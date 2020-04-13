@@ -158,12 +158,16 @@ class ShopProductDetail extends React.Component {
 
   increaseCount() {
     const { product_info } = this.state
-    if((product_info.type != 'file' && product_info.quantity_max != -1 && this.state.quantity >= product_info.quantity_max) || 
-      (product_info.type != 'file' && product_info.quantity_max == -1 && this.state.quantity >= product_info.stock)) {
+    if((product_info.type == 'serials' && product_info.quantity_max != -1 && this.state.quantity >= product_info.quantity_max) || 
+      (product_info.type == 'serials' && product_info.quantity_max == -1 && this.state.quantity >= product_info.stock)) {
       return true
     }
 
     if(product_info.type == 'file' &&  product_info.file_stock != -1 && this.state.quantity >= product_info.file_stock) {
+      return true
+    }
+
+    if(product_info.type == 'service' &&  product_info.service_stock != -1 && this.state.quantity >= product_info.service_stock) {
       return true
     }
 

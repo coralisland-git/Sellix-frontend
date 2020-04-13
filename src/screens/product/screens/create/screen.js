@@ -136,6 +136,7 @@ class CreateProduct extends React.Component {
 				serials: '',
 				service_text: '',
 				file_stock: -1,
+				service_stock: -1,
 				stock_delimeter: DELIMITER_OPTIONIS[0].value,
 				quantity_min: 0,
 				quantity_max: 0,
@@ -151,6 +152,7 @@ class CreateProduct extends React.Component {
 				file: null
 			},
 			showFileStock: false,
+			showServiceStock: false,
 			gateways: {},
 			type: TYPE_OPTIONS[0],
 			delimiter: DELIMITER_OPTIONIS[0],
@@ -231,13 +233,14 @@ class CreateProduct extends React.Component {
 
 	handleSubmit(values) {
 		this.setState({loading: true})
-		const { gateways, custom_fields, showFileStock } = this.state
+		const { gateways, custom_fields, showFileStock, showServiceStock } = this.state
 		delete gateways['']
 		values.gateways = Object.keys(gateways).filter(key => { return gateways[key]}).toString()
 		values.custom_fields = JSON.stringify({
 			custom_fields: custom_fields.map(field => { return {...field, type: field.type.value}})
 		})
 		values.file_stock = showFileStock?values.file_stock:-1
+		values.service_stock = showServiceStock?values.service_stock:-1
 
 		this.props.actions.createProduct(values).then(res => {
 			this.props.commonActions.tostifyAlert('success', res.message)
@@ -265,6 +268,7 @@ class CreateProduct extends React.Component {
 			files, 
 			images,
 			showFileStock,
+			showServiceStock,
 			editorState,
 			selectedTab,
 			initialValues,
@@ -299,6 +303,7 @@ class CreateProduct extends React.Component {
 								serials: Yup.string(),
 								service_text: Yup.string(),
 								file_stock: Yup.number(),
+								service_stock: Yup.number(),
 								quantity_min: Yup.number(),
 								quantity_max: Yup.number(),
 								stock_delimeter: Yup.string(),
@@ -730,8 +735,37 @@ class CreateProduct extends React.Component {
 																			/>
 																		</FormGroup>
 																	</Col>
+																	<Col lg={12}>
+																		<FormGroup row>
+																			<Col xs="12" md="7" className="d-flex align-items-center">
+																				<AppSwitch className="mx-1 file-switch mr-2"
+																					style={{width: 50}}
+																					variant={'pill'} 
+																					color={'primary'}
+																					checked={showServiceStock}
+																					onChange={(e) => {
+																						this.setState({
+																							showServiceStock: e.target.checked
+																						})
+																					}}
+																					size="sm"
+																					/><span>Set how many this service can be sold </span>
+																			</Col>
+																		</FormGroup>
+																	</Col>
 																</Row>}
 																
+																{showServiceStock && type.value === 'service' && <Row>
+																	<Col lg={4}>
+																		<FormGroup>
+																			<Label htmlFor="product_code">Stock Amount <small className="font-italic">(leave <b>-1</b> for unlimited times)</small></Label>
+																			<Input type="number" id="service_stock" name="service_stock"
+																				min={-1}
+																				value={props.values.service_stock}
+																				onChange={props.handleChange}/>
+																		</FormGroup>
+																	</Col>
+																</Row>}
 
 																<hr className="mt-4"/>
 																<Row>

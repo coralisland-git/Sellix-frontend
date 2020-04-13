@@ -154,17 +154,24 @@ class Product extends React.Component {
          </p>
       }
       if(row.type === 'service'){
-        return <p>
-          <span style={{fontSize:  20}}>∞</span>
-         </p>
-      }
-      if(row.type === 'file'){
-        if(row.file_stock === -1){
+        if(row.service_stock === '-1'){
           return <p>
             <span style={{fontSize:  20}}>∞</span>
           </p>
         }
-        if(row.file_stock != -1){
+        if(row.service_stock != '-1'){
+          return <p>
+            {row.service_stock}
+          </p>
+        }
+      }
+      if(row.type === 'file'){
+        if(row.file_stock === '-1'){
+          return <p>
+            <span style={{fontSize:  20}}>∞</span>
+          </p>
+        }
+        if(row.file_stock != '-1'){
           return <p>
             {row.file_stock}
           </p>
