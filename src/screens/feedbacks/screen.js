@@ -98,11 +98,9 @@ class Feedbacks extends React.Component {
   }
 
   renderTime(cell, row) {
-    let newDate = 0
-    if (
-      row.date
-    ) {
-      newDate = (Date.now() - (+row.date * 1000)) / (3600 * 24 * 1000)
+
+    const formatDate = (timestamp) => {
+      var newDate = (Date.now() - (+timestamp * 1000)) / (3600 * 24 * 1000)
       if(newDate > 0){
         if(newDate === 1){
           newDate = `${newDate.toFixed(0)} day ago`
@@ -110,9 +108,18 @@ class Feedbacks extends React.Component {
           newDate = `${newDate.toFixed(0)} days ago`
         }
       }
+      return newDate
+    }
+    if (
+      row.created_at
+    ) {
+      
       return (
         <div>
-          <p>{newDate}</p>
+          <p>{formatDate(row.created_at)}</p>
+          {row.updated_at && row.updated_at !== row.created_at && <p>
+            (updated {formatDate(row.updated_at)})
+          </p>}
         </div>
       )
     } else {
@@ -197,7 +204,7 @@ class Feedbacks extends React.Component {
                             dataAlign="right"
                             dataSort
                           >
-                            Time
+                            Time posted
                           </TableHeaderColumn>
                         </BootstrapTable>
                       </div>
