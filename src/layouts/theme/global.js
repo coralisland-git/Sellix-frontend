@@ -139,8 +139,14 @@ export const GlobalStyles = createGlobalStyle`
     }
 
 
-    .productsort-screen .item {
+    .productsort-screen .item,
+    .categorysort-screen .item {
         border-bottom-color:  ${({ theme }) => theme.sortItemBorder} !important;
+    }
+
+    .productsort-screen .floating .item,
+    .categorysort-screen .floating .item {
+        background-color: ${({ theme }) => theme.sortItemBackground} !important;
     }
 
     ${({theme}) => theme.name === 'dark' && `

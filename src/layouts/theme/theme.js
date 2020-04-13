@@ -8,6 +8,8 @@ export const lightTheme = {
     payButtonBorder: '#F5F5F5',
 
     sortItemBorder: '#f6f6f6',
+    sortItemBackground: '#f0efef',
+    
     stockInfoBg: '#E4D6FF'
 }
   
@@ -29,6 +31,7 @@ export const darkTheme = {
     payButtonBorder: '#221D3E',
 
     sortItemBorder: '#2e2759',
+    sortItemBackground: '#2e2759',
 
     text: '#B4AEBC',
     toggleBorder: '#6B8096',
