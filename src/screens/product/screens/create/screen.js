@@ -749,7 +749,7 @@ class CreateProduct extends React.Component {
 																						})
 																					}}
 																					size="sm"
-																					/><span>Set how many this service can be sold </span>
+																					/><span>Set how many times this service can be sold </span>
 																			</Col>
 																		</FormGroup>
 																	</Col>
