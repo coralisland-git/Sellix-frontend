@@ -5,8 +5,6 @@
     }
     .shop-header {
         box-shadow: none !important;
-
-        
     }
     .nav-link.active {
         color: #613BEA !important;
@@ -44,6 +42,15 @@
             font-size: 16px !important;
         }
     }
+
+
+    .app-header .dropdown-item:hover,
+    .app-header .dropdown-item:focus,
+    .app-header .dropdown-item:active {
+        color: #613BEA !important;
+        background-color: white;
+    }
+
     .app-footer {
         margin-left: 0 !important;
     }
@@ -81,7 +88,7 @@
           font-size: 16px !important;
       }
 
-      .nav-link.active {
+    .nav-link.active {
         font-family: 'Poppins';
     }
 
@@ -89,6 +96,7 @@
         .nav-link {
             font-family: 'Poppins-SemiBold';
             font-size: 18px !important;
+            color: #613BEA !important;
         }
     }
     header {
@@ -120,10 +128,6 @@
 
     .header-fixed .app-header {
         position:  relative !important;
-    }
-
-    .nav-link.active {
-        color: #613BEA !important;
     }
 
     .shop-main {

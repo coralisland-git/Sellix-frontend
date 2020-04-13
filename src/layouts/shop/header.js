@@ -80,6 +80,9 @@ class Header extends Component {
                   <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
                     Dashboard
                   </DropdownItem>
+                  <DropdownItem onClick={this.setTheme.bind(this)}>
+                    {(theme || 'light') === 'light' ? 'Dark Mode' : 'Light Mode'}
+                  </DropdownItem>
                   <DropdownItem onClick={() => this.signOut()}>
                     Sign Out
                   </DropdownItem>
