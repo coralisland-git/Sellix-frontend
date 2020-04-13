@@ -107,7 +107,11 @@ class Product extends React.Component {
     ) {
       return (
         <div>
-          <p><a href="#">{row.title}</a></p>
+          <p>
+            <a href={`/dashboard/${user}/products/all/edit/${row.uniqid}`} >
+              {row.title}
+            </a>
+          </p>
           <p className="caption">{row.uniqid}</p>
         </div>
       )  
