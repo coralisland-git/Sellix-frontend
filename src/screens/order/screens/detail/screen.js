@@ -459,12 +459,15 @@ class OrderDetail extends React.Component {
                                 <Col lg={12}>
                                   {
                                     order.crypto_transactions && order.crypto_transactions.map(trans => 
-                                      <div className="d-flex">
-                                        <p className="hash">
-                                          {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                      <div className="d-info">
+                                        <p className="d-addr">
+                                          <label>Address:</label> <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
                                           {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
                                           {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
                                           {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                        </p>
+                                        <p className="hash">
+                                          <label>Amount:</label> {trans.crypto_amount} 
                                         </p>
                                       </div>
                                     )
