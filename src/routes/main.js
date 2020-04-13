@@ -8,7 +8,6 @@ import {
   ProductLayout,
   LandingLayout
 } from 'layouts'
-import { NotFound } from 'components'
 
 const user = window.localStorage.getItem('userId')
 
@@ -36,8 +35,6 @@ const mainRoutes = [
 
   // Auth 
   { path: '/auth', name: 'AuthLayout', component: AuthLayout },
-
-  { path: '/:notexists', name: '404', component: NotFound },
 
   // Landing
   { path: '/', name: 'LandingLayout', component: LandingLayout },

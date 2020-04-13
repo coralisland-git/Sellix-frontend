@@ -3,6 +3,8 @@ import {
     Fees,
     Terms
   } from 'screens'
+import { NotFound } from 'components'
+
   
   const landingRoutes = [
     {
@@ -15,6 +17,7 @@ import {
       component: Terms,
       name: 'Terms'
     },
+    { path: '/:notexists', name: '404', component: NotFound },
     {
       path: '/',
       component: Home.screen,
