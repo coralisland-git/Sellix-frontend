@@ -69,6 +69,13 @@ class InitialLayout extends React.Component {
       zIndex: 1999
     }
 
+    const user = window.localStorage.getItem('userId')
+
+    if(user)  {
+      window.location = `/u/${user}/feedback/`;
+      return ""
+    }
+
     return (
       <div className="initial-container">
         <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
