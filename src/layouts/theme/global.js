@@ -1,9 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-    h1, h2, h3, h4, h5, p, label, span:not(.badge), a, th, td, input, select, textarea, .Select-placeholder {
+    h1, h2, h3, h4, h5, p, label, span:not(.badge):not(.text-red):not(.text-green), a, th, td, input, select, textarea, .Select-placeholder {
         color: ${({ theme }) => theme.text} !important;
     }
+
+    
     .admin-container {
         background: ${({ theme }) => theme.body};
         color: ${({ theme }) => theme.text};
@@ -17,6 +19,16 @@ export const GlobalStyles = createGlobalStyle`
         color: #B22424 !important;
     }
 
+    .shop-container {
+        background-color: ${({ theme }) => theme.shopContainerBackground} !important;
+    }
+
+    .shop-container .shop-section {
+        background-color: ${({ theme }) => theme.shopSectionBackground} !important;
+    }
+
+    .shop-product-screen .filter-button button:not(.btn-primary),
+    .shop-container header,
     .admin-container .app-header {
         background: ${({ theme }) => theme.cardBody} !important;
     }
@@ -33,8 +45,15 @@ export const GlobalStyles = createGlobalStyle`
         background-color: #613BEA !important;
     }
 
+    .bitcoin-paying-screen .bottom,
     .detail-product-screen .stock-info {
         background-color: ${({ theme }) => theme.stockInfoBg};
+        
+    }
+
+    .bitcoin-paying-screen .bottom h4,
+    .bitcoin-paying-screen .bottom h5 {
+        color: ${({ theme }) => theme.text} !important;
     }
 
     .new-select i {
@@ -50,6 +69,7 @@ export const GlobalStyles = createGlobalStyle`
         // background: ${({ theme }) => theme.cardBody};
     }
 
+    .bitcoin-paying-screen .top .btc-address,
     .searchbar .header-search-input,
     table tbody td .badge-normal,
     .Select-control,
@@ -104,8 +124,10 @@ export const GlobalStyles = createGlobalStyle`
         background: ${({ theme }) => theme.cardBody} !important;
     }
 
+    .shop-container .app-header .dropdown-item,
     .admin-container .app-header .dropdown-item {
         background: ${({ theme }) => theme.dropdownColor} !important;
+        color: ${({ theme }) => theme.text};
     }
 
     .app-header .navbar-nav .dropdown-menu:after {
@@ -129,6 +151,7 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.body} !important;
     }
 
+    .bitcoin-paying-screen .card,
     .detail-product-screen .card {
         background-color: ${({ theme }) => theme.cardBody} !important;
     }

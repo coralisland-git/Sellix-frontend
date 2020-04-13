@@ -15,7 +15,7 @@ import {
   CommonActions
 } from 'services/global'
 import { ThemeProvider  } from 'styled-components';
-import { lightTheme } from 'layouts/theme/theme'
+import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
 import { Loading } from 'components'
@@ -43,7 +43,7 @@ class ShopLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: 'light'
+      theme: window.localStorage.getItem('theme') || 'light'
     }
   }
 
@@ -80,9 +80,9 @@ class ShopLayout extends React.Component {
 
   changeTheme() {
     const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
+    window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
 
-    this.setState({theme: theme == 'light'? 'dark': 'light'})
+    this.setState({theme: theme === 'light' ? 'dark': 'light'})
   }
 
   render() {
@@ -95,15 +95,17 @@ class ShopLayout extends React.Component {
     const {user} = this.props
     const userId = this.props.match.params.username
 
+    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
+
     return (
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
-          <div className={"shop-container bg-white "}>
+          <div className={"shop-container"}>
             <div className="app">
 
                 <AppHeader>
                     <Suspense fallback={Loading()}>
-                        <Header {...this.props}/>
+                        <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}/>
                     </Suspense>
                 </AppHeader>
 
@@ -138,7 +140,7 @@ class ShopLayout extends React.Component {
                     </div>
                   </section>
 
-                  <div style={{backgroundColor: '#F5F5FE'}}>
+                  <div className="shop-section">
                     <div className="shop-main p-3">
                         <Container className="p-0" fluid>
                             <Suspense fallback={Loading()}>

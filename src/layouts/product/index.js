@@ -46,7 +46,7 @@ class DefaultLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: 'light'
+      theme: window.localStorage.getItem('theme') || 'light'
     }
   }
 
@@ -81,10 +81,11 @@ class DefaultLayout extends React.Component {
 
   changeTheme() {
     const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
+    window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
 
-    this.setState({theme: theme == 'light'? 'dark': 'light'})
+    this.setState({theme: theme === 'light' ? 'dark': 'light'})
   }
+
 
   render() {
     const containerStyle = {
@@ -92,10 +93,9 @@ class DefaultLayout extends React.Component {
     }
 
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
     return (
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">

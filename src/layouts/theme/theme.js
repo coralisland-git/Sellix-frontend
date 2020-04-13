@@ -9,8 +9,11 @@ export const lightTheme = {
 
     sortItemBorder: '#f6f6f6',
     sortItemBackground: '#f0efef',
-    
-    stockInfoBg: '#E4D6FF'
+
+    stockInfoBg: '#E4D6FF',
+
+    shopSectionBackground: '#F5F5FE',
+    shopContainerBackground: '#fff'
 }
   
 export const darkTheme = {
@@ -32,6 +35,9 @@ export const darkTheme = {
 
     sortItemBorder: '#2e2759',
     sortItemBackground: '#2e2759',
+
+    shopContainerBackground: '#1D183D',
+    shopSectionBackground: '#221D3E',
 
     text: '#B4AEBC',
     toggleBorder: '#6B8096',
