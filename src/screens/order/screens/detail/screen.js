@@ -238,7 +238,7 @@ class OrderDetail extends React.Component {
                           </div>
                           <div className="d-flex">
                             <p className="title">Value</p>
-                            <p>{`${config.CURRENCY_LIST[order.currency]}${order.product_price} ${order.currency}`}</p>
+                            <p>{`${config.CURRENCY_LIST[order.currency]}${order.total_display} ${order.currency}`}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Created At</p>
