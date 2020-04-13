@@ -59,6 +59,26 @@ export const resendInvoice = (invoice) => {
     })
   }
 }
+
+
+// Process Invoice
+export const processOrder = (invoice) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/invoices/process`,
+      data: formData(invoice)
+    }
+
+    return authApi(data).then(res => {
+      return res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
 export const issueReplacement = (coupon) => {
   return (dispatch) => {
     let data = {

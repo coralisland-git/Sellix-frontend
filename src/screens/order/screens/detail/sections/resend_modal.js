@@ -114,7 +114,7 @@ class ResendModal extends React.Component {
                             )}
                         </FormGroup>
                       <Button color="primary" type="submit" className="mr-2 mt-4 mb-4" disabled={loading}>
-                      {loading?<Spin/>:<span>Resend Order</span>}
+                      {loading?<Spin/>:'Resend Order'}
                       </Button>
                   </Form>
                 )}             
