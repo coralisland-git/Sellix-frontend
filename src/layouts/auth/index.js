@@ -72,7 +72,7 @@ class InitialLayout extends React.Component {
     const user = window.localStorage.getItem('userId')
 
     if(user)  {
-      window.location = `/u/${user}/feedback/`;
+      window.location = `/dashboard/${user}/home`;
       return ""
     }
 
