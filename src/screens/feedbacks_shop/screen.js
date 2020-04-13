@@ -48,14 +48,17 @@ class ShopFeedback extends React.Component {
   initializeData () {
     this.props.commonActions.getUserFeedbacks(this.props.match.params.username).then(res => {
       if (res.status === 200) {
-        this.setState({ loading: false })
+        this.setState({ 
+          loading: false,
+          user_feedback: res.data.feedback
+        })
       }
     })
   }
 
   render() {
     const { loading } = this.state
-    const { user_feedback } = this.props
+    const { user_feedback } = this.state
 
     return (
       <div className="feedback-shop-screen">
@@ -84,7 +87,7 @@ class ShopFeedback extends React.Component {
                           <p>{feedback.message}</p>
                           <div className="d-flex flex-row justify-content-between w-100">
                             <p><i className="fas fa-check feedback-checked"></i> Verified Purchase</p>
-                            <p><ReactTimeAgo date={feedback.date*1000/1} locale="en"/></p>
+                            <p><ReactTimeAgo date={feedback.created_at*1000/1} locale="en"/></p>
                           </div>
                         </CardBody>
                       </Card>

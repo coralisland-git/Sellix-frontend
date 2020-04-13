@@ -63,13 +63,14 @@ class Feedbacks extends React.Component {
   
 
   renderThumb = (row) => {
-    if(this.props.feedbacks[0].feedback === 'positive'){
-      return <i className="fa fa-thumbs-down fa-lg mr-3" style={{color: '#B22424'}}></i>
-    }
-    if(this.props.feedbacks[0].feedback === 'negative'){
+    const item = this.props.feedbacks.filter(x => x.id == row)[0]
+    if(item.feedback === 'positive'){
       return <i className="fa fa-thumbs-up fa-lg mr-3" style={{color: '#2BB224'}}></i>
     }
-    if(this.props.feedbacks[0].feedback === 'neutral'){
+    if(item.feedback === 'negative'){
+      return <i className="fa fa-thumbs-down fa-lg mr-3" style={{color: '#B22424'}}></i>
+    }
+    if(item.feedback === 'neutral'){
       return <i className="fas fa-hand-paper fa-lg mr-3" style={{ color: '#A7A5B4' }}></i>
     }
   }

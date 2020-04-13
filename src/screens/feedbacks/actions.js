@@ -17,7 +17,7 @@ export const getFeedbacks = () => {
       if (res.status === 200) {
         dispatch({
           type: FEEDBACKS.FEEDBACKS,
-          payload: res.data.feedbacks
+          payload: res.data.feedback
         })
         console.log({res})
         return res
