@@ -630,7 +630,7 @@ class CreateProduct extends React.Component {
 																						})
 																					}}
 																					size="sm"
-																					/><span>Set how many this file can be sold </span>
+																					/><span>Set how many times this file can be sold </span>
 																			</Col>
 																		</FormGroup>
 																	</Col>
