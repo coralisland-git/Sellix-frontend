@@ -23,6 +23,7 @@ import {
 } from 'services/global'
 import {ResendModal} from './sections'
 import {IssueReplacementModal} from './sections'
+import {ProcessOrderModal} from './sections'
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
@@ -93,6 +94,7 @@ class OrderDetail extends React.Component {
       resending: false,
       openModal: false,
       openIssueReplacementModal: false,
+      openProcessOrderModal: false,
       order: {}
     }
 
@@ -107,12 +109,20 @@ class OrderDetail extends React.Component {
     this.setState({openIssueReplacementModal: false})
   }
 
+  closeProcessOrderModal() {
+    this.setState({openProcessOrderModal: false})
+  }
+
   openResendModal() {
     this.setState({openModal: true})
   }
 
   openIssueReplacementModal() {
     this.setState({openIssueReplacementModal: true})
+  }
+
+  openProcessOrderModal() {
+    this.setState({openProcessOrderModal: true})
   }
 
   componentDidMount () {
@@ -151,7 +161,14 @@ class OrderDetail extends React.Component {
   }
 
   render() {
-    const { loading, order, resending, openModal, openIssueReplacementModal } = this.state
+    const { 
+      loading, 
+      order, 
+      resending, 
+      openModal, 
+      openIssueReplacementModal, 
+      openProcessOrderModal 
+    } = this.state
 
     let custom_fields = []
 
@@ -175,6 +192,12 @@ class OrderDetail extends React.Component {
             invoiceId = {order.uniqid}
             // email = {order.customer_email}
             closeModal={this.closeIssueReplacementModal.bind(this)}/>
+          <ProcessOrderModal  
+            openModal={openProcessOrderModal}
+            invoiceId = {order.uniqid}
+            email = {order.customer_email}
+            closeModal={this.closeProcessOrderModal.bind(this)}
+          />
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
               <a onClick={(e) => this.props.history.push(`/dashboard/${user}/orders`)}><i className="fas fa-chevron-left"/> Orders</a>
@@ -205,6 +228,14 @@ class OrderDetail extends React.Component {
                             </Button>
                             <Button color="primary" onClick={this.openIssueReplacementModal.bind(this)}>
                               Issue Replacement
+                            </Button>
+                          </div>
+                        }
+
+                        { 
+                          order.status && order.status == '4' && <div className='orderHeaderButtons'>
+                            <Button color="primary" onClick={this.openProcessOrderModal.bind(this)}>
+                              Process Order
                             </Button>
                           </div>
                         }
@@ -263,7 +294,7 @@ class OrderDetail extends React.Component {
                           
                           <div className="d-flex">
                               <p className="title">IP Address</p>
-                              <p>{order.ip} {order.is_vpn_or_proxy == '1' && <span className="proxy-label">VPN/Proxy</span> }</p>
+                              <p>{order.ip} {order.is_vpn_or_proxy == '1' && <span className="small-badge proxy-label">VPN/Proxy</span> }</p>
                             </div>
                             <div className="d-flex">
                               <p className="title">Device</p>
