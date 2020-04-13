@@ -117,11 +117,11 @@ class ShopLayout extends React.Component {
                         }
                     </div>
                     <Card className="report-count mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" style={{width: 'fit-content'}}>
-                        <span className="text-green mr-2">{user.feedbacks?user.feedbacks.positive:0}</span>
+                        <span className="text-green mr-2">{user.feedback?user.feedback.positive:0}</span>
                         <span className=""/>
-                        <span className="text-grey pl-2 pr-2">{user.feedbacks?user.feedbacks.neutral:0}</span>
+                        <span className="text-grey pl-2 pr-2">{user.feedback?user.feedback.neutral:0}</span>
                         <span className=""/>
-                        <span className="text-red ml-2">{user.feedbacks?user.feedbacks.negative:0}</span>
+                        <span className="text-red ml-2">{user.feedback?user.feedback.negative:0}</span>
                     </Card>
                     <div>
                         <Nav className="d-flex flex-row justify-content-center">

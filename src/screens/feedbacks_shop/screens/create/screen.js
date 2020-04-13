@@ -19,6 +19,7 @@ import { createFeedback } from './actions'
 import {
   CommonActions
 } from 'services/global'
+import { Loading } from 'components'
 
 import './style.scss'
 
@@ -40,7 +41,40 @@ class LeaveFeedback extends React.Component {
     super(props)
     this.state = {
       loading: false,
+      loadingInitialValues: true,
+      initialValues: {}
     }
+
+    this.initializeData = this.initializeData.bind(this)
+  }
+
+  componentDidMount () {
+    this.initializeData()
+  }
+
+  initializeData () {
+    this.props.commonActions.getUserFeedbacks(this.props.match.params.username).then(res => {
+      if (res.status === 200) {
+        var existingFeedback = res.data.feedback.filter(x => x.uniqid === this.props.match.params.id)
+
+        if(existingFeedback.length > 0) {
+          existingFeedback = existingFeedback[0]
+
+          this.setState({ 
+            initialValues: {
+              'message': existingFeedback.message,
+              'feedback': existingFeedback.feedback
+            },
+            loadingInitialValues: false
+          })
+
+        } else {
+          this.setState({
+            loadingInitialValues: false
+          })
+        }
+      }
+    })
   }
 
   handleSubmit(values) {
@@ -58,9 +92,13 @@ class LeaveFeedback extends React.Component {
   }
 
   render() {
+    if(this.state.loadingInitialValues) {
+      return Loading()
+    }
     return (
       <div className="animated fadeIn">
         <Formik
+          initialValues={this.state.initialValues}
           onSubmit={(values) => {
             this.handleSubmit(values)
           }}>{props => (
@@ -76,9 +114,15 @@ class LeaveFeedback extends React.Component {
                       <div className="mb-4 feedback-radioGroup">
                         <ButtonToolbar aria-label="Toolbar with button groups">
                           <ButtonGroup className="mr-2 feedback-radioGroup" aria-label="First group">
-                            <Button onClick={() => props.setFieldValue('feedback', 'positive')}type='button'><i className="fa fa-thumbs-up fa-lg mr-3" style={{ color: '#2BB224' }}></i></Button>
-                            <Button onClick={() => props.setFieldValue('feedback', 'negative')} type='button'><i className="fa fa-thumbs-down fa-lg mr-3" style={{ color: '#B22424' }}></i></Button>
-                            <Button onClick={() => props.setFieldValue('feedback', 'neutral')} type='button'><i className="fas fa-hand-paper fa-lg mr-3" style={{ color: '#A7A5B4' }}></i></Button>
+                            <Button onClick={() => props.setFieldValue('feedback', 'positive')} type='button' active={props.values.feedback === 'positive'}>
+                              <i className="fa fa-thumbs-up fa-lg mr-3" style={{ color: '#2BB224' }}></i>
+                            </Button>
+                            <Button onClick={() => props.setFieldValue('feedback', 'negative')} type='button' active={props.values.feedback === 'negative'}>
+                              <i className="fa fa-thumbs-down fa-lg mr-3" style={{ color: '#B22424' }}></i>
+                            </Button>
+                            <Button onClick={() => props.setFieldValue('feedback', 'neutral')} type='button' active={props.values.feedback === 'neutral'}>
+                              <i className="fas fa-hand-paper fa-lg mr-3" style={{ color: '#A7A5B4' }}></i>
+                            </Button>
                           </ButtonGroup>
                         </ButtonToolbar>
                       </div>
