@@ -450,10 +450,30 @@ class OrderDetail extends React.Component {
                           <Row className="mt-3">
                             <Col lg={12}>
                               <FormGroup className="mb-4">
-                                <Label className="title">{PAYMENT_OPTS[order.gateway]} Transactions</Label>
+                                <Label className="title">{PAYMENT_OPTS[order.gateway]} Details</Label>
                               </FormGroup>
                             </Col>
                             <Col lg={12}>
+                              <Label className="title">General Info</Label>
+                              <Row>
+                                <Col lg={12}>
+                                  {
+                                    order.crypto_transactions && order.crypto_transactions.map(trans => 
+                                      <div className="d-flex">
+                                        <p className="hash">
+                                          {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                          {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                          {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                          {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                        </p>
+                                      </div>
+                                    )
+                                  }
+                                </Col>
+                              </Row>
+                            </Col>
+                            <Col lg={12}>
+                              <Label className="title">Transactions</Label>
                               <Row>
                                 <Col lg={12}>
                                   {
@@ -471,6 +491,25 @@ class OrderDetail extends React.Component {
                                 </Col>
                               </Row>
                             </Col>
+                            {
+                              order.crypto_transactions && order.crypto_transactions.length == 1 && order.crypto_payout_transaction && (
+                                <Col lg={12}>
+                                  <Label className="title">Payout</Label>
+                                  <Row>
+                                    <Col lg={12}>
+                                      <div className="d-flex">
+                                        <p className="hash">
+                                          {order.crypto_payout_transaction.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                          {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
+                                          {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
+                                          {order.gateway == 'ethereum' && <a href={`https://etherscan.io/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
+                                        </p>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              )
+                            }
                           </Row>
                         }
                       </CardBody>
@@ -479,47 +518,6 @@ class OrderDetail extends React.Component {
               </div>
             </Col>
             <Col lg={6}>
-              {
-                order.gateway && CRYPTOS.includes(order.gateway)  && 
-                  <Card>
-                    <CardBody className="">
-                      {
-                        loading ?
-                          <Row>
-                            <Col lg={12}>
-                              <Loader />
-                            </Col>
-                          </Row>
-                        :
-                        <Row className="mt-3">
-                          <Col lg={12}>
-                            <FormGroup className="mb-4">
-                              <Label className="title">{PAYMENT_OPTS[order.gateway]} Details</Label>
-                            </FormGroup>
-                          </Col>
-                          <Col lg={12}>
-                            <Row>
-                              <Col lg={12}>
-                                {
-                                  order.crypto_transactions && order.crypto_transactions.map(trans => 
-                                    <div className="d-flex">
-                                      <p className="hash">
-                                        {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
-                                        {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                        {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                        {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                      </p>
-                                    </div>
-                                  )
-                                }
-                              </Col>
-                            </Row>
-                          </Col>
-                        </Row>
-                      }
-                    </CardBody>
-                  </Card> 
-              }
               <Card>
                 <CardBody className="">
                   {
