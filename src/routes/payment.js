@@ -22,7 +22,7 @@ import {
       component: ShopProductDetail.screen
     },
     {
-      path: '/payment/embeded/:id',
+      path: '/payment/embed/:id',
       name: 'EmbededPayment',
       component: EmbededPayment.screen
     }

@@ -97,7 +97,7 @@ class DefaultLayout extends React.Component {
 
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
-    const is_embeded = this.props.location.pathname.includes('/payment/embeded/')?true:false
+    const is_embeded = this.props.location.pathname.includes('/payment/embed/')?true:false
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
