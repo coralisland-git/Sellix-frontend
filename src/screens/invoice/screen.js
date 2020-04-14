@@ -77,8 +77,8 @@ class Invoice extends React.Component {
       loading: false,
       invoice: {},
       timer: '60:00',
-      time: {m:0, s:0},
-      seconds: 60*60,
+      time: {h:0, m:0, s:0},
+      seconds: 2*60*60,
       showAlert: true,
       openQRModal: false,
       openFeedbackModal: false
@@ -186,7 +186,7 @@ class Invoice extends React.Component {
   componentDidMount() {
     this.setState({loading:true})
     this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
-      let seconds = 60*60 - (new Date().getTime() - new Date(res.data.invoice.created_at*1000).getTime()) / 1000
+      let seconds = 2*60*60 - (new Date().getTime() - new Date(res.data.invoice.created_at*1000).getTime()) / 1000
 
       let timeLeftVar = this.secondsToTime(seconds);
 
@@ -202,7 +202,9 @@ class Invoice extends React.Component {
   setInvoiceStatus(status) {
     if(status == 0){
       this.startTimer()
-      return `${(this.state.time.m>9?this.state.time.m:'0'+this.state.time.m) || '00'}:${this.state.time.s>9?this.state.time.s:'0'+this.state.time.s || '00'}`
+      return `${this.state.time.h} :
+        ${(this.state.time.m>9?this.state.time.m:'0'+this.state.time.m) || '00'} :
+        ${this.state.time.s>9?this.state.time.s:'0'+this.state.time.s || '00'}`
     }
     else if(status == 1)
       return 'Paid'
@@ -245,8 +247,6 @@ class Invoice extends React.Component {
     if(seconds < 0)
       invoice.status = 2
 
-    // invoice.status = 1
-
     return (
       <div>
         {
@@ -260,8 +260,6 @@ class Invoice extends React.Component {
               <div className="bitcoin-paying-screen">
                 <QRCodeModal openModal={openQRModal} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal.bind(this)}/>
         
-                
-        
                 {invoice.status == 4 && 
                   <SweetAlert
                     info
@@ -269,14 +267,13 @@ class Invoice extends React.Component {
                     onCancel = {this.hideAlert.bind(this)}
                     title="We haven't received full amount"
                     show={showAlert}
-            
                   >
                     Transaction has been received but it’s not enough, make the send to bitcoin address appear again and update the crypto_received and crypto amount to send in the invoice
                   </SweetAlert>
                 }
                 <div className="animated fadeIn">
                   <Row className="m-3">
-                    <Col lg={4} className="ml-auto mr-auto p-0">
+                    <div className="invoice-card ml-auto mr-auto p-0">
                       <div className="float-logo"><img src={sellix_logo} width="153"/></div>
                       
                       <Card className="bg-white p-0 detail pt-3">
@@ -286,12 +283,12 @@ class Invoice extends React.Component {
                             style={{cursor: "pointer"}}/>
                         </div>
                         
-                        <div className="top p-4 pt-5">
+                        <div className="top p-4 pt-4">
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-                            <span className="badge text-primary bold status" id="status">{this.setInvoiceStatus(invoice.status)}</span>
+                            <span className="badge text-primary bold status invoice-timer" id="status">{this.setInvoiceStatus(invoice.status)}</span>
                           </div>
-                          <p className="text-grey  mb-4">{invoice.uniqid}</p>
+                          <p className="text-grey  mb-3">{invoice.uniqid}</p>
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.product || {}).title}</h4>
                             { 
@@ -310,7 +307,7 @@ class Invoice extends React.Component {
         
                           {
                             (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
-                                <p className="text-grey bold mt-5 text-center">
+                                <p className="text-grey bold mt-4 text-center">
                                     Please send exactly <span className="badge text-primary bold">
                                       {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> BTC to
                                 </p>
@@ -381,28 +378,28 @@ class Invoice extends React.Component {
                           }
                           { invoice.status != 1 && invoice.status != 2 &&
                           <div>
-                            <h4 className="text-primary mb-4">Order Details</h4>
+                            <h4 className="text-primary mb-3">Order Details</h4>
                             {
                               this.getInvoiceStatus2(invoice.status) != null && 
-                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div className="d-flex justify-content-between align-items-center mb-1">
                                   <span className="text-primary">Status</span>
                                   <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status)}</h5>
                                 </div>
                             }
                             
-                            <div className="d-flex justify-content-between align-items-center mb-2">
+                            <div className="d-flex justify-content-between align-items-center mb-1">
                               <span className="text-primary">Seller</span>
                               <h5 className="text-primary b-4">{invoice.username }</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
+                            <div className="d-flex justify-content-between align-items-center mb-1">
                               <span className="text-primary">Quantity</span>
                               <h5 className="text-primary b-4">{invoice.quantity}</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
+                            <div className="d-flex justify-content-between align-items-center mb-1">
                               <span className="text-primary">Email</span>
                               <h5 className="text-primary b-4">{invoice.customer_email}</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
+                            <div className="d-flex justify-content-between align-items-center mb-1">
                               <span className="text-primary">Created</span>
                               <h5 className="text-primary b-4">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
                             </div>
@@ -419,7 +416,7 @@ class Invoice extends React.Component {
                         }
                         </div>
                       </Card>
-                    </Col>
+                    </div>
                   </Row>
                 </div>
             </div>

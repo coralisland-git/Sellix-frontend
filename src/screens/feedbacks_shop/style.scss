@@ -8,12 +8,6 @@
     }
   }
 
-  .product-card {
-    img {
-      object-fit: cover;
-    }
-  }
-
   .product-table {
     .my-link {
       text-decoration: none;
@@ -23,7 +17,7 @@
 
   .badge {
     text-align: center;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 12px !important;
     font-weight: normal;
     max-width: 75px;

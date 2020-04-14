@@ -109,7 +109,7 @@ class DefaultLayout extends React.Component {
                 </Suspense>
               </AppHeader>
               
-              <div className="app-body mt-5 mb-5 pt-5">
+              <div className="app-body mt-4 mb-5 pt-5">
                   <Container className="p-0 pt-3" fluid>
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />

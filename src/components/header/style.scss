@@ -25,9 +25,9 @@
   content: '';
   right: 10px;
   top: -10px;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #fff;
-  border-left: 10px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #fff;
+  border-left: 5px solid transparent;
 }
 
 .admin-container .app-header .dropdown-item {
@@ -88,7 +88,7 @@
   .header-search-input {
     height: 45px !important;
     background-color: #F6F4FF !important;
-    border-radius: 10px !important;
+    border-radius: 5px !important;
     border: none !important;
     font-family: 'Poppins';
     font-size: 16px !important;

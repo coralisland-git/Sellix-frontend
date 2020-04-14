@@ -2,7 +2,7 @@
 
 @media (min-width: 992px){
     html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .main, html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .app-footer, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed .main, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed .app-footer {
-      margin-left: 220px
+      margin-left: 230px;
     }
 
     .btn {
@@ -117,7 +117,54 @@ html:not([dir="rtl"]) .sidebar-show .sidebar {
     min-width: 230px !important;
 
     .sidebar-nav {
-        min-width: 230px !important;
+        width: 100%;
+        padding: 30px 15px 0 15px;
+
+        .nav {
+            width: 100%;
+
+            .nav-item {
+                padding: 0.5rem 0 !important;
+
+                .nav-link {
+                    padding: 0.8rem 1rem !important;
+                    border-radius: 5px !important;
+                }
+    
+                .nav-link.active {
+                    background: #613BEA;
+                    color: white !important;
+    
+                    .nav-icon {
+                      color: white;
+                    }
+                  
+                }
+
+                .nav-dropdown-items {
+                    .nav-item {
+                        // width: 160px;
+                        text-align: center;
+                        margin-left: 17px;
+                        padding: 0.1rem 0 !important;
+
+                        .nav-link {
+                            text-align: left;
+                            display: block;
+                            padding-left: 40px !important;
+                            
+                            i {
+                               display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .nav-dropdown-toggle::before {
+        transform: rotate(-180deg);
     }
 }
 
@@ -149,7 +196,7 @@ select {
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5 !important;
     padding: 0 25px;
-    border-radius: 10px !important;
+    border-radius: 5px !important;
     font-size: 14px !important;
 }
 
@@ -259,7 +306,7 @@ table td a:hover {
 
 .card {
     background-color: transparent;
-    border-radius: 10px !important;
+    border-radius: 5px !important;
     box-shadow: none !important;
 
     .card-header-actions {
@@ -268,7 +315,7 @@ table td a:hover {
 
     .card-header {
         background-color: transparent !important;
-        border-radius: 10px !important;
+        border-radius: 5px !important;
         border: none !important;
         padding: 20px 0;
 
@@ -286,9 +333,14 @@ table td a:hover {
 
     .card-body {
         background-color: white;
-        border-radius: 10px !important;
+        border-radius: 5px !important;
         padding: 30px 25px;
     }
+}
+
+
+.paypal-button-text {
+    color: #A7A5B4 !important;
 }
 
 .card.grey {
@@ -384,7 +436,7 @@ table td a:hover {
 
 .badge {
     text-align: center;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 13px !important;
     font-weight: normal;
     height: 30px;
@@ -464,7 +516,7 @@ table {
 
             .badge {
                 text-align: center;
-                border-radius: 10px;
+                border-radius: 5px;
                 font-size: 12px !important;
                 padding: 0 10px;
                 font-weight: normal;
