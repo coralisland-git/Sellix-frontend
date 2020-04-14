@@ -2,7 +2,7 @@
 
 @media (min-width: 992px){
     html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .main, html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .app-footer, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed .main, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed .app-footer {
-      margin-left: 220px
+      margin-left: 230px;
     }
 
     .btn {
@@ -48,7 +48,10 @@
   }
 }
 
-  
+.border-right,
+.border-bottom {
+    border-color: #f4f6ff !important;
+}
 
 body {
     line-height: 1.0;
@@ -61,7 +64,7 @@ body {
 
 .btn {
     border: none !important;
-    border-radius: 4px !important;
+    border-radius: 3px !important;
     font-size: 14px !important;
     font-weight: 600 !important;
     padding-left: 20px;
@@ -117,7 +120,57 @@ html:not([dir="rtl"]) .sidebar-show .sidebar {
     min-width: 230px !important;
 
     .sidebar-nav {
-        min-width: 230px !important;
+        width: 100%;
+        padding: 30px 15px 0 15px;
+
+        .nav {
+            width: 100%;
+
+            .nav-item {
+                padding: 0.5rem 0 !important;
+
+                .nav-link {
+                    padding: 0.8rem 1rem !important;
+                    border-radius: 3px !important;
+                    font-family: 'Poppins' !important;
+                    font-weight: 100;
+                }
+    
+                .nav-link.active {
+                    background: #613BEA;
+                    color: white !important;
+                    font-weight: 100 !important;
+    
+                    .nav-icon {
+                      color: white;
+                    }
+                  
+                }
+
+                .nav-dropdown-items {
+                    .nav-item {
+                        // width: 160px;
+                        text-align: center;
+                        margin-left: 17px;
+                        padding: 0.1rem 0 !important;
+
+                        .nav-link {
+                            text-align: left;
+                            display: block;
+                            padding-left: 40px !important;
+                            
+                            i {
+                               display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .nav-dropdown-toggle::before {
+        transform: rotate(-180deg);
     }
 }
 
@@ -149,7 +202,7 @@ select {
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5 !important;
     padding: 0 25px;
-    border-radius: 10px !important;
+    border-radius: 3px !important;
     font-size: 14px !important;
 }
 
@@ -259,7 +312,7 @@ table td a:hover {
 
 .card {
     background-color: transparent;
-    border-radius: 10px !important;
+    border-radius: 3px !important;
     box-shadow: none !important;
 
     .card-header-actions {
@@ -268,7 +321,7 @@ table td a:hover {
 
     .card-header {
         background-color: transparent !important;
-        border-radius: 10px !important;
+        border-radius: 3px !important;
         border: none !important;
         padding: 20px 0;
 
@@ -286,9 +339,14 @@ table td a:hover {
 
     .card-body {
         background-color: white;
-        border-radius: 10px !important;
+        border-radius: 3px !important;
         padding: 30px 25px;
     }
+}
+
+
+.paypal-button-text {
+    color: #A7A5B4 !important;
 }
 
 .card.grey {
@@ -308,28 +366,35 @@ table td a:hover {
             margin-bottom: 0;
         }
 
-        .progress-indicator {
-            display: flex;
-            align-items: center;
-            margin: 0.7rem 0px -0.5rem;
-            font-size: .9rem;
-            white-space: nowrap;
+        
+    }
+}
 
-            & i {
-                font-size: 1.3rem;
-                margin-right: .5rem;
 
-                &.fa-caret-up {
-                    color: #2BB224;
-                }
-                &.fa-minus {
-                    color: #cda324;
-                    font-size: 1.2em;
-                }
-                &.fa-caret-down {
-                    color: #B22424;
-                }
-            }
+.card.grey .card-body p.report-title {
+    font-size: 15px !important;
+    font-family: 'Poppins' !important;
+}
+
+.progress-indicator {
+    display: flex;
+    align-items: center;
+    font-size: .9rem;
+    white-space: nowrap;
+
+    & i {
+        font-size: 1.3rem;
+        margin-left: .5rem;
+
+        &.fa-caret-up {
+            color: #2BB224;
+        }
+        &.fa-minus {
+            color: #cda324;
+            font-size: 1.2em;
+        }
+        &.fa-caret-down {
+            color: #B22424;
         }
     }
 }
@@ -382,9 +447,10 @@ table td a:hover {
   }
 
 
+
 .badge {
     text-align: center;
-    border-radius: 10px;
+    border-radius: 3px;
     font-size: 13px !important;
     font-weight: normal;
     height: 30px;
@@ -464,7 +530,7 @@ table {
 
             .badge {
                 text-align: center;
-                border-radius: 10px;
+                border-radius: 3px;
                 font-size: 12px !important;
                 padding: 0 10px;
                 font-weight: normal;

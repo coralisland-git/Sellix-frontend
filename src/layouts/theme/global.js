@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-    h1, h2, h3, h4, h5, p, label, span:not(.badge):not(.text-red):not(.text-green), a, th, td, input, select, textarea, .Select-placeholder {
+    h1, h2, h3, h4, h5, p, label, span:not(.badge):not(.small-badge):not(.text-red):not(.text-green), a, th, td, input, select, textarea, .Select-placeholder {
         color: ${({ theme }) => theme.text} !important;
     }
 
@@ -69,6 +69,11 @@ export const GlobalStyles = createGlobalStyle`
         // background: ${({ theme }) => theme.cardBody};
     }
 
+    .border-right,
+    .border-bottom {
+        border-color: ${({ theme }) => theme.borderRight} !important;
+    }
+
     .bitcoin-paying-screen .top .btc-address,
     .searchbar .header-search-input,
     table tbody td .badge-normal,
@@ -115,11 +120,13 @@ export const GlobalStyles = createGlobalStyle`
         // border: 1px solid ${({ theme }) => theme.cardBody} !important;
     }
 
-    .dashboard-screen .card.grey .card-body h3,
+    .dashboard-screen .card .card-body h3,
     .analytics-screen .card.grey .card-body h3 {
         color: ${({ theme }) => theme.text} !important;
     }
 
+    .admin-container .sidebar,
+    .settings-sidebar,
     .card.grey .card-body {
         background: ${({ theme }) => theme.cardBody} !important;
     }
@@ -128,6 +135,11 @@ export const GlobalStyles = createGlobalStyle`
     .admin-container .app-header .dropdown-item {
         background: ${({ theme }) => theme.dropdownColor} !important;
         color: ${({ theme }) => theme.text};
+    }
+
+    .admin-container footer {
+        background-color: ${({ theme }) => theme.shopContainerBackground} !important;
+        background: ${({ theme }) => theme.shopContainerBackground} !important;
     }
 
     .app-header .navbar-nav .dropdown-menu:after {

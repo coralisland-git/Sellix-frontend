@@ -10,7 +10,7 @@
   border-top: none !important;
   padding: 30px 20px!important;
   background-color: white !important;
-  border-radius: 4px !important;
+  border-radius: 3px !important;
   border-bottom: none !important;
   margin-bottom: 30px;
   line-height: 1.5;
@@ -89,19 +89,19 @@
             background-color: #a6a4b4;
             color: #613BEA !important;
             transition: all .3s ease;
-            border-radius: 8px !important;
+            border-radius: 3px !important;
           }
         }
       }
 
       &:first-child {
         .page-link {
-          border-radius: 8px !important;
+          border-radius: 3px !important;
         }
       }
 
       .page-link {
-        border-radius: 8px !important;
+        border-radius: 3px !important;
         font-size: 13px;
         padding: .5rem .9rem;
         & span {

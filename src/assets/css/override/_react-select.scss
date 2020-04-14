@@ -86,7 +86,7 @@
     height: 45px !important;
     background-color: #FCFCFE !important;
     border: 1px solid #F5F5F5 !important;
-    border-radius: 10px !important;
+    border-radius: 3px !important;
 
       &:hover {
         box-shadow: none !important;
@@ -109,7 +109,7 @@
   &--multi {
     &.is-focused {
       box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
-      border-radius: 8px;
+      border-radius: 3px;
     }
 
     &.has-value {

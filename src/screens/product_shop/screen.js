@@ -119,9 +119,26 @@ class ShopProducts extends React.Component {
     })
   }
 
+
+  searchProducts(products) {
+    const { search_key } = this.state
+    const search_fields = ['title', 'stock']
+
+    const data = products.filter(product => {
+      for(let i=0; i<search_fields.length; i++)
+        if(product[search_fields[i]] && product[search_fields[i]].toLowerCase().includes(search_key.toLowerCase()))
+          return true
+      return false
+    })
+
+    return data
+  }
+
   render() {
-    const { loading, filter, search } = this.state
+    const { loading, filter, search_key } = this.state
     const { user_categories, user_products } = this.props
+
+    const all_products = search_key?this.searchProducts(user_products):user_products
 
     return (
       <div className="shop-product-screen">
@@ -129,19 +146,20 @@ class ShopProducts extends React.Component {
           <Card className="grey">
             <CardHeader>
               <Row>
-                <Col md={12} className="filter-button d-flex flex-wrap">
-                  <Button color={filter == 'all'?'primary':'white'} className="mr-2" disabled={loading}
-                    onClick={() => this.filterProduct('all')}>All</Button>
-                  <Button data-sellix-product="5e90cfd1969d2" type="submit" alt="Buy Now with Sellix.io">
-                    Buy Now
-                  </Button>
-                  {
-                    user_categories.map(category => 
-                      <Button key={category.uniqid} color={filter == category.uniqid?'primary':'white'} className="mr-2" disabled={loading}
-                        onClick={() => this.filterProduct(category.uniqid)}>{category.title}</Button>)
-                  }
-                </Col>
-                <Col md={12} className="mt-4 mb-2">
+                {
+                  user_categories.length !=0 && 
+                    <Col md={12} className="filter-button d-flex flex-wrap mb-4">
+                      <Button color={filter == 'all'?'primary':'white'} className="mr-2" disabled={loading}
+                        onClick={() => this.filterProduct('all')}>All</Button>
+                      {
+                        user_categories.map(category => 
+                          <Button key={category.uniqid} color={filter == category.uniqid?'primary':'white'} className="mr-2" disabled={loading}
+                            onClick={() => this.filterProduct(category.uniqid)}>{category.title}</Button>)
+                      }
+                    </Col>
+                }
+                
+                <Col md={12} className="mb-2">
                   <div className="d-flex justify-content-start">
                     <div className="searchbar white w-100">
                       <i className="fas fa-search"/>
@@ -165,11 +183,11 @@ class ShopProducts extends React.Component {
                 :
                   <Row>
                     {
-                      user_products.map((pro, index) => 
+                      all_products.map((pro, index) => 
                         <Col md={3} key={index}>
                           <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.uniqid)}>
                             <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
-                              style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, 
+                              style={{borderTopLeftRadius: 3, borderTopRightRadius: 3, 
                                       opacity: pro.image_attachment ? 1 : 0}}
                               alt=""
                               width="100%" height="150"/>
@@ -186,7 +204,7 @@ class ShopProducts extends React.Component {
                         </Col>
                       )
                     }
-                    {user_products.length == 0 && <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>}
+                    {all_products.length == 0 && <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>}
                   </Row>
               }
               

@@ -51,7 +51,9 @@ class ShopLayout extends React.Component {
       this.props.authActions.getSelfUser().catch(err => {
         this.props.authActions.logOut()
       })
-      this.props.commonActions.getGeneralUserInfo(this.props.match.params.username)
+      this.props.commonActions.getGeneralUserInfo(this.props.match.params.username).catch(e => {
+        window.location = "/404"
+      })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
@@ -118,7 +120,7 @@ class ShopLayout extends React.Component {
                           : <i className="fa fa-user-circle text-primary avatar-icon" style={{fontSize: 130}}/>
                         }
                     </div>
-                    <Card className="report-count mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" style={{width: 'fit-content'}}>
+                    <Card className="report-count mb-3 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" style={{width: 'fit-content'}}>
                         <span className="text-green mr-2">{user.feedback?user.feedback.positive:0}</span>
                         <span className=""/>
                         <span className="text-grey pl-2 pr-2">{user.feedback?user.feedback.neutral:0}</span>
@@ -127,7 +129,7 @@ class ShopLayout extends React.Component {
                     </Card>
                     <div>
                         <Nav className="d-flex flex-row justify-content-center">
-                            <NavItem className="px-3" active={pathname == `/u/${userId}`}>
+                            <NavItem className="px-3" active={pathname == `/u/${userId}` || pathname.includes(`u/${userId}/category`)}>
                                 <NavLink to={`/u/${userId}`} className="nav-link" >Products</NavLink>
                             </NavItem>
                             <NavItem className="px-3" active={pathname == `/u/${userId}/contact`}>

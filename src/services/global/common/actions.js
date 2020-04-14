@@ -55,7 +55,9 @@ export const getGeneralUserInfo = (username) => {
           payload: res.data
         })
         // return res
-      } else throw res
+      } else {
+        throw res
+      }
     }).catch(err => {
       throw err
     })

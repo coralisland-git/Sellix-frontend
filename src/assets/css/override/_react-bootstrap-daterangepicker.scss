@@ -7,7 +7,7 @@
   align-items: center;
   color: #A7A5B4;
   padding: 0 30px 0 20px;
-  border-radius: 10px;
+  border-radius: 3px;
   height: 45px;
   background-color: #FCFCFE;
   border: 1px solid #F5F5F5;
@@ -36,7 +36,7 @@
 
 div.daterangepicker {
   border: none;
-  border-radius: 4px !important;
+  border-radius: 3px !important;
   box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2), 0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12) !important;
   margin-top: .8rem;
   background: #e8e1ff;
@@ -102,13 +102,13 @@ div.daterangepicker {
         border-radius: 0 !important;
 
         &:first-child {
-          border-top-left-radius: 4px !important;
-          border-top-right-radius: 4px !important;
+          border-top-left-radius: 3px !important;
+          border-top-right-radius: 3px !important;
         }
 
         &:last-child {
-          border-bottom-left-radius: 4px !important;
-          border-bottom-right-radius: 4px !important;
+          border-bottom-left-radius: 3px !important;
+          border-bottom-right-radius: 3px !important;
         }
 
         &:hover {
@@ -253,7 +253,7 @@ div.daterangepicker {
             border-bottom-right-radius: 0 !important;
           }
           &.start-date.active.end-date.available {
-            border-radius: 4px !important;
+            border-radius: 3px !important;
           }
           &.end-date.active {
             border-top-left-radius: 0 !important;
@@ -268,7 +268,7 @@ div.daterangepicker {
             background-color: #201d3c;
             color: #fff !important;
             font-weight: bold;
-            border-radius: 4px !important;
+            border-radius: 3px !important;
 
             &:hover {
               background-color: #1d183dcc;
@@ -325,14 +325,14 @@ div.daterangepicker {
 
   .drp-buttons {
     border-color: #1c173d;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 
     .btn {
       margin-left: 1rem;
       padding: 0 20px;
       min-height: 40px;
-      border-radius: 8px !important;
+      border-radius: 3px !important;
 
       &.cancelBtn {
         margin-left: 2rem;

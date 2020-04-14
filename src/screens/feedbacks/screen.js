@@ -13,6 +13,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import StarRatings from 'react-star-ratings';
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
+import ReactTimeAgo from 'react-time-ago'
 
 import {getFeedbacks} from './actions'
 import './style.scss'
@@ -100,15 +101,7 @@ class Feedbacks extends React.Component {
   renderTime(cell, row) {
 
     const formatDate = (timestamp) => {
-      var newDate = (Date.now() - (+timestamp * 1000)) / (3600 * 24 * 1000)
-      if(newDate > 0){
-        if(newDate === 1){
-          newDate = `${newDate.toFixed(0)} day ago`
-        }else{
-          newDate = `${newDate.toFixed(0)} days ago`
-        }
-      }
-      return newDate
+      return <ReactTimeAgo date={timestamp*1000/1} locale="en"/>
     }
     if (
       row.created_at
