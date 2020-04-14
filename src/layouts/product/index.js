@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import { Container } from 'reactstrap'
 import {
   AppHeader,
+  AppFooter
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider, createGlobalStyle  } from 'styled-components';
@@ -127,9 +128,11 @@ class DefaultLayout extends React.Component {
                     </Suspense>
                   </Container>
                 </div>
-                <p className="text-center text-grey footer-report pb-4">
-                  Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
-                </p>
+                <AppFooter>
+                  <p className="text-center text-grey footer-report py-4 m-0">
+                      Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
+                  </p>
+                </AppFooter>
             </div>
           </div>
       </ThemeProvider>

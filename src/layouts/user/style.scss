@@ -48,6 +48,14 @@
     }
   }
 
+
+  footer {
+    background: none;
+    border-top: none;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
   .breadcrumb {
     border-bottom: none;
     border-radius: 3px;
@@ -56,8 +64,6 @@
   .app-footer {
     border-top: none;
     margin-left: 0 !important;
-    background-color: transparent;
-    background: transparent !important;
     text-align: center;
     .footer-logo {
       max-width: 100px;

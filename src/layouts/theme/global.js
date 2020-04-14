@@ -137,6 +137,11 @@ export const GlobalStyles = createGlobalStyle`
         color: ${({ theme }) => theme.text};
     }
 
+    .admin-container footer {
+        background-color: ${({ theme }) => theme.shopContainerBackground} !important;
+        background: ${({ theme }) => theme.shopContainerBackground} !important;
+    }
+
     .app-header .navbar-nav .dropdown-menu:after {
         border-bottom: 10px solid ${({ theme }) => theme.dropdownColor} !important;
     }

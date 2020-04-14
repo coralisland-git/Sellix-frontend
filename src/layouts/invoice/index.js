@@ -6,11 +6,8 @@ import { bindActionCreators } from 'redux'
 
 import { Container } from 'reactstrap'
 import {
-  AppAside,
-  AppBreadcrumb,
+  AppFooter,
   AppHeader,
-  AppSidebar,
-  AppSidebarNav,
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider, createGlobalStyle  } from 'styled-components';
@@ -109,7 +106,7 @@ class DefaultLayout extends React.Component {
                 </Suspense>
               </AppHeader>
               
-              <div className="app-body mt-4 mb-5 pt-5">
+              <div className="app-body mt-4 pt-5">
                   <Container className="p-0 pt-3" fluid>
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
@@ -131,9 +128,11 @@ class DefaultLayout extends React.Component {
                     </Suspense>
                   </Container>
                 </div>
-                <p className="text-center text-grey footer-report pb-4">
-                  Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
-                </p>
+                <AppFooter>
+                  <p className="text-center text-grey footer-report py-4 m-0">
+                      Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
+                  </p>
+                </AppFooter>
             </div>
           </div>
       </ThemeProvider>
