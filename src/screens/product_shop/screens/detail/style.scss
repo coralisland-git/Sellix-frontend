@@ -49,7 +49,7 @@
   .paypal-instant {
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
-    border-radius: 5px;
+    border-radius: 3px;
     // width: 230px;
     margin: 0 auto;
     font-size: 14px;
@@ -70,7 +70,7 @@
       height: 25px;
       min-height: 25px;
       border: none !important;
-      border-radius: 5px !important;
+      border-radius: 3px !important;
       background: #D6E6FF;
       color: #27346A !important;
       font-size: 10px !important;
@@ -80,8 +80,8 @@
 
   .stock-info {
     background-color: #E4D6FF;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 
     .bold {
       font-family: 'Poppins-SemiBold';

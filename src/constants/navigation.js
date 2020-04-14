@@ -38,7 +38,7 @@ export const mainNavigation =  {
     {
       name: 'Analytics',
       url: `/dashboard/${user}/analytics`,
-      icon: 'fas fa-area-chart',
+      icon: 'fas fa-bar-chart',
       children: [
         {
           name: 'All Analytics',

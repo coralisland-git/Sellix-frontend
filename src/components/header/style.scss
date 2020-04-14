@@ -9,6 +9,11 @@
   }
 }
 
+
+.app-header {
+  border-bottom: 1px solid #f6f4ff;
+}
+
 .app-header .navbar-nav .dropdown-menu:before {
   box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 3px 3px -2px rgba(0, 0, 0, 0.12) !important;
   border: none !important;
@@ -42,13 +47,25 @@
 }
 
 .navbar-brand { 
-  width: 106px;
-  height: 25x;
-  margin-right: 10% !important;
+  width: 211px !important;
+
+  margin-right: 7% !important;
+  height: 100% !important;
+  justify-content: left !important;
+  margin-left: 10px;
+
+  img {
+    width: 83px;
+    height: auto;
+  }
 
   @media (max-width: 991.98px) {
     top: 10px !important;
   }
+}
+
+.navbar-brand.border {
+  border-right: 1px solid #f6f4ff;
 }
 
 .user-name {
@@ -88,7 +105,7 @@
   .header-search-input {
     height: 45px !important;
     background-color: #F6F4FF !important;
-    border-radius: 5px !important;
+    border-radius: 3px !important;
     border: none !important;
     font-family: 'Poppins';
     font-size: 16px !important;
