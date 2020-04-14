@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const DATE_RANGES =  {
   'last-24hours': [moment().subtract(1, 'days'), moment(), 'daily'],
-  'total': [moment().startOf(99, 'years'), moment(), 'yearly'],
+  'total': [moment(new Date('2019-01-01')), moment(), 'yearly'],
   'this-month': [moment().startOf('month'), moment().endOf('month'), 'daily'],
   'this-year': [moment().startOf('year'), moment(), 'monthly'],
   'last-30days': [moment().subtract(29, 'days'), moment(), 'daily'],
