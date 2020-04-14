@@ -69,7 +69,7 @@ class Home extends React.Component {
           </div>
         <div className="section pt-5 pb-5 text-center">
           <Container className="home-container" fluid>
-            <h3>E-commerce, Your Way!</h3>
+            <h3>Start selling with Sellix</h3>
             <p className="large">
               Put the ability to create a full customizable online storefront right at your fingertips
             </p>

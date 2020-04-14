@@ -61,8 +61,6 @@ class Header extends Component {
   render() {
     const { user, children, theme, is_authed, isShop, ...attributes } = this.props
     const { notifications } = user || {}
-  
-  
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />

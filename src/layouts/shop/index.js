@@ -51,7 +51,9 @@ class ShopLayout extends React.Component {
       this.props.authActions.getSelfUser().catch(err => {
         this.props.authActions.logOut()
       })
-      this.props.commonActions.getGeneralUserInfo(this.props.match.params.username)
+      this.props.commonActions.getGeneralUserInfo(this.props.match.params.username).catch(e => {
+        window.location = "/404"
+      })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
