@@ -11,6 +11,10 @@ import {
 
 const user = window.localStorage.getItem('userId')
 
+const RedirectToLogin = props => {
+  window.location = "/auth/login"
+}
+
 const mainRoutes = [
   // Settings
   { path: `/settings`,  name: 'SettingsLayout', component: SettingsLayout },
@@ -25,6 +29,9 @@ const mainRoutes = [
 
   // User
   { path: `/dashboard/${user}`, name: 'UserLayout', component: UserLayout },
+
+  // Wrong user - redirect to dashboard
+  { path: `/dashboard/`, name: 'WrongUser', component: RedirectToLogin },
 
   // Auth 
   { path: '/auth', name: 'AuthLayout', component: AuthLayout },

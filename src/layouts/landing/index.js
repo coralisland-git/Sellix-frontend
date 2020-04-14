@@ -150,19 +150,21 @@ class LandingLayout extends React.Component {
                     </header>
 
                 <Router>
-                {
-                    landingRoutes.map((prop, key) => {
-                    if (prop.redirect)
-                        return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                    return (
-                        <Route
-                          path={prop.path}
-                          component={prop.component}
-                          key={key}
-                        />
-                    )
-                    })
-                }
+                            <Switch>
+                            {
+                                landingRoutes.map((prop, key) => {
+                                if (prop.redirect)
+                                    return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                                return (
+                                    <Route
+                                      path={prop.path}
+                                      component={prop.component}
+                                      key={key}
+                                    />
+                                )
+                                })
+                            }
+                            </Switch>
                 </Router>
 
                 <footer>

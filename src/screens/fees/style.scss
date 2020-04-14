@@ -8,9 +8,14 @@
         background-color: white;
         box-shadow: 0 4px 30px #969ad680;
         margin-bottom: 100px;
-        transition: transform 0.3s;
+        transition: transform 0.3s, height 0.3s;
         margin-top: -60px;
         height: 90%;
+        height: 365px !important;
+
+        &.show-more {
+          height: 410px !important;
+        }
         
         .method {
             background-color: #E4D6FF;

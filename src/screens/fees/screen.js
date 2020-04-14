@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Button,
@@ -39,7 +39,10 @@ class Fees extends React.Component {
       paypal: null,
       bitcoin: {},
       ethereum: {},
-      litecoin: {}
+      litecoin: {},
+
+      showMoreBtc: false,
+      showMoreLtc: false
     }
   }
 
@@ -64,7 +67,7 @@ class Fees extends React.Component {
   }
 
   render() {
-    const { isOpen, paypal, bitcoin, ethereum, litecoin, site_fee_percentage } = this.state
+    const { isOpen, paypal, bitcoin, ethereum, litecoin, site_fee_percentage, showMoreBtc, showMoreLtc } = this.state
 
     return (
       <div className="fees-screen">
@@ -96,8 +99,20 @@ class Fees extends React.Component {
                             </div>
                         </div>
                     </Col>
+                    <style>
+                      {`
+                        .btn-read-more {
+                          padding: 5px;
+                          border: none !important;
+                          font-size: 12px !important;
+                          height: 10px !important;
+                          display: inline-block;
+                          box-shadow: none !important;
+                        }
+                      `}
+                    </style>
                     <Col md={3}>
-                        <div className="payment-card">
+                        <div className={"payment-card "+ (showMoreBtc && "show-more")}>
                             <div className="method">
                                 <h4 className="mt-4">Bitcoin</h4>
                                 <img className="service-img" src={service2}/>
@@ -109,14 +124,19 @@ class Fees extends React.Component {
                                 <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
                                     <b>{bitcoin.site_fee_low_price || 0} (${bitcoin.site_fee_low_price_usd || 0})</b>
                                 </p>
-                                <p className="small1 text-primary">
-                                if the order is less than ${bitcoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
-                                </p>
+                                <Button className="btn-read-more" onClick={() => this.setState({ showMoreBtc: !this.state.showMoreBtc })}>
+                                  read {showMoreBtc ? "less ▲" : "more ▼"}
+                                </Button>
+                                <Collapse isOpen={showMoreBtc}>
+                                  <p className="small1 text-primary">
+                                  if the order is less than ${bitcoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                                  </p>
+                                </Collapse>
                             </div>
                         </div>
                     </Col>
                     <Col md={3}>
-                        <div className="payment-card">
+                        <div className={"payment-card " + (showMoreLtc && "show-more")}>
                             <div className="method">
                                 <h4 className="mt-4">Litecoin</h4>
                                 <img className="service-img" src={service3}/>
@@ -128,9 +148,14 @@ class Fees extends React.Component {
                                 <p className="small1 text-primary">Sellix Fees: <img src={service3} width="25" height="25"/>
                                     <b>{litecoin.site_fee_low_price || 0} (${litecoin.site_fee_low_price_usd || 0})</b>
                                 </p>
-                                <p className="small1 text-primary">
-                                if the order is less than ${litecoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
-                                </p>
+                                <Button className="btn-read-more" onClick={() => this.setState({ showMoreLtc: !this.state.showMoreLtc })}>
+                                  read {showMoreLtc ? "less ▲" : "more ▼"}
+                                </Button>
+                                <Collapse isOpen={showMoreLtc}>
+                                  <p className="small1 text-primary">
+                                  if the order is less than ${litecoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                                  </p>
+                                </Collapse>
                             </div>
                         </div>
                     </Col>
