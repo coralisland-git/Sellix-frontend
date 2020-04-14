@@ -39,6 +39,9 @@
 .shop-container {
     .report-count {
         justify-content: center;
+        background-color: #F5F5FE;
+        border-radius: 3px !important;
+        padding: 5px 15px !important;
         span {
             font-size: 16px !important;
         }
@@ -87,6 +90,10 @@
       .nav-link {
           font-family: 'Poppins';
           font-size: 16px !important;
+          background-color: #F5F5FE;
+          border-radius: 3px !important;
+          width: 110px;
+          text-align: center;
       }
 
     .nav-link.active {
@@ -95,9 +102,8 @@
 
     .nav-item.active {
         .nav-link {
-            font-family: 'Poppins-SemiBold';
-            font-size: 18px !important;
-            color: #613BEA !important;
+            color: white !important;
+            background-color: #613BEA;
         }
     }
     header {

@@ -11,9 +11,12 @@
 
   .filter-button {
     button {
-      height: 45px !important;
+      min-height: 38px !important;
       font-size: 18px !important;
-      font-family: 'Poppins-SemiBold' !important;
+      font-family: 'Poppins-SemiBold' !important; 
+    }
+    .btn-white {
+      color: #613BEA !important;
     }
   }
 
@@ -29,10 +32,9 @@
   // }
 
   button {
-    width: 200px;
-    padding: 0 !important;
+    min-width: 150px;
+    padding: 0 20px !important;
     margin-bottom: 5px;
-
   }
 
   h5 {
