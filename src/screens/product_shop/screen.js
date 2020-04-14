@@ -132,6 +132,9 @@ class ShopProducts extends React.Component {
                 <Col md={12} className="filter-button d-flex flex-wrap">
                   <Button color={filter == 'all'?'primary':'white'} className="mr-2" disabled={loading}
                     onClick={() => this.filterProduct('all')}>All</Button>
+                  <Button data-sellix-product="5e90cfd1969d2" type="submit" alt="Buy Now with Sellix.io">
+                    Buy Now
+                  </Button>
                   {
                     user_categories.map(category => 
                       <Button key={category.uniqid} color={filter == category.uniqid?'primary':'white'} className="mr-2" disabled={loading}
