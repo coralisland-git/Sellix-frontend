@@ -489,7 +489,7 @@ class OrderDetail extends React.Component {
                               <Row>
                                 <Col lg={12}>
                                   {
-                                    order.crypto_transactions && order.crypto_transactions.map(trans => 
+                                    ((order.crypto_transactions && order.crypto_transactions.length > 0) ? order.crypto_transactions : [undefined]).map(trans => 
                                       <div className="d-info">
                                         <p className="d-addr">
                                           <label>Address:</label> <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
@@ -498,7 +498,7 @@ class OrderDetail extends React.Component {
                                           {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
                                         </p>
                                         <p className="hash">
-                                          <label>Amount:</label> {trans.crypto_amount} 
+                                          <label>Amount:</label> {trans !== undefined ? trans.crypto_amount : order.crypto_amount} 
                                         </p>
                                       </div>
                                     )
@@ -506,25 +506,27 @@ class OrderDetail extends React.Component {
                                 </Col>
                               </Row>
                             </Col>
-                            <Col lg={12}>
-                              <Label className="title">Transactions</Label>
-                              <Row>
-                                <Col lg={12}>
-                                  {
-                                    order.crypto_transactions && order.crypto_transactions.map(trans => 
-                                      <div className="d-flex">
-                                        <p className="hash">
-                                          {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
-                                          {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
-                                          {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
-                                          {order.gateway == 'ethereum' && <a href={`https://etherscan.io/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
-                                        </p>
-                                      </div>
-                                    )
-                                  }
-                                </Col>
-                              </Row>
-                            </Col>
+                            {
+                              !["0", "2"].includes(order.status) && <Col lg={12}>
+                                <Label className="title">Transactions</Label>
+                                <Row>
+                                  <Col lg={12}>
+                                    {
+                                      order.crypto_transactions && order.crypto_transactions.map(trans => 
+                                        <div className="d-flex">
+                                          <p className="hash">
+                                            {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                            {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                            {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                            {order.gateway == 'ethereum' && <a href={`https://etherscan.io/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                          </p>
+                                        </div>
+                                      )
+                                    }
+                                  </Col>
+                                </Row>
+                              </Col>
+                            }
                             {
                               order.crypto_transactions && order.crypto_transactions.length == 1 && order.crypto_payout_transaction && (
                                 <Col lg={12}>
