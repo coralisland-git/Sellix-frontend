@@ -1,7 +1,8 @@
 import {
     PaypalPaying,
     Invoice,
-    ShopProductDetail
+    ShopProductDetail,
+    EmbededPayment
   } from 'screens'
   
   const paymentRoutes = [
@@ -19,6 +20,11 @@ import {
       path: '/payment/checkout/:id',
       name: 'ShopProductDetail',
       component: ShopProductDetail.screen
+    },
+    {
+      path: '/payment/embeded/:id',
+      name: 'EmbededPayment',
+      component: EmbededPayment.screen
     }
   ]
   

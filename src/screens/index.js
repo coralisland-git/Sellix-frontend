@@ -57,6 +57,7 @@ import Billings from './billings'
 
 import GeneralSettings from './general_settings'
 import Customization from './customization'
+import EmbededPayment from './embeded_payment'
 
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
@@ -124,5 +125,7 @@ export {
   GeneralSettings,
   Notification,
   Customization,
-  EditBlacklist
+  EditBlacklist,
+
+  EmbededPayment
 }
