@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import NumberFormat from 'react-number-format';
 import {
   Card,
   CardBody,
@@ -29,17 +30,16 @@ const Progress = ({ progress, isPositive, is24 }) => {
   if(is24) {
     return (
         <div className={'progress-indicator'} >
+          {progress != 0 ?
+             (isPositive ?
+              <span>+<b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span> :
+              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>) :
+              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>
+          }
           {
             progress != 0 ? 
               <i className={`fas fa-caret-${isPositive ? 'up' : 'down'}`} />:
               <i className={`fa fa-minus`} />
-          }
-          
-          {progress != 0 ?
-             (isPositive ?
-              <span>+<b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span> :
-              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span>) :
-              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span>
           }
         </div>
     )
@@ -148,6 +148,7 @@ class Analytics extends React.Component {
       <div className="analytics-screen mt-4">
         <div className="animated fadeIn">
           <Card>
+            
             <CardBody>
               <div className="flex-wrapper align-items-center">
                 <h1 className="title">Analytics</h1>
@@ -168,36 +169,81 @@ class Analytics extends React.Component {
                   <Col lg={3}>
                     <Card className="grey">
                       <CardBody className="p-4">
-                        <h3 className="text-primary">${totalRevenue}</h3>
-                        <p className="report-title">Revenue</p>
-                        <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
+                        <p className="report-title mb-4">Revenue</p>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <NumberFormat value={totalRevenue} 
+                            displayType={'text'} 
+                            thousandSeparator={true} 
+                            prefix={'$'} 
+                            renderText={value => <h3 className="text-primary mb-0">{value}</h3>} />
+
+                          <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
+                        </div>
+                        <div class="progress-xs mt-3 progress">
+                          <div 
+                            className={`progress-bar ${revenueProgress>0?'bg-success':(revenueProgress==0?'bg-warning':'bg-danger')}`} 
+                            role="progressbar" 
+                            style={{width: `${revenueProgress==0?1:Math.abs(revenueProgress)}%`}}
+                            aria-valuemin="0" 
+                            aria-valuemax="100"></div>
+                        </div>
                       </CardBody>
                     </Card>
                   </Col>
                   <Col lg={3}>
                     <Card className="grey">
                       <CardBody className="p-4">
-                        <h3 className="text-primary">{totalOrders}</h3>
-                        <p className="report-title">Orders</p>
-                        <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
+                        <p className="report-title mb-4">Orders</p>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <h3 className="text-primary mb-0">{totalOrders}</h3>
+                          <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
+                        </div>
+                        <div class="progress-xs mt-3 progress">
+                          <div 
+                            className={`progress-bar ${ordersProgress>0?'bg-success':(ordersProgress==0?'bg-warning':'bg-danger')}`} 
+                            role="progressbar" 
+                            style={{width: `${ordersProgress==0?1:Math.abs(ordersProgress)}%`}}
+                            aria-valuemin="0" 
+                            aria-valuemax="100"></div>
+                        </div>
                       </CardBody>
                     </Card>
                   </Col>
                   <Col lg={3}>
                     <Card className="grey">
                       <CardBody className="p-4">
-                        <h3 className="text-primary">{totalViews}</h3>
-                        <p className="report-title">Views</p>
-                        <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
+                        <p className="report-title mb-4">Views</p>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <h3 className="text-primary mb-0">{totalViews}</h3>
+                          <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
+                        </div>
+                        <div class="progress-xs mt-3 progress">
+                          <div 
+                            className={`progress-bar ${viewsProgress>0?'bg-success':(viewsProgress==0?'bg-warning':'bg-danger')}`} 
+                            role="progressbar" 
+                            style={{width: `${viewsProgress == 0?1:Math.abs(viewsProgress)}%`}}
+                            aria-valuemin="0" 
+                            aria-valuemax="100"></div>
+                        </div>
                       </CardBody>
                     </Card>
                   </Col>
                   <Col lg={3}>
                     <Card className="grey">
                       <CardBody className="p-4">
-                        <h3 className="text-primary">{totalQueries}</h3>
-                        <p className="report-title">Queries</p>
-                        <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress>=0} />
+                        <p className="report-title mb-4">Queries</p>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <h3 className="text-primary mb-0">{totalQueries}</h3>
+                          <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress>=0} />
+                        </div>
+                        <div class="progress-xs mt-3 progress">
+                          <div 
+                            className={`progress-bar ${queriesProgress>0?'bg-success':(queriesProgress==0?'bg-warning':'bg-danger')}`} 
+                            role="progressbar" 
+                            style={{width: `${queriesProgress == 0?1:Math.abs(queriesProgress)}%`}}
+                            aria-valuemin="0" 
+                            aria-valuemax="100"></div>
+                        </div>
                       </CardBody>
                     </Card>
                   </Col>

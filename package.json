@@ -54,6 +54,7 @@
     "react-ladda": "^6.0.0",
     "react-list-drag-and-drop": "^0.9.2",
     "react-mde": "^8.2.0",
+    "react-number-format": "^4.4.1",
     "react-paypal-button-v2": "^2.6.1",
     "react-progress-button": "^5.1.0",
     "react-qr-code": "^0.1.3",

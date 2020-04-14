@@ -12,14 +12,17 @@
       background-color: white;
       // border-bottom: 1px solid grey;
     }
+
+    .navbar-brand {
+      margin-left: 0 !important;
+    }
     .navbar {
       
       max-width: 1252px;
       margin: 0 auto;
   
       .logo {
-        width: 88px !important;
-        height: 25px;
+        width: 83px !important;
       }
   
       .nav-item a{

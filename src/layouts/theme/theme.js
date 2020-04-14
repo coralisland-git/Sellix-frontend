@@ -13,11 +13,15 @@ export const lightTheme = {
     stockInfoBg: '#E4D6FF',
 
     shopSectionBackground: '#F5F5FE',
-    shopContainerBackground: '#fff'
+    shopContainerBackground: '#fff',
+
+    borderRight: '#f4f6ff'
 }
   
 export const darkTheme = {
     name: 'dark',
+
+    borderRight: '#221D3E',
 
     body: '#221D3E',
     cardBody: '#1D183D',

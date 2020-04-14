@@ -69,6 +69,11 @@ export const GlobalStyles = createGlobalStyle`
         // background: ${({ theme }) => theme.cardBody};
     }
 
+    .border-right,
+    .border-bottom {
+        border-color: ${({ theme }) => theme.borderRight} !important;
+    }
+
     .bitcoin-paying-screen .top .btc-address,
     .searchbar .header-search-input,
     table tbody td .badge-normal,
@@ -115,7 +120,7 @@ export const GlobalStyles = createGlobalStyle`
         // border: 1px solid ${({ theme }) => theme.cardBody} !important;
     }
 
-    .dashboard-screen .card.grey .card-body h3,
+    .dashboard-screen .card .card-body h3,
     .analytics-screen .card.grey .card-body h3 {
         color: ${({ theme }) => theme.text} !important;
     }

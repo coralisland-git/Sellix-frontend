@@ -67,7 +67,7 @@ class Header extends Component {
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
-          className="p-2"
+          className={`p-2 ${isShop?'':'border-right'}`}
           href="/"
           full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
         />

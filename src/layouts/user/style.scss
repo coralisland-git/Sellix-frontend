@@ -10,10 +10,9 @@
   background-color: #F6F4FF;
 
   .app-header {
-    border-bottom: none;
     // border-radius: 10px;
     height: 70px;
-    box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.2);
+    // box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.2);
     
     padding: 0 10px;
     // height: 100px;
@@ -51,7 +50,7 @@
 
   .breadcrumb {
     border-bottom: none;
-    border-radius: 5px;
+    border-radius: 3px;
   }
 
   .app-footer {
@@ -133,7 +132,6 @@
 
           .nav-link:hover,
           .nav-link.active {
-            font-weight: 600 !important;
             color: #613BEA;
             .nav-icon {
               color: #613BEA;

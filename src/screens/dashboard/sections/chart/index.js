@@ -9,47 +9,6 @@ import moment from 'moment'
 
 import './style.scss'
 
-const backOption = {
-  maintainAspectRatio: false,
-  // tooltips: {
-  //   enabled: false,
-  //   custom: CustomTooltips
-  // },
-  legend: {
-    display: false,
-    position: 'bottom'
-  },
-  elements: {
-    line: {
-      tension: 0, // disables bezier curves,
-    }
-  },
-  scales: {
-    xAxes: [{
-      gridLines: {
-        display: false,
-        borderDash: [2,3,4],
-      },
-      ticks: {
-      }
-    }],
-    yAxes: [{
-      ticks: {
-        beginAtZero: true
-      }
-    }]
-  },
-  layout: {
-    padding: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0
-    }
-  }
-}
-
-
 class RevenueChart extends Component {
 
   constructor(props) {
@@ -60,9 +19,7 @@ class RevenueChart extends Component {
 
 
   componentDidMount(){
-    // this.props.DashboardActions.getBankAccountTypes().then(firstAccount => {
-    //   this.getBankAccountGraphData(firstAccount, 12)
-    // })
+
   }
 
   getBankAccountGraphData(account, dateRange){
@@ -74,6 +31,47 @@ class RevenueChart extends Component {
 
     const labels = data.map(d => `${d.day_value || d.month || d.year}`)
     const values = data.map(d => d.revenue)
+
+
+    const backOption = {
+      maintainAspectRatio: false,
+      // tooltips: {
+      //   enabled: false,
+      //   custom: CustomTooltips
+      // },
+      legend: {
+        display: false,
+        position: 'bottom'
+      },
+      elements: {
+        line: {
+          tension: 0, // disables bezier curves,
+        }
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            display: false,
+            borderDash: [2,3,4],
+          },
+          ticks: {
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      layout: {
+        padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0
+        }
+      }
+    }
 
     const line = {
       labels:  labels,
@@ -104,7 +102,7 @@ class RevenueChart extends Component {
 
     return (
       <div className="animated fadeIn">
-        <Card className="bank-card">
+        <Card className="bank-card mb-0">
           <CardBody className="p-0">
             <div className="flex-wrapper">
               <div className="chart-wrapper" style={{width: '100%', height: this.props.height}}>
