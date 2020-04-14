@@ -173,7 +173,7 @@ class LandingLayout extends React.Component {
                         <div className="d-flex justify-content-between text-left flex-wrap">
                         <div className="mb-3">
                             <NavbarBrand className="p-0" href="/">
-                            <img src={sellix_logo} style={{width: 88, height: 25}}/>
+                            <img src={sellix_logo}/>
                             </NavbarBrand>
                             <p className="mt-2">Copyright © 2020, Sellix.io.</p>
                         </div>
