@@ -273,7 +273,7 @@ class EmbededPayment extends React.Component {
               </Col>
             </Row>
           :
-          <Row className="p-3">
+          <Row className="mt-4">
             <Col lg={4} className="ml-auto mr-auto p-0">
               <div className="stock-info text-center">
                 <img src={sellixLogoIcon} className="logo"/>
@@ -281,7 +281,7 @@ class EmbededPayment extends React.Component {
                 <p className="text-primary text-center" style={{fontSize: 14}}>by CrackedTo</p>
                 <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</p>                
               </div>
-              <Card className="bg-white stock-stop">
+              <Card className="bg-white stock-stop mb-0">
                 {
                   gateway?
                     <div className="p-4 pt-2 pb-2 mb-2">

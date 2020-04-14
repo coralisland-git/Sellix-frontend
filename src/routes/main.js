@@ -3,6 +3,7 @@ import {
   UserLayout,
   ShopLayout,
   PaymentLayout,
+  EmbedLayout,
   SettingsLayout,
   InvoiceLayout,
   ProductLayout,
@@ -19,6 +20,7 @@ const mainRoutes = [
   { path: `/u/:username`, name: 'ShopLayout', component: ShopLayout },
 
 
+  { path: '/payment/embed', name: 'EmbedLayout', component: EmbedLayout },
   { path: '/payment', name: 'PaymentLayout', component: PaymentLayout },
   { path: '/invoice', name: 'InvoiceLayout', component: InvoiceLayout },
   { path: '/product', name: 'ProductLayout', component: ProductLayout },
