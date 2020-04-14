@@ -7,6 +7,7 @@ import {
   Row,
   Col
 } from 'reactstrap'
+import config from 'constants/config'
 
 import {
   RevenueChart,
@@ -23,7 +24,20 @@ import * as AnalyticsActions from './actions'
 import './style.scss'
 import { date } from 'yup'
 
+import { PAYMENT_ICONS } from '../invoice/screen'
 
+const CURRENCY_LIST = { 
+  'USD': '$',
+  'EUR': '€',
+  'AUD': '$',
+  'GBP': '£',
+  'JPY': '¥',
+  'CAD': '$',
+  'CHF': '₣',
+  'CNY': '¥',
+  'SEK': 'kr',
+  'NZD': '$'
+}
 
 const Progress = ({ progress, isPositive, is24 }) => {
   if(is24) {
@@ -114,7 +128,8 @@ class Analytics extends React.Component {
         ordersProgress: total.orders_count_progress || 0,
         viewsProgress: total.views_count_progress || 0,
         queriesProgress: total.queries_count_progress || 0,
-        chartData: res.data.analytics.daily
+        chartData: res.data.analytics.daily,
+        topData: res.data.top
       })
     }).finally(() => {
       this.setState({loading:false})
@@ -130,6 +145,12 @@ class Analytics extends React.Component {
     this.getAnalyticsData(date)
   }
 
+  gotoDetail = (e, id) => {
+    this.props.history.push({
+      pathname: `/product/${id}`
+    })
+  }
+
   render() {
     const {
       totalQueries, 
@@ -141,7 +162,8 @@ class Analytics extends React.Component {
       revenueProgress,
       ordersProgress,
       viewsProgress,
-      queriesProgress
+      queriesProgress,
+      topData
     } = this.state
 
     return (
@@ -233,6 +255,142 @@ class Analytics extends React.Component {
                     <ConverstionChart height="350px" data={chartData}/>
                   </Col>
                 </div>
+
+                <div className="chart row mt-2 mb-2">
+                  <Col lg={12}>
+                    <label>Top 3 Gateways by Orders</label>
+                    <hr/>
+                      <CardBody className="p-0">
+                        {
+                          loading ?
+                            <Row>
+                              <Col lg={12}>
+                                <Loader />
+                              </Col>
+                            </Row>
+                          :
+                            <Row>
+                              {
+                                topData && topData.gateways.map((gateway, index) => 
+                                  <Col md={3} key={index}>
+                                    <Card className="grey p-0">
+                                      <CardBody>
+                                        <img src={PAYMENT_ICONS[gateway.gateway]} 
+                                          style={{borderTopLeftRadius: 10, borderTopRightRadius: 10,
+                                                  objectFit: 'contain'}}
+                                          alt=""
+                                          width="100%" height="150"/>
+                                        <div className="p-3" style={{position: 'relative', top: '15px'}}>
+                                          <h5 className="mb-3 text-black">{gateway.gateway.toUpperCase()}</h5>
+                                          <div className="d-flex justify-content-between mt-3 mb-2">
+                                            <span className="stock">Orders: <span className="stock-size">
+                                            {gateway.counter}
+                                            </span></span>
+                                          </div>
+                                        </div>
+                                      </CardBody> 
+                                    </Card>
+                                  </Col>
+                                )
+                              }
+                              {topData && topData.products_by_revenue.length == 0 && <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>}
+                            </Row>
+                        }
+                        
+                      </CardBody>
+                  </Col>
+                </div>
+
+                <div className="chart row mt-2 mb-2">
+                  <Col lg={12}>
+                    <label>Top 3 Products by Revenue</label>
+                    <hr/>
+                      <CardBody className="p-0">
+                        {
+                          loading ?
+                            <Row>
+                              <Col lg={12}>
+                                <Loader />
+                              </Col>
+                            </Row>
+                          :
+                            <Row>
+                              {
+                                topData && topData.products_by_revenue.map((pro, index) => 
+                                  <Col md={3} key={index}>
+                                    <Card className="grey p-0" onClick={(e) => this.gotoDetail(e, pro.uniqid)} style={{cursor: 'pointer'}}>
+                                      <CardBody>
+                                        <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
+                                          style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, 
+                                                  opacity: pro.image_attachment ? 1 : 0, objectFit: 'contain'}}
+                                          alt=""
+                                          width="100%" height="150"/>
+                                        <div className="p-3"  style={{position: 'relative', top: '15px'}}>
+                                          <h5 className="mb-3 text-black">{pro.product}</h5>
+                                          <div className="d-flex justify-content-between mt-3 mb-2">
+                                            <span className="stock">Revenue: <span className="stock-size">
+                                            ${pro.revenue}
+                                            </span></span>
+                                          </div>
+                                        </div> 
+                                      </CardBody>
+                                    </Card>
+                                  </Col>
+                                )
+                              }
+                              {topData && topData.products_by_revenue.length == 0 && <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>}
+                            </Row>
+                        }
+                        
+                      </CardBody>
+                  </Col>
+                </div>
+
+                <div className="chart row mt-2 mb-2">
+                  <Col lg={12}>
+                    <label>Top 3 Products by Orders</label>
+                    <hr/>
+                      <CardBody className="p-0">
+                        {
+                          loading ?
+                            <Row>
+                              <Col lg={12}>
+                                <Loader />
+                              </Col>
+                            </Row>
+                          :
+                            <Row>
+                              {
+                                topData && topData.products_by_orders.map((pro, index) => 
+                                  <Col md={3} key={index}>
+                                    <Card className="grey p-0" onClick={(e) => this.gotoDetail(e, pro.uniqid)} style={{cursor: 'pointer'}}>
+                                      <CardBody>
+                                        <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
+                                          style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, 
+                                                  opacity: pro.image_attachment ? 1 : 0, objectFit: 'contain'}}
+                                          alt=""
+                                          width="100%" height="150"/>
+                                        <div className="p-3"  style={{position: 'relative', top: '15px'}}>
+                                          <h5 className="mb-3 text-black">{pro.product}</h5>
+                                          <div className="d-flex justify-content-between mt-3 mb-2">
+                                            <span className="stock">Orders: <span className="stock-size">
+                                            {pro.counter}
+                                            </span></span>
+                                          </div>
+                                        </div> 
+                                      </CardBody>
+                                    </Card>
+                                  </Col>
+                                )
+                              }
+                              {topData && topData.products_by_revenue.length == 0 && <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>}
+                            </Row>
+                        }
+                        
+                      </CardBody>
+                  </Col>
+                </div>
+
                 {/* <div className="chart row mt-2 mb-2">
                   <Col lg={12}>
                     <label>Revenue by Country</label>

@@ -48,7 +48,7 @@ const CURRENCY_LIST = {
 }
 
 
-const PAYMENT_ICONS = {
+export const PAYMENT_ICONS = {
   paypal: paypalIcon,
   bitcoin: bitcoinIcon,
   litecoin: litecoinIcon,
