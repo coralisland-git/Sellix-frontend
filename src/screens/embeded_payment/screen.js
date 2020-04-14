@@ -471,7 +471,7 @@ class EmbededPayment extends React.Component {
                                       onChange={(e) => {
                                         this.setState({optParam : PAYMENT_LABELS[option]})
                                       }}
-                                      selected={ optParam === PAYMENT_LABELS[option] }
+                                      checked={ optParam === PAYMENT_LABELS[option] }
                                     />
                                     <label className="custom-control-label" htmlFor={option}>
                                     </label>
