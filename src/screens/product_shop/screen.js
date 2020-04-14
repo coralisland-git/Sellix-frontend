@@ -159,7 +159,7 @@ class ShopProducts extends React.Component {
                     </Col>
                 }
                 
-                <Col md={12} className="mb-2">
+                <Col md={12} className="mb-3">
                   <div className="d-flex justify-content-start">
                     <div className="searchbar white w-100">
                       <i className="fas fa-search"/>
