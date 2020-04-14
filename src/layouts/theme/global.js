@@ -120,6 +120,8 @@ export const GlobalStyles = createGlobalStyle`
         color: ${({ theme }) => theme.text} !important;
     }
 
+    .admin-container .sidebar,
+    .settings-sidebar,
     .card.grey .card-body {
         background: ${({ theme }) => theme.cardBody} !important;
     }
