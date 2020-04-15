@@ -86,7 +86,7 @@ class ShopFeedback extends React.Component {
                                 <span className="badge badge-neutral" title="Neutral">Neutral <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false}/></span>)
                             }
                           </p>
-                          <p>{feedback.message}</p>
+                          <p style={{lineHeight: '15px'}}>{feedback.message}</p>
                           <div className="d-flex flex-row justify-content-between w-100">
                             <p><i className="fas fa-check feedback-checked"></i> Verified Purchase</p>
                             <p><ReactTimeAgo date={feedback.created_at*1000/1} locale="en"/></p>
