@@ -18,6 +18,7 @@ import {
   CommonActions
 } from 'services/global'
 import './style.scss'
+import ReactStarsRating from 'react-awesome-stars-rating';
 
 const mapStateToProps = (state) => {
   return ({
@@ -77,13 +78,14 @@ class ShopFeedback extends React.Component {
                     <Col lg={3}>
                       <Card className="">
                         <CardBody className="p-3 bg-white d-flex flex-column align-items-center justify-content-between">
-                          <p className="text-right w-100">{
-                            feedback.feedback == 'positive'?
-                              <span className="badge badge-like" title="Positive">Positive</span>:
+                          <p className="text-right w-100">
+                            {feedback.feedback == 'positive'?
+                              <span className="badge badge-like" title="Positive">Positive <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false}/></span>:
                               (feedback.feedback == 'negative'?
-                                <span className="badge badge-dislike" title="Negative">Negative</span>:
-                                <span className="badge badge-neutral" title="Neutral">Neutral</span>)
-                            }</p>
+                                <span className="badge badge-dislike" title="Negative">Negative <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false}/></span>:
+                                <span className="badge badge-neutral" title="Neutral">Neutral <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false}/></span>)
+                            }
+                          </p>
                           <p>{feedback.message}</p>
                           <div className="d-flex flex-row justify-content-between w-100">
                             <p><i className="fas fa-check feedback-checked"></i> Verified Purchase</p>

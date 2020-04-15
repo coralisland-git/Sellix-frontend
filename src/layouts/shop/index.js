@@ -52,7 +52,11 @@ class ShopLayout extends React.Component {
         this.props.authActions.logOut()
       })
       this.props.commonActions.getGeneralUserInfo(this.props.match.params.username).catch(e => {
-        window.location = "/404"
+        if(e.status == 404) {
+          if(window.location != "/404") {
+            window.location = "/404"
+          }
+        }
       })
       const toastifyAlert = (status, message) => {
         if (!message) {

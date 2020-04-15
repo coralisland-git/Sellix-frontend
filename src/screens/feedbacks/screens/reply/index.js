@@ -67,7 +67,7 @@ class ReplyToFeedback extends React.Component {
   }
 
   render() {
-    const currentFeedback = _.find(this.props.feedbacks, (feedback) => feedback.id === this.props.match.params.id)
+    const currentFeedback = _.find(this.props.feedbacks, (feedback) => feedback.uniqid === this.props.match.params.id)
     if (!currentFeedback) { return null }
     return (
       <div className="reply-screen mt-3">
@@ -110,7 +110,7 @@ class ReplyToFeedback extends React.Component {
                             className="pt-3 pb-3 "
                             rows={7}
                             placeholder="Reply to feedback"
-                            onChange={props.handleChange}
+                            onChange={e => props.setFieldValue('reply', e.target.value)}
                             value={props.values.reply}
                           />
                         </FormGroup>
