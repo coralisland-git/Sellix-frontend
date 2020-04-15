@@ -101,9 +101,9 @@ class ShopProducts extends React.Component {
 
   filterProduct(filter) {
     if(filter == 'all')
-      this.props.history.push(`/u/${this.props.match.params.username}`)
+      this.props.history.push(`/${this.props.match.params.username}`)
     else {
-      this.props.history.push(`/u/${this.props.match.params.username}/category/${filter}`)
+      this.props.history.push(`/${this.props.match.params.username}/category/${filter}`)
       this.setState({filter: filter, loading: true})
       this.props.commonActions.getUserProductsByCategory(filter).catch(err => {
         this.props.commonActions.tostifyAlert('error', err.error)

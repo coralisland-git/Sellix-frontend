@@ -129,14 +129,14 @@ class ShopLayout extends React.Component {
                     </Card>
                     <div>
                         <Nav className="d-flex flex-row justify-content-center">
-                            <NavItem className="px-3" active={pathname == `/u/${userId}` || pathname.includes(`u/${userId}/category`)}>
-                                <NavLink to={`/u/${userId}`} className="nav-link" >Products</NavLink>
+                            <NavItem className="px-3" active={pathname == `/${userId}` || pathname.includes(`u/${userId}/category`)}>
+                                <NavLink to={`/${userId}`} className="nav-link" >Products</NavLink>
                             </NavItem>
-                            <NavItem className="px-3" active={pathname == `/u/${userId}/contact`}>
-                                <NavLink to={`/u/${userId}/contact`} className="nav-link">Contact</NavLink>
+                            <NavItem className="px-3" active={pathname == `/${userId}/contact`}>
+                                <NavLink to={`/${userId}/contact`} className="nav-link">Contact</NavLink>
                             </NavItem>
-                            <NavItem className="px-3" active={pathname == `/u/${userId}/feedback`}>
-                                <NavLink to={`/u/${userId}/feedback`} className="nav-link">Feedback</NavLink>
+                            <NavItem className="px-3" active={pathname == `/${userId}/feedback`}>
+                                <NavLink to={`/${userId}/feedback`} className="nav-link">Feedback</NavLink>
                             </NavItem>
                         </Nav>
                     </div>

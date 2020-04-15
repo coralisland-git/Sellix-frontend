@@ -157,7 +157,7 @@ class Header extends Component {
                     Dashboard
                   </DropdownItem>
                   {
-                    !isShop && <DropdownItem onClick={() => this.props.history.push(`/u/${userId}`)}>
+                    !isShop && <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
                       Your Shop
                     </DropdownItem>
                   }
