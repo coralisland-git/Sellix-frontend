@@ -48,7 +48,7 @@ class Contact extends React.Component {
     this.props.createQuery({...values, username: this.props.match.params.username}).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
-        pathname: `/u/${user}/query/${res.data.uniqid}`
+        pathname: `/${user}/query/${res.data.uniqid}`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)

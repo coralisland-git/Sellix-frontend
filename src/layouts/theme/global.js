@@ -209,4 +209,12 @@ export const GlobalStyles = createGlobalStyle`
             background: ${theme.cardBody}
         }
     `}
+
+    .feedback-shop-screen .badge {
+        background: ${({ theme }) => theme.widgetBorder} !important;
+    }
+
+    .transparent-bg {
+        background: transparent !important;
+    }
 `

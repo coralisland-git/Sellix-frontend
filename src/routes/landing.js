@@ -3,6 +3,15 @@ import {
     Fees,
     Terms
   } from 'screens'
+import {
+  Contact,
+  Contacts,
+  ShopProducts,
+  ShopFeedback,
+  LeaveFeedback,
+  ShopProductDetail
+} from 'screens'
+
 import { NotFound } from 'components'
 
   
@@ -17,11 +26,11 @@ import { NotFound } from 'components'
       component: Terms,
       name: 'Terms'
     },
-    { path: '/:notexists', name: '404', component: NotFound },
     {
       path: '/',
       component: Home.screen,
-      name: 'Home'
+      name: 'Home',
+      exact: true
     },
   ]
   
