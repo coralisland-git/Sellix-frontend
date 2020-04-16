@@ -104,7 +104,7 @@ class ShopProductDetail extends React.Component {
       openCoupon: false,
       gateway: null,
       showPaymentOptions: false,
-      quantity: 1,
+      quantity: 0,
       paymentoptions: [],
       email: null,
       coupon_code: '',
@@ -112,6 +112,8 @@ class ShopProductDetail extends React.Component {
       custom_fields: {},
       product_info: {}
     }
+
+    this.getProductStock = this.getProductStock.bind(this)
   }
 
   handleSubmit(values) {
@@ -155,6 +157,17 @@ class ShopProductDetail extends React.Component {
     this.setState({
       gateway: opt
     })
+  }
+
+  getProductStock(product) {
+    if(product.type == 'file')
+      return product.file_stock == '-1'?'∞':product.file_stock
+    
+    if(product.type == 'serials')
+      return product.stock == '-1'?'∞':product.stock
+
+    if(product.type == 'service')
+      return product.service_stock == '-1'?'∞':product.service_stock
   }
 
   increaseCount() {
@@ -257,7 +270,7 @@ class ShopProductDetail extends React.Component {
                 <Row>
                   <Col md={4} className="left-bar">
                     <div className="d-sm-down-none">
-                      <Affix offsetTop={129}>
+                      <Affix offsetTop={100}>
                         <Card className="bg-white">
                         {
                           gateway?
@@ -278,7 +291,7 @@ class ShopProductDetail extends React.Component {
                                 })}>
                                   {props => (
                                     <Form onSubmit={props.handleSubmit}>
-                                      <FormGroup className="mb-5">
+                                      <FormGroup className="mb-3">
                                         <Label htmlFor="email">Email</Label>
                                         <Input
                                           type="text"
@@ -439,7 +452,7 @@ class ShopProductDetail extends React.Component {
                           <div className="d-flex justify-content-between p-2">
                             <span className="text-primary">Stock</span>
                             <span className="text-primary bold">
-                              {product_info.type == 'file'?(product_info.file_stock == '-1'?'∞':product_info.file_stock):(product_info.stock == '-1'?'∞':product_info.stock) || 0}
+                            {this.getProductStock(product_info)}
                             </span>
                           </div>
                           <div className="d-flex justify-content-between p-2">
@@ -471,7 +484,7 @@ class ShopProductDetail extends React.Component {
                                 })}>
                                   {props => (
                                     <Form onSubmit={props.handleSubmit}>
-                                      <FormGroup className="mb-5">
+                                      <FormGroup className="mb-3">
                                         <Label htmlFor="email">Email</Label>
                                         <Input
                                           type="text"
@@ -632,7 +645,7 @@ class ShopProductDetail extends React.Component {
                           <div className="d-flex justify-content-between p-2">
                             <span className="text-primary">Stock</span>
                             <span className="text-primary bold">
-                              {product_info.type == 'file'?(product_info.file_stock == '-1'?'∞':product_info.file_stock):(product_info.stock == '-1'?'∞':product_info.stock) || 0}
+                              {this.getProductStock(product_info)}
                             </span>
                           </div>
                           <div className="d-flex justify-content-between p-2">

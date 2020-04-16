@@ -62,6 +62,7 @@ class ShopProducts extends React.Component {
     this.initializeData = this.initializeData.bind(this)
     this.filterProduct = this.filterProduct.bind(this)
     this.gotoDetail = this.gotoDetail.bind(this)
+    this.getProductStock = this.getProductStock.bind(this)
   }
 
   componentDidMount () {
@@ -119,6 +120,16 @@ class ShopProducts extends React.Component {
     })
   }
 
+  getProductStock(product) {
+    if(product.type == 'file')
+      return product.file_stock == '-1'?'∞':product.file_stock
+    
+    if(product.type == 'serials')
+      return product.stock == '-1'?'∞':product.stock
+
+    if(product.type == 'service')
+      return product.service_stock == '-1'?'∞':product.service_stock
+  }
 
   searchProducts(products) {
     const { search_key } = this.state
@@ -202,7 +213,7 @@ class ShopProducts extends React.Component {
                               <div className="d-flex justify-content-between mt-1">
                                 <span className="price">{`${CURRENCY_LIST[pro.currency]}${pro.price_display}`}</span>
                                 <span className="stock">Stock: <span className="stock-size">
-                                {pro.type == 'file'?(pro.file_stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.file_stock):(pro.stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.stock) || 0}
+                                  {this.getProductStock(pro)}
                                 </span></span>
                               </div>
                             </div> 

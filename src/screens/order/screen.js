@@ -123,7 +123,7 @@ class Order extends React.Component {
   renderOrderTime(cell, row) {
     return (
       <div>
-        <p>{new moment(new Date(row.created_at*1000)).format('ddd MM')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
         <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
       </div>
     )  
