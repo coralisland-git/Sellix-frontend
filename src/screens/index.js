@@ -58,6 +58,7 @@ import Billings from './billings'
 import GeneralSettings from './general_settings'
 import Customization from './customization'
 import EmbededPayment from './embeded_payment'
+import EmbededInvoice from './embeded_invoice'
 
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
@@ -127,5 +128,6 @@ export {
   Customization,
   EditBlacklist,
 
-  EmbededPayment
+  EmbededPayment,
+  EmbededInvoice
 }
