@@ -15,7 +15,6 @@ import RLDD from 'react-list-drag-and-drop/lib/RLDD';
 import {
   CommonActions,
 } from 'services/global'
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { productCard } from "../product_shop/productCard"
 import VirtualDraggableGrid from 'react-virtual-draggable-grid';
 import { DragAndDropGrid } from './dragAndDropGrid'
