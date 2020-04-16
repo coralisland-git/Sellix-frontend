@@ -95,6 +95,10 @@ class EmbedLayout extends React.Component {
       zIndex: 1999
     }
 
+    if (this.props.location.pathname.indexOf("/payment/embed") > -1){
+      require('./extra.scss')
+    }
+
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
     
@@ -102,29 +106,27 @@ class EmbedLayout extends React.Component {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
           <div className="admin-container bg-white" style={{ marginTop: 25, borderRadius:10}}>
-            <div className="app">
-              <div className="">
-                <Container className="p-0" fluid>
-                  <Suspense fallback={Loading()}>
-                    <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                    <Switch>
-                      {
-                        paymentRoutes.map((prop, key) => {
-                          if (prop.redirect)
-                            return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                          return (
-                            <Route
-                              path={prop.path}
-                              component={prop.component}
-                              key={key}
-                            />
-                          )
-                        })
-                      }
-                    </Switch>
-                  </Suspense>
-                </Container>
-              </div>                
+            <div className="app-embed">
+              <Container className="p-0" fluid>
+                <Suspense fallback={Loading()}>
+                  <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                  <Switch>
+                    {
+                      paymentRoutes.map((prop, key) => {
+                        if (prop.redirect)
+                          return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                        return (
+                          <Route
+                            path={prop.path}
+                            component={prop.component}
+                            key={key}
+                          />
+                        )
+                      })
+                    }
+                  </Switch>
+                </Suspense>
+              </Container>
             </div>
           </div>
       </ThemeProvider>
