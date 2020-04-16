@@ -453,7 +453,8 @@ class ShopProductDetail extends React.Component {
                         <div className="stock-info p-2">
                           <div className="d-flex justify-content-between p-2">
                             <span className="text-primary">Seller</span>
-                            <span className="text-primary"><Link className="bold" to={`/${product_info.username}/`}>{product_info.username || ''}</Link></span>
+                            <span className="text-primary">
+                              <Link className="bold" to={`/${product_info.username}`}>{product_info.username || ''}</Link></span>
                           </div>
                           <div className="d-flex justify-content-between p-2">
                             <span className="text-primary">Stock</span>
@@ -646,7 +647,8 @@ class ShopProductDetail extends React.Component {
                         <div className="stock-info p-2">
                           <div className="d-flex justify-content-between p-2">
                             <span className="text-primary">Seller</span>
-                            <span className="text-primary bold">{product_info.username || ''}</span>
+                            <span className="text-primary bold">
+                              <Link className="bold" to={`/${product_info.username}`}>{product_info.username || ''}</Link></span>
                           </div>
                           <div className="d-flex justify-content-between p-2">
                             <span className="text-primary">Stock</span>

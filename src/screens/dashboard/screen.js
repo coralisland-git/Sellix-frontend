@@ -173,7 +173,7 @@ class Dashboard extends React.Component {
 
                               <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
                             </div>
-                            <div class="progress-xs mt-3 progress">
+                            <div className="progress-xs mt-3 progress">
                               <div 
                                 className={`progress-bar ${revenueProgress>0?'bg-success':(revenueProgress==0?'bg-warning':'bg-danger')}`} 
                                 role="progressbar" 
@@ -192,7 +192,7 @@ class Dashboard extends React.Component {
                               <h3 className="text-primary mb-0">{totalOrders}</h3>
                               <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
                             </div>
-                            <div class="progress-xs mt-3 progress">
+                            <div className="progress-xs mt-3 progress">
                               <div 
                                 className={`progress-bar ${ordersProgress>0?'bg-success':(ordersProgress==0?'bg-warning':'bg-danger')}`} 
                                 role="progressbar" 
@@ -211,7 +211,7 @@ class Dashboard extends React.Component {
                               <h3 className="text-primary mb-0">{totalViews}</h3>
                               <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
                             </div>
-                            <div class="progress-xs mt-3 progress">
+                            <div className="progress-xs mt-3 progress">
                               <div 
                                 className={`progress-bar ${viewsProgress>0?'bg-success':(viewsProgress==0?'bg-warning':'bg-danger')}`} 
                                 role="progressbar" 
@@ -230,7 +230,7 @@ class Dashboard extends React.Component {
                               <h3 className="text-primary mb-0">{totalQueries}</h3>
                               <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress>=0} />
                             </div>
-                            <div class="progress-xs mt-3 progress">
+                            <div className="progress-xs mt-3 progress">
                               <div 
                                 className={`progress-bar ${queriesProgress>0?'bg-success':(queriesProgress==0?'bg-warning':'bg-danger')}`} 
                                 role="progressbar" 
