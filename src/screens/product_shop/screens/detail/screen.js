@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import {
   Card,
@@ -20,9 +21,6 @@ import { Formik } from 'formik';
 import { Spin, Loader, Affix } from 'components'
 import * as Yup from "yup";
 import * as Showdown from "showdown";
-
-import shop_brand from 'assets/images/brand/shop_brand.png'
-
 
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
@@ -455,7 +453,7 @@ class ShopProductDetail extends React.Component {
                         <div className="stock-info p-2">
                           <div className="d-flex justify-content-between p-2">
                             <span className="text-primary">Seller</span>
-                            <span className="text-primary bold">{product_info.username || ''}</span>
+                            <span className="text-primary"><Link className="bold" to={`/${product_info.username}/`}>{product_info.username || ''}</Link></span>
                           </div>
                           <div className="d-flex justify-content-between p-2">
                             <span className="text-primary">Stock</span>
