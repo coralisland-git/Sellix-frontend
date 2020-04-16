@@ -191,3 +191,12 @@
   
     }
   }
+
+body {
+  background-color: inherit !important;
+  overflow: hidden;
+}
+
+.app {
+  min-height: auto !important;
+}
