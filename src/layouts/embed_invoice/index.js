@@ -87,14 +87,14 @@ class EmbedInvoiceLayout extends React.Component {
     if (this.props.location.pathname.indexOf("/ivembed") > -1){
       require('./extra.scss')
     }
-    
+
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
           <div className="admin-container bg-white" style={{ marginTop: 25, borderRadius:10}}>
-            <div className="app">              
+            <div className="app-embed">
               <div className="">
                   <Container className="p-0" fluid>
                     <Suspense fallback={Loading()}>
