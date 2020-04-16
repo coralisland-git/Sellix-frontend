@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class DefaultLayout extends React.Component {
+class EmbedLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -96,42 +96,35 @@ class DefaultLayout extends React.Component {
     }
 
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false    
+    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
+    
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
-          <div className="admin-container">
+          <div className="admin-container bg-white">
             <div className="app">
-              <AppHeader fixed>
-                <Suspense fallback={Loading()}>
-                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
-                </Suspense>
-              </AppHeader>
-              <div className="app-body mt-5 mb-5 pt-5">
-                  <Container className="p-0 pt-3" fluid>
-                    <Suspense fallback={Loading()}>
-                      <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                      <Switch>
-                        {
-                          paymentRoutes.map((prop, key) => {
-                            if (prop.redirect)
-                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                            return (
-                              <Route
-                                path={prop.path}
-                                component={prop.component}
-                                key={key}
-                              />
-                            )
-                          })
-                        }
-                      </Switch>
-                    </Suspense>
-                  </Container>
-                </div>
-                <p className="text-center text-grey footer-report pb-4">
-                  Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
-                </p>
+              <div className="">
+                <Container className="p-0 pt-3" fluid>
+                  <Suspense fallback={Loading()}>
+                    <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                    <Switch>
+                      {
+                        paymentRoutes.map((prop, key) => {
+                          if (prop.redirect)
+                            return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                          return (
+                            <Route
+                              path={prop.path}
+                              component={prop.component}
+                              key={key}
+                            />
+                          )
+                        })
+                      }
+                    </Switch>
+                  </Suspense>
+                </Container>
+              </div>                
             </div>
           </div>
       </ThemeProvider>
@@ -139,4 +132,4 @@ class DefaultLayout extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(EmbedLayout)
