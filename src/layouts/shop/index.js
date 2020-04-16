@@ -127,7 +127,7 @@ class ShopLayout extends React.Component {
                         <span className=""/>
                         <span className="text-red ml-2">{user.feedback?user.feedback.negative:0}</span>
                     </Card>
-                    <div>
+                    <div className="shop-navs">
                         <Nav className="d-flex flex-row justify-content-center">
                             <NavItem className="px-3" active={pathname == `/u/${userId}` || pathname.includes(`u/${userId}/category`)}>
                                 <NavLink to={`/u/${userId}`} className="nav-link" >Products</NavLink>
