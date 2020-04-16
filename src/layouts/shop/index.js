@@ -98,7 +98,9 @@ class ShopLayout extends React.Component {
 		const pathname = this.props.history.location.pathname
 
 		const { user } = this.props
-		const userId = this.props.match.params.username
+    const userId = this.props.match.params.username
+    
+    console.log(userId)
 
 		const theme =
 			window.localStorage.getItem('theme') || this.state.theme || 'light'
