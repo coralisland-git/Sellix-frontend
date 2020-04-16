@@ -54,13 +54,11 @@ class LeaveFeedback extends React.Component {
   }
 
   initializeData () {
-    this.props.commonActions.getUserFeedbacks(this.props.match.params.username).then(res => {
+    this.props.commonActions.getFeedbackByUniqid(this.props.match.params.id).then(res => {
       if (res.status === 200) {
-        var existingFeedback = res.data.feedback.filter(x => x.uniqid === this.props.match.params.id)
+        var existingFeedback = res.data.feedback
 
-        if(existingFeedback.length > 0) {
-          existingFeedback = existingFeedback[0]
-
+        if(existingFeedback) {
           if(!existingFeedback.score && existingFeedback.feedback) {
             existingFeedback.score = {
               'negative': 1,
@@ -78,6 +76,7 @@ class LeaveFeedback extends React.Component {
           })
 
         } else {
+          window.location = "/404"
           this.setState({
             loadingInitialValues: false
           })
