@@ -137,7 +137,7 @@ export const GlobalStyles = createGlobalStyle`
         color: ${({ theme }) => theme.text};
     }
 
-    .shop-container .nav-link {
+    .shop-container .shop-navs .nav-link {
         background-color: ${({ theme }) => theme.shopSectionBackground} !important;
     }
 
