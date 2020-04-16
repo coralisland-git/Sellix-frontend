@@ -101,10 +101,10 @@ class EmbedLayout extends React.Component {
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
-          <div className="admin-container bg-white">
+          <div className="admin-container bg-white" style={{ marginTop: 25, borderRadius:10}}>
             <div className="app">
               <div className="">
-                <Container className="p-0 pt-3" fluid>
+                <Container className="p-0" fluid>
                   <Suspense fallback={Loading()}>
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                     <Switch>
