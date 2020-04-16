@@ -31,6 +31,7 @@ import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
+import QRCode from 'react-qr-code'
 
 import './style.scss'
 
@@ -93,7 +94,7 @@ class EmbededInvoice extends React.Component {
 
 
   openQrCodeModal() {
-    this.setState({openQRModal: true})
+    this.setState({openQRModal: !this.state.openQRModal})
   }
 
   closeQrCodeModal() {
@@ -257,9 +258,7 @@ class EmbededInvoice extends React.Component {
               </Col>
             </Row>
           :
-              <div className="embeded-paying-screen">
-                <QRCodeModal openModal={openQRModal} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal.bind(this)}/>
-        
+              <div className="embeded-paying-screen">        
                 {invoice.status == 4 && 
                   <SweetAlert
                     info
@@ -275,8 +274,8 @@ class EmbededInvoice extends React.Component {
                   <div className="invoice-card ml-auto mr-auto p-0">
                     <div className="float-logo"><img src={sellix_logo} width="153" style={{marginTop:-23}}/></div>
                     
-                    <Card className="bg-white p-0 detail pt-3 mb-0">                        
-                      <div className="top p-4 pt-4 mt-3">
+                    <Card className="bg-white p-0 detail mt-3 mb-0">                        
+                      <div className="top pr-4 pl-4 pb-4">
                         <div className="d-flex justify-content-between align-items-center ">
                           <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
                           <span className="badge text-primary bold status invoice-timer" id="status">{this.setInvoiceStatus(invoice.status)}</span>
@@ -297,7 +296,11 @@ class EmbededInvoice extends React.Component {
                           <span className="text-grey">{invoice.product_id || ''}</span>
                           <span className="text-grey">{CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
                         </div>
-      
+                        { openQRModal && (
+                          <div className="text-center pb-1">
+                            <QRCode value={invoice.crypto_uri || ''} size={226}/>
+                          </div>
+                        )}
                         {
                           (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
                               <p className="text-grey bold mt-4 text-center">

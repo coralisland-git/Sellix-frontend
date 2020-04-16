@@ -15,16 +15,12 @@ import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
 import { paymentRoutes } from 'routes'
-import {
-  AuthActions,
+import {  
   CommonActions
 } from 'services/global'
 
 
 import {
-  Aside,
-  Header,
-  Footer,
   Loading
 } from 'components'
 
@@ -34,12 +30,10 @@ import { invoiceRoutes } from '../../routes';
 const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
-    is_authed: state.auth.is_authed
   })
 }
 const mapDispatchToProps = (dispatch) => {
-  return ({
-    authActions: bindActionCreators(AuthActions, dispatch),
+  return ({    
     commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
@@ -53,9 +47,6 @@ class EmbedInvoiceLayout extends React.Component {
   }
 
   componentDidMount () {
-      this.props.authActions.getSelfUser().catch(err => {
-        this.props.authActions.logOut()
-      })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
@@ -93,7 +84,7 @@ class EmbedInvoiceLayout extends React.Component {
       zIndex: 1999
     }
 
-    if (this.props.location.pathname.indexOf("/invoice/embed") > -1){
+    if (this.props.location.pathname.indexOf("/ivembed") > -1){
       require('./extra.scss')
     }
 

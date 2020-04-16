@@ -39,7 +39,6 @@ import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    user_products: state.common.user_products
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -133,7 +132,7 @@ class EmbededPayment extends React.Component {
     this.props.commonActions.createInvoice(data).then(res => {
       this.props.commonActions.tostifyAlert('success', 'Invoice is created successfully.')
       this.props.history.push({
-        pathname: `/invoice/embed/${res.data.invoice.uniqid}`
+        pathname: `/ivembed/${res.data.invoice.uniqid}`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
@@ -170,7 +169,7 @@ class EmbededPayment extends React.Component {
 
   increaseCount() {
     const { product_info } = this.state
-    if((product_info.type == 'serials' && product_info.quantity_max != -1 && this.state.quantity >= product_info.quantity_max) || 
+    if((product_info.type == 'serials' && product_info.quantity_max != -1 && this.state.quantity >= product_info.stock) || 
       (product_info.type == 'serials' && product_info.quantity_max == -1 && this.state.quantity >= product_info.stock)) {
       return true
     }

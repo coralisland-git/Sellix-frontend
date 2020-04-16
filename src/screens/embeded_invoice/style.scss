@@ -71,11 +71,12 @@
   .float-logo {
     text-align: center;
     z-index: 99;
-    position: relative;
-    margin-bottom: -20px;
+    position: relative;    
   }
 
   .detail {
     border-radius: 5px !important;
+    max-height: 90vh;
+    overflow-y: scroll;
   }
 }

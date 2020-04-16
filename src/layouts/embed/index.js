@@ -19,15 +19,11 @@ import { GlobalStyles } from 'layouts/theme/global'
 
 import { paymentRoutes } from 'routes'
 import {
-  AuthActions,
   CommonActions
 } from 'services/global'
 
 
 import {
-  Aside,
-  Header,
-  Footer,
   Loading
 } from 'components'
 
@@ -36,12 +32,10 @@ import './style.scss'
 const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
-    is_authed: state.auth.is_authed
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    authActions: bindActionCreators(AuthActions, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
@@ -55,9 +49,6 @@ class EmbedLayout extends React.Component {
   }
 
   componentDidMount () {
-      this.props.authActions.getSelfUser().catch(err => {
-        this.props.authActions.logOut()
-      })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
@@ -99,13 +90,12 @@ class EmbedLayout extends React.Component {
       require('./extra.scss')
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
+    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'    
     
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
-          <div className="admin-container bg-white" style={{ marginTop: 25, borderRadius:10}}>
+          <div className="admin-container bg-white" style={{ marginTop: 25, borderRadius:5}}>
             <div className="app-embed">
               <Container className="p-0" fluid>
                 <Suspense fallback={Loading()}>
