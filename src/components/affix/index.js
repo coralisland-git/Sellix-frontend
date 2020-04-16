@@ -41,7 +41,8 @@ class Affix extends Component {
     }
 
     getContainerDOM() {
-        const container = this.props.container;
+        const container = this.props.container?document.getElementById(this.props.container):document.body;
+
         if (container != document.body) {
             return ReactDOM.findDOMNode(container);
         }
@@ -79,10 +80,13 @@ class Affix extends Component {
     handleTargetChange(evt) {
         const container = this.getContainerDOM()
         const { top, left } = container.getBoundingClientRect()
+        const thisElm = ReactDOM.findDOMNode(this);
+        const { width } = thisElm.getBoundingClientRect()
 
         this.setState({
             top: top + this.state.marginTop,
             left: left + this.state.marginLeft,
+            width: width,
             containerHeight: container.offsetHeight,
             containerWidth: container.offsetWidth,
         })
@@ -135,7 +139,7 @@ class Affix extends Component {
 }
 
 Affix.propTypes = {
-    container: PropTypes.object,
+    container: PropTypes.string,
     offsetTop: PropTypes.number,
     horizontal: PropTypes.bool,
     target: PropTypes.func,
@@ -147,7 +151,7 @@ Affix.propTypes = {
 Affix.defaultProps = {
     offsetTop: 0,
     horizontal: false,
-    container: document.body,
+    container: null,
     target: () => window,
     onChange: (affixed) => ({}),
     onTargetChange: (state) => ({}),

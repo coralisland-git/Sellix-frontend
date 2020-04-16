@@ -104,7 +104,7 @@ class ShopProductDetail extends React.Component {
       openCoupon: false,
       gateway: null,
       showPaymentOptions: false,
-      quantity: 0,
+      quantity: 1,
       paymentoptions: [],
       email: null,
       coupon_code: '',
@@ -218,12 +218,13 @@ class ShopProductDetail extends React.Component {
   }
 
   componentDidMount() {
+    console.log(document.getElementById('affix-bar'))
     this.setState({loading: true})
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
       if(res.status == 200)
         this.setState({
           product_info: res.data.product,
-          paymentoptions: (res.data.product.gateways || '').split(',')
+          paymentoptions: (res.data.product.gateways || '').split(','),
         })
       else throw res
     }).catch((err) => {
@@ -268,9 +269,16 @@ class ShopProductDetail extends React.Component {
             <Row className="p-3">
               <Col lg={12} className="ml-auto mr-auto">
                 <Row>
-                  <Col md={4} className="left-bar">
-                    <div className="d-sm-down-none">
-                      <Affix offsetTop={100}>
+                  <Col md={8}>
+                    <Card className="bg-white p-4 detail">
+                      <h4 className="text-primary mb-4">{product_info.title}</h4>
+                      <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>
+                      </div>
+                    </Card>
+                  </Col>
+                  <Col md={4} className="left-bar" id="affix-bar">
+                    <div className="d-sm-down-none" >
+                      <Affix offsetTop={100} container='affix-bar'>
                         <Card className="bg-white">
                         {
                           gateway?
@@ -657,13 +665,6 @@ class ShopProductDetail extends React.Component {
                     </div>
                     
                   </Col>  
-                  <Col md={8}>
-                    <Card className="bg-white p-4 detail">
-                      <h4 className="text-primary mb-4">{product_info.title}</h4>
-                      <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>
-                      </div>
-                    </Card>
-                  </Col>
                 </Row>
               </Col>
             </Row>

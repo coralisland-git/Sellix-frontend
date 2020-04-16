@@ -397,33 +397,33 @@ class Invoice extends React.Component {
                             <h4 className="text-primary mb-3">Order Details</h4>
                             {
                               this.getInvoiceStatus2(invoice.status) != null && 
-                                <div className="d-flex justify-content-between align-items-center mb-1">
+                                <div className="d-flex justify-content-between align-items-center mb-2">
                                   <span className="text-primary">Status</span>
-                                  <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status)}</h5>
+                                  <h5 className="text-primary mb-0">{this.getInvoiceStatus2(invoice.status)}</h5>
                                 </div>
                             }
                             
-                            <div className="d-flex justify-content-between align-items-center mb-1">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
                               <span className="text-primary">Seller</span>
-                              <h5 className="text-primary b-4">{invoice.username }</h5>
+                              <h5 className="text-primary mb-0">{invoice.username }</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-1">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
                               <span className="text-primary">Quantity</span>
-                              <h5 className="text-primary b-4">{invoice.quantity}</h5>
+                              <h5 className="text-primary mb-0">{invoice.quantity}</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-1">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
                               <span className="text-primary">Email</span>
-                              <h5 className="text-primary b-4">{invoice.customer_email}</h5>
+                              <h5 className="text-primary mb-0">{invoice.customer_email}</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-1">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
                               <span className="text-primary">Created</span>
-                              <h5 className="text-primary b-4">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
+                              <h5 className="text-primary mb-0">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
                             </div>
                             { 
                                 invoice.gateway != 'paypal' && 
                                   <div className="d-flex justify-content-between align-items-center">
                                     <span className="text-primary">Received</span>
-                                    <h5 className="text-primary b-4 d-flex align-items-center">
+                                    <h5 className="text-primary mb-0 d-flex align-items-center">
                                       <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
                                       {invoice.crypto_received}</h5>
                                   </div>
