@@ -147,7 +147,7 @@ class EditProduct extends React.Component {
 				service_text: '',
 				file_stock: -1,
 				service_stock: -1,
-				stock_delimeter: DELIMITER_OPTIONIS[0].value,
+				stock_delimiter: DELIMITER_OPTIONIS[0].value,
 				quantity_min: 0,
 				quantity_max: 0,
 				delivery_text: '',
@@ -306,13 +306,13 @@ class EditProduct extends React.Component {
           gateways[key] = true
 		})
 		
-		if(product.stock_delimeter == ',')
+		if(product.stock_delimiter == ',')
 			delimiter = DELIMITER_OPTIONIS[0]
-		else if(product.stock_delimeter == '\n')
+		else if(product.stock_delimiter == '\n')
 			delimiter = DELIMITER_OPTIONIS[1]
 		else delimiter = DELIMITER_OPTIONIS[2]
 
-		product.serials = product.serials.join(product.stock_delimeter)
+		product.serials = product.serials.join(product.stock_delimiter)
 		product.price = product.price_display
         
         this.setState({
@@ -387,7 +387,7 @@ class EditProduct extends React.Component {
 							service_stock: Yup.number(),
 							quantity_min: Yup.number(),
 							quantity_max: Yup.number(),
-							stock_delimeter: Yup.string(),
+							stock_delimiter: Yup.string(),
 							delivery_text: Yup.string(),
 							crypto_confirmations: Yup.number(),
 							max_risk_level: Yup.number(),
@@ -756,8 +756,8 @@ class EditProduct extends React.Component {
 																					options={DELIMITER_OPTIONIS}
 																					searchable={false}
 																					className="mb-3"
-																					id="stock_delimeter"
-																					name="stock_delimeter"
+																					id="stock_delimiter"
+																					name="stock_delimiter"
 																					value={this.state.delimiter}
 																					onChange={(option) => {
 																						this.setState({
@@ -766,8 +766,8 @@ class EditProduct extends React.Component {
 																						
 																						console.log(option.value)
 																						if(option.value !== 'custom')
-																							props.handleChange("stock_delimeter")(option.value)
-																						else props.handleChange("stock_delimeter")('')
+																							props.handleChange("stock_delimiter")(option.value)
+																						else props.handleChange("stock_delimiter")('')
 																					}}>                                       
 																				</Select>
 																			</FormGroup>
@@ -777,9 +777,9 @@ class EditProduct extends React.Component {
 																				<FormGroup className="mb-3">
 																					<Label htmlFor="product_code">Custom Stock Delimiter</Label>
 																					<Input type="text"
-																						id="stock_delimeter"
-																						name="stock_delimeter"
-																						value={props.values.stock_delimeter}
+																						id="stock_delimiter"
+																						name="stock_delimiter"
+																						value={props.values.stock_delimiter}
 																						onChange={props.handleChange}
 																					></Input>
 																				</FormGroup>
