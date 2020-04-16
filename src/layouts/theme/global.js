@@ -217,4 +217,8 @@ export const GlobalStyles = createGlobalStyle`
     .transparent-bg {
         background: transparent !important;
     }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
 `
