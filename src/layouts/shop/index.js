@@ -107,13 +107,6 @@ class ShopLayout extends React.Component {
 
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-				<style>
-					{`
-          body {
-            overflow-y: scroll;
-          }
-        `}
-				</style>
 				<GlobalStyles />
 				<div className={'shop-container'}>
 					<div className="app">
