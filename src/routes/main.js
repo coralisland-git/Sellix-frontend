@@ -6,7 +6,7 @@ import {
   SettingsLayout,
   InvoiceLayout,
   ProductLayout,
-  LandingLayout
+  LandingLayout, 
 } from 'layouts'
 
 const user = window.localStorage.getItem('userId')
@@ -25,6 +25,7 @@ const mainRoutes = [
 
   // User
   { path: `/dashboard/${user}`, name: 'UserLayout', component: UserLayout },
+  { path: `/admin`, name: 'ReallyAdminLayout', component: UserLayout },
 
   // Auth 
   { path: '/auth', name: 'AuthLayout', component: AuthLayout },

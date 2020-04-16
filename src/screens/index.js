@@ -46,6 +46,9 @@ import ReplyToQuerie from './queries/screens/reply'
 import Contacts from './contacts/screens/reply/index.js'
 import Terms from './terms/screen.js'
 import AdminDashboard from './admin_dashboard/screen'
+import Users from './users'
+import User from './users/screens/detail'
+import TopUsers from './topUsers'
 
 import PaypalPaying from './paypal_paying'
 import Invoice from './invoice'
@@ -54,6 +57,7 @@ import Notification from './notification'
 import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
+import OrderAdminDetail from './users/screens/viewOrder/screens/detail'
 
 import GeneralSettings from './general_settings'
 import Customization from './customization'
@@ -79,6 +83,10 @@ export {
   TwoFactorAuthentication,
   Invoice,
   Terms,
+  Users,
+  User,
+  OrderAdminDetail,
+  TopUsers,
 
 
   EditCoupon,

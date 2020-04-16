@@ -21,7 +21,11 @@ import {
   CreateProduct,
   OrderDetail,
   ReplyToQuerie,
-  AdminDashboard
+  AdminDashboard,
+  Users,
+  User,
+  TopUsers,
+  OrderAdminDetail
 } from 'screens'
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
@@ -29,12 +33,37 @@ import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback 
 const user = window.localStorage.getItem('userId')
 
 const adminRoutes = [
-
+  {
+    path: `/admin/users/view/:id/product/edit/:id`,
+    name: 'EditAdminProduct',
+    component: EditProduct.screen
+  },
+  {
+    path: `/admin/users/view/:id/order/:id`,
+    name: 'OrderAdminDetail',
+    component: OrderAdminDetail.screen
+  },
+  {
+    path: `/admin/users/view/:id`,
+    name: 'User',
+    component: User.screen
+  },
+  {
+    path: `/admin/top`,
+    name: 'TopUsers',
+    component: TopUsers.screen
+  },
   {
     path: `/admin/dashboard`,
     name: 'AdminDashboard',
     component: AdminDashboard
   },
+  {
+    path: `/admin/users`,
+    name: 'Users',
+    component: Users.screen
+  },
+  
   {
     path: `/dashboard/${user}/home`,
     name: 'Dashboard',

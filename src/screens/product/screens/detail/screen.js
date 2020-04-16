@@ -27,6 +27,7 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import config from 'constants/config'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import * as _ from 'lodash'
 
 import {
 	CommonActions
@@ -43,6 +44,8 @@ import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
 const user = window.localStorage.getItem('userId')
+
+const admin = _.includes(window.location.pathname, 'admin')
 
 const mapStateToProps = (state) => {
 	return ({
@@ -251,10 +254,13 @@ class EditProduct extends React.Component {
 		values.file_stock = showFileStock?values.file_stock:-1
 
 		this.props.actions.editProduct(values).then(res => {
-
-			this.props.history.push(`/dashboard/${user}/products/all`)
-			this.props.commonActions.tostifyAlert('success', res.message)
-
+			if(admin){
+				window.history.back()
+				this.props.commonActions.tostifyAlert('success', res.message)
+			}else{
+				this.props.history.push(`/dashboard/${user}/products/all`)
+				this.props.commonActions.tostifyAlert('success', res.message)
+			}
 		}).catch(err => {
 			this.props.commonActions.tostifyAlert('error', err.error)
 		}).finally(() => {
@@ -355,11 +361,11 @@ class EditProduct extends React.Component {
 		return (
 			<div className="create-product-screen mt-3">
 				<div className="animated fadeIn">
-					<Breadcrumb className="mb-0">
+					{!admin && <Breadcrumb className="mb-0">
 						<BreadcrumbItem active className="mb-0">
 							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Products</a>
 						</BreadcrumbItem>
-					</Breadcrumb>
+					</Breadcrumb>}
 					<Formik
 						noValidate="noValidate"
 						initialValues={initialValues}

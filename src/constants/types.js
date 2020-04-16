@@ -29,6 +29,18 @@ export const ANALYTICS = {
   NEW_REPORT: 'NEW_REPORT'
 }
 
+export const USERS = {
+  USERS: 'USERS'
+}
+
+export const USER = {
+  USER: 'USER'
+}
+
+export const TOP_USERS = {
+  TOP_USERS: 'TOP_USERS'
+}
+
 export const BLACKLIST = {
   BLACKLIST_LIST: 'BLACKLIST'
 }
@@ -113,9 +125,9 @@ export const PAYMENT = {
   PAYMENT_LIST: 'PAYMENT_LIST'
 }
 
-export const USER = {
-  USER_LIST: 'USER_LIST'
-}
+// export const USER = {
+//   USER_LIST: 'USER_LIST'
+// }
 
 export const VAT = {
   VAT_LIST: 'VAT_LIST',

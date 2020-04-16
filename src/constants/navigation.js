@@ -97,17 +97,17 @@ export const adminNavigation =  {
   items: [
     {
       name: 'Dashboard',
-      url: `/dashboard/home`,
+      url: `/admin/dashboard`,
       icon: 'fas fa-home fa-lg'
     },
     {
       name: 'Users',
-      url: `/dashboard/products`,
+      url: `/admin/users`,
       icon: 'fas fa-boxes',
     },
     {
       name: 'Top 10 users',
-      url: `/dashboard/orders`,
+      url: `/admin/top`,
       icon: 'fas fa-credit-card',
     },
     {

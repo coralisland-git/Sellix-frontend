@@ -20,11 +20,15 @@ import {
   Queries,
   Coupons,
   Feedbacks,
-  Reports
+  Reports,
+  Users,
+  TopUsers,
 } from 'screens'
 
 
 const reducer = combineReducers({
+  users: Users.reducer,
+  topUsers: TopUsers.reducer,
   common: CommonReducer,
   queries: Queries.reducer,
   auth: AuthReducer,
