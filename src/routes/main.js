@@ -36,6 +36,7 @@ const mainRoutes = [
   // Fees, terms
   { path: '/fees', name: 'LandingLayout', component: LandingLayout },
   { path: '/terms', name: 'LandingLayout', component: LandingLayout },
+  { path: '/404', name: 'LandingLayout', component: LandingLayout },
 
   // Shop
   { path: `/:username`, name: 'ShopLayout', component: ShopLayout },

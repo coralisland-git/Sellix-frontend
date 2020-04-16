@@ -53,7 +53,7 @@ class ShopLayout extends React.Component {
       })
       this.props.commonActions.getGeneralUserInfo(this.props.match.params.username).catch(e => {
         if(e.status == 404) {
-          if(window.location != "/404") {
+          if(window.location.pathname !== "/404") {
             window.location = "/404"
           }
         }

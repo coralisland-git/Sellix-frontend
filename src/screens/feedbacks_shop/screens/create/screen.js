@@ -104,6 +104,7 @@ class LeaveFeedback extends React.Component {
     if(this.state.loadingInitialValues) {
       return Loading()
     }
+    console.log('initialValues', this.state.initialValues)
     return (
       <div className="animated fadeIn">
         <Formik
@@ -121,7 +122,7 @@ class LeaveFeedback extends React.Component {
                         <p className="text-grey mt-3 mb-4">Was the product good? Write your feedback about it here.</p>
                       </div>
                       <div className="mb-4 feedback-radioGroup">
-                      <ReactStarsRating onChange={score => {
+                      <ReactStarsRating className="transparent-bg cursor-pointer" onChange={score => {
                         props.setFieldValue('score', score)
                         const feedback = {
                           1: 'negative',
