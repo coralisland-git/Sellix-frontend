@@ -109,8 +109,11 @@
   }
 
   .stock-stop {
+    border-radius : 10px !important;
     border-top-left-radius: 0px;
-    border-top-right-radius: 0px;    
+    border-top-right-radius: 0px;
+    max-height: 72vh;
+    overflow-y: scroll;
   }
 
   .detail {

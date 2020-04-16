@@ -29,6 +29,7 @@ import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import ethereumIcon from 'assets/images/crypto/eth.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import backIcon from 'assets/images/back.png'
+import editIcon from 'assets/images/edit.png'
 import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
@@ -272,7 +273,7 @@ class EmbededPayment extends React.Component {
               </Col>
             </Row>
           :
-          <Row className="mt-4 m-0">
+          <Row className="m-0">
             <Col lg={4} className="ml-auto mr-auto p-0">
               <div className="stock-info text-center">
                 <img src={sellixLogoIcon} className="logo"/>
@@ -439,7 +440,10 @@ class EmbededPayment extends React.Component {
                                     onChange={(e) => {this.setState({coupon_code: e.target.value})}}/>
                                     <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
                                 </div>:
-                                <p className="text-grey mt-3 cursor-pointer text-primary" onClick={this.openCoupon.bind(this)}><b>Apply a Coupon</b></p>
+                                <p className="text-grey mt-3 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
+                                  <img src={editIcon} width="15" style={{ marginRight:5}} />
+                                  <b>Apply a Coupon</b>
+                                </p>
                               }
                             </>
                         )}                            

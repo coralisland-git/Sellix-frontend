@@ -273,10 +273,10 @@ class EmbededInvoice extends React.Component {
                 }
                 <div className="animated fadeIn">
                   <div className="invoice-card ml-auto mr-auto p-0">
-                    <div className="float-logo"><img src={sellix_logo} width="153"/></div>
+                    <div className="float-logo"><img src={sellix_logo} width="153" style={{marginTop:-23}}/></div>
                     
                     <Card className="bg-white p-0 detail pt-3 mb-0">                        
-                      <div className="top p-4 pt-4">
+                      <div className="top p-4 pt-4 mt-3">
                         <div className="d-flex justify-content-between align-items-center ">
                           <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
                           <span className="badge text-primary bold status invoice-timer" id="status">{this.setInvoiceStatus(invoice.status)}</span>
