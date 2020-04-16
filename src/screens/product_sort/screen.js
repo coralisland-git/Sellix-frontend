@@ -15,6 +15,11 @@ import RLDD from 'react-list-drag-and-drop/lib/RLDD';
 import {
   CommonActions,
 } from 'services/global'
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { productCard } from "../product_shop/productCard"
+import VirtualDraggableGrid from 'react-virtual-draggable-grid';
+import { DragAndDropGrid } from './dragAndDropGrid'
+
 
 import * as ProductActions from './actions'
 import './style.scss'
@@ -30,6 +35,17 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators(ProductActions, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
   })
+}
+
+class ProductCard extends React.Component {
+  render() {
+    return <div style={{
+      border: '1px solid #ccc',
+      background: 'white'
+    }}>
+      {productCard(this.props.product, this.props.index, () => {})}
+    </div>
+  }
 }
 
 class Product extends React.Component {
@@ -115,7 +131,7 @@ class Product extends React.Component {
                   <Row>
                     <Col lg={12}>
                       <div>
-                        <RLDD
+                        {/* <RLDD
                           cssClasses="product-list"
                           items={product_list}
                           itemRenderer={(product) => (
@@ -124,7 +140,47 @@ class Product extends React.Component {
                             </div>
                           )}
                           onChange={this.handleRLDDChange}
-                        />
+                        /> */}
+
+                        {/* <DragDropContext onDragEnd={this.onDragEnd}>
+                          <Droppable droppableId="droppable" direction="horizontal">
+                            {(provided, snapshot) => (
+                              <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                // style={getListStyle(snapshot.isDraggingOver)}
+                              >
+                                {product_list.map((item, index) => (
+                                  <Draggable key={item.uniqid} draggableId={item.uniqid} index={index}>
+                                    {(provided, snapshot) => (
+                                      <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        // style={getItemStyle(
+                                        //   snapshot.isDragging,
+                                        //   provided.draggableProps.style
+                                        // )}
+                                      >
+                                        {productCard(item, index, () => {})}
+                                      </div>
+                                    )}
+                                  </Draggable>
+                                ))}
+                                {provided.placeholder}
+                              </div>
+                            )}
+                          </Droppable>
+                        </DragDropContext> */}
+
+                        <DragAndDropGrid items={product_list} 
+                                         ItemComponent={ProductCard}
+                                         itemToProps={(pro, index) => ({
+                                           product: pro,
+                                           index
+                                         })}
+                                         handleChange={this.handleRLDDChange}
+                                         />
                       </div>
                     </Col>
                   </Row>
