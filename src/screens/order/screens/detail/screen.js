@@ -273,7 +273,7 @@ class OrderDetail extends React.Component {
                           </div>
                           <div className="d-flex">
                             <p className="title">Created At</p>
-                            <p>{moment(new Date(order.created_at*1000)).format('MMM DD  h:mm')}</p>
+                            <p>{moment(new Date(order.created_at*1000)).format('DD, MMM YYYY h:mm')}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Quantity</p>
