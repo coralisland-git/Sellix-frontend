@@ -186,10 +186,8 @@ class ShopProducts extends React.Component {
                       all_products.map((pro, index) => 
                         <Col md={3} key={index}>
                           <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.uniqid)}>
-                            <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
-                              style={{borderTopLeftRadius: 3, borderTopRightRadius: 3, 
-                                      opacity: pro.image_attachment ? 1 : 0}}
-                              alt=""
+                            <img src={pro.image_attachment?(config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment):shop_brand} 
+                              alt={pro.title}
                               width="100%" height="150"/>
                             <div className="p-3">
                               <h5 className="mb-3 text-black">{pro.title}</h5>
