@@ -103,6 +103,23 @@ export const getUserFeedbacks = (username) => {
 }
 
 
+export const getFeedbackByUniqid = (uniqid) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/feedback/unique/${uniqid}`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
 export const getUserProductById = (id) => {
   return (dispatch) => {
     let data = {

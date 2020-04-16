@@ -21,9 +21,6 @@ const mainRoutes = [
   // Settings
   { path: `/settings`,  name: 'SettingsLayout', component: SettingsLayout },
 
-  // Shop
-  { path: `/u/:username`, name: 'ShopLayout', component: ShopLayout },
-
 
   { path: '/payment/embed', name: 'EmbedLayout', component: EmbedLayout },
   //{ path: '/payment', name: 'PaymentLayout', component: PaymentLayout },
@@ -39,6 +36,14 @@ const mainRoutes = [
 
   // Auth 
   { path: '/auth', name: 'AuthLayout', component: AuthLayout },
+
+  // Fees, terms
+  { path: '/fees', name: 'LandingLayout', component: LandingLayout },
+  { path: '/terms', name: 'LandingLayout', component: LandingLayout },
+  { path: '/404', name: 'LandingLayout', component: LandingLayout },
+
+  // Shop
+  { path: `/:username`, name: 'ShopLayout', component: ShopLayout },
 
   // Landing
   { path: '/', name: 'LandingLayout', component: LandingLayout },

@@ -59,17 +59,13 @@ class Header extends Component {
     console.log(this.props)
     return (
       <React.Fragment>
-        <AppNavbarBrand
-          className="p-2"
-          href="/"
-          full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
-        />
+        <a href="/" className="logo"><img src={sellix_logo} alt='CoreUI Logo'/></a>
         <Nav className="ml-auto shop-header" navbar style={{flex:1, justifyContent: 'flex-end'}}>
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
               <div>
                 {profile && profile.profile_attachment?
-                  <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}}/>:
+                  <img src={profile.profile_attachment} className="mt-2" width="45" height="45" style={{borderRadius: '50%'}}/>:
                   <i className="fa fa-user-circle text-primary avatar-icon"/>
                 }
               </div>

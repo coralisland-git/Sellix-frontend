@@ -25,7 +25,7 @@ export default class App extends React.Component {
               
               {
                 mainRoutes.map((prop, key) => {
-                  return <Route path={prop.path} key={key} component={prop.component}/>
+                  return <Route path={prop.path} key={key} component={prop.component} exact={prop.exact}/>
                 })
               }   
               <Route component={NotFound} />

@@ -1,4 +1,4 @@
-.shop-product-screen {
+.shop-product-screen, .productsort-screen {
   .card-header {
     color: #20a8d8;
     padding: 15px 0 !important; 
@@ -12,8 +12,9 @@
   .filter-button {
     button {
       min-height: 38px !important;
-      font-size: 18px !important;
-      font-family: 'Poppins-SemiBold' !important; 
+      font-size: 16px !important;
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
     }
     .btn-white {
       color: #613BEA !important;
@@ -22,7 +23,15 @@
 
   .product-card {
     cursor: pointer;
-    transition: transform 0.3s;
+    height: 100%;
+    // max-height: 280px;
+    h5 {
+      flex: 1;
+    }
+    img {
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
   }
 
   // .product-card:hover {
@@ -46,7 +55,8 @@
   }
 
   span.price {
-    font-family: 'Poppins-SemiBold';
+    font-family: var(--font-family-sans-serif);
+    font-weight: 600;
   }
 
   span.stock {

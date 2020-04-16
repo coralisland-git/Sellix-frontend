@@ -175,8 +175,8 @@ class LogIn extends React.Component {
                     </Card>
                     <Card className="second-card text-white bg-primary d-md-down-none">
                       <CardBody className="text-center bg-primary flex align-items-center">
-                          <h2><b>Hello friend!</b></h2>
-                          <p style={{ width: '70%' }}>Enter your personal info and star journey with us.</p>
+                          <h2><b>No Account yet?</b></h2>
+                          <p style={{ width: '70%' }}>Sign Up and start selling with Sellix.</p>
                           <Link to="/auth/register">
                             <Button color="primary" active>
                               Sign Up

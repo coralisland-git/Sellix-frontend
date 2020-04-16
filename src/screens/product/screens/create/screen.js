@@ -137,7 +137,7 @@ class CreateProduct extends React.Component {
 				service_text: '',
 				file_stock: -1,
 				service_stock: -1,
-				stock_delimeter: DELIMITER_OPTIONIS[0].value,
+				stock_delimiter: DELIMITER_OPTIONIS[0].value,
 				quantity_min: 0,
 				quantity_max: 0,
 				delivery_text: '',
@@ -242,6 +242,12 @@ class CreateProduct extends React.Component {
 		values.file_stock = showFileStock?values.file_stock:-1
 		values.service_stock = showServiceStock?values.service_stock:-1
 
+		console.log('values', values, values.quantity_max)
+
+		if(values.quantity_max == "") {
+			values.quantity_max = "0"
+		}
+
 		this.props.actions.createProduct(values).then(res => {
 			this.props.commonActions.tostifyAlert('success', res.message)
 			this.props.history.goBack()
@@ -306,7 +312,7 @@ class CreateProduct extends React.Component {
 								service_stock: Yup.number(),
 								quantity_min: Yup.number(),
 								quantity_max: Yup.number(),
-								stock_delimeter: Yup.string(),
+								stock_delimiter: Yup.string(),
 								delivery_text: Yup.string(),
 								crypto_confirmations: Yup.number(),
 								max_risk_level: Yup.number(),
@@ -676,9 +682,9 @@ class CreateProduct extends React.Component {
 																						})
 																						
 																						if(option.value !== 'custom') {
-																							props.handleChange("stock_delimeter")(option.value)
+																							props.handleChange("stock_delimiter")(option.value)
 																						} else {
-																							props.handleChange("stock_delimeter")('')
+																							props.handleChange("stock_delimiter")('')
 																						}
 																					}}>                                       
 																				</Select>
@@ -689,9 +695,9 @@ class CreateProduct extends React.Component {
 																				<FormGroup className="mb-3">
 																					<Label htmlFor="product_code">Custom Stock Delimiter</Label>
 																					<Input type="text"
-																						id="stock_delimeter"
-																						name="stock_delimeter"
-																						value={props.values.stock_delimeter}
+																						id="stock_delimiter"
+																						name="stock_delimiter"
+																						value={props.values.stock_delimiter}
 																						onChange={props.handleChange}
 																					/>
 																				</FormGroup>
@@ -716,9 +722,13 @@ class CreateProduct extends React.Component {
 																					id="quantity_max"
 																					min={1}
 																					name="quantity_max"
-																					value={props.values.quantity_max}
+																					value={props.values.quantity_max == 0 || props.values.quantity_max == -1 ? "" : props.values.quantity_max}
 																					onChange={props.handleChange}
 																				/>
+																				<p style={{
+																					margin: '10px 5px',
+																					color: 'gray'
+																				}}>Leave this field blank to set it to infinite</p>
 																			</FormGroup>
 																		</Col>
 																</Row></div>}

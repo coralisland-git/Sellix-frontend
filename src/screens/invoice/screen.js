@@ -59,6 +59,18 @@ export const PAYMENT_ICONS = {
   skrill: skrillIcon
 }
 
+
+const PAYMENT_OPTS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'BTC',
+  'litecoin': 'LTC',
+  'ethereum': 'ETH',
+  'skrill': 'Skrill',
+  'stripe': 'Stripe',
+  'bitcoincash': 'BTH',
+  'perfectmoney': 'Perfect Money'
+}
+
 const mapStateToProps = (state) => {
   return ({
   })
@@ -236,7 +248,11 @@ class Invoice extends React.Component {
               Waiting for Confirmation
             </div>
     else if(status == 4)
-     return 'Partial Payment'
+      return (
+        <div className="d-flex align-items-center">
+          <div className="sk-spinner sk-spinner-pulse"></div>
+          Partial Payment</div>
+      )
 
     return null
   }
@@ -268,7 +284,7 @@ class Invoice extends React.Component {
                     title="We haven't received full amount"
                     show={showAlert}
                   >
-                    Transaction has been received but it’s not enough, make the send to bitcoin address appear again and update the crypto_received and crypto amount to send in the invoice
+                    Transaction has been received but it’s not enough. We only received {invoice.crypto_received} of {invoice.crypto_amount}, please send the remaining amount in order to fulfill the invoice
                   </SweetAlert>
                 }
                 <div className="animated fadeIn">
@@ -309,7 +325,7 @@ class Invoice extends React.Component {
                             (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
                                 <p className="text-grey bold mt-4 text-center">
                                     Please send exactly <span className="badge text-primary bold">
-                                      {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> BTC to
+                                      {((invoice.crypto_amount || 0) - (invoice.crypto_received || 0)).toFixed(8)}</span> {PAYMENT_OPTS[invoice.gateway]} to
                                 </p>
                                 <p className="btc-address text-grey bold text-center">
                                   {invoice.crypto_address || ''}
@@ -381,33 +397,33 @@ class Invoice extends React.Component {
                             <h4 className="text-primary mb-3">Order Details</h4>
                             {
                               this.getInvoiceStatus2(invoice.status) != null && 
-                                <div className="d-flex justify-content-between align-items-center mb-1">
+                                <div className="d-flex justify-content-between align-items-center mb-2">
                                   <span className="text-primary">Status</span>
-                                  <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status)}</h5>
+                                  <h5 className="text-primary mb-0">{this.getInvoiceStatus2(invoice.status)}</h5>
                                 </div>
                             }
                             
-                            <div className="d-flex justify-content-between align-items-center mb-1">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
                               <span className="text-primary">Seller</span>
-                              <h5 className="text-primary b-4">{invoice.username }</h5>
+                              <h5 className="text-primary mb-0">{invoice.username }</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-1">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
                               <span className="text-primary">Quantity</span>
-                              <h5 className="text-primary b-4">{invoice.quantity}</h5>
+                              <h5 className="text-primary mb-0">{invoice.quantity}</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-1">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
                               <span className="text-primary">Email</span>
-                              <h5 className="text-primary b-4">{invoice.customer_email}</h5>
+                              <h5 className="text-primary mb-0">{invoice.customer_email}</h5>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center mb-1">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
                               <span className="text-primary">Created</span>
-                              <h5 className="text-primary b-4">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
+                              <h5 className="text-primary mb-0">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
                             </div>
                             { 
                                 invoice.gateway != 'paypal' && 
                                   <div className="d-flex justify-content-between align-items-center">
                                     <span className="text-primary">Received</span>
-                                    <h5 className="text-primary b-4 d-flex align-items-center">
+                                    <h5 className="text-primary mb-0 d-flex align-items-center">
                                       <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
                                       {invoice.crypto_received}</h5>
                                   </div>

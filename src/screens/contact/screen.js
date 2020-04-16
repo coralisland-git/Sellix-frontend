@@ -48,7 +48,7 @@ class Contact extends React.Component {
     this.props.createQuery({...values, username: this.props.match.params.username}).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
-        pathname: `/u/${user}/query/${res.data.uniqid}`
+        pathname: `/${user}/query/${res.data.uniqid}`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)
@@ -67,9 +67,9 @@ class Contact extends React.Component {
             }}>{props => (
               <Form onSubmit={props.handleSubmit}>
                 <Card>
-                  <CardBody className="p5-4 pb-5">
+                  <CardBody className="pb-3">
                     <div className="flex-wrapper align-items-center">
-                      <h4 className="title text-primary f-18 mb-5 mt-4">Create a Query</h4>
+                      <h4 className="title text-primary f-18 mb-5">Create a Query</h4>
                     </div>
                     <Row>
                       <Col>

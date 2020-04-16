@@ -276,8 +276,8 @@ class EmbededPayment extends React.Component {
             <Col lg={4} className="ml-auto mr-auto p-0">
               <div className="stock-info text-center">
                 <img src={sellixLogoIcon} className="logo"/>
-                <p className="text-primary text-center"><b>{product_info.title}</b></p>
-                <p className="text-primary text-center" style={{fontSize: 14}}>{product_info.username || ''}</p>
+                <p className="text-primary text-center"><b>Cracked Infinity</b></p>
+                <p className="text-primary text-center" style={{fontSize: 14}}>by CrackedTo</p>
                 <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</p>                
               </div>
               <Card className="bg-white stock-stop mb-0">
@@ -411,10 +411,19 @@ class EmbededPayment extends React.Component {
                         { !showPaymentOptions && (
                             <>
                               <p className="grey desc">
-                                {product_info.description}
+                                Instant Auth Key <br />
+                                Reputation Ability +5/-5 <br />
+                                View hidden content without posting <br />
+                                Access to Premium-only section<br />
+                                Close & edit own threads<br />
+                                Ability to link music on profile<br />
+                                Ability to change username<br />
+                                Access to Userbar Hue<br />
+                                Access to Postbit Background Changer<br />
+                                Colorful Usertitles<br />
                               </p>
                               <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                                onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
+                                onClick={this.showPaymentOptions.bind(this)} style={{width: 107}}>Continue</Button>
                               <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
                                 <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>
                                 <span className="ml-2 mr-2 text-primary">{quantity}</span>
@@ -474,7 +483,7 @@ class EmbededPayment extends React.Component {
                               )}
                             )}
                             <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                              onClick={(e) => this.setPaymentOptions(e, optParam)}>Continue</Button>
+                              onClick={(e) => this.setPaymentOptions(e, optParam)} style={{width: 107}}>Continue</Button>
                             </>
                           )
                         }

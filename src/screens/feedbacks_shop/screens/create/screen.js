@@ -20,6 +20,7 @@ import {
   CommonActions
 } from 'services/global'
 import { Loading } from 'components'
+import ReactStarsRating from 'react-awesome-stars-rating';
 
 import './style.scss'
 
@@ -53,22 +54,29 @@ class LeaveFeedback extends React.Component {
   }
 
   initializeData () {
-    this.props.commonActions.getUserFeedbacks(this.props.match.params.username).then(res => {
+    this.props.commonActions.getFeedbackByUniqid(this.props.match.params.id).then(res => {
       if (res.status === 200) {
-        var existingFeedback = res.data.feedback.filter(x => x.uniqid === this.props.match.params.id)
+        var existingFeedback = res.data.feedback
 
-        if(existingFeedback.length > 0) {
-          existingFeedback = existingFeedback[0]
+        if(existingFeedback) {
+          if(!existingFeedback.score && existingFeedback.feedback) {
+            existingFeedback.score = {
+              'negative': 1,
+              'neutral': 3,
+              'positive': 5
+            }[existingFeedback.feedback]
+          }
 
           this.setState({ 
             initialValues: {
               'message': existingFeedback.message,
-              'feedback': existingFeedback.feedback
+              'score': existingFeedback.score
             },
             loadingInitialValues: false
           })
 
         } else {
+          window.location = "/404"
           this.setState({
             loadingInitialValues: false
           })
@@ -95,6 +103,7 @@ class LeaveFeedback extends React.Component {
     if(this.state.loadingInitialValues) {
       return Loading()
     }
+    console.log('initialValues', this.state.initialValues)
     return (
       <div className="animated fadeIn">
         <Formik
@@ -112,19 +121,18 @@ class LeaveFeedback extends React.Component {
                         <p className="text-grey mt-3 mb-4">Was the product good? Write your feedback about it here.</p>
                       </div>
                       <div className="mb-4 feedback-radioGroup">
-                        <ButtonToolbar aria-label="Toolbar with button groups">
-                          <ButtonGroup className="mr-2 feedback-radioGroup" aria-label="First group">
-                            <Button onClick={() => props.setFieldValue('feedback', 'positive')} type='button' active={props.values.feedback === 'positive'}>
-                              <i className="fa fa-thumbs-up fa-lg mr-3" style={{ color: '#2BB224' }}></i>
-                            </Button>
-                            <Button onClick={() => props.setFieldValue('feedback', 'negative')} type='button' active={props.values.feedback === 'negative'}>
-                              <i className="fa fa-thumbs-down fa-lg mr-3" style={{ color: '#B22424' }}></i>
-                            </Button>
-                            <Button onClick={() => props.setFieldValue('feedback', 'neutral')} type='button' active={props.values.feedback === 'neutral'}>
-                              <i className="fas fa-hand-paper fa-lg mr-3" style={{ color: '#A7A5B4' }}></i>
-                            </Button>
-                          </ButtonGroup>
-                        </ButtonToolbar>
+                      <ReactStarsRating className="transparent-bg cursor-pointer" onChange={score => {
+                        props.setFieldValue('score', score)
+                        const feedback = {
+                          1: 'negative',
+                          2: 'negative',
+                          3: 'neutral',
+                          4: 'positive',
+                          5: 'positive' 
+                        }[score]
+                        props.setFieldValue('feedback', feedback)
+                      }} 
+                                        value={props.values.score || 5} isHalf={false}/>
                       </div>
                       <Row>
                         <Col>
