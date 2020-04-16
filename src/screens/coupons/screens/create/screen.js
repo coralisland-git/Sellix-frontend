@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
       ...coupon,
       discount_value: [+coupon.discount]
     })),
-    products: [{ label: 'Select all products', value: ''}, ..._.map(state.coupons.products, product => ({label: product.title, value: product.id})) ] 
+    products: [{ label: 'Select all products', value: ''}, ..._.map(state.coupons.products, product => ({label: product.title, value: product.uniqid})) ] 
   })
 }
 

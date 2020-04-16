@@ -254,6 +254,10 @@ class EditProduct extends React.Component {
 		values.file_stock = showFileStock?values.file_stock:-1
 		values.service_stock = showServiceStock?values.service_stock:-1
 
+		if(values.quantity_max == "") {
+			values.quantity_max = "0"
+		}
+
 		this.props.actions.editProduct(values).then(res => {
 
 			this.props.history.push(`/dashboard/${user}/products/all`)
@@ -804,9 +808,13 @@ class EditProduct extends React.Component {
 																					id="quantity_max"
 																					
 																					name="quantity_max"
-																					value={props.values.quantity_max}
+																					value={props.values.quantity_max == 0 || props.values.quantity_max == -1 ? "" : props.values.quantity_max}
 																					onChange={props.handleChange}
 																				></Input>
+																				<p style={{
+																					margin: '10px 5px',
+																					color: 'gray'
+																				}}>Leave this field blank to set it to infinite</p>
 																			</FormGroup>
 																		</Col>
 																</Row></div>}
