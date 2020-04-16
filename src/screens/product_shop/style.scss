@@ -22,7 +22,11 @@
 
   .product-card {
     cursor: pointer;
-    transition: transform 0.3s;
+    
+    img {
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
   }
 
   // .product-card:hover {
