@@ -22,7 +22,11 @@
 
   .product-card {
     cursor: pointer;
-    
+    height: 100%;
+    // max-height: 280px;
+    h5 {
+      flex: 1;
+    }
     img {
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;

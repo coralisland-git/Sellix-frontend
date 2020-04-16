@@ -141,6 +141,10 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.shopSectionBackground} !important;
     }
 
+    .shop-container .report-count {
+        background-color: ${({ theme }) => theme.shopSectionBackground} !important;
+    }
+
     .admin-container footer {
         background-color: ${({ theme }) => theme.shopContainerBackground} !important;
         background: ${({ theme }) => theme.shopContainerBackground} !important;
