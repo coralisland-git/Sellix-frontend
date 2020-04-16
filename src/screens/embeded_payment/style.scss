@@ -93,7 +93,8 @@
       background: #D6E6FF;
       color: #27346A !important;
       font-size: 10px !important;
-      font-family: 'Poppins-semiBold' !important;
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
     }
   }
 
@@ -104,7 +105,8 @@
     padding-bottom: 10px;
 
     .bold {
-      font-family: 'Poppins-SemiBold';
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
     }
   }
 

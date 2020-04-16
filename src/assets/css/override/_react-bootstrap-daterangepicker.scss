@@ -207,7 +207,7 @@ div.daterangepicker {
             line-height: 31px;
             font-size: 12px !important;
             font-weight: 100;
-            font-family: Poppins !important;
+            font-family: var(--font-family-sans-serif) !important;
             border-radius: 0;
 
             select {
