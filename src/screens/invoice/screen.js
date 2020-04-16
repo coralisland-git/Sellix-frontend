@@ -248,7 +248,11 @@ class Invoice extends React.Component {
               Waiting for Confirmation
             </div>
     else if(status == 4)
-     return 'Partial Payment'
+      return (
+        <div className="d-flex align-items-center">
+          <div className="sk-spinner sk-spinner-pulse"></div>
+          Partial Payment</div>
+      )
 
     return null
   }
@@ -280,7 +284,7 @@ class Invoice extends React.Component {
                     title="We haven't received full amount"
                     show={showAlert}
                   >
-                    Transaction has been received but it’s not enough, make the send to bitcoin address appear again and update the crypto_received and crypto amount to send in the invoice
+                    Transaction has been received but it’s not enough. We only received {invoice.crypto_received} of {invoice.crypto_amount}, please send the remaining amount in order to fulfill the invoice
                   </SweetAlert>
                 }
                 <div className="animated fadeIn">
@@ -321,7 +325,7 @@ class Invoice extends React.Component {
                             (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
                                 <p className="text-grey bold mt-4 text-center">
                                     Please send exactly <span className="badge text-primary bold">
-                                      {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> {PAYMENT_OPTS[invoice.gateway]} to
+                                      {((invoice.crypto_amount || 0) - (invoice.crypto_received || 0)).toFixed(8)}</span> {PAYMENT_OPTS[invoice.gateway]} to
                                 </p>
                                 <p className="btc-address text-grey bold text-center">
                                   {invoice.crypto_address || ''}
