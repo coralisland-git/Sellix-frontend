@@ -186,12 +186,17 @@ class ShopProducts extends React.Component {
                       all_products.map((pro, index) => 
                         <Col md={3} key={index} className="mb-4">
                           <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.uniqid)}>
-                            <img src={pro.image_attachment?(config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment):shop_brand} 
-                              alt={pro.title} 
-                              style={{opacity: pro.image_attachment?0:1}}
-                              width="100%" height="150"/>
+                            <div style={{minHeight: 150, width: '100%'}}>
+                              {
+                                pro.image_attachment && 
+                                  <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
+                                    alt={pro.title} 
+                                    width="100%" height="150"/>
+                              }
+                            </div>
+                            
                             <div className="p-3 d-flex flex-column h-100">
-                              <h5 className="mb-3 text-black">
+                              <h5 className="mb-1 text-black">
                                 {pro.title}
                               </h5>
                               <div className="d-flex justify-content-between mt-1">
