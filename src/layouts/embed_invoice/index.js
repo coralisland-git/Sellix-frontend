@@ -6,11 +6,8 @@ import { bindActionCreators } from 'redux'
 
 import { Container } from 'reactstrap'
 import {
-  AppAside,
-  AppBreadcrumb,
+  AppFooter,
   AppHeader,
-  AppSidebar,
-  AppSidebarNav,
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider, createGlobalStyle  } from 'styled-components';
@@ -32,6 +29,7 @@ import {
 } from 'components'
 
 import './style.scss'
+import { invoiceRoutes } from '../../routes';
 
 const mapStateToProps = (state) => {
   return ({
@@ -46,11 +44,11 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class EmbedLayout extends React.Component {
+class EmbedInvoiceLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: 'light'
+      theme: window.localStorage.getItem('theme') || 'light'
     }
   }
 
@@ -85,9 +83,9 @@ class EmbedLayout extends React.Component {
 
   changeTheme() {
     const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
+    window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
 
-    this.setState({theme: theme == 'light'? 'dark': 'light'})
+    this.setState({theme: theme === 'light' ? 'dark': 'light'})
   }
 
   render() {
@@ -96,35 +94,34 @@ class EmbedLayout extends React.Component {
     }
 
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
-    
+
     return (
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
           <div className="admin-container bg-white">
-            <div className="app">
+            <div className="app">              
               <div className="">
-                <Container className="p-0 pt-3" fluid>
-                  <Suspense fallback={Loading()}>
-                    <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                    <Switch>
-                      {
-                        paymentRoutes.map((prop, key) => {
-                          if (prop.redirect)
-                            return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                          return (
-                            <Route
-                              path={prop.path}
-                              component={prop.component}
-                              key={key}
-                            />
-                          )
-                        })
-                      }
-                    </Switch>
-                  </Suspense>
-                </Container>
-              </div>                
+                  <Container className="p-0 pt-3" fluid>
+                    <Suspense fallback={Loading()}>
+                      <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                      <Switch>
+                        {
+                          invoiceRoutes.map((prop, key) => {
+                            if (prop.redirect)
+                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                            return (
+                              <Route
+                                path={prop.path}
+                                component={prop.component}
+                                key={key}
+                              />
+                            )
+                          })
+                        }
+                      </Switch>
+                    </Suspense>
+                  </Container>
+                </div>
             </div>
           </div>
       </ThemeProvider>
@@ -132,4 +129,4 @@ class EmbedLayout extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmbedLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(EmbedInvoiceLayout)

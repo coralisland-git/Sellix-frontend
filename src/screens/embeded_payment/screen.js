@@ -103,6 +103,7 @@ class EmbededPayment extends React.Component {
       loading: false,
       openCoupon: false,
       gateway: null,
+      showQuantityOption: true,
       showPaymentOptions: false,
       quantity: 1,
       paymentoptions: [],
@@ -110,7 +111,8 @@ class EmbededPayment extends React.Component {
       coupon_code: '',
       product_id: this.props.match.params.id,
       custom_fields: {},
-      product_info: {}
+      product_info: {},
+      optParam: 'PayPal'
     }
   }
 
@@ -130,7 +132,7 @@ class EmbededPayment extends React.Component {
     this.props.commonActions.createInvoice(data).then(res => {
       this.props.commonActions.tostifyAlert('success', 'Invoice is created successfully.')
       this.props.history.push({
-        pathname: `/invoice/${res.data.invoice.uniqid}`
+        pathname: `/invoice/embed/${res.data.invoice.uniqid}`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
@@ -238,8 +240,6 @@ class EmbededPayment extends React.Component {
     }).finally(() => {
       this.setState({loading: false})
     })
-
-    
   }
 
   render() {
@@ -255,7 +255,6 @@ class EmbededPayment extends React.Component {
       paymentoptions,
       optParam
     } = this.state
-
     
     let custom_fields = []
 
@@ -265,7 +264,7 @@ class EmbededPayment extends React.Component {
     return (
       <div className="embeded-payment-screen">
         <div className="animated fadeIn">
-        {
+          {
           loading ?
             <Row>
               <Col lg={12}>
@@ -273,7 +272,7 @@ class EmbededPayment extends React.Component {
               </Col>
             </Row>
           :
-          <Row className="mt-4">
+          <Row className="mt-4 m-0">
             <Col lg={4} className="ml-auto mr-auto p-0">
               <div className="stock-info text-center">
                 <img src={sellixLogoIcon} className="logo"/>
