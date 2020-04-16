@@ -173,15 +173,15 @@ export const accountSettingsNavigation =  {
   items: [
     {
       name: 'General',
-      url: `/settings/general`
+      url: `/settings/${user}/general`
     },
     {
       name: 'Security',
-      url: `/settings/security`
+      url: `/settings/${user}/security`
     },
     {
       name: 'Notifications',
-      url: `/settings/notifications`
+      url: `/settings/${user}/notifications`
     }
   ]
 }
@@ -191,19 +191,19 @@ export const shopSettingsNavigation =  {
   items: [
     // {
     //   name: 'Members',
-    //   url: `/dashboard/${user}/settings/memebers`
+    //   url: `/dashboard/${user}/settings/${user}/memebers`
     // },
     {
       name: 'Payments',
-      url: `/settings/payments`
+      url: `/settings/${user}/payments`
     },
     // {
     //   name: 'Billing',
-    //   url: `/dashboard/${user}/settings/billing`
+    //   url: `/dashboard/${user}/settings/${user}/billing`
     // },
     // {
     //   name: 'Customization',
-    //   url: `/dashboard/${user}/settings/customization`
+    //   url: `/dashboard/${user}/settings/${user}/customization`
     // }
   ]
 }

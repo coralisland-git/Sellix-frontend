@@ -95,7 +95,7 @@ class Order extends React.Component {
     return (
       <div>
         <p><a onClick={(e) => this.gotoDetail(e, row.uniqid)}>
-          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`}>
+          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
             </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
         <p className="caption">{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
@@ -134,8 +134,6 @@ class Order extends React.Component {
     const { loading } = this.state
     const { order_list } = this.props
 
-    console.log(order_list)
-
     return (
       <div className="order-screen">
         <div className="animated fadeIn">
@@ -169,7 +167,7 @@ class Order extends React.Component {
                       <div>
                         <BootstrapTable
                           options={{...tableOptions(), onRowClick: (row) => {
-                            this.gotoDetail(null, row.uniqid)}
+                            this.gotoDetail(null, row.uniqid)}, sizePerPage: 15
                           }}
                           data={order_list}
                           version="4"

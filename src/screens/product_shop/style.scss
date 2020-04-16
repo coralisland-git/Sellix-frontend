@@ -22,7 +22,15 @@
 
   .product-card {
     cursor: pointer;
-    transition: transform 0.3s;
+    height: 100%;
+    // max-height: 280px;
+    h5 {
+      flex: 1;
+    }
+    img {
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
   }
 
   // .product-card:hover {

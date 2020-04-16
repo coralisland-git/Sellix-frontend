@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createBrowserHistory } from 'history'
+import TextEllipsis from 'react-text-ellipsis';
 import config from 'constants/config'
 import {
   Card,
@@ -159,7 +159,7 @@ class ShopProducts extends React.Component {
                     </Col>
                 }
                 
-                <Col md={4} className="mb-3">
+                <Col md={12} className="mb-3">
                   <div className="d-flex justify-content-start">
                     <div className="searchbar white w-100">
                       <i className="fas fa-search"/>
@@ -184,16 +184,22 @@ class ShopProducts extends React.Component {
                   <Row>
                     {
                       all_products.map((pro, index) => 
-                        <Col md={3} key={index}>
+                        <Col md={3} key={index} className="mb-4">
                           <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.uniqid)}>
-                            <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
-                              style={{borderTopLeftRadius: 3, borderTopRightRadius: 3, 
-                                      opacity: pro.image_attachment ? 1 : 0}}
-                              alt=""
-                              width="100%" height="150"/>
-                            <div className="p-3">
-                              <h5 className="mb-3 text-black">{pro.title}</h5>
-                              <div className="d-flex justify-content-between mt-3 mb-2">
+                            <div style={{minHeight: 150, width: '100%'}}>
+                              {
+                                pro.image_attachment && 
+                                  <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
+                                    alt={pro.title} 
+                                    width="100%" height="150"/>
+                              }
+                            </div>
+                            
+                            <div className="p-3 d-flex flex-column h-100">
+                              <h5 className="mb-1 text-black">
+                                {pro.title}
+                              </h5>
+                              <div className="d-flex justify-content-between mt-1">
                                 <span className="price">{`${CURRENCY_LIST[pro.currency]}${pro.price_display}`}</span>
                                 <span className="stock">Stock: <span className="stock-size">
                                 {pro.type == 'file'?(pro.file_stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.file_stock):(pro.stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.stock) || 0}

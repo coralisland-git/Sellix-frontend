@@ -161,7 +161,7 @@ class Header extends Component {
                       Your Shop
                     </DropdownItem>
                   }
-                  <DropdownItem onClick={() => this.props.history.push(`/settings`)}>
+                  <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
                     Settings
                   </DropdownItem>
                   <DropdownItem onClick={this.setTheme.bind(this)}>

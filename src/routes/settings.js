@@ -2,55 +2,52 @@ import {
     SecurityPage,
     Notification,
     Payments,
-    MemberPage,
-    Billings,
     GeneralSettings,
-    Customization
   } from 'screens'
 
   const user = window.localStorage.getItem('userId')
   
   const settingsRoute = [
     {
-      path: `/settings/general`,
+      path: `/settings/${user}/general`,
       name: 'GeneralSettings',
       component: GeneralSettings.screen
     },
     {
-      path: `/settings/security`,
+      path: `/settings/${user}/security`,
       name: 'Security',
       component: SecurityPage.screen
     },
     {
-        path: `/settings/notifications`,
+        path: `/settings/${user}/notifications`,
         name: 'Notifications',
         component: Notification.screen
     },
 
     {
-        path: `/settings/payments`,
+        path: `/settings/${user}/payments`,
         name: 'Payments',
         component: Payments.screen
     },
 
     // {
-    //     path: `/settings/memebers`,
+    //     path: `/settings/${user}/memebers`,
     //     name: 'Memebers',
     //     component: MemberPage.screen
     // },
     // {
-    //   path: `/settings/billing`,
+    //   path: `/settings/${user}/billing`,
     //   name: 'Billings',
     //   component: Billings.screen
     // },
     // {
-    //   path: `/settings/customization`,
+    //   path: `/settings/${user}/customization`,
     //   name: 'Customization',
     //   component: Customization.screen
     // },
     {
       redirect: true,
-      pathTo: `/settings/general`,
+      pathTo: `/settings/${user}/general`,
       path: `/settings`,
       name: 'GeneralSettings',
     },
