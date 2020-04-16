@@ -48,10 +48,14 @@
 
 
 .app-header {
+  .searchbar {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 20px;
+  }
+  
   .navbar-brand { 
     width: 211px !important;
-  
-    margin-right: 7% !important;
     height: 100% !important;
     justify-content: left !important;
     margin-left: 10px;
@@ -62,7 +66,12 @@
     }
   
     @media (max-width: 991.98px) {
-      top: 10px !important;
+      top: 4px !important;
+      border-right: none !important;
+      
+      img {
+        margin: 0 auto;
+      }
     }
   }
   
@@ -105,6 +114,7 @@
 
 .searchbar {
   position: relative;
+
 
   .header-search-input {
     height: 45px !important;
