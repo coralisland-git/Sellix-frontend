@@ -242,6 +242,12 @@ class CreateProduct extends React.Component {
 		values.file_stock = showFileStock?values.file_stock:-1
 		values.service_stock = showServiceStock?values.service_stock:-1
 
+		console.log('values', values, values.quantity_max)
+
+		if(values.quantity_max == "") {
+			values.quantity_max = "0"
+		}
+
 		this.props.actions.createProduct(values).then(res => {
 			this.props.commonActions.tostifyAlert('success', res.message)
 			this.props.history.goBack()
@@ -716,9 +722,13 @@ class CreateProduct extends React.Component {
 																					id="quantity_max"
 																					min={1}
 																					name="quantity_max"
-																					value={props.values.quantity_max}
+																					value={props.values.quantity_max == 0 || props.values.quantity_max == -1 ? "" : props.values.quantity_max}
 																					onChange={props.handleChange}
 																				/>
+																				<p style={{
+																					margin: '10px 5px',
+																					color: 'gray'
+																				}}>Leave this field blank to set it to infinite</p>
 																			</FormGroup>
 																		</Col>
 																</Row></div>}
