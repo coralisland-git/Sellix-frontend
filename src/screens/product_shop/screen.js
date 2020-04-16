@@ -212,7 +212,7 @@ class ShopProducts extends React.Component {
                               </h5>
                               <div className="d-flex justify-content-between mt-1">
                                 <span className="price">{`${CURRENCY_LIST[pro.currency]}${pro.price_display}`}</span>
-                                <span className="stock">Stock{this.getProductStock(pro) == '∞'?'':':'} <span className="stock-size" style={this.getProductStock(pro) == '∞' ? {
+                                <span className="stock">Stock <span className="stock-size" style={this.getProductStock(pro) == '∞' ? {
                                   position: 'relative',
                                   top: '1px'
                                 }:{}}>
