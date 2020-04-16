@@ -2,7 +2,7 @@
   // padding: 0 10px;
 
   .nav-link {
-    font-family: "Poppins";
+    font-family: var(--font-family-sans-serif);
     font-weight: 600;
     font-size: 15px !important;
   }
@@ -97,7 +97,8 @@
     }
     .nav-link {
       padding: 0 1rem !important;
-      font-family: Poppins-SemiBold !important;
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
       color: #A7A5B4;
       display: flex;
       align-items: center;

@@ -108,7 +108,7 @@
         }
       }
       .nav-link {
-          font-family: 'Poppins';
+          font-family: var(--font-family-sans-serif);
           font-size: 16px !important;
           background-color: #F5F5FE;
           border-radius: 3px !important;
@@ -118,7 +118,7 @@
       }
 
     .nav-link.active {
-        font-family: 'Poppins';
+        font-family: var(--font-family-sans-serif);
     }
 
     .nav-item.active {
