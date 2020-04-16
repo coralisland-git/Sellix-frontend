@@ -27,6 +27,11 @@ import { NotFound } from 'components'
       name: 'Terms'
     },
     {
+      path: '/404',
+      component: NotFound,
+      name: '404'
+    },
+    {
       path: '/',
       component: Home.screen,
       name: 'Home',
