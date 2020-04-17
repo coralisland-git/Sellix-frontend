@@ -413,7 +413,7 @@ class ShopProductDetail extends React.Component {
                                   style={{cursor: "pointer"}}/>
                               </div>
                               <div className="text-center">
-                                <h3>{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</h3>
+                                <h3>{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</h3>
                                 {
                                   !showPaymentOptions && 
                                     <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
@@ -616,7 +616,7 @@ class ShopProductDetail extends React.Component {
                                   style={{cursor: "pointer"}}/>
                               </div>
                               <div className="text-center">
-                                <h3>{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</h3>
+                                <h3>{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</h3>
                                 {
                                   !showPaymentOptions && 
                                     <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
