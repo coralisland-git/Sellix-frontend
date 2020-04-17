@@ -111,11 +111,13 @@ class EmbededPayment extends React.Component {
       paymentoptions: [],
       email: null,
       coupon_code: '',
+      coupon_value: '',
       product_id: this.props.match.params.id,
       custom_fields: {},
       product_info: {},
       optParam: 'PayPal',
-      coupon_discount:100
+      coupon_discount:100,
+      coupon_is_valid: true
     }
   }
 
@@ -272,25 +274,36 @@ class EmbededPayment extends React.Component {
   clearCoupon() {
     this.setState({
       coupon_code: '',
+      coupon_value: '',
       coupon_discount: 100,
-      openCoupon: false
+      openCoupon: false,
+      coupon_is_valid: true
     })
   }
 
   onChangeCouponCode(ev) {
-    var coupons = this.props.coupons    
+    var coupons = this.props.coupons 
+    var coupon_value = ev.target.value   
     var code = ''
+    var coupon_is_valid = true
     var discount = 100
     for(var i=0;i<coupons.length;i++){
       var coupon = coupons[i]
-      if(ev.target.value == coupon['code']){        
-        code = coupon['code']
-        discount = coupon['discount']
-      }      
+      if(coupon_value == coupon['code']){
+        if(coupon['products_bound'].length == 0 || coupon['products_bound'].indexOf(this.props.match.params.id) > -1){
+          code = coupon['code']
+          discount = coupon['discount']
+        }
+        else{
+          coupon_is_valid = false
+        }
+      }
     }
     this.setState({
+      coupon_value: coupon_value,
       coupon_code: code,
-      coupon_discount: discount
+      coupon_discount: discount,
+      coupon_is_valid: coupon_is_valid
     })    
   }
 
@@ -333,8 +346,10 @@ class EmbededPayment extends React.Component {
       openCoupon, 
       paymentoptions,
       optParam,
+      coupon_value,
       coupon_code,
-      coupon_discount
+      coupon_discount,
+      coupon_is_valid
     } = this.state
     
     var is_many = paymentoptions.length > 4 ? true : false
@@ -530,17 +545,23 @@ class EmbededPayment extends React.Component {
                             </div>
                             {openCoupon?
                               <div className="mt-3">
-                                <Input 
+                                <Input
                                   type="text"
                                   id="coupon"
                                   name="coupon"
                                   placeholder="Coupon code"
+                                  value={coupon_value}
                                   onChange={this.onChangeCouponCode.bind(this)} />
-                                { coupon_code != '' && (
+                                { coupon_code != '' && coupon_is_valid && (
                                   <p className="text-primary coupon_applied m-2">
                                     <img src={editIcon} width="12" />
                                     <b className="ml-2 mr-2">Applied Coupon: ({coupon_discount}%)</b>
                                     <i class="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
+                                  </p>
+                                )}
+                                { !coupon_is_valid && (
+                                  <p className="text-grey coupon_applied m-2">
+                                    <b className="ml-2 mr-2">This coupon is invalid for this product</b>
                                   </p>
                                 )}
                                 <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
