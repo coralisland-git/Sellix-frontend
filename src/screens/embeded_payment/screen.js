@@ -34,15 +34,17 @@ import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import sellixLogoIcon from 'assets/images/Sellix_logo.svg'
-
+import { getCoupons } from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
+    coupons: state.coupons.coupons
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
+    actions: bindActionCreators({ getCoupons }, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
@@ -112,7 +114,8 @@ class EmbededPayment extends React.Component {
       product_id: this.props.match.params.id,
       custom_fields: {},
       product_info: {},
-      optParam: 'PayPal'
+      optParam: 'PayPal',
+      coupon_discount:100
     }
   }
 
@@ -241,7 +244,8 @@ class EmbededPayment extends React.Component {
       showQuantityOption: true,
       showPaymentOptions: false,
       quantity: 1,
-      optParam: 'PayPal'
+      optParam: 'PayPal',
+      coupon_discount: 100
     })
   }
 
@@ -263,6 +267,31 @@ class EmbededPayment extends React.Component {
     this.setState({
       openCoupon: true
     })
+  }
+
+  clearCoupon() {
+    this.setState({
+      coupon_code: '',
+      coupon_discount: 100,
+      openCoupon: false
+    })
+  }
+
+  onChangeCouponCode(ev) {
+    var coupons = this.props.coupons    
+    var code = ''
+    var discount = 100
+    for(var i=0;i<coupons.length;i++){
+      var coupon = coupons[i]
+      if(ev.target.value == coupon['code']){        
+        code = coupon['code']
+        discount = coupon['discount']
+      }      
+    }
+    this.setState({
+      coupon_code: code,
+      coupon_discount: discount
+    })    
   }
 
   componentDidMount() {
@@ -288,6 +317,7 @@ class EmbededPayment extends React.Component {
     }).finally(() => {
       this.setState({loading: false})
     })
+    this.props.actions.getCoupons()
   }
 
   render() {
@@ -302,7 +332,9 @@ class EmbededPayment extends React.Component {
       product_info,
       openCoupon, 
       paymentoptions,
-      optParam
+      optParam,
+      coupon_code,
+      coupon_discount
     } = this.state
     
     var is_many = paymentoptions.length > 4 ? true : false
@@ -343,7 +375,7 @@ class EmbededPayment extends React.Component {
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
               <p className="text-primary text-center" style={{fontSize: 14}}>{product_info.username || ''}</p>
-              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</p>                
+              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * coupon_discount/100).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
               {
@@ -503,17 +535,24 @@ class EmbededPayment extends React.Component {
                                   id="coupon"
                                   name="coupon"
                                   placeholder="Coupon code"
-                                  onChange={(e) => {this.setState({coupon_code: e.target.value})}}/>
-                                  <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
-                              </div>:
+                                  onChange={this.onChangeCouponCode.bind(this)} />
+                                { coupon_code != '' && (
+                                  <p className="text-primary coupon_applied m-2">
+                                    <img src={editIcon} width="12" />
+                                    <b className="ml-2 mr-2">Applied Coupon: ({coupon_discount}%)</b>
+                                    <i class="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
+                                  </p>
+                                )}
+                                <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
+                              </div>
+                              :
                               <p className="text-grey mt-3 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
-                                <img src={editIcon} width="15" style={{ marginRight:5}} />
+                                <img src={editIcon} width="15" className="mr-2" />
                                 <b>Apply a Coupon</b>
                               </p>
                             }
                           </>
-                      )}                            
-
+                      )}
                       {
                         showPaymentOptions && (
                           <>
