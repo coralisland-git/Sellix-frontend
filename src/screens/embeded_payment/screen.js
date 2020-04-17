@@ -123,11 +123,11 @@ class EmbededPayment extends React.Component {
     delete data['showPaymentOptions']
     delete data["product_info"]
     delete data["openCoupon"]
-
-    data['custom_fields'] = JSON.stringify({custom_fields: this.state.custom_fields})
+    
+    data['custom_fields'] = JSON.stringify({custom_fields: this.state.custom_fields})    
     data['gateway'] = data['gateway'].toLowerCase()
     data['email'] = values.email
-
+        
     this.setState({sending: true})
     this.props.commonActions.createInvoice(data).then(res => {
       this.props.commonActions.tostifyAlert('success', 'Invoice is created successfully.')
@@ -228,6 +228,15 @@ class EmbededPayment extends React.Component {
 
   componentDidMount() {
     this.setState({loading: true})
+    var params = {};
+    var vars = this.props.location.search.substr(1).split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      var key = pair[0].replace(/-/g, '_')
+      if (pair[0] != '')
+        params[key] = decodeURIComponent(pair[1])
+    }
+    this.setState({custom_fields : params});
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
       if(res.status == 200)
         this.setState({
