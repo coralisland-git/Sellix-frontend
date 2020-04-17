@@ -82,7 +82,8 @@ class Order extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			loading: true
+			loading: true,
+			search_key: null
 		}
 
 		this.initializeData = this.initializeData.bind(this)
@@ -193,6 +194,19 @@ class Order extends React.Component {
 			</div>
 		)
 	}
+	searchOrders(products) {
+    const { search_key } = this.state
+    const search_fields = ['customer_email', 'total_display', 'uniqid', 'gateway', 'status']
+
+    const data = products.filter(product => {
+      for(let i=0; i<search_fields.length; i++)
+        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase()))
+          return true
+      return false
+    })
+
+    return data
+  }
 
 	caretRender(direction) {
 		return (
@@ -235,9 +249,13 @@ class Order extends React.Component {
 	}
 
 	render() {
-		const { loading } = this.state
+		const { loading, search_key } = this.state
 		const { order_list } = this.props
 
+		if (search_key) {
+			order_list = this.searchOrders(order_list)
+		}
+		
 		return (
 			<div className="order-screen">
 				<div className="animated fadeIn">
@@ -254,6 +272,9 @@ class Order extends React.Component {
 											<Input
 												placeholder="Search..."
 												className="header-search-input"
+												onChange={(e) => {
+                          this.setState({search_key: e.target.value})
+                        }}
 											></Input>
 										</div>
 									</div>
@@ -288,7 +309,7 @@ class Order extends React.Component {
 											>
 												<TableHeaderColumn
 													isKey
-													dataField="uniqid"
+													dataField="customer_email"
 													caretRender={this.caretRender}
 													dataFormat={this.renderOrderInfo}
 													dataSort
@@ -307,7 +328,7 @@ class Order extends React.Component {
 													Status
 												</TableHeaderColumn>
 												<TableHeaderColumn
-													dataField="value"
+													dataField="total_display"
 													caretRender={this.caretRender}
 													dataAlign="center"
 													dataSort
@@ -317,7 +338,7 @@ class Order extends React.Component {
 													Value
 												</TableHeaderColumn>
 												<TableHeaderColumn
-													dataField="datetime"
+													dataField="created_at"
 													caretRender={this.caretRender}
 													dataAlign="right"
 													dataFormat={this.renderOrderTime}

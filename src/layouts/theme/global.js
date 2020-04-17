@@ -30,6 +30,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .shop-product-screen .filter-button button:not(.btn-primary),
+    .productsort-screen .filter-button button:not(.btn-primary),
     .shop-container header,
     .admin-container .app-header {
         background: ${({ theme }) => theme.cardBody} !important;
@@ -168,11 +169,12 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.cardBody} !important;
     }
 
-    .shop-product-screen .product-card {
+    .shop-product-screen .product-card, .productsort-screen .product-card {
         background-color: ${({ theme }) => theme.cardBody} !important;
     }
 
-    .shop-product-screen .card.grey .card-body {
+    .shop-product-screen .card.grey .card-body,
+    .productsort-screen .card.grey  .card-body {
         background: ${({ theme }) => theme.body} !important;
         background-color: ${({ theme }) => theme.body} !important;
     }

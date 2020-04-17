@@ -8,6 +8,7 @@ import { mainRoutes } from 'routes'
 import { configureStore } from 'services'
 import { Loading, NotFound } from 'components'
 import 'app.scss'
+import SingleLogo from './assets/images/single.png'
 
 const hist = createBrowserHistory()
 const store = configureStore()
@@ -15,7 +16,18 @@ const store = configureStore()
 
 export default class App extends React.Component {
 
+  componentDidMount() {
+    for(const elem of document.querySelectorAll('[putSinglePngHrefHere]')) {
+      elem.href = SingleLogo
+    }
+
+    for(const elem of document.querySelectorAll('[putSinglePngContentHere]')) {
+      elem.content = SingleLogo
+    }
+  }
+
   render () {
+    
     return (
       <Provider store={store}>
         <Router history={hist}>

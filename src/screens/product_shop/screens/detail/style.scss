@@ -20,10 +20,6 @@
   }
   .pay-button {
     
-    i {
-      color: #27346A !important;
-      font-size: 18px;
-    }
     color: #A7A5B4 !important;
     background-color: #FCFCFE !important;
     border: 1px solid #F5F5F5 !important; 
@@ -36,7 +32,8 @@
 
   .stock-count {
     span {
-      font-size: 16px;
+      font-size: 15px;
+      line-height: 1em;
       font-weight: bold;
       display: block;
       cursor: pointer;

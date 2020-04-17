@@ -79,23 +79,6 @@ class Product extends React.Component {
     this.props.actions.getCoupons()
   }
 
-  renderProductInfo(cell, row) {
-    if (
-      row.info && row.id
-    ) {
-      return (
-        <div>
-          <p>{row.info}</p>
-          <p className="caption">{row.id}</p>
-        </div>
-      )
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
-
   renderProductType(cell, row) {
     if (
       row.type
@@ -330,20 +313,27 @@ class Product extends React.Component {
                             Discount
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="stock"
+                            dataField="products_count"
                             dataAlign="center"
                             caretRender={this.caretRender}
                             width="20%"
                             dataSort
-                            dataFormat={this.renderProductsCount}
                           >
                             Product Count
                           </TableHeaderColumn>
                           <TableHeaderColumn
+                            dataField="used"
+                            dataSort
+                            dataAlign="center"
+                            width="20%"
+                          >
+                            Used
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
                             dataField="id"
                             dataAlign="right"
+                            width="10%"
                             dataFormat={this.renderOptions}
-                            width="20%"
                           >
                             Options
                           </TableHeaderColumn>
