@@ -302,7 +302,9 @@ a:hover {
 }
 
 table td a {
-    color: #A7A5B4;
+    // color: #A7A5B4;
+    color: #444447 !important;
+    font-weight: 600;
 }
 
 table td a:hover {
@@ -463,6 +465,8 @@ table td a:hover {
 }
 
 .badge-normal {
+    // background-color: #613BEA;
+    // color: #E4D6FF;
     background-color: #E4D6FF;
     color: #613BEA;
 }
@@ -507,18 +511,41 @@ table {
         th {
             font-size: 14px !important;
             text-transform: initial !important;
-            color: #A7A5B4 !important;
+            // color: #A7A5B4 !important;
+            color: #212529 !important;
             border: none !important;
+            span.order {
+                color: #2125297d !important;
+            }
         }
     }
 
     tbody {
-        td{
+        td {
             vertical-align: middle !important;
             padding-top: 20px !important;
             padding-bottom: 20px !important;
             border: none !important;
-            border-top: 1px solid #F5F5F5 !important;
+            // border-top: 1px solid #F5F5F5 !important;
+            .img-container {
+                width: 65px;
+                height: 45px;
+                border-radius: 4px;
+                margin-right: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 30px;
+                color: #212529 !important;
+                background-color: #d2d2d6;
+                img {
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 4px;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
 
             p {
                 margin-bottom: 0 !important;
@@ -527,6 +554,7 @@ table {
 
             p.caption {
                 color: #A7A5B4 !important;
+                margin-top: 3px;
             }
 
             .badge {
@@ -545,6 +573,8 @@ table {
             .badge-normal {
                 background-color: #E4D6FF;
                 color: #613BEA;
+                // background-color: #613BEA;
+                // color: #E4D6FF;
             }
             
             .badge-completed,
@@ -578,8 +608,9 @@ table {
             .actions {
                 justify-content: flex-end;
                 a {
-                    color: #A7A5B4 !important;
-                    font-size: 18px !important;
+                    // color: #A7A5B4 !important;
+                    color: #77767D !important;
+                    font-size: 22px !important;
                     margin-left: 15px;
                 }
                 a:hover {

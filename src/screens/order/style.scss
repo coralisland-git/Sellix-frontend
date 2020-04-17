@@ -2,6 +2,21 @@
   .badge {
     border-radius: 3px;
     padding: 5 20px;
+    i.bx {
+      font-size: 16px;
+      margin-right: 4px;
+    }
+  }
+
+  
+  .badge-pending {
+      color: #ffc107 !important;
+      background-color: #ffc1072d;
+  }
+
+  .badge-cancelled {
+    color: #B22424 !important;
+    background-color: #F4C9C9;
   }
 
   .badge-completed {

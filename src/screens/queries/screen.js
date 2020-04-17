@@ -128,6 +128,7 @@ class Queries extends React.Component {
     }
 
     this.initializeData = this.initializeData.bind(this)
+    this.caretRender = this.caretRender.bind(this)
   }
 
   componentDidMount() {
@@ -151,7 +152,7 @@ class Queries extends React.Component {
       row.status
     ) {
       return (
-        <div className={`badge badge-${row.status.toLowerCase()}`}>
+        <div className={`badge badge-${row.status.toLowerCase()}`} style={{ margin: '0 auto' }}>
           {row.status}
         </div>
       )
@@ -240,6 +241,46 @@ class Queries extends React.Component {
     )
   }
 
+  caretRender(direction) {
+		return (
+			<div style={{ marginLeft: 12.4, display: 'inline' }}>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="3.621"
+					height="11.98"
+					style={{
+						marginRight: 3,
+						transform: `scale(${direction === 'desc' ? 1.2 : 1.1})`,
+						transition: 'all 0.2s linear'
+					}}
+					opacity={direction === 'asc' ? 0.4 : 1}
+					viewBox="0 0 3.621 11.72"
+				>
+					<path
+						d="M6.834,15.272V4.586h.54V15.272l1.159-1.159.382.382L7.1,16.306,5.293,14.5l.382-.382Z"
+						transform="translate(-5.293 -4.586)"
+					/>
+				</svg>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="3.621"
+					height="11.98"
+					style={{
+						transform: `scale(${direction === 'asc' ? 1.2 : 1.1})`,
+						transition: 'all 0.2s linear'
+					}}
+					opacity={direction === 'desc' ? 0.4 : 1}
+					viewBox="0 0 3.621 11.72"
+				>
+					<path
+						d="M6.834,5.619V16.306h.54V5.619L8.532,6.778,8.914,6.4,7.1,4.586,5.293,6.4l.382.382Z"
+						transform="translate(-5.293 -4.586)"
+					/>
+				</svg>
+			</div>
+		)
+	}
+
 
   render() {
     const { loading } = this.state
@@ -300,7 +341,8 @@ class Queries extends React.Component {
                           <TableHeaderColumn
                             isKey
                             dataField="title"
-                            width='40%'
+                            caretRender={this.caretRender}
+                            width='30%'
                             dataSort
                             dataFormat={this.renderQuerieTitle}
                           >
@@ -308,14 +350,19 @@ class Queries extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="email"
+                            caretRender={this.caretRender}
+                            dataAlign="left"
                             dataSort
-                            width="30%"
+                            width="20%"
                             dataFormat={this.renderQuerieEmail}
                           >
                             Email
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="status"
+                            width="10%"
+                            dataAlign="center"
+                            caretRender={this.caretRender}
                             dataSort
                             dataFormat={this.renderQueryStatus}
                           >
@@ -326,6 +373,7 @@ class Queries extends React.Component {
                             dataSort
                             width="30%"
                             dataAlign="right"
+                            caretRender={this.caretRender}
                             dataFormat={this.renderOption}
                           >
                             Option
@@ -333,7 +381,9 @@ class Queries extends React.Component {
                           <TableHeaderColumn
                             dataField="updatedAt"
                             dataAlign="right"
+                            width="10%"
                             dataSort
+                            caretRender={this.caretRender}
                             dataFormat={this.renderTime}
                           >
                             Updated at
