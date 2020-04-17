@@ -1,46 +1,41 @@
 import React, { Component } from 'react'
-import {
-  Input,
-  ButtonDropdown,
-  Button,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle
-} from 'reactstrap'
-import moment from 'moment'
+import { ButtonDropdown, DropdownToggle } from 'reactstrap'
+import moment from 'moment';
 
-import { DateRangePicker, DayPickerRangeController}  from 'react-bootstrap-daterangepicker'
+import { DateRangePicker }  from 'react-bootstrap-daterangepicker'
 
 import 'bootstrap-daterangepicker/daterangepicker.css'
 
-class DateRangePicker2 extends React.Component{
+class DateRangePicker2 extends Component{
+
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
       startDate: moment(),
       endDate: moment()
     }
-
-    this.handleEvent = this.handleEvent.bind(this)
   }
 
   componentDidMount() {
-    if(this.props.ranges)
-      Object.keys(this.props.ranges).map((key, index) => {
+    const { ranges } = this.props;
+
+    if(ranges) {
+      Object.keys(ranges).map((key, index) => {
         if(index === 0) {
           this.setState({
-            startDate: this.props.ranges[key][0],
-            endDate: this.props.ranges[key][1]
+            startDate: ranges[key][0],
+            endDate: ranges[key][1]
           })
         }
       })
+    }
   }
 
-  handleEvent (event, picker) {
-    event.preventDefault()
+  handleEvent = (event, picker) => {
+    event.preventDefault();
     this.setState({
-      startDate: picker.startDate,
-      endDate: picker.endDate
+      ...picker
     })
 
     this.props.getDate(picker)
@@ -51,35 +46,36 @@ class DateRangePicker2 extends React.Component{
   }
 
   render() {
-    let nick_key = null
+    let nick_key = null;
+    let { ranges, opens, getDate, className, showCustomRangeLabel=true } = this.props;
+    let { startDate, endDate } = this.state;
 
-    if(this.props.ranges) {
-      Object.keys(this.props.ranges).map((key) => {
-        if(this.state.startDate.format('YYYY-MM-DD') === this.props.ranges[key][0].format('YYYY-MM-DD') &&
-            this.state.endDate.format('YYYY-MM-DD') === this.props.ranges[key][1].format('YYYY-MM-DD')){
-          nick_key = key
-          return true
+    if(ranges) {
+      Object.keys(ranges).map((key) => {
+        if(startDate.format('YYYY-MM-DD') === ranges[key][0].format('YYYY-MM-DD') && endDate.format('YYYY-MM-DD') === ranges[key][1].format('YYYY-MM-DD')) {
+          nick_key = key;
         }
       })
     }
 
-    if(this.state.startDate !== null && nick_key === null) {
-      nick_key = this.state.startDate.format('ll') + ' - ' + this.state.endDate.format('ll')
+    if(startDate !== null && nick_key === null) {
+      nick_key = startDate.format('ll') + ' - ' + endDate.format('ll')
     }
 
     return (
-        <div className={"datepicker2 " + this.props.className || ''}>
+        <div className={"datepicker2 " + className || ''}>
           <i className="fas fa-calendar mr-2"/>
           <DateRangePicker
               onShow={this.setCustomAttribs}
-              startDate={this.state.startDate}
-              endDate={this.state.endDate}
+              startDate={startDate}
+              showCustomRangeLabel={showCustomRangeLabel}
+              endDate={endDate}
               showDropdowns
               showClearDates
-              opens={this.props.opens || 'right'}
-              ranges={this.props.ranges}
-              getDate={this.props.getDate}
-              onApply={(e, picker) => this.handleEvent(e, picker)}
+              opens={opens || 'right'}
+              ranges={ranges}
+              getDate={getDate}
+              onApply={this.handleEvent}
               locale={{
                 format: "MMM DD, YYYY",
                 daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],

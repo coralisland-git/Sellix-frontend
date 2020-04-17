@@ -4,6 +4,67 @@
     padding: 5 20px;
   }
 
+  .sk-spinner-pulse {
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    margin-left:5px;
+    background-color: #613bea;
+  }
+
+  .filter-button-group {
+    border-radius: 3px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
+  }
+
+  .live-orders-list {
+    .live-card {
+      cursor: pointer;
+
+      .card-body {
+        background-color: #F6F4FF;
+      }
+
+      a, p, span {
+        color: rgb(150, 149, 153);
+        margin-bottom: 0;
+        line-height: 1.5em;
+        font-size: 14px;
+      }
+      
+      a {
+        color: black;
+      }
+
+      p.date, p.date a {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .filter-btn {
+    padding: 7px;
+    font-size: 13px;
+    display: block;
+    width: 60px;
+    text-align: center;
+    line-height: 0.8em;
+    cursor: pointer;
+    // border-radius: 3px;
+    background-color: white;
+  }
+
+  .filter-btn:hover {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
+  }
+
+  .filter-btn.active {
+    color: white !important;
+    background-color: #613BEA;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
+  }
+
   .badge-completed {
     color: #2BB224;
     background-color: #CBF4C9;
