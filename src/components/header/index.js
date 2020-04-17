@@ -14,6 +14,7 @@ import PropTypes from 'prop-types'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
+import IntervalTimer from 'react-interval-timer';
 
 import {
   AppAsideToggler,
@@ -108,6 +109,13 @@ class Header extends Component {
                 }}>{notifications.length}</Badge></sup>
               }
             </DropdownToggle>
+
+            <IntervalTimer
+                    timeout={5000}
+                    callback={()=>{this.props.authActions.getSelfUser()}}
+                    enabled={true}
+                    repeat={true}
+                />
             
             <DropdownMenu right className="mt-2" style={{width: 300, maxHeight: 300, overflow: 'auto'}}>
               <DropdownItem>
