@@ -9,6 +9,11 @@
   }
 
   .product-table {
+    & > div.react-bs-table-bordered {
+      // border: 1.5px solid #ddd !important;
+      background-color: #FCFCFE;
+      border-radius: 10px !important;
+    }
     .my-link {
       text-decoration: none;
       cursor: pointer;
