@@ -15,7 +15,6 @@
 
   .filter-button-group {
     border-radius: 3px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
   }
 
   .live-orders-list {
@@ -55,14 +54,19 @@
     background-color: white;
   }
 
-  .filter-btn:hover {
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
+  .filter-btn:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+  .filter-btn:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
   }
 
   .filter-btn.active {
     color: white !important;
     background-color: #613BEA;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
   }
 
   .badge-completed {

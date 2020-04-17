@@ -297,7 +297,7 @@ class Order extends React.Component {
                                       <span className="sk-spinner sk-spinner-pulse"></span>
                                     </p>
                                     <p className="date">
-                                      {new moment(new Date(order.created_at*1000)).format('DD, MMM YYYY h:mm')}
+                                      {new moment(new Date(order.created_at*1000)).format('DD, MMM YYYY HH:mm')}
                                        <span className="ml-1 mr-1">-</span> 
                                        <a>{order.username}</a></p>
                                   </CardBody>
@@ -328,7 +328,7 @@ class Order extends React.Component {
                                       <span className="sk-spinner sk-spinner-pulse"></span>
                                     </p>
                                     <p className="date">
-                                      {new moment(new Date(order.created_at*1000)).format('DD, MMM YYYY h:mm')}
+                                      {new moment(new Date(order.created_at*1000)).format('DD, MMM YYYY HH:mm')}
                                        <span className="ml-1 mr-1">-</span> 
                                        <a>{order.username}</a></p>
                                   </CardBody>
@@ -359,7 +359,7 @@ class Order extends React.Component {
                                       <span className="sk-spinner sk-spinner-pulse"></span>
                                     </p>
                                     <p className="date">
-                                      {new moment(new Date(order.created_at*1000)).format('DD, MMM YYYY h:mm')}
+                                      {new moment(new Date(order.created_at*1000)).format('DD, MMM YYYY HH:mm')}
                                        <span className="ml-1 mr-1">-</span> 
                                        <a>{order.username}</a></p>
                                   </CardBody>
@@ -390,7 +390,7 @@ class Order extends React.Component {
                                       <span className="sk-spinner sk-spinner-pulse"></span>
                                     </p>
                                     <p className="date">
-                                      {new moment(new Date(order.created_at*1000)).format('DD, MMM YYYY h:mm')}
+                                      {new moment(new Date(order.created_at*1000)).format('DD, MMM YYYY HH:mm')}
                                        <span className="ml-1 mr-1">-</span> 
                                        <a>{order.username}</a></p>
                                   </CardBody>
