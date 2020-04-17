@@ -184,14 +184,53 @@ class ShopProductDetail extends React.Component {
     }
 
     this.setState({
-      quantity: this.state.quantity + 1
+      quantity: this.state.quantity + 1,
+      quantityPrompt: this.state.quantity + 1
+    })
+  }
+
+  setCount = (count) => {
+    const { product_info } = this.state
+
+    if(isNaN(count)) {
+      this.setState({
+        quantity: this.state.quantity,
+        quantityPrompt: this.state.quantity
+      })
+      return;
+    }
+
+    var validatedCount = count
+
+    if(product_info.type == 'serials') {
+      validatedCount = Math.min(product_info.stock, validatedCount)
+    }
+
+    if(product_info.type == 'file') {
+      validatedCount = Math.min(product_info.file_stock, validatedCount)
+    }
+
+    if(product_info.type == 'service') {
+      validatedCount = Math.min(product_info.service_stock, validatedCount)
+    }
+
+    if(product_info.quantity_max != -1)
+      validatedCount = Math.min(product_info.quantity_max, validatedCount)
+
+    if(product_info.quantity_min != -1)
+      validatedCount = Math.max(product_info.quantity_min, validatedCount)
+
+    this.setState({
+      quantity: validatedCount,
+      quantityPrompt: validatedCount
     })
   }
 
   decreaseCount() {
     if(this.state.quantity > this.state.product_info.quantity_min) {
       this.setState({
-        quantity: this.state.quantity - 1
+        quantity: this.state.quantity - 1,
+        quantityPrompt: this.state.quantity - 1
       })
     }
   }
@@ -243,6 +282,7 @@ class ShopProductDetail extends React.Component {
       gateway, 
       showPaymentOptions, 
       quantity, 
+      quantityPrompt,
       sending, 
       loading,
       product_info,
@@ -441,7 +481,18 @@ class ShopProductDetail extends React.Component {
                                 <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
                                   <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>
                                     <i className="fas fa-minus"></i></span>
-                                  <span style={{fontSize: 20, minWidth: 25, marginBottom: 3}} className="ml-3 mr-3">{quantity}</span>
+                                  <span style={{fontSize: 20, minWidth: 25, marginBottom: 3}} className="ml-3 mr-3">
+                                    <input type="text" value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
+                                          background: 'transparent',
+                                          border: 'none',
+                                          width: '50px',
+                                          textAlign: 'center',
+                                          fontWeight: 'bold'
+                                    }} onChange={(e) => this.setState({quantityPrompt: e.target.value})} 
+                                       onBlur={e => this.setCount(e.target.value)}
+                                       />
+                                    {/* {quantity} */}
+                                  </span>
                                   <span onClick={this.increaseCount.bind(this)}><i className="fas fa-plus"></i></span>
                                 </div>
                                 {openCoupon?
@@ -642,7 +693,18 @@ class ShopProductDetail extends React.Component {
                                 <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
                                   <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>
                                     <i className="fas fa-minus"></i></span>
-                                  <span style={{fontSize: 20, minWidth: 25, marginBottom: 2}} className="ml-3 mr-3">{quantity}</span>
+                                  <span style={{fontSize: 20, minWidth: 25, marginBottom: 2}} className="ml-3 mr-3">
+                                    <input type="text" value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
+                                            background: 'transparent',
+                                            border: 'none',
+                                            width: '50px',
+                                            textAlign: 'center',
+                                            fontWeight: 'bold'
+                                      }} onChange={(e) => this.setState({quantityPrompt: e.target.value})} 
+                                        onBlur={e => this.setCount(e.target.value)}
+                                        />
+                                    {/* {quantity} */}
+                                  </span>
                                   <span onClick={this.increaseCount.bind(this)}><i className="fas fa-plus"></i></span>
                                 </div>
                                 {openCoupon?
