@@ -93,8 +93,8 @@ class EmbedInvoiceLayout extends React.Component {
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
-          <div className="admin-container bg-white" style={{ marginTop: 25, borderRadius:10}}>
-            <div className="app-embed">
+          <div className="admin-container app-embed">
+            <div className="">
               <div className="">
                   <Container className="p-0" fluid>
                     <Suspense fallback={Loading()}>

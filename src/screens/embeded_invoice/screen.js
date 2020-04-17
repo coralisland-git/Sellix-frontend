@@ -271,148 +271,149 @@ class EmbededInvoice extends React.Component {
                   </SweetAlert>
                 }
                 <div className="animated fadeIn">
-                  <div className="invoice-card ml-auto mr-auto p-0">
-                    <div className="float-logo"><img src={sellix_logo} width="153" style={{marginTop:-23}}/></div>
-                    
-                    <Card className="bg-white p-0 detail mt-3 mb-0">                        
-                      <div className="top pr-4 pl-4 pb-4">
-                        <div className="d-flex justify-content-between align-items-center ">
-                          <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-                          <span className="badge text-primary bold status invoice-timer" id="status">{this.setInvoiceStatus(invoice.status)}</span>
+                  <div className="invoice-card ml-auto mr-auto p-0 embed-block">
+                      <Card className="bg-white p-0 detail mb-0">                        
+                        <div className="float-logo">
+                          <img src={sellix_logo} width="153" style={{marginTop:-23}}/>
                         </div>
-                        <p className="text-grey  mb-3">{invoice.uniqid}</p>
-                        <div className="d-flex justify-content-between align-items-center ">
-                          <h4 className="text-grey">{(invoice.product || {}).title}</h4>
-                          { 
-                            invoice.gateway != 'paypal' && 
-                              <span className="text-grey d-flex align-items-center">
-                                <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
-                                {invoice.crypto_amount || 0}
-                              </span>
-                          }
-                          
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                          <span className="text-grey">{invoice.product_id || ''}</span>
-                          <span className="text-grey">{CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
-                        </div>
-                        { openQRModal && (
-                          <div className="text-center pb-1">
-                            <QRCode value={invoice.crypto_uri || ''} size={226}/>
+                        <div className="top p-4">
+                          <div className="d-flex justify-content-between align-items-center ">
+                            <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
+                            <span className="badge text-primary bold status invoice-timer" id="status">{this.setInvoiceStatus(invoice.status)}</span>
                           </div>
-                        )}
-                        {
-                          (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
-                              <p className="text-grey bold mt-4 text-center">
-                                  Please send exactly <span className="badge text-primary bold">
-                                    {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> BTC to
-                              </p>
-                              <p className="btc-address text-grey bold text-center">
-                                {invoice.crypto_address || ''}
-                              </p>
-                              <div className="d-flex justify-content-between align-items-center ">
-                                <span className="text-grey cursor-pointer" onClick={this.openQrCodeModal.bind(this)}>QR Code</span>
-                                <span className="text-grey">Pay in Wallet</span>
-                              </div>
-      
-                          </div>
-                        }
-                        
-                        {(invoice.gateway == 'paypal' && invoice.status == 0) && 
-                          <div className="mt-5">
-                            <PayPalButton
-                              createOrder={(data, actions) => {
-                                console.log('111111111')
-                                  return invoice.paypal_tx_id;
-                              }}
-                              onApprove={(data, actions) => {
-                                
-                                  this.getPayPalInvoice()
-                              }}
-                              onError = {() => {
-                                  console.log('33333333333')
-                              }}
-                              style={{
-                                  layout: 'horizontal',
-                                  color: 'blue',
-                              }}
-                              amount={invoice.total}
-                              currency={invoice.currency}
-                              options={{
-                                  clientId: invoice.paypal_client_id,
-                                  currency: invoice.currency
-                              }}
-                            />
-                          </div>
-                        }
-                      </div>
-                      <div className="bottom p-4">
-                        {invoice.status == 1 && 
-                          <SweetAlert
-                            success
-                            title="Order completed!"
-                            show={showAlert}
-                            showConfirm={false}
-                            onConfirm={this.hideAlert.bind(this)}
-                         
-                          >
-                            Your invoice has been paid. <br/>
-                            You will receive the products within minutes, <br/>check your email!
-                          </SweetAlert>
-                        }
-                
-                        {invoice.status == 2 && 
-                          <SweetAlert
-                            danger
-                            title="Invoice Cancelled"
-                            show={showAlert}
-                            showConfirm={false}
-                            onConfirm={this.hideAlert.bind(this)}
-                          >
-                            The invoice has expired or isn't available.
-                          </SweetAlert>
-                        }
-                        { invoice.status != 1 && invoice.status != 2 &&
-                        <div>
-                          <h4 className="text-primary mb-3">Order Details</h4>
-                          {
-                            this.getInvoiceStatus2(invoice.status) != null && 
-                              <div className="d-flex justify-content-between align-items-center mb-1">
-                                <span className="text-primary">Status</span>
-                                <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status)}</h5>
-                              </div>
-                          }
-                          
-                          <div className="d-flex justify-content-between align-items-center mb-1">
-                            <span className="text-primary">Seller</span>
-                            <h5 className="text-primary b-4">{invoice.username }</h5>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center mb-1">
-                            <span className="text-primary">Quantity</span>
-                            <h5 className="text-primary b-4">{invoice.quantity}</h5>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center mb-1">
-                            <span className="text-primary">Email</span>
-                            <h5 className="text-primary b-4">{invoice.customer_email}</h5>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center mb-1">
-                            <span className="text-primary">Created</span>
-                            <h5 className="text-primary b-4">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
-                          </div>
-                          { 
+                          <p className="text-grey  mb-3">{invoice.uniqid}</p>
+                          <div className="d-flex justify-content-between align-items-center ">
+                            <h4 className="text-grey">{(invoice.product || {}).title}</h4>
+                            { 
                               invoice.gateway != 'paypal' && 
-                                <div className="d-flex justify-content-between align-items-center">
-                                  <span className="text-primary">Received</span>
-                                  <h5 className="text-primary b-4 d-flex align-items-center">
-                                    <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
-                                    {invoice.crypto_received}</h5>
+                                <span className="text-grey d-flex align-items-center">
+                                  <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                                  {invoice.crypto_amount || 0}
+                                </span>
+                            }
+                            
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center mb-3">
+                            <span className="text-grey">{invoice.product_id || ''}</span>
+                            <span className="text-grey">{CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
+                          </div>
+                          { openQRModal && (
+                            <div className="text-center pb-1">
+                              <QRCode value={invoice.crypto_uri || ''} size={226}/>
+                            </div>
+                          )}
+                          {
+                            (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
+                                <p className="text-grey bold mt-4 text-center">
+                                    Please send exactly <span className="badge text-primary bold">
+                                      {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> BTC to
+                                </p>
+                                <p className="btc-address text-grey bold text-center">
+                                  {invoice.crypto_address || ''}
+                                </p>
+                                <div className="d-flex justify-content-between align-items-center ">
+                                  <span className="text-grey cursor-pointer" onClick={this.openQrCodeModal.bind(this)}>QR Code</span>
+                                  <span className="text-grey">Pay in Wallet</span>
                                 </div>
+        
+                            </div>
+                          }
+                          
+                          {(invoice.gateway == 'paypal' && invoice.status == 0) && 
+                            <div className="mt-5">
+                              <PayPalButton
+                                createOrder={(data, actions) => {
+                                  console.log('111111111')
+                                    return invoice.paypal_tx_id;
+                                }}
+                                onApprove={(data, actions) => {
+                                  
+                                    this.getPayPalInvoice()
+                                }}
+                                onError = {() => {
+                                    console.log('33333333333')
+                                }}
+                                style={{
+                                    layout: 'horizontal',
+                                    color: 'blue',
+                                }}
+                                amount={invoice.total}
+                                currency={invoice.currency}
+                                options={{
+                                    clientId: invoice.paypal_client_id,
+                                    currency: invoice.currency
+                                }}
+                              />
+                            </div>
                           }
                         </div>
-                      }
-                      </div>
-                    </Card>
-                  </div>
+                        <div className="bottom p-4">
+                          {invoice.status == 1 && 
+                            <SweetAlert
+                              success
+                              title="Order completed!"
+                              show={showAlert}
+                              showConfirm={false}
+                              onConfirm={this.hideAlert.bind(this)}
+                           
+                            >
+                              Your invoice has been paid. <br/>
+                              You will receive the products within minutes, <br/>check your email!
+                            </SweetAlert>
+                          }
+                  
+                          {invoice.status == 2 && 
+                            <SweetAlert
+                              danger
+                              title="Invoice Cancelled"
+                              show={showAlert}
+                              showConfirm={false}
+                              onConfirm={this.hideAlert.bind(this)}
+                            >
+                              The invoice has expired or isn't available.
+                            </SweetAlert>
+                          }
+                          { invoice.status != 1 && invoice.status != 2 &&
+                          <div>
+                            <h4 className="text-primary mb-3">Order Details</h4>
+                            {
+                              this.getInvoiceStatus2(invoice.status) != null && 
+                                <div className="d-flex justify-content-between align-items-center mb-1">
+                                  <span className="text-primary">Status</span>
+                                  <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status)}</h5>
+                                </div>
+                            }
+                            
+                            <div className="d-flex justify-content-between align-items-center mb-1">
+                              <span className="text-primary">Seller</span>
+                              <h5 className="text-primary b-4">{invoice.username }</h5>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center mb-1">
+                              <span className="text-primary">Quantity</span>
+                              <h5 className="text-primary b-4">{invoice.quantity}</h5>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center mb-1">
+                              <span className="text-primary">Email</span>
+                              <h5 className="text-primary b-4">{invoice.customer_email}</h5>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center mb-1">
+                              <span className="text-primary">Created</span>
+                              <h5 className="text-primary b-4">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
+                            </div>
+                            { 
+                                invoice.gateway != 'paypal' && 
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <span className="text-primary">Received</span>
+                                    <h5 className="text-primary b-4 d-flex align-items-center">
+                                      <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                                      {invoice.crypto_received}</h5>
+                                  </div>
+                            }
+                          </div>
+                        }
+                        </div>
+                      </Card>
+                   </div>
                 </div>
             </div>
           }

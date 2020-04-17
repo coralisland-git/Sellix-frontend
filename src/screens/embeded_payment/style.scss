@@ -113,10 +113,8 @@
 
   .stock-stop {
     border-radius : 5px !important;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    //max-height: 72vh;
-    //overflow-y: scroll;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
   }
 
   .detail {
@@ -138,5 +136,9 @@
 
   .custom-checkbox .custom-control-label::before {
     border-radius: 0.5rem !important;
+  }
+
+  .embed-block {
+    width: 380px;
   }
 }
