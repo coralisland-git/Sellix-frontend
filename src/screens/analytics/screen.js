@@ -1,41 +1,19 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React from 'react'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import NumberFormat from 'react-number-format';
-import {
-  Card,
-  CardBody,
-  Row,
-  Col
-} from 'reactstrap'
+import { Card, CardBody, Row, Col } from 'reactstrap'
 import config from 'constants/config'
 
-import {
-  Charts,
-  RevenueMap
-} from './sections'
+import { Charts } from './sections'
 import { Loader } from 'components'
 import moment from 'moment'
 import { DateRangePicker2 } from 'components'
-import * as AnalyticsActions from './actions'
+import { getAnalyticsData } from './actions'
 
 import './style.scss'
-import { date } from 'yup'
 
 import { PAYMENT_ICONS } from '../invoice/screen'
-
-const CURRENCY_LIST = { 
-  'USD': '$',
-  'EUR': '€',
-  'AUD': '$',
-  'GBP': '£',
-  'JPY': '¥',
-  'CAD': '$',
-  'CHF': '₣',
-  'CNY': '¥',
-  'SEK': 'kr',
-  'NZD': '$'
-}
 
 const Progress = ({ progress, isPositive, is24 }) => {
   if(is24) {
@@ -69,16 +47,9 @@ const ranges =  {
   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
 }
 
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(AnalyticsActions, dispatch)
-  })
-}
+const mapDispatchToProps = dispatch => ({
+  getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch)
+})
 
 class Analytics extends React.Component {
   
@@ -99,21 +70,12 @@ class Analytics extends React.Component {
     }
   }
 
-  changeDateRange(date) {
-    this.setState({
-      startDate: date.startDate,
-      endDate: date.endDate
-    })
-
-    this.getAnalyticsData()
-  }
-
   getAnalyticsData = (date) => {
     const startDate = date.startDate.format('MM/DD/YYYY')
     const endDate = date.endDate.format('MM/DD/YYYY')
     this.setState({loading: true})
 
-    this.props.actions.getAnalyticsData(startDate, endDate).then(res => {
+    this.props.getAnalyticsData(startDate, endDate).then(res => {
       const total = res.data.analytics.total
 
       this.setState({
@@ -167,7 +129,6 @@ class Analytics extends React.Component {
       <div className="analytics-screen mt-4">
         <div className="animated fadeIn">
           <Card>
-            
             <CardBody>
               <div className="flex-wrapper align-items-center">
                 <h1 className="title">Analytics</h1>
@@ -312,10 +273,8 @@ class Analytics extends React.Component {
                                     <Card className="grey p-0">
                                       <CardBody>
                                         <img src={PAYMENT_ICONS[gateway.gateway]} 
-                                          style={{borderTopLeftRadius: 10, borderTopRightRadius: 10,
-                                                  objectFit: 'contain'}}
-                                          alt=""
-                                          width="100%" height="150"/>
+                                          style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, objectFit: 'contain'}}
+                                          alt="" width="100%" height="150"/>
                                         <div className="p-3" style={{position: 'relative', top: '15px'}}>
                                           <h5 className="mb-3 text-black">{gateway.gateway.toUpperCase()}</h5>
                                           <div className="d-flex justify-content-between mt-3 mb-2">
@@ -438,4 +397,4 @@ class Analytics extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Analytics)
+export default connect(null, mapDispatchToProps)(Analytics)
