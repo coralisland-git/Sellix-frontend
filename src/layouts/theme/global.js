@@ -114,10 +114,12 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.cardBody} !important;
     }
 
+    .order-screen .live-card .card-body,
     .dashboard-screen .card.grey .card-body,
     .blacklist-screen .card.grey .card-body,
     .analytics-screen .card.grey .card-body{
         background-color: ${({ theme }) => theme.widget} !important;
+        background: ${({ theme }) => theme.widget} !important;
         // border: 1px solid ${({ theme }) => theme.cardBody} !important;
     }
 
@@ -153,6 +155,10 @@ export const GlobalStyles = createGlobalStyle`
 
     .app-header .navbar-nav .dropdown-menu:after {
         border-bottom: 10px solid ${({ theme }) => theme.dropdownColor} !important;
+    }
+
+    .order-screen .filter-btn {
+        background-color: ${({ theme }) => theme.shopContainerBackground};
     }
 
     .card-body {

@@ -21,7 +21,8 @@ export const AUTH = {
 
 
 export const ORDER = {
-  ALL_ORDERS: 'ALL_ORDERS'
+  ALL_ORDERS: 'ALL_ORDERS',
+  LIVE_ORDER_DISPLAY: 'LIVE_ORDER_DISPLAY'
 }
 
 export const ANALYTICS = {

@@ -106,6 +106,21 @@ class Dashboard extends React.Component {
     })
   }
 
+  getDataKey() {
+    const { range } = this.state
+
+    if(DATE_RANGES[range][2] == 'daily')
+      return 'day'
+    
+    if(DATE_RANGES[range][2] == 'monthly')
+      return 'month'
+
+    if(DATE_RANGES[range][2] == 'yearly')
+      return 'year'
+
+    return 'day'
+  }
+
   componentDidMount() {
     const range = DATE_RANGES['last-24hours']
     this.getAnalyticsData(range)
@@ -122,7 +137,8 @@ class Dashboard extends React.Component {
       revenueProgress,
       ordersProgress,
       viewsProgress,
-      queriesProgress
+      queriesProgress,
+      range
     } = this.state
 
     return (
@@ -244,7 +260,7 @@ class Dashboard extends React.Component {
                     </Row>
                     <CardBody className="mt-2">
                       <h5 className="mb-4">Revenue</h5>
-                      <DashBoardChart height="350px" data={chartData}/>
+                      <DashBoardChart height="350px" data={chartData} datakey={this.getDataKey()}/>
                     </CardBody>
                   </div>
               }

@@ -170,7 +170,7 @@ class ShopLayout extends React.Component {
 								<div className="shop-navs">
 									<Nav className="d-flex flex-row justify-content-center">
 										<NavItem
-											className="px-3"
+											className="px-1"
 											active={
 												pathname == `/${userId}` ||
 												pathname.includes(`/${userId}/category`)
@@ -181,7 +181,7 @@ class ShopLayout extends React.Component {
 											</NavLink>
 										</NavItem>
 										<NavItem
-											className="px-3"
+											className="px-1"
 											active={pathname == `/${userId}/contact`}
 										>
 											<NavLink to={`/${userId}/contact`} className="nav-link">
@@ -189,7 +189,7 @@ class ShopLayout extends React.Component {
 											</NavLink>
 										</NavItem>
 										<NavItem
-											className="px-3"
+											className="px-1"
 											active={pathname == `/${userId}/feedback`}
 										>
 											<NavLink to={`/${userId}/feedback`} className="nav-link">
