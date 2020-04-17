@@ -183,14 +183,53 @@ class EmbededPayment extends React.Component {
     }
 
     this.setState({
-      quantity: this.state.quantity + 1
+      quantity: this.state.quantity + 1,
+      quantityPrompt: this.state.quantity + 1
+    })
+  }
+
+  setCount = (count) => {
+    const { product_info } = this.state
+
+    if(isNaN(count)) {
+      this.setState({
+        quantity: this.state.quantity,
+        quantityPrompt: this.state.quantity
+      })
+      return;
+    }
+
+    var validatedCount = count
+
+    if(product_info.type == 'serials') {
+      validatedCount = Math.min(product_info.stock, validatedCount)
+    }
+
+    if(product_info.type == 'file') {
+      validatedCount = Math.min(product_info.file_stock, validatedCount)
+    }
+
+    if(product_info.type == 'service') {
+      validatedCount = Math.min(product_info.service_stock, validatedCount)
+    }
+
+    if(product_info.quantity_max != -1)
+      validatedCount = Math.min(product_info.quantity_max, validatedCount)
+
+    if(product_info.quantity_min != -1)
+      validatedCount = Math.max(product_info.quantity_min, validatedCount)
+
+    this.setState({
+      quantity: validatedCount,
+      quantityPrompt: validatedCount
     })
   }
 
   decreaseCount() {
     if(this.state.quantity > this.state.product_info.quantity_min) {
       this.setState({
-        quantity: this.state.quantity - 1
+        quantity: this.state.quantity - 1,
+        quantityPrompt: this.state.quantity - 1
       })
     }
   }
@@ -257,6 +296,7 @@ class EmbededPayment extends React.Component {
       showQuantityOption,
       showPaymentOptions, 
       quantity, 
+      quantityPrompt,
       sending, 
       loading,
       product_info,
@@ -303,7 +343,7 @@ class EmbededPayment extends React.Component {
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
               <p className="text-primary text-center" style={{fontSize: 14}}>{product_info.username || ''}</p>
-              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{product_info.price_display * quantity || 0}</p>                
+              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
               {
@@ -441,9 +481,20 @@ class EmbededPayment extends React.Component {
                             <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                               onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
                             <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
-                              <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>
-                              <span className="ml-2 mr-2 text-primary">{quantity}</span>
-                              <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>
+                              <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>                              
+                              <span className="ml-2 mr-2">
+                                  <input type="text" 
+                                      className="text-primary"
+                                      value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
+                                      background: 'transparent',
+                                      border: 'none',
+                                      width: '8px',
+                                      textAlign: 'center',                               
+                                  }} onChange={(e) => this.setState({quantityPrompt: e.target.value})} 
+                                     onBlur={e => this.setCount(e.target.value)}
+                                     />
+                                </span>
+                              <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>                              
                             </div>
                             {openCoupon?
                               <div className="mt-3">
