@@ -3,6 +3,7 @@ import {
     Notification,
     Payments,
     GeneralSettings,
+    ShopDesign
   } from 'screens'
 
   const user = window.localStorage.getItem('userId')
@@ -28,6 +29,12 @@ import {
         path: `/settings/${user}/payments`,
         name: 'Payments',
         component: Payments.screen
+    },
+
+    {
+      path: `/settings/${user}/design`,
+      name: 'Design',
+      component: ShopDesign.screen
     },
 
     // {

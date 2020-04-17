@@ -8,7 +8,8 @@ import {
   Button,
   Row,
   Col,
-  Input
+  Input,
+  Badge
 } from 'reactstrap'
 import { Loader, Spin } from 'components'
 import RLDD from 'react-list-drag-and-drop/lib/RLDD';
@@ -122,7 +123,20 @@ class CategorySort extends React.Component {
                           items={category_list}
                           itemRenderer={(category) => (
                             <div className="item">
-                              <p className="body mb-0"><i className="fa fa-bars mr-3"></i>{category.title}</p>
+                              <p className="body mb-0"><i className="fa fa-bars mr-3"></i>
+                              <Badge color="danger" style={{
+                                color: 'white',
+                                padding: '6px',
+                                height: '19px',
+                                margin: '3px'
+                              }}>{category.title}</Badge> ({category.products_count} products) - 
+                              {category.products_bound.map(product => <Badge color="success" style={{
+                                color: 'white',
+                                padding: '6px',
+                                height: '19px',
+                                margin: '3px'
+                              }}>{product.title}</Badge>)}
+                              </p>
                             </div>
                           )}
                           onChange={this.handleRLDDChange}

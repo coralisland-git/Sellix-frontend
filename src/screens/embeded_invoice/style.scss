@@ -72,11 +72,14 @@
   .float-logo {
     text-align: center;
     z-index: 99;
-    position: relative;
-    margin-bottom: -20px;
+    position: relative;    
   }
 
   .detail {
-    border-radius: 10px !important;
+    border-radius: 5px !important;
+  }
+
+  .embed-block {
+    width: 380px;
   }
 }

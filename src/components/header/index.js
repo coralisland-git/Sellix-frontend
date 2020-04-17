@@ -14,6 +14,7 @@ import PropTypes from 'prop-types'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
+import IntervalTimer from 'react-interval-timer';
 
 import {
   AppAsideToggler,
@@ -108,6 +109,13 @@ class Header extends Component {
                 }}>{notifications.length}</Badge></sup>
               }
             </DropdownToggle>
+
+            <IntervalTimer
+                    timeout={30000}
+                    callback={()=>{this.props.authActions.getSelfUser()}}
+                    enabled={true}
+                    repeat={true}
+                />
             
             <DropdownMenu right className="mt-2" style={{width: 300, maxHeight: 300, overflow: 'auto'}}>
               <DropdownItem>
@@ -121,8 +129,8 @@ class Header extends Component {
               </DropdownItem>
               
                 {notifications && notifications.length > 0? 
-                  notifications.map(notify => 
-                    <DropdownItem >
+                  notifications.map((notify, key) =>
+                    <DropdownItem key={key}>
                       <div className="notification-row">
                         <div className="d-flex justify-content-between align-items-end">
                           <p className="title mb-0">{notify.title}</p>

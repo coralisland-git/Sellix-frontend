@@ -76,7 +76,6 @@ class LogIn extends React.Component {
           let errMsg = err.status === 403 ? 'reCAPTCHA verification failed, please try again.' : 'Invalid Email or Password. Please try again.';
           tostifyAlert('error', errMsg)
           this.captcha.reset()
-          console.log(this.captcha)
       })
   }
 

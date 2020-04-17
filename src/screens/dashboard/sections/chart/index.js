@@ -1,117 +1,91 @@
-import React, {Component} from 'react'
-import { Line } from 'react-chartjs-2'
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips'
-import {
-  Card,
-  CardBody
-} from 'reactstrap'
-import moment from 'moment'
+import React, { PureComponent } from 'react';
+import { AreaChart, ResponsiveContainer, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 import './style.scss'
 
-class RevenueChart extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
-
-
-  componentDidMount(){
-
-  }
-
-  getBankAccountGraphData(account, dateRange){
-    // this.props.DashboardActions.getBankAccountGraphData(account, dateRange)
-  }
+class RevenueChart extends PureComponent {
 
   render() {
-    const data = this.props.data
 
-    const labels = data.map(d => `${d.day_value || d.month || d.year}`)
-    const values = data.map(d => d.revenue)
+    const { data } = this.props;
 
+    const days = data.map(({ day_value }) => day_value)
+    const months = data.map(({ month }) => month)
+    const years = data.map(({ year }) => year)
+    const revenues = data.map(({ revenue }) => revenue)
+    const orders = data.map(({ orders_count }) => orders_count)
 
-    const backOption = {
-      maintainAspectRatio: false,
-      // tooltips: {
-      //   enabled: false,
-      //   custom: CustomTooltips
-      // },
-      legend: {
-        display: false,
-        position: 'bottom'
-      },
-      elements: {
-        line: {
-          tension: 0, // disables bezier curves,
-        }
-      },
-      scales: {
-        xAxes: [{
-          gridLines: {
-            display: false,
-            borderDash: [2,3,4],
-          },
-          ticks: {
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      },
-      layout: {
-        padding: {
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0
-        }
+    let dataset = [];
+
+    days.map((day, key) => {
+      dataset.push({
+        day: day,
+        revenue: revenues[key],
+        month: months[key],
+        year: years[key],
+        order: orders[key],
+      })
+    });
+
+    const CustomTooltip = ({ active, payload }) => {
+      if (active) {
+
+        let { day, month, year } = payload[0].payload;
+
+        return (
+            <div className={"custom-tooltip"}>
+              <p className="label"><b>{day} {month} {year}</b></p>
+              <p className="intro">Revenue: <b>{payload[0].value}</b></p>
+              <p className="intro">Order: <b>{payload[1].value}</b></p>
+            </div>
+        );
       }
-    }
 
-    const line = {
-      labels:  labels,
-      datasets: [
-        {
-          label: [],
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: 'white',
-          borderColor: '#613BEA',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: 'white',
-          pointBackgroundColor: '#613BEA',
-          pointBorderWidth: 2,
-          pointHoverRadius: 6,
-          pointHoverBackgroundColor: '#613BEA',
-          pointHoverBorderColor: 'white',
-          pointHoverBorderWidth: 2,
-          pointRadius: 4,
-          pointHitRadius: 20,
-          data: values,
-        }
-      ]
-    }
+      return null;
+    };
 
     return (
-      <div className="animated fadeIn">
-        <Card className="bank-card mb-0">
-          <CardBody className="p-0">
-            <div className="flex-wrapper">
-              <div className="chart-wrapper" style={{width: '100%', height: this.props.height}}>
-                <Line data={line} options={backOption} datasetKeyProvider={() => {return Math.random()}}/>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-      </div>
+        <ResponsiveContainer width={"100%"} height={350}>
+          <AreaChart height={350} data={dataset} margin={{ top: 10, right: 0, left: -30, bottom: 0 }} >
+            <defs>
+              <linearGradient id="fillPurple" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0" stopColor="#613BEA" stopOpacity={1} />
+                <stop offset="100%" stopColor="#613BEA" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="fillBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0" stopColor="#007eff" stopOpacity={1} />
+                <stop offset="100%" stopColor="#007eff" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="0 0" vertical={false} />
+            <XAxis stroke={"#e8e8e8"} axisLine={{ stroke: "#666" }} tick={{ fontSize: 12, fill: '#666' }} dataKey="day" />
+            <YAxis stroke={"#e8e8e8"} axisLine={{ stroke: "#666" }} tick={{ fontSize: 12, fill: '#666' }}  />
+            <Tooltip cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: "5 5" }} content={CustomTooltip}/>
+            <Area
+                strokeWidth={2}
+                type="monotone"
+                dataKey="order"
+                stackId="2"
+                stroke="#007eff"
+                fill="url(#fillBlue)"
+                fillOpacity={0.7}
+                isAnimationActive={false}
+                activeDot={{ r: 6 }}
+            />
+            <Area
+                strokeWidth={2}
+                type="monotone"
+                dataKey="revenue"
+                stackId="2"
+                stroke="#613BEA"
+                fill="url(#fillPurple)"
+                fillOpacity={0.7}
+                isAnimationActive={false}
+                activeDot={{ r: 6 }}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
     )
   }
 }

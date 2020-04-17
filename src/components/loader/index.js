@@ -1,10 +1,13 @@
 import React from 'react'
+import Dark from '../../assets/images/loader_logo_dark.svg'
+import Light from '../../assets/images/loader_logo_light.svg'
 
-export default function Loader () {
-  return (
-    <div className="sk-double-bounce loader">
-      <div className="sk-child sk-double-bounce1"></div>
-      <div className="sk-child sk-double-bounce2"></div>
+const Loader = () => (
+    <div className="custom-loader">
+        <div className="custom-loader-bounce1" />
+        <img src={window.localStorage.getItem('theme') === 'dark' ? Light : Dark} alt="" />
+        <div className="custom-loader-bounce2" />
     </div>
-  )
-}
+);
+
+export default Loader;

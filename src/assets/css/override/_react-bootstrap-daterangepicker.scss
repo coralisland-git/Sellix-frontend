@@ -11,12 +11,24 @@
   height: 45px;
   background-color: #FCFCFE;
   border: 1px solid #F5F5F5;
+
+  & > i {
+    color: #5c6873 !important;
+  }
+}
+
+.dark .datepicker2 > i {
+  color: #b3adbb !important;
+}
+
+.dark .react-bootstrap-daterangepicker-container button {
+  color: #b3adbb !important;
 }
 
 .react-bootstrap-daterangepicker-container {
   button {
     margin-right: 0 !important;
-    color: #A7A5B4 !important;
+    color: #5c6873 !important;
     padding: 0 !important;
     height: 40px;
     min-height: 0 !important;
