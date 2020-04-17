@@ -11,7 +11,6 @@ import { getAnalyticsData } from './actions'
 
 import './style.scss'
 
-
 const mapDispatchToProps = dispatch => ({
   getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch)
 })
@@ -134,7 +133,8 @@ class Dashboard extends React.Component {
       revenueProgress,
       ordersProgress,
       viewsProgress,
-      queriesProgress
+      queriesProgress,
+      range
     } = this.state
 
     return (
