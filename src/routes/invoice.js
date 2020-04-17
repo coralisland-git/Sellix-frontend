@@ -5,7 +5,7 @@ import {
   
   const invoiceRoutes = [
     {
-      path: '/invoice/embed/:id',
+      path: '/ivembed/:id',
       name: 'EmbedInvoice',
       component: EmbededInvoice.screen
     },
