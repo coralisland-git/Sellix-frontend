@@ -11,7 +11,6 @@ import { getAnalyticsData } from './actions'
 
 import './style.scss'
 
-
 const mapDispatchToProps = dispatch => ({
   getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch)
 })
@@ -116,21 +115,6 @@ class Dashboard extends React.Component {
           })
     }
 
-  }
-
-  getDataKey() {
-    const { range } = this.state
-
-    if(DATE_RANGES[range][2] == 'daily')
-      return 'day'
-    
-    if(DATE_RANGES[range][2] == 'monthly')
-      return 'month'
-
-    if(DATE_RANGES[range][2] == 'yearly')
-      return 'year'
-
-    return 'day'
   }
 
   componentDidMount() {
@@ -263,7 +247,7 @@ class Dashboard extends React.Component {
                     </Row>
                     <CardBody className="mt-2">
                       <h5 className="mb-4">Revenues & Orders</h5>
-                      <DashBoardChart height="350px" data={chartData} datakey={this.getDataKey()}/>
+                      <DashBoardChart height="350px" data={chartData}/>
                     </CardBody>
                   </div>
               }
