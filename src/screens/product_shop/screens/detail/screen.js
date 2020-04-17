@@ -264,7 +264,7 @@ class ShopProductDetail extends React.Component {
             </Row>
           :
           <div className="purchase-card ml-auto mr-auto">
-            <Row className="p-3">
+            <Row className="pr-3 pl-3 pt-0">
               <Col lg={12} className="ml-auto mr-auto">
                 <Row>
                   <Col md={8}>
@@ -276,7 +276,7 @@ class ShopProductDetail extends React.Component {
                   </Col>
                   <Col md={4} className="left-bar" id="affix-bar">
                     <div className="d-sm-down-none" >
-                      <Affix offsetTop={100} container='affix-bar'>
+                      <Affix offsetTop={80} container='affix-bar'>
                         <Card className="bg-white">
                         {
                           gateway?
@@ -401,8 +401,8 @@ class ShopProductDetail extends React.Component {
                                     </Form> )}
                                 </Formik>
                             </div>:
-                            <div className="p-3 pt-2 pb-2 mb-2">
-                              <div className="d-flex justify-content-between align-items-center mb-4">
+                            <div className="p-3 pt-2 pb-2">
+                              <div className="d-flex justify-content-between align-items-center mb-3">
                                 <h4 className="mt-2 grey">Purchase</h4>
                                 <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
                               </div>
@@ -410,26 +410,28 @@ class ShopProductDetail extends React.Component {
                                 <h3>{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</h3>
                                 <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                                   onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
-                                {showPaymentOptions && paymentoptions.map(option => {
-                                  if(option != '') return(
-                                  <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
-                                    onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
-                                    style={{width: 170}}>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                      <div>
-                                        <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
-                                        {PAYMENT_LABELS[option]}
+                                <div>
+                                  {showPaymentOptions && paymentoptions.map(option => {
+                                    if(option != '') return(
+                                    <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
+                                      onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
+                                      style={{width: 170}}>
+                                      <div className="d-flex justify-content-between align-items-center">
+                                        <div>
+                                          <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
+                                          {PAYMENT_LABELS[option]}
+                                        </div>
+                                        <div><i className="fas fa-xs fa-chevron-right"/></div>
                                       </div>
-                                      <div>></div>
-                                    </div>
-                                  </Button>  
+                                    </Button>  
+                                    )}
                                   )}
-                                )}
-                                
+                                </div>
                                 <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
-                                  <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>-</span>
-                                  <span style={{fontSize: 18}} className="ml-3 mr-3">{quantity}</span>
-                                  <span onClick={this.increaseCount.bind(this)}>+</span>
+                                  <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>
+                                    <i className="fas fa-minus"></i></span>
+                                  <span style={{fontSize: 20, minWidth: 25}} className="ml-3 mr-3">{quantity}</span>
+                                  <span onClick={this.increaseCount.bind(this)}><i className="fas fa-plus"></i></span>
                                 </div>
                                 {openCoupon?
                                   <div className="mt-3">
@@ -595,8 +597,8 @@ class ShopProductDetail extends React.Component {
                                     </Form> )}
                                 </Formik>
                             </div>:
-                            <div className="p-3 pt-2 pb-2 mb-2">
-                              <div className="d-flex justify-content-between align-items-center mb-4">
+                            <div className="p-3 pt-2 pb-2">
+                              <div className="d-flex justify-content-between align-items-center mb-2">
                                 <h4 className="mt-2 grey">Purchase</h4>
                                 <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
                               </div>
@@ -614,16 +616,17 @@ class ShopProductDetail extends React.Component {
                                         <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
                                         {PAYMENT_LABELS[option]}
                                       </div>
-                                      <div>></div>
+                                      <div><i className="fas fa-xs fa-chevron-right"/></div>
                                     </div>
                                   </Button>  
                                   )}
                                 )}
                                 
                                 <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
-                                  <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>-</span>
-                                  <span style={{fontSize: 18}} className="ml-3 mr-3">{quantity}</span>
-                                  <span onClick={this.increaseCount.bind(this)}>+</span>
+                                  <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>
+                                    <i className="fas fa-minus"></i></span>
+                                  <span style={{fontSize: 20, minWidth: 25}} className="ml-3 mr-3">{quantity}</span>
+                                  <span onClick={this.increaseCount.bind(this)}><i className="fas fa-plus"></i></span>
                                 </div>
                                 {openCoupon?
                                   <div className="mt-3">

@@ -100,7 +100,7 @@ class DefaultLayout extends React.Component {
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">
-              <AppHeader fixed>
+              <AppHeader fixed className="border-bottom">
                 <Suspense fallback={Loading()}>
                   <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
                 </Suspense>

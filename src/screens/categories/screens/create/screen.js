@@ -135,7 +135,7 @@ class CreateCategories extends React.Component {
                 .required('Products is required'),
               sort_priority: Yup.number()
                 .required("Sort Priority is required"),
-              unlisted: Yup.number()
+              unlisted: Yup.boolean()
             })}>
               {props => (
                 <Form onSubmit={props.handleSubmit}>
@@ -221,7 +221,7 @@ class CreateCategories extends React.Component {
                             </Col>
                           </Row>
                           <Row>
-                            <Col lg={2}>
+                            <Col lg={12}>
                               <FormGroup check inline className="mb-3">
                                   <div className="custom-checkbox custom-control">
                                     <input 
@@ -230,9 +230,9 @@ class CreateCategories extends React.Component {
                                       id="inline-radio1"
                                       name="SMTP-auth"
                                       onChange={(e) => {
-                                        props.handleChange('unlisted')(e.target.checked?1:0)
+                                        props.handleChange('unlisted')(e.target.checked)
                                       }}
-                                      checked={props.values.unlisted === 0?false:true}
+                                      checked={props.values.unlisted}
                                     />
                                     <label className="custom-control-label" htmlFor="inline-radio1">
                                       Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
