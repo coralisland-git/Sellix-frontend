@@ -63,13 +63,13 @@ export default class Charts extends PureComponent {
           <ResponsiveContainer width={"100%"} height={height}>
             <AreaChart height={height} data={dataset} margin={{ top: 10, right: 0, left: -30, bottom: 0 }} >
               <defs>
-                <linearGradient id="fill" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="fillPurple" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0" stopColor="#613BEA" stopOpacity={1} />
                   <stop offset="100%" stopColor="#613BEA" stopOpacity={0} />
                 </linearGradient>
-                <linearGradient id="fill2" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0" stopColor="#2BB224" stopOpacity={1} />
-                  <stop offset="100%" stopColor="#2BB224" stopOpacity={0} />
+                <linearGradient id="fillBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0" stopColor="#007eff" stopOpacity={1} />
+                  <stop offset="100%" stopColor="#007eff" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="0 0" vertical={false} />
@@ -78,33 +78,33 @@ export default class Charts extends PureComponent {
               <Tooltip cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: "5 5" }} content={CustomTooltip}/>
 
               {isRevenue &&
+              <Area
+                  isAbove
+                  strokeWidth={2}
+                  type="monotone"
+                  dataKey="order"
+                  stackId="3"
+                  stroke="#007eff"
+                  fill="url(#fillBlue)"
+                  fillOpacity={0.7}
+                  isAnimationActive={false}
+                  activeDot={{ r: 6 }}
+              />
+              }
+              {isRevenue &&
                 <Area
                     strokeWidth={2}
                     type="monotone"
                     dataKey="revenue"
-                    stackId="2"
-                    stroke="#2BB224"
-                    fill="url(#fill2)"
+                    stackId="3"
+                    stroke="#613BEA"
+                    fill="url(#fillPurple)"
                     fillOpacity={0.7}
                     isAnimationActive={false}
                     activeDot={{ r: 6 }}
                 />
               }
 
-              {isRevenue &&
-              <Area
-                  isAbove
-                  strokeWidth={2}
-                  type="monotone"
-                  dataKey="order"
-                  stackId="2"
-                  stroke="#613BEA"
-                  fill="url(#fill)"
-                  fillOpacity={0.7}
-                  isAnimationActive={false}
-                  activeDot={{ r: 6 }}
-              />
-              }
               {isView &&
               <Area
                   strokeWidth={2}
