@@ -265,10 +265,27 @@ class EmbededPayment extends React.Component {
       optParam
     } = this.state
     
-    let custom_fields = []
+    var is_many = paymentoptions.length > 4 ? true : false
+    let custom_fields = []    
 
     if(product_info && product_info.custom_fields)
-      custom_fields = JSON.parse(product_info.custom_fields)['custom_fields']
+      var temp_custom_fields = JSON.parse(product_info.custom_fields)['custom_fields']
+      var embed_fields = Object.keys(this.state.custom_fields);
+      if(temp_custom_fields){
+        for(var i=0;i<temp_custom_fields.length;i++){
+          var field = temp_custom_fields[i];
+          var is_exist = false
+          for(var j=0;j<embed_fields.length;j++){
+            var e_field = embed_fields[j];
+            if(e_field.toLowerCase() == field['name'].toLowerCase()){
+              is_exist = true
+              break
+            }
+          }
+          if(!is_exist)
+            custom_fields.push(field)
+        }
+      }
 
     return (
       <div className="embeded-payment-screen">
@@ -454,7 +471,35 @@ class EmbededPayment extends React.Component {
                             <p className="grey text-center desc">Select payment method</p>
                             <span></span>
                           </div>
-                          {paymentoptions.map(option => {
+                          { is_many?
+                            paymentoptions.map(option => {
+                            if(option != '') return(
+                            <Button className="pay-button many p-2" 
+                              key={option} >
+                              <div className="d-flex justify-content-between align-items-center">
+                                <div>
+                                  <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
+                                  {PAYMENT_LABELS[option]}
+                                </div>
+                                <label className="custom-checkbox custom-control payment-checkbox ">
+                                  <input 
+                                    className="custom-control-input"
+                                    type="checkbox"
+                                    id={option}
+                                    name="SMTP-auth"
+                                    onChange={(e) => {
+                                      this.setState({optParam : PAYMENT_LABELS[option]})
+                                    }}
+                                    checked={ optParam === PAYMENT_LABELS[option] }
+                                  />
+                                  <label className="custom-control-label" htmlFor={option}>
+                                  </label>
+                                </label>
+                              </div>
+                            </Button>
+                            )})
+                            :
+                            paymentoptions.map(option => {
                             if(option != '') return(
                             <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
                               key={option} >
@@ -479,8 +524,8 @@ class EmbededPayment extends React.Component {
                                 </label>
                               </div>
                             </Button>
-                            )}
-                          )}
+                            )})
+                          }
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                             onClick={(e) => this.setPaymentOptions(e, optParam)}>Continue</Button>
                           </>
