@@ -54,7 +54,7 @@ class CreateCategories extends React.Component {
         title: '',
         unlisted: 0,
         products_bound: '',
-        image: null,
+        image: '',
         sort_priority: 0
       },
       files: [],
@@ -204,16 +204,7 @@ class CreateCategories extends React.Component {
                               </FormGroup>
                             </Col>
                           </Row>
-                          <Row>
-                            <Col lg={12}>
-                              <FormGroup className="mb-3">
-                                <Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
-                                <ImageUpload addFile={(file) => {
-                                  props.handleChange('image')(file[0]); 
-                                  this.addFile(file)}} files={files}/>
-                              </FormGroup>
-                            </Col>
-                          </Row>
+                          
                           <Row>
                             <Col lg={2}>
                               <FormGroup className="mb-3">

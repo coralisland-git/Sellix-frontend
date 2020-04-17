@@ -228,17 +228,7 @@ class EditCategory extends React.Component {
                                   </FormGroup>
                                 </Col>
                               </Row>
-                              <Row>
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
-                                    <ImageUpload addFile={(file) => {
-                                      
-                                      props.handleChange('image')(file.length>0?file[0]:null); 
-                                      this.addFile(file)}} files={files} files={files}/>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
+                          
                               <Row>
                                 <Col lg={2}>
                                   <FormGroup className="mb-3">
