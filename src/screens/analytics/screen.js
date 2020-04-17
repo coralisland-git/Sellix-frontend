@@ -11,10 +11,7 @@ import {
 import config from 'constants/config'
 
 import {
-  RevenueChart,
-  ViewsChart,
-  ConverstionChart,
-  OrdersChart,
+  Charts,
   RevenueMap
 } from './sections'
 import { Loader } from 'components'
@@ -193,7 +190,7 @@ class Analytics extends React.Component {
                       <CardBody className="p-4">
                         <p className="report-title mb-4">Revenue</p>
                         <div className="d-flex justify-content-between align-items-center">
-                          <NumberFormat value={totalRevenue} 
+                          <NumberFormat value={totalRevenue}
                             displayType={'text'} 
                             thousandSeparator={true} 
                             prefix={'$'} 
@@ -201,13 +198,13 @@ class Analytics extends React.Component {
 
                           <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
                         </div>
-                        <div class="progress-xs mt-3 progress">
+                        <div className="progress-xs mt-3 progress">
                           <div 
-                            className={`progress-bar ${revenueProgress>0?'bg-success':(revenueProgress==0?'bg-warning':'bg-danger')}`} 
+                            className={`progress-bar ${revenueProgress > 0 ? 'bg-success' : (revenueProgress==0?'bg-warning':'bg-danger')}`}
                             role="progressbar" 
-                            style={{width: `${revenueProgress==0?1:Math.abs(revenueProgress)}%`}}
+                            style={{width: `${revenueProgress == 0 ? 1 : Math.abs(revenueProgress)}%`}}
                             aria-valuemin="0" 
-                            aria-valuemax="100"></div>
+                            aria-valuemax="100" />
                         </div>
                       </CardBody>
                     </Card>
@@ -220,13 +217,13 @@ class Analytics extends React.Component {
                           <h3 className="text-primary mb-0">{totalOrders}</h3>
                           <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
                         </div>
-                        <div class="progress-xs mt-3 progress">
+                        <div className="progress-xs mt-3 progress">
                           <div 
                             className={`progress-bar ${ordersProgress>0?'bg-success':(ordersProgress==0?'bg-warning':'bg-danger')}`} 
                             role="progressbar" 
-                            style={{width: `${ordersProgress==0?1:Math.abs(ordersProgress)}%`}}
+                            style={{width: `${ordersProgress == 0 ? 1 : Math.abs(ordersProgress)}%`}}
                             aria-valuemin="0" 
-                            aria-valuemax="100"></div>
+                            aria-valuemax="100" />
                         </div>
                       </CardBody>
                     </Card>
@@ -239,13 +236,13 @@ class Analytics extends React.Component {
                           <h3 className="text-primary mb-0">{totalViews}</h3>
                           <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
                         </div>
-                        <div class="progress-xs mt-3 progress">
+                        <div className="progress-xs mt-3 progress">
                           <div 
                             className={`progress-bar ${viewsProgress>0?'bg-success':(viewsProgress==0?'bg-warning':'bg-danger')}`} 
                             role="progressbar" 
-                            style={{width: `${viewsProgress == 0?1:Math.abs(viewsProgress)}%`}}
+                            style={{width: `${viewsProgress == 0 ? 1 : Math.abs(viewsProgress)}%`}}
                             aria-valuemin="0" 
-                            aria-valuemax="100"></div>
+                            aria-valuemax="100" />
                         </div>
                       </CardBody>
                     </Card>
@@ -256,49 +253,42 @@ class Analytics extends React.Component {
                         <p className="report-title mb-4">Queries</p>
                         <div className="d-flex justify-content-between align-items-center">
                           <h3 className="text-primary mb-0">{totalQueries}</h3>
-                          <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress>=0} />
+                          <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress >= 0} />
                         </div>
-                        <div class="progress-xs mt-3 progress">
+                        <div className="progress-xs mt-3 progress">
                           <div 
-                            className={`progress-bar ${queriesProgress>0?'bg-success':(queriesProgress==0?'bg-warning':'bg-danger')}`} 
+                            className={`progress-bar ${queriesProgress > 0 ? 'bg-success' : (queriesProgress == 0?'bg-warning':'bg-danger')}`}
                             role="progressbar" 
-                            style={{width: `${queriesProgress == 0?1:Math.abs(queriesProgress)}%`}}
+                            style={{width: `${queriesProgress == 0 ? 1 : Math.abs(queriesProgress)}%`}}
                             aria-valuemin="0" 
-                            aria-valuemax="100"></div>
+                            aria-valuemax="100" />
                         </div>
                       </CardBody>
                     </Card>
                   </Col>
                 </Row>
-                <div className="chart row row mt-2 mb-2">
+
+                <div className="chart row row mt-4 mb-5">
                   <Col lg={12}>
-                    <label>Revenue</label>
+                    <label>Revenues & Orders</label>
                     <hr/>
-                    <RevenueChart height="350px" data={chartData}/>
+                    <Charts height={350} data={chartData} isRevenue />
                   </Col>
                 </div>
 
-                <div className="chart row row mt-2 mb-2">
+                <div className="chart row row mt-4 mb-5">
                   <Col lg={12}>
                     <label>Views</label>
                     <hr/>
-                    <ViewsChart height="350px" data={chartData}/>
+                    <Charts height={350} data={chartData} isView />
                   </Col>
                 </div>
 
-                <div className="chart row row mt-2 mb-2">
-                  <Col lg={12}>
-                    <label>Orders</label>
-                    <hr/>
-                    <OrdersChart height="350px" data={chartData}/>
-                  </Col>
-                </div>
-
-                <div className="chart row mt-2 mb-2">
+                <div className="chart row mt-4 mb-5">
                   <Col lg={12}>
                     <label>Queries</label>
                     <hr/>
-                    <ConverstionChart height="350px" data={chartData}/>
+                    <Charts height={350} data={chartData} isQuery />
                   </Col>
                 </div>
 
@@ -366,11 +356,7 @@ class Analytics extends React.Component {
                                   <Col md={3} key={index}>
                                     <Card className="grey p-0" onClick={(e) => this.gotoDetail(e, pro.uniqid)} style={{cursor: 'pointer'}}>
                                       <CardBody>
-                                        <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
-                                          style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, 
-                                                  opacity: pro.image_attachment ? 1 : 0, objectFit: 'contain'}}
-                                          alt=""
-                                          width="100%" height="150"/>
+                                        <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, opacity: pro.image_attachment ? 1 : 0, objectFit: 'contain' }} alt="" width="100%" height="150" />
                                         <div className="p-3"  style={{position: 'relative', top: '15px'}}>
                                           <h5 className="mb-3 text-black">{pro.product}</h5>
                                           <div className="d-flex justify-content-between mt-3 mb-2">
@@ -411,12 +397,8 @@ class Analytics extends React.Component {
                                   <Col md={3} key={index}>
                                     <Card className="grey p-0" onClick={(e) => this.gotoDetail(e, pro.uniqid)} style={{cursor: 'pointer'}}>
                                       <CardBody>
-                                        <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
-                                          style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, 
-                                                  opacity: pro.image_attachment ? 1 : 0, objectFit: 'contain'}}
-                                          alt=""
-                                          width="100%" height="150"/>
-                                        <div className="p-3"  style={{position: 'relative', top: '15px'}}>
+                                        <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, opacity: pro.image_attachment ? 1 : 0, objectFit: 'contain'}} alt="" width="100%" height="150" />
+                                        <div className="p-3" style={{ position: 'relative', top: '15px' }}>
                                           <h5 className="mb-3 text-black">{pro.product}</h5>
                                           <div className="d-flex justify-content-between mt-3 mb-2">
                                             <span className="stock">Orders: <span className="stock-size">

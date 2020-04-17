@@ -70,6 +70,7 @@
     "react-time-ago": "^5.0.7",
     "react-toastify": "^5.2.1",
     "reactstrap": "^8.0.0",
+    "recharts": "^1.8.5",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
