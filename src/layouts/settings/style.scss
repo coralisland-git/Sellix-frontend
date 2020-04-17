@@ -10,7 +10,7 @@
     }
   
     .nav-link {
-      font-family: "Poppins";
+      font-family: var(--font-family-sans-serif);
       font-weight: 600;
       font-size: 15px;
     }
@@ -18,7 +18,6 @@
     background-color: #F6F4FF;
   
     .app-header {
-      border-bottom: none;
       // border-radius: 10px;
       // padding: 20px 10px;
       // height: 100px;
@@ -107,7 +106,8 @@
       }
       .nav-link {
         padding: 0 1rem !important;
-        font-family: Poppins-SemiBold !important;
+        font-family: var(--font-family-sans-serif);
+        font-weight: 600;
         color: #A7A5B4;
         display: flex;
         align-items: center;

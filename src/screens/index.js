@@ -54,10 +54,12 @@ import Notification from './notification'
 import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
+import ShopDesign from './shop_design'
 
 import GeneralSettings from './general_settings'
 import Customization from './customization'
 import EmbededPayment from './embeded_payment'
+import EmbededInvoice from './embeded_invoice'
 
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
@@ -123,9 +125,11 @@ export {
   MemberPage,
   Billings,
   GeneralSettings,
+  ShopDesign,
   Notification,
   Customization,
   EditBlacklist,
 
-  EmbededPayment
+  EmbededPayment,
+  EmbededInvoice
 }

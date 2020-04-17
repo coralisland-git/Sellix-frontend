@@ -96,20 +96,17 @@ class DefaultLayout extends React.Component {
     }
 
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
-    const is_embeded = this.props.location.pathname.includes('/payment/embed/')?true:false
+    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false    
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">
-              {!is_embeded && (
-                <AppHeader fixed>
-                  <Suspense fallback={Loading()}>
-                    <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
-                  </Suspense>
-                </AppHeader>
-              )}
+              <AppHeader fixed>
+                <Suspense fallback={Loading()}>
+                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
+                </Suspense>
+              </AppHeader>
               <div className="app-body mt-5 mb-5 pt-5">
                   <Container className="p-0 pt-3" fluid>
                     <Suspense fallback={Loading()}>

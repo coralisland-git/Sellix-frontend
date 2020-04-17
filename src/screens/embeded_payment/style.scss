@@ -48,7 +48,7 @@
     margin: auto;
     background-color: #efefef;
     width: 72px;    
-    border-radius: 10px;
+    border-radius: 3px;
     padding: .75rem 2.5rem;
   }
 
@@ -60,6 +60,7 @@
   .desc {
     line-height: 1.6rem;
     margin: auto;
+    text-align: left !important;
   }
 
   .grey {
@@ -93,24 +94,27 @@
       background: #D6E6FF;
       color: #27346A !important;
       font-size: 10px !important;
-      font-family: 'Poppins-semiBold' !important;
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
     }
   }
 
   .stock-info {
     background-color: #E4D6FF;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding-bottom: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding-bottom: 5px;
 
     .bold {
-      font-family: 'Poppins-SemiBold';
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
     }
   }
 
   .stock-stop {
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;    
+    border-radius : 5px !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
   }
 
   .detail {
@@ -121,7 +125,7 @@
   }
 
   .logo {
-    width: 135px;
+    width: 153px;
     position: relative;
     top: -23px;
   }
@@ -132,5 +136,9 @@
 
   .custom-checkbox .custom-control-label::before {
     border-radius: 0.5rem !important;
+  }
+
+  .embed-block {
+    width: 380px;
   }
 }

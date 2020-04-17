@@ -3,8 +3,10 @@ import {
   UserLayout,
   ShopLayout,
   PaymentLayout,
+  EmbedLayout,
   SettingsLayout,
   InvoiceLayout,
+  EmbedInvoiceLayout,
   ProductLayout,
   LandingLayout
 } from 'layouts'
@@ -20,7 +22,9 @@ const mainRoutes = [
   { path: `/settings`,  name: 'SettingsLayout', component: SettingsLayout },
 
 
-  { path: '/payment', name: 'PaymentLayout', component: PaymentLayout },
+  { path: '/payment/embed', name: 'EmbedLayout', component: EmbedLayout },
+  //{ path: '/payment', name: 'PaymentLayout', component: PaymentLayout },
+  { path: '/ivembed', name: 'EmbedInvoiceLayout', component: EmbedInvoiceLayout },
   { path: '/invoice', name: 'InvoiceLayout', component: InvoiceLayout },
   { path: '/product', name: 'ProductLayout', component: ProductLayout },
 
@@ -36,6 +40,7 @@ const mainRoutes = [
   // Fees, terms
   { path: '/fees', name: 'LandingLayout', component: LandingLayout },
   { path: '/terms', name: 'LandingLayout', component: LandingLayout },
+  { path: '/404', name: 'LandingLayout', component: LandingLayout },
 
   // Shop
   { path: `/:username`, name: 'ShopLayout', component: ShopLayout },

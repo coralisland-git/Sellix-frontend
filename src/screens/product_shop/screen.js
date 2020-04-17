@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createBrowserHistory } from 'history'
+import TextEllipsis from 'react-text-ellipsis';
 import config from 'constants/config'
 import {
   Card,
@@ -20,26 +20,13 @@ import shop_brand from 'assets/images/brand/shop_brand.png'
 
 import * as ProductActions from './actions'
 import './style.scss'
-
-
-
-const CURRENCY_LIST = { 
-  'USD': '$',
-  'EUR': '€',
-  'AUD': '$',
-  'GBP': '£',
-  'JPY': '¥',
-  'CAD': '$',
-  'CHF': '₣',
-  'CNY': '¥',
-  'SEK': 'kr',
-  'NZD': '$'
-}
+import { productCard } from './productCard'
 
 const mapStateToProps = (state) => {
   return ({
     user_categories: state.common.user_categories,
-    user_products: state.common.user_products
+    user_products: state.common.user_products,
+    user: state.common.general_info,
   })
 }
 
@@ -119,7 +106,6 @@ class ShopProducts extends React.Component {
     })
   }
 
-
   searchProducts(products) {
     const { search_key } = this.state
     const search_fields = ['title', 'stock']
@@ -136,7 +122,7 @@ class ShopProducts extends React.Component {
 
   render() {
     const { loading, filter, search_key } = this.state
-    const { user_categories, user_products } = this.props
+    const { user_categories, user_products, user } = this.props
 
     const all_products = search_key?this.searchProducts(user_products):user_products
 
@@ -144,7 +130,7 @@ class ShopProducts extends React.Component {
       <div className="shop-product-screen">
         <div className="animated fadeIn">
           <Card className="grey">
-            <CardHeader>
+            <CardHeader className="pb-1 pt-3">
               <Row>
                 {
                   user_categories.length !=0 && 
@@ -158,18 +144,20 @@ class ShopProducts extends React.Component {
                       }
                     </Col>
                 }
-                
-                <Col md={12} className="mb-3">
-                  <div className="d-flex justify-content-start">
-                    <div className="searchbar white w-100">
-                      <i className="fas fa-search"/>
-                      <Input placeholder="Search for a product..." 
-                        className="header-search-input"
-                        onChange={e => {this.setState({search_key: e.target.value})}}
-                      ></Input>
-                    </div>
-                  </div>
-                </Col>
+                {
+                  user.shop_search_enabled == '1' && 
+                    <Col md={12} className="mb-4">
+                      <div className="d-flex justify-content-start">
+                        <div className="searchbar white w-100">
+                          <i className="fas fa-search"/>
+                          <Input placeholder="Search for a product..." 
+                            className="header-search-input"
+                            onChange={e => {this.setState({search_key: e.target.value})}}
+                          ></Input>
+                        </div>
+                      </div>
+                    </Col>
+                }
               </Row>
             </CardHeader>
             <CardBody className="p-0">
@@ -184,23 +172,8 @@ class ShopProducts extends React.Component {
                   <Row>
                     {
                       all_products.map((pro, index) => 
-                        <Col md={3} key={index}>
-                          <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.uniqid)}>
-                            <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
-                              style={{borderTopLeftRadius: 3, borderTopRightRadius: 3, 
-                                      opacity: pro.image_attachment ? 1 : 0}}
-                              alt=""
-                              width="100%" height="150"/>
-                            <div className="p-3">
-                              <h5 className="mb-3 text-black">{pro.title}</h5>
-                              <div className="d-flex justify-content-between mt-3 mb-2">
-                                <span className="price">{`${CURRENCY_LIST[pro.currency]}${pro.price_display}`}</span>
-                                <span className="stock">Stock: <span className="stock-size">
-                                {pro.type == 'file'?(pro.file_stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.file_stock):(pro.stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.stock) || 0}
-                                </span></span>
-                              </div>
-                            </div> 
-                          </Card>
+                        <Col md={3} key={index} className="mb-4">
+                          {productCard(pro, index, (e) => this.gotoDetail(e, pro.uniqid))}
                         </Col>
                       )
                     }

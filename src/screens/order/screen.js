@@ -63,6 +63,7 @@ class Order extends React.Component {
     super(props)
     this.state = {
       loading: true,
+      search_key: null
     }
 
     this.initializeData = this.initializeData.bind(this)
@@ -95,7 +96,7 @@ class Order extends React.Component {
     return (
       <div>
         <p><a onClick={(e) => this.gotoDetail(e, row.uniqid)}>
-          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`}>
+          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
             </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
         <p className="caption">{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
@@ -123,18 +124,34 @@ class Order extends React.Component {
   renderOrderTime(cell, row) {
     return (
       <div>
-        <p>{new moment(new Date(row.created_at*1000)).format('ddd MM')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
         <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
       </div>
     )  
   }
 
+
+  searchOrders(products) {
+    const { search_key } = this.state
+    const search_fields = ['customer_email', 'total_display', 'uniqid', 'gateway', 'status']
+
+    const data = products.filter(product => {
+      for(let i=0; i<search_fields.length; i++)
+        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase()))
+          return true
+      return false
+    })
+
+    return data
+  }
+
   render() {
 
-    const { loading } = this.state
-    const { order_list } = this.props
+    const { loading, search_key } = this.state
+    let { order_list } = this.props
 
-    console.log(order_list)
+    if(search_key)
+      order_list = this.searchOrders(order_list)
 
     return (
       <div className="order-screen">
@@ -149,7 +166,12 @@ class Order extends React.Component {
                   <div className="d-flex justify-content-end">
                     <div className="searchbar white">
                       <i className="fas fa-search"/>
-                      <Input placeholder="Search..." className="header-search-input"></Input>
+                      <Input placeholder="Search..." 
+                        className="header-search-input"
+                        onChange={(e) => {
+                          this.setState({search_key: e.target.value})
+                        }}
+                      ></Input>
                     </div>
                   </div>
                 </Col>
@@ -169,7 +191,7 @@ class Order extends React.Component {
                       <div>
                         <BootstrapTable
                           options={{...tableOptions(), onRowClick: (row) => {
-                            this.gotoDetail(null, row.uniqid)}
+                            this.gotoDetail(null, row.uniqid)}, sizePerPage: 15
                           }}
                           data={order_list}
                           version="4"
@@ -180,7 +202,7 @@ class Order extends React.Component {
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="uniqid"
+                            dataField="customer_email"
                             dataFormat={this.renderOrderInfo}
                             dataSort
                             width='45%'
@@ -197,7 +219,7 @@ class Order extends React.Component {
                             Status
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="value"
+                            dataField="total_display"
                             dataAlign="center"
                             dataSort
                             dataFormat={this.renderOrderValue}
@@ -206,7 +228,7 @@ class Order extends React.Component {
                             Value
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="datetime"
+                            dataField="created_at"
                             dataAlign="right"
                             dataFormat={this.renderOrderTime}
                             dataSort

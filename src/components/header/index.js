@@ -70,12 +70,15 @@ class Header extends Component {
           full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
         />
         <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
-          <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
-            <div className="searchbar">
-              <i className="fas fa-search"/>
-              <Input placeholder="Search..." className="header-search-input"></Input>
-            </div>
-          </NavItem>
+          {
+            !isShop && 
+              <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
+                <div className="searchbar">
+                  <i className="fas fa-search"/>
+                  <Input placeholder="Search..." className="header-search-input"></Input>
+                </div>
+            </NavItem>
+          }
           <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-3 mr-3">
             <DropdownToggle className="user-name" nav>
               <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}}></i>
@@ -161,7 +164,7 @@ class Header extends Component {
                       Your Shop
                     </DropdownItem>
                   }
-                  <DropdownItem onClick={() => this.props.history.push(`/settings`)}>
+                  <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
                     Settings
                   </DropdownItem>
                   <DropdownItem onClick={this.setTheme.bind(this)}>

@@ -78,23 +78,6 @@ class Product extends React.Component {
     this.props.actions.getCoupons()
   }
 
-  renderProductInfo(cell, row) {
-    if (
-      row.info && row.id
-    ) {
-      return (
-        <div>
-          <p>{row.info}</p>
-          <p className="caption">{row.id}</p>
-        </div>
-      )
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
-
   renderProductType(cell, row) {
     if (
       row.type
@@ -279,21 +262,33 @@ class Product extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="type"
+                            width="20%"
+                            dataAlign="center"
                             dataFormat={this.renderCouponDiscount}
                             dataSort
                           >
                             Discount
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="stock"
+                            dataField="products_count"
                             dataSort
-                            dataFormat={this.renderProductsCount}
+                            dataAlign="center"
+                            width="20%"
                           >
                             Product Count
                           </TableHeaderColumn>
                           <TableHeaderColumn
+                            dataField="used"
+                            dataSort
+                            dataAlign="center"
+                            width="20%"
+                          >
+                            Used
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
                             dataField="id"
                             dataAlign="right"
+                            width="10%"
                             dataFormat={this.renderOptions}
                           >
                             Options

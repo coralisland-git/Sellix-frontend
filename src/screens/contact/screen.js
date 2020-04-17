@@ -67,9 +67,9 @@ class Contact extends React.Component {
             }}>{props => (
               <Form onSubmit={props.handleSubmit}>
                 <Card>
-                  <CardBody className="p5-4 pb-5">
+                  <CardBody className="mt-4 pb-3">
                     <div className="flex-wrapper align-items-center">
-                      <h4 className="title text-primary f-18 mb-5 mt-4">Create a Query</h4>
+                      <h4 className="title text-primary f-18 mb-5">Create a Query</h4>
                     </div>
                     <Row>
                       <Col>

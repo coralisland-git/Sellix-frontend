@@ -270,7 +270,7 @@ class SecurityPage extends React.Component {
                                   <FormGroup>
                                     <Label>API Key</Label>
                                     <div className="d-flex input-group">
-                                      <Input className="bg-brown" disabled value={api_key}/>
+                                      <Input className="bg-grey" disabled value={api_key}/>
                                       <Button color="primary" disabled={generatingAPI} onClick={this.newAPIkey.bind(this)}>
                                         {generatingAPI ?<Spin/>:'Re-Generate' }</Button>
                                     </div>
@@ -285,7 +285,6 @@ class SecurityPage extends React.Component {
                                       type="text"
                                       id="webhook_secret"
                                       name="webhook_secret"
-                                      className="bg-brown" 
                                       onChange={props.handleChange}
                                       value={props.values.webhook_secret}
                                     />
