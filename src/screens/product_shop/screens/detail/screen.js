@@ -226,7 +226,7 @@ class ShopProductDetail extends React.Component {
       if(res.status == 200)
         this.setState({
           product_info: res.data.product,
-          paymentoptions: (res.data.product.gateways || '').split(','),
+          paymentoptions: (res.data.product.gateways || '').split(',').filter(opt => opt!=''),
         })
       else throw res
     }).catch((err) => {
@@ -419,10 +419,10 @@ class ShopProductDetail extends React.Component {
                                     <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                                       onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
                                 }
-                                <div className="d-flex flex-wrap">
-                                  {showPaymentOptions && paymentoptions.map(option => {
+                                <div className={paymentoptions.length > 4?"d-flex flex-wrap justify-content-between":""}>
+                                  {showPaymentOptions && paymentoptions.map((option, key) => {
                                     if(option != '') return(
-                                    <Button className="pay-button mt-2 pl-2 mr-auto ml-auto pr-2 d-block" 
+                                    <Button key={key} className="pay-button mt-2 pl-2 mr-auto ml-auto pr-2 d-block" 
                                       onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
                                       style={{width: 140}}>
                                       <div className="d-flex justify-content-between align-items-center">
@@ -435,6 +435,8 @@ class ShopProductDetail extends React.Component {
                                     </Button>  
                                     )}
                                   )}
+                                  { showPaymentOptions && paymentoptions.length == 0 && <p className="mt-3 mb-3 text-grey">
+                                    This product has no payment options.</p> }
                                 </div>
                                 <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
                                   <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>
@@ -486,9 +488,9 @@ class ShopProductDetail extends React.Component {
                         {
                           gateway?
                             <div className="p-3 pt-2 pb-2 mb-2">
-                              <div className="d-flex justify-content-between align-items-center mb-5">
+                              <div className="d-flex justify-content-between align-items-center mb-3">
                                 <h4 className="mt-2  grey">Checkout with {gateway}</h4>
-                                <img src={backIcon} width="15" onClick={this.init.bind(this)} style={{cursor: "pointer"}}/>
+                                <img src={backIcon} width="15" className="mb-2" onClick={this.init.bind(this)} style={{cursor: "pointer"}}/>
                               </div>
                               
                               <Formik
@@ -609,15 +611,20 @@ class ShopProductDetail extends React.Component {
                             <div className="p-3 pt-2 pb-2">
                               <div className="d-flex justify-content-between align-items-center mb-2">
                                 <h4 className="mt-2 grey">Purchase</h4>
-                                <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
+                                <img src={backIcon} className="mb-2" width="15" 
+                                  onClick={this.backToProducts.bind(this)} 
+                                  style={{cursor: "pointer"}}/>
                               </div>
                               <div className="text-center">
                                 <h3>{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</h3>
-                                <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                                  onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
-                                {showPaymentOptions && paymentoptions.map(option => {
+                                {
+                                  !showPaymentOptions && 
+                                    <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
+                                      onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
+                                }
+                                {showPaymentOptions && paymentoptions.map((option, key) => {
                                   if(option != '') return(
-                                  <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
+                                  <Button key={key} className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
                                     onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
                                     style={{width: 170}}>
                                     <div className="d-flex justify-content-between align-items-center">
@@ -630,11 +637,12 @@ class ShopProductDetail extends React.Component {
                                   </Button>  
                                   )}
                                 )}
-                                
+                                { (showPaymentOptions && paymentoptions.length == 0) && <p className="mt-3 mb-3 text-grey">
+                                    This product has no payment options.</p> }
                                 <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
                                   <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>
                                     <i className="fas fa-minus"></i></span>
-                                  <span style={{fontSize: 20, minWidth: 25}} className="ml-3 mr-3">{quantity}</span>
+                                  <span style={{fontSize: 20, minWidth: 25, marginBottom: 2}} className="ml-3 mr-3">{quantity}</span>
                                   <span onClick={this.increaseCount.bind(this)}><i className="fas fa-plus"></i></span>
                                 </div>
                                 {openCoupon?
@@ -643,7 +651,6 @@ class ShopProductDetail extends React.Component {
                                       type="text"
                                       id="coupon"
                                       name="coupon"
-                                    
                                       placeholder="Coupon code"
                                       onChange={(e) => {this.setState({coupon_code: e.target.value})}}/>
                                       <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
