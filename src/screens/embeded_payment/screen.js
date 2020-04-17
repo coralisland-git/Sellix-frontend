@@ -514,13 +514,13 @@ class EmbededPayment extends React.Component {
                               onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
                             <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
                               <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>                              
-                              <span className="ml-2 mr-2">
+                              <span className="ml-1 mr-1">
                                   <input type="text" 
                                       className="text-primary"
                                       value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
                                       background: 'transparent',
                                       border: 'none',
-                                      width: '8px',
+                                      width: '18px',
                                       textAlign: 'center',                               
                                   }} onChange={(e) => this.setState({quantityPrompt: e.target.value})} 
                                      onBlur={e => this.setCount(e.target.value)}
