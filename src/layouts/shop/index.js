@@ -20,6 +20,7 @@ import { Loading } from 'components'
 import Header from './header'
 
 import './style.scss'
+import verifiedIcon from 'assets/images/sellix_verified.svg'
 
 const mapStateToProps = (state) => {
 	return {
@@ -80,13 +81,11 @@ class ShopLayout extends React.Component {
 			}
 		}
 		this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
-		// }
 	}
 
 	changeTheme() {
 		const theme = window.localStorage.getItem('theme') || 'light'
 		window.localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
-
 		this.setState({ theme: theme === 'light' ? 'dark' : 'light' })
 	}
 
@@ -96,14 +95,9 @@ class ShopLayout extends React.Component {
 		}
 
 		const pathname = this.props.history.location.pathname
-
 		const { user } = this.props
-    const userId = this.props.match.params.username
-    
-    console.log(userId)
-
-		const theme =
-			window.localStorage.getItem('theme') || this.state.theme || 'light'
+    	const userId = this.props.match.params.username
+		const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -123,7 +117,9 @@ class ShopLayout extends React.Component {
 						<div className="shop-content flex-column">
 							<section className="pb-3">
 								<div className="text-center align-items-center logo-content">
-									<h4 className="mb-0 mt-3 mb-3">{user.username}</h4>
+									<h4 className="mb-0 mt-3 mb-3">
+										{user.username} 
+										{user.verified == '1' && <img src={verifiedIcon} width="20" className="ml-2 mb-1"/>}</h4>
 									{user.profile_attachment ? (
 										<img
 											src={user.profile_attachment}

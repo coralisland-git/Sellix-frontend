@@ -245,7 +245,7 @@ class EditCategory extends React.Component {
                                 </Col>
                               </Row>
                               <Row>
-                                <Col lg={2}>
+                                <Col lg={12}>
                                   <FormGroup check inline className="mb-3">
                                       <div className="custom-checkbox custom-control">
                                         <input 

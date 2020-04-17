@@ -25,7 +25,8 @@ import { productCard } from './productCard'
 const mapStateToProps = (state) => {
   return ({
     user_categories: state.common.user_categories,
-    user_products: state.common.user_products
+    user_products: state.common.user_products,
+    user: state.common.general_info,
   })
 }
 
@@ -121,7 +122,7 @@ class ShopProducts extends React.Component {
 
   render() {
     const { loading, filter, search_key } = this.state
-    const { user_categories, user_products } = this.props
+    const { user_categories, user_products, user } = this.props
 
     const all_products = search_key?this.searchProducts(user_products):user_products
 
@@ -129,7 +130,7 @@ class ShopProducts extends React.Component {
       <div className="shop-product-screen">
         <div className="animated fadeIn">
           <Card className="grey">
-            <CardHeader>
+            <CardHeader className="pb-1 pt-3">
               <Row>
                 {
                   user_categories.length !=0 && 
@@ -143,18 +144,20 @@ class ShopProducts extends React.Component {
                       }
                     </Col>
                 }
-                
-                <Col md={12} className="mb-3">
-                  <div className="d-flex justify-content-start">
-                    <div className="searchbar white w-100">
-                      <i className="fas fa-search"/>
-                      <Input placeholder="Search for a product..." 
-                        className="header-search-input"
-                        onChange={e => {this.setState({search_key: e.target.value})}}
-                      ></Input>
-                    </div>
-                  </div>
-                </Col>
+                {
+                  user.shop_search_enabled == '1' && 
+                    <Col md={12} className="mb-4">
+                      <div className="d-flex justify-content-start">
+                        <div className="searchbar white w-100">
+                          <i className="fas fa-search"/>
+                          <Input placeholder="Search for a product..." 
+                            className="header-search-input"
+                            onChange={e => {this.setState({search_key: e.target.value})}}
+                          ></Input>
+                        </div>
+                      </div>
+                    </Col>
+                }
               </Row>
             </CardHeader>
             <CardBody className="p-0">

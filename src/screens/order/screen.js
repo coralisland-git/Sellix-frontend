@@ -63,6 +63,7 @@ class Order extends React.Component {
     super(props)
     this.state = {
       loading: true,
+      search_key: null
     }
 
     this.initializeData = this.initializeData.bind(this)
@@ -129,10 +130,28 @@ class Order extends React.Component {
     )  
   }
 
+
+  searchOrders(products) {
+    const { search_key } = this.state
+    const search_fields = ['customer_email', 'total_display', 'uniqid', 'gateway', 'status']
+
+    const data = products.filter(product => {
+      for(let i=0; i<search_fields.length; i++)
+        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase()))
+          return true
+      return false
+    })
+
+    return data
+  }
+
   render() {
 
-    const { loading } = this.state
-    const { order_list } = this.props
+    const { loading, search_key } = this.state
+    let { order_list } = this.props
+
+    if(search_key)
+      order_list = this.searchOrders(order_list)
 
     return (
       <div className="order-screen">
@@ -147,7 +166,12 @@ class Order extends React.Component {
                   <div className="d-flex justify-content-end">
                     <div className="searchbar white">
                       <i className="fas fa-search"/>
-                      <Input placeholder="Search..." className="header-search-input"></Input>
+                      <Input placeholder="Search..." 
+                        className="header-search-input"
+                        onChange={(e) => {
+                          this.setState({search_key: e.target.value})
+                        }}
+                      ></Input>
                     </div>
                   </div>
                 </Col>
@@ -178,7 +202,7 @@ class Order extends React.Component {
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="uniqid"
+                            dataField="customer_email"
                             dataFormat={this.renderOrderInfo}
                             dataSort
                             width='45%'
@@ -195,7 +219,7 @@ class Order extends React.Component {
                             Status
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="value"
+                            dataField="total_display"
                             dataAlign="center"
                             dataSort
                             dataFormat={this.renderOrderValue}
@@ -204,7 +228,7 @@ class Order extends React.Component {
                             Value
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="datetime"
+                            dataField="created_at"
                             dataAlign="right"
                             dataFormat={this.renderOrderTime}
                             dataSort

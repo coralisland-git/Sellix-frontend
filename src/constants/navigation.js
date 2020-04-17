@@ -197,6 +197,11 @@ export const shopSettingsNavigation =  {
       name: 'Payments',
       url: `/settings/${user}/payments`
     },
+
+    {
+      name: 'Design',
+      url: `/settings/${user}/design`
+    },
     // {
     //   name: 'Billing',
     //   url: `/dashboard/${user}/settings/${user}/billing`

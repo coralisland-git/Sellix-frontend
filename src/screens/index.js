@@ -54,6 +54,7 @@ import Notification from './notification'
 import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
+import ShopDesign from './shop_design'
 
 import GeneralSettings from './general_settings'
 import Customization from './customization'
@@ -124,6 +125,7 @@ export {
   MemberPage,
   Billings,
   GeneralSettings,
+  ShopDesign,
   Notification,
   Customization,
   EditBlacklist,
