@@ -111,7 +111,7 @@ class Header extends Component {
             </DropdownToggle>
 
             <IntervalTimer
-                    timeout={5000}
+                    timeout={30000}
                     callback={()=>{this.props.authActions.getSelfUser()}}
                     enabled={true}
                     repeat={true}
