@@ -15,3 +15,11 @@
     }
   }
 }
+
+.react-stars-rating.is-dashboard {
+  display: flex;
+  transform: scale(0.75);
+  & > span {
+    margin: 2px;
+  }
+}
