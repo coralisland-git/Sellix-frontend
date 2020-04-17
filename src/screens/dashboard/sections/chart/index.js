@@ -8,7 +8,7 @@ class RevenueChart extends PureComponent {
 
   render() {
 
-    const { data } = this.props;
+    const { data, datakey } = this.props;
 
     const days = data.map(({ day_value }) => day_value)
     const months = data.map(({ month }) => month)
@@ -36,8 +36,8 @@ class RevenueChart extends PureComponent {
         return (
             <div className={"custom-tooltip"}>
               <p className="label"><b>{day} {month} {year}</b></p>
-              <p className="intro">Revenue: <b>{payload[0].value}</b></p>
-              <p className="intro">Order: <b>{payload[1].value}</b></p>
+              <p className="intro">Revenue: <b>{payload[1].value}</b></p>
+              <p className="intro">Order: <b>{payload[0].value}</b></p>
             </div>
         );
       }
@@ -47,7 +47,7 @@ class RevenueChart extends PureComponent {
 
     return (
         <ResponsiveContainer width={"100%"} height={350}>
-          <AreaChart height={350} data={dataset} margin={{ top: 10, right: 0, left: -30, bottom: 0 }} >
+          <AreaChart height={350} data={dataset} margin={{ top: 10, right: 10, left: -30, bottom: 0 }} >
             <defs>
               <linearGradient id="fillPurple" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0" stopColor="#613BEA" stopOpacity={1} />
@@ -59,7 +59,7 @@ class RevenueChart extends PureComponent {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="0 0" vertical={false} />
-            <XAxis stroke={"#e8e8e8"} axisLine={{ stroke: "#666" }} tick={{ fontSize: 12, fill: '#666' }} dataKey="day" />
+            <XAxis stroke={"#e8e8e8"} axisLine={{ stroke: "#666" }} tick={{ fontSize: 12, fill: '#666' }} dataKey={datakey} />
             <YAxis stroke={"#e8e8e8"} axisLine={{ stroke: "#666" }} tick={{ fontSize: 12, fill: '#666' }}  />
             <Tooltip cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: "5 5" }} content={CustomTooltip}/>
             <Area
@@ -70,8 +70,7 @@ class RevenueChart extends PureComponent {
                 stroke="#007eff"
                 fill="url(#fillBlue)"
                 fillOpacity={0.7}
-                isAnimationActive={false}
-                activeDot={{ r: 6 }}
+                activeDot={{ r: 6, fill: '#007eff', fillOpacity: 1 }}
             />
             <Area
                 strokeWidth={2}
@@ -80,9 +79,8 @@ class RevenueChart extends PureComponent {
                 stackId="2"
                 stroke="#613BEA"
                 fill="url(#fillPurple)"
-                fillOpacity={0.7}
-                isAnimationActive={false}
-                activeDot={{ r: 6 }}
+                fillOpacity={0.4}
+                activeDot={{ r: 6, fill: '#613BEA', fillOpacity: 1 }}
             />
           </AreaChart>
         </ResponsiveContainer>

@@ -11,7 +11,6 @@ import { getAnalyticsData } from './actions'
 
 import './style.scss'
 
-
 const mapDispatchToProps = dispatch => ({
   getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch)
 })
@@ -134,7 +133,8 @@ class Dashboard extends React.Component {
       revenueProgress,
       ordersProgress,
       viewsProgress,
-      queriesProgress
+      queriesProgress,
+      range
     } = this.state
 
     return (
@@ -246,7 +246,7 @@ class Dashboard extends React.Component {
                       </Col>
                     </Row>
                     <CardBody className="mt-2">
-                      <h5 className="mb-4">Revenues & Orders</h5>
+                      <h5 className="mb-4">Revenues</h5>
                       <DashBoardChart height="350px" data={chartData}/>
                     </CardBody>
                   </div>

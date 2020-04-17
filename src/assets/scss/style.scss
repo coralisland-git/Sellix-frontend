@@ -21,6 +21,10 @@
 // temp fixes
 @import "fixes";
 
+// Spinkit
+$spinkit-spinner-color: $body-color;
+@import 'node_modules/spinkit/scss/spinkit.scss';
+
 // Loader
 .custom-loader {
   width: 40px;

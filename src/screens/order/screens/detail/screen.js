@@ -215,7 +215,7 @@ class OrderDetail extends React.Component {
                 : 
                   <Row className="mt-3 mb-2">
                     <Col lg={12}>
-                      <div className="d-flex justify-content-between align-items-center mb-4">
+                      <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
                         <Label className="title">View Order {order.developer_invoice == '1' && 
                           <span className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
                             Developer
@@ -223,10 +223,10 @@ class OrderDetail extends React.Component {
                         }</Label>
                         { 
                           order.status && (order.status == '0' || order.status == '1') && <div className='orderHeaderButtons'>
-                            <Button color="primary" onClick={this.openResendModal.bind(this)}>
+                            <Button color="primary" className="mb-2" onClick={this.openResendModal.bind(this)}>
                               Resend Order
                             </Button>
-                            <Button color="primary" onClick={this.openIssueReplacementModal.bind(this)}>
+                            <Button color="primary" className="mb-2" onClick={this.openIssueReplacementModal.bind(this)}>
                               Issue Replacement
                             </Button>
                           </div>
@@ -234,7 +234,7 @@ class OrderDetail extends React.Component {
 
                         { 
                           order.status && order.status == '4' && <div className='orderHeaderButtons'>
-                            <Button color="primary" onClick={this.openProcessOrderModal.bind(this)}>
+                            <Button color="primary" className="mb-2" onClick={this.openProcessOrderModal.bind(this)}>
                               Process Order
                             </Button>
                           </div>
@@ -246,7 +246,7 @@ class OrderDetail extends React.Component {
                       <Row className="flex">
                         <Col lg={12} className="mb-5">
                           <div className="d-flex align-items-center">
-                            <img src={PAYMENT_ICONS[order.gateway]} className="avatar mr-3"/>
+                            <img src={PAYMENT_ICONS[order.gateway]} className="avatar mr-2"/>
                             <div>
                               <p className="email text-primary mb-1 d-flex align-items-center">
                                 <a href={`mailto:${order.customer_email}`}>{order.customer_email}</a>
@@ -273,7 +273,7 @@ class OrderDetail extends React.Component {
                           </div>
                           <div className="d-flex">
                             <p className="title">Created At</p>
-                            <p>{moment(new Date(order.created_at*1000)).format('DD, MMM YYYY h:mm')}</p>
+                            <p>{moment(new Date(order.created_at*1000)).format('DD, MMM YYYY HH:mm')}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Quantity</p>

@@ -14,9 +14,13 @@
     }
   }
 
+  .coupon_applied {
+    font-size: 12px;
+  }
+
   .coupon-help {
     font-size: 12px;
-    line-height: 1.3em;
+    line-height: 1.5em;
   }
   .pay-button {
     
@@ -34,8 +38,22 @@
       border-color: #613BEA !important;
     }
 
-    width : 100%;
+    width: 100%;
     cursor: initial;
+  }
+
+  .pay-button.many {
+    width : 49%;
+  }
+
+  .pay-button.many:nth-child(even) {    
+    margin-right: 3px;
+    margin-top: 1rem;
+  }
+
+  .pay-button.many:nth-child(odd) {    
+    margin-left: 3px;
+    margin-top: 1rem;
   }
 
   .stock-count {
@@ -134,8 +152,10 @@
     margin: auto 0;
   }
 
-  .custom-checkbox .custom-control-label::before {
+  .custom-checkbox .custom-control-label::before,
+  .custom-checkbox .custom-control-label::after {
     border-radius: 0.5rem !important;
+    left: -1.1rem !important;
   }
 
   .embed-block {
