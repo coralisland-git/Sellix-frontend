@@ -14,7 +14,6 @@ export const getAnalyticsData = (startdate, enddate) => {
 
     return authApi(data).then(res => {
       if (res.status === 200) {
-        console.log(res)
         return res
       } else {
         throw res
