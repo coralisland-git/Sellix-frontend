@@ -206,7 +206,11 @@ class ShopProductDetail extends React.Component {
   }
 
   backToProducts(){
-    this.props.history.goBack()
+    if(this.state.showPaymentOptions) 
+      this.setState({
+        showPaymentOptions: false
+      })
+    else this.props.history.push(`/${this.state.product_info.username}`)
   }
 
   openCoupon() {
@@ -276,14 +280,14 @@ class ShopProductDetail extends React.Component {
                   </Col>
                   <Col md={4} className="left-bar" id="affix-bar">
                     <div className="d-sm-down-none" >
-                      <Affix offsetTop={80} container='affix-bar'>
+                      <Affix offsetTop={97} container='affix-bar'>
                         <Card className="bg-white">
                         {
                           gateway?
                             <div className="p-3 pt-2 pb-2 mb-2">
-                              <div className="d-flex justify-content-between align-items-center mb-5">
+                              <div className="d-flex justify-content-between align-items-center mb-3">
                                 <h4 className="mt-2  grey">Checkout with {gateway}</h4>
-                                <img src={backIcon} width="15" onClick={this.init.bind(this)} style={{cursor: "pointer"}}/>
+                                <img src={backIcon} width="15" className="mb-2" onClick={this.init.bind(this)} style={{cursor: "pointer"}}/>
                               </div>
                               
                               <Formik
@@ -404,24 +408,29 @@ class ShopProductDetail extends React.Component {
                             <div className="p-3 pt-2 pb-2">
                               <div className="d-flex justify-content-between align-items-center mb-3">
                                 <h4 className="mt-2 grey">Purchase</h4>
-                                <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
+                                <img src={backIcon} className="mb-2" width="15" 
+                                  onClick={this.backToProducts.bind(this)} 
+                                  style={{cursor: "pointer"}}/>
                               </div>
                               <div className="text-center">
                                 <h3>{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</h3>
-                                <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                                  onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
-                                <div>
+                                {
+                                  !showPaymentOptions && 
+                                    <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
+                                      onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
+                                }
+                                <div className="d-flex flex-wrap">
                                   {showPaymentOptions && paymentoptions.map(option => {
                                     if(option != '') return(
-                                    <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
+                                    <Button className="pay-button mt-2 pl-2 mr-auto ml-auto pr-2 d-block" 
                                       onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
-                                      style={{width: 170}}>
+                                      style={{width: 140}}>
                                       <div className="d-flex justify-content-between align-items-center">
                                         <div>
                                           <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
                                           {PAYMENT_LABELS[option]}
                                         </div>
-                                        <div><i className="fas fa-xs fa-chevron-right"/></div>
+                                       
                                       </div>
                                     </Button>  
                                     )}
@@ -430,7 +439,7 @@ class ShopProductDetail extends React.Component {
                                 <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
                                   <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>
                                     <i className="fas fa-minus"></i></span>
-                                  <span style={{fontSize: 20, minWidth: 25}} className="ml-3 mr-3">{quantity}</span>
+                                  <span style={{fontSize: 20, minWidth: 25, marginBottom: 3}} className="ml-3 mr-3">{quantity}</span>
                                   <span onClick={this.increaseCount.bind(this)}><i className="fas fa-plus"></i></span>
                                 </div>
                                 {openCoupon?

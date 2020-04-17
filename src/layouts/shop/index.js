@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 
-import { Container, Nav, NavItem, Label, Card } from 'reactstrap'
+import { Container, Nav, NavItem, Label, Card, 	Tooltip } from 'reactstrap'
 import { AppHeader, AppFooter } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 
@@ -41,7 +41,8 @@ class ShopLayout extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			theme: window.localStorage.getItem('theme') || 'light'
+			theme: window.localStorage.getItem('theme') || 'light',
+			verifiedTooltipOpen: false
 		}
 	}
 
@@ -89,6 +90,10 @@ class ShopLayout extends React.Component {
 		this.setState({ theme: theme === 'light' ? 'dark' : 'light' })
 	}
 
+	verifiedTooltipToggle() {
+		this.setState({verifiedTooltipOpen: !this.state.verifiedTooltipOpen})
+	}
+
 	render() {
 		const containerStyle = {
 			zIndex: 1999
@@ -98,6 +103,7 @@ class ShopLayout extends React.Component {
 		const { user } = this.props
     	const userId = this.props.match.params.username
 		const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
+		const { verifiedTooltipOpen } = this.state
 
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -117,9 +123,20 @@ class ShopLayout extends React.Component {
 						<div className="shop-content flex-column">
 							<section className="pb-3">
 								<div className="text-center align-items-center logo-content">
-									<h4 className="mb-0 mt-3 mb-3">
+									<h4 className="mb-0 mt-3 mb-2">
 										{user.username} 
-										{user.verified == '1' && <img src={verifiedIcon} width="20" className="ml-2 mb-1"/>}</h4>
+										{user.verified == '1' && 
+											<span>
+												<img src={verifiedIcon} width="20" className="verified-icon mb-1" id="verifiedTooltip"/>
+												<Tooltip 
+													placement="right" 
+													isOpen={verifiedTooltipOpen} 
+													target="verifiedTooltip" 
+													toggle={this.verifiedTooltipToggle.bind(this)}>
+													This user has been verified by Sellix.io staff
+												</Tooltip>
+											</span>
+										}</h4>
 									{user.profile_attachment ? (
 										<img
 											src={user.profile_attachment}
