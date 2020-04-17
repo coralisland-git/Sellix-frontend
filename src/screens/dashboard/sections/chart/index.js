@@ -36,8 +36,8 @@ class RevenueChart extends PureComponent {
         return (
             <div className={"custom-tooltip"}>
               <p className="label"><b>{day} {month} {year}</b></p>
-              <p className="intro">Revenue: <b>{payload[0].value}</b></p>
-              <p className="intro">Order: <b>{payload[1].value}</b></p>
+              <p className="intro">Revenue: <b>{payload[1].value}</b></p>
+              <p className="intro">Order: <b>{payload[0].value}</b></p>
             </div>
         );
       }
@@ -70,8 +70,7 @@ class RevenueChart extends PureComponent {
                 stroke="#007eff"
                 fill="url(#fillBlue)"
                 fillOpacity={0.7}
-                isAnimationActive={false}
-                activeDot={{ r: 6 }}
+                activeDot={{ r: 6, fill: '#007eff', fillOpacity: 1 }}
             />
             <Area
                 strokeWidth={2}
@@ -80,9 +79,8 @@ class RevenueChart extends PureComponent {
                 stackId="2"
                 stroke="#613BEA"
                 fill="url(#fillPurple)"
-                fillOpacity={0.7}
-                isAnimationActive={false}
-                activeDot={{ r: 6 }}
+                fillOpacity={0.4}
+                activeDot={{ r: 6, fill: '#613BEA', fillOpacity: 1 }}
             />
           </AreaChart>
         </ResponsiveContainer>
