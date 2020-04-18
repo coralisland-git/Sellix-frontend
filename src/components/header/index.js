@@ -60,7 +60,14 @@ class Header extends Component {
   }
 
   render() {
-    const { user, children, theme, is_authed, isShop, ...attributes } = this.props
+    const { children, theme, is_authed, isShop, ...attributes } = this.props
+
+    let { user } = this.props
+
+    if((!user || Object.keys(user).length === 0) && this.props.profile && Object.keys(this.props.profile).length > 0) {
+      user = this.props.profile
+    }
+
     const { notifications } = user || {}
     return (
       <React.Fragment>
