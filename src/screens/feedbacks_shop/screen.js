@@ -1,14 +1,24 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, CardBody, Row, Col } from 'reactstrap'
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Row,
+  Col,
+  Button,
+} from 'reactstrap'
+import StarRatings from 'react-star-ratings';
 import { Loader } from 'components'
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
-import { CommonActions } from 'services/global'
-import { StarRating as ReactStarsRating } from 'components/star_ratings';
-
+import {
+  CommonActions
+} from 'services/global'
 import './style.scss'
-
+import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
 const mapStateToProps = (state) => {
   return ({
@@ -64,25 +74,23 @@ class ShopFeedback extends React.Component {
             :
               <Row className="py-3">
                 {
-                  user_feedback.map((feedback, key) =>
-                    <Col lg={3} key={key}>
+                  user_feedback.map(feedback => 
+                    <Col lg={3}>
                       <Card className="">
                         <CardBody className="p-3 bg-white d-flex flex-column align-items-center justify-content-between">
-                          <div className="text-right w-100">
-                            {feedback.feedback === 'positive' && <span className="badge badge-like" title="Positive">Positive <ReactStarsRating isEdit={false} value={Number(feedback.score)} isHalf={false} className="react-stars-rating"/></span>}
-                            {feedback.feedback === 'negative' && <span className="badge badge-dislike" title="Negative">Negative <ReactStarsRating isEdit={false} value={Number(feedback.score)} isHalf={false} className="react-stars-rating"/></span>}
-                            {feedback.feedback !== 'negative' && feedback.feedback !== 'positive' && <span className="badge badge-neutral" title="Neutral">Neutral <ReactStarsRating isEdit={false} value={Number(feedback.score)} isHalf={false} className="react-stars-rating"/></span>}
-                          </div>
+                          <p className="text-left w-100">
+                            <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false} className="react-stars-rating"/>
+                          </p>
                           <p style={{lineHeight: '15px'}}>{feedback.message}</p>
                           <div className="d-flex flex-row justify-content-between w-100">
-                            <p><i className="fas fa-check feedback-checked" /> Verified Purchase</p>
+                            <p><i className="fas fa-check feedback-checked"></i> Verified Purchase</p>
                             <p><ReactTimeAgo date={feedback.created_at*1000/1} locale="en"/></p>
                           </div>
                         </CardBody>
                       </Card>
                     </Col>)
                 }
-                {user_feedback.length === 0 && <p className="w-100 text-center mt-4 mb-4">No Feedback Given</p>}
+                {user_feedback.length == 0 && <p className="w-100 text-center mt-4 mb-4">No Feedback Given</p>}
               </Row>
             }
         </div>

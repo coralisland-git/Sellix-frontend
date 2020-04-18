@@ -34,7 +34,8 @@ import { invoiceRoutes } from '../../routes';
 const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
-    is_authed: state.auth.is_authed
+    is_authed: state.auth.is_authed,
+    theme: state.common.theme
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -48,7 +49,7 @@ class DefaultLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: window.localStorage.getItem('theme') || 'light'
+      theme: 'light'
     }
   }
 
@@ -93,7 +94,7 @@ class DefaultLayout extends React.Component {
       zIndex: 1999
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
+    const { theme } = this.props
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>

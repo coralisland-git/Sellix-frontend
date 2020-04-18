@@ -60,7 +60,14 @@ class Header extends Component {
   }
 
   render() {
-    const { user, children, theme, is_authed, isShop, ...attributes } = this.props
+    const { children, theme, is_authed, isShop, ...attributes } = this.props
+
+    let { user } = this.props
+
+    if((!user || Object.keys(user).length === 0) && this.props.profile && Object.keys(this.props.profile).length > 0) {
+      user = this.props.profile
+    }
+
     const { notifications } = user || {}
     return (
       <React.Fragment>
@@ -175,17 +182,16 @@ class Header extends Component {
                   <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
                     Settings
                   </DropdownItem>
-                  <DropdownItem onClick={this.setTheme.bind(this)}>
-                    {(theme || 'light') === 'light' ? 'Dark Mode' : 'Light Mode'}
-                  </DropdownItem>
+                  {
+                    !isShop && <DropdownItem onClick={this.setTheme.bind(this)}>
+                      {(theme || 'light') === 'light' ? 'Dark Mode' : 'Light Mode'}
+                    </DropdownItem>
+                  }
                   <DropdownItem onClick={() => this.signOut()}>
                     Sign Out
                   </DropdownItem>
                 </DropdownMenu>:
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={this.setTheme.bind(this)}>
-                    {(theme || 'light') === 'light' ? 'Dark Mode' : 'Light Mode'}
-                  </DropdownItem>
                   <DropdownItem onClick={() => this.props.history.push(`/auth/login`)}>
                     Log In
                   </DropdownItem>
