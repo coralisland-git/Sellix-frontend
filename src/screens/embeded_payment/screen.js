@@ -580,7 +580,7 @@ class EmbededPayment extends React.Component {
                               { coupon_code != '' && coupon_is_valid && (
                                 <p className="text-primary text-center coupon_applied m-0 mt-3">
                                   <img src={editIcon} width="12" />
-                                  <span className="ml-2 mr-2" style={{ fontSize: 12 }}>Applied: {coupon_discount}% off the order</span>
+                                  <span className="ml-2 mr-2" style={{ fontSize: 12 }}>Applied: { parseFloat(coupon_discount).toFixed(0)}% off the order</span>
                                   <i className="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
                                 </p>
                               )}
