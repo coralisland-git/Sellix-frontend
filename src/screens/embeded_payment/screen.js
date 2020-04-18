@@ -34,17 +34,16 @@ import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import sellixLogoIcon from 'assets/images/Sellix_logo.svg'
-import { getCoupons } from './actions'
+import { validateCoupon } from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
-  return ({
-    coupons: state.coupons.coupons
+  return ({    
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    actions: bindActionCreators({ getCoupons }, dispatch),
+    actions: bindActionCreators({ validateCoupon }, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
@@ -282,29 +281,34 @@ class EmbededPayment extends React.Component {
   }
 
   onChangeCouponCode(ev) {
-    var coupons = this.props.coupons 
-    var coupon_value = ev.target.value   
+    var coupon_value = ev.target.value
     var code = ''
     var coupon_is_valid = true
     var discount = 100
-    for(var i=0;i<coupons.length;i++){
-      var coupon = coupons[i]
-      if(coupon_value == coupon['code']){
-        if(coupon['products_bound'].length == 0 || coupon['products_bound'].indexOf(this.props.match.params.id) > -1){
-          code = coupon['code']
-          discount = coupon['discount']
-        }
-        else{
-          coupon_is_valid = false
-        }
-      }
+    var params = {
+      "code":coupon_value,
+      "product_id":this.props.match.params.id
     }
+    this.props.actions.validateCoupon(params).then((res) => {
+      if (res.data){
+          code = res.data.coupon['code']
+          discount = res.data.coupon['discount']
+      }
+      this.setState({
+        coupon_code: code,
+        coupon_discount: discount,
+        coupon_is_valid: true
+      })
+    }).catch(err => {      
+      this.setState({
+        coupon_code: '',
+        coupon_discount: 100,
+        coupon_is_valid: coupon_value != ''? false:true
+      })
+    })
     this.setState({
       coupon_value: coupon_value,
-      coupon_code: code,
-      coupon_discount: discount,
-      coupon_is_valid: coupon_is_valid
-    })    
+    })  
   }
 
   componentDidMount() {
@@ -330,7 +334,6 @@ class EmbededPayment extends React.Component {
     }).finally(() => {
       this.setState({loading: false})
     })
-    this.props.actions.getCoupons()
   }
 
   render() {
@@ -552,19 +555,20 @@ class EmbededPayment extends React.Component {
                                   placeholder="Coupon code"
                                   value={coupon_value}
                                   onChange={this.onChangeCouponCode.bind(this)} />
-                                { coupon_code != '' && coupon_is_valid && (
-                                  <p className="text-primary coupon_applied m-2">
-                                    <img src={editIcon} width="12" />
-                                    <b className="ml-2 mr-2">Applied Coupon: ({coupon_discount}%)</b>
-                                    <i class="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
-                                  </p>
-                                )}
                                 { !coupon_is_valid && (
-                                  <p className="text-grey coupon_applied m-2">
-                                    <b className="ml-2 mr-2">This coupon is invalid for this product</b>
+                                  <p className="text-grey coupon_applied m-0 mt-3">
+                                    This coupon is invalid for this product
                                   </p>
                                 )}
-                                <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
+                                { coupon_code != '' && coupon_is_valid?
+                                  <p className="text-primary coupon_applied m-0 mt-3">
+                                    <img src={editIcon} width="12" />
+                                    <span className="ml-2 mr-2" style={{ fontSize: 12 }}>Applied Coupon: ({coupon_discount}%)</span>
+                                    <i className="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
+                                  </p>
+                                  :
+                                  <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
+                                }
                               </div>
                               :
                               <p className="text-grey mt-3 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>

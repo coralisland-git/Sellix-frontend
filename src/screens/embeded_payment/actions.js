@@ -1,7 +1,8 @@
 import { PRODUCT, COUPONS } from 'constants/types'
 import {
   api,
-  authApi
+  authApi,
+  formData
 } from 'utils'
 
 export const initialData = (obj) => {
@@ -27,6 +28,26 @@ export const getCoupons = () => {
       } else {
         throw res
       }     
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+export const validateCoupon = (params) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `coupons/check`,
+      data: formData(params)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
     }).catch(err => {
       throw err
     })
