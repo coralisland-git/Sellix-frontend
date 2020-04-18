@@ -58,7 +58,7 @@ class Header extends Component {
 
     return (
       <React.Fragment>
-        <a href="/" className="logo"><img src={sellix_logo} alt='CoreUI Logo'/></a>
+        <a href="/" className="logo"><img src={sellix_logo} alt='Sellix Logo'/></a>
         <Nav className="ml-auto shop-header" navbar style={{flex:1, justifyContent: 'flex-end'}}>
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
