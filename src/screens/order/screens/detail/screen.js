@@ -99,6 +99,7 @@ class OrderDetail extends React.Component {
     }
 
     this.id = this.props.match.params.id
+    this.initializeData = this.initializeData.bind(this)
   }
 
   closeResendModal() {
@@ -195,6 +196,8 @@ class OrderDetail extends React.Component {
           <ProcessOrderModal  
             openModal={openProcessOrderModal}
             invoiceId = {order.uniqid}
+            status = {order.status}
+            refreshOrder = {() => this.initializeData()}
             email = {order.customer_email}
             closeModal={this.closeProcessOrderModal.bind(this)}
           />
@@ -221,24 +224,26 @@ class OrderDetail extends React.Component {
                             Developer
                           </span>
                         }</Label>
-                        { 
-                          order.status && (order.status == '0' || order.status == '1') && <div className='orderHeaderButtons'>
-                            <Button color="primary" className="mb-2" onClick={this.openResendModal.bind(this)}>
-                              Resend Order
-                            </Button>
-                            <Button color="primary" className="mb-2" onClick={this.openIssueReplacementModal.bind(this)}>
-                              Issue Replacement
-                            </Button>
-                          </div>
-                        }
-
-                        { 
-                          order.status && order.status == '4' && <div className='orderHeaderButtons'>
-                            <Button color="primary" className="mb-2" onClick={this.openProcessOrderModal.bind(this)}>
-                              Process Order
-                            </Button>
-                          </div>
-                        }
+                        <div className='orderHeaderButtons'>
+                          {
+                            order.status && (['0', '1'].includes(order.status)) && 
+                              <Button color="primary" className="mb-2 mr-2" onClick={this.openResendModal.bind(this)}>
+                                Resend Order
+                              </Button>
+                          }
+                          {
+                            order.status && (['1'].includes(order.status)) && 
+                              <Button color="primary" className="mb-2 mr-2" onClick={this.openIssueReplacementModal.bind(this)}>
+                                Issue Replacement
+                              </Button>
+                          }
+                          { 
+                            order.status && (['0', '2', '4'].includes(order.status)) && 
+                              <Button color="primary" className="mb-2" onClick={this.openProcessOrderModal.bind(this)}>
+                                Process Order
+                              </Button>
+                          }
+                        </div>
                       </div>
                       
                     </Col>

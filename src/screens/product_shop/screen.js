@@ -16,9 +16,7 @@ import { Loader } from 'components'
 import {
   CommonActions
 } from 'services/global'
-import shop_brand from 'assets/images/brand/shop_brand.png'
 
-import * as ProductActions from './actions'
 import './style.scss'
 import { productCard } from './productCard'
 

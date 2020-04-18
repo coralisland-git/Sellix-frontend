@@ -40,6 +40,14 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const ORDER_STATUS = {
+  '0': 'Pending',
+  '1': 'Completed',
+  '2': 'Cancelled',
+  '3': 'Confirmation',
+  '4': 'Partial'
+}
+
 class ProcessOrderModal extends React.Component {
   
   constructor(props) {
@@ -59,6 +67,7 @@ class ProcessOrderModal extends React.Component {
     }).then(res => {
       if(res.status == 200){
         this.props.commonActions.tostifyAlert('success', res.message)
+        this.props.refreshOrder()
         this.props.closeModal()
       } else throw res
     }).catch(err => {
@@ -69,7 +78,7 @@ class ProcessOrderModal extends React.Component {
   }
 
   render() {
-    const { openModal, closeModal, invoiceId } = this.props
+    const { openModal, closeModal, invoiceId, status } = this.props
     const { loading } = this.state
 
     return (
@@ -81,7 +90,7 @@ class ProcessOrderModal extends React.Component {
             <ModalBody>
                 <div>
                     <p className="text-left" style={{lineHeight: '1.4em'}}>
-                    This invoice <b>{invoiceId}</b> has been flagged as a partial payment. 
+                    This invoice <b>{invoiceId}</b> has been flagged as a {ORDER_STATUS[status]} payment. 
                     If you wish to, you can process this order now. 
                     You won’t receive any further revenue besides what you already received now.
                     </p>
