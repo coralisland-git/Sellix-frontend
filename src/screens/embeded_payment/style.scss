@@ -16,6 +16,9 @@
 
   .coupon_applied {
     font-size: 12px;
+    i {
+      -webkit-text-stroke: 1px #ffffff;
+    }
   }
 
   .coupon-help {
