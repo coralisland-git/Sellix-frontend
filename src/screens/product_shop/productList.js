@@ -18,7 +18,7 @@ const ProductsList = ({ products, loading }) => {
 	}
 
 	return (
-		<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} duration={200}>
+		<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} >
 			{products.map(product =>
 				<div key={product.uniqid} style={{ width: "25%" }} className="mb-4 col-md-3">
 					<ProductCard product={product}/>
