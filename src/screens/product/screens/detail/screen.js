@@ -199,7 +199,6 @@ class EditProduct extends React.Component {
 
 
 	addFile = file => {
-		console.log(file);
 		this.setState({
 			files: file.map(file =>
 				Object.assign(file, {
@@ -245,7 +244,7 @@ class EditProduct extends React.Component {
 
 	handleSubmit(values) {
 		this.setState({saving: true})
-		const { gateways, custom_fields, showFileStock, showServiceStock } = this.state
+		const { gateways, custom_fields, showFileStock, showServiceStock, images, files } = this.state
 		delete gateways['']
 		values.gateways = Object.keys(gateways).filter(key => { return gateways[key]}).toString()
 		values.custom_fields = JSON.stringify({
@@ -257,6 +256,9 @@ class EditProduct extends React.Component {
 		if(values.quantity_max == "") {
 			values.quantity_max = "0"
 		}
+
+		values.remove_image = images.length == 0?true:false
+		values.remove_file= files.length == 0?true:false
 
 		this.props.actions.editProduct(values).then(res => {
 
@@ -324,7 +326,7 @@ class EditProduct extends React.Component {
 		  delimiter: delimiter,
 		  serials: serials,
           files: product.file_attachment?
-            [{name : product.file_attachment_info.original_name}]:[],
+            [{name : product.file_attachment_info && product.file_attachment_info.original_name}]:[],
           images: product.image_attachment?
             [{preview: config.API_ROOT_URL+'/attachments/image/'+product.image_attachment}]:[],
           gateways: gateways,
@@ -704,7 +706,7 @@ class EditProduct extends React.Component {
 																{type.value === 'file' && <Row>
 																	<Col lg={12} className="mb-3">
 																		<FileUpload addFile={(file) => {
-																			props.handleChange('file')(file[0]); 
+																			props.handleChange('file')(file[0] || null); 
 																			this.addFile(file)}} files={files}/>
 																	</Col>
 																	<Col lg={12}>
@@ -875,8 +877,9 @@ class EditProduct extends React.Component {
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
 																			<ImageUpload addFile={(file) => {
-																			props.handleChange('image')(file[0]); 
-																			this.addImages(file)}} files={images}/>
+																				props.handleChange('image')(file[0]); 
+																				this.addImages(file)
+																			}} files={images}/>
 																		</FormGroup>
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Note to Customer <small className="font-italic">(optional)</small></Label>
