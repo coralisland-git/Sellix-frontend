@@ -410,7 +410,7 @@ class EmbededPayment extends React.Component {
             <Card className="bg-white stock-stop mb-0">
               {
                 gateway?
-                  <div className="p-4 mb-2">
+                  <div className="p-4">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <img src={backIcon} width="15" onClick={this.backToOptions.bind(this)} style={{cursor: "pointer", marginTop: -25}}/>
                       <p className="grey text-center desc">Please enter your email address <br />for product delivery</p>
@@ -529,7 +529,7 @@ class EmbededPayment extends React.Component {
                           </Form> )}
                       </Formik>
                   </div>:
-                  <div className="p-4 mb-2">
+                  <div className="p-4">
                     {/*<div className="d-flex justify-content-between align-items-center mb-4">
                         <h4 className="mt-2 grey">Purchase</h4>
                         <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
@@ -558,36 +558,43 @@ class EmbededPayment extends React.Component {
                                 </span>
                               <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>                              
                             </div>
-                            <div className="mt-3">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <Input
-                                  type="text"
-                                  id="coupon"
-                                  name="coupon"
-                                  placeholder="Coupon code"
-                                  value={coupon_value}
-                                  onChange={this.onChangeCouponCode.bind(this)} />
-                                 <Button color="primary" className="mr-auto d-block" 
-                                    onClick={this.vaiidateCouponAndShowPaymentOptions.bind(this)}>
-                                  <CouponSvg />
-                                </Button>
+                            {openCoupon?
+                              <div className="mt-3">
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <Input
+                                    type="text"
+                                    id="coupon"
+                                    name="coupon"
+                                    placeholder="Coupon code"
+                                    value={coupon_value}
+                                    onChange={this.onChangeCouponCode.bind(this)} />
+                                   <Button color="primary" className="mr-auto d-block" 
+                                      onClick={this.vaiidateCouponAndShowPaymentOptions.bind(this)}>
+                                    <CouponSvg />
+                                  </Button>
+                                </div>
+                                { !coupon_is_valid && (
+                                  <p className="text-grey text-center coupon_applied m-0 mt-3">
+                                    This coupon is invalid for this product
+                                  </p>
+                                )}
+                                { coupon_code != '' && coupon_is_valid && (
+                                  <p className="text-primary text-center coupon_applied m-0 mt-3">
+                                    <img src={editIcon} width="12" />
+                                    <span className="ml-2 mr-2" style={{ fontSize: 12 }}>Applied: { parseFloat(coupon_discount).toFixed(0)}% off the order</span>
+                                    <i className="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
+                                  </p>
+                                )}
+                                { !coupon_applied && (
+                                  <p className="text-grey text-left mt-2 mb-0 coupon-help">Click on the right button to check and apply the coupon for this order</p>
+                                )}
                               </div>
-                              { !coupon_is_valid && (
-                                <p className="text-grey text-center coupon_applied m-0 mt-3">
-                                  This coupon is invalid for this product
-                                </p>
-                              )}
-                              { coupon_code != '' && coupon_is_valid && (
-                                <p className="text-primary text-center coupon_applied m-0 mt-3">
-                                  <img src={editIcon} width="12" />
-                                  <span className="ml-2 mr-2" style={{ fontSize: 12 }}>Applied: { parseFloat(coupon_discount).toFixed(0)}% off the order</span>
-                                  <i className="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
-                                </p>
-                              )}
-                              { !coupon_applied && (
-                                <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
-                              )}
-                            </div>
+                              :
+                              <p className="text-grey mt-5 mb-0 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
+                                <img src={editIcon} width="15" className="mr-2" />
+                                <b>Apply a Coupon</b>
+                              </p>
+                            }
                           </>
                       )}
                       {
