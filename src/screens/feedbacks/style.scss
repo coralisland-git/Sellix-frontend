@@ -2,45 +2,6 @@
   .card-header {
     color: #20a8d8;
   }
-  i.bx.bxs-star {
-    font-size: 26px;
-  }
-  @media (max-width: 577px) {
-    .feedback-main {
-      justify-content: flex-end !important;
-    }
-  }
-  .feedback-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-width: 2px;
-    border-style: solid;
-    padding: 10px;
-    border-radius: 50%;
-    &.feedback-neutral {
-      border-color: #707070;
-    }
-    &.feedback-negative {
-      border-color: #E34747;
-    }
-    &.feedback-positive {
-      border-color: #47E37A;
-    }
-  }
-  i.far {
-    font-size: 28px;
-    &.fa-thumbs-up {
-      color: #47E37A;
-    }
-    &.fa-thumbs-down {
-      color: #E34747;
-      transform: translate(2px, 2px);
-    }
-    &.fa-meh {
-      color: #707070;
-    }
-  }
   .btn-group {
     .btn {
       color: #ffffff !important;
@@ -54,6 +15,7 @@
     }
   }
 }
+
 .react-stars-rating.is-dashboard {
   display: flex;
   transform: scale(0.75);

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
     h1, h2, h3, h4, h5, p, label, span:not(.badge):not(.small-badge):not(.text-red):not(.text-green), a, th, td, input, select, textarea, .Select-placeholder {
@@ -20,13 +20,11 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .shop-container {
-        background-color: ${({ theme }) =>
-					theme.shopContainerBackground} !important;
+        background-color: ${({ theme }) => theme.shopContainerBackground} !important;
     }
 
     .shop-container .shop-section {
-        background-color: ${({ theme }) =>
-					theme.shopSectionBackground} !important;
+        background-color: ${({ theme }) => theme.shopSectionBackground} !important;
     }
 
     .shop-product-screen .filter-button button:not(.btn-primary),
@@ -94,7 +92,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     table tbody td {
-        border-top: 1px solid #edeaea !important;
+        border-top: 1px solid ${({ theme }) => theme.tdBorder} !important;
     }
 
     .react-bootstrap-daterangepicker-container button {
@@ -143,24 +141,20 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .shop-container .shop-navs .nav-link {
-        background-color: ${({ theme }) =>
-					theme.shopSectionBackground} !important;
+        background-color: ${({ theme }) => theme.shopSectionBackground} !important;
     }
 
     .shop-container .report-count {
-        background-color: ${({ theme }) =>
-					theme.shopSectionBackground} !important;
+        background-color: ${({ theme }) => theme.shopSectionBackground} !important;
     }
 
     .admin-container footer {
-        background-color: ${({ theme }) =>
-					theme.shopContainerBackground} !important;
+        background-color: ${({ theme }) => theme.shopContainerBackground} !important;
         background: ${({ theme }) => theme.shopContainerBackground} !important;
     }
 
     .app-header .navbar-nav .dropdown-menu:after {
-        border-bottom: 10px solid ${({ theme }) =>
-					theme.dropdownColor} !important;
+        border-bottom: 10px solid ${({ theme }) => theme.dropdownColor} !important;
     }
 
     .order-screen .filter-btn {
@@ -206,9 +200,7 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.sortItemBackground} !important;
     }
 
-    ${({ theme }) =>
-			theme.name === 'dark' &&
-			`
+    ${({theme}) => theme.name === 'dark' && `
         .mde-header * {
             color: ${theme.text} !important;
         }

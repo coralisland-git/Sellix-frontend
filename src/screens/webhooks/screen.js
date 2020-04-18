@@ -41,7 +41,6 @@ class Webhooks extends React.Component {
     }
 
     this.initializeData = this.initializeData.bind(this)
-    this.caretRender = this.caretRender.bind(this)
   }
 
   componentDidMount () {
@@ -63,7 +62,7 @@ class Webhooks extends React.Component {
       row.status
     ) {
       return (
-        <div className={`badge badge-${row.status.toLowerCase()}`} style={{ margin: '0 auto' }}>
+        <div className={`badge badge-${row.status.toLowerCase()}`}>
           {row.status}
         </div>
       )  
@@ -78,10 +77,10 @@ class Webhooks extends React.Component {
     return (
       <div className="d-flex actions">
         <a>
-          <i className="bx bx-edit-alt"/>
+          <i className="fas fa-pen"/>
         </a>
         <a>
-          <i className="bx bx-trash-alt"/>
+          <i className="fas fa-trash"/>
         </a>
       </div>
     )
@@ -94,46 +93,6 @@ class Webhooks extends React.Component {
   closeNewWebhookModal() {
     this.setState({openModal: false})
   }
-
-  caretRender(direction) {
-		return (
-			<div style={{ marginLeft: 12.4, display: 'inline' }}>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="3.621"
-					height="11.98"
-					style={{
-						marginRight: 3,
-						transform: `scale(${direction === 'desc' ? 1.2 : 1.1})`,
-						transition: 'all 0.2s linear'
-					}}
-					opacity={direction === 'asc' ? 0.4 : 1}
-					viewBox="0 0 3.621 11.72"
-				>
-					<path
-						d="M6.834,15.272V4.586h.54V15.272l1.159-1.159.382.382L7.1,16.306,5.293,14.5l.382-.382Z"
-						transform="translate(-5.293 -4.586)"
-					/>
-				</svg>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="3.621"
-					height="11.98"
-					style={{
-						transform: `scale(${direction === 'asc' ? 1.2 : 1.1})`,
-						transition: 'all 0.2s linear'
-					}}
-					opacity={direction === 'desc' ? 0.4 : 1}
-					viewBox="0 0 3.621 11.72"
-				>
-					<path
-						d="M6.834,5.619V16.306h.54V5.619L8.532,6.778,8.914,6.4,7.1,4.586,5.293,6.4l.382.382Z"
-						transform="translate(-5.293 -4.586)"
-					/>
-				</svg>
-			</div>
-		)
-	}
 
   render() {
     const { loading, openModal } = this.state
@@ -186,35 +145,26 @@ class Webhooks extends React.Component {
                           <TableHeaderColumn
                             isKey
                             dataField="url"
-                            caretRender={this.caretRender}
                             dataSort
-                            width="40%"
                           >
                             Webhook URL
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="events"
-                            caretRender={this.caretRender}
-                            dataAlign="center"
                             dataSort
-                            width="20%"
                           >
                             Events
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="status"
-                            caretRender={this.caretRender}
                             dataSort
-                            dataAlign="center"
                             dataFormat={this.renderStatus}
-                            width="20%"
                           >
                             Status
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"
                             dataAlign="right"
-                            width="20%"
                             dataFormat={this.renderOptions}
                           >
                             Options

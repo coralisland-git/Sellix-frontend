@@ -46,7 +46,6 @@ class Product extends React.Component {
       loading: false,
     }
     this.deleteCoupon = this.deleteCoupon.bind(this)
-    this.caretRender = this.caretRender.bind(this)
 
     this.options = {
       onRowClick: this.goToDetail,
@@ -150,10 +149,10 @@ class Product extends React.Component {
     return (
       <div className="d-flex actions">
         <a onClick={(e) => this.gotoEditPage(e, row.uniqid)}>
-          <i className="bx bx-edit-alt" />
+          <i className="fas fa-pen" />
         </a>
         <a onClick={(e) => this.deleteCoupon(e, row.uniqid)}>
-          <i className="bx bx-trash-alt" />
+          <i className="fas fa-trash" />
         </a>
       </div>
     )
@@ -196,9 +195,9 @@ class Product extends React.Component {
       row.products_count
     ) {
       return (
-        <>
+        <div>
           {row.products_count}
-        </>
+        </div>
       )
     } else {
       return (
@@ -206,46 +205,6 @@ class Product extends React.Component {
       )
     }
   }
-
-  caretRender(direction) {
-		return (
-			<div style={{ marginLeft: 12.4, display: 'inline' }}>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="3.621"
-					height="11.98"
-					style={{
-						marginRight: 3,
-						transform: `scale(${direction === 'desc' ? 1.2 : 1.1})`,
-						transition: 'all 0.2s linear'
-					}}
-					opacity={direction === 'asc' ? 0.4 : 1}
-					viewBox="0 0 3.621 11.72"
-				>
-					<path
-						d="M6.834,15.272V4.586h.54V15.272l1.159-1.159.382.382L7.1,16.306,5.293,14.5l.382-.382Z"
-						transform="translate(-5.293 -4.586)"
-					/>
-				</svg>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="3.621"
-					height="11.98"
-					style={{
-						transform: `scale(${direction === 'asc' ? 1.2 : 1.1})`,
-						transition: 'all 0.2s linear'
-					}}
-					opacity={direction === 'desc' ? 0.4 : 1}
-					viewBox="0 0 3.621 11.72"
-				>
-					<path
-						d="M6.834,5.619V16.306h.54V5.619L8.532,6.778,8.914,6.4,7.1,4.586,5.293,6.4l.382.382Z"
-						transform="translate(-5.293 -4.586)"
-					/>
-				</svg>
-			</div>
-		)
-	}
 
   render() {
 
@@ -295,7 +254,6 @@ class Product extends React.Component {
                           <TableHeaderColumn
                             isKey
                             dataField="type"
-                            caretRender={this.caretRender}
                             dataFormat={this.renderCouponCode}
                             width="30%"
                             dataSort
@@ -304,20 +262,18 @@ class Product extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="type"
+                            width="20%"
                             dataAlign="center"
-                            caretRender={this.caretRender}
                             dataFormat={this.renderCouponDiscount}
                             dataSort
-                            width="30%"
                           >
                             Discount
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="products_count"
-                            dataAlign="center"
-                            caretRender={this.caretRender}
-                            width="20%"
                             dataSort
+                            dataAlign="center"
+                            width="20%"
                           >
                             Product Count
                           </TableHeaderColumn>
