@@ -18,7 +18,7 @@ import {
   CommonActions
 } from 'services/global'
 import './style.scss'
-import ReactStarsRating from 'react-awesome-stars-rating';
+import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
 const mapStateToProps = (state) => {
   return ({
@@ -80,10 +80,10 @@ class ShopFeedback extends React.Component {
                         <CardBody className="p-3 bg-white d-flex flex-column align-items-center justify-content-between">
                           <p className="text-right w-100">
                             {feedback.feedback == 'positive'?
-                              <span className="badge badge-like" title="Positive">Positive <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false}/></span>:
+                              <span className="badge badge-like" title="Positive">Positive <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false} className="react-stars-rating"/></span>:
                               (feedback.feedback == 'negative'?
-                                <span className="badge badge-dislike" title="Negative">Negative <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false}/></span>:
-                                <span className="badge badge-neutral" title="Neutral">Neutral <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false}/></span>)
+                                <span className="badge badge-dislike" title="Negative">Negative <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false} className="react-stars-rating"/></span>:
+                                <span className="badge badge-neutral" title="Neutral">Neutral <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false} className="react-stars-rating"/></span>)
                             }
                           </p>
                           <p style={{lineHeight: '15px'}}>{feedback.message}</p>

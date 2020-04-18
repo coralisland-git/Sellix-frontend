@@ -34,15 +34,17 @@ import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import sellixLogoIcon from 'assets/images/Sellix_logo.svg'
-
+import { getCoupons } from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
+    coupons: state.coupons.coupons
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
+    actions: bindActionCreators({ getCoupons }, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
@@ -109,10 +111,13 @@ class EmbededPayment extends React.Component {
       paymentoptions: [],
       email: null,
       coupon_code: '',
+      coupon_value: '',
       product_id: this.props.match.params.id,
       custom_fields: {},
       product_info: {},
-      optParam: 'PayPal'
+      optParam: 'PayPal',
+      coupon_discount:100,
+      coupon_is_valid: true
     }
   }
 
@@ -183,14 +188,53 @@ class EmbededPayment extends React.Component {
     }
 
     this.setState({
-      quantity: this.state.quantity + 1
+      quantity: this.state.quantity + 1,
+      quantityPrompt: this.state.quantity + 1
+    })
+  }
+
+  setCount = (count) => {
+    const { product_info } = this.state
+
+    if(isNaN(count)) {
+      this.setState({
+        quantity: this.state.quantity,
+        quantityPrompt: this.state.quantity
+      })
+      return;
+    }
+
+    var validatedCount = count
+
+    if(product_info.type == 'serials') {
+      validatedCount = Math.min(product_info.stock, validatedCount)
+    }
+
+    if(product_info.type == 'file') {
+      validatedCount = Math.min(product_info.file_stock, validatedCount)
+    }
+
+    if(product_info.type == 'service') {
+      validatedCount = Math.min(product_info.service_stock, validatedCount)
+    }
+
+    if(product_info.quantity_max != -1)
+      validatedCount = Math.min(product_info.quantity_max, validatedCount)
+
+    if(product_info.quantity_min != -1)
+      validatedCount = Math.max(product_info.quantity_min, validatedCount)
+
+    this.setState({
+      quantity: validatedCount,
+      quantityPrompt: validatedCount
     })
   }
 
   decreaseCount() {
     if(this.state.quantity > this.state.product_info.quantity_min) {
       this.setState({
-        quantity: this.state.quantity - 1
+        quantity: this.state.quantity - 1,
+        quantityPrompt: this.state.quantity - 1
       })
     }
   }
@@ -202,7 +246,8 @@ class EmbededPayment extends React.Component {
       showQuantityOption: true,
       showPaymentOptions: false,
       quantity: 1,
-      optParam: 'PayPal'
+      optParam: 'PayPal',
+      coupon_discount: 100
     })
   }
 
@@ -224,6 +269,42 @@ class EmbededPayment extends React.Component {
     this.setState({
       openCoupon: true
     })
+  }
+
+  clearCoupon() {
+    this.setState({
+      coupon_code: '',
+      coupon_value: '',
+      coupon_discount: 100,
+      openCoupon: false,
+      coupon_is_valid: true
+    })
+  }
+
+  onChangeCouponCode(ev) {
+    var coupons = this.props.coupons 
+    var coupon_value = ev.target.value   
+    var code = ''
+    var coupon_is_valid = true
+    var discount = 100
+    for(var i=0;i<coupons.length;i++){
+      var coupon = coupons[i]
+      if(coupon_value == coupon['code']){
+        if(coupon['products_bound'].length == 0 || coupon['products_bound'].indexOf(this.props.match.params.id) > -1){
+          code = coupon['code']
+          discount = coupon['discount']
+        }
+        else{
+          coupon_is_valid = false
+        }
+      }
+    }
+    this.setState({
+      coupon_value: coupon_value,
+      coupon_code: code,
+      coupon_discount: discount,
+      coupon_is_valid: coupon_is_valid
+    })    
   }
 
   componentDidMount() {
@@ -249,6 +330,7 @@ class EmbededPayment extends React.Component {
     }).finally(() => {
       this.setState({loading: false})
     })
+    this.props.actions.getCoupons()
   }
 
   render() {
@@ -257,18 +339,40 @@ class EmbededPayment extends React.Component {
       showQuantityOption,
       showPaymentOptions, 
       quantity, 
+      quantityPrompt,
       sending, 
       loading,
       product_info,
       openCoupon, 
       paymentoptions,
-      optParam
+      optParam,
+      coupon_value,
+      coupon_code,
+      coupon_discount,
+      coupon_is_valid
     } = this.state
     
-    let custom_fields = []
+    var is_many = paymentoptions.length > 4 ? true : false
+    let custom_fields = []    
 
     if(product_info && product_info.custom_fields)
-      custom_fields = JSON.parse(product_info.custom_fields)['custom_fields']
+      var temp_custom_fields = JSON.parse(product_info.custom_fields)['custom_fields']
+      var embed_fields = Object.keys(this.state.custom_fields);
+      if(temp_custom_fields){
+        for(var i=0;i<temp_custom_fields.length;i++){
+          var field = temp_custom_fields[i];
+          var is_exist = false
+          for(var j=0;j<embed_fields.length;j++){
+            var e_field = embed_fields[j];
+            if(e_field.toLowerCase() == field['name'].toLowerCase()){
+              is_exist = true
+              break
+            }
+          }
+          if(!is_exist)
+            custom_fields.push(field)
+        }
+      }
 
     return (
       <div className="embeded-payment-screen">
@@ -286,7 +390,7 @@ class EmbededPayment extends React.Component {
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
               <p className="text-primary text-center" style={{fontSize: 14}}>{product_info.username || ''}</p>
-              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{product_info.price_display * quantity || 0}</p>                
+              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * coupon_discount/100).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
               {
@@ -424,28 +528,52 @@ class EmbededPayment extends React.Component {
                             <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                               onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
                             <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
-                              <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>
-                              <span className="ml-2 mr-2 text-primary">{quantity}</span>
-                              <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>
+                              <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>                              
+                              <span className="ml-1 mr-1">
+                                  <input type="text" 
+                                      className="text-primary"
+                                      value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
+                                      background: 'transparent',
+                                      border: 'none',
+                                      width: '18px',
+                                      textAlign: 'center',                               
+                                  }} onChange={(e) => this.setState({quantityPrompt: e.target.value})} 
+                                     onBlur={e => this.setCount(e.target.value)}
+                                     />
+                                </span>
+                              <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>                              
                             </div>
                             {openCoupon?
                               <div className="mt-3">
-                                <Input 
+                                <Input
                                   type="text"
                                   id="coupon"
                                   name="coupon"
                                   placeholder="Coupon code"
-                                  onChange={(e) => {this.setState({coupon_code: e.target.value})}}/>
-                                  <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
-                              </div>:
+                                  value={coupon_value}
+                                  onChange={this.onChangeCouponCode.bind(this)} />
+                                { coupon_code != '' && coupon_is_valid && (
+                                  <p className="text-primary coupon_applied m-2">
+                                    <img src={editIcon} width="12" />
+                                    <b className="ml-2 mr-2">Applied Coupon: ({coupon_discount}%)</b>
+                                    <i class="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
+                                  </p>
+                                )}
+                                { !coupon_is_valid && (
+                                  <p className="text-grey coupon_applied m-2">
+                                    <b className="ml-2 mr-2">This coupon is invalid for this product</b>
+                                  </p>
+                                )}
+                                <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
+                              </div>
+                              :
                               <p className="text-grey mt-3 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
-                                <img src={editIcon} width="15" style={{ marginRight:5}} />
+                                <img src={editIcon} width="15" className="mr-2" />
                                 <b>Apply a Coupon</b>
                               </p>
                             }
                           </>
-                      )}                            
-
+                      )}
                       {
                         showPaymentOptions && (
                           <>
@@ -454,7 +582,35 @@ class EmbededPayment extends React.Component {
                             <p className="grey text-center desc">Select payment method</p>
                             <span></span>
                           </div>
-                          {paymentoptions.map(option => {
+                          { is_many?
+                            paymentoptions.map(option => {
+                            if(option != '') return(
+                            <Button className="pay-button many p-2" 
+                              key={option} >
+                              <div className="d-flex justify-content-between align-items-center">
+                                <div>
+                                  <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
+                                  {PAYMENT_LABELS[option]}
+                                </div>
+                                <label className="custom-checkbox custom-control payment-checkbox ">
+                                  <input 
+                                    className="custom-control-input"
+                                    type="checkbox"
+                                    id={option}
+                                    name="SMTP-auth"
+                                    onChange={(e) => {
+                                      this.setState({optParam : PAYMENT_LABELS[option]})
+                                    }}
+                                    checked={ optParam === PAYMENT_LABELS[option] }
+                                  />
+                                  <label className="custom-control-label" htmlFor={option}>
+                                  </label>
+                                </label>
+                              </div>
+                            </Button>
+                            )})
+                            :
+                            paymentoptions.map(option => {
                             if(option != '') return(
                             <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
                               key={option} >
@@ -479,8 +635,8 @@ class EmbededPayment extends React.Component {
                                 </label>
                               </div>
                             </Button>
-                            )}
-                          )}
+                            )})
+                          }
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                             onClick={(e) => this.setPaymentOptions(e, optParam)}>Continue</Button>
                           </>

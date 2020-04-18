@@ -14,7 +14,7 @@ import StarRatings from 'react-star-ratings';
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import ReactTimeAgo from 'react-time-ago'
-import ReactStarsRating from 'react-awesome-stars-rating';
+import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
 import {getFeedbacks} from './actions'
 import './style.scss'
@@ -67,7 +67,7 @@ class Feedbacks extends React.Component {
   renderThumb = (row) => {
     const item = this.props.feedbacks.filter(x => x.id == row)[0]
   
-    return <ReactStarsRating isEdit={false} value={item.score || 5} isHalf={false} className="transparent-bg"/>
+    return <ReactStarsRating isEdit={false} value={item.score || 5} isHalf={false} className="transparent-bg react-stars-rating is-dashboard"/>
   }
 
   renderFeedback = (cell, row) => {
@@ -172,7 +172,7 @@ class Feedbacks extends React.Component {
                           <TableHeaderColumn
                             dataField="id"
                             dataSort
-                            width="10%"
+                            width="15%"
                             dataAlign="center"
                             dataFormat={this.renderThumb}
                           >
