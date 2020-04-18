@@ -259,7 +259,6 @@ class ShopProductDetail extends React.Component {
   }
 
   componentDidMount() {
-    console.log(document.getElementById('affix-bar'))
     this.setState({loading: true})
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
       if(res.status == 200)
@@ -273,8 +272,6 @@ class ShopProductDetail extends React.Component {
     }).finally(() => {
       this.setState({loading: false})
     })
-
-    
   }
 
   render() {

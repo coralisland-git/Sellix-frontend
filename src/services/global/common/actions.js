@@ -54,6 +54,10 @@ export const getGeneralUserInfo = (username) => {
           type: COMMON.GENERAL_USER_INFO,
           payload: res.data
         })
+        dispatch({
+          type: COMMON.SHOP_THEME,
+          payload: res.data.user.shop_dark_mode == '1'?'dark':'light'
+        })
         // return res
       } else {
         throw res
@@ -128,6 +132,11 @@ export const getUserProductById = (id) => {
     }
     return api(data).then(res => {
       if(res && res.status == 200) {
+        dispatch({
+          type: COMMON.SHOP_THEME,
+          payload: res.data.product.theme
+        })
+
         return res
       } else throw res
     }).catch(err => {
@@ -145,6 +154,10 @@ export const getInvoice = (id) => {
     }
     return api(data).then(res => {
       if(res && res.status == 200) {
+        dispatch({
+          type: COMMON.SHOP_THEME,
+          payload: res.data.invoice.theme
+        })
         return res
       } else throw res
     }).catch(err => {
@@ -163,7 +176,6 @@ export const getPayPalInvoice = (id) => {
       url: `/invoices/paypal/${id}`,
     }
     return api(data).then(res => {
-      console.log(res)
       if(res && res.status == 200) {
         return res
       } else throw res

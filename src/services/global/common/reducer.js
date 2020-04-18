@@ -7,7 +7,8 @@ const initState = {
   general_info: {},
   user_feedback: [],
   user_categories: [],
-  user_products: []
+  user_products: [],
+  theme: 'light'
 }
 
 const CommonReducer = (state = initState, action) => {
@@ -25,6 +26,12 @@ const CommonReducer = (state = initState, action) => {
       return {
         ...state,
         is_loading: false,
+      }
+
+    case COMMON.SHOP_THEME:
+      return {
+        ...state,
+        theme: payload,
       }
     
     case COMMON.TOSTIFY_ALERT_FUNC:
