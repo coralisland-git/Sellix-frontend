@@ -261,7 +261,8 @@ class Notification extends React.Component {
                           onChange={(e) => {
                             this.setState({discord_channel_id: e.target.value})
                           }}/>
-                        <Button color="primary" onClick={this.testDiscordChannel.bind(this)}>Test Channel</Button>
+                        <Button color="primary" onClick={this.testDiscordChannel.bind(this)} disabled={!discord_channel_id}>
+                          Test Channel</Button>
                       </div>
                     </FormGroup>
                   </Col>

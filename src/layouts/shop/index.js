@@ -41,7 +41,7 @@ class ShopLayout extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			theme: window.localStorage.getItem('theme') || 'light',
+			theme: 'light',
 			verifiedTooltipOpen: false
 		}
 	}
@@ -102,7 +102,7 @@ class ShopLayout extends React.Component {
 		const pathname = this.props.history.location.pathname
 		const { user } = this.props
     	const userId = this.props.match.params.username
-		const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
+		const theme = user.shop_dark_mode == '1'?'dark':'light'
 		const { verifiedTooltipOpen } = this.state
 
 		return (

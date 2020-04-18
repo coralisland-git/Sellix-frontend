@@ -36,7 +36,8 @@ class Payments extends React.Component {
     this.state = {
       loading: false,
       discord_link: '',
-      search_enabled: true
+      search_enabled: true,
+      dark_mode: false
     }
   }
 
@@ -44,7 +45,8 @@ class Payments extends React.Component {
     this.setState({ loading: true });
     this.props.actions.saveShopSettings({
       discord_link: this.state.discord_link,
-      search_enabled: this.state.search_enabled
+      search_enabled: this.state.search_enabled,
+      dark_mode: this.state.dark_mode
     })
       .then(res => this.props.commonActions.tostifyAlert('success', res.message))
       .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
@@ -58,7 +60,8 @@ class Payments extends React.Component {
       const settings = res.data.settings
       this.setState({
         discord_link: settings.shop_discord_link || '',
-        search_enabled: settings.shop_search_enabled == '1'?true:false
+        search_enabled: settings.shop_search_enabled == '1'?true:false,
+        dark_mode: settings.shop_dark_mode == '1'?true:false,
       })
     }).finally(() => {
       this.setState({loading: false})
@@ -66,7 +69,7 @@ class Payments extends React.Component {
   }
 
   render() {
-    const { loading, discord_link, search_enabled } = this.state;
+    const { loading, discord_link, search_enabled, dark_mode } = this.state;
 
     return (
       <div className="shop-settings-screen">
@@ -119,7 +122,31 @@ class Payments extends React.Component {
                               <div className="ml-2">
                                 <Label className="mb-0">Search Products</Label>
                                 <p className="text-grey mb-0">
-                                  Show the products searchbar in your shop, this option can be disabled to improve the design of your page</p>
+                                  Show the products searchbar in your shop, this option can be disabled to improve the design of your page.</p>
+                              </div>
+                            </Col>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <FormGroup row>
+                            <Col className="d-flex align-items-center">
+                              <AppSwitch className="mt-1 file-switch mr-2"
+                                variant={'pill'} 
+                                color={'primary'}
+                                size="lg"
+                                checked={dark_mode}
+                                onChange={(e) => {
+                                  this.setState({
+                                    dark_mode: e.target.checked
+                                  })
+                                }}
+                              />
+                              <div className="ml-2">
+                                <Label className="mb-0">Dark Mode</Label>
+                                <p className="text-grey mb-0">
+                                Show your shop page with our dark theme.</p>
                               </div>
                             </Col>
                           </FormGroup>
