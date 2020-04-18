@@ -55,8 +55,7 @@ class Header extends Component {
 
   render() {
     const { user, profile, children, theme, is_authed, ...attributes } = this.props
-    
-    console.log(this.props)
+
     return (
       <React.Fragment>
         <a href="/" className="logo"><img src={sellix_logo} alt='CoreUI Logo'/></a>

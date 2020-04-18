@@ -46,6 +46,7 @@
     "react-dom": "^16.8.6",
     "react-draft-wysiwyg": "^1.13.2",
     "react-dropzone": "^10.2.1",
+    "react-flip-move": "^3.0.4",
     "react-google-maps": "9.4.5",
     "react-google-recaptcha": "^2.0.1",
     "react-grid-layout": "^0.16.6",

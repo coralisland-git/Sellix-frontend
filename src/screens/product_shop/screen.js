@@ -1,185 +1,149 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import TextEllipsis from 'react-text-ellipsis';
-import config from 'constants/config'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  Row,
-  Col,
-  Input
-} from 'reactstrap'
+import {Card, CardHeader, Button, Row, Col, Input, CardBody} from 'reactstrap'
+import { CommonActions } from 'services/global'
+import { Route } from 'react-router-dom'
 import { Loader } from 'components'
-import {
-  CommonActions
-} from 'services/global'
 
 import './style.scss'
-import { productCard } from './productCard'
 
-const mapStateToProps = (state) => {
-  return ({
-    user_categories: state.common.user_categories,
-    user_products: state.common.user_products,
-    user: state.common.general_info,
-  })
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+const ProductList = React.lazy(() => import('./productList'))
+
+
+const mapStateToProps = ({ common }) => ({
+  shop_search_enabled: Number(common.general_info.shop_search_enabled)
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(CommonActions, dispatch)
+})
+
 
 class ShopProducts extends React.Component {
   
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
       loading: false,
       search_key: null,
-      filter: this.props.match.params.id || 'all'
+      products: [],
+      categories: [],
+      filter: props.match.params.id || 'all'
     }
-
-    this.initializeData = this.initializeData.bind(this)
-    this.filterProduct = this.filterProduct.bind(this)
-    this.gotoDetail = this.gotoDetail.bind(this)
   }
 
   componentDidMount () {
     this.initializeData()
   }
 
-  initializeData () {
-    this.props.commonActions.getUserCategories(this.props.match.params.username).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error)
-    })
+  initializeData = () => {
 
-    const filter = this.props.match.params.id || 'all'
+    const { actions: { getUserCategories, getUserProducts, tostifyAlert }, match: { params } } = this.props;
 
-    if(filter == 'all')
-      this.getAllProducts()
-    else this.getCategoryProducts()
+    this.setState({ loading: true });
+
+    Promise.all([getUserCategories(params.username), getUserProducts(params.username)])
+        .then(([{ data: { categories } }, { data: { products }} ]) => {
+          this.setState({
+            updatedProducts: products,
+            products,
+            categories
+          })
+        })
+        .catch(err => {
+          tostifyAlert('error', err.error)
+        })
+        .finally(err => {
+          this.setState({ loading: false })
+        })
   }
 
 
-  getAllProducts() {
-    this.setState({loading:true})
-    this.props.commonActions.getUserProducts(this.props.match.params.username).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error)
-    }).finally(() => {
-      this.setState({loading: false})
-    })
+  setFilter = (filter) => () => {
+
+    const { username } = this.props.match.params;
+
+    this.setState({ filter });
+
+    this.props.history.push(filter === 'all' ? `/${username}` : `/${username}/category/${filter}`);
   }
 
-  getCategoryProducts() {
-    this.setState({loading: true})
-    this.props.commonActions.getUserProductsByCategory(this.props.match.params.id).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error)
-    }).finally(() => {
-      this.setState({loading: false})
-    })
+  setSearchKey = (e) => {
+    this.setState({ search_key: e.target.value })
   }
 
-  filterProduct(filter) {
-    if(filter == 'all')
-      this.props.history.push(`/${this.props.match.params.username}`)
-    else {
-      this.props.history.push(`/${this.props.match.params.username}/category/${filter}`)
-      this.setState({filter: filter, loading: true})
-      this.props.commonActions.getUserProductsByCategory(filter).catch(err => {
-        this.props.commonActions.tostifyAlert('error', err.error)
-      }).finally(() => {
-        this.setState({loading: false})
-      })
-    }
+
+  searchProducts = () => {
+
+    const { search_key, filter, products, categories } = this.state;
+
+    let category = filter !== 'all' ? categories.find(({ uniqid }) => uniqid === filter ).products_bound : products;
+    let productsByCategory = products.filter(({ uniqid: id }) => category.find(({ uniqid }) => uniqid === id))
+
+    return search_key ?
+        productsByCategory.filter(({ title, stock }) =>
+          title.toLowerCase().includes(search_key.toLowerCase()) ||
+          stock.toLowerCase().includes(search_key.toLowerCase())
+        ) : productsByCategory
   }
 
-  gotoDetail(e, id) {
-    this.props.history.push({
-      pathname: `/product/${id}`
-    })
-  }
-
-  searchProducts(products) {
-    const { search_key } = this.state
-    const search_fields = ['title', 'stock']
-
-    const data = products.filter(product => {
-      for(let i=0; i<search_fields.length; i++)
-        if(product[search_fields[i]] && product[search_fields[i]].toLowerCase().includes(search_key.toLowerCase()))
-          return true
-      return false
-    })
-
-    return data
-  }
 
   render() {
-    const { loading, filter, search_key } = this.state
-    const { user_categories, user_products, user } = this.props
 
-    const all_products = search_key?this.searchProducts(user_products):user_products
+    const { loading, filter, categories, products } = this.state;
+    const { shop_search_enabled } = this.props;
+
+    let searchProducts = this.searchProducts(products);
 
     return (
       <div className="shop-product-screen">
-        <div className="animated fadeIn">
+        <div className="">
           <Card className="grey">
             <CardHeader className="pb-1 pt-3">
               <Row>
                 {
-                  user_categories.length !=0 && 
+                  categories.length !== 0 &&
                     <Col md={12} className="filter-button d-flex flex-wrap mb-4">
-                      <Button color={filter == 'all'?'primary':'white'} className="mr-2" disabled={loading}
-                        onClick={() => this.filterProduct('all')}>All</Button>
-                      {
-                        user_categories.map(category => 
-                          <Button key={category.uniqid} color={filter == category.uniqid?'primary':'white'} className="mr-2" disabled={loading}
-                            onClick={() => this.filterProduct(category.uniqid)}>{category.title}</Button>)
-                      }
+                      <Button color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
+                        All
+                      </Button>
+                      {categories.map(({ uniqid, title }) =>
+                        <Button key={uniqid} color={filter === uniqid ? 'primary' : 'white' } className="mr-2" disabled={loading} onClick={this.setFilter(uniqid)}>
+                          {title}
+                        </Button>
+                      )}
                     </Col>
                 }
+
                 {
-                  user.shop_search_enabled == '1' && 
+                  shop_search_enabled === 1 &&
                     <Col md={12} className="mb-4">
                       <div className="d-flex justify-content-start">
                         <div className="searchbar white w-100">
                           <i className="fas fa-search"/>
-                          <Input placeholder="Search for a product..." 
-                            className="header-search-input"
-                            onChange={e => {this.setState({search_key: e.target.value})}}
-                          ></Input>
+                          <Input
+                              placeholder="Search for a product..."
+                              className="header-search-input"
+                              onChange={this.setSearchKey}
+                          />
                         </div>
                       </div>
                     </Col>
                 }
               </Row>
             </CardHeader>
-            <CardBody className="p-0">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                :
-                  <Row>
-                    {
-                      all_products.map((pro, index) => 
-                        <Col md={3} key={index} className="mb-4">
-                          {productCard(pro, index, (e) => this.gotoDetail(e, pro.uniqid))}
-                        </Col>
-                      )
-                    }
-                    {all_products.length == 0 && <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>}
-                  </Row>
-              }
-              
-            </CardBody>
+
+            <React.Suspense fallback={<Loader />}>
+              <CardBody className="p-0">
+                <Row>
+                  <Route to={'/:username/category/:id'} render={(props) => <ProductList products={searchProducts} loading={loading} {...props} />} />
+                </Row>
+              </CardBody>
+            </React.Suspense>
+
           </Card>
         </div>
       </div>
