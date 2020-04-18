@@ -531,7 +531,7 @@ class EmbededPayment extends React.Component {
                   </div>:
                   <>
                     { !showPaymentOptions && (
-                      <div className="pt-4 pl-4 pr-4 pb-1">
+                      <div className="pt-4 pl-4 pr-4">
                         <div className="text-center">
                           <p className="grey desc">
                             {product_info.description}
@@ -586,7 +586,7 @@ class EmbededPayment extends React.Component {
                               )}
                             </div>
                             :
-                            <p className="text-grey mt-5 mb-0 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
+                            <p className="text-grey mt-5 mb-2 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
                               <img src={editIcon} width="15" className="mr-1" />
                               <b>Apply a Coupon</b>
                             </p>
