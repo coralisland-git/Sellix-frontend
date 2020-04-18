@@ -404,7 +404,7 @@ class EmbededPayment extends React.Component {
             <div className="stock-info text-center">
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
-              <p className="text-primary text-center" style={{fontSize: 14}}>{product_info.username || ''}</p>
+              <p className="text-primary text-center" style={{fontSize: 14}}>by {product_info.username || ''}</p>
               <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * coupon_discount/100).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
@@ -531,7 +531,7 @@ class EmbededPayment extends React.Component {
                   </div>:
                   <>
                     { !showPaymentOptions && (
-                      <div className="pt-4 pl-4 pr-4">
+                      <div className="pt-4 pl-4 pr-4 pb-1">
                         <div className="text-center">
                           <p className="grey desc">
                             {product_info.description}
@@ -587,7 +587,7 @@ class EmbededPayment extends React.Component {
                             </div>
                             :
                             <p className="text-grey mt-5 mb-0 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
-                              <img src={editIcon} width="15" className="mr-2" />
+                              <img src={editIcon} width="15" className="mr-1" />
                               <b>Apply a Coupon</b>
                             </p>
                           }
@@ -603,31 +603,19 @@ class EmbededPayment extends React.Component {
                             <span></span>
                           </div>
                           { is_many?
-                            paymentoptions.map(option => {
+                            paymentoptions.map((option, key) => {
                             if(option != '') return(
-                            <Button className="pay-button many p-2" 
-                              key={option} >
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
-                                  {PAYMENT_LABELS[option]}
+                              <Button className="pay-button many p-2" 
+                                key={key} 
+                                onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
+                                >
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div>
+                                    <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
+                                    {PAYMENT_LABELS[option]}
+                                  </div>
                                 </div>
-                                <label className="custom-checkbox custom-control payment-checkbox">
-                                  <input 
-                                    className="custom-control-input"
-                                    type="checkbox"
-                                    id={option}
-                                    name="SMTP-auth"
-                                    onChange={(e) => {
-                                      this.setState({optParam : PAYMENT_LABELS[option]})
-                                    }}
-                                    checked={ optParam === PAYMENT_LABELS[option] }
-                                  />
-                                  <label className="custom-control-label cursor-pointer" htmlFor={option}>
-                                  </label>
-                                </label>
-                              </div>
-                            </Button>
+                              </Button>
                             )})
                             :
                             paymentoptions.map(option => {
