@@ -224,7 +224,6 @@ class ShopLayout extends React.Component {
 															path={prop.path}
 															component={prop.component}
 															key={key}
-															exact={true}
 														/>
 													)
 												})}

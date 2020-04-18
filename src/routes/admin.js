@@ -1,7 +1,7 @@
 import {
   Dashboard,
   ProductSort,
-  CateogrySort,
+  CategorySort,
   Product,
   EditProduct,
   Categories,
@@ -61,7 +61,7 @@ const adminRoutes = [
     path: `/dashboard/${user}/products/categories/sort`,
     name: 'Cateogry Sort',
     exact: true,
-    component: CateogrySort.screen
+    component: CategorySort.screen
   },
 
 

@@ -3,13 +3,9 @@ import {
     Contacts,
     ShopProducts,
     ShopFeedback,
-    LeaveFeedback,
-    ShopProductDetail
+    LeaveFeedback
   } from 'screens'
 
-
-  const user = window.localStorage.getItem('userId')
-  
   const shopRoutes = [
     {
       path: `/:username/contact/:id`,
@@ -39,12 +35,6 @@ import {
       path: `/:username/feedback`,
       name: 'Feedback',
       component: ShopFeedback.screen
-    },
-
-    {
-      path: `/:username/category/:id`,
-      name: 'Products',
-      component: ShopProducts.screen
     },
 
     {

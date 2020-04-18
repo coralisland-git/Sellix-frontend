@@ -22,11 +22,9 @@ import './style.scss'
 const user = window.localStorage.getItem('userId')
 
 
-const mapStateToProps = (state) => {
-  return ({
-    feedbacks: state.feedbacks.feedbacks
-  })
-}
+const mapStateToProps = ({ feedbacks: { feedbacks } }) => ({
+  feedbacks
+})
 
 const mapDispatchToProps = (dispatch) => {
   return ({

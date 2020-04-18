@@ -14,7 +14,7 @@ import CreateProduct from './product/screens/create'
 import EditProduct from './product/screens/detail'
 
 import ProductSort from './product_sort'
-import CateogrySort from './category_sort'
+import CategorySort from './category_sort'
 
 import Categories from './categories'
 import CreateCategories from './categories/screens/create'
@@ -89,7 +89,7 @@ export {
   CreateProduct,
   EditProduct,
 
-  CateogrySort,
+  CategorySort,
   ProductSort,
 
   Categories,

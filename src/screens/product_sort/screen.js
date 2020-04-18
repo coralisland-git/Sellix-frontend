@@ -15,7 +15,7 @@ import RLDD from 'react-list-drag-and-drop/lib/RLDD';
 import {
   CommonActions,
 } from 'services/global'
-import { productCard } from "../product_shop/productCard"
+import ProductCard from "../product_shop/productCard"
 import VirtualDraggableGrid from 'react-virtual-draggable-grid';
 import { DragAndDropGrid } from './dragAndDropGrid'
 
@@ -36,16 +36,11 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class ProductCard extends React.Component {
-  render() {
-    return <div style={{
-      border: '1px solid #ccc',
-      background: 'white'
-    }}>
-      {productCard(this.props.product, this.props.index, () => {})}
+const ProductCardExtended = ({ product }) => (
+    <div style={{ border: '1px solid #ccc', background: 'white' }}>
+      <ProductCard product={product} preventDefault />
     </div>
-  }
-}
+)
 
 class Product extends React.Component {
   
@@ -172,14 +167,12 @@ class Product extends React.Component {
                           </Droppable>
                         </DragDropContext> */}
 
-                        <DragAndDropGrid items={product_list} 
-                                         ItemComponent={ProductCard}
-                                         itemToProps={(pro, index) => ({
-                                           product: pro,
-                                           index
-                                         })}
-                                         handleChange={this.handleRLDDChange}
-                                         />
+                        <DragAndDropGrid
+                            items={product_list}
+                            ItemComponent={ProductCardExtended}
+                            itemToProps={product => ({ product })}
+                            handleChange={this.handleRLDDChange}
+                         />
                       </div>
                     </Col>
                   </Row>

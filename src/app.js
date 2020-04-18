@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
-import { Router, Route, Switch, Redirect } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router-dom'
 
 import { mainRoutes } from 'routes'
 import { configureStore } from 'services'
