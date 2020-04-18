@@ -43,20 +43,22 @@
 
     width: 100%;
     cursor: initial;
+    font-size: 15px!important;
+    font-weight: 400!important;
   }
 
   .pay-button.many {
-    width : 49%;
+    width : 48%;
   }
 
   .pay-button.many:nth-child(even) {    
-    margin-right: 3px;
-    margin-top: 1rem;
+    margin-right: 5px;
+    margin-top: .5rem;
   }
 
   .pay-button.many:nth-child(odd) {    
-    margin-left: 3px;
-    margin-top: 1rem;
+    margin-left: 5px;
+    margin-top: .5rem;
   }
 
   .stock-count {
@@ -153,7 +155,7 @@
 
   .custom-control {
     margin: auto 0;
-  }
+  }  
 
   .custom-checkbox .custom-control-label::before,
   .custom-checkbox .custom-control-label::after {
@@ -162,6 +164,6 @@
   }
 
   .embed-block {
-    width: 380px;
+    width: 390px;
   }
 }
