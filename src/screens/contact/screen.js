@@ -18,12 +18,14 @@ import {
 } from 'services/global'
 import { createQuery} from './actions'
 import './style.scss'
+import discordIcon from 'assets/images/discord.png'
 
 const user = window.localStorage.getItem('userId')
 
+
 const mapStateToProps = (state) => {
   return ({
-
+    user: state.common.general_info,
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -58,6 +60,8 @@ class Contact extends React.Component {
   }
 
   render() {
+    const { user } = this.props
+
     return (
       <div className="contact-screen container">
         <div className="animated fadeIn">
@@ -67,9 +71,17 @@ class Contact extends React.Component {
             }}>{props => (
               <Form onSubmit={props.handleSubmit}>
                 <Card>
-                  <CardBody className="mt-4 pb-3">
-                    <div className="flex-wrapper align-items-center">
-                      <h4 className="title text-primary f-18 mb-5">Create a Query</h4>
+                  <CardBody className="mt-4 pb-3 pt-3">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                      <h4 className="title text-primary f-18">Create a Query</h4>
+                      <div style={{height: 65}}>
+                        {
+                          user.shop_discord_link && 
+                            <a href={user.shop_discord_link} target="_blank">
+                              <img src={discordIcon} width="200" height="65"/>
+                            </a>
+                        }
+                      </div>
                     </div>
                     <Row>
                       <Col>

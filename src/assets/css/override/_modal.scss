@@ -12,7 +12,7 @@
 
     .modal-header {
       background-color: white;
-      color: black;
+      color: #A7A5B4;
       font-size: 18px;
       padding: 30px 25px;
       border-bottom: none !important;
@@ -37,6 +37,10 @@
     .modal-body {
       padding: 0px 25px;
       border-radius: 0 !important;
+
+      p,a,span {
+        color: #A7A5B4;
+      }
     }
 
     .modal-footer {

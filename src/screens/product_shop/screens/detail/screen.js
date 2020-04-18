@@ -464,7 +464,7 @@ class ShopProductDetail extends React.Component {
                                     if(option != '') return(
                                     <Button key={key} className="pay-button mt-2 pl-2 mr-auto ml-auto pr-2 d-block" 
                                       onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
-                                      style={{width: 140}}>
+                                      style={{width: 145}}>
                                       <div className="d-flex justify-content-between align-items-center">
                                         <div>
                                           <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
