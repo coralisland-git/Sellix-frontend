@@ -34,7 +34,8 @@ const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
     is_authed: state.auth.is_authed,
-    profile: state.auth.profile
+    profile: state.auth.profile,
+    theme: state.common.theme
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -44,11 +45,11 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class DefaultLayout extends React.Component {
+class ProductLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: window.localStorage.getItem('theme') || 'light'
+      theme: 'light'
     }
   }
 
@@ -94,7 +95,11 @@ class DefaultLayout extends React.Component {
       zIndex: 1999
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
+    const { theme } = this.props
+
+    console.log(theme)
+
+    // const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
@@ -141,4 +146,4 @@ class DefaultLayout extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductLayout)
