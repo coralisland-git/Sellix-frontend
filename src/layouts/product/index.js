@@ -94,12 +94,7 @@ class ProductLayout extends React.Component {
     const containerStyle = {
       zIndex: 1999
     }
-
     const { theme } = this.props
-
-    console.log(theme)
-
-    // const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
