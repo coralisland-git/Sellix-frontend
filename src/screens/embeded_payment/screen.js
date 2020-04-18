@@ -34,6 +34,7 @@ import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import sellixLogoIcon from 'assets/images/Sellix_logo.svg'
+import { ReactComponent as CouponSvg } from 'assets/images/coupon.svg';
 import { validateCoupon } from './actions'
 import './style.scss'
 
@@ -116,7 +117,8 @@ class EmbededPayment extends React.Component {
       product_info: {},
       optParam: 'PayPal',
       coupon_discount:100,
-      coupon_is_valid: true
+      coupon_is_valid: true,
+      coupon_applied: false
     }
   }
 
@@ -169,6 +171,38 @@ class EmbededPayment extends React.Component {
     this.setState({
       gateway: opt
     })
+  }
+
+  vaiidateCouponAndShowPaymentOptions() {
+    var coupon_value = this.state.coupon_value
+    var code = ''
+    var coupon_is_valid = true
+    var discount = 100
+    var params = {
+      "code":coupon_value,
+      "product_id":this.props.match.params.id
+    }
+    this.props.actions.validateCoupon(params).then((res) => {
+      if (res.data){
+          code = res.data.coupon['code']
+          discount = res.data.coupon['discount']
+      }
+      this.setState({
+        coupon_code: code,
+        coupon_discount: discount,
+        coupon_is_valid: true,        
+      })
+    }).catch(err => {      
+      this.setState({
+        coupon_code: '',
+        coupon_discount: 100,
+        coupon_is_valid: coupon_value != ''? false:true,        
+      })
+    })
+    this.setState({      
+      coupon_applied: coupon_value == ''? false:true
+    })    
+
   }
 
   increaseCount() {
@@ -276,36 +310,13 @@ class EmbededPayment extends React.Component {
       coupon_value: '',
       coupon_discount: 100,
       openCoupon: false,
-      coupon_is_valid: true
+      coupon_is_valid: true,
+      coupon_applied: false
     })
   }
 
   onChangeCouponCode(ev) {
     var coupon_value = ev.target.value
-    var code = ''
-    var coupon_is_valid = true
-    var discount = 100
-    var params = {
-      "code":coupon_value,
-      "product_id":this.props.match.params.id
-    }
-    this.props.actions.validateCoupon(params).then((res) => {
-      if (res.data){
-          code = res.data.coupon['code']
-          discount = res.data.coupon['discount']
-      }
-      this.setState({
-        coupon_code: code,
-        coupon_discount: discount,
-        coupon_is_valid: true
-      })
-    }).catch(err => {      
-      this.setState({
-        coupon_code: '',
-        coupon_discount: 100,
-        coupon_is_valid: coupon_value != ''? false:true
-      })
-    })
     this.setState({
       coupon_value: coupon_value,
     })  
@@ -352,7 +363,8 @@ class EmbededPayment extends React.Component {
       coupon_value,
       coupon_code,
       coupon_discount,
-      coupon_is_valid
+      coupon_is_valid,
+      coupon_applied
     } = this.state
     
     var is_many = paymentoptions.length > 4 ? true : false
@@ -392,13 +404,13 @@ class EmbededPayment extends React.Component {
             <div className="stock-info text-center">
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
-              <p className="text-primary text-center" style={{fontSize: 14}}>{product_info.username || ''}</p>
+              <p className="text-primary text-center" style={{fontSize: 14}}>by {product_info.username || ''}</p>
               <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * coupon_discount/100).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
               {
                 gateway?
-                  <div className="p-4 pt-2 pb-2 mb-2">
+                  <div className="p-4">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <img src={backIcon} width="15" onClick={this.backToOptions.bind(this)} style={{cursor: "pointer", marginTop: -25}}/>
                       <p className="grey text-center desc">Please enter your email address <br />for product delivery</p>
@@ -517,37 +529,34 @@ class EmbededPayment extends React.Component {
                           </Form> )}
                       </Formik>
                   </div>:
-                  <div className="p-4 pt-2 pb-2 mb-2">
-                    {/*<div className="d-flex justify-content-between align-items-center mb-4">
-                        <h4 className="mt-2 grey">Purchase</h4>
-                        <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
-                      </div>*/}
-                    <div className="text-center">
-                      { !showPaymentOptions && (
-                          <>
-                            <p className="grey desc">
-                              {product_info.description}
-                            </p>
-                            <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                              onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
-                            <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
-                              <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>                              
-                              <span className="ml-1 mr-1">
-                                  <input type="text" 
-                                      className="text-primary"
-                                      value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
-                                      background: 'transparent',
-                                      border: 'none',
-                                      width: '18px',
-                                      textAlign: 'center',                               
-                                  }} onChange={(e) => this.setState({quantityPrompt: e.target.value})} 
-                                     onBlur={e => this.setCount(e.target.value)}
-                                     />
-                                </span>
-                              <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>                              
-                            </div>
-                            {openCoupon?
-                              <div className="mt-3">
+                  <>
+                    { !showPaymentOptions && (
+                      <div className="pt-4 pl-4 pr-4 pb-1">
+                        <div className="text-center">
+                          <p className="grey desc">
+                            {product_info.description}
+                          </p>
+                          <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
+                          onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
+                          <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
+                            <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>                              
+                            <span className="ml-1 mr-1">
+                                <input type="text" 
+                                    className="text-primary"
+                                    value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    width: '18px',
+                                    textAlign: 'center',                               
+                                }} onChange={(e) => this.setState({quantityPrompt: e.target.value})} 
+                                   onBlur={e => this.setCount(e.target.value)}
+                                   />
+                              </span>
+                            <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>                              
+                          </div>
+                          {openCoupon?
+                            <div className="pt-3 pb-3">
+                              <div className="d-flex justify-content-between align-items-center">
                                 <Input
                                   type="text"
                                   id="coupon"
@@ -555,63 +564,58 @@ class EmbededPayment extends React.Component {
                                   placeholder="Coupon code"
                                   value={coupon_value}
                                   onChange={this.onChangeCouponCode.bind(this)} />
-                                { !coupon_is_valid && (
-                                  <p className="text-grey coupon_applied m-0 mt-3">
-                                    This coupon is invalid for this product
-                                  </p>
-                                )}
-                                { coupon_code != '' && coupon_is_valid?
-                                  <p className="text-primary coupon_applied m-0 mt-3">
-                                    <img src={editIcon} width="12" />
-                                    <span className="ml-2 mr-2" style={{ fontSize: 12 }}>Applied Coupon: ({coupon_discount}%)</span>
-                                    <i className="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
-                                  </p>
-                                  :
-                                  <p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
-                                }
+                                 <Button color="primary" className="mr-auto d-block" 
+                                    onClick={this.vaiidateCouponAndShowPaymentOptions.bind(this)}>
+                                  <CouponSvg />
+                                </Button>
                               </div>
-                              :
-                              <p className="text-grey mt-3 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
-                                <img src={editIcon} width="15" className="mr-2" />
-                                <b>Apply a Coupon</b>
-                              </p>
-                            }
-                          </>
-                      )}
-                      {
-                        showPaymentOptions && (
-                          <>
+                              { !coupon_is_valid && (
+                                <p className="text-grey text-center coupon_applied m-0 mt-3">
+                                  This coupon is invalid for this product
+                                </p>
+                              )}
+                              { coupon_code != '' && coupon_is_valid && (
+                                <p className="text-primary text-center coupon_applied m-0 mt-3">
+                                  <img src={editIcon} width="12" />
+                                  <span className="ml-2 mr-2" style={{ fontSize: 12 }}>Applied: { parseFloat(coupon_discount).toFixed(0)}% off the order</span>
+                                  <i className="fa fa-times cursor-pointer" onClick={this.clearCoupon.bind(this)}></i>
+                                </p>
+                              )}
+                              { !coupon_applied && (
+                                <p className="text-grey text-left mt-2 mb-0 coupon-help">Click on the right button to check and apply the coupon for this order</p>
+                              )}
+                            </div>
+                            :
+                            <p className="text-grey mt-5 mb-0 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
+                              <img src={editIcon} width="15" className="mr-1" />
+                              <b>Apply a Coupon</b>
+                            </p>
+                          }
+                        </div>
+                      </div>
+                    )}
+                    {showPaymentOptions && (
+                      <div className="p-4">
+                        <div className="text-center">
                           <div className="d-flex justify-content-between align-items-center mb-4">
                             <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
                             <p className="grey text-center desc">Select payment method</p>
                             <span></span>
                           </div>
                           { is_many?
-                            paymentoptions.map(option => {
+                            paymentoptions.map((option, key) => {
                             if(option != '') return(
-                            <Button className="pay-button many p-2" 
-                              key={option} >
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
-                                  {PAYMENT_LABELS[option]}
+                              <Button className="pay-button many p-2" 
+                                key={key} 
+                                onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
+                                >
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div>
+                                    <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
+                                    {PAYMENT_LABELS[option]}
+                                  </div>
                                 </div>
-                                <label className="custom-checkbox custom-control payment-checkbox ">
-                                  <input 
-                                    className="custom-control-input"
-                                    type="checkbox"
-                                    id={option}
-                                    name="SMTP-auth"
-                                    onChange={(e) => {
-                                      this.setState({optParam : PAYMENT_LABELS[option]})
-                                    }}
-                                    checked={ optParam === PAYMENT_LABELS[option] }
-                                  />
-                                  <label className="custom-control-label" htmlFor={option}>
-                                  </label>
-                                </label>
-                              </div>
-                            </Button>
+                              </Button>
                             )})
                             :
                             paymentoptions.map(option => {
@@ -643,11 +647,10 @@ class EmbededPayment extends React.Component {
                           }
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                             onClick={(e) => this.setPaymentOptions(e, optParam)}>Continue</Button>
-                          </>
-                        )
-                      }
-                    </div>
-                  </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
               }
             </Card>
           </div>
