@@ -64,7 +64,7 @@ class Contact extends React.Component {
 
     return (
       <div className="contact-screen container">
-        <div className="animated fadeIn">
+        <div className="animated customAnimation">
           <Formik
             onSubmit={(values) => {
               this.handleSubmit(values)

@@ -98,7 +98,7 @@ class ShopProducts extends React.Component {
 
     return (
       <div className="shop-product-screen">
-        <div className="animated fadeIn">
+        <div className="animated customAnimation">
           <Card className="grey">
             <CardHeader className="pb-1 pt-3">
               <Row>
