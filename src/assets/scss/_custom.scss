@@ -174,20 +174,6 @@ html:not([dir="rtl"]) .sidebar-show .sidebar {
     }
 }
 
-.react-confirm-alert-overlay {
-    background: rgba(0, 0, 0, 0.3) !important;
-}
-.react-confirm-alert-body {
-    text-align: center;
-    h1 {
-        font-size: 25px !important;
-        color: #613BEA !important;
-    }
-}
-
-.react-confirm-alert-button-group {
-    justify-content: center !important;
-}
 select {
     margin: 0 2px;
 }
@@ -231,10 +217,6 @@ textarea {
     padding-top: 10px !important;
 }
 
-
-.react-confirm-alert-overlay {
-    z-index: 9999 !important;
-}
 
 
 .form-control::placeholder {
