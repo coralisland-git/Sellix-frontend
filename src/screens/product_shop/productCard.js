@@ -1,7 +1,6 @@
 import React from 'react'
 import config from 'constants/config'
 import { Card } from 'reactstrap';
-import { withRouter } from 'react-router';
 
 
 const getProductStock = ({ type, file_stock, stock, service_stock }) => {
@@ -36,4 +35,4 @@ const ProductCard = ({ product, preventDefault, history }) => {
         </Card>
 }
 
-export default withRouter(ProductCard);
+export default ProductCard;
