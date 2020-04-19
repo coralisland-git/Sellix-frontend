@@ -81,8 +81,25 @@ class ShopFeedback extends React.Component {
                           <div className="text-left w-100">
                             <ReactStarsRating isEdit={false} value={Number(feedback.score)} isHalf={false} className="react-stars-rating"/>
                           </div>
-                          <p style={{lineHeight: '15px'}}>{feedback.message}</p>
-                          <div className="d-flex flex-row justify-content-between w-100">
+                          <p style={{lineHeight: '15px', padding: '10px'}}>{feedback.message}</p>
+                          {feedback.reply && <p style={{
+                            borderLeft: '3px solid gray',
+                            marginLeft: '10px',
+                            padding: '10px'
+                          }}>
+                            {feedback.reply}  
+                            <p className="reply-from-seller">— reply from the Seller</p>
+                            <style>
+                              {`
+                              .reply-from-seller {
+                                font-size: 11px;
+                                color: gray !important;
+                                margin: 8px 0;
+                              }
+                              `}
+                            </style>
+                          </p>}
+                          <div className="d-flex flex-row justify-content-between w-100" style={{marginLeft: '15px'}}>
                             <p><i className="fas fa-check feedback-checked" /> Verified Purchase</p>
                             <p><ReactTimeAgo date={feedback.created_at*1000/1} locale="en"/></p>
                           </div>

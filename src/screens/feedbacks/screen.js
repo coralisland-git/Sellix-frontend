@@ -90,6 +90,30 @@ class Feedbacks extends React.Component {
     )
   }
 
+  renderMessage = (cell, row) => {
+    const feedback = row;
+    return <p>
+        {feedback.message}
+        {feedback.reply && <p style={{
+          borderLeft: '3px solid gray',
+          marginLeft: '10px',
+          padding: '10px'
+        }}>
+          {feedback.reply}  
+          <p className="reply-from-seller">— reply from the Seller</p>
+          <style>
+            {`
+            .reply-from-seller {
+              font-size: 11px;
+              color: gray !important;
+              margin: 8px 0;
+            }
+            `}
+          </style>
+        </p>}
+    </p>
+  }
+
   renderTime(cell, row) {
 
     const formatDate = (timestamp) => {
@@ -164,6 +188,7 @@ class Feedbacks extends React.Component {
                             dataField="message"
                             dataSort
                             width = "30%"
+                            dataFormat={this.renderMessage}
                           >
                             Message
                           </TableHeaderColumn>
