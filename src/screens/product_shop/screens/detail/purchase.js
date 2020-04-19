@@ -48,6 +48,7 @@ class Purchase extends React.Component {
 	}
 
 	backToProducts = () => {
+		console.log(this.props.history, this.state.showPaymentOptions)
 		if(this.state.showPaymentOptions) {
 			this.setState({ showPaymentOptions: false })
 		} else {

@@ -36,15 +36,14 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-const Confirm = ({ onClose, onDeleteProduct }) => {
-
+const Confirm = ({ onClose, title, message, onDelete }) => {
   return <div className={"react-confirm-alert" + ` ${window.localStorage.getItem('theme') || 'light'}`}>
     <div className="react-confirm-alert-body">
-      <h1>Are you sure?</h1>
-      <h3>You want to delete this product?</h3>
+      <h1>{title}</h1>
+      <h3>{message}</h3>
       <div className="react-confirm-alert-button-group">
         <button onClick={() => {
-          onDeleteProduct()
+          onDelete()
           onClose()
         }}>Yes, Delete it!</button>
         <button onClick={onClose}>No</button>
@@ -84,7 +83,9 @@ class Product extends React.Component {
 
   deleteProduct = (e, id) => {
     confirmAlert({
-      customUI:  ({ onClose }) => <Confirm onClose={onClose} onDeleteProduct={this.onDeleteProduct(id)}/>
+      title: "Are you sure?",
+      message: "You want to delete this product?",
+      customUI:  (props) => <Confirm {...props} onDelete={this.onDeleteProduct(id)}/>
     });
   }
 
