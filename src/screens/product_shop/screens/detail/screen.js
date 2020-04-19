@@ -315,7 +315,7 @@ class ShopProductDetail extends React.Component {
                       </div>
                     </Card>
                   </Col>
-                  <Col md={4} className="left-bar" id="affix-bar">
+                  <Col md={4} className="left-bar" >
                     <div className="d-sm-down-none" >
                       <Affix offsetTop={97} container='affix-bar'>
                         <Card className="bg-white">
