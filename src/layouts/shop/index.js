@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
 
 class ShopLayout extends React.Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			theme: 'light',
 			verifiedTooltipOpen: false
@@ -47,9 +47,7 @@ class ShopLayout extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.authActions.getSelfUser().catch((err) => {
-			this.props.authActions.logOut()
-		})
+
 		this.props.commonActions
 			.getGeneralUserInfo(this.props.match.params.username)
 			.catch((e) => {
@@ -59,6 +57,9 @@ class ShopLayout extends React.Component {
 					}
 				}
 			})
+		this.props.authActions.getSelfUser().catch((err) => {
+			this.props.authActions.logOut()
+		})
 		const toastifyAlert = (status, message) => {
 			if (!message) {
 				message = 'Unexpected Error'
@@ -99,10 +100,10 @@ class ShopLayout extends React.Component {
 			zIndex: 1999
 		}
 
-		const pathname = this.props.history.location.pathname
+		const { pathname } = this.props.history.location;
 		const { user } = this.props
     	const userId = this.props.match.params.username
-		const theme = user.shop_dark_mode == '1'?'dark':'light'
+		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
 		const { verifiedTooltipOpen } = this.state
 
 		return (

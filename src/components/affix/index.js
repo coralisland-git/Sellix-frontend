@@ -129,7 +129,8 @@ class Affix extends Component {
     render() {
         const { fixStyle, boxStyle }= this.calculate()
         return (
-            <div><div style={boxStyle}></div>
+            <div>
+                <div style={boxStyle} />
                 <div style={fixStyle}>
                     {this.props.children}
                 </div>
