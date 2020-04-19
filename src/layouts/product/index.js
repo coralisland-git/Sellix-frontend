@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => {
 
 class ProductLayout extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       theme: 'light'
     }
@@ -83,7 +83,7 @@ class ProductLayout extends React.Component {
   }
 
   changeTheme() {
-    const theme = window.localStorage.getItem('theme') || 'light'
+    const theme = window.localStorage.getItem('theme') || 'light';
     window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
 
     this.setState({theme: theme === 'light' ? 'dark': 'light'})

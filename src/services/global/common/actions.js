@@ -43,28 +43,31 @@ export const checkDiscordChannel = (channel) => {
 
 export const getGeneralUserInfo = (username) => {
   return (dispatch) => {
+
     let data = {
       method: 'get',
       url: `/users/${username}`,
     }
-    return api(data).then(res => {
-      if(res && res.status == 200) {
-        console.log(res)
-        dispatch({
-          type: COMMON.GENERAL_USER_INFO,
-          payload: res.data
+
+    return api(data)
+        .then(res => {
+          let { status, data } = res;
+          let { shop_dark_mode } = data.user;
+          if(status === 200) {
+            dispatch({
+              type: COMMON.SHOP_THEME,
+              payload: shop_dark_mode === '1' ? 'dark' : 'light'
+            })
+            dispatch({
+              type: COMMON.GENERAL_USER_INFO,
+              payload: data
+            })
+          } else {
+            throw res
+          }
+        }).catch(err => {
+          throw err
         })
-        dispatch({
-          type: COMMON.SHOP_THEME,
-          payload: res.data.user.shop_dark_mode == '1'?'dark':'light'
-        })
-        // return res
-      } else {
-        throw res
-      }
-    }).catch(err => {
-      throw err
-    })
   }
 }
 

@@ -185,7 +185,7 @@
 }
 
 
-@keyframes custom {
+@keyframes customAnimation {
     from {
         opacity: 0;
         transform: translateY(10px);
@@ -198,7 +198,7 @@
     }
 }
 
-.fadeIn {
-    animation-name: custom !important;
+.customAnimation {
+    animation-name: customAnimation !important;
 }
 

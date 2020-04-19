@@ -63,7 +63,7 @@ class ShopFeedback extends React.Component {
 
     return (
       <div className="feedback-shop-screen">
-        <div className="animated fadeIn">
+        <div className="animated customAnimation">
         {
             loading ?
               <Row>
