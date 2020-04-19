@@ -183,3 +183,22 @@
         font-size: 15px;
     }
 }
+
+
+@keyframes custom {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transition: 0.3s ease-out;
+        transform: translateY(0px);
+    }
+}
+
+.fadeIn {
+    animation-name: custom !important;
+}
+
