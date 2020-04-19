@@ -29,8 +29,10 @@ export class StarRating extends React.Component {
             for(const star of this.stars) {
                 if(i < value) {
                     star.innerHTML = starSvg
+                    star.style.opacity = 1
                 } else {
-                    star.innerHTML = emptyStarSvg
+                    star.innerHTML = starSvg
+                    star.style.opacity = 0
                 }
                 const iCopy = i
 
@@ -39,12 +41,12 @@ export class StarRating extends React.Component {
                     star.onclick = () => this.props.onChange(iCopy+1)
                     star.onmouseover = () => {
                         for(var j = 0; j < this.stars.length; j++) {
-                            this.stars[j].innerHTML = j <= iCopy ? starSvg : emptyStarSvg
+                            this.stars[j].style.opacity = j <= iCopy ? 1 : 0
                         }
                     }
                     star.onmouseout = () => {
                         for(var j = 0; j < this.stars.length; j++) {
-                            this.stars[j].innerHTML = j < value ? starSvg : emptyStarSvg
+                            this.stars[j].style.opacity = j < value ? 1 : 0
                         }
                     }
                 }
