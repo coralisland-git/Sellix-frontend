@@ -31,8 +31,7 @@ class Purchase extends React.Component {
 		this.state = {
 			openCoupon: false,
 			showPaymentOptions: false,
-			quantity: 1,
-			quantityPrompt: undefined,
+			quantity: 1
 		}
 	}
 
@@ -60,8 +59,7 @@ class Purchase extends React.Component {
 		let { quantity } = this.state;
 		let { quantity_min } = this.props.productInfo;
 		this.setState({
-			quantity: quantity > quantity_min ? quantity - 1 : quantity,
-			quantityPrompt: quantity > quantity_min ? quantity - 1 : quantity,
+			quantity: quantity > quantity_min ? quantity - 1 : quantity
 		}, () => {
 			this.props.setCount(this.state)
 		})
@@ -73,79 +71,58 @@ class Purchase extends React.Component {
 		const { quantity } = this.state;
 		const { type, stock, file_stock, service_stock, quantity_max } = this.props.productInfo;
 
-		if((type === 'serials' && quantity_max !== "-1" && quantity >= quantity_max) || (type === 'serials' && quantity_max === "-1" && quantity >= stock)) {
+		if((type == 'serials' && quantity_max != -1 && quantity >= quantity_max) ||
+			(type == 'serials' && quantity_max == -1 && quantity >= stock)) {
 			return true
 		}
 
-		if(type === 'file' && file_stock !== "-1" && quantity >= file_stock) {
+		if(type == 'file' &&  file_stock != -1 && quantity >= file_stock) {
 			return true
 		}
 
-		if(type === 'service' && service_stock !== "-1" && quantity >= service_stock) {
+		if(type == 'service' &&  service_stock != -1 && quantity >= service_stock) {
 			return true
 		}
 
 		this.setState({
-			quantity: quantity + 1,
-			quantityPrompt: quantity + 1
+			quantity: quantity + 1
 		}, () => {
 			this.props.setCount(this.state)
 		})
 	}
 
-
-	setPromptCount = (quantityPrompt) => {
-		this.setState({
-			quantityPrompt
-		}, () => {
-			this.props.setCount(this.state)
-		})
-	}
 
 	setCoupon = coupon_code => {
 		this.setState({
 			coupon_code
 		}, () => {
-			this.props.setCoupon(this.state)
+			this.props.setCoupon(this.state.coupon_code)
 		})
 	}
 
 	setCount = (count) => {
 
-		const { quantity } = this.state;
 		const { type, stock, file_stock, service_stock, quantity_max, quantity_min } = this.props.productInfo;
 
-		if(isNaN(count)) {
-			this.setState({
-				quantity,
-				quantityPrompt: quantity
-			}, () => {
-				this.props.setCount(this.state)
-			})
-		} else {
-			let validatedCount = count;
+		if(!isNaN(count)) {
 
-			switch (type) {
-				case 'serials':
-					validatedCount = Math.min(stock, validatedCount);
-					break;
-				case 'file':
-					validatedCount = Math.min(file_stock, validatedCount)
-					break;
-				case 'service':
-					validatedCount = Math.min(service_stock, validatedCount)
-					break;
+			let validatedCount = Number(count);
+
+			if((type == 'serials' && quantity_max != -1 && validatedCount >= quantity_max) ||
+				(type == 'serials' && quantity_max == -1 && validatedCount >= stock)) {
+				validatedCount = Math.min(stock, validatedCount)
 			}
 
-			if(quantity_max !== "-1")
-				validatedCount = Math.min(quantity_max, validatedCount)
+			if(type == 'file' &&  file_stock != -1 && validatedCount >= file_stock) {
+				validatedCount = Math.min(file_stock, validatedCount)
+			}
 
-			if(quantity_min !== "-1")
+			if(type == 'service' &&  service_stock != -1 && validatedCount >= service_stock) {
 				validatedCount = Math.max(quantity_min, validatedCount)
+			}
 
 			this.setState({
-				quantity: validatedCount,
-				quantityPrompt: validatedCount
+				quantity: validatedCount
 			}, () => {
 				this.props.setCount(this.state)
 			})
@@ -155,7 +132,7 @@ class Purchase extends React.Component {
 
 	render() {
 
-		let { productInfo, quantity, setPaymentOptions, quantityPrompt } = this.props;
+		let { productInfo, quantity, setPaymentOptions } = this.props;
 		let { paymentOptions = [] } = productInfo;
 		let { openCoupon, showPaymentOptions } = this.state;
 		let currency = config.CURRENCY_LIST[productInfo.currency];
@@ -179,16 +156,15 @@ class Purchase extends React.Component {
 						</Collapse>
 					</div>
 					<div className="d-flex justify-content-center align-items-center mt-3 stock-count">
-						<span className={quantity === 1 ? 'text-grey' : ''} onClick={this.decreaseCount}><i className="fas fa-minus"/></span>
-						<span style={{fontSize: 20, minWidth: 25, marginBottom: 3 / 2}} className="ml-3 mr-3">
+						<span className={quantity === 1 ? 'text-grey' : ''} style={{ padding: "1rem" }} onClick={this.decreaseCount}><i className="fas fa-minus"/></span>
+						<span style={{ fontSize: 20, minWidth: 25, marginBottom: 2.5 }}>
 			                <input
 				                type="text"
-				                value={quantityPrompt === undefined ? quantity : quantityPrompt}
-				                onChange={(e) => this.setPromptCount(e.target.value)}
-				                onBlur={e => this.setCount(e.target.value)}
+				                value={quantity}
+				                onChange={(e) => this.setCount(e.target.value)}
 			                />
 		                </span>
-						<span onClick={this.increaseCount}><i className="fas fa-plus"/></span>
+						<span onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
 					</div>
 
 					{openCoupon ?

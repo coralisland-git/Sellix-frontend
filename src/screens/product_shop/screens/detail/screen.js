@@ -70,10 +70,9 @@ class ShopProductDetail extends React.Component {
   }
 
 
-  setCount = ({ quantity, quantityPrompt }) => {
+  setCount = ({ quantity }) => {
     this.setState({
-      quantity,
-      quantityPrompt
+      quantity
     })
   }
 
@@ -87,8 +86,7 @@ class ShopProductDetail extends React.Component {
     this.setState({
       sending: false,
       gateway: null,
-      quantity: 1,
-      quantityPrompt: 1
+      quantity: 1
     })
   }
 
@@ -148,7 +146,7 @@ class ShopProductDetail extends React.Component {
                           {
                             gateway ?
                               <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                              <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount}/>
+                                <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
                           }
 
                           <StockInfo productInfo={productInfo} />
@@ -161,7 +159,7 @@ class ShopProductDetail extends React.Component {
                         {
                           gateway ?
                               <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                              <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} />
+                              <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
                         }
                         <StockInfo productInfo={productInfo} />
                       </Card>
