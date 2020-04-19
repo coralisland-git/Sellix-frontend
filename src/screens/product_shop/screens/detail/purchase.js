@@ -58,8 +58,9 @@ class Purchase extends React.Component {
 	decreaseCount = () => {
 		let { quantity } = this.state;
 		let { quantity_min } = this.props.productInfo;
+
 		this.setState({
-			quantity: quantity > quantity_min ? quantity - 1 : quantity
+			quantity: Number(quantity > quantity_min ? quantity - 1 : quantity)
 		}, () => {
 			this.props.setCount(this.state)
 		})
@@ -85,7 +86,7 @@ class Purchase extends React.Component {
 		}
 
 		this.setState({
-			quantity: quantity + 1
+			quantity: Number(quantity + 1)
 		}, () => {
 			this.props.setCount(this.state)
 		})
@@ -122,7 +123,17 @@ class Purchase extends React.Component {
 			}
 
 			this.setState({
-				quantity: validatedCount
+				quantity: Number(validatedCount)
+			}, () => {
+				this.props.setCount(this.state)
+			})
+		}
+	}
+
+	onBlur = (count) => {
+		if(count < this.props.productInfo.quantity_min) {
+			this.setState({
+				quantity: Number(this.props.productInfo.quantity_min)
 			}, () => {
 				this.props.setCount(this.state)
 			})
@@ -162,6 +173,7 @@ class Purchase extends React.Component {
 				                type="text"
 				                value={quantity}
 				                onChange={(e) => this.setCount(e.target.value)}
+				                onBlur={(e) => this.onBlur(e.target.value)}
 			                />
 		                </span>
 						<span onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>

@@ -72,7 +72,7 @@ class ShopProductDetail extends React.Component {
 
   setCount = ({ quantity }) => {
     this.setState({
-      quantity
+      quantity: Number(quantity)
     })
   }
 
