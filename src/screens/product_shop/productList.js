@@ -8,7 +8,7 @@ import './style.scss'
 
 
 
-const ProductsList = ({ products, loading }) => {
+const ProductsList = ({ products, loading, history }) => {
 
 	if(loading) {
 		return  <Loader />
@@ -17,13 +17,11 @@ const ProductsList = ({ products, loading }) => {
 		return <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>
 	}
 
-	console.log(products.length, "FLIP MOVE");
-
 	return (
-		<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} duration={100}>
+		<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} duration={300}>
 			{products.map(product =>
 				<div key={product.uniqid} style={{ width: "25%" }} className="mb-4 col-md-3">
-					<ProductCard product={product}/>
+					<ProductCard product={product} history={history}/>
 				</div>
 			)}
 		</FlipMove>

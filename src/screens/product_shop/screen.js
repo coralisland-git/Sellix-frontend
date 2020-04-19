@@ -3,8 +3,9 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Card, CardHeader, Button, Row, Col, Input, CardBody} from 'reactstrap'
 import { CommonActions } from 'services/global'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { Loader } from 'components'
+import { debounce } from 'lodash'
 
 import './style.scss'
 
@@ -71,10 +72,7 @@ class ShopProducts extends React.Component {
     this.props.history.push(filter === 'all' ? `/${username}` : `/${username}/category/${filter}`);
   }
 
-  setSearchKey = (e) => {
-    this.setState({ search_key: e.target.value })
-  }
-
+  setSearchKey = debounce((search_key) => this.setState({ search_key }), 300);
 
   searchProducts = () => {
 
@@ -100,7 +98,7 @@ class ShopProducts extends React.Component {
 
     return (
       <div className="shop-product-screen">
-        <div className="">
+        <div className="animated fadeIn">
           <Card className="grey">
             <CardHeader className="pb-1 pt-3">
               <Row>
@@ -127,7 +125,7 @@ class ShopProducts extends React.Component {
                           <Input
                               placeholder="Search for a product..."
                               className="header-search-input"
-                              onChange={this.setSearchKey}
+                              onChange={(e) => this.setSearchKey(e.target.value)}
                           />
                         </div>
                       </div>
@@ -139,7 +137,9 @@ class ShopProducts extends React.Component {
             <React.Suspense fallback={<Loader />}>
               <CardBody className="p-0">
                 <Row>
-                  <Route to={'/:username/category/:id'} render={(props) => <ProductList products={searchProducts} loading={loading} {...props} />} />
+                  <Switch>
+                    <Route to={'/:username/category/:id'} render={(props) => <ProductList products={searchProducts} loading={loading} {...props} />} />
+                  </Switch>
                 </Row>
               </CardBody>
             </React.Suspense>

@@ -74,23 +74,23 @@ class ShopFeedback extends React.Component {
             :
               <Row className="py-3">
                 {
-                  user_feedback.map(feedback => 
-                    <Col lg={3}>
+                  user_feedback.map((feedback, key) =>
+                    <Col lg={3} key={key}>
                       <Card className="">
                         <CardBody className="p-3 bg-white d-flex flex-column align-items-center justify-content-between">
-                          <p className="text-left w-100">
-                            <ReactStarsRating isEdit={false} value={feedback.score} isHalf={false} className="react-stars-rating"/>
-                          </p>
+                          <div className="text-left w-100">
+                            <ReactStarsRating isEdit={false} value={Number(feedback.score)} isHalf={false} className="react-stars-rating"/>
+                          </div>
                           <p style={{lineHeight: '15px'}}>{feedback.message}</p>
                           <div className="d-flex flex-row justify-content-between w-100">
-                            <p><i className="fas fa-check feedback-checked"></i> Verified Purchase</p>
+                            <p><i className="fas fa-check feedback-checked" /> Verified Purchase</p>
                             <p><ReactTimeAgo date={feedback.created_at*1000/1} locale="en"/></p>
                           </div>
                         </CardBody>
                       </Card>
                     </Col>)
                 }
-                {user_feedback.length == 0 && <p className="w-100 text-center mt-4 mb-4">No Feedback Given</p>}
+                {user_feedback.length === 0 && <p className="w-100 text-center mt-4 mb-4">No Feedback Given</p>}
               </Row>
             }
         </div>
