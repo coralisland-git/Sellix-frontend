@@ -17,7 +17,7 @@ import {
 } from 'services/global'
 import ProductCard from "../product_shop/productCard"
 import VirtualDraggableGrid from 'react-virtual-draggable-grid';
-import { DragAndDropGrid } from './dragAndDropGrid'
+import { DragAndDropGrid } from './dragAndDropGrid2'
 
 
 import * as ProductActions from './actions'
@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const ProductCardExtended = ({ product }) => (
-    <div style={{ border: '1px solid #ccc', background: 'white' }}>
+    <div style={{ background: 'white', marginRight: '15px', marginLeft: '15px', borderRadius: '5px' }}>
       <ProductCard product={product} preventDefault />
     </div>
 )
@@ -113,7 +113,7 @@ class Product extends React.Component {
                 </Col>
               </Row>
             </CardHeader>
-            <CardBody>
+            <div>
               {
                 loading ?
                   <Row>
@@ -177,7 +177,7 @@ class Product extends React.Component {
                     </Col>
                   </Row>
               }
-            </CardBody>
+            </div>
           </Card>
         </div>
       </div>

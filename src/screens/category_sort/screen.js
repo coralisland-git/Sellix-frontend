@@ -16,6 +16,7 @@ import RLDD from 'react-list-drag-and-drop/lib/RLDD';
 import {
   CommonActions,
 } from 'services/global'
+import { DragAndDropGrid } from '../product_sort/dragAndDropGrid2'
 
 
 import * as CategoryActions from './actions'
@@ -33,6 +34,19 @@ const mapDispatchToProps = (dispatch) => {
     commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
+
+const CategoryCard = ({ category }) => (
+  <CardBody style={{ background: 'white', marginRight: '15px', marginLeft: '15px', padding: '15px', borderRadius: '5px' }}>
+    <h2 style={{display: 'inline-block'}}>{category.title}</h2> 
+    <span class="text-right" style={{float: 'right'}}>{category.products_count} product{category.products_count == 1 ? '' : 's'}</span> <br/>
+    {category.products_bound.map(product => <Badge color="success" style={{
+      color: 'white',
+      padding: '6px',
+      height: '19px',
+      margin: '3px'
+    }}>{product.title}</Badge>)}
+  </CardBody>
+)
 
 class CategorySort extends React.Component {
   
@@ -106,7 +120,7 @@ class CategorySort extends React.Component {
                 </Col>
               </Row>
             </CardHeader>
-            <CardBody>
+            <div>
               {
                 loading ?
                   <Row>
@@ -118,34 +132,17 @@ class CategorySort extends React.Component {
                   <Row>
                     <Col lg={12}>
                       <div>
-                      <RLDD
-                          cssClasses="product-list"
-                          items={category_list}
-                          itemRenderer={(category) => (
-                            <div className="item">
-                              <p className="body mb-0"><i className="fa fa-bars mr-3"></i>
-                              <Badge color="danger" style={{
-                                color: 'white',
-                                padding: '6px',
-                                height: '19px',
-                                margin: '3px'
-                              }}>{category.title}</Badge> ({category.products_count} products) - 
-                              {category.products_bound.map(product => <Badge color="success" style={{
-                                color: 'white',
-                                padding: '6px',
-                                height: '19px',
-                                margin: '3px'
-                              }}>{product.title}</Badge>)}
-                              </p>
-                            </div>
-                          )}
-                          onChange={this.handleRLDDChange}
-                        />
+                      <DragAndDropGrid
+                            items={category_list}
+                            ItemComponent={CategoryCard}
+                            itemToProps={category => ({ category })}
+                            handleChange={this.handleRLDDChange}
+                         />
                       </div>
                     </Col>
                   </Row>
               }
-            </CardBody>
+            </div>
           </Card>
         </div>
       </div>
