@@ -27,12 +27,13 @@ export class StarRating extends React.Component {
             this.stars = this.ref.current.querySelectorAll('.star')
             
             for(const star of this.stars) {
+                star.innerHTML = starSvg + emptyStarSvg
                 if(i < value) {
-                    star.innerHTML = starSvg
-                    star.style.opacity = 1
+                    star.children[0].style.display = 'inline'
+                    star.children[1].style.display = 'none'
                 } else {
-                    star.innerHTML = starSvg
-                    star.style.opacity = 0
+                    star.children[0].style.display = 'none'
+                    star.children[1].style.display = 'inline'
                 }
                 const iCopy = i
 
@@ -41,12 +42,24 @@ export class StarRating extends React.Component {
                     star.onclick = () => this.props.onChange(iCopy+1)
                     star.onmouseover = () => {
                         for(var j = 0; j < this.stars.length; j++) {
-                            this.stars[j].style.opacity = j <= iCopy ? 1 : 0
+                            if(j <= iCopy) {
+                                this.stars[j].children[0].style.display = 'inline'
+                                this.stars[j].children[1].style.display = 'none'
+                            } else {
+                                this.stars[j].children[0].style.display = 'none'
+                                this.stars[j].children[1].style.display = 'inline'
+                            }
                         }
                     }
                     star.onmouseout = () => {
                         for(var j = 0; j < this.stars.length; j++) {
-                            this.stars[j].style.opacity = j < value ? 1 : 0
+                            if(j < value) {
+                                this.stars[j].children[0].style.display = 'inline'
+                                this.stars[j].children[1].style.display = 'none'
+                            } else {
+                                this.stars[j].children[0].style.display = 'none'
+                                this.stars[j].children[1].style.display = 'inline'
+                            }
                         }
                     }
                 }
