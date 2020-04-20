@@ -1,6 +1,25 @@
+.light .analytics-screen {
+  div.top3-products.card-body {
+    background: #f4f0ff !important;
+  }
+}
+
 .analytics-screen {
   .card-header {
     color: #20a8d8;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 16px !important;
+  }
+
+
+  div.top3-products.card-body {
+    background: #211d3d !important;
   }
   
   .product-table {
@@ -29,7 +48,7 @@
   }
 
   h1.title {
-    font-size: 16px;
+    font-size: 18px;
     color: black;
     font-weight: 600;
     font-family: var(--font-family-sans-serif);

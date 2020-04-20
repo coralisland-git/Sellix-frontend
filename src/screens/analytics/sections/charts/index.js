@@ -110,7 +110,7 @@ export default class Charts extends PureComponent {
                   dataKey="view"
                   stackId="3"
                   stroke="#613BEA"
-                  fill="url(#fill)"
+                  fill="url(#fillPurple)"
                   fillOpacity={0.7}
                   activeDot={{ r: 6, fill: '#613BEA', fillOpacity: 1 }}
               />
@@ -122,7 +122,7 @@ export default class Charts extends PureComponent {
                   dataKey="query"
                   stackId="4"
                   stroke="#613BEA"
-                  fill="url(#fill)"
+                  fill="url(#fillPurple)"
                   fillOpacity={0.7}
                   activeDot={{ r: 6, fill: '#613BEA', fillOpacity: 1 }}
               />

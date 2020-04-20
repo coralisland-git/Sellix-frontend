@@ -128,7 +128,7 @@ class GeneralSettings extends React.Component {
               {props => (
                 <Form onSubmit={props.handleSubmit}>
                   <Card>
-                    <CardBody className="p-4 mb-5">
+                    <CardBody className="p-4 mb-4">
                       {
                         loading ?
                           <Row>
@@ -137,12 +137,12 @@ class GeneralSettings extends React.Component {
                             </Col>
                           </Row>
                         :
-                          <Row className="mt-4 mb-4">
+                          <Row className="">
                             <Col lg={12}>
                               <Row>
                                 <Col lg={12}>
                                   <FormGroup>
-                                    <Label className="mb-4">General Information</Label>
+                                    <h4 className="mb-4">General Information</h4>
                                   </FormGroup>
                                 </Col>
                               </Row>

@@ -115,7 +115,7 @@ class CreateWebhookSimulator extends React.Component {
                       </Col>
                     </Row>
                   </CardHeader>
-                  <CardBody className="p-4 mb-5">
+                  <CardBody className="mb-4">
                     { 
                       loading ?
                         <Row>
@@ -124,7 +124,7 @@ class CreateWebhookSimulator extends React.Component {
                           </Col>
                         </Row>
                       :
-                        <Row className="mt-4 mb-4">
+                        <Row className="mt-2 mb-2">
                           <Col lg={12}>
                             <Row>
                               <Col>
