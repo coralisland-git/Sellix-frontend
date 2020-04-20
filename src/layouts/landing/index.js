@@ -194,6 +194,9 @@ class LandingLayout extends React.Component {
                             <NavItem>
                                 <NavLink href="/terms">Terms</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink href="/changelog">Changelog</NavLink>
+                            </NavItem>
                             </Nav>
                         </div>
                         <div className="mb-3">

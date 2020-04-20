@@ -1,5 +1,6 @@
 import Home from './home'
 import Fees from './fees'
+import Changelog from './changelog'
 import LogIn from './log_in'
 import TwoFactorAuthentication from './2fa'
 import OTPLogin from './otp_2fa'
@@ -72,6 +73,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 export {
   AdminDashboard,
   Home,
+  Changelog,
   Fees,
   LogIn,
   Register,
