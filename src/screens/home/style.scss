@@ -7,6 +7,26 @@
     color: white !important;
   }
 
+  .background1-img {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    width: 100%;
+    height: 687px !important;
+    // object-fit: cover;
+    // min-height: 590px;
+  }
+
+  .background2-img {
+    // width: 136% !important;
+    position: absolute;
+    left: 0px;
+    // top: 138%;
+    height: 120% !important;
+    z-index: 0;
+    object-fit: cover;
+  }
+
   background-color: #f8f8f8;
   header {
     // position: fixed;
@@ -48,22 +68,64 @@
   }
 
   .purple {
-    background-color: #613BEA;
+    background-image: linear-gradient(#3D2E87, #8C2DDF);
+    padding: 70px 30px !important;
+    border-radius: 22px;
+    box-shadow: -23px 15px 111px 0 rgba(0, 52, 74, 0.18) !important;
+
+    h1 {
+      font-size: 32px !important;
+      font-weight: 400 !important;
+    }
+
+    p {
+      font-size: 21px !important;
+      max-width: 450px;
+    }
 
     h1, p {
       color: white !important;
+    }
+
+    button {
+      font-size: 20px !important;
+      height: 40px !important;
+      font-weight: 400 !important;
+      padding: 0 30px !important;
+      a {
+        line-height: 26px;
+        color: #822DD5 !important;
+        padding-bottom: 2px !important;
+      }
+    }
+  }
+
+  .payment-fee {
+    h1 {
+      font-size: 35px !important;
+      font-weight: 400;
+    }
+    button {
+      background-color: #504293 !important;
+      font-size: 22px !important;
+      font-weight: bold !important;
+      padding: 0px 50px !important;
+      height: 40px;
+      a {
+        
+      }
     }
   }
 
   p {
     color: #A7A5B4;
-    line-height: 2em;
+    line-height: 1.5em !important;
   }
 
   h1 {
     color: #613BEA;
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 45px;
+    font-weight: 700;
   }
 
   h3 {
@@ -86,11 +148,12 @@
   }
 
   p.large {
-    font-size: 20px;
+    font-size: 24px !important;
+    font-weight: 200;
   }
 
   p.small {
-    font-size: 18px;
+    font-size: 16px !important;
   }
 
   img {
@@ -98,23 +161,52 @@
     height: 100%;
   }
 
-  .service-img {
-    max-width: 120px;
-    max-height: 120px;
+  .service-card {
+    text-align: left;
+    background-color: white;
+    border-radius: 22px;
+    padding: 15px;
+
+    &.service-card-shadow {
+      box-shadow: -23px 15px 111px 0 rgba(0, 52, 74, 0.18) !important;
+    }
+
+    &.zindex-2 {
+      position: relative;
+      z-index: 2;
+    }
+
+    &.zindex-3 {
+      position: relative;
+      z-index: 3;
+    }
+
+    p, h4 {
+      padding: 0 20px;
+    }
+    .service-img {
+      max-width: 64px !important;
+      max-height: 64px !important;
+    }
   }
 
+  
+
   .undraw-img {
-    max-width: 600px;
-    max-height: 440px;
+    width: 100% !important;
+    // width: 1000px !important;
+    max-width: 700px !important;
+    margin-right: -15px !important;
+    // box-shadow: -23px 15px 111px 0 rgba(0, 52, 74, 0.18) !important;
   }
 
   .pc-img  {
-    max-width: 680px;
-    max-height: 380px;
+    max-width: 760px !important;
+    max-height: 760px !important;
   }
 
   .digital-img {
-    max-width: 570px;
+    max-width: 442px !important;
   }
 
   .home-container {

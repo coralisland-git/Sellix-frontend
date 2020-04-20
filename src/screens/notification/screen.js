@@ -266,7 +266,7 @@ class Notification extends React.Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col lg={12}>
+                  {/* <Col lg={12}>
                     <hr/>
                     <label className="custom-checkbox custom-control payment-checkbox ">
                       <input 
@@ -295,7 +295,7 @@ class Notification extends React.Component {
                         }}
                       />
                     </FormGroup>
-                  </Col>
+                  </Col> */}
                 </Row>
             }
             </CardBody>
