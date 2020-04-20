@@ -3,6 +3,8 @@ import config from "constants/config";
 import { Collapse, Button, Input } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import React from "react";
+import { Loading } from 'components'
+import { api, formData } from 'utils'
 
 const ButtonOptions = ({ option, setPaymentOptions, index }) => {
 	if(option === '') {
@@ -30,7 +32,11 @@ class Purchase extends React.Component {
 		this.state = {
 			openCoupon: false,
 			showPaymentOptions: false,
-			quantity: 1
+			quantity: 1,
+			appliedCoupon: null,
+			couponSuccess: false,
+			couponError: false,
+			couponLoader: false
 		}
 	}
 
@@ -140,12 +146,50 @@ class Purchase extends React.Component {
 		}
 	}
 
+	applyCoupon = () => {
+		this.setState({
+			couponSuccess: false,
+			couponError: false,
+			couponLoading: true,
+			appliedCoupon: null
+		})
+
+		const { coupon_code } = this.state
+
+		let data = {
+			method: 'POST',
+			url: '/coupons/check',
+			data: formData({
+				code: coupon_code,
+				product_id: this.props.productInfo.uniqid
+			})
+		}
+
+		api(data).then(res => {
+			console.log(res)
+			if(res.status == 200)
+				return this.setState({
+					appliedCoupon: res.data.coupon,
+					couponSuccess: true,
+					couponLoading: false
+				})
+			else if(res.status == 400)
+				return this.setState({
+					couponError: true,
+					couponLoading: false
+				})
+			else throw res
+		}).catch(err => {
+			throw err
+		})
+	}
+
 
 	render() {
 
 		let { productInfo, quantity, setPaymentOptions } = this.props;
 		let { paymentOptions = [] } = productInfo;
-		let { openCoupon, showPaymentOptions } = this.state;
+		let { openCoupon, showPaymentOptions, couponSuccess, couponError, couponLoading, appliedCoupon } = this.state;
 		let currency = config.CURRENCY_LIST[productInfo.currency];
 
 		return <div>
@@ -158,7 +202,7 @@ class Purchase extends React.Component {
 				</div>
 
 				<div className="text-center">
-					<h3>{currency}{(productInfo.price_display * quantity).toFixed(2) || 0}</h3>
+					<h3>{currency}{(productInfo.price_display * quantity * (appliedCoupon ? appliedCoupon.discount / 100 : 1)).toFixed(2) || 0}</h3>
 					<div className="mt-3">
 						{!showPaymentOptions && <Button color="primary" className="mr-auto ml-auto d-block" onClick={this.showPaymentOptions} style={{width: 170}}>Purchase</Button>}
 						{showPaymentOptions && paymentOptions.length === 0 && <p className="mt-3 mb-3 text-grey">This product has no payment options.</p>}
@@ -183,8 +227,31 @@ class Purchase extends React.Component {
 
 					{openCoupon ?
 						<div className="mt-3">
-							<Input type="text" id="coupon" name="coupon" placeholder="Coupon code" onChange={(e) => {this.setCoupon(e.target.value)}}/>
-							<p className="text-grey text-left mt-2 coupon-help">This coupon will be automatically checked and applied if working when you proceed with the invoice</p>
+							<div style={{display: 'flex'}} className="coupon-apply-container">
+								<Input type="text" id="coupon" name="coupon" placeholder="Coupon code" onChange={(e) => {this.setCoupon(e.target.value)}}/>
+								<Button color="primary" className="mr-auto ml-auto d-block" onClick={this.applyCoupon} style={{
+									width: 100
+								}}>Apply</Button>
+								<style>
+									{`
+										.coupon-apply-container > *:first-child {
+											border-radius: 3px 0 0 3px !important;
+										}
+										.coupon-apply-container > *:nth-child(2) {
+											border-radius: 0 3px 3px 0 !important;
+										}
+									`}
+								</style>
+							</div>
+							<p className="text-grey text-left mt-2 coupon-help" style={{
+								display: 'flex',
+								justifyContent: 'center',
+								paddingTop: '10px'
+							}}>
+								{couponSuccess && <span className="text-green">{parseInt(appliedCoupon.discount)}% Coupon is applied!</span>}
+								{couponError && <span className="text-red">Coupon does not exist or is expired</span>}
+								{/* {couponLoading && Loading()} */}
+							</p>
 						</div> :
 						<p className="text-grey mt-3 cursor-pointer" onClick={this.openCoupon}>Apply a Coupon</p>
 					}
