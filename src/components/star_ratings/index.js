@@ -37,7 +37,6 @@ export class StarRating extends React.Component {
                 }
                 const iCopy = i
 
-
                 if(this.props.isEdit !== false) {
                     star.onclick = () => this.props.onChange(iCopy+1)
                     star.onmouseover = () => {
