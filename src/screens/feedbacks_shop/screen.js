@@ -85,7 +85,9 @@ class ShopFeedback extends React.Component {
                           {feedback.reply && <p style={{
                             borderLeft: '3px solid gray',
                             marginLeft: '10px',
-                            padding: '10px'
+                            padding: '10px',
+                            position: 'relative',
+                            top: '-6px'
                           }}>
                             {feedback.reply}  
                             <p className="reply-from-seller">— reply from the Seller</p>
