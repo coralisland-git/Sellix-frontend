@@ -15,7 +15,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
-import { NewWebhookModal } from './sections'
+import { NewWebhookLogModal } from './sections'
 import { CommonActions } from 'services/global';
 import * as WebhooksActions from './actions'
 
@@ -124,7 +124,7 @@ class WebhookLogs extends React.Component {
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
-          <NewWebhookModal 
+          <NewWebhookLogModal 
             openModal={openModal} 
             closeModal={this.closeNewWebhookModal.bind(this)}
             actions={this.props.actions}
@@ -148,7 +148,7 @@ class WebhookLogs extends React.Component {
                       />
                     </div>
                     <Button className="ml-3" color="primary" onClick={this.openNewWebhookModal.bind(this)}>
-                      Simulator</Button>
+                      Add Webhook Simulator</Button>
                   </div>
                 </Col>
               </Row>
