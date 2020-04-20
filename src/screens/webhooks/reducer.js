@@ -12,7 +12,7 @@ const WebhookReducer = (state = initState, action) => {
     case WEBHOOK.WEBHOOK_LIST:
       return {
         ...state,
-        webhook_list: Object.assign([], payload.wehbooks)
+        webhook_list: Object.assign([], payload.webhooks)
       }
 
     default:
