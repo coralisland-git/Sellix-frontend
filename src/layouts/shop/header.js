@@ -1,30 +1,18 @@
 import React, { Component } from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
   Nav,
-  NavItem,
-  UncontrolledDropdown,
-  Input,
-  Badge
+  UncontrolledDropdown
 } from 'reactstrap'
 import PropTypes from 'prop-types'
-
-import {
-  AppAsideToggler,
-  AppNavbarBrand,
-  AppSidebarToggler
-} from '@coreui/react'
 
 import './style.scss'
 
 
 
 import sellix_logo from 'assets/images/Sellix_logo.svg'
-import avatar from 'assets/images/avatars/6.png'
-import chevron from 'assets/images/chevron-down-solid.png'
 
 const propTypes = {
   children: PropTypes.node
@@ -47,10 +35,6 @@ class Header extends Component {
   signOut () {
     this.props.authActions.logOut()
     this.props.history.push('/auth/login')
-  }
-
-  setTheme(){
-    this.props.changeTheme()
   }
 
   render() {
