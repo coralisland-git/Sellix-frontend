@@ -24,15 +24,7 @@ const userId = window.localStorage.getItem('userId')
 
 class Header extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-
-    this.signOut = this.signOut.bind(this)
-  }
-
-  signOut () {
+  signOut = () => {
     this.props.authActions.logOut()
     this.props.history.push('/auth/login')
   }
