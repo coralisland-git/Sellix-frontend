@@ -35,6 +35,10 @@ export const BLACKLIST = {
   BLACKLIST_LIST: 'BLACKLIST'
 }
 
+export const WEBHOOK = {
+  WEBHOOK_LIST: 'WEBHOOK_LIST'
+}
+
 export const QUERIES = {
   QUERIES_LIST: 'QUERIES'
 }
