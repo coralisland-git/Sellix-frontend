@@ -37,7 +37,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const ProductCardExtended = ({ product }) => (
-    <div style={{ background: 'white', marginRight: '15px', marginLeft: '15px', borderRadius: '5px' }}>
+    <div style={{ background: 'white', marginRight: '15px', marginLeft: '15px', borderRadius: '5px'}} 
+         className="product-card-extended">
       <ProductCard product={product} preventDefault />
     </div>
 )
@@ -113,7 +114,7 @@ class Product extends React.Component {
                 </Col>
               </Row>
             </CardHeader>
-            <CardBody>
+            <div>
               {
                 loading ?
                   <Row>
@@ -177,7 +178,7 @@ class Product extends React.Component {
                     </Col>
                   </Row>
               }
-            </CardBody>
+            </div>
           </Card>
         </div>
       </div>

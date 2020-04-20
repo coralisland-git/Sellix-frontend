@@ -70,3 +70,7 @@
     width: 85%;
   }
 }
+
+.category-card-extended, .category-card-extended * {
+  user-select: none;
+}
