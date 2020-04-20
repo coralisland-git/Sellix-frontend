@@ -90,7 +90,7 @@ class NewWebhookModal extends React.Component {
             {props => (
               <Form name="simpleForm" onSubmit={props.handleSubmit}>                
                 <ModalHeader toggle={closeModal}>
-                  Webhook Simulator
+                  Webhook Endpoint
                 </ModalHeader>
                 <ModalBody className="p-4">
                   <Row>

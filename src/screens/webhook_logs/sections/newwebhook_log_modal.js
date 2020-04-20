@@ -37,7 +37,7 @@ const EVENT_OPTIONS = [
 ]
 
 
-class NNewWebhookLogModal extends React.Component {
+class NewWebhookLogModal extends React.Component {
   
   constructor(props) {
     super(props)
@@ -173,4 +173,4 @@ class NNewWebhookLogModal extends React.Component {
   }
 }
 
-export default NNewWebhookLogModal
+export default NewWebhookLogModal

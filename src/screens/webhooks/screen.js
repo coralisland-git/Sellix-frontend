@@ -12,6 +12,7 @@ import {
   Input
 } from 'reactstrap'
 import { ToastContainer, toast } from 'react-toastify'
+import moment from 'moment'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
@@ -105,7 +106,7 @@ class Webhooks extends React.Component {
         <div className={`badge badge-${row.response_code.toLowerCase()}`}>
           {row.response_code}
         </div>
-      )  
+      )
     } else {
       return (
         <p className="caption">No specified</p>
@@ -132,6 +133,15 @@ class Webhooks extends React.Component {
         Payload
       </div>
     )
+  }
+
+  renderOrderTime(cell, row) {
+    return (
+      <div>
+        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+      </div>
+    )  
   }
 
   openNewWebhookModal() {
@@ -238,9 +248,9 @@ class Webhooks extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="created_at"
-                            dataAlign="right"
-                            dataAlign="center"
+                            dataAlign="right"                            
                             width='15%'
+                            dataFormat={this.renderOrderTime}
                           >
                             Created at
                           </TableHeaderColumn>
@@ -248,8 +258,7 @@ class Webhooks extends React.Component {
                             dataField="id"
                             dataAlign="right"
                             dataFormat={this.renderOptions}
-                            width='15%'
-                            dataAlign="right"
+                            width='15%'                            
                           >
                             Options
                           </TableHeaderColumn>

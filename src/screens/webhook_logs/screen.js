@@ -12,10 +12,11 @@ import {
   Input
 } from 'reactstrap'
 import { ToastContainer, toast } from 'react-toastify'
+import moment from 'moment'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
-import { NewWebhookLogModal } from './sections'
+import { NewWebhookLogModal, ShowWebhookLogModal } from './sections'
 import { CommonActions } from 'services/global';
 import * as WebhooksActions from './actions'
 
@@ -40,7 +41,9 @@ class WebhookLogs extends React.Component {
     this.state = {
       loading: true,
       openModal: false,
-      search_key: null
+      openShowModal: false,
+      search_key: null,
+      webhook: {}
     }    
   }
 
@@ -86,12 +89,28 @@ class WebhookLogs extends React.Component {
     )
   }
 
-  renderPayload(cell, row) {
+  renderPayload = (cell, row) => {
     return(
-      <div className="badge badge-payload">
-        Payload
-      </div>
+      <>
+        <div className="badge badge-payload" 
+          onClick={ ()=> this.setState({
+            openShowModal: true,
+            webhook: row
+          })}
+        >
+          Payload
+        </div>        
+      </>
     )
+  }
+
+  renderOrderTime(cell, row) {
+    return (
+      <div>
+        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+      </div>
+    )  
   }
 
   openNewWebhookModal() {
@@ -117,18 +136,23 @@ class WebhookLogs extends React.Component {
   }
 
   render() {
-    const { loading, openModal, search_key } = this.state    
+    const { loading, openModal, search_key, openShowModal, webhook } = this.state    
     const webhook_log_list = search_key?this.searchWebhookLogs(this.props.webhook_log_list):this.props.webhook_log_list
 
 
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
-          <NewWebhookLogModal 
-            openModal={openModal} 
+          <NewWebhookLogModal            
+            openModal={openModal}
             closeModal={this.closeNewWebhookModal.bind(this)}
             actions={this.props.actions}
             commonActions={this.props.commonActions}
+          />
+          <ShowWebhookLogModal            
+            openModal={openShowModal}
+            webhook={webhook}
+            closeModal={ ()=> this.setState({openShowModal: false})}            
           />
           <Card className="grey">
             <CardHeader>
@@ -208,7 +232,7 @@ class WebhookLogs extends React.Component {
                             Attempts
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="payload"
+                            dataField=""
                             width='13%'
                             dataAlign="center"
                             dataFormat={this.renderPayload}
@@ -219,16 +243,15 @@ class WebhookLogs extends React.Component {
                             dataField="created_at"
                             dataAlign="right"
                             width='13%'
-                            dataAlign="center"
+                            dataFormat={this.renderOrderTime}
                           >
-                            Sent at
+                            Created at
                           </TableHeaderColumn>
                           {/*<TableHeaderColumn
                               dataField="id"
                               dataAlign="right"
                               dataFormat={this.renderOptions}
-                              width='15%'
-                              dataAlign="right"
+                              width='15%'                              
                             >
                               Options
                             </TableHeaderColumn>*/}
