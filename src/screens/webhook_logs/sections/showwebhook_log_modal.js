@@ -22,6 +22,8 @@ import { DateRangePicker2 } from 'components'
 
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import JSONPretty from 'react-json-pretty';
+import 'react-json-pretty/themes/monikai.css';
 
 const EVENT_OPTIONS = [
     { value: 'order:created', label: 'order:created' },
@@ -54,10 +56,7 @@ class ShowWebhookLogModal extends React.Component {
     return (
       <div>
         <Modal isOpen={openModal}
-          className="modal-success"
-          wrapClassName="1122"
-          modalClassName="888"
-          >
+          className="modal-success">
           <ModalHeader toggle={closeModal}>
             Webhook Simulator
           </ModalHeader>
@@ -103,7 +102,11 @@ class ShowWebhookLogModal extends React.Component {
               <Col>
                 <FormGroup>
                   <Label htmlFor="event">Payload</Label>                  
-                  
+                  <JSONPretty 
+                    id="json-pretty" 
+                    data={payload}
+                    style={{height: 360, overflow: "scroll"}}
+                  ></JSONPretty>
                 </FormGroup>
               </Col>
             </Row>
