@@ -101,7 +101,9 @@ class SettingsLayout extends React.Component {
   changeTheme() {
     const theme = window.localStorage.getItem('theme') || 'light'
     window.localStorage.setItem('theme', theme == 'light' ? 'dark' : 'light')
-
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+    document.body.classList.add(theme === 'light' ? 'dark': 'light');
     this.setState({ theme: theme == 'light' ? 'dark' : 'light' })
   }
 

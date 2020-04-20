@@ -93,7 +93,7 @@ class LeaveFeedback extends React.Component {
       //   pathname: '/admin/blacklist'
       // })
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.message)
+      this.props.commonActions.tostifyAlert('error', err.error)
     }).finally(() => {
       this.setState({ loading: false })
     })

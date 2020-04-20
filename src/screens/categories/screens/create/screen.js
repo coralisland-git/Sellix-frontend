@@ -147,8 +147,8 @@ class CreateCategories extends React.Component {
                         </Col>
                       </Row>
                     </CardHeader>
-                    <CardBody className="p-4 mb-5">
-                      <Row className="mt-4 mb-4">
+                    <CardBody className="mb-4">
+                      <Row className="mt-2 mb-2">
                         <Col lg={12}>
                           <Row>
                             <Col lg={12}>

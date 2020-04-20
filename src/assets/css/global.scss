@@ -68,7 +68,7 @@ table tbody td p {
 
 .light .image-uploader .drag-drop-area {
   &:hover {
-    background-color: #f6f4ff !important;
+    background-color: #f4f0ff !important;
   }
 }
 
@@ -124,6 +124,9 @@ table tbody td p {
     0px 3px 3px -2px rgba(0,0,0,0.12) !important;
 }
 
+h4 {
+  font-size: 18px !important;
+}
 
 @import "override/modal";
 @import "override/react-autosuggest";

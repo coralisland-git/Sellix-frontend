@@ -108,8 +108,29 @@
       line-height: 3em;
     }
   }
+
+  .description {
+    p {
+      font-size: .9rem;
+      margin: 0;
+      line-height: 1.4rem;
+      margin-bottom: .6rem;
+    }
+
+    pre {
+      background: #181432;
+      padding: 1rem;
+      border-radius: 3px;
+      margin-top: 1rem;
+      color: #b3adbb;
+      overflow: auto;
+      display: block;
+      line-height: 1rem;
+    }
+  }
 }
 
-body {
-  background: #000;
+.light .detail-product-screen .description pre {
+  background: #f3edff;
+  color: #000;
 }

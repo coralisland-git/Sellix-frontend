@@ -36,15 +36,11 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const CategoryCard = ({ category }) => (
-  <CardBody style={{ background: 'white', marginRight: '15px', marginLeft: '15px', padding: '15px', borderRadius: '5px' }}>
+  <CardBody style={{ background: 'white', marginRight: '15px', marginLeft: '15px', padding: '15px', borderRadius: '5px' }}
+    className="category-card-extended">
     <h2 style={{display: 'inline-block'}}>{category.title}</h2> 
     <span class="text-right" style={{float: 'right'}}>{category.products_count} product{category.products_count == 1 ? '' : 's'}</span> <br/>
-    {category.products_bound.map(product => <Badge color="success" style={{
-      color: 'white',
-      padding: '6px',
-      height: '19px',
-      margin: '3px'
-    }}>{product.title}</Badge>)}
+    {category.products_bound.map(product => <>{product.title}<br/></>)}
   </CardBody>
 )
 

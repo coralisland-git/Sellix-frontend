@@ -130,14 +130,14 @@ class Notification extends React.Component {
             <CardBody>
             {
               loading ?
-                <Loader></Loader>: 
+                <Loader /> :
                 <Row>
+
                   <Col lg={12}>
-                    <FormGroup>
-                      <Label>Notifications</Label>
+                    <FormGroup className="mb-4">
+                      <h4 className="title">Notifications</h4>
                     </FormGroup>
-                  </Col>
-                  <Col lg={12}>
+
                     <Form className="mt-3">
                       <Row>
                         <Col>
@@ -149,12 +149,8 @@ class Notification extends React.Component {
                                 color={'primary'}
                                 size="sm"
                                 checked={invoice_notification}
-                                onChange={(e) => {
-                                  this.setState({
-                                    invoice_notification: e.target.checked
-                                  })
-                                }}
-                                />
+                                onChange={(e) => this.setState({ invoice_notification: e.target.checked })}
+                              />
                               <div className="ml-2">
                                 <Label>Invoices</Label>
                                 <p>Receive an email when an invoice status is updated</p>
@@ -165,6 +161,7 @@ class Notification extends React.Component {
                       </Row>
                     </Form>
                   </Col>
+
                   <Col lg={12}>
                     <Form className="mt-3">
                       <Row>
@@ -177,12 +174,8 @@ class Notification extends React.Component {
                                 color={'primary'}
                                 size="sm"
                                 checked={ticket_notification}
-                                onChange={(e) => {
-                                  this.setState({
-                                    ticket_notification: e.target.checked
-                                  })
-                                }}
-                                />
+                                onChange={(e) => this.setState({ ticket_notification: e.target.checked })}
+                              />
                               <div className="ml-2">
                                 <Label>Queries</Label>
                                 <p>Receive an email when a query is created</p>
@@ -299,8 +292,7 @@ class Notification extends React.Component {
                 </Row>
             }
             </CardBody>
-            <Button color="primary" className="mt-5" style={{width: 200}} onClick={this.saveNotificationSettings.bind(this)}
-            >Save Settings</Button>
+            <Button color="primary" className="mt-4" style={{width: 200}} onClick={this.saveNotificationSettings.bind(this)}>Save Settings</Button>
           </Card>
         </div>
       </div>

@@ -37,7 +37,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const ProductCardExtended = ({ product }) => (
-    <div style={{ background: 'white', marginRight: '15px', marginLeft: '15px', borderRadius: '5px' }}>
+    <div style={{ background: 'white', marginRight: '15px', marginLeft: '15px', borderRadius: '5px'}} 
+         className="product-card-extended">
       <ProductCard product={product} preventDefault />
     </div>
 )

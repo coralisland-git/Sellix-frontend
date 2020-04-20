@@ -135,7 +135,7 @@ class ReplyToFeedback extends React.Component {
                     </Row>
                   </CardHeader>
                   
-                  <CardBody className="p5-4 pb-5 mb-4">
+                  <CardBody className="p5-4 pb-4 mb-4">
                     <Row>
                       <Col lg={8}>
                         <FormGroup>
@@ -172,14 +172,14 @@ class ReplyToFeedback extends React.Component {
                           </Col>
                         </Row>
                       : 
-                        <Row className="mt-2 mb-2">
+                        <Row className="">
                           <Col lg={12}>
                             <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
-                              <Label className="title"><b>View Order</b> {currentFeedback.invoice.developer_invoice == '1' && 
-                                <span className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
+                              <h4 className="title">View Order {currentFeedback.invoice.developer_invoice == '1' &&
+                                <b className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
                                   Developer
-                                </span>
-                              }</Label>
+                                </b>
+                              }</h4>
                             </div>
                             
                           </Col>

@@ -95,7 +95,7 @@ class Feedbacks extends React.Component {
     return <p>
         {feedback.message}
         {feedback.reply && <p style={{
-          borderLeft: '3px solid gray',
+          borderLeft: '3px solid #613bea',
           marginLeft: '10px',
           padding: '10px'
         }}>
@@ -124,7 +124,10 @@ class Feedbacks extends React.Component {
     ) {
       
       return (
-        <div>
+        <div style={{
+          minWidth: '100px',
+          textAlign: 'center'
+        }}>
           <p>{formatDate(row.created_at)}</p>
           {row.updated_at && row.updated_at !== row.created_at && <p>
             (updated {formatDate(row.updated_at)})
@@ -172,7 +175,7 @@ class Feedbacks extends React.Component {
                           version="4"
                           pagination
                           // totalSize={product_list ? product_list.length : 0}
-                          className="product-table"
+                          className="product-table feedback-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn

@@ -1,5 +1,6 @@
 import Home from './home'
 import Fees from './fees'
+import Changelog from './changelog'
 import LogIn from './log_in'
 import TwoFactorAuthentication from './2fa'
 import OTPLogin from './otp_2fa'
@@ -30,6 +31,7 @@ import Queries from './queries'
 import Feedbacks from './feedbacks'
 import ReplyToFeedback from './feedbacks/screens/reply'
 import Webhooks from './webhooks'
+import CreateWebhookSimulator from './webhooks/screens/create'
 import WebhookLogs from './webhook_logs'
 import Pages from './pages'
 import CreatePage from './pages/screens/create'
@@ -71,6 +73,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 export {
   AdminDashboard,
   Home,
+  Changelog,
   Fees,
   LogIn,
   Register,
@@ -108,6 +111,7 @@ export {
   Feedbacks,
   ReplyToFeedback,
   Webhooks,
+  CreateWebhookSimulator,
   Pages,
 
   CreatePage,

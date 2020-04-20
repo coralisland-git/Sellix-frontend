@@ -11,332 +11,205 @@ import {
   Form,
   FormGroup,
   Input,
-  Label
-} from 'reactstrap'
-import Select from 'react-select'
-
+  Label,
+  Modal,
+  ModalHeader, 
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
+import Select from 'react-select';
+import { Loader } from 'components'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import _ from 'lodash'
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import { CommonActions } from 'services/global';
+import { createWebhookSimulator } from '../../actions';
 
-import './style.scss'
 
-import * as ProductActions from '../../actions'
+const EVENT_OPTIONS = [
+    { value: 'order:created', label: 'order:created' },
+    { value: 'order:updated', label: 'order:updated' },
+    { value: 'order:partial', label: 'order:partial' },
+    { value: 'order:paid', label: 'order:paid' },
+    { value: 'order:cancelled', label: 'order:cancelled' },
+    { value: 'product:created', label: 'product:created' },
+    { value: 'product:edited', label: 'product:edited' },
+    { value: 'product:stock', label: 'product:stock' },
+    { value: 'query:created', label: 'query:created' },
+    { value: 'query:replied', label: 'query:replied' },
+    { value: 'feedback:received', label: 'feedback:received' }
+]
 
-import {WareHouseModal} from '../../sections'
 
 const mapStateToProps = (state) => {
-  return ({
-    vat_list: state.product.product_vat_list,
-    product_ware_house: state.product.product_ware_house,
-    product_parent: state.product.product_parent
-  })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    actions: bindActionCreators({ createWebhookSimulator }, dispatch)
   })
 }
 
-class CreateProduct extends React.Component {
-  
+class CreateWebhookSimulator extends React.Component {
+    
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
-      openWarehouseModal:false,
-
-      selectedParentProduct: null,
-      selectedVatCategory: null,
-      selectedWareHouse: null,
-
-      initProductValue: {
-        productName: '', 
-        productDescription: '',
-        productCode:'',
-        vatIncluded : false,
-        unitPrice : 8,
-        parentProduct : 1,
-        vatCategory: '', 
-        productWarehouse: ''
+      initialValues: {
+        url: '',
+        event: '',
+        key: ''
       },
     }
 
-    this.showWarehouseModal = this.showWarehouseModal.bind(this)
-    this.closeWarehouseModal = this.closeWarehouseModal.bind(this)
+    // this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-
-  componentDidMount(){
-    this.props.productActions.getProductVatCategoryList()
-    this.props.productActions.getParentProductList()
-    this.props.productActions.getProductWareHouseList()
-  }
-
-
-  // Show Invite User Modal
-  showWarehouseModal() {
-    this.setState({ openWarehouseModal: true })
-  }
-  // Cloase Confirm Modal
-  closeWarehouseModal() {
-    this.setState({ openWarehouseModal: false })
-  }
-
-
-  // Create or Edit Product
-  productHandleSubmit(data) {
-    this.props.productActions.createAndSaveProduct(data).then(res => {
-      if (res.status === 200) {
-        // this.success()
-
-        if(this.state.readMore){
-          this.setState({
-            readMore: false
-          })
-        } else this.props.history.push('/admin/master/product')
-      }
+  handleSubmit(values) {
+    this.setState({loading: true})
+    this.props.actions.createWebhookSimulator(values).then(res => {
+      this.props.history.goBack()
+      this.props.commonActions.tostifyAlert('success', res.message)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+    }).finally(() => {
+      this.setState({loading: false})
     })
   }
 
   render() {
-
-    const  {vat_list, product_parent, product_ware_house } = this.props
-
-    console.log()
+    const { openModal, closeModal } = this.props
+    const { 
+      loading,
+      initialValues,
+    } = this.state
 
     return (
-      <div className="create-product-screen">
+      <div className="create-product-screen mt-3">
         <div className="animated fadeIn">
-          <Row>
-            <Col lg={12} className="mx-auto">
-              <Card>
-                <CardHeader>
-                  <Row>
-                    <Col lg={12}>
-                      <div className="h4 mb-0 d-flex align-items-center">
-                        <i className="fas fa-object-group" />
-                        <span className="ml-2">Create Product</span>
-                      </div>
-                    </Col>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col lg={12}>
-                      <Formik
-                        initialValues={this.state.initProductValue}
-                        onSubmit={(values, {resetForm}) => {
 
-                          this.productHandleSubmit(values)
-                          resetForm(this.state.initProductValue)
-
-                          this.setState({
-                            selectedWareHouse: null,
-                            selectedParentProduct: null,
-                            selectedVatCategory: null,
-                          })
-                        }}
-                        validationSchema={Yup.object().shape({
-                          productName: Yup.string()
-                            .required("Product Name is Required"),
-                          vatCategory: Yup.string()
-                            .required("Vat Category is Required"),
-                        })}>
-                          {props => (
-                            <Form onSubmit={props.handleSubmit}>
-                              <Row>
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="productName">
-                                      <span className="text-danger">*</span>Name
-                                    </Label>
-                                    <Input
-                                      type="text"
-                                      id="productName"
-                                      name="productName"
-                                      onChange={props.handleChange}
-                                      value={props.values.productName}
-                                      placeholder="Enter Product Name"
-                                      className={
-                                        props.errors.productName && props.touched.productName
-                                          ? "is-invalid"
-                                          : ""
-                                      }
-                                    />
-                                    {props.errors.productName && props.touched.productName && (
-                                      <div className="invalid-feedback">{props.errors.productName}</div>
-                                    )}
-                                  </FormGroup>
-                                </Col>
-                                
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="productCode">Product Code</Label>
-                                    <Input
-                                      type="text"
-                                      id="productCode"
-                                      name="productCode"
-                                      onChange={props.handleChange}
-                                      value={props.values.productCode}
-                                      placeholder="Enter Product Code"
-                                    />
-                                  </FormGroup>
-                                </Col>
-
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="parent_product">Parent Product</Label>
-                                    <Select
-                                      className="select-default-width"
-                                      options={product_parent}
-                                      id="parentProduct"
-                                      name="parentProduct"
-                                      value={this.state.selectedParentProduct}
-                                      onChange={(option) => {
-                                        this.setState({
-                                          selectedParentProduct: option.value
-                                        })
-                                        props.handleChange("parentProduct")(option.value);
-                                      }}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="unitPrice">Product Price</Label>
-                                    <Input
-                                      type="text"
-                                      id="unitPrice"
-                                      name="unitPrice"
-                                      placeholder="Enter Product Price"
-                                      onChange={props.handleChange}
-                                      value={props.values.unitPrice}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="vatCategory"><span className="text-danger">*</span>Vat Percentage</Label>
-                                    <Select
-                                      className="select-default-width"
-                                      options={vat_list}
-                                      id="vatCategory"
-                                      name="vatCategory"
-                                      value={this.state.selectedVatCategory}
-                                      onChange={(option) => {
-                                        this.setState({
-                                          selectedVatCategory: option.value
-                                        })
-                                        props.handleChange("vatCategory")(option.value);
-                                      }}
-                                      className={
-                                        props.errors.vatCategory && props.touched.vatCategory
-                                          ? "is-invalid"
-                                          : ""
-                                      }
-                                    />
-                                    {props.errors.vatCategory && props.touched.vatCategory && (
-                                      <div className="invalid-feedback">{props.errors.vatCategory}</div>
-                                    )}
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={12}>
-                                  <FormGroup check inline className="mb-3">
-                                    <Input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      id="vatIncluded"
-                                      name="vatIncluded"
-                                      onChange={props.handleChange}
-                                      value={props.values.vatIncluded}
-                                    />
-                                    <Label className="form-check-label" check htmlFor="vatIncluded">Vat Include</Label>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                  
-                              <Row>
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="warehourse">Warehourse</Label>
-                                    <Select
-                                      className="select-default-width"
-                                      options={product_ware_house}
-                                      id="productWarehouse"
-                                      name="productWarehouse"
-                                      value={this.state.selectedWareHouse}
-                                      onChange={(option) => {
-                                        this.setState({
-                                          selectedWareHouse: option.value
-                                        })
-                                        props.handleChange("productWarehouse")(option.value);
-                                      }}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={4}>
-                                  <FormGroup className="text-right">
-                                    <Button color="primary" type="button" className="btn-square" 
-                                        onClick={this.showWarehouseModal}>
-                                      <i className="fa fa-plus"></i> Add a Warehouse
-                                    </Button>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={8}>
-                                  <FormGroup className="">
-                                    <Label htmlFor="description">Description</Label>
-                                    <Input
-                                      type="textarea"
-                                      name="productDescription"
-                                      id="productDescription"
-                                      rows="6"
-                                      placeholder="Description..."
-                                      onChange={props.handleChange}
-                                      value={props.values.productDescription}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={12} className="mt-5">
-                                  <FormGroup className="text-right">
-                                    <Button type="submit" color="primary" className="btn-square mr-3">
-                                      <i className="fa fa-dot-circle-o"></i> Create
-                                    </Button>
-                                    <Button type="submit" color="primary" className="btn-square mr-3">
-                                      <i className="fa fa-repeat"></i> Create and More
-                                    </Button>
-                                    <Button color="secondary" className="btn-square" 
-                                      onClick={() => {this.props.history.push('/admin/master/product')}}>
-                                      <i className="fa fa-ban"></i> Cancel
-                                    </Button>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                            </Form>
-                          )}
-                      </Formik>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-
-        <WareHouseModal openModal={this.state.openWarehouseModal} closeWarehouseModal={this.closeWarehouseModal}/>
+          <Breadcrumb className="mb-0">
+            <BreadcrumbItem active className="mb-0">
+              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Webhooks</a>
+            </BreadcrumbItem>
+          </Breadcrumb>
+          <Formik
+            initialValues={this.state.initialValues}
+            onSubmit={(values) => {
+              this.handleSubmit(values)
+            }}
+            validationSchema={Yup.object().shape({
+                url: Yup.string().required('URL is required'),
+                event: Yup.string().required('Event is required'),
+                key: Yup.string(),
+            })}>
+            {props => (
+              <Form onSubmit={props.handleSubmit}>
+                <Card>
+                  <CardHeader>
+                    <Row style={{alignItems: 'center'}}>
+                      <Col md={12}>
+                        <h1>Webhook Simulator</h1>
+                      </Col>
+                    </Row>
+                  </CardHeader>
+                  <CardBody className="mb-4">
+                    { 
+                      loading ?
+                        <Row>
+                          <Col lg={12}>
+                            <Loader />
+                          </Col>
+                        </Row>
+                      :
+                        <Row className="mt-2 mb-2">
+                          <Col lg={12}>
+                            <Row>
+                              <Col>
+                                <FormGroup>
+                                  <Label htmlFor="url">URL</Label>
+                                  <Input 
+                                    id="url"
+                                    type="text" placeholder="URL"
+                                    value={props.values.url}
+                                    onChange={props.handleChange}
+                                    className={
+                                      props.errors.url && props.touched.url
+                                        ? "is-invalid"
+                                        : ""
+                                    }
+                                  />
+                                  {props.errors.url && props.touched.url && (
+                                    <div className="invalid-feedback">{props.errors.url}</div>
+                                  )}
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col>
+                                <FormGroup>
+                                  <Label htmlFor="event">Events</Label>
+                                  <Select 
+                                    id="event"
+                                    placeholder="Select events" 
+                                    options={EVENT_OPTIONS}
+                                    searchable={false}                              
+                                    value={props.values.event}
+                                    onChange={(option) => {
+                                      props.handleChange("event")(option.value);
+                                    }}
+                                    className={
+                                      props.errors.event && props.touched.event
+                                        ? "is-invalid"
+                                        : ""
+                                    }>
+                                  </Select>
+                                  {props.errors.event && props.touched.event && (
+                                    <div className="invalid-feedback">{props.errors.event}</div>
+                                  )}
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col>
+                                <FormGroup>
+                                  <Label htmlFor="key">Key</Label>
+                                  <Input 
+                                    id="key"
+                                    type="text" placeholder="Key"
+                                    value={props.values.key}
+                                    onChange={props.handleChange}
+                                    className={
+                                      props.errors.key && props.touched.key
+                                        ? "is-invalid"
+                                        : ""
+                                    }
+                                  />
+                                  {props.errors.key && props.touched.key && (
+                                    <div className="invalid-feedback">{props.errors.key}</div>
+                                  )}
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                    }
+                  </CardBody>
+                  { !loading && (
+                    <Button color="primary" type="submit" className="" style={{width: 200}}>
+                      Queue
+                    </Button>
+                  )}
+                </Card>
+              </Form>
+              )}
+            </Formik>
+          </div>
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateWebhookSimulator)

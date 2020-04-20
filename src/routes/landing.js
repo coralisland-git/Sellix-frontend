@@ -9,7 +9,8 @@ import {
   ShopProducts,
   ShopFeedback,
   LeaveFeedback,
-  ShopProductDetail
+  ShopProductDetail,
+  Changelog
 } from 'screens'
 
 import { NotFound } from 'components'
@@ -20,6 +21,11 @@ import { NotFound } from 'components'
       path: '/fees',
       component: Fees.screen,
       name: 'Fees'
+    },
+    {
+      path: '/changelog',
+      component: Changelog,
+      name: 'Changelog'
     },
     {
       path: '/terms',

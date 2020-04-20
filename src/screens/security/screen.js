@@ -183,7 +183,7 @@ class SecurityPage extends React.Component {
               {props => (
                 <Form onSubmit={props.handleSubmit}>
                   <Card>
-                    <CardBody className="p-4 mb-5">
+                    <CardBody className="p-4 mb-4">
                       {
                         loading ?
                           <Row>
@@ -192,10 +192,10 @@ class SecurityPage extends React.Component {
                             </Col>
                           </Row>
                         : 
-                          <Row className="mt-4 mb-4">
+                          <Row className="">
                             <Col lg={12}>
-                              <FormGroup className="mb-5">
-                                <Label className="title">General</Label>
+                              <FormGroup className="mb-4">
+                                <h4 className="title">General</h4>
                               </FormGroup>
                             </Col>
                             <Col lg={12}>
@@ -295,7 +295,7 @@ class SecurityPage extends React.Component {
                           </Row>
                       }
                     </CardBody>
-                    <CardBody className="p-4 mb-5">
+                    <CardBody className="p-4 mb-4">
                       {
                         loading ?
                           <Row>
@@ -304,10 +304,10 @@ class SecurityPage extends React.Component {
                             </Col>
                           </Row>
                         : 
-                          <Row className="mt-4 mb-4">
+                          <Row className="">
                             <Col lg={12}>
-                              <FormGroup className="mb-5">
-                                <Label className="title">Multi Factor Authentication</Label>
+                              <FormGroup className="mb-4">
+                                <h4 className="title">Multi Factor Authentication</h4>
                               </FormGroup>
                               <FormGroup row>
                                 <Col className="d-flex align-items-center">

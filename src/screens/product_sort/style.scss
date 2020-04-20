@@ -73,6 +73,10 @@
   }
 }
 
-img { 
+.productsort-screen img { 
   pointer-events: none;
+}
+
+.product-card-extended * {
+  user-select: none !important;
 }

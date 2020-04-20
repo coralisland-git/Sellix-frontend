@@ -134,7 +134,7 @@ class ShopLayout extends React.Component {
 													isOpen={verifiedTooltipOpen} 
 													target="verifiedTooltip" 
 													toggle={this.verifiedTooltipToggle.bind(this)}>
-													This user has been verified by Sellix.io staff
+													This shop has verified its brand identity to Sellix.
 												</Tooltip>
 											</span>
 										}</h4>
