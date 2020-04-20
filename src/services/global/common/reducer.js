@@ -4,12 +4,15 @@ const initState = {
   is_loading: false,
   version: '',
   tostifyAlertFunc: null,
-  general_info: {},
+  general_info: {
+    shop_dark_mode: "1"
+  },
   user_feedback: [],
   user_categories: [],
   user_products: [],
-  theme: 'light'
+  theme: 'dark'
 }
+
 
 const CommonReducer = (state = initState, action) => {
   const { type, payload } = action
@@ -29,6 +32,7 @@ const CommonReducer = (state = initState, action) => {
       }
 
     case COMMON.SHOP_THEME:
+      document.body.classList.add(payload);
       return {
         ...state,
         theme: payload,
