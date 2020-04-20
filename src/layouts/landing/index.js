@@ -134,7 +134,7 @@ class LandingLayout extends React.Component {
                         <div className="d-lg-down-none">
                             { user?
                                     <Link to={dashboardUrl} className="text-white">
-                                        <Button className="mr-3 landing-primary-button text-white" >Dashboard</Button>
+                                        <Button className="mr-3 landing-primary-button text-white menu" >Dashboard</Button>
                                     </Link>
                                 :
                                 <>

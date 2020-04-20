@@ -93,7 +93,7 @@ class Home extends React.Component {
                   <p className="small text-pink">
                   Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrencie for your store.
                   </p>
-                  <p className="text-pink f-b mt-5"><Link to="/fees" className="text-pink">Fees <i className="fa fa-arrow-right"/></Link></p>
+                  <p className="text-pink f-b mt-5"><Link to="/fees" className="text-pink">Fees →</Link></p>
                 </div>
               </Col>
               <Col md={4} className="p-2">
@@ -140,7 +140,7 @@ class Home extends React.Component {
                   <p className="text-pink f-20 col-11 p-0">
                   We provide very low fees for each transaction. With our unique payment processing method, we keep transaction fees at the lowest amount. Find out more about our fees.
                   </p>
-                  <Button className="landing-primary-button"><NavLink className="p-0 text-white" href="/fees">Our  Fees <i className="fa fa-arrow-right"/></NavLink></Button>
+                  <Button className="landing-primary-button"><NavLink className="p-0 text-white" href="/fees">Our  Fees →</NavLink></Button>
                 </div>
               </Col>
             </Row>
@@ -151,7 +151,7 @@ class Home extends React.Component {
           <Container className="mr-auto ml-auto p-0 purple" fluid style={{maxWidth: 1330}}>
             <h1 className="mb-4">Start using <b>Sellix</b> now!</h1>
             <p className="mr-auto ml-auto">Create an account and start selling your products now. Are you ready ?</p>
-            <Button className="landing-secondary-button"><NavLink className="p-0" href="/auth/register">Get Started <i className="fa fa-arrow-right"/></NavLink></Button>
+            <Button className="landing-secondary-button"><NavLink className="p-0" href="/auth/register">Get Started →</NavLink></Button>
           </Container>
         </div>
       </div>
