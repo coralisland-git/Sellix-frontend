@@ -153,7 +153,9 @@ class Purchase extends React.Component {
 			<div className="p-3 pt-2 pb-2">
 				<div className="d-flex justify-content-between align-items-center mb-3">
 					<h4 className="mt-2 grey">Purchase</h4>
-					<img src={backIcon} className="mb-2" width="15" onClick={this.backToProducts} style={{ cursor: "pointer" }} />
+					<div onClick={this.backToProducts} style={{ cursor: "pointer" }} >
+						<img src={backIcon} className="mb-2" width="15" alt={''}/>
+					</div>
 				</div>
 
 				<div className="text-center">
