@@ -105,7 +105,7 @@ class ShowWebhookLogModal extends React.Component {
                   <JSONPretty 
                     id="json-pretty" 
                     data={payload}
-                    style={{height: 360, overflow: "scroll"}}
+                    style={{maxHeight: 360, overflow: "scroll"}}
                   ></JSONPretty>
                 </FormGroup>
               </Col>
