@@ -238,7 +238,7 @@ class OrderDetail extends React.Component {
                               </Button>
                           }
                           { 
-                            order.status && (['0', '2', '4'].includes(order.status)) && 
+                            order.status && (['4'].includes(order.status)) && 
                               <Button color="primary" className="mb-2" onClick={this.openProcessOrderModal.bind(this)}>
                                 Process Order
                               </Button>

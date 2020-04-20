@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -14,7 +15,10 @@ import {
   Input
 } from 'reactstrap'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { getFeedbacks } from '../../actions'
+import config from 'constants/config'
+import moment from 'moment'
+import { getFeedbackById } from '../../actions'
+import { Loader, Spin } from 'components'
 import * as _ from 'lodash'
 import { Formik } from 'formik'
 import {replyFeedback} from '../../actions'
@@ -23,17 +27,48 @@ import {
 } from 'services/global'
 
 import './style.scss'
+import bitcoinIcon from 'assets/images/crypto/btc.svg'
+import paypalIcon from 'assets/images/crypto/paypal.svg'
+import litecoinIcon from 'assets/images/crypto/ltc.svg'
+import ethereumIcon from 'assets/images/crypto/eth.svg'
+import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
+import stripeIcon from 'assets/images/crypto/stripe.svg'
+import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
+import skrillIcon from 'assets/images/crypto/skrill.svg'
+
+const PAYMENT_ICONS = {
+  paypal: paypalIcon,
+  bitcoin: bitcoinIcon,
+  litecoin: litecoinIcon,
+  ethereum: ethereumIcon,
+  perfectmoney: perfectmoneyIcon,
+  stripe: stripeIcon,
+  bitcoincash: bitcoincashIcon,
+  skrill: skrillIcon
+}
 
 const user = window.localStorage.getItem('userId')
 
+const PAYMENT_OPTS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'BTC',
+  'litecoin': 'LTC',
+  'ethereum': 'ETH',
+  'skrill': 'Skrill',
+  'stripe': 'Stripe',
+  'bitcoincash': 'BTH',
+  'perfectmoney': 'Perfect Money'
+}
+
+
 const mapStateToProps = (state) => {
   return ({
-    feedbacks: state.feedbacks.feedbacks
+    currentFeedback: state.feedbacks.currentFeedback
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    actions: bindActionCreators({ getFeedbacks }, dispatch),
+    actions: bindActionCreators({ getFeedbackById }, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch),
     replyFeedback: bindActionCreators(replyFeedback, dispatch),
   })
@@ -49,7 +84,10 @@ class ReplyToFeedback extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.getFeedbacks()
+    this.setState({loading: true})
+    this.props.actions.getFeedbackById(this.props.match.params.id).finally(() => {
+      this.setState({loading: false})
+    })
   }
 
   handleSubmit(values) {
@@ -67,7 +105,11 @@ class ReplyToFeedback extends React.Component {
   }
 
   render() {
-    const currentFeedback = _.find(this.props.feedbacks, (feedback) => feedback.uniqid === this.props.match.params.id)
+    const currentFeedback = this.props.currentFeedback || 
+      _.find(this.props.feedbacks, (feedback) => feedback.uniqid === this.props.match.params.id)
+    const {loading} = this.state
+
+  
     if (!currentFeedback) { return null }
     return (
       <div className="reply-screen mt-3">
@@ -78,6 +120,7 @@ class ReplyToFeedback extends React.Component {
             </BreadcrumbItem>
           </Breadcrumb>
           <Formik
+            initialValues={{reply: currentFeedback.reply}}
             onSubmit={(values) => {
               this.handleSubmit(values)
             }}>{props => (
@@ -90,7 +133,8 @@ class ReplyToFeedback extends React.Component {
                       </Col>
                     </Row>
                   </CardHeader>
-                  <CardBody className="p5-4 pb-5">
+                  
+                  <CardBody className="p5-4 pb-5 mb-4">
                     <Row>
                       <Col lg={8}>
                         <FormGroup>
@@ -117,6 +161,80 @@ class ReplyToFeedback extends React.Component {
                       </Col>
                     </Row>
                     <Button color="primary" className="mt-4 mb-3">Submit</Button>
+                  </CardBody>
+                  <CardBody className="p-4 invoice-view">
+                    {
+                      loading ?
+                        <Row>
+                          <Col lg={12}>
+                            <Loader />
+                          </Col>
+                        </Row>
+                      : 
+                        <Row className="mt-2 mb-2">
+                          <Col lg={12}>
+                            <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                              <Label className="title"><b>View Order</b> {currentFeedback.invoice.developer_invoice == '1' && 
+                                <span className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
+                                  Developer
+                                </span>
+                              }</Label>
+                            </div>
+                            
+                          </Col>
+                          <Col lg={12}>
+                            <Row className="flex">
+                              <Col lg={6}>
+                                <div className="d-flex">
+                                  <p className="title">Invoice ID</p>
+                                  <p>
+                                    <Link to={`/dashboard/${user}/orders/view/${currentFeedback.invoice.uniqid}`}>
+                                      {currentFeedback.invoice.uniqid}
+                                    </Link>
+                                  </p>
+                                </div>
+                                <div className="d-flex">
+                                  <p className="title">Customer</p>
+                                  <p><a href={`mailto:${currentFeedback.invoice.customer_email}`}>{currentFeedback.invoice.customer_email}</a></p>
+                                </div>
+                                <div className="d-flex">
+                                  <p className="title">Product</p>
+                                  <p>
+                                    <Link to={`/dashboard/${user}/products/all/edit/${currentFeedback.invoice.product_id}`}>
+                                      {currentFeedback.invoice.developer_invoice == '1'?currentFeedback.invoice.developer_title:(currentFeedback.product && currentFeedback.product.title || '')}
+                                    </Link>
+                                  </p>
+                                </div>
+                                <div className="d-flex">
+                                  <p className="title">Value</p>
+                                  <p>{`${config.CURRENCY_LIST[currentFeedback.invoice.currency]}${currentFeedback.invoice.total_display} ${currentFeedback.invoice.currency}`}</p>
+                                </div>
+                              </Col>
+                              <Col lg={6}>
+                                <div className="d-flex">
+                                  <p className="title">Quantity</p>
+                                  <p>{currentFeedback.invoice.quantity}</p>
+                                </div>
+
+                                <div className="d-flex">
+                                  <p className="title">Gateway</p>
+                                  <p>{PAYMENT_OPTS[currentFeedback.invoice.gateway]}</p>
+                                </div>
+                                
+                                <div className="d-flex">
+                                  <p className="title">Country</p>
+                                  <p><i className={`flag-icon flag-icon-${currentFeedback.invoice.country && currentFeedback.invoice.country.toLowerCase()} mr-2`}/> 
+                                    {currentFeedback.invoice.location}</p>
+                                </div>
+                                <div className="d-flex">
+                                  <p className="title">Created At</p>
+                                  <p>{moment(new Date(currentFeedback.invoice.created_at*1000)).format('DD, MMM YYYY HH:mm')}</p>
+                                </div>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                    }
                   </CardBody>
                 </Card>
               </Form>

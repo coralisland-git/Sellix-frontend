@@ -179,7 +179,7 @@ class Feedbacks extends React.Component {
                             isKey
                             dataField="title"
                             dataSort
-                            width="20%"
+                            width="10%"
                             dataFormat={this.renderFeedback}
                           >
                             Feedback
@@ -195,7 +195,7 @@ class Feedbacks extends React.Component {
                           <TableHeaderColumn
                             dataField="id"
                             dataSort
-                            width="15%"
+                            width="50%"
                             dataAlign="center"
                             dataFormat={this.renderThumb}
                           >
@@ -204,6 +204,7 @@ class Feedbacks extends React.Component {
                           <TableHeaderColumn
                             dataField="id"
                             dataSort
+                            width="20%"
                             dataFormat={this.renderOption}
                           >
                             Option

@@ -1,7 +1,8 @@
 import { FEEDBACKS } from 'constants/types'
 
 const initState = {
-  feedbacks: []
+  feedbacks: [],
+  currentFeedback: null
 }
 
 const Feedbacks = (state = initState, action) => {
@@ -11,6 +12,12 @@ const Feedbacks = (state = initState, action) => {
       return {
         ...state,
         feedbacks: Object.assign([], payload)
+      }
+
+    case FEEDBACKS.CURRENT_FEEDBACK:
+      return {
+        ...state,
+        currentFeedback: Object.assign([], payload)
       }
     default:
       return state
