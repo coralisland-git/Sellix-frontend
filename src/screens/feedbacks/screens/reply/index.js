@@ -121,6 +121,7 @@ class ReplyToFeedback extends React.Component {
           </Breadcrumb>
           <Formik
             initialValues={{reply: currentFeedback.reply}}
+            enableReinitialize={true}
             onSubmit={(values) => {
               this.handleSubmit(values)
             }}>{props => (
