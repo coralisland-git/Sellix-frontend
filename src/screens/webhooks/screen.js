@@ -161,9 +161,7 @@ class Webhooks extends React.Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable                          
-                          options={{...tableOptions(), onRowClick: (row) => {
-                              this.gotoDetail(row.uniqid)}, sizePerPage: 15
-                            }}
+                          options={{...tableOptions(), sizePerPage: 15}}
                           data={webhook_list}
                           version="4"
                           pagination
