@@ -16,6 +16,7 @@ import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { getWebhookList } from './actions'
+import moment from 'moment'
 import './style.scss'
 
 
@@ -92,7 +93,16 @@ class Webhooks extends React.Component {
         Payload
       </div>
     )
-  }  
+  }
+
+  renderOrderTime(cell, row) {
+    return (
+      <div>
+        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+      </div>
+    )  
+  }
 
   searchWebhooks = (webhooks) => {
     const { search_key } = this.state
@@ -150,8 +160,8 @@ class Webhooks extends React.Component {
                   <Row>
                     <Col lg={12}>
                       <div>
-                        <BootstrapTable
-                          options={ tableOptions() }
+                        <BootstrapTable                          
+                          options={{...tableOptions(), sizePerPage: 15}}
                           data={webhook_list}
                           version="4"
                           pagination
@@ -204,9 +214,10 @@ class Webhooks extends React.Component {
                             dataField="created_at"
                             dataAlign="right"
                             width='13%'
-                            dataAlign="center"
+                            dataAlign="right"
+                            dataFormat={this.renderOrderTime}
                           >
-                            Sent at
+                            Created at
                           </TableHeaderColumn>
                           {/*<TableHeaderColumn
                               dataField="id"

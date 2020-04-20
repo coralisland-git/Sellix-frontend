@@ -6,3 +6,11 @@
 @import '~font-awesome/css/font-awesome.min.css';
 @import '~simple-line-icons/css/simple-line-icons.css';
 @import './assets/scss/style.scss';
+
+body.dark {
+  background: #211d3d;
+}
+
+body.light {
+  background: #f6f3ff;
+}
