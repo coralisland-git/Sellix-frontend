@@ -31,6 +31,30 @@ export const getFeedbacks = () => {
   }
 }
 
+
+export const getFeedbackById = (uniqid) => {
+  return (dispatch) => {
+    let data = {
+      method: 'GET',
+      url: `/feedback/unique/${uniqid}`
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        dispatch({
+          type: FEEDBACKS.CURRENT_FEEDBACK,
+          payload: res.data.feedback
+        })
+        return res
+      } else {
+        throw res
+      }     
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
 export const replyFeedback = (feedback) => {
   return (dispatch) => {
     let data = {

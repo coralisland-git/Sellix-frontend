@@ -38,6 +38,23 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const Confirm = ({ onClose, title, message, onDelete }) => {
+  return <div className={"react-confirm-alert" + ` ${window.localStorage.getItem('theme') || 'light'}`}>
+    <div className="react-confirm-alert-body">
+      <h1>{title}</h1>
+      <h3>{message}</h3>
+      <div className="react-confirm-alert-button-group">
+        <button onClick={() => {
+          onDelete()
+          onClose()
+        }}>Yes, Delete it!</button>
+        <button onClick={onClose}>No</button>
+      </div>
+    </div>
+  </div>
+}
+
+
 class Product extends React.Component {
 
   constructor(props) {
@@ -49,7 +66,6 @@ class Product extends React.Component {
 
     this.options = {
       onRowClick: this.goToDetail,
-      paginationPosition: 'bottom',
       page: 1,
       sizePerPage: 5,  // which size per page you want to locate as default
       pageStartIndex: 1, // where to start counting the pages
@@ -110,32 +126,27 @@ class Product extends React.Component {
     }
   }
 
+
+
+  onDeleteCoupon = (id) => () => {
+    this.setState({ loading: true })
+    this.props.deleteCoupon.deleteCoupon({
+      uniqid: id
+    }).then(res => {
+      this.props.actions.getCoupons()
+      this.props.commonActions.tostifyAlert('success', res.message)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  };
+
   deleteCoupon = (e, id) => {
     confirmAlert({
       title: 'Are you sure?',
       message: 'You want to delete this coupon?',
-      buttons: [
-        {
-          label: 'Yes, Delete it!',
-          onClick: () => {
-            this.setState({ loading: true })
-            this.props.deleteCoupon.deleteCoupon({
-              uniqid: id
-            }).then(res => {
-              this.props.actions.getCoupons()
-              this.props.commonActions.tostifyAlert('success', res.message)
-            }).catch(err => {
-              this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
-            }).finally(() => {
-              this.setState({ loading: false })
-            })
-          }
-        },
-        {
-          label: 'No',
-          onClick: () => { return true }
-        }
-      ]
+      customUI:  (props) => <Confirm {...props} onDelete={this.onDeleteCoupon(id)}/>
     });
   }
 

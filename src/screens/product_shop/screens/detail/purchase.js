@@ -1,5 +1,5 @@
-import backIcon from "../../../../assets/images/x.png";
-import config from "../../../../constants/config";
+import backIcon from "assets/images/x.png";
+import config from "constants/config";
 import { Collapse, Button, Input } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import React from "react";
@@ -18,7 +18,6 @@ const ButtonOptions = ({ option, setPaymentOptions, index }) => {
 					<img src={config.PAYMENT_ICONS[option]} className="mr-2" width="20" height="20" alt={''}/>
 					{config.PAYMENT_LABELS[option]}
 				</div>
-				<div><i className="fas fa-xs fa-chevron-right"/></div>
 			</div>
 		</Button>
 )}
@@ -48,6 +47,7 @@ class Purchase extends React.Component {
 	}
 
 	backToProducts = () => {
+		console.log(this.props.history, this.state.showPaymentOptions)
 		if(this.state.showPaymentOptions) {
 			this.setState({ showPaymentOptions: false })
 		} else {
@@ -152,7 +152,9 @@ class Purchase extends React.Component {
 			<div className="p-3 pt-2 pb-2">
 				<div className="d-flex justify-content-between align-items-center mb-3">
 					<h4 className="mt-2 grey">Purchase</h4>
-					<img src={backIcon} className="mb-2" width="15" onClick={this.backToProducts} style={{ cursor: "pointer" }} />
+					<div onClick={this.backToProducts} style={{ cursor: "pointer" }} >
+						<img src={backIcon} className="mb-2" width="15" alt={''}/>
+					</div>
 				</div>
 
 				<div className="text-center">

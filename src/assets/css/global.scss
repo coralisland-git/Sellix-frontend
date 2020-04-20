@@ -116,9 +116,6 @@ table tbody td p {
 }
 
 
-
-
-
 // dropdown styles
 .dropdown-menu {
   border-radius: 0 !important;
@@ -136,6 +133,7 @@ table tbody td p {
 @import "override/react-select";
 @import "override/react-toastify";
 @import "override/react-compound-slider";
+@import "override/react-confirm-alert";
 
 
 

@@ -36,6 +36,22 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const Confirm = ({ onClose, title, message, onDelete }) => {
+  return <div className={"react-confirm-alert" + ` ${window.localStorage.getItem('theme') || 'light'}`}>
+    <div className="react-confirm-alert-body">
+      <h1>{title}</h1>
+      <h3>{message}</h3>
+      <div className="react-confirm-alert-button-group">
+        <button onClick={() => {
+          onDelete()
+          onClose()
+        }}>Yes, Delete it!</button>
+        <button onClick={onClose}>No</button>
+      </div>
+    </div>
+  </div>
+}
+
 class Categories extends React.Component {
   constructor(props) {
     super(props)
@@ -77,32 +93,25 @@ class Categories extends React.Component {
     })
   }
 
+  onDeleteCateogry = (id) => () => {
+    this.setState({ loading: true })
+    this.props.actions.deleteCategory({
+      uniqid: id
+    }).then(res => {
+      this.props.actions.getCategoryList()
+      this.props.commonActions.tostifyAlert('success', res.message)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  }
+
   deleteCateogry(e, id) {
     confirmAlert({
       title: 'Are you sure?',
       message: 'You want to delete this category?',
-      buttons: [
-        {
-          label: 'Yes, Delete it!',
-          onClick: () => {
-            this.setState({ loading: true })
-            this.props.actions.deleteCategory({
-              uniqid: id
-            }).then(res => {
-              this.props.actions.getCategoryList()
-              this.props.commonActions.tostifyAlert('success', res.message)
-            }).catch(err => {
-              this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
-            }).finally(() => {
-              this.setState({ loading: false })
-            })
-          }
-        },
-        {
-          label: 'No',
-          onClick: () => {return true}
-        }
-      ]
+      customUI:  (props) => <Confirm {...props} onDelete={this.onDeleteCateogry(id)}/>
     });
   }
 
