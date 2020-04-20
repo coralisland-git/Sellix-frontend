@@ -79,7 +79,7 @@ class Purchase extends React.Component {
 		const { type, stock, file_stock, service_stock, quantity_max } = this.props.productInfo;
 
 		if((type == 'serials' && quantity_max != -1 && quantity >= quantity_max) ||
-			(type == 'serials' && quantity_max == -1 && quantity >= stock)) {
+			(type == 'serials' && quantity >= stock)) {
 			return true
 		}
 
@@ -116,6 +116,7 @@ class Purchase extends React.Component {
 			let validatedCount = Number(count);
 
 			if((type == 'serials' && quantity_max != -1 && validatedCount >= quantity_max) ||
+				(type == 'serials' && quantity_max != -1 && validatedCount >= stock) ||
 				(type == 'serials' && quantity_max == -1 && validatedCount >= stock)) {
 				validatedCount = Math.min(stock, validatedCount)
 			}

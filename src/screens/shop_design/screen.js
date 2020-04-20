@@ -75,7 +75,7 @@ class Payments extends React.Component {
       <div className="shop-settings-screen">
         <div className="animated fadeIn">
           <Card>
-            <CardBody className="p-4 mb-5">
+            <CardBody className="p-4 mb-4">
               {
                 loading ?
                   <Row>
@@ -84,10 +84,10 @@ class Payments extends React.Component {
                     </Col>
                   </Row>
                 : 
-                  <Row className="mt-4 mb-4">
+                  <Row className="">
                     <Col lg={12}>
                       <FormGroup className="mb-4">
-                        <Label className="title">Design</Label>
+                        <h4 className="title">Design</h4>
                       </FormGroup>
                     </Col>
                     <Col lg={12}>

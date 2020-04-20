@@ -15,7 +15,8 @@ export const lightTheme = {
     shopSectionBackground: '#F5F5FE',
     shopContainerBackground: '#fff',
 
-    borderRight: '#f4f6ff'
+    borderRight: '#f4f6ff',
+    cardBody: 'white',
 }
   
 export const darkTheme = {

@@ -430,11 +430,11 @@ class EditProduct extends React.Component {
 														</Col>
 													</Row>
 												:
-													<Row className="mt-4 mb-4">
+													<Row className="mb-4">
 														<Col lg={12}>
 															<Row>
 																<Col lg={12}>
-																	<h4 className="mb-4">General Information</h4>
+																	<h4 className="mb-4 mt-1 pb-1">General Information</h4>
 																</Col>
 															</Row>
 															<Row>
@@ -679,7 +679,7 @@ class EditProduct extends React.Component {
 
 																<Row>
 																	<Col lg={12}>
-																		<h4 className="mb-4 mt-4">Product Stock</h4>
+																		<h4 className="mb-4 mt-2 pb-1">Product Stock</h4>
 																	</Col>
 																</Row>
 																<Row>
@@ -869,7 +869,7 @@ class EditProduct extends React.Component {
 																<hr className="mt-4"/>
 																<Row>
 																	<Col lg={12}>
-																		<h4 className="mb-4 mt-4">Customization</h4>
+																		<h4 className="mb-4 mt-2">Customization</h4>
 																	</Col>
 																</Row>
 																<Row>
@@ -961,7 +961,7 @@ class EditProduct extends React.Component {
 																<hr className="mt-4"/>
 																<Row>
 																	<Col lg={12}>
-																		<h4 className="mb-4 mt-4">Miscellaneous</h4>
+																		<h4 className="mb-4 mt-2">Miscellaneous</h4>
 																	</Col>
 																</Row>
 																

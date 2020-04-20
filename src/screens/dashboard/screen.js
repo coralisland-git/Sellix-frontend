@@ -245,8 +245,8 @@ class Dashboard extends React.Component {
                         </Card>
                       </Col>
                     </Row>
-                    <CardBody className="mt-2">
-                      <h5 className="mb-4">Revenues</h5>
+                    <CardBody className="">
+                      <h5 className="mb-4">Revenues | Orders</h5>
                       <DashBoardChart height="350px" data={chartData}/>
                     </CardBody>
                   </div>

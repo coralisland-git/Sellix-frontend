@@ -25,7 +25,8 @@ import {
     NavLink
   } from 'reactstrap'
 
-import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
+import sellix_logo from 'assets/images/home/logo-1@2x.png'
+import sellix_logo_footer from 'assets/images/Sellix_logo_beta.svg'
 import './style.scss'
 
 const mapStateToProps = (state) => {
@@ -102,7 +103,7 @@ class LandingLayout extends React.Component {
         <div className="animated fadeIn">
             <div className="initial-container">
                 <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
-                <header className="pt-2 pb-2 ">
+                <header className="pt-4 pb-2 ">
                     <Navbar  color="white" light expand="lg">
                         <NavbarBrand href="/">
                             <img className="logo" src={sellix_logo}/>
@@ -123,7 +124,7 @@ class LandingLayout extends React.Component {
                                 <NavLink href="/"></NavLink>
                             </NavItem>
                             <NavItem className="d-xl-none">
-                                <NavLink href="/auth/login">Sign In</NavLink>
+                                <NavLink href="/auth/login">Log In</NavLink>
                             </NavItem>
                             <NavItem className="d-xl-none">
                                 <NavLink href="/auth/register">Sign Up</NavLink>
@@ -132,16 +133,16 @@ class LandingLayout extends React.Component {
                         </Collapse>
                         <div className="d-lg-down-none">
                             { user?
-                                    <Link to={dashboardUrl}>
-                                        <Button className="mr-3" color="primary" >Dashboard</Button>
+                                    <Link to={dashboardUrl} className="text-white">
+                                        <Button className="mr-3 landing-primary-button text-white menu" >Dashboard</Button>
                                     </Link>
                                 :
                                 <>
                                     <Link to="/auth/login">
-                                        <Button className="mr-3" color="secondary" >Sign In</Button>
+                                        <Button className="landing-secondary-button menu mr-2" >Log In</Button>
                                     </Link>
                                     <Link to="/auth/register">
-                                        <Button color="primary">Sign Up</Button>
+                                        <Button className="landing-primary-button menu">Sign Up</Button>
                                     </Link>
                                 </>
                             }
@@ -168,12 +169,13 @@ class LandingLayout extends React.Component {
                 </Router>
 
                 <footer>
-                <div className="section text-center" style={{paddingBottom: 100, paddingTop: 100}}>
+                  <div className="footer-hr"/>
+                  <div className="section white text-center" style={{paddingBottom: 100, paddingTop: 50}}>
                     <Container className="home-container p-0" fluid>
                         <div className="d-flex justify-content-between text-left flex-wrap">
                         <div className="mb-3">
                             <NavbarBrand className="p-0" href="/">
-                            <img src={sellix_logo}/>
+                            <img src={sellix_logo_footer} width="137" height="60"/>
                             </NavbarBrand>
                             <p className="mt-2">Copyright © 2020, Sellix.io.</p>
                         </div>
