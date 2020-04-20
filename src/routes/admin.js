@@ -15,6 +15,7 @@ import {
   Queries,
   Feedbacks,
   Webhooks,
+  CreateWebhookSimulator,
   WebhookLogs,
   CreatePage,
   Pages,
@@ -185,9 +186,15 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/developer/webhooks`,
-    name: 'Weebhooks',
+    path: `/dashboard/${user}/developer/webhooks/all`,
+    name: 'Webhooks',
     component: Webhooks.screen
+  },
+
+  {
+    path: `/dashboard/${user}/developer/webhooks/new`,
+    name: 'New',
+    component: CreateWebhookSimulator.screen
   },
 
   {
