@@ -14,4 +14,17 @@
       cursor: pointer;
     }
   }
+
+  .badge {
+    margin: auto;
+  }
+
+  .badge-200 {
+    background-color: #E4D6FF;
+    color: #613BEA;
+  }
+
+  .badge-payload {
+    background-color: #c8ced3;
+  }
 }

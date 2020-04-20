@@ -30,6 +30,7 @@ import Queries from './queries'
 import Feedbacks from './feedbacks'
 import ReplyToFeedback from './feedbacks/screens/reply'
 import Webhooks from './webhooks'
+import CreateWebhookSimulator from './webhooks/screens/create'
 import WebhookLogs from './webhook_logs'
 import Pages from './pages'
 import CreatePage from './pages/screens/create'
@@ -108,6 +109,7 @@ export {
   Feedbacks,
   ReplyToFeedback,
   Webhooks,
+  CreateWebhookSimulator,
   Pages,
 
   CreatePage,
