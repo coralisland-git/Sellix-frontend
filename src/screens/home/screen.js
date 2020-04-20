@@ -58,9 +58,9 @@ class Home extends React.Component {
             <Container className="home-container p-0" fluid>
               <Row className="flex-row">
                 <Col md={7} className="mb-5" style={{paddingTop: '10%'}}>
-                  <h1 className="text-white">Sell Digital Goods Online</h1>
+                  <h1 className="text-white">Digital Selling With Ease</h1>
                   <p className="large pr-3 text-white col-8 p-0">
-                    E-commerce is easy with Sellix. Create your own online store with a couple of clicks.
+                    You provide the products on Sellix, we take care of the rest. Day and night.
                   </p>
                   <Button className="landing-primary-button f-20 f-b"><NavLink className="p-0 text-white" href="/auth/register">Get Started for Free</NavLink></Button>
                 </Col>
@@ -150,7 +150,7 @@ class Home extends React.Component {
         <div className="section white text-center" style={{paddingBottom: 125}}>
           <Container className="mr-auto ml-auto p-0 purple" fluid style={{maxWidth: 1330}}>
             <h1 className="mb-4">Start using <b>Sellix</b> now!</h1>
-            <p className="mr-auto ml-auto">Create an account and start selling your products now. Are you ready ?</p>
+            <p className="mr-auto ml-auto">Create an account and start selling your products. Are you ready? Because we are.</p>
             <Button className="landing-secondary-button"><NavLink className="p-0" href="/auth/register">Get Started →</NavLink></Button>
           </Container>
         </div>
