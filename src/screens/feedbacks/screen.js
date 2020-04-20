@@ -95,7 +95,7 @@ class Feedbacks extends React.Component {
     return <p>
         {feedback.message}
         {feedback.reply && <p style={{
-          borderLeft: '3px solid gray',
+          borderLeft: '3px solid #613bea',
           marginLeft: '10px',
           padding: '10px'
         }}>
