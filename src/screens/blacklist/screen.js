@@ -142,7 +142,7 @@ class Blacklist extends React.Component {
       <div className="blacklist-screen mt-3">
         <div className="animated fadeIn">
           <div className='blacklist-header'>
-            <div className='blacklist-title'>Blacklist</div>
+            <h1 className='blacklist-title'>Blacklist</h1>
             <Button className="ml-3" color="primary"
             onClick={() => this.props.history.push(`/dashboard/${user}/blacklist/new`)}>Create blacklist</Button>
           </div>

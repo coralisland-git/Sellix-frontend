@@ -216,30 +216,30 @@ class OrderDetail extends React.Component {
                     </Col>
                   </Row>
                 : 
-                  <Row className="mt-3 mb-2">
+                  <Row className="">
                     <Col lg={12}>
                       <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
-                        <Label className="title">View Order {order.developer_invoice == '1' && 
+                        <h4 className="title">View Order {order.developer_invoice == '1' &&
                           <span className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
                             Developer
                           </span>
-                        }</Label>
+                        }</h4>
                         <div className='orderHeaderButtons'>
                           {
                             order.status && (['0', '1'].includes(order.status)) && 
-                              <Button color="primary" className="mb-2 mr-2" onClick={this.openResendModal.bind(this)}>
+                              <Button color="primary" className="mr-2" onClick={this.openResendModal.bind(this)}>
                                 Resend Order
                               </Button>
                           }
                           {
                             order.status && (['1'].includes(order.status)) && 
-                              <Button color="primary" className="mb-2 mr-2" onClick={this.openIssueReplacementModal.bind(this)}>
+                              <Button color="primary" className="mr-2" onClick={this.openIssueReplacementModal.bind(this)}>
                                 Issue Replacement
                               </Button>
                           }
                           { 
                             order.status && (['4'].includes(order.status)) && 
-                              <Button color="primary" className="mb-2" onClick={this.openProcessOrderModal.bind(this)}>
+                              <Button color="primary" className="" onClick={this.openProcessOrderModal.bind(this)}>
                                 Process Order
                               </Button>
                           }
@@ -329,10 +329,10 @@ class OrderDetail extends React.Component {
                         </Col>
                       </Row>
                     :
-                    <Row className="mt-3">
+                    <Row className="">
                       <Col lg={12}>
                         <FormGroup className="mb-4">
-                          <Label className="title">Delivered Webhooks</Label>
+                          <h4 className="title">Delivered Webhooks</h4>
                         </FormGroup>
                       </Col>
                       <Col lg={12}>
@@ -407,10 +407,10 @@ class OrderDetail extends React.Component {
                           </Col>
                         </Row>
                       :
-                      <Row className="mt-3">
+                      <Row className="">
                         <Col lg={12}>
                           <FormGroup className="mb-4">
-                            <Label className="title">Delivered Goods</Label>
+                            <h4 className="title">Delivered Goods</h4>
                           </FormGroup>
                         </Col>
                         <Col lg={12}>
@@ -442,7 +442,7 @@ class OrderDetail extends React.Component {
                               </Col>
                             </Row>
                           :
-                          <Row className="mt-3">
+                          <Row className="">
                             <Col lg={12}>
                               <FormGroup className="mb-4">
                                 <Label className="title">Developer Settings</Label>
@@ -483,10 +483,10 @@ class OrderDetail extends React.Component {
                               </Col>
                             </Row>
                           :
-                          <Row className="mt-3">
+                          <Row className="">
                             <Col lg={12}>
                               <FormGroup className="mb-4">
-                                <Label className="title">{PAYMENT_OPTS[order.gateway]} Details</Label>
+                                <h4 className="title">{PAYMENT_OPTS[order.gateway]} Details</h4>
                               </FormGroup>
                             </Col>
                             <Col lg={12}>
@@ -569,10 +569,10 @@ class OrderDetail extends React.Component {
                         </Col>
                       </Row>
                     :
-                    <Row className="mt-3">
+                    <Row className="">
                       <Col lg={12}>
                         <FormGroup className="mb-4">
-                          <Label className="title">Provided Custom Fields</Label>
+                          <h4 className="title">Provided Custom Fields</h4>
                         </FormGroup>
                       </Col>
                       <Col lg={12}>

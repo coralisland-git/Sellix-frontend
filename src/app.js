@@ -10,7 +10,7 @@ import { Loading, NotFound } from 'components'
 import 'app.scss'
 import SingleLogo from './assets/images/single.png'
 
-const hist = createBrowserHistory()
+const history = createBrowserHistory()
 const store = configureStore()
 
 
@@ -30,7 +30,7 @@ export default class App extends React.Component {
     
     return (
       <Provider store={store}>
-        <Router history={hist}>
+        <Router history={history}>
           <React.Suspense fallback={Loading()}>
             
             <Switch>
