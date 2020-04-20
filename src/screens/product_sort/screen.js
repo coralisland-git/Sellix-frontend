@@ -113,7 +113,7 @@ class Product extends React.Component {
                 </Col>
               </Row>
             </CardHeader>
-            <div>
+            <CardBody>
               {
                 loading ?
                   <Row>
@@ -177,7 +177,7 @@ class Product extends React.Component {
                     </Col>
                   </Row>
               }
-            </div>
+            </CardBody>
           </Card>
         </div>
       </div>
