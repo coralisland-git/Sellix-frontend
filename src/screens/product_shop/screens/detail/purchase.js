@@ -1,5 +1,5 @@
-import backIcon from "../../../../assets/images/x.png";
-import config from "../../../../constants/config";
+import backIcon from "assets/images/x.png";
+import config from "constants/config";
 import { Collapse, Button, Input } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import React from "react";
@@ -18,7 +18,6 @@ const ButtonOptions = ({ option, setPaymentOptions, index }) => {
 					<img src={config.PAYMENT_ICONS[option]} className="mr-2" width="20" height="20" alt={''}/>
 					{config.PAYMENT_LABELS[option]}
 				</div>
-				<div><i className="fas fa-xs fa-chevron-right"/></div>
 			</div>
 		</Button>
 )}

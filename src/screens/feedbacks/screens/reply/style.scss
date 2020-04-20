@@ -26,4 +26,74 @@
         color: #B27424 !important;
         background-color: #F4E6C9 !important;
     }
+
+    .invoice-view {
+        p {
+            color: #A7A5B4;
+          }
+        
+          p.hash {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            flex: 1;
+            line-height: 1.3em;
+          }
+        
+          p.title {
+            max-width: 25%;
+            width: 100%;
+            margin-right: 20px;
+          }
+        
+          label {
+            color: #A7A5B4;
+          }
+        
+          span {
+            font-size: 10px;
+          }
+        
+          .small-badge {
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 3px;
+            margin-left: 10px !important;
+          }
+        
+          .badge-developer {
+            color: #271458   !important;
+            background-color: #c4bed9;
+          }
+        
+          .proxy-label {
+            color: #B22424 !important;
+            background-color: #F4C9C9;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 5px;
+          }
+        
+          .avatar {
+            font-size: 25px;
+            color: white;
+            padding: 0px;
+            // background-color: #ccc;
+            // border-radius: 50%;
+          }
+        
+          .email {
+            font-size: 16px;
+            margin-bottom: 0;
+          }
+        
+          .d-info {
+            label { margin-bottom : 0;}
+            .d-addr {
+              margin-bottom : 0;
+            }
+          }
+    }
 }
