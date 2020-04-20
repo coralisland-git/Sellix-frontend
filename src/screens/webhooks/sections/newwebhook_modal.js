@@ -52,8 +52,14 @@ class NewWebhookModal extends React.Component {
   }
 
   handleSubmit(values) {
-    this.props.actions.createWebhook(values).then(res => {
-      this.props.commonActions.tostifyAlert('success', res.message || 'Created successfully');
+    var action = this.props.actions.createWebhook;
+    var msg = 'Created successfully'
+    if(values['uniqid']){
+      action = this.props.actions.editWebhook;
+      msg = 'Updated successfully'
+    }
+    action(values).then(res => {
+      this.props.commonActions.tostifyAlert('success', res.message || msg);
       this.props.actions.getWebhookList();
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
@@ -63,22 +69,26 @@ class NewWebhookModal extends React.Component {
   }
 
   render() {    
-    const { openModal, closeModal } = this.props
-    const { 
+    const { openModal, closeModal, webhook } = this.props
+    var { 
       loading,
       initialValues,
     } = this.state
 
+    if (webhook)
+      initialValues = {
+        uniqid: webhook['uniqid'],
+        url: webhook['url'],
+        events: webhook['events'],
+        key: webhook['key']
+      }
 
     return (
       <div>
         <Modal isOpen={openModal}
-          className="modal-success"
-          wrapClassName="1122"
-          modalClassName="888"
-          >
+          className="modal-success">
           <Formik
-            initialValues={this.state.initialValues}
+            initialValues={initialValues}
             onSubmit={(values) => {
               this.handleSubmit(values)
             }}

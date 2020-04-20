@@ -48,7 +48,7 @@ class ShowWebhookLogModal extends React.Component {
 
   render() {    
     const { openModal, closeModal, webhook } = this.props
-    console.log('~~~~~~~~~~~~~~~', webhook)    
+    
     var payload = {}
     if (webhook && webhook['payload'])
       payload = JSON.parse(webhook['payload'])

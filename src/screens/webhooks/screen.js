@@ -58,7 +58,8 @@ class Webhooks extends React.Component {
     this.state = {
       loading: true,
       openModal: false,
-      search_key: null
+      search_key: null,
+      webhook: null
     }
     this.deleteWebhook = this.deleteWebhook.bind(this)
   }
@@ -117,7 +118,12 @@ class Webhooks extends React.Component {
   renderOptions = (cell, row) => {
     return (
       <div className="d-flex actions">
-        <a>
+        <a onClick={(e) => {
+          this.setState({
+            openModal: true,
+            webhook: row
+          })
+        }}>
           <i className="fas fa-pen"/>
         </a>
         <a onClick={(e) => this.deleteWebhook(e, row.uniqid) }>
@@ -145,11 +151,17 @@ class Webhooks extends React.Component {
   }
 
   openNewWebhookModal() {
-    this.setState({openModal: true})
+    this.setState({
+      openModal: true,
+      webhook: null
+    })
   }
 
   closeNewWebhookModal() {
-    this.setState({openModal: false})
+    this.setState({
+      openModal: false,
+      webhook: null
+    })
   }
 
   searchWebhooks = (webhooks) => {
@@ -167,7 +179,7 @@ class Webhooks extends React.Component {
   }
 
   render() {
-    const { loading, openModal, search_key } = this.state
+    const { loading, openModal, search_key, webhook } = this.state
     const webhook_list = search_key?this.searchWebhooks(this.props.webhook_list):this.props.webhook_list
 
     return (
@@ -178,6 +190,7 @@ class Webhooks extends React.Component {
             closeModal={this.closeNewWebhookModal.bind(this)}
             actions={this.props.actions}
             commonActions={this.props.commonActions}
+            webhook={webhook}
           />
           <Card className="grey">
             <CardHeader>

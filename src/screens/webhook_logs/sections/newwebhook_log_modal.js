@@ -75,7 +75,7 @@ class NewWebhookLogModal extends React.Component {
         <Modal isOpen={openModal}
           className="modal-success">
           <Formik
-            initialValues={this.state.initialValues}
+            initialValues={initialValues}
             onSubmit={(values) => {
               this.handleSubmit(values)
             }}

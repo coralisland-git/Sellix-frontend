@@ -62,3 +62,23 @@ export const deleteWebhook = (webhook) => {
     })
   }
 }
+
+export const editWebhook = (webhook) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/webhooks/edit`,
+      data: formData(webhook)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
