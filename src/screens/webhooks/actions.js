@@ -9,7 +9,7 @@ export const getWebhookList = () => {
   return (dispatch) => {
     let data = {
       method: 'GET',
-      url: `/self/webhooks`
+      url: `/self/webhooks/queue`
     }
 
     return authApi(data).then(res => {

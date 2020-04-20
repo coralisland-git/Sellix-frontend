@@ -15,13 +15,11 @@ import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
-import { getWebhookList } from './actions'
-import moment from 'moment'
+import { NewWebhookModal } from './sections'
+import { CommonActions } from 'services/global';
+import * as WebhooksActions from './actions'
+
 import './style.scss'
-
-
-const user = window.localStorage.getItem('userId')
-
 
 const mapStateToProps = (state) => {
   return ({
@@ -31,7 +29,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    actions: bindActionCreators({ getWebhookList }, dispatch)    
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    actions: bindActionCreators(WebhooksActions, dispatch)    
   })
 }
 
@@ -40,6 +39,7 @@ class Webhooks extends React.Component {
     super(props)
     this.state = {
       loading: true,
+      openModal: false,
       search_key: null
     }    
   }
@@ -95,13 +95,12 @@ class Webhooks extends React.Component {
     )
   }
 
-  renderOrderTime(cell, row) {
-    return (
-      <div>
-        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
-        <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
-      </div>
-    )  
+  openNewWebhookModal() {
+    this.setState({openModal: true})
+  }
+
+  closeNewWebhookModal() {
+    this.setState({openModal: false})
   }
 
   searchWebhooks = (webhooks) => {
@@ -119,12 +118,18 @@ class Webhooks extends React.Component {
   }
 
   render() {
-    const { loading, search_key } = this.state    
+    const { loading, openModal, search_key } = this.state
     const webhook_list = search_key?this.searchWebhooks(this.props.webhook_list):this.props.webhook_list
 
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
+          <NewWebhookModal 
+            openModal={openModal} 
+            closeModal={this.closeNewWebhookModal.bind(this)}
+            actions={this.props.actions}
+            commonActions={this.props.commonActions}
+          />
           <Card className="grey">
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
@@ -142,7 +147,7 @@ class Webhooks extends React.Component {
                         }}
                       />
                     </div>
-                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/dashboard/${user}/developer/webhooks/new`)}>
+                    <Button className="ml-3" color="primary" onClick={this.openNewWebhookModal.bind(this)}>
                       Simulator</Button>
                   </div>
                 </Col>
@@ -160,7 +165,7 @@ class Webhooks extends React.Component {
                   <Row>
                     <Col lg={12}>
                       <div>
-                        <BootstrapTable                          
+                        <BootstrapTable
                           options={{...tableOptions(), sizePerPage: 15}}
                           data={webhook_list}
                           version="4"
@@ -195,7 +200,7 @@ class Webhooks extends React.Component {
                             Status
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="attempts"                            
+                            dataField="retries"                            
                             dataSort
                             dataAlign="center"
                             width='13%'
@@ -214,10 +219,9 @@ class Webhooks extends React.Component {
                             dataField="created_at"
                             dataAlign="right"
                             width='13%'
-                            dataAlign="right"
-                            dataFormat={this.renderOrderTime}
+                            dataAlign="center"
                           >
-                            Created at
+                            Sent at
                           </TableHeaderColumn>
                           {/*<TableHeaderColumn
                               dataField="id"

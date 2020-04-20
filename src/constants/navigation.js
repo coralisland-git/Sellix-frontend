@@ -72,18 +72,18 @@ export const mainNavigation =  {
     },
     {
       name: 'Developer',
-      url: `/dashboard/${user}/developer/webhooks/all`,
+      url: `/dashboard/${user}/developer`,
       icon: 'fas fa-code',
-      // children: [
-      //   {
-      //     name: 'Webhooks',
-      //     url: `/dashboard/${user}/developer/webhooks`,
-      //   },
-      //   {
-      //     name: 'Webhook Logs',
-      //     url: `/dashboard/${user}/developer/webhook-logos`,
-      //   }
-      // ]
+      children: [
+        {
+          name: 'Webhooks',
+          url: `/dashboard/${user}/developer/webhooks`,
+        },
+        {
+          name: 'Webhook Logs',
+          url: `/dashboard/${user}/developer/webhook-logs`,
+        }
+      ]
     },
     // {
     //   name: 'Pages',

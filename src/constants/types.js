@@ -36,7 +36,8 @@ export const BLACKLIST = {
 }
 
 export const WEBHOOK = {
-  WEBHOOK_LIST: 'WEBHOOK_LIST'
+  WEBHOOK_LIST: 'WEBHOOK_LIST',
+  WEBHOOK_LOG_LIST: 'WEBHOOK_LOG_LIST'
 }
 
 export const QUERIES = {

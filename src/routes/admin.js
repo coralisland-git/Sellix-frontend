@@ -186,19 +186,19 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/developer/webhooks/all`,
+    path: `/dashboard/${user}/developer/webhooks`,
     name: 'Webhooks',
     component: Webhooks.screen
   },
 
-  {
-    path: `/dashboard/${user}/developer/webhooks/new`,
-    name: 'New',
-    component: CreateWebhookSimulator.screen
-  },
+  // {
+  //   path: `/dashboard/${user}/developer/webhooks/new`,
+  //   name: 'New',
+  //   component: CreateWebhookSimulator.screen
+  // },
 
   {
-    path: `/dashboard/${user}/developer/webhook-logos`,
+    path: `/dashboard/${user}/developer/webhook-logs`,
     name: 'Weebhook Logs',
     component: WebhookLogs.screen
   },
