@@ -128,7 +128,7 @@ class ShopProductDetail extends React.Component {
 
           <div className="purchase-card ml-auto mr-auto">
             <Row className="pr-3 pl-3 pt-0">
-              <Col lg={12} className="ml-auto mr-auto">
+              <Col lg={12} className="ml-auto mr-auto pb-4">
                 <Row>
 
                   <Col md={8}>
@@ -141,8 +141,8 @@ class ShopProductDetail extends React.Component {
 
                   <Col md={4} className="left-bar" id="affix-bar">
                     <div className="d-sm-down-none" >
-                      <Affix offsetTop={97} container='affix-bar'>
-                        <Card className="bg-white">
+                      <Affix offsetTop={97} container='affix-bar' >
+                        <Card className="bg-white" id={'affix-container'}>
                           {
                             gateway ?
                               <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:

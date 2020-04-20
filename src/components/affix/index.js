@@ -23,12 +23,22 @@ class Affix extends Component {
         containerWidth: 0,
     }
 
+    resizeObserver = null;
+
     componentDidMount() {
         this.getInitPosition();
         const listenTarget = this.props.target();
         if (listenTarget) {
             listenTarget.addEventListener('resize', this.handleTargetChange)
             listenTarget.addEventListener('scroll', this.handleTargetChange)
+
+            this.resizeObserver = new ResizeObserver((entries) => {
+                this.setState({
+                    height: entries[0].contentRect.height
+                }, this.handleTargetChange)
+            });
+
+            this.resizeObserver.observe(document.getElementById("affix-container"));
         }
     }
 
@@ -37,6 +47,9 @@ class Affix extends Component {
         if (listenTarget) {
             listenTarget.removeEventListener('scroll', this.handleTargetChange)
             listenTarget.removeEventListener('resize', this.handleTargetChange)
+        }
+        if(this.resizeObserver) {
+            this.resizeObserver.disconnect()
         }
     }
 
