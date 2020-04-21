@@ -77,11 +77,11 @@ export const mainNavigation =  {
       children: [
         {
           name: 'Webhooks',
-          url: `/dashboard/${user}/developer/webhooks`,
+          url: `/dashboard/${user}/developer/webhooks/all`,
         },
         {
           name: 'Webhook Logs',
-          url: `/dashboard/${user}/developer/webhook-logs`,
+          url: `/dashboard/${user}/developer/webhooks/logs`,
         }
       ]
     },
