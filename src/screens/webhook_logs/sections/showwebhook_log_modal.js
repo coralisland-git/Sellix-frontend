@@ -56,7 +56,7 @@ class ShowWebhookLogModal extends React.Component {
     return (
       <div>
         <Modal isOpen={openModal}
-          className="modal-success">
+          className="modal-success modal-detail">
           <ModalHeader toggle={closeModal}>
             Webhook Simulator
           </ModalHeader>
