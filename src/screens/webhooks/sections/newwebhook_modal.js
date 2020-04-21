@@ -42,7 +42,7 @@ class NewWebhookModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
+      loading: false,      
       initialValues: {
         url: '',
         events: ''        
@@ -68,19 +68,27 @@ class NewWebhookModal extends React.Component {
   }
 
   render() {    
-    const { openModal, closeModal, webhook } = this.props
+    const { openModal, closeModal, webhook, chosenEvents, updateEvents } = this.props
     var { 
       loading,
       initialValues,
     } = this.state
 
-    if (webhook)
+    if (webhook){
       initialValues = {
         uniqid: webhook['uniqid'],
         url: webhook['url'],
-        events: webhook['events'],
-        key: webhook['key']
+        events: webhook['events']
+      }      
+    }
+    
+    var event_options = EVENT_OPTIONS.filter(option => {
+      for(let i=0; i<chosenEvents.length; i++){
+        if(option['value'] == chosenEvents[i])
+          return false
       }
+      return true
+    })
 
     return (
       <div>
@@ -93,7 +101,7 @@ class NewWebhookModal extends React.Component {
             }}
             validationSchema={Yup.object().shape({
                 url: Yup.string().required('URL is required'),
-                events: Yup.string().required('Event is required')                
+                events: Yup.string().required('Events is required')                
             })}>
             {props => (
               <Form name="simpleForm" onSubmit={props.handleSubmit}>                
@@ -129,11 +137,13 @@ class NewWebhookModal extends React.Component {
                         <Select 
                           id="event"
                           placeholder="Select events" 
-                          options={EVENT_OPTIONS}
-                          searchable={false}                              
-                          value={props.values.events}
+                          options={event_options}
+                          searchable={false}
                           onChange={(option) => {
-                            props.handleChange("events")(option.value);
+                            var evts = chosenEvents
+                            evts.push(option.value);
+                            updateEvents(evts);
+                            props.handleChange("events")(chosenEvents.join(','));
                           }}
                           className={
                             props.errors.events && props.touched.events
@@ -144,6 +154,33 @@ class NewWebhookModal extends React.Component {
                         {props.errors.events && props.touched.events && (
                           <div className="invalid-feedback">{props.errors.events}</div>
                         )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Label htmlFor="event">{chosenEvents.length} events</Label>
+                        <ul className="chosen-events">
+                          { chosenEvents.map((event, index) => {
+                            return(
+                              <li key={index} className="d-flex mt-2 mb-2">
+                                <span className="mr-2">{event}</span>
+                                <i className="fa fa-times cursor-pointer" 
+                                  onClick={ () => {
+                                    var evts = chosenEvents.filter(et => {
+                                      if (et == event)
+                                        return false
+                                      return true
+                                    });
+                                    updateEvents(evts);
+                                    props.handleChange("events")(evts.join(','));
+                                  }}>
+                                </i>
+                              </li>
+                            )
+                          })}
+                        </ul>
                       </FormGroup>
                     </Col>
                   </Row>

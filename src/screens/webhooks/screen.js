@@ -59,7 +59,8 @@ class Webhooks extends React.Component {
       loading: true,
       openModal: false,
       search_key: null,
-      webhook: null
+      webhook: null,
+      chosenEvents: []
     }
     this.deleteWebhook = this.deleteWebhook.bind(this)
   }
@@ -121,7 +122,8 @@ class Webhooks extends React.Component {
         <a onClick={(e) => {
           this.setState({
             openModal: true,
-            webhook: row
+            webhook: row,
+            chosenEvents: row['events'].split(',')
           })
         }}>
           <i className="fas fa-pen"/>
@@ -160,8 +162,13 @@ class Webhooks extends React.Component {
   closeNewWebhookModal() {
     this.setState({
       openModal: false,
-      webhook: null
+      webhook: null,
+      chosenEvents: []
     })
+  }
+
+  updateEvents(events) {
+    this.setState({chosenEvents: events})
   }
 
   searchWebhooks = (webhooks) => {
@@ -179,7 +186,7 @@ class Webhooks extends React.Component {
   }
 
   render() {
-    const { loading, openModal, search_key, webhook } = this.state
+    const { loading, openModal, search_key, webhook, chosenEvents } = this.state
     const webhook_list = search_key?this.searchWebhooks(this.props.webhook_list):this.props.webhook_list
 
     return (
@@ -191,6 +198,8 @@ class Webhooks extends React.Component {
             actions={this.props.actions}
             commonActions={this.props.commonActions}
             webhook={webhook}
+            chosenEvents={chosenEvents}
+            updateEvents={this.updateEvents.bind(this)}
           />
           <Card className="grey">
             <CardHeader>
