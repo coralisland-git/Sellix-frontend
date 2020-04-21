@@ -43,7 +43,8 @@ class WebhookLogs extends React.Component {
       openModal: false,
       openShowModal: false,
       search_key: null,
-      webhook: {}
+      webhook: {},
+      chosenEvents: []
     }    
   }
 
@@ -124,7 +125,14 @@ class WebhookLogs extends React.Component {
   }
 
   closeNewWebhookModal() {
-    this.setState({openModal: false})
+    this.setState({
+      openModal: false,      
+      chosenEvents: []
+    })
+  }
+
+  updateEvents(events) {
+    this.setState({chosenEvents: events})
   }
 
   searchWebhookLogs = (webhooks) => {
@@ -142,7 +150,7 @@ class WebhookLogs extends React.Component {
   }
 
   render() {
-    const { loading, openModal, search_key, openShowModal, webhook } = this.state    
+    const { loading, openModal, search_key, openShowModal, webhook, chosenEvents } = this.state    
     const webhook_log_list = search_key?this.searchWebhookLogs(this.props.webhook_log_list):this.props.webhook_log_list
 
 
@@ -154,6 +162,8 @@ class WebhookLogs extends React.Component {
             closeModal={this.closeNewWebhookModal.bind(this)}
             actions={this.props.actions}
             commonActions={this.props.commonActions}
+            chosenEvents={chosenEvents}
+            updateEvents={this.updateEvents.bind(this)}
           />
           <ShowWebhookLogModal            
             openModal={openShowModal}

@@ -42,7 +42,7 @@ class NewWebhookLogModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
+      loading: false,      
       initialValues: {
         url: '',
         event: ''        
@@ -62,12 +62,19 @@ class NewWebhookLogModal extends React.Component {
   }
 
   render() {    
-    const { openModal, closeModal } = this.props
+    const { openModal, closeModal, chosenEvents, updateEvents } = this.props
     const { 
-      loading,
+      loading,      
       initialValues,
     } = this.state
 
+    var event_options = EVENT_OPTIONS.filter(option => {
+      for(let i=0; i<chosenEvents.length; i++){        
+        if(option['value'] == chosenEvents[i])
+          return false
+      }
+      return true
+    })
 
     return (
       <div>
@@ -116,11 +123,13 @@ class NewWebhookLogModal extends React.Component {
                         <Select 
                           id="event"
                           placeholder="Select events" 
-                          options={EVENT_OPTIONS}
-                          searchable={false}                              
-                          value={props.values.event}
+                          options={event_options}
+                          searchable={false}
                           onChange={(option) => {
-                            props.handleChange("event")(option.value);
+                            var evts = chosenEvents
+                            evts.push(option.value);
+                            updateEvents(evts);
+                            props.handleChange("event")(chosenEvents.join(','));
                           }}
                           className={
                             props.errors.event && props.touched.event
@@ -131,6 +140,33 @@ class NewWebhookLogModal extends React.Component {
                         {props.errors.event && props.touched.event && (
                           <div className="invalid-feedback">{props.errors.event}</div>
                         )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Label htmlFor="event">{chosenEvents.length} events</Label>
+                        <ul className="chosen-events">
+                          { chosenEvents.map((event, index) => {
+                            return(
+                              <li key={index} className="d-flex mt-2 mb-2">
+                                <span className="mr-2">{event}</span>
+                                <i className="fa fa-times cursor-pointer" 
+                                  onClick={ () => {
+                                    var evts = chosenEvents.filter(et => {
+                                      if (et == event)
+                                        return false
+                                      return true
+                                    });
+                                    updateEvents(evts);
+                                    props.handleChange("event")(evts.join(','));
+                                  }}>
+                                </i>
+                              </li>
+                            )
+                          })}
+                        </ul>
                       </FormGroup>
                     </Col>
                   </Row>
