@@ -3,7 +3,7 @@ import {
   authApi,
   formData
 } from 'utils'
-import { PRODUCTS } from 'constants/types'
+import { PRODUCTS, COUPONS } from 'constants/types'
 
 export const createCoupon = (coupon) => {
   return (dispatch) => {
@@ -19,6 +19,30 @@ export const createCoupon = (coupon) => {
       } else {
         throw res
       }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+export const getCouponByID = (uniqid) => {
+  return (dispatch) => {
+    let data = {
+      method: 'GET',
+      url: `/coupons/unique/${uniqid}`
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        dispatch({
+          type: COUPONS.CURRENT_COUPON,
+          payload: res.data.coupon
+        })
+        return res
+      } else {
+        throw res
+      }     
     }).catch(err => {
       throw err
     })

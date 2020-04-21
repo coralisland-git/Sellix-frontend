@@ -21,7 +21,7 @@ import { Loader, DataSlider } from 'components'
 import { createCoupon } from './actions'
 import { getCoupons } from '../../actions'
 import { editCoupon } from '../detail/actions'
-import { getProducts } from './actions'
+import { getProducts, getCouponByID } from './actions'
 import {
   CommonActions
 } from 'services/global'
@@ -48,6 +48,7 @@ const mapDispatchToProps = (dispatch) => {
     createCoupon: bindActionCreators(createCoupon, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch),
     getProducts: bindActionCreators(getProducts, dispatch),
+    getCouponByID: bindActionCreators(getCouponByID, dispatch)
   })
 }
 
@@ -66,12 +67,21 @@ class CreateCoupon extends React.Component {
       loading: false,
       tooltipOpen: false,
       files: [],
-      codeFromGenerator: null
+      codeFromGenerator: null,
+      currentCouponData: null
     }
   }
 
   componentDidMount() {
-    this.props.actions.getCoupons()
+    if(this.isEdit()) {
+      this.setState({ loading: true })
+      this.props.getCouponByID(this.props.match.params.id).then(res => {
+        this.setState({currentCouponData: res.data.coupon})
+      }).finally(() => {
+        this.setState({loading: false})
+      })
+    }
+    
     this.props.getProducts()
   }
 
@@ -111,17 +121,11 @@ class CreateCoupon extends React.Component {
   }
 
   render() {
-
+    const { loading, currentCouponData } = this.state
     
-    console.log(random(16))
-    const { loading } = this.state
-    const currentCouponData = _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id)
 
-    if (this.isEdit() && !currentCouponData) {
-      return 'load'
-    }
-    let initialValues = this.isEdit()
-      ? { ...currentCouponData, products_bound: currentCouponData.products_bound.length === 0 ? [''] : currentCouponData.products_bound}
+    let initialValues = (this.isEdit() && currentCouponData)
+      ? { ...currentCouponData, discount_value: [currentCouponData.discount], products_bound: currentCouponData.products_bound.length === 0 ? [''] : currentCouponData.products_bound}
       : { discount_value: [50] }
     return (
       <div className="product-screen mt-3">
@@ -142,7 +146,7 @@ class CreateCoupon extends React.Component {
                   <CardHeader>
                     <Row style={{ alignItems: 'center' }}>
                       <Col md={12}>
-                        <h1>New Coupon</h1>
+                        <h1>{this.isEdit()?'Edit Coupon':'New Coupon'}</h1>
                       </Col>
                     </Row>
                   </CardHeader>

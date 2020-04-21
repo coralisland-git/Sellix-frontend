@@ -28,7 +28,7 @@ const ProductCard = ({ product, preventDefault, history }) => {
                 <div className="d-flex justify-content-between mt-1">
                     <span className="price">{`${config.CURRENCY_LIST[currency]}${price_display}`}</span>
                     <span className="stock">
-                        Stock <span className="stock-size" style={getProductStock(product) === '∞' ? { position: 'relative', top: '1px' } : {}}>{getProductStock(product)}</span>
+                        Stock <span className="stock-size" style={getProductStock(product) === '∞' ? { position: 'relative', top: '1px' } : getProductStock(product) == 0?{color:'red'}:{}}>{getProductStock(product)}</span>
                     </span>
                 </div>
             </div> 
