@@ -159,7 +159,7 @@ class NewWebhookLogModal extends React.Component {
                   </Row>
                 </ModalBody>
                 <ModalFooter className="justify-content-start">
-                  <Button color="primary" type="submit" className="mr-2">Generate Webhook Simulator</Button>
+                  <Button color="primary" type="submit" className="mr-2">Simulate</Button>
                 </ModalFooter>                
               </Form>
               )}
