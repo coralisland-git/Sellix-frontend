@@ -135,13 +135,13 @@ class ShopProducts extends React.Component {
             </CardHeader>
 
             <React.Suspense fallback={<Loader />}>
-              <CardBody className="p-0">
+              <div className="p-0">
                 <Row>
                   <Switch>
                     <Route to={'/:username/category/:id'} render={(props) => <ProductList products={searchProducts} loading={loading} {...props} />} />
                   </Switch>
                 </Row>
-              </CardBody>
+              </div>
             </React.Suspense>
 
           </Card>
