@@ -116,6 +116,20 @@ class Webhooks extends React.Component {
     }
   }
 
+  renderEvents (cell, row) {
+    return(
+      <ul className="p-0">
+        {
+          row.events.split(',').map((event, index) => {
+            return (
+              <li key={index} className="p-1">{event}</li>
+            )
+          })
+        }
+      </ul>
+    )
+  }
+
   renderOptions = (cell, row) => {
     return (
       <div className="d-flex actions">
@@ -265,6 +279,7 @@ class Webhooks extends React.Component {
                             dataSort
                             dataAlign="center"
                             width='15%'
+                            dataFormat={this.renderEvents}
                           >
                             Events
                           </TableHeaderColumn>

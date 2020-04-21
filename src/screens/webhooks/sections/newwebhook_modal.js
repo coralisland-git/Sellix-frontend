@@ -164,7 +164,7 @@ class NewWebhookModal extends React.Component {
                         <ul className="chosen-events">
                           { chosenEvents.map((event, index) => {
                             return(
-                              <li key={index} className="d-flex mt-2 mb-2">
+                              <li key={index} className="d-flex pt-1 pb-1">
                                 <span className="mr-2">{event}</span>
                                 <i className="fa fa-times cursor-pointer" 
                                   onClick={ () => {

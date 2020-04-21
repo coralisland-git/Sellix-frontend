@@ -120,6 +120,20 @@ class WebhookLogs extends React.Component {
     )
   }
 
+  renderEvents (cell, row) {
+    return(
+      <ul className="p-0">
+        {
+          row.event.split(',').map((event, index) => {
+            return (
+              <li key={index} className="p-1">{event}</li>
+            )
+          })
+        }
+      </ul>
+    )
+  }
+
   openNewWebhookModal() {
     this.setState({openModal: true})
   }
@@ -227,6 +241,7 @@ class WebhookLogs extends React.Component {
                             dataSort
                             dataAlign="center"
                             width='13%'
+                            dataFormat={this.renderEvents}
                           >
                             Event
                           </TableHeaderColumn>
