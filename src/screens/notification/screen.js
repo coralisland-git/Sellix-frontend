@@ -247,7 +247,7 @@ class Notification extends React.Component {
                     <img src={discordIcon} width="200"/><br/>
                     <Button color="default" className="connect-discord" onClick={this.connectDiscord.bind(this)}>Connect</Button>
                     <FormGroup className="mt-3">
-                      <label>Receive Sellix Notifications on your Discord Server.</label>
+                      <label>Receive Sellix Notifications on your Discord Server. Enter your Channel ID below.</label>
                       <div className="d-flex input-group">
                         <Input type="text" placeholder="Discord Channel ID" 
                           value={discord_channel_id}
