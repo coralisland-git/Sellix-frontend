@@ -1,4 +1,4 @@
-.product-screen {
+.webhook-screen {
   .card-header {
     color: #20a8d8;
   }
@@ -8,7 +8,7 @@
     }
   }
 
-  .product-table {
+  .webhook-table {
     .my-link {
       text-decoration: none;
       cursor: pointer;
@@ -21,5 +21,10 @@
       color: inherit !important
     }
   }
+}
 
+@media (min-width: 576px){
+  .modal-detail {
+      max-width: 768px !important;
+  }
 }

@@ -125,9 +125,9 @@ class WebhookLogs extends React.Component {
     const { search_key } = this.state
     const search_fields = ['url', 'event']
 
-    const data = webhooks.filter(product => {
+    const data = webhooks.filter(webhook => {
       for(let i=0; i<search_fields.length; i++)
-        if(product[search_fields[i]] && product[search_fields[i]].includes(search_key))
+        if(webhook[search_fields[i]] && webhook[search_fields[i]].includes(search_key))
           return true
       return false
     })
@@ -141,7 +141,7 @@ class WebhookLogs extends React.Component {
 
 
     return (
-      <div className="product-screen">
+      <div className="webhook-screen">
         <div className="animated fadeIn">
           <NewWebhookLogModal            
             openModal={openModal}
@@ -195,7 +195,7 @@ class WebhookLogs extends React.Component {
                           version="4"
                           pagination
                           totalSize={webhook_log_list ? webhook_log_list.length : 0}
-                          className="product-table"
+                          className="webhook-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn
