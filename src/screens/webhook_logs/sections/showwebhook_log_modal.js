@@ -53,6 +53,10 @@ class ShowWebhookLogModal extends React.Component {
     if (webhook && webhook['payload'])
       payload = JSON.parse(webhook['payload'])
 
+    var response = null
+    if (webhook && webhook['response'] && webhook['response'] !== '')
+      response = JSON.parse(webhook['response'])      
+
     return (
       <div>
         <Modal isOpen={openModal}
@@ -106,6 +110,20 @@ class ShowWebhookLogModal extends React.Component {
                     <JSONPretty 
                       id="json-pretty" 
                       data={payload}
+                      style={{maxHeight: 360, overflow: "scroll"}}
+                    ></JSONPretty>
+                  )}
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="event">Response</Label>
+                  { response && (
+                    <JSONPretty 
+                      id="json-pretty" 
+                      data={response}
                       style={{maxHeight: 360, overflow: "scroll"}}
                     ></JSONPretty>
                   )}
