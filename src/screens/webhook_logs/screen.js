@@ -62,11 +62,11 @@ class WebhookLogs extends React.Component {
 
   renderStatus (cell, row) {
     if (
-      row.status
+      row.response_code
     ) {
       return (
-        <div className={`badge badge-${row.status.toLowerCase()}`}>
-          {row.status}
+        <div className={`badge badge-${row.response_code.toLowerCase()}`}>
+          {row.response_code}
         </div>
       )  
     } else {
