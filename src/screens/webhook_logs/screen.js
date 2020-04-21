@@ -110,7 +110,13 @@ class WebhookLogs extends React.Component {
         <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
         <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
       </div>
-    )  
+    )
+  }
+
+  renderRetries(cell, row) {
+    return (
+      <p>{row.retries}/20</p>
+    )
   }
 
   openNewWebhookModal() {
@@ -172,7 +178,7 @@ class WebhookLogs extends React.Component {
                       />
                     </div>
                     <Button className="ml-3" color="primary" onClick={this.openNewWebhookModal.bind(this)}>
-                      Add Webhook Simulator</Button>
+                      Simulator</Button>
                   </div>
                 </Col>
               </Row>
@@ -227,9 +233,10 @@ class WebhookLogs extends React.Component {
                             dataField="retries"                            
                             dataSort
                             dataAlign="center"
+                            dataFormat={this.renderRetries}
                             width='13%'
                           >
-                            Attempts
+                            Retries
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField=""
