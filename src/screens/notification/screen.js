@@ -247,7 +247,7 @@ class Notification extends React.Component {
                     <img src={discordIcon} width="200"/><br/>
                     <Button color="default" className="connect-discord" onClick={this.connectDiscord.bind(this)}>Connect</Button>
                     <FormGroup className="mt-3">
-                      <label>We send Discord notifiaction straight to your channel.</label>
+                      <label>Receive Sellix Notifications on your Discord Server.</label>
                       <div className="d-flex input-group">
                         <Input type="text" placeholder="Discord Channel ID" 
                           value={discord_channel_id}
@@ -255,7 +255,7 @@ class Notification extends React.Component {
                             this.setState({discord_channel_id: e.target.value})
                           }}/>
                         <Button color="primary" onClick={this.testDiscordChannel.bind(this)} disabled={!discord_channel_id}>
-                          Test Channel</Button>
+                          Send Test</Button>
                       </div>
                     </FormGroup>
                   </Col>
