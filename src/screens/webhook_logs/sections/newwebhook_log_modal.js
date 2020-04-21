@@ -45,8 +45,7 @@ class NewWebhookLogModal extends React.Component {
       loading: false,
       initialValues: {
         url: '',
-        event: '',
-        key: ''
+        event: ''        
       },
     }
   }
@@ -81,8 +80,7 @@ class NewWebhookLogModal extends React.Component {
             }}
             validationSchema={Yup.object().shape({
                 url: Yup.string().required('URL is required'),
-                event: Yup.string().required('Event is required'),
-                key: Yup.string(),
+                event: Yup.string().required('Event is required')                
             })}>
             {props => (
               <Form name="simpleForm" onSubmit={props.handleSubmit}>                
@@ -132,27 +130,6 @@ class NewWebhookLogModal extends React.Component {
                         </Select>
                         {props.errors.event && props.touched.event && (
                           <div className="invalid-feedback">{props.errors.event}</div>
-                        )}
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <Label htmlFor="key">Key</Label>
-                        <Input 
-                          id="key"
-                          type="text" placeholder="Key"
-                          value={props.values.key}
-                          onChange={props.handleChange}
-                          className={
-                            props.errors.key && props.touched.key
-                              ? "is-invalid"
-                              : ""
-                          }
-                        />
-                        {props.errors.key && props.touched.key && (
-                          <div className="invalid-feedback">{props.errors.key}</div>
                         )}
                       </FormGroup>
                     </Col>

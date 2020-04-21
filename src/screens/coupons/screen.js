@@ -212,7 +212,7 @@ class Product extends React.Component {
       )
     } else {
       return (
-        <p className="caption">No specified</p>
+        <div>All Products</div>
       )
     }
   }
@@ -281,7 +281,8 @@ class Product extends React.Component {
                             Discount
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="products_count"
+                            // dataField="products_count"
+                            dataFormat={this.renderProductsCount}
                             dataSort
                             dataAlign="center"
                             width="20%"

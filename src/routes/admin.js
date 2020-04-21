@@ -186,7 +186,7 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/developer/webhooks`,
+    path: `/dashboard/${user}/developer/webhooks/all`,
     name: 'Webhooks',
     component: Webhooks.screen
   },
@@ -198,7 +198,7 @@ const adminRoutes = [
   // },
 
   {
-    path: `/dashboard/${user}/developer/webhook-logs`,
+    path: `/dashboard/${user}/developer/webhooks/logs`,
     name: 'Weebhook Logs',
     component: WebhookLogs.screen
   },

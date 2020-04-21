@@ -19,7 +19,17 @@
 
 pre {  
   margin-bottom: 0px !important;
+  span {
+    color: #696969 !important;
+  }
 }
+
+.__json-pretty__ {
+  color: #613BEA !important;
+  background: #f5f5f5 !important;
+  padding: 10px !important;
+}
+
 
 @media (min-width: 576px){
   .modal-detail {
