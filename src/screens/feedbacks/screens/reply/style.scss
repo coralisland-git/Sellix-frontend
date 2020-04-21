@@ -30,6 +30,7 @@
     .invoice-view {
         p {
             color: #A7A5B4;
+            word-break: break-word;
           }
         
           p.hash {
@@ -42,13 +43,15 @@
           }
         
           p.title {
-            max-width: 25%;
-            width: 100%;
-            margin-right: 20px;
+            word-break: normal !important;
+            width: 70px;
+            text-align: right;
+            margin-right: 15%;
           }
         
           label {
-            color: #A7A5B4;
+            color: #85838f;
+            font-weight: 600;
           }
         
           span {

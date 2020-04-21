@@ -74,8 +74,7 @@ class ShopProducts extends React.Component {
 
   setSearchKey = debounce((search_key) => this.setState({ search_key }), 300);
 
-  searchProducts = () => {
-
+  searchProducts = () => {    
     const { search_key, filter, products, categories } = this.state;
 
     let category = filter !== 'all' ? categories.find(({ uniqid }) => uniqid === filter ).products_bound : products;
@@ -90,11 +89,10 @@ class ShopProducts extends React.Component {
 
 
   render() {
-
     const { loading, filter, categories, products } = this.state;
     const { shop_search_enabled } = this.props;
 
-    let searchProducts = this.searchProducts(products);
+    let searchProducts = products.length > 0?this.searchProducts(products):[];
 
     return (
       <div className="shop-product-screen">

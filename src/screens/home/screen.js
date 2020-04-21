@@ -35,6 +35,10 @@ import sellix_logo from 'assets/images/Sellix_logo.svg'
 import background1 from 'assets/images/home/BG@2x.png'
 import background2 from 'assets/images/home/Bg2@2x.png'
 
+import bottom_isometric from 'assets/images/home/Bottom_Isometric.svg'
+import Hero_Iphone_Mockup from 'assets/images/home/Hero_Iphone_Mockup.svg'
+import Reliable_Payment from 'assets/images/home/Reliable_Payment.svg'
+
 class Home extends React.Component {
   
   constructor(props) {
@@ -65,7 +69,7 @@ class Home extends React.Component {
                   <Button className="landing-primary-button f-20 f-b"><NavLink className="p-0 text-white" href="/auth/register">Get Started for Free</NavLink></Button>
                 </Col>
                 <Col md={5}>
-                  <img src={top1} className="digital-img"/>
+                  <img src={Hero_Iphone_Mockup} className="digital-img"/>
                 </Col>
               </Row>
             </Container>
@@ -122,7 +126,7 @@ class Home extends React.Component {
                 
               </Col>
               <Col md={7} className="text-right" style={{position: 'relative'}}>
-                <img className="undraw-img" src={undraw}/>
+                <img className="undraw-img" src={Reliable_Payment}/>
               </Col>
             </Row>
           </Container>
@@ -132,7 +136,7 @@ class Home extends React.Component {
           <Container className="p-0" fluid style={{maxWidth: 1330}}>
             <Row className="flex-row align-items-center">
               <Col md={7}>
-                <img className="pc-img" src={undraw1}/>
+                <img className="pc-img" src={bottom_isometric}/>
               </Col>
               <Col md={5}>
                 <div className="float-left pb-5" style={{maxWidth: 447}}>
@@ -140,7 +144,7 @@ class Home extends React.Component {
                   <p className="text-pink f-20 col-11 p-0">
                   We provide very low fees for each transaction. With our unique payment processing method, we keep transaction fees at the lowest amount. Find out more about our fees.
                   </p>
-                  <Button className="landing-primary-button"><NavLink className="p-0 text-white" href="/fees">Our  Fees →</NavLink></Button>
+                  <Button className="landing-primary-button"><NavLink className="p-0 text-white mb-1" href="/fees">Our  Fees →</NavLink></Button>
                 </div>
               </Col>
             </Row>

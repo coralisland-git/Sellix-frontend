@@ -53,7 +53,8 @@ export const PRODUCTS = {
 }
 
 export const COUPONS = {
-  COUPONS: 'COUPONS_FETCH_SUCCESS'
+  COUPONS: 'COUPONS_FETCH_SUCCESS',
+  CURRENT_COUPON: 'CURRENT_COUPON'
 }
 
 export const FEEDBACKS = {

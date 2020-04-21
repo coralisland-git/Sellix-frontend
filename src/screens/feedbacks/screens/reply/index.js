@@ -80,6 +80,7 @@ class ReplyToFeedback extends React.Component {
     super(props)
     this.state = {
       loading: false,
+      saving: false
     }
   }
 
@@ -91,7 +92,7 @@ class ReplyToFeedback extends React.Component {
   }
 
   handleSubmit(values) {
-    this.setState({ loading: true })
+    this.setState({ saving: true })
     this.props.replyFeedback({ ...values, uniqid: this.props.match.params.id }).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
@@ -100,14 +101,14 @@ class ReplyToFeedback extends React.Component {
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)
     }).finally(() => {
-      this.setState({ loading: false })
+      this.setState({ saving: false })
     })
   }
 
   render() {
     const currentFeedback = this.props.currentFeedback || 
       _.find(this.props.feedbacks, (feedback) => feedback.uniqid === this.props.match.params.id)
-    const {loading} = this.state
+    const {loading, saving} = this.state
 
   
     if (!currentFeedback) { return null }
@@ -134,109 +135,110 @@ class ReplyToFeedback extends React.Component {
                       </Col>
                     </Row>
                   </CardHeader>
-                  
-                  <CardBody className="p5-4 pb-4 mb-4">
-                    <Row>
-                      <Col lg={8}>
-                        <FormGroup>
-                          <Label htmlFor="warehouseName">Feedback <span className={`badge badge-${currentFeedback.feedback.toLowerCase()}`}>{currentFeedback.feedback.toLowerCase()}</span></Label>
-                          <div>
-                            <p className="text-grey mt-3 mb-4">{currentFeedback.message}</p>
-                          </div>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg={12}>
-                        <FormGroup>
-                          <Label htmlFor="warehouseName">Reply</Label>
-                          <Input
-                            type="textarea"
-                            className="pt-3 pb-3 "
-                            rows={7}
-                            placeholder="Reply to feedback"
-                            onChange={e => props.setFieldValue('reply', e.target.value)}
-                            value={props.values.reply}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Button color="primary" className="mt-4 mb-3">Submit</Button>
-                  </CardBody>
-                  <CardBody className="p-4 invoice-view">
-                    {
-                      loading ?
+                  <Row>
+                    <Col lg={5}>
+                      <CardBody className="p-4 invoice-view mb-4">
+                      {
+                        loading ?
+                          <Row>
+                            <Col lg={12}>
+                              <Loader />
+                            </Col>
+                          </Row>
+                        : 
+                          <Row className="">
+                            <Col lg={12}>
+                              <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                                <label className="fw-600 mt-2">View Order {currentFeedback.invoice.developer_invoice == '1' &&
+                                  <b className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
+                                    Developer
+                                  </b>
+                                }</label>
+                              </div>
+                              
+                            </Col>
+                            <Col lg={12}>
+                              <div className="d-flex">
+                                <p className="title">Invoice ID</p>
+                                <p>
+                                  <Link to={`/dashboard/${user}/orders/view/${currentFeedback.invoice.uniqid}`}>
+                                    {currentFeedback.invoice.uniqid}
+                                  </Link>
+                                </p>
+                              </div>
+                              <div className="d-flex">
+                                <p className="title">Customer</p>
+                                <p><a href={`mailto:${currentFeedback.invoice.customer_email}`}>{currentFeedback.invoice.customer_email}</a></p>
+                              </div>
+                              <div className="d-flex">
+                                <p className="title">Product</p>
+                                <p>
+                                  <Link to={`/dashboard/${user}/products/all/edit/${currentFeedback.invoice.product_id}`}>
+                                    {currentFeedback.invoice.developer_invoice == '1'?currentFeedback.invoice.developer_title:(currentFeedback.product && currentFeedback.product.title || '')}
+                                  </Link>
+                                </p>
+                              </div>
+                              <div className="d-flex">
+                                <p className="title">Value</p>
+                                <p>{`${config.CURRENCY_LIST[currentFeedback.invoice.currency]}${currentFeedback.invoice.total_display} ${currentFeedback.invoice.currency}`}</p>
+                              </div>
+                              <div className="d-flex">
+                                <p className="title">Quantity</p>
+                                <p>{currentFeedback.invoice.quantity}</p>
+                              </div>
+
+                              <div className="d-flex">
+                                <p className="title">Gateway</p>
+                                <p>{PAYMENT_OPTS[currentFeedback.invoice.gateway]}</p>
+                              </div>
+                              
+                              <div className="d-flex">
+                                <p className="title">Country</p>
+                                <p><i className={`flag-icon flag-icon-${currentFeedback.invoice.country && currentFeedback.invoice.country.toLowerCase()} mr-2`}/> 
+                                  {currentFeedback.invoice.location}</p>
+                              </div>
+                              <div className="d-flex">
+                                <p className="title">Created At</p>
+                                <p>{moment(new Date(currentFeedback.invoice.created_at*1000)).format('DD, MMM YYYY HH:mm')}</p>
+                              </div>
+                            </Col>
+                          </Row>
+                      }
+                    </CardBody>
+                    </Col>
+                    <Col lg={7}>
+                      <CardBody className="p5-4 pb-4 mb-4">
+                        <Row>
+                          <Col lg={8}>
+                            <FormGroup>
+                              <Label htmlFor="warehouseName">Feedback <span className={`badge badge-${currentFeedback.feedback.toLowerCase()}`}>{currentFeedback.feedback.toLowerCase()}</span></Label>
+                              <div>
+                                <p className="text-grey mt-3 mb-4">{currentFeedback.message}</p>
+                              </div>
+                            </FormGroup>
+                          </Col>
+                        </Row>
                         <Row>
                           <Col lg={12}>
-                            <Loader />
+                            <FormGroup>
+                              <Label htmlFor="warehouseName">Reply</Label>
+                              <Input
+                                type="textarea"
+                                className="pt-3 pb-3 "
+                                rows={7}
+                                placeholder="Reply to feedback"
+                                onChange={e => props.setFieldValue('reply', e.target.value)}
+                                value={props.values.reply}
+                              />
+                            </FormGroup>
                           </Col>
                         </Row>
-                      : 
-                        <Row className="">
-                          <Col lg={12}>
-                            <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
-                              <h4 className="title">View Order {currentFeedback.invoice.developer_invoice == '1' &&
-                                <b className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
-                                  Developer
-                                </b>
-                              }</h4>
-                            </div>
-                            
-                          </Col>
-                          <Col lg={12}>
-                            <Row className="flex">
-                              <Col lg={6}>
-                                <div className="d-flex">
-                                  <p className="title">Invoice ID</p>
-                                  <p>
-                                    <Link to={`/dashboard/${user}/orders/view/${currentFeedback.invoice.uniqid}`}>
-                                      {currentFeedback.invoice.uniqid}
-                                    </Link>
-                                  </p>
-                                </div>
-                                <div className="d-flex">
-                                  <p className="title">Customer</p>
-                                  <p><a href={`mailto:${currentFeedback.invoice.customer_email}`}>{currentFeedback.invoice.customer_email}</a></p>
-                                </div>
-                                <div className="d-flex">
-                                  <p className="title">Product</p>
-                                  <p>
-                                    <Link to={`/dashboard/${user}/products/all/edit/${currentFeedback.invoice.product_id}`}>
-                                      {currentFeedback.invoice.developer_invoice == '1'?currentFeedback.invoice.developer_title:(currentFeedback.product && currentFeedback.product.title || '')}
-                                    </Link>
-                                  </p>
-                                </div>
-                                <div className="d-flex">
-                                  <p className="title">Value</p>
-                                  <p>{`${config.CURRENCY_LIST[currentFeedback.invoice.currency]}${currentFeedback.invoice.total_display} ${currentFeedback.invoice.currency}`}</p>
-                                </div>
-                              </Col>
-                              <Col lg={6}>
-                                <div className="d-flex">
-                                  <p className="title">Quantity</p>
-                                  <p>{currentFeedback.invoice.quantity}</p>
-                                </div>
-
-                                <div className="d-flex">
-                                  <p className="title">Gateway</p>
-                                  <p>{PAYMENT_OPTS[currentFeedback.invoice.gateway]}</p>
-                                </div>
-                                
-                                <div className="d-flex">
-                                  <p className="title">Country</p>
-                                  <p><i className={`flag-icon flag-icon-${currentFeedback.invoice.country && currentFeedback.invoice.country.toLowerCase()} mr-2`}/> 
-                                    {currentFeedback.invoice.location}</p>
-                                </div>
-                                <div className="d-flex">
-                                  <p className="title">Created At</p>
-                                  <p>{moment(new Date(currentFeedback.invoice.created_at*1000)).format('DD, MMM YYYY HH:mm')}</p>
-                                </div>
-                              </Col>
-                            </Row>
-                          </Col>
-                        </Row>
-                    }
-                  </CardBody>
+                        <Button color="primary" className="mt-4 mb-3" disabled={saving}>{saving?<Spin/>:'Submit'}</Button>
+                      </CardBody>
+                    </Col>
+                  </Row>
+                  
+                  
                 </Card>
               </Form>
             )}
