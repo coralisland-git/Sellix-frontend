@@ -37,7 +37,7 @@ const EVENT_OPTIONS = [
 ]
 
 
-class NewWebhookModal extends React.Component {
+class NewWebhookLogModal extends React.Component {
   
   constructor(props) {
     super(props)
@@ -45,22 +45,16 @@ class NewWebhookModal extends React.Component {
       loading: false,
       initialValues: {
         url: '',
-        events: '',
+        event: '',
         key: ''
       },
     }
   }
 
   handleSubmit(values) {
-    var action = this.props.actions.createWebhook;
-    var msg = 'Created successfully'
-    if(values['uniqid']){
-      action = this.props.actions.editWebhook;
-      msg = 'Updated successfully'
-    }
-    action(values).then(res => {
-      this.props.commonActions.tostifyAlert('success', res.message || msg);
-      this.props.actions.getWebhookList();
+    this.props.actions.createWebhookSimulator(values).then(res => {
+      this.props.commonActions.tostifyAlert('success', res.message || 'Created successfully');
+      this.props.actions.getWebhookLogList();
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
     }).finally(() => {
@@ -69,19 +63,12 @@ class NewWebhookModal extends React.Component {
   }
 
   render() {    
-    const { openModal, closeModal, webhook } = this.props
-    var { 
+    const { openModal, closeModal } = this.props
+    const { 
       loading,
       initialValues,
     } = this.state
 
-    if (webhook)
-      initialValues = {
-        uniqid: webhook['uniqid'],
-        url: webhook['url'],
-        events: webhook['events'],
-        key: webhook['key']
-      }
 
     return (
       <div>
@@ -94,13 +81,13 @@ class NewWebhookModal extends React.Component {
             }}
             validationSchema={Yup.object().shape({
                 url: Yup.string().required('URL is required'),
-                events: Yup.string().required('Event is required'),
+                event: Yup.string().required('Event is required'),
                 key: Yup.string(),
             })}>
             {props => (
               <Form name="simpleForm" onSubmit={props.handleSubmit}>                
                 <ModalHeader toggle={closeModal}>
-                  Webhook Endpoint
+                  Webhook Simulator
                 </ModalHeader>
                 <ModalBody className="p-4">
                   <Row>
@@ -133,18 +120,18 @@ class NewWebhookModal extends React.Component {
                           placeholder="Select events" 
                           options={EVENT_OPTIONS}
                           searchable={false}                              
-                          value={props.values.events}
+                          value={props.values.event}
                           onChange={(option) => {
-                            props.handleChange("events")(option.value);
+                            props.handleChange("event")(option.value);
                           }}
                           className={
-                            props.errors.events && props.touched.events
+                            props.errors.event && props.touched.event
                               ? "is-invalid"
                               : ""
                           }>
                         </Select>
-                        {props.errors.events && props.touched.events && (
-                          <div className="invalid-feedback">{props.errors.events}</div>
+                        {props.errors.event && props.touched.event && (
+                          <div className="invalid-feedback">{props.errors.event}</div>
                         )}
                       </FormGroup>
                     </Col>
@@ -172,7 +159,7 @@ class NewWebhookModal extends React.Component {
                   </Row>
                 </ModalBody>
                 <ModalFooter className="justify-content-start">
-                  <Button color="primary" type="submit" className="mr-2">Generate Webhook Endpoint</Button>
+                  <Button color="primary" type="submit" className="mr-2">Generate Webhook Simulator</Button>
                 </ModalFooter>                
               </Form>
               )}
@@ -183,4 +170,4 @@ class NewWebhookModal extends React.Component {
   }
 }
 
-export default NewWebhookModal
+export default NewWebhookLogModal

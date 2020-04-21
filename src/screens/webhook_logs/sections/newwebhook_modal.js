@@ -56,10 +56,7 @@ class NewWebhookModal extends React.Component {
     return (
       <div>
         <Modal isOpen={openModal}
-          className="modal-success"
-          wrapClassName="1122"
-          modalClassName="888"
-          >
+          className="modal-success">
           <Formik
             initialValues={this.state.initWareHouseValue}
             onSubmit={(values, {resetForm}) => {

@@ -24,12 +24,51 @@ export const getWebhookList = () => {
   }
 }
 
-export const createWebhookSimulator = (simulator) => {
+export const createWebhook = (simulator) => {
   return (dispatch) => {
     let data = {
       method: 'POST',
-      url: `/webhooks/try`,
+      url: `/webhooks/create`,
       data: formData(simulator)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+export const deleteWebhook = (webhook) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/webhooks/delete`,
+      data: formData(webhook)
+    }
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+export const editWebhook = (webhook) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/webhooks/edit`,
+      data: formData(webhook)
     }
 
     return authApi(data).then(res => {

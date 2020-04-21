@@ -24,7 +24,7 @@ import _ from 'lodash'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { CommonActions } from 'services/global';
-import { createWebhookSimulator } from '../../actions';
+import { createWebhook } from '../../actions';
 
 
 const EVENT_OPTIONS = [
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return ({
     commonActions: bindActionCreators(CommonActions, dispatch),
-    actions: bindActionCreators({ createWebhookSimulator }, dispatch)
+    actions: bindActionCreators({ createWebhook }, dispatch)
   })
 }
 
@@ -69,7 +69,7 @@ class CreateWebhookSimulator extends React.Component {
 
   handleSubmit(values) {
     this.setState({loading: true})
-    this.props.actions.createWebhookSimulator(values).then(res => {
+    this.props.actions.createWebhook(values).then(res => {
       this.props.history.goBack()
       this.props.commonActions.tostifyAlert('success', res.message)
     }).catch(err => {
