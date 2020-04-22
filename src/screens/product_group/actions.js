@@ -27,28 +27,28 @@ export const getProductGroupList = () => {
 
 
 // Get Product By ID
-// export const getProductByID = (id) => {
-//   return (dispatch) => {
-//     let data = {
-//       method: 'GET',
-//       url: `products/unique/${id}`
-//     }
+export const getProductGroupByID = (id) => {
+  return (dispatch) => {
+    let data = {
+      method: 'GET',
+      url: `groups/unique/${id}`
+    }
 
-//     return authApi(data).then(res => {
-//       if (res.status === 200) {
-//         // dispatch({
-//         //   type: PRODUCT.CURRENT_PRODUCT,
-//         //   payload: res.data.product
-//         // })
-//         return res
-//       } else {
-//         throw res
-//       }     
-//     }).catch(err => {
-//       throw err
-//     })
-//   }
-// }
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        // dispatch({
+        //   type: PRODUCT.CURRENT_PRODUCT,
+        //   payload: res.data.product
+        // })
+        return res
+      } else {
+        throw res
+      }     
+    }).catch(err => {
+      throw err
+    })
+  }
+}
 
 
 // Create New Product Group
@@ -73,26 +73,26 @@ export const createProductGroup = (product) => {
 }
 
 
-// // Save Product
-// export const editProduct = (product) => {
-//   return (dispatch) => {
-//     let data = {
-//       method: 'POST',
-//       url: `products/edit`,
-//       data: formData(product)
-//     }
+// Save Product
+export const editProductGroup = (product) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `groups/edit`,
+      data: formData(product)
+    }
 
-//     return authApi(data).then(res => {
-//       if (res.status === 200) {
-//         return res
-//       } else {
-//         throw res
-//       }
-//     }).catch(err => {
-//       throw err
-//     })
-//   }
-// }
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
 
 
 
