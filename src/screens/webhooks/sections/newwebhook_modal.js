@@ -186,7 +186,7 @@ class NewWebhookModal extends React.Component {
                   </Row>
                 </ModalBody>
                 <ModalFooter className="justify-content-start">
-                  <Button color="primary" type="submit" className="mr-2">Generate Webhook Endpoint</Button>
+                  <Button color="primary" type="submit" className="mr-2">{ props.values.uniqid? "Update" : "Generate" } Webhook Endpoint</Button>
                 </ModalFooter>                
               </Form>
               )}

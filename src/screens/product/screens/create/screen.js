@@ -156,12 +156,17 @@ class CreateProduct extends React.Component {
 			gateways: {},
 			type: TYPE_OPTIONS[0],
 			delimiter: DELIMITER_OPTIONIS[0],
-			custom_fields: []
+			custom_fields: [],
+			webhook_fields: []
 		}
 
 		this.addCustomField = this.addCustomField.bind(this)
 		this.deleteCustomField = this.deleteCustomField.bind(this)
 		this.saveCustomField = this.saveCustomField.bind(this)
+
+		this.addWebhookField = this.addWebhookField.bind(this)
+		this.deleteWebhookField = this.deleteWebhookField.bind(this)
+    	this.saveWebhookField = this.saveWebhookField.bind(this)
 	}
 
 	componentWillUnmount() {
@@ -207,6 +212,27 @@ class CreateProduct extends React.Component {
 	};
 
 
+	addWebhookField() {
+		const webhook_fields = Object.assign([], this.state.webhook_fields)
+		webhook_fields.push('')
+
+		this.setState({webhook_fields: webhook_fields})
+	}
+
+	deleteWebhookField(e, index) {
+		const webhook_fields = Object.assign([], this.state.webhook_fields)
+		webhook_fields.splice(index, 1)
+
+		this.setState({webhook_fields: webhook_fields})
+	}
+
+	saveWebhookField(value, index) {
+		const webhook_fields = Object.assign([], this.state.webhook_fields)
+		webhook_fields[index] = value
+
+		this.setState({webhook_fields: webhook_fields})
+	}
+
 	/**  Custom Fields **/
 
 	addCustomField() {
@@ -233,16 +259,16 @@ class CreateProduct extends React.Component {
 
 	handleSubmit(values) {
 		this.setState({loading: true})
-		const { gateways, custom_fields, showFileStock, showServiceStock } = this.state
+		const { gateways, custom_fields, showFileStock, showServiceStock, webhook_fields } = this.state
 		delete gateways['']
 		values.gateways = Object.keys(gateways).filter(key => { return gateways[key]}).toString()
 		values.custom_fields = JSON.stringify({
 			custom_fields: custom_fields.map(field => { return {...field, type: field.type.value}})
 		})
 		values.file_stock = showFileStock?values.file_stock:-1
-		values.service_stock = showServiceStock?values.service_stock:-1
+		values.service_stock = showServiceStock?values.service_stock:-1	
 
-		console.log('values', values, values.quantity_max)
+		values.webhooks = webhook_fields
 
 		if(values.quantity_max == "") {
 			values.quantity_max = "0"
@@ -280,7 +306,8 @@ class CreateProduct extends React.Component {
 			initialValues,
 			type,
 			delimiter,
-			custom_fields
+			custom_fields,
+			webhook_fields
 		} = this.state
 
 		return (
@@ -872,6 +899,47 @@ class CreateProduct extends React.Component {
 																<Row>
 																	<Col lg={12}>
 																		<h4 className="mb-4 mt-2">Miscellaneous</h4>
+																	</Col>
+																</Row>
+
+																<Row>
+																	<Col lg={12}>
+																		<FormGroup className="mb-0">
+																			<Label htmlFor="product_code" style={{width: '100%'}}>Webhook URLs <small className="font-italic">(optional)</small></Label>
+																		</FormGroup>
+																	</Col>
+
+																	{
+																		webhook_fields.map((field, index) => {
+																			return(
+																				<Col lg={12} key={index}>
+																					<Row>
+																						<Col lg={11}>
+																							<FormGroup className="mb-3">																								
+																								<Input type="text" value={field} onChange={(e) => {
+																									this.saveWebhookField(e.target.value, index)
+																								}}/>
+																							</FormGroup>
+																						</Col>
+																						<Col lg={1}>																						
+																							<FormGroup className="mb-3">																								
+																								<div className="d-flex align-items-center mt-2">
+																									<a onClick={(e) => this.deleteWebhookField(e, index)} style={{fontSize: 20}}>
+																										<i className="fas fa-trash"/>
+																									</a>
+																								</div>
+																							</FormGroup>
+																						</Col>
+																					</Row>
+																				</Col>
+																			)
+																		})
+																	}
+																	
+																	<Col lg={12}>
+																		<FormGroup className="mb-3">
+																			<Button color="default" onClick={this.addWebhookField}>Add webhook</Button>
+																		</FormGroup>
 																	</Col>
 																</Row>
 																
