@@ -84,35 +84,53 @@
       
     }
     
-
+    
     header {
-      // position: fixed;
       position: relative;
       width: 100%;
       z-index: 2;
-      // top: 0;
-      // background-color: ;
-      // border-bottom: 1px solid grey;
+      background-color: white;
+
+      &.home-header {
+        background-color: transparent !important;
+        .navbar {
+          background-color: transparent !important;
+          max-width: 1330px;
+          margin: 0 auto;
+    
+          .nav-item a{
+            margin: 0 15px;
+            color: white !important;
+            font-weight: 600;
+            font-size: 15px;
+          }
+      
+          .nav-item a:hover,
+          .nav-item.active a {
+            color: white !important;
+          }
+        }
+      }
+
+      .navbar {
+        background-color: transparent !important;
+        max-width: 1330px;
+        margin: 0 auto;
+  
+        .nav-item a{
+          margin: 0 15px;
+          color: #613bea !important;
+          font-weight: 600;
+          font-size: 15px;
+        }
+    
+        .nav-item a:hover,
+        .nav-item.active a {
+          color: #613bea !important;
+        }
+      }
     }
 
-    .navbar {
-      background-color: transparent !important;
-      max-width: 1330px;
-      margin: 0 auto;
-
-      .nav-item a{
-        margin: 0 15px;
-        color: white !important;
-        font-weight: 600;
-        font-size: 15px;
-      }
-  
-      .nav-item a:hover,
-      .nav-item.active a {
-        color: white !important;
-      }
-    }
-  
     .section {
       padding-left: 15px;
       padding-right: 15px;

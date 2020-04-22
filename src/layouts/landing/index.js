@@ -93,60 +93,15 @@ class LandingLayout extends React.Component {
     }
 
     const { isOpen } = this.state
-
     const user = window.localStorage.getItem('userId')
-
     var dashboardUrl = user? `/dashboard/${user}/home` : '/'
 
     return (
     <div className="landing-layout">
         <div className="animated fadeIn">
             <div className="initial-container">
-                <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
-                <header className="pt-4 pb-2 ">
-                    <Navbar  color="white" light expand="lg">
-                        <NavbarBrand href="/">
-                            <img className="logo" src={sellix_logo}/>
-                        </NavbarBrand>
-                        
-                        <Collapse className="mr-3" isOpen={isOpen} navbar>
-                            <Nav className="ml-auto" navbar>
-                            <NavItem className="active">
-                                <NavLink href="/">Home</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/">Features</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/auth/register">Get Started</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/"></NavLink>
-                            </NavItem>
-                            
-                            </Nav>
-                        </Collapse>
-                        
-                        
-                        <div>
-                          { user?
-                                  <Link to={dashboardUrl} className="text-white">
-                                      <Button className="mr-3 landing-primary-button text-white menu" >Dashboard</Button>
-                                  </Link>
-                              :
-                              <>
-                                  <Link to="/auth/login">
-                                      <Button className="landing-secondary-button menu mr-2" >Log In</Button>
-                                  </Link>
-                                  <Link to="/auth/register">
-                                      <Button className="landing-primary-button menu">Sign Up</Button>
-                                  </Link>
-                              </>
-                            }
-                        </div>
-                        </Navbar>
-                    </header>
-
+              <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
+            
                 <Router>
                   <Switch>
                   {
@@ -156,7 +111,56 @@ class LandingLayout extends React.Component {
                       return (
                           <Route
                             path={prop.path}
-                            component={prop.component}
+                            component={() => (
+                              <>
+                                <header className={`pt-3 pb-3 ${prop.name === 'Home'?'home-header':''}`}>
+                                  <Navbar  color="white" light expand="lg">
+                                      <NavbarBrand href="/">
+                                          <img className="logo" src={prop.name === 'Home'?sellix_logo:sellix_logo_footer}/>
+                                      </NavbarBrand>
+                                      
+                                      <Collapse className="mr-3" isOpen={isOpen} navbar>
+                                          <Nav className="ml-auto" navbar>
+                                          <NavItem className="active">
+                                              <NavLink href="/">Home</NavLink>
+                                          </NavItem>
+                                          <NavItem>
+                                              <NavLink href="/">Features</NavLink>
+                                          </NavItem>
+                                          <NavItem>
+                                              <NavLink href="/auth/register">Get Started</NavLink>
+                                          </NavItem>
+                                          <NavItem>
+                                              <NavLink href="/"></NavLink>
+                                          </NavItem>
+                                          
+                                          </Nav>
+                                      </Collapse>
+                                      <div>
+                                        { user?
+                                            <Button className="mr-3 landing-primary-button text-white menu" 
+                                              onClick={() => this.props.history.push(dashboardUrl)}
+                                            >
+                                              Dashboard
+                                            </Button>
+                                            :
+                                            <>  
+                                              <Button className="landing-secondary-button menu mr-2" 
+                                                onClick={() => this.props.history.push('/auth/login')}>
+                                                Log In
+                                              </Button>
+                                              <Button className="landing-primary-button menu" 
+                                                onClick={() => this.props.history.push('/auth/register')}>
+                                                Sign Up
+                                              </Button>
+                                            </>
+                                          }
+                                      </div>
+                                      </Navbar>
+                                  </header>
+                                <prop.component/>
+                              </>
+                            )}
                             key={key}
                           />
                       )
