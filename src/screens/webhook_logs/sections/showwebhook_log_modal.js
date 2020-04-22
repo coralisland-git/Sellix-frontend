@@ -54,8 +54,14 @@ class ShowWebhookLogModal extends React.Component {
       payload = JSON.parse(webhook['payload'])
 
     var response = null
-    if (webhook && webhook['response'] && webhook['response'] !== '')
-      response = JSON.parse(webhook['response'])      
+    if (webhook && webhook['response'] && webhook['response'] !== ''){
+      try {
+        response = JSON.parse(webhook['response'])
+      }
+      catch(err) {
+        response = webhook['response']
+      }
+    }
 
     return (
       <div>
