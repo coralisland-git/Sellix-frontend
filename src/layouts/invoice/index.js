@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
     is_authed: state.auth.is_authed,
+    profile: state.auth.profile,
     theme: state.common.theme
   })
 }

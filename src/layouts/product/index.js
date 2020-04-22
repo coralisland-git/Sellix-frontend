@@ -68,7 +68,7 @@ class ProductLayout extends React.Component {
   }
 
   render() {
-    const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light'
+    const theme = this.props.theme
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>

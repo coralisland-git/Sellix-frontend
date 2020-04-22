@@ -25,13 +25,9 @@ import {
   Loading
 } from 'components'
 
-import top1 from 'assets/images/home/phone_vector2x.png'
 import service1 from 'assets/images/home/service1.svg'
 import service2 from 'assets/images/home/service2.svg'
 import service3 from 'assets/images/home/service3.svg'
-import undraw from 'assets/images/home/left-part-iso@2x.png'
-import undraw1 from 'assets/images/home/right-side-iso@2x.png'
-import sellix_logo from 'assets/images/Sellix_logo.svg'
 import background1 from 'assets/images/home/BG@2x.png'
 import background2 from 'assets/images/home/Bg2@2x.png'
 
@@ -56,9 +52,10 @@ class Home extends React.Component {
     const { isOpen } = this.state
 
     return (
-      <div className="home-screen">
-        <img className="background1-img" src={background1}/>
-        <div className="section white" style={{paddingTop: 0, paddingBottom: 50}}>
+      <div className="home-screen" style={{backgroundImage: "url(" + background1 + ")"}}>
+
+        
+        <div className="section" style={{paddingTop: 0, paddingBottom: 50}}>
             <Container className="home-container p-0" fluid>
               <Row className="flex-row">
                 <Col md={7} className="mb-5" style={{paddingTop: '10%'}}>
@@ -74,7 +71,7 @@ class Home extends React.Component {
               </Row>
             </Container>
           </div>
-        <div className="section pt-0 pb-5 text-center bg-white">
+        <div className="section pt-0 pb-5 text-center">
           <Container className="home-container" fluid>
             <h1 className="text-pink">Start selling with Sellix</h1>
             <p className="large text-darkgrey">
@@ -82,7 +79,7 @@ class Home extends React.Component {
             </p>
             <Row className="mt-5 pt-4">
               <Col md={4} className="p-2">
-                <div className="service-card zindex-3">
+                <div className="service-card service-card-shadow zindex-2">
                   <img className="service-img" src={service1}/>
                   <h4 className="mt-4 text-pink f-20 f-b">Customizable Shop</h4>
                   <p className="small text-pink">
@@ -91,7 +88,7 @@ class Home extends React.Component {
                 </div>
               </Col>
               <Col md={4} className="p-2">
-                <div className="service-card service-card-shadow zindex-2">
+                <div className="service-card service-card-shadow zindex-3">
                   <img className="service-img" src={service2}/>
                   <h4 className="mt-4 text-pink f-20 f-b">Payment Flexibility</h4>
                   <p className="small text-pink">
@@ -101,7 +98,7 @@ class Home extends React.Component {
                 </div>
               </Col>
               <Col md={4} className="p-2">
-                <div className="service-card service-card-shadow">
+                <div className="service-card service-card-shadow zindex-2">
                   <img className="service-img" src={service3}/>
                   <h4 className="mt-4 text-pink f-20 f-b">All-in-One Platform</h4>
                   <p className="small text-pink">
