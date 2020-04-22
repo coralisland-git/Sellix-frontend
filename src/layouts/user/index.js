@@ -55,6 +55,7 @@ class AdminLayout extends React.Component {
     super(props);
     let theme = window.localStorage.getItem('theme') || 'light'
     document.body.classList.add(theme);
+    document.documentElement.classList.add(theme);
     this.state = {
       theme: theme
     }
@@ -101,6 +102,11 @@ class AdminLayout extends React.Component {
     document.body.classList.remove('light');
     document.body.classList.remove('dark');
     document.body.classList.add(theme === 'light' ? 'dark': 'light');
+
+    document.documentElement.classList.remove('light')
+    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.add(theme === 'light' ? 'dark': 'light');
+
 
     this.setState({theme: theme === 'light' ? 'dark': 'light'})
   }
