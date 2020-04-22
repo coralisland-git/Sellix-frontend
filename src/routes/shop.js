@@ -38,12 +38,6 @@ import {
     },
 
     {
-      path: `/:username/category/:id`,
-      name: 'Products',
-      component: ShopProducts.screen
-    },
-
-    {
       path: `/:username`,
       name: 'Products',
       component: ShopProducts.screen

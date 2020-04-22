@@ -177,7 +177,7 @@ const adminRoutes = [
     component: Queries.screen
   },
   {
-    path: `/dashboard/${user}/querie/view/:id`,
+    path: `/dashboard/${user}/query/view/:id`,
     name: 'Reply to Querie',
     component: ReplyToQuerie
   },

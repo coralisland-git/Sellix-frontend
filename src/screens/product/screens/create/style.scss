@@ -111,4 +111,15 @@
       top: 0.20em;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .webhook-field {
+      .col-lg-11 {
+        width: 80% !important;
+      }
+      .col-lg-1 {
+        width: 20% !important;
+      }
+    }
+  }
 }
