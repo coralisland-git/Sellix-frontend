@@ -252,7 +252,7 @@ class EditProductGroup extends React.Component {
 
 		this.props.actions.editProductGroup(values).then(res => {
 
-			this.props.history.push(`/dashboard/${user}/product-groups/all`)
+			this.props.history.push(`/dashboard/${user}/groups/all`)
 			this.props.commonActions.tostifyAlert('success', res.message)
 
 		}).catch(err => {

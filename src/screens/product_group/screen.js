@@ -77,7 +77,7 @@ class ProductGroups extends React.Component {
 
   gotoEditPage = (e, id) => {
     this.props.history.push({
-      pathname: `/dashboard/${user}/product-groups/all/edit/${id}`
+      pathname: `/dashboard/${user}/groups/all/edit/${id}`
     })
   }
 
@@ -96,7 +96,7 @@ class ProductGroups extends React.Component {
       return (
         <div>
           <p>
-            <a href={`/dashboard/${user}/product-groups/all/edit/${row.uniqid}`} >
+            <a href={`/dashboard/${user}/groups/all/edit/${row.uniqid}`} >
               {row.title}
             </a>
           </p>
@@ -117,7 +117,7 @@ class ProductGroups extends React.Component {
       return (
         <div>
           <p>
-            <a href={`/dashboard/${user}/product-groups/all/edit/${row.uniqid}`} >
+            <a href={`/dashboard/${user}/groups/all/edit/${row.uniqid}`} >
               {row.title}
             </a>
           </p>
@@ -263,7 +263,7 @@ class ProductGroups extends React.Component {
                         }}
                       />
                     </div>
-                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/dashboard/${user}/product-groups/all/new`)}>
+                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/dashboard/${user}/groups/all/new`)}>
                       Add Product Group</Button>
                   </div>
                 </Col>
