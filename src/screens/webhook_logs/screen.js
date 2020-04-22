@@ -62,18 +62,30 @@ class WebhookLogs extends React.Component {
   }
 
   renderStatus (cell, row) {
-    if (
-      row.response_code
-    ) {
+    if (row.response_code && row.response_code != 0) {
+      var status = "success"
+      if (row.response_code.startsWith("3"))
+        status = "warning"
+      if (row.response_code.startsWith("4"))
+        status = "error"
       return (
-        <div className={`badge badge-${row.response_code.toLowerCase()}`}>
+        <div className={`badge badge-${status}`}>
           {row.response_code}
         </div>
       )  
     } else {
-      return (
-        <p className="caption">No specified</p>
-      )
+      if(row.retries == 20)
+        return (
+          <div className="badge badge-error">
+            Invalid
+          </div>
+        )      
+      else
+        return (
+          <div className="badge badge-pending">
+            Pending
+          </div>
+        )
     }
   }
 
@@ -252,7 +264,7 @@ class WebhookLogs extends React.Component {
                             dataAlign="center"
                             width='13%'
                           >
-                            Status
+                            Response
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="retries"                            

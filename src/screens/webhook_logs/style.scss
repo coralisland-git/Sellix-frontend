@@ -15,6 +15,29 @@
     }
   }
 
+  .badge-success {
+    color: #07bc0c;
+    background-color: #ffffff;
+    border: 1px solid #07bc0c;
+  }
+
+  .badge-warning {
+    color: #613BEA;
+    background-color: #ffffff;
+    border: 1px solid #613BEA;
+  }
+
+  .badge-error {
+    color: #e74c3c;
+    background-color: #ffffff;
+    border: 1px solid #e74c3c;
+  }
+
+  .badge-pending {
+    color: #a17ce8 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #a17ce8;
+  }
 }
 
 pre {  

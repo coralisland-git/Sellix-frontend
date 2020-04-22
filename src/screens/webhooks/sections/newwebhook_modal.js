@@ -68,7 +68,7 @@ class NewWebhookModal extends React.Component {
   }
 
   render() {    
-    const { openModal, closeModal, webhook, chosenEvents, updateEvents } = this.props
+    const { openModal, closeModal, webhook } = this.props
     var { 
       loading,
       initialValues,
@@ -81,14 +81,6 @@ class NewWebhookModal extends React.Component {
         events: webhook['events']
       }      
     }
-    
-    var event_options = EVENT_OPTIONS.filter(option => {
-      for(let i=0; i<chosenEvents.length; i++){
-        if(option['value'] == chosenEvents[i])
-          return false
-      }
-      return true
-    })
 
     return (
       <div>
@@ -133,17 +125,15 @@ class NewWebhookModal extends React.Component {
                   <Row>
                     <Col>
                       <FormGroup>
-                        <Label htmlFor="event">Events</Label>
+                        <Label htmlFor="event">Event</Label>
                         <Select 
                           id="event"
                           placeholder="Select events" 
-                          options={event_options}
+                          options={EVENT_OPTIONS}
+                          value={props.values.events}
                           searchable={false}
-                          onChange={(option) => {
-                            var evts = chosenEvents
-                            evts.push(option.value);
-                            updateEvents(evts);
-                            props.handleChange("events")(chosenEvents.join(','));
+                          onChange={(option) => {                            
+                            props.handleChange("events")(option.value);
                           }}
                           className={
                             props.errors.events && props.touched.events
@@ -154,33 +144,6 @@ class NewWebhookModal extends React.Component {
                         {props.errors.events && props.touched.events && (
                           <div className="invalid-feedback">{props.errors.events}</div>
                         )}
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <Label htmlFor="event">{chosenEvents.length} events</Label>
-                        <ul className="chosen-events">
-                          { chosenEvents.map((event, index) => {
-                            return(
-                              <li key={index} className="d-flex pt-1 pb-1">
-                                <span className="mr-2">{event}</span>
-                                <i className="fa fa-times cursor-pointer" 
-                                  onClick={ () => {
-                                    var evts = chosenEvents.filter(et => {
-                                      if (et == event)
-                                        return false
-                                      return true
-                                    });
-                                    updateEvents(evts);
-                                    props.handleChange("events")(evts.join(','));
-                                  }}>
-                                </i>
-                              </li>
-                            )
-                          })}
-                        </ul>
                       </FormGroup>
                     </Col>
                   </Row>
