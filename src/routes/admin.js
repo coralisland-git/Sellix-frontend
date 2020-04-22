@@ -108,14 +108,14 @@ const adminRoutes = [
   },
   {
     path: `/dashboard/${user}/groups/all`,
-    name: 'Product Groups',
+    name: 'Groups',
     exact: true,
     component: ProductGroups.screen
   },
 
   {
     path: `/dashboard/${user}/groups/sort`,
-    name: 'Product Groups',
+    name: 'Sort Groups',
     exact: true,
     component: ProductGroupSort.screen
   },
