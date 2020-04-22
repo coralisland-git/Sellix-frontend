@@ -4,7 +4,7 @@ const initState = {
   all_product_groups: []
 }
 
-const ProductReducer = (state = initState, action) => {
+const ProductGroupReducer = (state = initState, action) => {
   const { type, payload} = action
   
   switch(type) {
@@ -25,4 +25,4 @@ const ProductReducer = (state = initState, action) => {
   }
 }
 
-export default ProductReducer
+export default ProductGroupReducer

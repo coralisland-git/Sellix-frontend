@@ -25,7 +25,8 @@ import {
   AdminDashboard,
   CreateProductGroup,
   EditProductGroup,
-  ProductGroups
+  ProductGroups,
+  ProductGroupSort
 } from 'screens'
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
@@ -110,6 +111,13 @@ const adminRoutes = [
     name: 'Product Groups',
     exact: true,
     component: ProductGroups.screen
+  },
+
+  {
+    path: `/dashboard/${user}/groups/sort`,
+    name: 'Product Groups',
+    exact: true,
+    component: ProductGroupSort.screen
   },
  
 
