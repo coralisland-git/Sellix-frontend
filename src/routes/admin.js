@@ -22,7 +22,10 @@ import {
   CreateProduct,
   OrderDetail,
   ReplyToQuerie,
-  AdminDashboard
+  AdminDashboard,
+  CreateProductGroup,
+  EditProductGroup,
+  ProductGroups
 } from 'screens'
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
@@ -88,6 +91,25 @@ const adminRoutes = [
     name: 'Products',
     exact: true,
     component: Product.screen
+  },
+
+  {
+    path: `/dashboard/${user}/product-groups/all/new`,
+    name: 'Product Group New',
+    exact: true,
+    component: CreateProductGroup.screen
+  },
+  {
+    path: `/dashboard/${user}/product-groups/all/edit/:id`,
+    name: 'Product Group Edit',
+    exact: true,
+    component: EditProductGroup.screen
+  },
+  {
+    path: `/dashboard/${user}/product-groups/all`,
+    name: 'Product Groups',
+    exact: true,
+    component: ProductGroups.screen
   },
  
 

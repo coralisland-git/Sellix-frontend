@@ -16,6 +16,10 @@ export const mainNavigation =  {
           name: 'All Products',
           url: `/dashboard/${user}/products/all`
         },
+        // {
+        //   name: 'Product Groups',
+        //   url: `/dashboard/${user}/product-groups/all`
+        // },
         {
           name: 'Categories',
           url: `/dashboard/${user}/products/categories/all`,
