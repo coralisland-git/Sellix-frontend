@@ -864,7 +864,7 @@ class CreateProduct extends React.Component {
 																								/>
 																							</FormGroup>
 																						</Col>
-																						<Col lg={3}>																						
+																						<Col lg={3}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Required</Label>
 																								<div className="d-flex align-items-center mt-2">
@@ -913,16 +913,18 @@ class CreateProduct extends React.Component {
 																		webhook_fields.map((field, index) => {
 																			return(
 																				<Col lg={12} key={index}>
-																					<Row>
+																					<Row className="webhook-field">
 																						<Col lg={11}>
-																							<FormGroup className="mb-3">																								
-																								<Input type="text" value={field} onChange={(e) => {
+																							<FormGroup className="mb-3">
+																								<Input type="text" value={field} 
+																									placeholder="https://www.example.com/endpoint"
+																									onChange={(e) => {
 																									this.saveWebhookField(e.target.value, index)
 																								}}/>
 																							</FormGroup>
 																						</Col>
-																						<Col lg={1}>																						
-																							<FormGroup className="mb-3">																								
+																						<Col lg={1}>
+																							<FormGroup className="mb-3">
 																								<div className="d-flex align-items-center mt-2">
 																									<a onClick={(e) => this.deleteWebhookField(e, index)} style={{fontSize: 20}}>
 																										<i className="fas fa-trash"/>
