@@ -17,6 +17,7 @@ import EditProduct from './product/screens/detail'
 import ProductGroups from './product_group'
 import CreateProductGroup from './product_group/screens/create'
 import EditProductGroup from './product_group/screens/detail'
+import ProductGroupSort from './product_group_sort'
 
 import ProductSort from './product_sort'
 import CategorySort from './category_sort'
@@ -143,5 +144,6 @@ export {
 
   ProductGroups,
   CreateProductGroup,
-  EditProductGroup
+  EditProductGroup,
+  ProductGroupSort
 }
