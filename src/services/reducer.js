@@ -22,7 +22,8 @@ import {
   Queries,
   Coupons,
   Feedbacks,
-  Reports
+  Reports,
+  ProductGroups
 } from 'screens'
 
 
@@ -36,6 +37,7 @@ const reducer = combineReducers({
   coupons: Coupons.reducer,
   dashboard: Dashboard.reducer,
   product: Product.reducer,
+  product_group: ProductGroups.reducer,
   category: Categories.reducer,
   feedbacks: Feedbacks.reducer,
   report: Reports.reducer,
