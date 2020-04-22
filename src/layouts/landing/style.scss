@@ -62,7 +62,29 @@
       color: #898989 !important;
     }
   
-    background-color: #f8f8f8;
+    .navbar-brand {
+      margin-left: 0 !important;
+
+      .logo {
+        width: 117px !important;
+        // height: 48px;
+
+        @media (max-width: 768px){ 
+          & {
+            width: 100px !important;
+          }
+        }
+
+        @media (max-width: 420px){ 
+          & {
+            width: 80px !important;
+          }
+        }
+      }
+      
+    }
+    
+
     header {
       // position: fixed;
       position: relative;
@@ -73,20 +95,11 @@
       // border-bottom: 1px solid grey;
     }
 
-
-    .navbar-brand {
-      margin-left: 0 !important;
-    }
     .navbar {
       background-color: transparent !important;
       max-width: 1330px;
       margin: 0 auto;
-  
-      .logo {
-        width: 117px !important;
-        // height: 48px;
-      }
-  
+
       .nav-item a{
         margin: 0 15px;
         color: white !important;

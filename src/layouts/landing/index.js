@@ -108,8 +108,8 @@ class LandingLayout extends React.Component {
                         <NavbarBrand href="/">
                             <img className="logo" src={sellix_logo}/>
                         </NavbarBrand>
-                        <NavbarToggler onClick={this.toggle.bind(this)} />
-                        <Collapse className="mr-5" isOpen={isOpen} navbar>
+                        
+                        <Collapse className="mr-3" isOpen={isOpen} navbar>
                             <Nav className="ml-auto" navbar>
                             <NavItem className="active">
                                 <NavLink href="/">Home</NavLink>
@@ -123,49 +123,46 @@ class LandingLayout extends React.Component {
                             <NavItem>
                                 <NavLink href="/"></NavLink>
                             </NavItem>
-                            <NavItem className="d-xl-none">
-                                <NavLink href="/auth/login">Log In</NavLink>
-                            </NavItem>
-                            <NavItem className="d-xl-none">
-                                <NavLink href="/auth/register">Sign Up</NavLink>
-                            </NavItem>
+                            
                             </Nav>
                         </Collapse>
-                        <div className="d-lg-down-none">
-                            { user?
-                                    <Link to={dashboardUrl} className="text-white">
-                                        <Button className="mr-3 landing-primary-button text-white menu" >Dashboard</Button>
-                                    </Link>
-                                :
-                                <>
-                                    <Link to="/auth/login">
-                                        <Button className="landing-secondary-button menu mr-2" >Log In</Button>
-                                    </Link>
-                                    <Link to="/auth/register">
-                                        <Button className="landing-primary-button menu">Sign Up</Button>
-                                    </Link>
-                                </>
+                        
+                        
+                        <div>
+                          { user?
+                                  <Link to={dashboardUrl} className="text-white">
+                                      <Button className="mr-3 landing-primary-button text-white menu" >Dashboard</Button>
+                                  </Link>
+                              :
+                              <>
+                                  <Link to="/auth/login">
+                                      <Button className="landing-secondary-button menu mr-2" >Log In</Button>
+                                  </Link>
+                                  <Link to="/auth/register">
+                                      <Button className="landing-primary-button menu">Sign Up</Button>
+                                  </Link>
+                              </>
                             }
                         </div>
                         </Navbar>
                     </header>
 
                 <Router>
-                            <Switch>
-                            {
-                                landingRoutes.map((prop, key) => {
-                                if (prop.redirect)
-                                    return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                                return (
-                                    <Route
-                                      path={prop.path}
-                                      component={prop.component}
-                                      key={key}
-                                    />
-                                )
-                                })
-                            }
-                            </Switch>
+                  <Switch>
+                  {
+                      landingRoutes.map((prop, key) => {
+                      if (prop.redirect)
+                          return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                      return (
+                          <Route
+                            path={prop.path}
+                            component={prop.component}
+                            key={key}
+                          />
+                      )
+                      })
+                  }
+                  </Switch>
                 </Router>
 
                 <footer>
@@ -175,7 +172,7 @@ class LandingLayout extends React.Component {
                         <div className="d-flex justify-content-between text-left flex-wrap">
                         <div className="mb-3">
                             <NavbarBrand className="p-0" href="/">
-                            <img src={sellix_logo_footer} width="137" height="60"/>
+                            <img  className="logo" src={sellix_logo_footer} width="137"/>
                             </NavbarBrand>
                             <p className="mt-2">Copyright © 2020, Sellix.io.</p>
                         </div>
