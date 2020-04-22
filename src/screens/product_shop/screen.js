@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Card, CardHeader, Button, Row, Col, Input, CardBody} from 'reactstrap'
 import { CommonActions } from 'services/global'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter, matchPath } from 'react-router-dom'
 import { Loader } from 'components'
 import { debounce } from 'lodash'
 
@@ -27,12 +27,15 @@ class ShopProducts extends React.Component {
   constructor(props) {
     super(props);
 
+
+    const match = matchPath(props.location.pathname, { path: '/:username/category/:id' })
+
     this.state = {
       loading: false,
       search_key: null,
       products: [],
       categories: [],
-      filter: props.match.params.id || 'all'
+      filter: match ? match.params.id : 'all'
     }
   }
 
@@ -77,7 +80,7 @@ class ShopProducts extends React.Component {
   searchProducts = () => {    
     const { search_key, filter, products, categories } = this.state;
 
-    let category = filter !== 'all' ? categories.find(({ uniqid }) => uniqid === filter ).products_bound : products;
+    let category = filter !== 'all' && categories.length ? categories.find(({ uniqid }) => uniqid === filter ).products_bound : products;
     let productsByCategory = products.filter(({ uniqid: id }) => category.find(({ uniqid }) => uniqid === id))
 
     return search_key ?
@@ -92,7 +95,7 @@ class ShopProducts extends React.Component {
     const { loading, filter, categories, products } = this.state;
     const { shop_search_enabled } = this.props;
 
-    let searchProducts = products.length > 0?this.searchProducts(products):[];
+    let searchProducts = this.searchProducts(products);
 
     return (
       <div className="shop-product-screen">
@@ -149,4 +152,4 @@ class ShopProducts extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopProducts)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShopProducts))
