@@ -18,7 +18,7 @@ export const mainNavigation =  {
         },
         // {
         //   name: 'Product Groups',
-        //   url: `/dashboard/${user}/product-groups/all`
+        //   url: `/dashboard/${user}/groups/all`
         // },
         {
           name: 'Categories',

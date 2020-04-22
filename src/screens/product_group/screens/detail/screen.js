@@ -252,7 +252,7 @@ class EditProductGroup extends React.Component {
 
 		this.props.actions.editProductGroup(values).then(res => {
 
-			this.props.history.push(`/dashboard/${user}/product-groups/all`)
+			this.props.history.push(`/dashboard/${user}/groups/all`)
 			this.props.commonActions.tostifyAlert('success', res.message)
 
 		}).catch(err => {
@@ -292,7 +292,10 @@ class EditProductGroup extends React.Component {
         let group = res.data.group
 
         this.setState({
-		  initialValues: group,
+		  initialValues: {
+			  ...group,
+			  products_bound: group.products_bound.map(x => x.uniqid).join(',')
+		  },
           images: group.image_attachment?
 			[{preview: config.API_ROOT_URL+'/attachments/image/'+group.image_attachment}]:[],
 		  multiValue: group.products_bound.map(pro => {return {value: pro.uniqid, label:pro.title}})

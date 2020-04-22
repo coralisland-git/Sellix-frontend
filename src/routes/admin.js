@@ -94,19 +94,19 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/product-groups/all/new`,
+    path: `/dashboard/${user}/groups/all/new`,
     name: 'Product Group New',
     exact: true,
     component: CreateProductGroup.screen
   },
   {
-    path: `/dashboard/${user}/product-groups/all/edit/:id`,
+    path: `/dashboard/${user}/groups/all/edit/:id`,
     name: 'Product Group Edit',
     exact: true,
     component: EditProductGroup.screen
   },
   {
-    path: `/dashboard/${user}/product-groups/all`,
+    path: `/dashboard/${user}/groups/all`,
     name: 'Product Groups',
     exact: true,
     component: ProductGroups.screen
