@@ -8,7 +8,8 @@ import {
   InvoiceLayout,
   EmbedInvoiceLayout,
   ProductLayout,
-  LandingLayout
+  LandingLayout,
+  DocumentationLayout
 } from 'layouts'
 
 const user = window.localStorage.getItem('userId')
@@ -44,10 +45,14 @@ const mainRoutes = [
   { path: '/changelog', name: 'LandingLayout', component: LandingLayout },
 
   // Shop
+  { path: `/documentation`,  name: 'DocumentationLayout', component: DocumentationLayout },
+
   { path: `/:username`, name: 'ShopLayout', component: ShopLayout },
 
   // Landing
   { path: '/', name: 'LandingLayout', component: LandingLayout },
+
+
 
 ]
 

@@ -7,6 +7,7 @@ import settingsRoutes from './settings'
 import landingRoutes from './landing'
 import productRoutes from './product'
 import invoiceRoutes from './invoice'
+import documentationRoutes from './documentation'
 
 export {
   mainRoutes,
@@ -17,5 +18,6 @@ export {
   settingsRoutes,
   landingRoutes,
   invoiceRoutes,
-  productRoutes
+  productRoutes,
+  documentationRoutes
 }

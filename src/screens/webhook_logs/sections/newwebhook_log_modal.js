@@ -87,7 +87,7 @@ class NewWebhookLogModal extends React.Component {
             }}
             validationSchema={Yup.object().shape({
                 url: Yup.string().required('URL is required'),
-                event: Yup.string().required('Event is required')                
+                event: Yup.string().required('Event is required')
             })}>
             {props => (
               <Form name="simpleForm" onSubmit={props.handleSubmit}>                
@@ -125,11 +125,9 @@ class NewWebhookLogModal extends React.Component {
                           placeholder="Select events" 
                           options={event_options}
                           searchable={false}
+                          value={props.values.event}
                           onChange={(option) => {
-                            var evts = chosenEvents
-                            evts.push(option.value);
-                            updateEvents(evts);
-                            props.handleChange("event")(chosenEvents.join(','));
+                            props.handleChange("event")(option.value);
                           }}
                           className={
                             props.errors.event && props.touched.event
@@ -140,33 +138,6 @@ class NewWebhookLogModal extends React.Component {
                         {props.errors.event && props.touched.event && (
                           <div className="invalid-feedback">{props.errors.event}</div>
                         )}
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <Label htmlFor="event">{chosenEvents.length} events</Label>
-                        <ul className="chosen-events">
-                          { chosenEvents.map((event, index) => {
-                            return(
-                              <li key={index} className="d-flex pt-1 pb-1">
-                                <span className="mr-2">{event}</span>
-                                <i className="fa fa-times cursor-pointer" 
-                                  onClick={ () => {
-                                    var evts = chosenEvents.filter(et => {
-                                      if (et == event)
-                                        return false
-                                      return true
-                                    });
-                                    updateEvents(evts);
-                                    props.handleChange("event")(evts.join(','));
-                                  }}>
-                                </i>
-                              </li>
-                            )
-                          })}
-                        </ul>
                       </FormGroup>
                     </Col>
                   </Row>
