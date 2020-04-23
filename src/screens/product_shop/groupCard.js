@@ -17,9 +17,9 @@ const GroupCard = ({ group, preventDefault, history }) => {
             <div className="p-3 d-flex flex-column h-100">
                 <h5 className="mb-1 text-black">{title}</h5>
                 <div className="d-flex justify-content-between mt-1">
-                    <span className="price">Starting at: {config.CURRENCY_LIST[productWithMinPrice.currency]}{productWithMinPrice.price_display}</span>
+                    <span className="stock">Starting at: {config.CURRENCY_LIST[productWithMinPrice.currency]}{productWithMinPrice.price_display}</span>
                     <span className="stock">
-                        Count: {products_bound.length}
+                        Count: <span className="stock-size">{products_bound.length}</span>
                     </span>
                 </div>
             </div> 
