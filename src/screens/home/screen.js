@@ -38,10 +38,11 @@ import Reliable_Payment from 'assets/images/home/Reliable_Payment.svg'
 class Home extends React.Component {
   
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isOpen: false
     }
+    document.title = `Sellix - Home`;
   }
 
   toggle() {

@@ -74,14 +74,8 @@ class EmbedLayout extends React.Component {
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
   }
 
-  changeTheme() {
-    const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
-
-    this.setState({theme: theme == 'light'? 'dark': 'light'})
-  }
-
   render() {
+
     const containerStyle = {
       zIndex: 1999
     }
@@ -90,8 +84,6 @@ class EmbedLayout extends React.Component {
       require('./extra.scss')
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'    
-    
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />

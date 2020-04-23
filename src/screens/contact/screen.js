@@ -44,6 +44,16 @@ class Contact extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    let { user } = this.props;
+    if(prevProps.user !== user) {
+      document.title = `${user.username} Sellix - Contact`;
+    }
+  }
+
+  componentDidMount() {
+    document.title = `${this.props.user ? this.props.user.username : ''} Sellix - Contact`;
+  }
 
   handleSubmit(values) {
     this.setState({ loading: true })

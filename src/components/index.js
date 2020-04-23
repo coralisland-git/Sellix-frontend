@@ -15,6 +15,7 @@ import DataSlider from './slider'
 import LeaveFeedbackModal from './feedback_leave_modal'
 import Affix from './affix'
 import NotFound from './404'
+import SetTitle from './set_title'
 
 export {
   Loading,
@@ -33,5 +34,6 @@ export {
   FaviconUploader,
   LeaveFeedbackModal,
   Affix,
-  NotFound
+  NotFound,
+  SetTitle
 }

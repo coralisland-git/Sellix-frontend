@@ -18,11 +18,14 @@ import sellix_logo from "assets/images/Sellix_logo.svg";
 import "./style.scss";
 
 class Terms extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
     };
+
+    document.title = `Sellix - Terms`;
   }
 
   toggle() {

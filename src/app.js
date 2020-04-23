@@ -7,6 +7,9 @@ import { Router, Route, Switch } from 'react-router-dom'
 import { mainRoutes } from 'routes'
 import { configureStore } from 'services'
 import { Loading, NotFound } from 'components'
+
+import { Helmet } from "react-helmet";
+
 import 'app.scss'
 import SingleLogo from './assets/images/single.png'
 
@@ -29,20 +32,14 @@ export default class App extends React.Component {
   render () {
     
     return (
+
       <Provider store={store}>
         <Router history={history}>
           <React.Suspense fallback={Loading()}>
-            
             <Switch>
-              
-              {
-                mainRoutes.map((prop, key) => {
-                  return <Route path={prop.path} key={key} component={prop.component} exact={prop.exact}/>
-                })
-              }   
+              {mainRoutes.map((props, key) => <Route key={key} {...props} />)}
               <Route component={NotFound} />
             </Switch>
-            
           </React.Suspense>
         </Router>
       </Provider>

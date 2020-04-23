@@ -13,8 +13,9 @@ import Form from "./form";
 import './style.scss';
 
 
-const mapStateToProps = ({ common: { user_products } }) => ({
-  user_products
+const mapStateToProps = ({ common: { user_products, general_info: user } }) => ({
+  user_products,
+  user,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -100,6 +101,7 @@ class ShopProductDetail extends React.Component {
         this.setState({
           productInfo: {...res.data.product, paymentOptions: (res.data.product.gateways || '').split(',').filter(opt => opt !== '')},
         })
+        document.title = `Sellix - Product: ${res.data.product.title}`;
       } else {
         throw res
       }

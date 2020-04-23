@@ -13,8 +13,9 @@ import './style.scss'
 const ProductList = React.lazy(() => import('./productList'))
 
 
-const mapStateToProps = ({ common }) => ({
-  shop_search_enabled: Number(common.general_info.shop_search_enabled)
+const mapStateToProps = ({ common: { general_info } }) => ({
+  shop_search_enabled: Number(general_info.shop_search_enabled),
+  user: general_info,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -39,7 +40,15 @@ class ShopProducts extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    let { user } = this.props;
+    if(prevProps.user !== user) {
+      document.title = `${user.username} Sellix - Products`;
+    }
+  }
+
   componentDidMount () {
+    document.title = `${this.props.user ? this.props.user.username : ''} Sellix - Products`;
     this.initializeData()
   }
 

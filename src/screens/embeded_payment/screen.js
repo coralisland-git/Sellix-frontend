@@ -323,7 +323,8 @@ class EmbededPayment extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({loading: true})
+    this.setState({loading: true});
+    document.title = "Selix - Payment"
     var params = {};
     var vars = this.props.location.search.substr(1).split('&');
     for (var i = 0; i < vars.length; i++) {
