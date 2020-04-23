@@ -133,7 +133,7 @@ class NewWebhookModal extends React.Component {
                   <Row>
                     <Col>
                       <FormGroup>
-                        <Label htmlFor="event">Event</Label>
+                        <Label htmlFor="event">Events</Label>
                         <Select 
                           id="event"
                           placeholder="Select events" 
