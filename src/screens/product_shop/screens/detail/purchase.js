@@ -103,7 +103,7 @@ class Purchase extends React.Component {
 		this.setState({
 			coupon_code
 		}, () => {
-			this.props.setCoupon(this.state.coupon_code)
+			// this.props.setCoupon(this.state.coupon_code)
 		})
 	}
 
@@ -168,13 +168,14 @@ class Purchase extends React.Component {
 
 		api(data).then(res => {
 			console.log(res)
-			if(res.status == 200)
+			if(res.status == 200) {
+				this.props.setCoupon(coupon_code)
 				return this.setState({
 					appliedCoupon: res.data.coupon,
 					couponSuccess: true,
 					couponLoading: false
 				})
-			else if(res.status == 400)
+			} else if(res.status == 400)
 				return this.setState({
 					couponError: true,
 					couponLoading: false
