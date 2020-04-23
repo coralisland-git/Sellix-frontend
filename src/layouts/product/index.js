@@ -39,9 +39,13 @@ const mapDispatchToProps = (dispatch) => {
 class ProductLayout extends React.Component {
 
   componentDidMount () {
-      this.props.authActions.getSelfUser().catch(err => {
-        this.props.authActions.logOut()
-      })
+
+      document.title = `${this.props.user ? this.props.user.username ? this.props.user.username : '' : ''} Sellix - Products`;
+
+      this.props.authActions.getSelfUser()
+          .catch(err => {
+            this.props.authActions.logOut()
+          })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'

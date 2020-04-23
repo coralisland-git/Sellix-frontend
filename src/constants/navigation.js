@@ -17,7 +17,7 @@ export const mainNavigation =  {
           url: `/dashboard/${user}/products/all`
         },
         {
-          name: 'Product Groups',
+          name: 'Groups',
           url: `/dashboard/${user}/groups/all`
         },
         {
@@ -33,7 +33,7 @@ export const mainNavigation =  {
           url: `/dashboard/${user}/products/categories/sort`,
         },
         {
-          name: 'Groups Sort',
+          name: 'Sort Groups',
           url: `/dashboard/${user}/groups/sort`
         },
       ]

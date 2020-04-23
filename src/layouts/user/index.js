@@ -30,7 +30,8 @@ import {
   Aside,
   Header,
   Footer,
-  Loading
+  Loading,
+  SetTitle
 } from 'components'
 
 import './style.scss'
@@ -147,16 +148,14 @@ class AdminLayout extends React.Component {
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
                     <Switch>
                       {
-                        adminRoutes.map((prop, key) => {
-                          if (prop.redirect)
-                            return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                          return (
-                            <Route
-                              path={prop.path}
-                              component={prop.component}
-                              key={key}
-                            />
-                          )
+                        adminRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) => {
+                          if (redirect) {
+                            return <Redirect from={path} to={pathTo} key={key} />
+                          } else {
+                            return (
+                                <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key}/>
+                            )
+                          }
                         })
                       }
                     </Switch>

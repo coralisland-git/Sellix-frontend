@@ -250,7 +250,7 @@ class ProductGroups extends React.Component {
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
                 <Col md={4}>
-                  <h1>Product Groups</h1>
+                  <h1>Groups</h1>
                 </Col>
                 <Col md={8}>
                   <div className="d-flex justify-content-end">

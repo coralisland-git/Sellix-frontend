@@ -8,6 +8,7 @@ import EmbedInvoiceLayout from './embed_invoice'
 import ProductLayout from './product'
 import SettingsLayout from './settings'
 import LandingLayout from './landing'
+import DocumentationLayout from './documentation'
 
 export {
   AuthLayout,
@@ -19,5 +20,6 @@ export {
   InvoiceLayout,
   ProductLayout,
   EmbedLayout,
-  EmbedInvoiceLayout
+  EmbedInvoiceLayout,
+  DocumentationLayout
 }

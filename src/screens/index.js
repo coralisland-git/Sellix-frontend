@@ -68,6 +68,7 @@ import Customization from './customization'
 import EmbededPayment from './embeded_payment'
 import EmbededInvoice from './embeded_invoice'
 
+import Documentation from './documentation/screen.js'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
 import "react-toastify/dist/ReactToastify.css"
@@ -145,5 +146,7 @@ export {
   ProductGroups,
   CreateProductGroup,
   EditProductGroup,
-  ProductGroupSort
+  ProductGroupSort,
+
+  Documentation
 }
