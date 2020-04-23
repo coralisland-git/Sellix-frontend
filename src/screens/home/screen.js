@@ -28,7 +28,7 @@ import {
 import service1 from 'assets/images/home/service1.svg'
 import service2 from 'assets/images/home/service2.svg'
 import service3 from 'assets/images/home/service3.svg'
-import background1 from 'assets/images/home/BG@2x.png'
+import background1 from 'assets/images/home/only_hero_bg.svg'
 import background2 from 'assets/images/home/Bg2@2x.png'
 
 import bottom_isometric from 'assets/images/home/Bottom_Isometric.svg'
@@ -59,9 +59,9 @@ class Home extends React.Component {
           <Container className="home-container p-0" fluid>
             <Row className="flex-row">
               <Col md={7} className="mb-3" style={{paddingTop: '10%'}}>
-                <h1 className="text-white">Sell Digital Goods Online</h1>
+                <h1 className="text-white">Digital Selling With Ease</h1>
                 <p className="large pr-3 text-white col-lg-8 p-0">
-                E-commerce is easy with Sellix. Create your own online store with a couple of clicks.
+                You provide the products on Sellix, we take care of the rest. Day and night.
                 </p>
                 <Button className="landing-primary-button f-20 f-b"><NavLink className="p-0 text-white" href="/auth/register">Get Started for Free</NavLink></Button>
               </Col>
@@ -138,7 +138,7 @@ class Home extends React.Component {
                 </Col>
                 <Col md={5}>
                   <div className="float-left pb-3" style={{maxWidth: 447}}>
-                    <h2 className="text-pink">Cheap Payment Fees</h2>
+                    <h1 className="text-pink">Cheap Payment Fees</h1>
                     <p className="text-pink f-20 col-11 p-0">
                     We provide very low fees for each transaction. With our unique payment processing method, we keep transaction fees at the lowest amount. Find out more about our fees.
                     </p>
