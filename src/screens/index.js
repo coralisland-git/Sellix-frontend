@@ -45,6 +45,7 @@ import ShopFeedback from './feedbacks_shop'
 import LeaveFeedback from './feedbacks_shop/screens/create'
 import ShopProducts from './product_shop'
 import ShopProductDetail from './product_shop/screens/detail'
+import ShopGroupDetail from './product_shop/screens/group_detail'
 import BlackList from './blacklist'
 import CreateBlacklist from './blacklist/screens/create'
 import EditBlacklist from './blacklist/screens/create'
@@ -126,6 +127,7 @@ export {
   LeaveFeedback,
   ShopProducts,
   ShopProductDetail,
+  ShopGroupDetail,
   PaypalPaying,
   BlackList,
   CreateBlacklist,

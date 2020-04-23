@@ -1,6 +1,7 @@
 import React from 'react';
 import FlipMove from 'react-flip-move';
 import ProductCard from './productCard';
+import GroupCard from './groupCard';
 import { Loader } from 'components';
 
 import './style.scss'
@@ -8,7 +9,7 @@ import './style.scss'
 
 
 
-const ProductsList = ({ products, loading, history }) => {
+const ProductsList = ({ products, groups, loading, history }) => {
 
 	if(loading) {
 		return  <Loader />
@@ -22,6 +23,11 @@ const ProductsList = ({ products, loading, history }) => {
 			{products.map(product =>
 				<div key={product.uniqid} className="mb-4 col-md-3">
 					<ProductCard product={product} history={history}/>
+				</div>
+			)}
+			{groups.map(group =>
+				<div key={group.uniqid} className="mb-4 col-md-3">
+					<GroupCard group={group} history={history}/>
 				</div>
 			)}
 		</FlipMove>

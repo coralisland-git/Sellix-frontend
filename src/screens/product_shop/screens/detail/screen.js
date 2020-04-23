@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { converter } from 'constants/config'
-import { Card, Row, Col } from 'reactstrap'
+import { Card, Row, Col, Input } from 'reactstrap'
 import { CommonActions } from 'services/global'
 import { Loader, Affix } from 'components'
 import StockInfo from "./stock_info";
@@ -91,28 +91,47 @@ class ShopProductDetail extends React.Component {
     })
   }
 
+  updateGroupProduct = () => {
+    if(this.props.group) {
+      this.setState({
+        productInfo: {...this.props.selectedProduct, paymentOptions: (this.props.selectedProduct.gateways || '').split(',').filter(opt => opt !== '')},
+      })
+    }
+  }
+
   componentDidMount() {
+    if(this.props.group) {
+      this.updateGroupProduct()
+    } else {
+      const { tostifyAlert, getUserProductById } = this.props.commonActions;
+      this.setState({ loading: true })
 
-    const { tostifyAlert, getUserProductById } = this.props.commonActions;
-    this.setState({ loading: true })
+      getUserProductById(this.props.match.params.id).then(res => {
+        if(res.status === 200) {
+          this.setState({
+            productInfo: {...res.data.product, paymentOptions: (res.data.product.gateways || '').split(',').filter(opt => opt !== '')},
+          })
+          document.title = `${res.data.product.title} | Sellix`;
+        } else {
+          throw res
+        }
+      }).catch((err) => {
+        tostifyAlert('error', err.error)
+      }).finally(() => {
+        this.setState({loading: false})
+      })
+    }
+  }
 
-    getUserProductById(this.props.match.params.id).then(res => {
-      if(res.status === 200) {
-        this.setState({
-          productInfo: {...res.data.product, paymentOptions: (res.data.product.gateways || '').split(',').filter(opt => opt !== '')},
-        })
-        document.title = `${res.data.product.title} | Sellix`;
-      } else {
-        throw res
-      }
-    }).catch((err) => {
-      tostifyAlert('error', err.error)
-    }).finally(() => {
-      this.setState({loading: false})
-    })
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.group && this.props.selectedProduct.uniqid !== prevProps.selectedProduct.uniqid) {
+      this.updateGroupProduct()
+    }
   }
 
   render() {
+    const { group } = this.props;
+
     const {
       gateway,
       sending,
@@ -145,6 +164,23 @@ class ShopProductDetail extends React.Component {
                     <div className="d-sm-down-none" >
                       <Affix offsetTop={97} container='affix-bar' >
                         <Card className="bg-white" id={'affix-container'}>
+                          {
+                            group && <div className="p-3 pt-2 pb-2">
+                              <h4>Select an option</h4>
+                              <Input type="select" name="select" id="exampleSelect" 
+                                     value={this.props.selectedProduct.uniqid}
+                                     onChange={e => {
+                                       const uniqid = e.target.value
+                                       const product = group.products_bound.find(p => p.uniqid === uniqid)
+                                       this.props.handleProductChange(product)
+                                     }}
+                                     >
+                                {group.products_bound.map(product => 
+                                  <option key={product.uniqid} value={product.uniqid}>{product.title}</option>
+                                )}
+                              </Input>
+                            </div>
+                          }
                           {
                             gateway ?
                               <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
