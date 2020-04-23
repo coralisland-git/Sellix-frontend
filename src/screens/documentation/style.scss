@@ -28,6 +28,14 @@
         padding: .7rem 0;
         cursor: pointer;
       }
+
+      a {
+        color: inherit;        
+      }
+
+      .active {
+        color: #613BEA !important;
+      }
     }
 
     .action-list {
@@ -35,6 +43,10 @@
       list-style: none;
       padding-left: 30px;      
 
+      a {
+        color: inherit;        
+      }
+      
       li {
         padding: .7rem 0;
         cursor: pointer;
@@ -49,17 +61,52 @@
   .code-block {
     background-color: #ddd;
     border-radius: 10px;
-    font-weight: 600;    
+    font-weight: 600;
+    margin: 2rem auto 5rem auto;
 
     .code-block-header {
       padding: 20px;
     }
     .code-block-body {
       padding: 30px 20px;
+      line-height: 1.4rem;
       background-color: #E9E9E9;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
     }
+  }
+
+  td {
+    border: none !important;
+    line-height: 1.4rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    p {
+      line-height: 1.4rem;
+    }
+
+  } 
+
+  td:nth-child(even) {
+    display: flex;
+  }
+
+  .param {
+    color: #613BEA;
+  }
+
+  .badge-mark {
+    line-height: 1.2rem;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 13px !important;
+    font-weight: normal;    
+    padding: 6px 10px;
+    margin: 2px;
+    vertical-align: middle;
+    background-color: #E4D6FF;
+    color: #613BEA;
   }
 
 }
