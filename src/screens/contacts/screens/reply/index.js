@@ -57,12 +57,12 @@ class ReplyToQuerie extends React.Component {
   componentDidUpdate(prevProps) {
     let { user } = this.props;
     if(user || prevProps.user !== user) {
-      document.title = `${user.username} Sellix - Contact`;
+      document.title = `Contacts | Sellix`;
     }
   }
 
   componentDidMount() {
-    // this.props.actions.getFeedbacks()
+    document.title = `Contacts | Sellix`;
     this.props.actions.getQuerie(this.props.match.params.id)
   }
 

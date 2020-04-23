@@ -25,7 +25,7 @@ class Terms extends React.Component {
       isOpen: false,
     };
 
-    document.title = `Sellix - Terms`;
+    document.title = `Terms | Sellix`;
   }
 
   toggle() {

@@ -101,7 +101,7 @@ class ShopProductDetail extends React.Component {
         this.setState({
           productInfo: {...res.data.product, paymentOptions: (res.data.product.gateways || '').split(',').filter(opt => opt !== '')},
         })
-        document.title = `Sellix - Product: ${res.data.product.title}`;
+        document.title = `${res.data.product.title} | Sellix`;
       } else {
         throw res
       }

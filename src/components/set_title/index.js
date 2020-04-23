@@ -11,13 +11,13 @@ class SetTitle extends Component {
 		const { notifications, title } = this.props;
 
 		if (prevProps.notifications !== notifications) {
-			document.title = notifications ? `(${notifications}) Sellix - ${title}` : `Sellix - ${title}`;
+			document.title = notifications ? `(${notifications}) ${title} | Sellix` : `${title} | Sellix`;
 		}
 	}
 
 	componentDidMount() {
 	    const { notifications, title} = this.props;
-		document.title = notifications ? `(${notifications}) Sellix - ${title}` : `Sellix - ${title}`;
+		document.title = notifications ? `(${notifications}) ${title} | Sellix` : `${title} | Sellix`;
 	}
 
 	render() {

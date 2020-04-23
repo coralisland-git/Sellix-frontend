@@ -47,12 +47,12 @@ class Contact extends React.Component {
   componentDidUpdate(prevProps) {
     let { user } = this.props;
     if(prevProps.user !== user) {
-      document.title = `${user.username} Sellix - Contact`;
+      document.title = `Contact | Sellix`;
     }
   }
 
   componentDidMount() {
-    document.title = `${this.props.user ? this.props.user.username : ''} Sellix - Contact`;
+    document.title = `Contact | Sellix`;
   }
 
   handleSubmit(values) {

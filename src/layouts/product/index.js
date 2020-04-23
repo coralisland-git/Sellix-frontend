@@ -40,7 +40,7 @@ class ProductLayout extends React.Component {
 
   componentDidMount () {
 
-      document.title = `${this.props.user ? this.props.user.username ? this.props.user.username : '' : ''} Sellix - Products`;
+      document.title = `Products | Sellix`;
 
       this.props.authActions.getSelfUser()
           .catch(err => {
