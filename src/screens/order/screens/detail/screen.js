@@ -419,7 +419,7 @@ class OrderDetail extends React.Component {
                               {
                                 (order.serials && order.serials.length == 0)?
                                   <label>No product has been delivered</label>:
-                                  (order.serials || []).map(ser => <p>{ser}</p>)
+                                  (order.serials || []).map(serial => <p key={serial}>{serial}</p>)
                               }
                               
                             </Col>

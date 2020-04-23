@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react'
+import * as router from 'react-router-dom';
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -6,17 +7,16 @@ import { bindActionCreators } from 'redux'
 import { Container, Collapse, NavbarToggler, Navbar } from 'reactstrap'
 import {
   AppAside,
-  AppBreadcrumb,
   AppHeader,
   AppSidebar,
   AppSidebarNav,
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
-import { ThemeProvider, createGlobalStyle } from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
-import { settingsRoutes } from 'routes'
+import {adminRoutes, settingsRoutes} from 'routes'
 import {
   AuthActions,
   CommonActions
@@ -31,8 +31,7 @@ import {
 import {
   Aside,
   Header,
-  Footer,
-  Loading
+  Loading, SetTitle
 } from 'components'
 
 import './style.scss'
@@ -109,7 +108,7 @@ class SettingsLayout extends React.Component {
     document.documentElement.classList.remove('dark')
     document.documentElement.classList.add(theme === 'light' ? 'dark': 'light');
 
-    this.setState({ theme: theme == 'light' ? 'dark' : 'light' })
+    this.setState({ theme: theme === 'light' ? 'dark' : 'light' })
   }
 
   toggle() {
@@ -120,13 +119,12 @@ class SettingsLayout extends React.Component {
     const containerStyle = {
       zIndex: 1999
     }
-    let isSettings = this.props.location.pathname.includes('/admin/settings') ? true : false
 
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
     const { isOpen } = this.state
 
     return (
-      <ThemeProvider theme={theme == 'light' ? lightTheme : darkTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <GlobalStyles />
         <div className="admin-container">
           <div className="app">
@@ -137,8 +135,8 @@ class SettingsLayout extends React.Component {
             </AppHeader>
             <div className="app-body">
               <AppSidebar fixed className="pt-4 mb-5" display="lg">
-                <Suspense>
-                  <AppSidebarNav navConfig={mainNavigation} {...this.props} />
+                <Suspense fallback={Loading()}>
+                  <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router} />
                 </Suspense>
               </AppSidebar>
 
@@ -152,14 +150,11 @@ class SettingsLayout extends React.Component {
                       <NavbarToggler onClick={this.toggle.bind(this)} />
                       <Collapse className="mr-5" isOpen={isOpen} navbar>
                         <div className="pt-3">
-                          <Suspense>
+                          <Suspense fallback={Loading()}>
                             <h4 style={{ color: 'black', fontSize: '16px' }}>
                               Account
                                             </h4>
-                            <AppSidebarNav
-                              navConfig={accountSettingsNavigation}
-                              {...this.props}
-                            />
+                            <AppSidebarNav navConfig={accountSettingsNavigation} location={this.props.location} router={router} />
                           </Suspense>
                         </div>
                       </Collapse>
@@ -170,14 +165,9 @@ class SettingsLayout extends React.Component {
                       <NavbarToggler onClick={this.toggle.bind(this)} />
                       <Collapse className="mr-5" isOpen={isOpen} navbar>
                         <div className="pt-3">
-                          <Suspense>
-                            <h4 style={{ color: 'black', fontSize: '16px' }}>
-                              Shop
-                                            </h4>
-                            <AppSidebarNav
-                              navConfig={shopSettingsNavigation}
-                              {...this.props}
-                            />
+                          <Suspense fallback={Loading()}>
+                            <h4 style={{ color: 'black', fontSize: '16px' }}>Shop</h4>
+                            <AppSidebarNav navConfig={shopSettingsNavigation} location={this.props.location} router={router} />
                           </Suspense>
                         </div>
                       </Collapse>
@@ -190,16 +180,14 @@ class SettingsLayout extends React.Component {
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                     <Switch>
                       {
-                        settingsRoutes.map((prop, key) => {
-                          if (prop.redirect)
-                            return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                          return (
-                            <Route
-                              path={prop.path}
-                              component={prop.component}
-                              key={key}
-                            />
-                          )
+                        settingsRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) => {
+                          if (redirect) {
+                            return <Redirect from={path} to={pathTo} key={key} />
+                          } else {
+                            return (
+                                <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key}/>
+                            )
+                          }
                         })
                       }
                     </Switch>

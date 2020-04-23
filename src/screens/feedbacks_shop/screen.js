@@ -22,7 +22,8 @@ import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
 const mapStateToProps = (state) => {
   return ({
-    user_feedback: state.common.user_feedback
+    user_feedback: state.common.user_feedback,
+    user: state.common.general_info,
   })
 }
 
@@ -33,20 +34,27 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class ShopFeedback extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
       loading: true,
     }
+  }
 
-    this.initializeData = this.initializeData.bind(this)
+  componentDidUpdate(prevProps) {
+    let { user } = this.props;
+    if(prevProps.user !== user) {
+      document.title = `${user.username} Sellix - Contact`;
+    }
   }
 
   componentDidMount () {
+    document.title = `${this.props.user ? this.props.user.username : ''} Sellix - Feedback`;
     this.initializeData()
   }
 
-  initializeData () {
+  initializeData = () => {
     this.props.commonActions.getUserFeedbacks(this.props.match.params.username).then(res => {
       if (res.status === 200) {
         this.setState({ 

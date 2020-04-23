@@ -1,30 +1,16 @@
-import React, { Suspense, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
 import {
-  Button,
   Col,
   Container,
-  Row,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink
+  Row
 } from 'reactstrap'
 
 import './style.scss'
 
-
-import top1 from 'assets/images/home/top1.svg'
 import service1 from 'assets/images/crypto/b_paypal.jpg'
 import service2 from 'assets/images/crypto/b_btc.jpg'
 import service3 from 'assets/images/crypto/b_ltc.jpg'
 import service4 from 'assets/images/crypto/b_skrill.jpg'
-import undraw from 'assets/images/home/undraw.svg'
-import undraw1 from 'assets/images/home/undraw2.svg'
-import sellix_logo from 'assets/images/Sellix_logo.svg'
 
 import * as feeAction from './actions'
 
@@ -51,6 +37,8 @@ class Fees extends React.Component {
   }
 
   componentDidMount() {
+    document.title = `Sellix - Fees`;
+
     feeAction.getFees().then(res => {
       const data = res.data.fees
       console.log(data)
