@@ -119,10 +119,10 @@ class NewWebhookLogModal extends React.Component {
                   <Row>
                     <Col>
                       <FormGroup>
-                        <Label htmlFor="event">Events</Label>
+                        <Label htmlFor="event">Event</Label>
                         <Select 
                           id="event"
-                          placeholder="Select events" 
+                          placeholder="Select event" 
                           options={event_options}
                           searchable={false}
                           value={props.values.event}
