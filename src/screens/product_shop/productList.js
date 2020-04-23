@@ -20,14 +20,14 @@ const ProductsList = ({ products, groups, loading, history }) => {
 
 	return (
 		<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} duration={300}>
-			{products.map(product =>
-				<div key={product.uniqid} className="mb-4 col-md-3">
-					<ProductCard product={product} history={history}/>
-				</div>
-			)}
 			{groups.map(group =>
 				<div key={group.uniqid} className="mb-4 col-md-3">
 					<GroupCard group={group} history={history}/>
+				</div>
+			)}
+			{products.map(product =>
+				<div key={product.uniqid} className="mb-4 col-md-3">
+					<ProductCard product={product} history={history}/>
 				</div>
 			)}
 		</FlipMove>
