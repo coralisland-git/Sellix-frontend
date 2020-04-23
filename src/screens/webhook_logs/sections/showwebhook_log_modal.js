@@ -96,8 +96,8 @@ class ShowWebhookLogModal extends React.Component {
               </Col>
               <Col lg={4}>
                 <FormGroup>
-                  <Label htmlFor="status">Attempts</Label>                  
-                  <p>{webhook['retries']}</p>
+                  <Label htmlFor="status">Retries</Label>                  
+                  <p>{webhook['retries']}/20</p>
                 </FormGroup>
               </Col>
               <Col lg={4}>
