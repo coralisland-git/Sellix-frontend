@@ -45,12 +45,12 @@ class ShopFeedback extends React.Component {
   componentDidUpdate(prevProps) {
     let { user } = this.props;
     if(prevProps.user !== user) {
-      document.title = `${user.username} Sellix - Contact`;
+      document.title = `Feedback | Sellix`;
     }
   }
 
   componentDidMount () {
-    document.title = `${this.props.user ? this.props.user.username : ''} Sellix - Feedback`;
+    document.title = `Feedback | Sellix`;
     this.initializeData()
   }
 

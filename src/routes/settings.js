@@ -13,33 +13,33 @@ import {
       path: `/settings/${user}/general`,
       name: 'GeneralSettings',
       component: GeneralSettings.screen,
-        title: 'Settings | Details'
+        title: 'Settings - Details'
     },
     {
       path: `/settings/${user}/security`,
       name: 'Security',
       component: SecurityPage.screen,
-        title: 'Settings | Security'
+        title: 'Settings - Security'
     },
     {
         path: `/settings/${user}/notifications`,
         name: 'Notifications',
         component: Notification.screen,
-        title: 'Settings | Notifications'
+        title: 'Settings - Notifications'
     },
 
     {
         path: `/settings/${user}/payments`,
         name: 'Payments',
         component: Payments.screen,
-        title: 'Settings | Payments'
+        title: 'Settings - Payments'
     },
 
     {
       path: `/settings/${user}/design`,
       name: 'Design',
       component: ShopDesign.screen,
-        title: 'Settings | Design'
+        title: 'Settings - Design'
     },
     // {
     //     path: `/settings/${user}/memebers`,
