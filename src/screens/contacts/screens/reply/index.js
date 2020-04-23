@@ -31,7 +31,8 @@ const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({
-    querie: state.queries.querie
+    querie: state.queries.querie,
+    user: state.common.general_info,
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -50,6 +51,13 @@ class ReplyToQuerie extends React.Component {
     super(props)
     this.state = {
       loading: false,
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    let { user } = this.props;
+    if(user || prevProps.user !== user) {
+      document.title = `${user.username} Sellix - Contact`;
     }
   }
 

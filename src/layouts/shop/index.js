@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import * as router from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 
 import { Container, Nav, NavItem, Label, Card, 	Tooltip } from 'reactstrap'
@@ -47,6 +46,8 @@ class ShopLayout extends React.Component {
 	}
 
 	componentDidMount() {
+
+		document.title = `${this.props.user ? this.props.user.username ? this.props.user.username : '' : ''} Sellix - Shop`;
 
 		this.props.commonActions
 			.getGeneralUserInfo(this.props.match.params.username)

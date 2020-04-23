@@ -1,61 +1,30 @@
 import React, { Component } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import {
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Nav,
-  NavItem,
-  UncontrolledDropdown,
-  Input,
-  Badge
-} from 'reactstrap'
+import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledDropdown, Input, Badge } from 'reactstrap'
 import PropTypes from 'prop-types'
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
 import IntervalTimer from 'react-interval-timer';
 
-import {
-  AppAsideToggler,
-  AppNavbarBrand,
-  AppSidebarToggler
-} from '@coreui/react'
+import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
 
+import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
 import './style.scss'
 
 
-// import sellix_logo from 'assets/images/Sellix_logo.svg'
-import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
-
-const propTypes = {
-  children: PropTypes.node
-}
-
-const defaultProps = {}
-
 const userId = window.localStorage.getItem('userId')
+
 
 class Header extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-
-    this.signOut = this.signOut.bind(this)
-  }
-
-  signOut () {
+  signOut = () => {
     this.props.authActions.logOut()
     this.props.history.push('/')
   }
 
-  setTheme(){
+  setTheme = () => {
     this.props.changeTheme()
   }
 
-  markAsRead() {
+  markAsRead = () => {
     this.props.authActions.markAsRead()
   }
 
@@ -78,13 +47,13 @@ class Header extends Component {
                 <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
                   <div className="searchbar">
                     <i className="fas fa-search"/>
-                    <Input placeholder="Search..." className="header-search-input"></Input>
+                    <Input placeholder="Search..." className="header-search-input" />
                   </div>
               </NavItem>
             }
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-3 mr-3">
               <DropdownToggle className="user-name" nav>
-                <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}}></i>
+                <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}} />
               </DropdownToggle>
               
               <DropdownMenu right className="mt-2">
@@ -102,13 +71,13 @@ class Header extends Component {
 
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none mr-3">
               <DropdownToggle className="user-name" nav>
-                <i className="fas fa-bell nav-icon"></i>
+                <i className="fas fa-bell nav-icon" />
                 {notifications && notifications.length > 0 &&  
-                  <sup><Badge color="danger" style={{
-                    color: 'white',
-                    padding: '6px',
-                    height: '19px'
-                  }}>{notifications.length}</Badge></sup>
+                  <sup>
+                    <Badge color="danger" style={{ color: 'white', padding: '6px', height: '19px'}}>
+                      {notifications.length}
+                    </Badge>
+                  </sup>
                 }
               </DropdownToggle>
 
@@ -152,7 +121,7 @@ class Header extends Component {
                 
               </DropdownMenu>
             </UncontrolledDropdown>
-   
+
             <UncontrolledDropdown nav direction="down">
               <DropdownToggle className="user-name" nav>
                 <div>
@@ -201,8 +170,5 @@ class Header extends Component {
     );
   }
 }
-
-Header.propTypes = propTypes
-Header.defaultProps = defaultProps
 
 export default Header

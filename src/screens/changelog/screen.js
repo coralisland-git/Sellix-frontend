@@ -57,6 +57,7 @@ export class Changelog extends React.Component {
   }
 
   componentDidMount() {
+    document.title = `Sellix - Changelog`;
     let data = {
       method: 'GET',
       url: '/changelog'

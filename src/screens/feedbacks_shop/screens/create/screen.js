@@ -26,7 +26,7 @@ import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-
+    user: state.common.general_info,
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -47,6 +47,14 @@ class LeaveFeedback extends React.Component {
     }
 
     this.initializeData = this.initializeData.bind(this)
+  }
+
+  componentDidUpdate(prevProps) {
+    let { user } = this.props;
+
+    if(prevProps.user !== user) {
+      document.title = `${user.username} Sellix - Feedback`;
+    }
   }
 
   componentDidMount () {
