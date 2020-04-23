@@ -183,7 +183,7 @@ class LandingLayout extends React.Component {
                         <div className="mb-3" style={{maxWidth: 295}}>
                             <h5 className="mb-3">About Us</h5>
                             <p className="mt-4">Sellix is an online e-commerce payment processing 
-                            website that lets your create your own store with a couple of clicks.</p>
+                            website that lets you create your own store with a couple of clicks.</p>
                         </div>
                         <div className="mb-3">
                             <h5 className="mb-3">Sellix</h5>
