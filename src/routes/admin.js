@@ -221,14 +221,14 @@ const adminRoutes = [
     path: `/dashboard/${user}/feedback/reply/:id`,
     name: 'Reply to Feedback',
     component: ReplyToFeedback,
-    title: 'Feedback'
+    title: 'Reply to Feedback'
   },
 
   {
     path: `/dashboard/${user}/feedback`,
     name: 'Feedback',
     component: Feedbacks.screen,
-    title: 'View Feedback'
+    title: 'Feedback'
   },
 
   {
