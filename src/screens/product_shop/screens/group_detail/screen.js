@@ -101,8 +101,8 @@ class ShopGroupDetail extends React.Component {
           `}
         </style>
         <div style={{filter: 'blur(10px)'}}>
-          <ShopProductDetail {...this.props} selectedProduct={selectedProduct} group={group}
-          handleProductChange={product => []/*this.setState({ selectedProduct: product })*/} />
+          <ShopProductDetail {...this.props} selectedProduct={group.products_bound[0]} group={group}
+          /*handleProductChange={product => []this.setState({ selectedProduct: product })}*/ />
         </div>
         <div>
           <Modal isOpen={true} className="blur" centered={true}>
