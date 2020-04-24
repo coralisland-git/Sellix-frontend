@@ -98,15 +98,16 @@
           max-width: 1330px;
           margin: 0 auto;
     
-          .nav-item a{
-            margin: 0 15px;
+          a{
+            margin: 0 25px;
             color: white !important;
             font-weight: 600;
             font-size: 15px;
+            cursor: pointer;
           }
       
-          .nav-item a:hover,
-          .nav-item.active a {
+          a:hover,
+          a.active {
             color: white !important;
           }
         }
@@ -116,16 +117,18 @@
         background-color: transparent !important;
         max-width: 1330px;
         margin: 0 auto;
+        justify-content: space-between !important;
   
-        .nav-item a{
-          margin: 0 15px;
+        a{
+          margin: 0 25px;
           color: #613bea !important;
           font-weight: 600;
           font-size: 15px;
+          cursor: pointer;
         }
     
-        .nav-item a:hover,
-        .nav-item.active a {
+        a:hover,
+        a.active {
           color: #613bea !important;
         }
       }

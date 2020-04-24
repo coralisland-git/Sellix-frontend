@@ -475,6 +475,7 @@ class EditProductGroup extends React.Component {
 																	</Col>
 																</Row>
 															</Col>
+                              
 														</Row>
 												}
 											</CardBody>
