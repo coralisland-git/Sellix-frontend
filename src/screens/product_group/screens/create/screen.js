@@ -312,12 +312,19 @@ class CreateProductGroup extends React.Component {
 														</Row>
 													:
 														<Row className="mb-4">
-															<Col lg={12}>
-																<Row>
-																	<Col lg={12}>
-																		<h4 className="mb-4 mt-1">General Information</h4>
-																	</Col>
-																</Row>
+															<Col lg={3}>
+															<p className="page_description">
+																Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+																sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+																sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+																Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+																<br/>
+																<br/>
+																Lorem ipsum dolor sit amet, consetetur sadipscing elitr, s
+																ed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+																</p>
+															</Col>
+															<Col lg={9}>
 																<Row>
 																	<Col lg={8}>
 																		<FormGroup className="mb-3">
