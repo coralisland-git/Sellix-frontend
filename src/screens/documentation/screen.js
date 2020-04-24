@@ -10,6 +10,8 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import sellix_logo from "assets/images/Sellix_logo.svg";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import "./style.scss";
 
@@ -103,9 +105,9 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       ROOT URL
                     </div>
-                    <div className="code-block-body">
-                      https://sellix.io/api/v2
-                    </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`https://sellix.io/api/v2`}
+                    </SyntaxHighlighter>                    
                   </div>
                 </div>
               </section>
@@ -124,11 +126,11 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       SETUP AUTHENTICATION
                     </div>
-                    <div className="code-block-body">
-                      require 'sellix' <br /><br />
-                      sellix.api_key = 'api key'<br />
-                      sellix.api_email = 'email'
-                    </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`require 'sellix'
+sellix.api_key = 'api key'
+sellix.api_email = 'email'`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -136,7 +138,7 @@ class Documentation extends React.Component {
                 <div className="d-ins">
                   <h3><b>Pagenation</b></h3>
                   <p>
-                    Selly offers the ability to paginate any list endpoint. The <span class="badge-mark">X-Total-Pages</span> header returns 
+                    Sellix offers the ability to paginate any list endpoint. The <span class="badge-mark">X-Total-Pages</span> header returns 
                     the total number of pages for the resources at the specific endpoint you're using. <br/><br/>
 
                     By default, <span class="badge-mark">20</span> resources are displayed per page.
@@ -170,12 +172,12 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       PAGINATING ORDERS EXAMPLE
                     </div>
-                    <div className="code-block-body">
-                      # Page 10 <br />
-                      Selly::Orders::List(page: 10) <br /><br />
-                      # Page 10 and 50 per page <br />
-                      Selly::Orders::List(page: 10, per_page: 50)
-                    </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`# Page 10 
+Sellix::Orders::List(page: 10)
+# Page 10 and 50 per page 
+Sellix::Orders::List(page: 10, per_page: 50)`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -186,17 +188,80 @@ class Documentation extends React.Component {
                     Errors will only ever be present with a <span class="badge-mark">400</span> to <span class="badge-mark">503</span> HTTP response 
                     status. All errors will include a <span class="badge-mark">message</span> attribute detailing the error message. <br /><br />
                     Validation errors will feature a <span class="badge-mark">errors</span> attribute containing an array of error message strings. <br /><br />
-                    The Selly API uses the following error codes:
+                    The Sellix API uses the following error codes:
                   </p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td><p className="param">400</p></td>
+                        <td>Bad Request - Invalid parameters</td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">401</p></td>
+                        <td>Unauthorized - Unable to authenticate</td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">403</p></td>
+                        <td>Forbidden - The request is not allowed</td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">404</p></td>
+                        <td>Not Found - The specified resource could not be found.</td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">406</p></td>
+                        <td>Not Acceptable - You requested a format that isn't json.</td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">429</p></td>
+                        <td>Too Many Requests - You have reached the rate limit</td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">500</p></td>
+                        <td>Internal Server Error - We had a problem with our server. Try again later. These are rare.</td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">503</p></td>
+                        <td>Service Unavailable - We're temporarily offline for maintenance. Please try again later.</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      Authentication Error
+                      AUTHENTICATION ERROR
                     </div>
-                    <div className="code-block-body">
-                      
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`{
+  "message": "Unable to authenticate"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      AUTHENTICATION ERROR
                     </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`{
+  "message": "You are not authorized to perform this action"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      VALIDATION ERROR
+                    </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`{
+  "message": "Validation failed",
+  "errors": [
+    "Title can't be blank",
+    "Title is too short (minimum is 2 characters)",
+    "Title must be present"
+  ]
+}`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -204,26 +269,49 @@ class Documentation extends React.Component {
                 <div className="d-ins">
                   <h3><b>Webhook</b></h3>
                   <p>
-                    Selly provides a webhooks system allowing you to subscribe to to events with <a href="#">Webhook Endpoints</a>, 
+                    Sellix provides a webhooks system allowing you to subscribe to to events with <a href="#">Webhook Endpoints</a>, 
                     alongside Product/Payment Order status webhooks and Dynamic Product webhooks. <br /><br />
-
                     Please note <b>only HTTPS webhook URLs are supported</b>.<br /><br />
-
                     A webhook simulator is available allowing you to simulate webhooks to a URL. It can be accessed <a href="#">here</a>.<br /><br />
                   </p>
-                  <b>Signing/Validating</b>
+                  <p><b>Signing/Validating</b></p>
                   <p>
                     To verify the authenticity of a webhook request and its payload, each webhook request includes 
                     a <span class="badge-mark">X-Sellix-Signature</span> header with a 
                     HMAC signature comprised of the JSON encoded request body and your webhook secret. 
                     Your webhook secret can be changed in your <a href="#">settings page</a>. <br /><br />
                   </p>
-                  <b>Events</b>
+                  <p><b>Events</b></p>
                   <p>
                     Each webhook request will feature a <span class="badge-mark">X-Sellix-Event</span> header containing the 
                     webhook event type. A list of supported events from <a href="#">Webhook Endpoints</a> can be found below.
                   </p>
-                  <b>Logs</b>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td><p className="param">feedback:updated</p></td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">order:created</p></td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">order:updated</p></td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">order:paid</p></td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">product:out_of_stock</p></td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">query:created</p></td>
+                      </tr>
+                      <tr>
+                        <td><p className="param">query:replied</p></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p><b>Logs</b></p>
                   <p>
                     Each webhook request will create a <a href="#">Webhook Log</a>. The object is created by the request 
                     has been sent. Before the request response has actually been received, the <span class="badge-mark">response_code</span> will 
@@ -237,8 +325,16 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       VALIDATING SIGNED WEBHOOK SIGNATURE
                     </div>
-                    <div className="code-block-body">
-                    </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`require 'openssl'
+require 'active_support'
+secret = 'your webhook secret'
+signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha512'), secret, payload.to_json)
+is_valid_signature = ActiveSupport::SecurityUtils.secure_compare(request.headers['X-Sellix-Signature'], signature)
+if is_valid_signature
+    # Webhook is valid
+end`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -251,13 +347,13 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       ENDPOINTS
                     </div>
-                    <div className="code-block-body">
-                      GET /api/v2/blacklist/:id <br />
-                      GET /api/v2/blacklist <br />
-                      POST /api/v2/blacklist <br />
-                      PUT /api/v2/blacklist/:id <br />
-                      DELETE /api/v2/blacklist/:id <br />
-                    </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`GET /api/v2/blacklist/:id
+GET /api/v2/blacklist
+POST /api/v2/blacklist
+PUT /api/v2/blacklist/:id
+DELETE /api/v2/blacklist/:id`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -328,9 +424,16 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       THE BLACKLIST OBJECT
                     </div>
-                    <div className="code-block-body">
-
-                    </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`{
+  "id": "bGYSEexV",
+  "blocked_data": "ZW",
+  "blacklist_type": 3,
+  "note": "This is a demo blacklist",
+  "created_at": "2019-12-28T16:47:01.000+00:00",
+  "updated_at": "2019-12-28T16:47:01.000+00:00"
+}`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -358,10 +461,26 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      ENDPOINTS
+                      GET A BLACKLIST
                     </div>
-                    <div className="code-block-body">
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`Sellix::Blacklist.retrieve('bGYSEexV')`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      RESPONSE
                     </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`{
+  "id": "bGYSEexV",
+  "blocked_data": "ZW",
+  "blacklist_type": 3,
+  "note": "This is a demo blacklist",
+  "created_at": "2019-12-28T16:47:01.000+00:00",
+  "updated_at": "2019-12-28T16:47:01.000+00:00"
+}`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -377,10 +496,28 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      ENDPOINTS
+                      LIST ALL BLACKLIST
                     </div>
-                    <div className="code-block-body">
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`Sellix::Blacklist.list`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      RESPONSE
                     </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`[
+  {
+    "id": "bGYSEexV",
+    "blocked_data": "ZW",
+    "blacklist_type": 3,
+    "note": "This is a demo blacklist",
+    "created_at": "2019-12-28T16:47:01.000+00:00",
+    "updated_at": "2019-12-28T16:47:01.000+00:00"
+  }
+]`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -428,10 +565,29 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      ENDPOINTS
+                      CREATE A BLACKLIST
                     </div>
-                    <div className="code-block-body">
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`Sellix::Blacklist.create(
+    blocked_data: 'ZW',
+    blacklist_type: 3
+)`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      RESPONSE
                     </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`{
+  "id": "bGYSEexV",
+  "blocked_data": "ZW",
+  "blacklist_type": 3,
+  "note": "This is a demo blacklist",
+  "created_at": "2019-12-28T16:47:01.000+00:00",
+  "updated_at": "2019-12-28T16:47:01.000+00:00"
+}`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -477,10 +633,28 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      ENDPOINTS
+                      UPDATE A BLACKLIST
                     </div>
-                    <div className="code-block-body">
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`Sellix::Blacklist.update('bGYSEexV',
+    blocked_data: 'GR'
+)`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      RESPONSE
                     </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`{
+  "id": "bGYSEexV",
+  "blocked_data": "GR",
+  "blacklist_type": 3,
+  "note": "This is a demo blacklist",
+  "created_at": "2019-12-28T16:47:01.000+00:00",
+  "updated_at": "2019-12-28T16:48:02.000+00:00"
+}`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -495,10 +669,19 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      ENDPOINTS
+                      DESTROY A BLACKLIST
                     </div>
-                    <div className="code-block-body">
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`Sellix::Blacklist.destroy('bGYSEexV')`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      RESPONSE
                     </div>
+                    <SyntaxHighlighter language="javascript" style={docco}>
+                      {`// No Content: 204 HTTP status`}
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>

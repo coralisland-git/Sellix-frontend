@@ -2,6 +2,7 @@
 	.app-body{
    		background-color: white;
    		margin-top: 70px !important;
+		background-color: #f8f8f8;
 	}
 
 	.main {
@@ -11,5 +12,9 @@
 
 	.main .container-fluid {
 		height: 100%;
+	}
+
+	.animated {
+		width: 100%;
 	}
 }
