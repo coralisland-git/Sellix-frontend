@@ -1,6 +1,6 @@
 const user = window.localStorage.getItem('userId')
 
-export const mainNavigation =  {
+export const mainNavigation = () => ({
   items: [
     {
       name: 'Dashboard',
@@ -9,7 +9,7 @@ export const mainNavigation =  {
     },
     {
       name: 'Products',
-      url: `/dashboard/${user}/products`,
+      url: window.location.pathname.includes('/groups') ? `/dashboard/${user}/groups` : `/dashboard/${user}/products`,
       icon: 'fas fa-boxes',
       children: [
         {
@@ -99,7 +99,7 @@ export const mainNavigation =  {
     //   icon: 'fa fa-file',
     // }
   ]
-}
+})
 
 export const adminNavigation =  {
   items: [
