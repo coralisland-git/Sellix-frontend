@@ -56,13 +56,14 @@
     width: inherit;
     padding: 0px;
     display: flex;
-    background-color: #f8f8f8;
+    background-color: inherit;
 
     > div {
       padding: 0 !important;
     }
 
     .side-nav {
+      min-width: 230px;
       width: 260px;
     }
 
