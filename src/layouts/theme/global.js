@@ -77,7 +77,7 @@ export const GlobalStyles = createGlobalStyle`
       
         @media (max-width: 991px){
           & {
-            border-right: none;
+            border-right: none !important;
             border-bottom: 1px solid ${({ theme }) => theme.borderRight} !important;
           }
         }

@@ -374,8 +374,8 @@ class EditProductGroup extends React.Component {
 														</Row>
 													:
 														<Row className="mb-4">
-                              <Col lg={3} className="p-0">
-                                <div className="page_description_card bg-grey p-3 mr-2 mb-4">
+															<Col lg={3} className="p-0">
+																<div className="page_description_card bg-grey p-3 mr-2 mb-4">
 																	<h6 className="text-grey mb-3">REFERENCE</h6>
 																	<p className="page_description text-grey">
 																	Product Groups let you organize all your items in your shop page.
@@ -387,13 +387,10 @@ class EditProductGroup extends React.Component {
 																	Once selected, a menu will be prompted asking to choose one of the products the group has, then the customer will be redirected to the classic purchase product page.
 																	<br/>
 																	<br/>
-																	In order to create a group, please fill its Title, select which products should be contained in it and give it an image! (If no image is passed, a blank or dark background will be displayed instead).
-																	<br/>
-																	<br/>
-																	By selecting “Unlisted”, the product group will not be displayed anymore in your shop page. This is useful if you need to make a few changes and you do not want it to be displayed temporarily.
+																	In order to create a group, please fill its Title, select which products should be contained in it and give it an image!
 																	</p>
 																</div>
-                              </Col>
+                              								</Col>
 															<Col lg={9} className="mt-3">
 																<Row>
 																	<Col lg={12}>
