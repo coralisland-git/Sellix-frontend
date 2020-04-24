@@ -1,45 +1,35 @@
 import React from 'react'
-import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import {connect} from 'react-redux'
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { landingRoutes } from 'routes'
-import {
-  AuthActions,
-  CommonActions
-} from 'services/global'
-import {NotFound} from 'components'
+import { AuthActions, CommonActions } from 'services/global'
 
 import {
     Button,
-    Col,
     Container,
-    Row,
     Collapse,
     Navbar,
-    NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
     NavLink
-  } from 'reactstrap'
+} from 'reactstrap'
 
 import sellix_logo from 'assets/images/home/logo-1@2x.png'
 import sellix_logo_footer from 'assets/images/Sellix_logo_beta.svg'
 import './style.scss'
 
-const mapStateToProps = (state) => {
-  return ({
+const mapStateToProps = (state) => ({
     is_authed: state.auth.is_authed
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
+})
+
+const mapDispatchToProps = (dispatch) => ({
     authActions: bindActionCreators(AuthActions, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+})
+
 
 class LandingLayout extends React.Component {
 
@@ -49,7 +39,6 @@ class LandingLayout extends React.Component {
         isOpen: false
     }
   }
-
 
   toggle() {
     this.setState({isOpen: !this.state.isOpen})
@@ -92,9 +81,10 @@ class LandingLayout extends React.Component {
       zIndex: 1999
     }
 
-    const { isOpen } = this.state
+    const { isOpen } = this.state;
+    const { history } = this.props;
     const user = window.localStorage.getItem('userId')
-    var dashboardUrl = user? `/dashboard/${user}/home` : '/'
+    let dashboardUrl = user? `/dashboard/${user}/home` : '/'
 
     return (
     <div className="landing-layout">
@@ -104,68 +94,53 @@ class LandingLayout extends React.Component {
             
                 <Router>
                   <Switch>
-                  {
-                      landingRoutes.map((prop, key) => {
-                      if (prop.redirect)
-                          return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                      return (
-                          <Route
-                            path={prop.path}
-                            component={() => (
-                              <>
-                                <header className={`pt-3 pb-3 ${prop.name === 'Home'?'home-header':''}`}>
-                                  <Navbar  color="white" light expand="lg">
-                                      <NavbarBrand href="/">
-                                          <img className="logo" src={prop.name === 'Home'?sellix_logo:sellix_logo_footer}/>
-                                      </NavbarBrand>
-                                      
-                                      <Collapse className="mr-3" isOpen={isOpen} navbar>
-                                          <Nav className="ml-auto" navbar>
-                                          <NavItem className="active">
-                                              <NavLink href="/">Home</NavLink>
-                                          </NavItem>
-                                          <NavItem>
-                                              <NavLink href="/">Features</NavLink>
-                                          </NavItem>
-                                          <NavItem>
-                                              <NavLink href="/auth/register">Get Started</NavLink>
-                                          </NavItem>
-                                          <NavItem>
-                                              <NavLink href="/"></NavLink>
-                                          </NavItem>
-                                          
-                                          </Nav>
-                                      </Collapse>
-                                      <div>
-                                        { user?
-                                            <Button className="mr-3 landing-primary-button text-white menu" 
-                                              onClick={() => this.props.history.push(dashboardUrl)}
-                                            >
-                                              Dashboard
-                                            </Button>
-                                            :
-                                            <>  
-                                              <Button className="landing-secondary-button menu mr-2" 
-                                                onClick={() => this.props.history.push('/auth/login')}>
-                                                Log In
-                                              </Button>
-                                              <Button className="landing-primary-button menu" 
-                                                onClick={() => this.props.history.push('/auth/register')}>
-                                                Sign Up
-                                              </Button>
-                                            </>
-                                          }
-                                      </div>
-                                      </Navbar>
-                                  </header>
-                                <prop.component/>
-                              </>
-                            )}
-                            key={key}
-                          />
-                      )
-                      })
-                  }
+                  {landingRoutes.map(({ path, component: Component, name, exact}, key) => (
+                    <Route path={path} key={key} exact={exact} render={() => (
+                         <>
+                             <header className={`pt-3 pb-3 ${name === 'Home'?'home-header':''}`}>
+                                 <Navbar  color="white" light expand="lg">
+                                     <NavbarBrand href="/">
+                                         <img className="logo" src={name === 'Home'?sellix_logo:sellix_logo_footer}/>
+                                     </NavbarBrand>
+                                     <Collapse className="mr-3" isOpen={isOpen} navbar>
+                                         <Nav className="ml-auto" navbar>
+                                             <NavItem className="active">
+                                                 <NavLink href="/">Home</NavLink>
+                                             </NavItem>
+                                             <NavItem>
+                                                 <NavLink href="/">Features</NavLink>
+                                             </NavItem>
+                                             <NavItem>
+                                                 <NavLink href="/auth/register">Get Started</NavLink>
+                                             </NavItem>
+                                             <NavItem>
+                                                 <NavLink href="/" />
+                                             </NavItem>
+
+                                         </Nav>
+                                     </Collapse>
+                                     <div>
+                                         { user?
+                                             <Button className="mr-3 landing-primary-button text-white menu" onClick={() => history.push(dashboardUrl)}>
+                                                 Dashboard
+                                             </Button>
+                                             :
+                                             <>
+                                                 <Button className="landing-secondary-button menu mr-2" onClick={() => history.push('/auth/login')}>
+                                                     Log In
+                                                 </Button>
+                                                 <Button className="landing-primary-button menu" onClick={() => history.push('/auth/register')}>
+                                                     Sign Up
+                                                 </Button>
+                                             </>
+                                         }
+                                     </div>
+                                 </Navbar>
+                             </header>
+                             <Component/>
+                         </>
+                     )} />
+                  ))}
                   </Switch>
                 </Router>
 
@@ -234,10 +209,8 @@ class LandingLayout extends React.Component {
                             </Nav>
                         </div>
                         </div>
-                    
                     </Container>
                 </div>
-                
                 </footer>
             </div>
         </div>
