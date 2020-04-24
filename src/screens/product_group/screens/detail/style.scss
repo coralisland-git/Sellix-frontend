@@ -8,3 +8,15 @@ p.page_description {
   color: #85838f;
   line-height: 1.5em;
 }
+
+.page_description_card {
+  // background-color: #fcfdfd;
+  border-right: 1px solid #eee;
+
+  @media (max-width: 991px){
+    & {
+      border-right: none;
+      border-bottom: 1px solid #eee;
+    }
+  }
+}

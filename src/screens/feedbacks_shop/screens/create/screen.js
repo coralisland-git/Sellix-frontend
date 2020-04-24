@@ -111,7 +111,7 @@ class LeaveFeedback extends React.Component {
     if(this.state.loadingInitialValues) {
       return Loading()
     }
-    console.log('initialValues', this.state.initialValues)
+
     return (
       <div className="animated fadeIn">
         <Formik
