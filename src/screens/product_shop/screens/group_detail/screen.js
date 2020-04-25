@@ -31,9 +31,11 @@ class ShopGroupModal extends React.Component {
   formatProductOption = product => {
     const rating = product.average_score || 0
 
-    const isRatingGold = rating > 4 
+    const isRatingGold = rating > 4
 
-    return <div className="option-select-option">
+    const isSelected = product.uniqid === this.state.selectedProduct.uniqid
+
+    return <div className={"option-select-option " + (isSelected && "is-selected")}>
       <div>
         <span>{product.title}</span>
         <span className={isRatingGold && "text-gold"} style={{marginLeft: '10px'}}>
@@ -71,7 +73,7 @@ class ShopGroupModal extends React.Component {
           .option-select, .option-select * {
             user-select: none !important;
           }
-          .option-select > * > * > *:not([class$=-singleValue]) {
+          .option-select > * > * > *:not([class$=-singleValue]):not([class$=-indicatorContainer]) {
             background: white !important;
             padding: 0;
           }
@@ -83,6 +85,15 @@ class ShopGroupModal extends React.Component {
             margin: 0;
             
           }
+          *[class$=-singleValue] > .option-select-option span:not(.text-gold) {
+            color: rgba(0,0,0,.9) !important;
+          }
+          *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold) {
+            color: black !important;
+          }
+          *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold) {
+            color: black !important;
+          }
           .option-select *[class*=ValueContainer] {
             height: 50px;
           }
@@ -93,7 +104,7 @@ class ShopGroupModal extends React.Component {
         </style>
         <div>
           <Modal isOpen={true} className="blur" centered={true}>
-            <ModalHeader><span>{group.title}</span></ModalHeader>
+            <ModalHeader><span style={{color: '#613BEA'}}>{group.title}</span></ModalHeader>
             <ModalBody>
               <p>Select option:</p>
               <Select 
