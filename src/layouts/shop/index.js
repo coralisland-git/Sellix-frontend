@@ -256,7 +256,11 @@ class ShopLayout extends React.Component {
 
 						{appBody}
 
-						<AppFooter>
+						<AppFooter style={userIsBanned ? {
+							position: 'fixed',
+							bottom: 0,
+							width: '100%'
+						} : {}}>
 							<p className="text-center text-grey footer-report py-4 m-0">
 								Copyright by Sellix.io -{' '}
 								<a href="mailto:abuse@sellix.io">Report Abuse</a>
