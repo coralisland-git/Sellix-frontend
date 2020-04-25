@@ -94,7 +94,6 @@ class Documentation extends React.Component {
                         <li className="sub-nav" key={cindex}>
                           <a 
                             href={`/documentation#${child.key}`} 
-                            
                           >{child.value}</a>
                         </li>
                       )
