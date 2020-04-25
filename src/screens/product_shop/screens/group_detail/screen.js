@@ -94,7 +94,7 @@ class ShopGroupModal extends React.Component {
           *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold) {
             color: black !important;
           }
-          .option-select *[class*=ValueContainer] {
+          .option-select > div:first-of-type > div:first-child {
             height: 50px;
           }
           .option-select input {
