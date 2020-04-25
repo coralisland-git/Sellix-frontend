@@ -13,41 +13,18 @@ import { getProductStock } from 'screens/product_shop/productCard';
 import config from 'constants/config';
 
 
-const mapStateToProps = ({ common: { user_products } }) => ({
-  user_products
-});
-
-const mapDispatchToProps = dispatch => ({
-  commonActions: bindActionCreators(CommonActions, dispatch)
-});
-
-
-class ShopGroupDetail extends React.Component {
+class ShopGroupModal extends React.Component {
 
   state = {
     loading: true,
-    selectedProduct: null,
-    group: null
+    selectedProduct: null
   }
 
   componentDidMount() {
-    let data = {
-      method: 'GET',
-      url: `groups/unique/${this.props.match.params.id}`
-    }
+    const { group } = this.props
 
-    return api(data).then(res => {
-      if (res.status === 200) {
-        this.setState({
-          loading: false,
-          group: res.data.group,
-          selectedProduct: res.data.group.products_bound[0]
-        })
-      } else {
-        throw res
-      }     
-    }).catch(err => {
-      throw err
+    this.setState({
+      selectedProduct: group.products_bound[0]
     })
   }
 
@@ -78,10 +55,10 @@ class ShopGroupDetail extends React.Component {
 
   render() {
 
-    const { loading, selectedProduct, group } = this.state
-    let { history } = this.props;
+    const { selectedProduct } = this.state
+    let { group, onGoBack, onProductSelect } = this.props;
 
-    return loading ? Loading() : (
+    return (
       <div>
         <style>
           {`
@@ -100,10 +77,6 @@ class ShopGroupDetail extends React.Component {
           // }
           `}
         </style>
-        <div style={{filter: 'blur(10px)'}}>
-          <ShopProductDetail {...this.props} selectedProduct={selectedProduct} group={group}
-          handleProductChange={product => []/*this.setState({ selectedProduct: product })*/} />
-        </div>
         <div>
           <Modal isOpen={true} className="blur" centered={true}>
             <ModalHeader><span>{group.title}</span></ModalHeader>
@@ -118,8 +91,8 @@ class ShopGroupDetail extends React.Component {
               />
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={() => history.push(`/product/${selectedProduct.uniqid}`)}>Next</Button>{' '}
-              <Button color="secondary" onClick={() => history.push(`/${selectedProduct.username}`)}>Go Back</Button>
+              <Button color="primary" onClick={() => onProductSelect(selectedProduct)}>Next</Button>{' '}
+              <Button color="secondary" onClick={() => onGoBack()}>Go Back</Button>
             </ModalFooter>
           </Modal>
         </div>
@@ -128,4 +101,4 @@ class ShopGroupDetail extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopGroupDetail)
+export default ShopGroupModal
