@@ -62,6 +62,9 @@ class ShopGroupModal extends React.Component {
       <div>
         <style>
           {`
+          body {
+            padding-right: 0px !important;
+          }
           .text-gold {
             color: gold !important;
           }
