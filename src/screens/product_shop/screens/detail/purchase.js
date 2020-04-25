@@ -204,7 +204,7 @@ class Purchase extends React.Component {
 				</div>
 
 				<div className="text-center">
-					<h3>{currency}{(productInfo.price_display * quantity * (appliedCoupon ? appliedCoupon.discount / 100 : 1)).toFixed(2) || 0}</h3>
+					<h3>{currency}{(productInfo.price_display * quantity * (appliedCoupon ? (100 - appliedCoupon.discount) / 100 : 1)).toFixed(2) || 0}</h3>
 					<div className="mt-3">
 						{!showPaymentOptions && <Button color="primary" className="mr-auto ml-auto d-block" onClick={this.showPaymentOptions} style={{width: 170}}>Purchase</Button>}
 						{showPaymentOptions && paymentOptions.length === 0 && <p className="mt-3 mb-3 text-grey">This product has no payment options.</p>}
