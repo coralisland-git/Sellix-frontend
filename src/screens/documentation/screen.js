@@ -11,8 +11,8 @@ import {
 import { Link } from "react-router-dom";
 import sellix_logo from "assets/images/Sellix_logo.svg";
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-
+import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import Scrollspy from 'react-scrollspy'
 import "./style.scss";
 
 const NAVITATIONS = [
@@ -54,38 +54,51 @@ class Documentation extends React.Component {
     if (key === "")
       key = "introduction";
 
+    var items = NAVITATIONS.map((nav => {
+        return nav.key
+      }
+    ))
+
+    NAVITATIONS[5].children.map(child => {
+      items.push(child.key)
+    })
+
+
+
+    console.log(items)
+
     return (
       <div className="documentation-screen">
         <div className="animated fadeIn">
           <div className="d-wrapper">          
             <div className="side-nav">
               <div className="d-nav">
-                <ul className="section-nav">
+                <Scrollspy items={ items } 
+                  className="section-nav"
+                  currentClassName="active">
                   {
                     NAVITATIONS.map((nav, index) => {
                       return (
-                        <>
-                          <li key={index}>
-                            <a 
-                              href={`/documentation#${nav.key}`} 
-                              className={ key === nav.key && "active"}
-                            >{nav.value}</a>
-                          </li>
-                          { nav.children && nav.children.map((child, cindex) => {
-                            return (
-                              <li className="sub-nav" key={cindex}>                                
-                                <a 
-                                  href={`/documentation#${child.key}`} 
-                                  className={ key === child.key && "active"}
-                                >{child.value}</a>
-                              </li>
-                            )
-                          })}
-                        </>
+                        <li key={index}>
+                          <a 
+                            href={`/documentation#${nav.key}`} 
+                          >{nav.value}</a>
+                        </li>
                       )
                     })
                   }
-                </ul>
+                  {
+                    NAVITATIONS[5].children.map((child, cindex) => {
+                      return (
+                        <li className="sub-nav" key={cindex}>
+                          <a 
+                            href={`/documentation#${child.key}`} 
+                          >{child.value}</a>
+                        </li>
+                      )
+                    })
+                  }
+                </Scrollspy>
               </div>
             </div>
             <div className="d-content">
@@ -105,7 +118,7 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       ROOT URL
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`https://sellix.io/api/v2`}
                     </SyntaxHighlighter>                    
                   </div>
@@ -126,7 +139,7 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       SETUP AUTHENTICATION
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`require 'sellix'
 sellix.api_key = 'api key'
 sellix.api_email = 'email'`}
@@ -172,7 +185,7 @@ sellix.api_email = 'email'`}
                     <div className="code-block-header">
                       PAGINATING ORDERS EXAMPLE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`# Page 10 
 Sellix::Orders::List(page: 10)
 # Page 10 and 50 per page 
@@ -232,7 +245,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       AUTHENTICATION ERROR
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`{
   "message": "Unable to authenticate"
 }`}
@@ -242,7 +255,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       AUTHENTICATION ERROR
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`{
   "message": "You are not authorized to perform this action"
 }`}
@@ -252,7 +265,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       VALIDATION ERROR
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`{
   "message": "Validation failed",
   "errors": [
@@ -325,7 +338,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       VALIDATING SIGNED WEBHOOK SIGNATURE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`require 'openssl'
 require 'active_support'
 secret = 'your webhook secret'
@@ -347,7 +360,7 @@ end`}
                     <div className="code-block-header">
                       ENDPOINTS
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`GET /api/v2/blacklist/:id
 GET /api/v2/blacklist
 POST /api/v2/blacklist
@@ -424,7 +437,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       THE BLACKLIST OBJECT
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "ZW",
@@ -463,7 +476,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       GET A BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`Sellix::Blacklist.retrieve('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
@@ -471,7 +484,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "ZW",
@@ -498,7 +511,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       LIST ALL BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`Sellix::Blacklist.list`}
                     </SyntaxHighlighter>
                   </div>
@@ -506,7 +519,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`[
   {
     "id": "bGYSEexV",
@@ -567,7 +580,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       CREATE A BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`Sellix::Blacklist.create(
     blocked_data: 'ZW',
     blacklist_type: 3
@@ -578,7 +591,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "ZW",
@@ -635,7 +648,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       UPDATE A BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`Sellix::Blacklist.update('bGYSEexV',
     blocked_data: 'GR'
 )`}
@@ -645,7 +658,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "GR",
@@ -671,7 +684,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       DESTROY A BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`Sellix::Blacklist.destroy('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
@@ -679,7 +692,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={docco}>
+                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
                       {`// No Content: 204 HTTP status`}
                     </SyntaxHighlighter>
                   </div>
