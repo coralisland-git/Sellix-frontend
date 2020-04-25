@@ -35,20 +35,43 @@ class ShopProducts extends React.Component {
       loading: false,
       search_key: null,
       products: [],
+      groups: [],
       categories: [],
       filter: match ? match.params.id : 'all'
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     let { user } = this.props;
+    let { categories, filter } = this.state;
+
     if(prevProps.user !== user) {
-      document.title = `${user.username} Sellix - Products`;
+      document.title = `${user ? user.username : ""} | Sellix`;
+    }
+
+    if(filter === 'all') {
+      document.title = `${user.username} | Sellix`;
+    } else {
+      if(categories.length) {
+        document.title = `Category: ${categories.find(({ uniqid }) => uniqid === filter).title} | Sellix`;
+      } else {
+        if(categories.length !== prevState.categories.length) {
+          document.title = `Category: ${categories.find(({ uniqid }) => uniqid === filter).title} | Sellix`;
+        }
+      }
     }
   }
 
   componentDidMount () {
-    document.title = `${this.props.user ? this.props.user.username : ''} Sellix - Products`;
+    if(this.state.categories.length > 0 && this.state.filter !== 'all') {
+      this.state.categories.categories.map(({ uniqid, title }) => {
+        if(this.state.filter === uniqid) {
+          document.title = `Category: ${title} | Sellix`;
+        }
+      })
+    } else {
+      document.title = `${this.props.user ? this.props.user.username : ''} | Sellix`;
+    }
     this.initializeData()
   }
 
@@ -59,10 +82,11 @@ class ShopProducts extends React.Component {
     this.setState({ loading: true });
 
     Promise.all([getUserCategories(params.username), getUserProducts(params.username)])
-        .then(([{ data: { categories } }, { data: { products }} ]) => {
+        .then(([{ data: { categories } }, { data: { products, groups }} ]) => {
           this.setState({
             updatedProducts: products,
             products,
+            groups,
             categories
           })
         })
@@ -99,12 +123,25 @@ class ShopProducts extends React.Component {
         ) : productsByCategory
   }
 
+  searchGroups = () => {
+    const { search_key, filter, groups, categories } = this.state;
+
+    let category = filter !== 'all' && categories.length ? categories.find(({ uniqid }) => uniqid === filter ) : null;
+    let groupsByCategory = category ? groups.filter(({ products_bound }) => products_bound.find(({ uniqid: id }) => category.products_bound.find(({uniqid}) => uniqid === id))) : groups
+
+    return search_key ?
+        groupsByCategory.filter(({ title }) =>
+          title.toLowerCase().includes(search_key.toLowerCase())
+        ) : groupsByCategory
+  }
+
 
   render() {
-    const { loading, filter, categories, products } = this.state;
+    const { loading, filter, categories, products, groups } = this.state;
     const { shop_search_enabled } = this.props;
 
     let searchProducts = this.searchProducts(products);
+    let searchGroups = this.searchGroups(groups)
 
     return (
       <div className="shop-product-screen">
@@ -148,7 +185,7 @@ class ShopProducts extends React.Component {
               <div className="p-0">
                 <Row>
                   <Switch>
-                    <Route to={'/:username/category/:id'} render={(props) => <ProductList products={searchProducts} loading={loading} {...props} />} />
+                    <Route to={'/:username/category/:id'} render={(props) => <ProductList products={searchProducts} groups={searchGroups} loading={loading} {...props} />} />
                   </Switch>
                 </Row>
               </div>

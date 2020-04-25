@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, animateScroll as scroll } from "react-scroll";
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
@@ -119,23 +119,38 @@ class LandingLayout extends React.Component {
                                           <img className="logo" src={prop.name === 'Home'?sellix_logo:sellix_logo_footer}/>
                                       </NavbarBrand>
                                       
-                                      <Collapse className="mr-3" isOpen={isOpen} navbar>
-                                          <Nav className="ml-auto" navbar>
-                                          <NavItem className="active">
-                                              <NavLink href="/">Home</NavLink>
-                                          </NavItem>
-                                          <NavItem>
-                                              <NavLink href="/">Features</NavLink>
-                                          </NavItem>
-                                          <NavItem>
-                                              <NavLink href="/auth/register">Get Started</NavLink>
-                                          </NavItem>
-                                          <NavItem>
-                                              <NavLink href="/"></NavLink>
-                                          </NavItem>
-                                          
-                                          </Nav>
-                                      </Collapse>
+                                      {
+                                        prop.name === 'Home' && 
+                                          <Collapse className="mr-5" isOpen={isOpen} navbar>
+                                            <Nav className="ml-auto" navbar>
+                                              <Link
+                                                activeClass="active"
+                                                to="home_section"
+                                                spy={true}
+                                                smooth={true}
+                                                offset={-70}
+                                                duration= {500}
+                                              >Home</Link>
+                                              <Link
+                                                activeClass="active"
+                                                to="feature_section"
+                                                spy={true}
+                                                smooth={true}
+                                                offset={-70}
+                                                duration= {500}
+                                              >Features</Link>
+                                              <Link
+                                                activeClass="active"
+                                                to="started_section"
+                                                spy={true}
+                                                smooth={true}
+                                                offset={-70}
+                                                duration= {500}
+                                              >Get Started</Link>
+                                            </Nav>
+                                          </Collapse>
+                                      }
+                                      
                                       <div>
                                         { user?
                                             <Button className="mr-3 landing-primary-button text-white menu" 
@@ -183,7 +198,7 @@ class LandingLayout extends React.Component {
                         <div className="mb-3" style={{maxWidth: 295}}>
                             <h5 className="mb-3">About Us</h5>
                             <p className="mt-4">Sellix is an online e-commerce payment processing 
-                            website that lets your create your own store with a couple of clicks.</p>
+                            website that lets you create your own store with a couple of clicks.</p>
                         </div>
                         <div className="mb-3">
                             <h5 className="mb-3">Sellix</h5>

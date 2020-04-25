@@ -37,7 +37,7 @@ class Fees extends React.Component {
   }
 
   componentDidMount() {
-    document.title = `Sellix - Fees`;
+    document.title = `Fees | Sellix`;
 
     feeAction.getFees().then(res => {
       const data = res.data.fees

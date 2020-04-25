@@ -5,7 +5,7 @@ import pageNotFound from 'assets/images/page-not-found.jpg'
 class NotFound extends Component {
 
     componentDidMount() {
-        document.title = `Sellix - 404`;
+        document.title = `404 Page Not Found | Sellix`;
     }
 
     render() {

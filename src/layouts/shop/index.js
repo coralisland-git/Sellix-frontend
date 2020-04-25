@@ -47,7 +47,7 @@ class ShopLayout extends React.Component {
 
 	componentDidMount() {
 
-		document.title = `${this.props.user ? this.props.user.username ? this.props.user.username : '' : ''} Sellix - Shop`;
+		document.title = `Products | Sellix`;
 
 		this.props.commonActions
 			.getGeneralUserInfo(this.props.match.params.username)

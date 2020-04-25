@@ -196,8 +196,12 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({loading:true})
-    this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
+    this.setState({loading:true});
+
+    document.title = `Invoice ${this.props.match.params.id} | Sellix`;
+
+    this.props.commonActions.getInvoice(this.props.match.params.id)
+        .then(res => {
       let seconds = 2*60*60 - (new Date().getTime() - new Date(res.data.invoice.created_at*1000).getTime()) / 1000
 
       let timeLeftVar = this.secondsToTime(seconds);
@@ -260,8 +264,8 @@ class Invoice extends React.Component {
   render() {
     const {loading, invoice, timer, showAlert, openQRModal, seconds} = this.state
 
-    if(seconds < 0)
-      invoice.status = 2
+    // if(seconds < 0)
+    //   invoice.status = 2
 
     return (
       <div>

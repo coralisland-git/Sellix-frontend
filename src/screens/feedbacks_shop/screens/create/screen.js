@@ -53,7 +53,7 @@ class LeaveFeedback extends React.Component {
     let { user } = this.props;
 
     if(prevProps.user !== user) {
-      document.title = `${user.username} Sellix - Feedback`;
+      document.title = `${user.username} Feedback | Sellix`;
     }
   }
 
@@ -111,7 +111,7 @@ class LeaveFeedback extends React.Component {
     if(this.state.loadingInitialValues) {
       return Loading()
     }
-    console.log('initialValues', this.state.initialValues)
+
     return (
       <div className="animated fadeIn">
         <Formik

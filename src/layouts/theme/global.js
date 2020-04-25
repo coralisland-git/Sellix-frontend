@@ -70,6 +70,19 @@ export const GlobalStyles = createGlobalStyle`
         // background: ${({ theme }) => theme.cardBody};
     }
 
+
+    .page_description_card {
+        // background-color: #fcfdfd;
+        border-right: 1px solid ${({ theme }) => theme.borderRight} !important;
+      
+        @media (max-width: 991px){
+          & {
+            border-right: none !important;
+            border-bottom: 1px solid ${({ theme }) => theme.borderRight} !important;
+          }
+        }
+      }
+
     .border-right,
     .border-bottom {
         border-color: ${({ theme }) => theme.borderRight} !important;

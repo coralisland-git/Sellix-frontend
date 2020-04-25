@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
     is_authed: state.auth.is_authed,
-    user: state.auth.profile,
+    profile: state.auth.profile,
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -136,7 +136,7 @@ class SettingsLayout extends React.Component {
             <div className="app-body">
               <AppSidebar fixed className="pt-4 mb-5" display="lg">
                 <Suspense fallback={Loading()}>
-                  <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router} />
+                  <AppSidebarNav navConfig={mainNavigation()} location={this.props.location} router={router} />
                 </Suspense>
               </AppSidebar>
 

@@ -6,7 +6,7 @@
   margin: 0 auto;
   background-repeat: no-repeat;
   background-position: top center;
-  background-size: 100% 20%;
+  background-size: 100% auto;
   margin-top: -108px;
   padding-top: 111px;
   background-color: white !important;
@@ -164,7 +164,7 @@
 
   p.large {
     font-size: 24px !important;
-    font-weight: 200;
+    font-weight: 400;
   }
 
   p.small {
@@ -183,7 +183,7 @@
     padding: 15px;
 
     &.service-card-shadow {
-      box-shadow: 0px 15px 111px 0 rgba(0, 52, 74, 0.18) !important;
+      box-shadow: 0px 15px 80px 0 rgba(0, 52, 74, 0.18) !important;
     }
 
     &.zindex-2 {
@@ -230,14 +230,15 @@
   }
 
 
-  @media (max-width: 1024px){ 
+  @media (max-width: 1300px){ 
     & {
-      background-size: auto 22%;
+      background-size: auto 100%;
     }
   }
 
 
   @media (max-width: 1024px){ 
+    
     h1 { font-size: 40px;}
     h2 { font-size: 35px;}
     .purple h1 { font-size: 35px !important;}
@@ -246,6 +247,9 @@
   }
 
   @media (max-width: 768px){ 
+    & {
+      background-size: auto 125%;
+    }
     h1 { font-size: 32px;}
     .purple h1 { font-size: 30px !important;}
     h2 { font-size: 30px;}

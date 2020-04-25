@@ -137,7 +137,7 @@ class AdminLayout extends React.Component {
                       <AppSidebarNav navConfig={adminNavigation} location={this.props.location} router={router}/>
                     </Route>
                     <Route>
-                      <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router}/>
+                      <AppSidebarNav navConfig={mainNavigation()} location={this.props.location} router={router}/>
                     </Route>
                   </Switch>
                 </Suspense>
