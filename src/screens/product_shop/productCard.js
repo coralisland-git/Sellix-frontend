@@ -3,7 +3,7 @@ import config from 'constants/config'
 import { Card } from 'reactstrap';
 
 
-const getProductStock = ({ type, file_stock, stock, service_stock }) => {
+export const getProductStock = ({ type, file_stock, stock, service_stock }) => {
     switch (type) {
         case 'file':
             return file_stock === '-1' ? '∞' : file_stock
