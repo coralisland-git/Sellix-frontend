@@ -31,12 +31,20 @@ const ProductsList = ({ products, groups, loading, history }) => {
 			{products.map(product =>
 				<div key={product.uniqid} className="mb-4 col-md-3">
 					<ProductCard product={product} history={history}/>
-				</div>
+				</div> 
 			)}
 			{ selectedGroup && 
 				<GroupModal group={selectedGroup} 
-					onGoBack={() => setSelectedGroup(null)} 
-					onProductSelect={product => history.push(`/product/${product.uniqid}`)}/>}
+					className="group-modal"
+					onGoBack={() => {
+						document.querySelector('.group-modal').remove()
+						document.querySelector('.fade.show').remove()
+						document.querySelector('.fade.show').remove()
+						setSelectedGroup(null)
+					}} 
+					onProductSelect={product => {
+						history.push(`/product/${product.uniqid}`)
+					}}/>}
 		</FlipMove>
 	)
 }

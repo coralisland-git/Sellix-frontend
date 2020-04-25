@@ -58,7 +58,7 @@ class ShopGroupModal extends React.Component {
   render() {
 
     const { selectedProduct } = this.state
-    let { group, onGoBack, onProductSelect } = this.props;
+    let { group, onGoBack, onProductSelect, className } = this.props;
 
     return (
       <div>
@@ -103,7 +103,7 @@ class ShopGroupModal extends React.Component {
           `}
         </style>
         <div>
-          <Modal isOpen={true} className="blur" centered={true}>
+          <Modal isOpen={true} className="blur" centered={true} className={className}>
             <ModalHeader><span style={{color: '#613BEA'}}>{group.title}</span></ModalHeader>
             <ModalBody>
               <p>Select option:</p>
