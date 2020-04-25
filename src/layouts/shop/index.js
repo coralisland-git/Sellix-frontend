@@ -20,6 +20,7 @@ import Header from './header'
 
 import './style.scss'
 import verifiedIcon from 'assets/images/sellix_verified.svg'
+import LockIcon from 'assets/images/Lock.svg'
 
 const mapStateToProps = (state) => {
 	return {
@@ -41,7 +42,8 @@ class ShopLayout extends React.Component {
 		super(props);
 		this.state = {
 			theme: 'light',
-			verifiedTooltipOpen: false
+			verifiedTooltipOpen: false,
+			userIsBanned: false
 		}
 	}
 
@@ -55,6 +57,14 @@ class ShopLayout extends React.Component {
 				if (e.status == 404) {
 					if (window.location.pathname !== '/404') {
 						window.location = '/404'
+					}
+				}
+				if(e.status == 400) {
+					if(e.error.includes('user has been banned')) {
+						this.setState({
+							userIsBanned: true
+						})
+						document.title = 'Banned User | Sellix'
 					}
 				}
 			})
@@ -105,7 +115,129 @@ class ShopLayout extends React.Component {
 		const { user } = this.props
     	const userId = this.props.match.params.username
 		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
-		const { verifiedTooltipOpen } = this.state
+		const { verifiedTooltipOpen, userIsBanned } = this.state
+
+		const appBody = userIsBanned ? (<div style={{
+			textAlign: 'center',
+			margin: '100px'
+		}}>
+			<img src={LockIcon} width="150"/>
+			<h1 className="text-primary" style={{marginTop: '50px'}}>User has been banned</h1>
+		</div>) : (
+			<div className="shop-content flex-column">
+				<section className="pb-3">
+					<div className="text-center align-items-center logo-content">
+						<h4 className="mb-0 mt-3 mb-2">
+							{user.username} 
+							{user.verified == '1' && 
+								<span>
+									<img src={verifiedIcon} width="20" className="verified-icon mb-1" id="verifiedTooltip"/>
+									<Tooltip 
+										placement="right" 
+										isOpen={verifiedTooltipOpen} 
+										target="verifiedTooltip" 
+										toggle={this.verifiedTooltipToggle.bind(this)}>
+										This shop has verified its brand identity to Sellix.
+									</Tooltip>
+								</span>
+							}</h4>
+						{user.profile_attachment ? (
+							<img
+								src={user.profile_attachment}
+								width="130"
+								height="130"
+								style={{ borderRadius: '50%' }}
+							/>
+						) : (
+							<i
+								className="fa fa-user-circle text-primary avatar-icon"
+								style={{ fontSize: 130 }}
+							/>
+						)}
+					</div>
+					<Card
+						className="report-count mb-3 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row"
+						style={{ width: 'fit-content' }}
+					>
+						<span className="text-green mr-2">
+							{user.feedback ? user.feedback.positive : 0}
+						</span>
+						<span className="" />
+						<span className="text-grey pl-2 pr-2">
+							{user.feedback ? user.feedback.neutral : 0}
+						</span>
+						<span className="" />
+						<span className="text-red ml-2">
+							{user.feedback ? user.feedback.negative : 0}
+						</span>
+					</Card>
+					<div className="shop-navs">
+						<Nav className="d-flex flex-row justify-content-center">
+							<NavItem
+								className="px-1"
+								active={
+									pathname == `/${userId}` ||
+									pathname.includes(`/${userId}/category`)
+								}
+							>
+								<NavLink to={`/${userId}`} className="nav-link">
+									Products
+								</NavLink>
+							</NavItem>
+							<NavItem
+								className="px-1"
+								active={pathname == `/${userId}/contact`}
+							>
+								<NavLink to={`/${userId}/contact`} className="nav-link">
+									Contact
+								</NavLink>
+							</NavItem>
+							<NavItem
+								className="px-1"
+								active={pathname == `/${userId}/feedback`}
+							>
+								<NavLink to={`/${userId}/feedback`} className="nav-link">
+									Feedback
+								</NavLink>
+							</NavItem>
+						</Nav>
+					</div>
+				</section>
+
+				<div className="shop-section">
+					<div className="shop-main p-3">
+						<Container className="p-0" fluid>
+							<Suspense fallback={Loading()}>
+								<ToastContainer
+									position="top-right"
+									autoClose={5000}
+									style={containerStyle}
+								/>
+								<Switch>
+									{shopRoutes.map((prop, key) => {
+										if (prop.redirect)
+											return (
+												<Redirect
+													from={prop.path}
+													to={prop.pathTo}
+													key={key}
+												/>
+											)
+										return (
+											<Route
+												path={prop.path}
+												component={prop.component}
+												key={key}
+											/>
+										)
+									})}
+								</Switch>
+							</Suspense>
+						</Container>
+					</div>
+				</div>
+			</div>
+		)
 
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -122,119 +254,7 @@ class ShopLayout extends React.Component {
 							</Suspense>
 						</AppHeader>
 
-						<div className="shop-content flex-column">
-							<section className="pb-3">
-								<div className="text-center align-items-center logo-content">
-									<h4 className="mb-0 mt-3 mb-2">
-										{user.username} 
-										{user.verified == '1' && 
-											<span>
-												<img src={verifiedIcon} width="20" className="verified-icon mb-1" id="verifiedTooltip"/>
-												<Tooltip 
-													placement="right" 
-													isOpen={verifiedTooltipOpen} 
-													target="verifiedTooltip" 
-													toggle={this.verifiedTooltipToggle.bind(this)}>
-													This shop has verified its brand identity to Sellix.
-												</Tooltip>
-											</span>
-										}</h4>
-									{user.profile_attachment ? (
-										<img
-											src={user.profile_attachment}
-											width="130"
-											height="130"
-											style={{ borderRadius: '50%' }}
-										/>
-									) : (
-										<i
-											className="fa fa-user-circle text-primary avatar-icon"
-											style={{ fontSize: 130 }}
-										/>
-									)}
-								</div>
-								<Card
-									className="report-count mb-3 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row"
-									style={{ width: 'fit-content' }}
-								>
-									<span className="text-green mr-2">
-										{user.feedback ? user.feedback.positive : 0}
-									</span>
-									<span className="" />
-									<span className="text-grey pl-2 pr-2">
-										{user.feedback ? user.feedback.neutral : 0}
-									</span>
-									<span className="" />
-									<span className="text-red ml-2">
-										{user.feedback ? user.feedback.negative : 0}
-									</span>
-								</Card>
-								<div className="shop-navs">
-									<Nav className="d-flex flex-row justify-content-center">
-										<NavItem
-											className="px-1"
-											active={
-												pathname == `/${userId}` ||
-												pathname.includes(`/${userId}/category`)
-											}
-										>
-											<NavLink to={`/${userId}`} className="nav-link">
-												Products
-											</NavLink>
-										</NavItem>
-										<NavItem
-											className="px-1"
-											active={pathname == `/${userId}/contact`}
-										>
-											<NavLink to={`/${userId}/contact`} className="nav-link">
-												Contact
-											</NavLink>
-										</NavItem>
-										<NavItem
-											className="px-1"
-											active={pathname == `/${userId}/feedback`}
-										>
-											<NavLink to={`/${userId}/feedback`} className="nav-link">
-												Feedback
-											</NavLink>
-										</NavItem>
-									</Nav>
-								</div>
-							</section>
-
-							<div className="shop-section">
-								<div className="shop-main p-3">
-									<Container className="p-0" fluid>
-										<Suspense fallback={Loading()}>
-											<ToastContainer
-												position="top-right"
-												autoClose={5000}
-												style={containerStyle}
-											/>
-											<Switch>
-												{shopRoutes.map((prop, key) => {
-													if (prop.redirect)
-														return (
-															<Redirect
-																from={prop.path}
-																to={prop.pathTo}
-																key={key}
-															/>
-														)
-													return (
-														<Route
-															path={prop.path}
-															component={prop.component}
-															key={key}
-														/>
-													)
-												})}
-											</Switch>
-										</Suspense>
-									</Container>
-								</div>
-							</div>
-						</div>
+						{appBody}
 
 						<AppFooter>
 							<p className="text-center text-grey footer-report py-4 m-0">
