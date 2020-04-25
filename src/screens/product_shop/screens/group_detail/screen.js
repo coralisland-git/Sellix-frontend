@@ -71,13 +71,24 @@ class ShopGroupModal extends React.Component {
           .option-select, .option-select * {
             user-select: none !important;
           }
-          .option-select > * > * > * {
+          .option-select > * > * > *:not([class$=-singleValue]) {
             background: white !important;
+            padding: 0;
           }
-          // .option-select-option:hover {
-          //   background: rgba(0,0,0,.1);
-          //   margin: 0;
-          // }
+          *:not([class$=-singleValue]) > .option-select-option {
+            padding: 8px 12px;
+          }
+          *:not([class$=-singleValue]) > .option-select-option:hover {
+            background: rgba(0,0,0,.1);
+            margin: 0;
+            
+          }
+          .option-select *[class*=ValueContainer] {
+            height: 50px;
+          }
+          .option-select input {
+            opacity: 0 !important;
+          }
           `}
         </style>
         <div>
@@ -91,6 +102,7 @@ class ShopGroupModal extends React.Component {
                 options={group.products_bound}
                 className="option-select"
                 onChange={product => this.setState({ selectedProduct: product})}
+                // menuIsOpen={true}
               />
             </ModalBody>
             <ModalFooter>
