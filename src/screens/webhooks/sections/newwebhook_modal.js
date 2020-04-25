@@ -137,7 +137,7 @@ class NewWebhookModal extends React.Component {
                         <Select 
                           id="event"
                           placeholder="Select events" 
-                          options={EVENT_OPTIONS}
+                          options={event_options}
                           searchable={false}
                           onChange={(option) => {
                             var evts = chosenEvents
