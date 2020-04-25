@@ -63,10 +63,6 @@ class Documentation extends React.Component {
       items.push(child.key)
     })
 
-
-
-    console.log(items)
-
     return (
       <div className="documentation-screen">
         <div className="animated fadeIn">
@@ -75,7 +71,12 @@ class Documentation extends React.Component {
               <div className="d-nav">
                 <Scrollspy items={ items } 
                   className="section-nav"
-                  currentClassName="active">
+                  currentClassName="active"
+                  onUpdate={
+                    (el) => {
+                    }
+                  }
+                >
                   {
                     NAVITATIONS.map((nav, index) => {
                       return (
@@ -280,7 +281,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
               </section>
               <section id="webhooks">
                 <div className="d-ins">
-                  <h3><b>Webhook</b></h3>
+                  <h3><b>Webhooks</b></h3>
                   <p>
                     Sellix provides a webhooks system allowing you to subscribe to to events with <a href="#">Webhook Endpoints</a>, 
                     alongside Product/Payment Order status webhooks and Dynamic Product webhooks. <br /><br />
