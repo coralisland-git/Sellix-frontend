@@ -13,6 +13,7 @@ import sellix_logo from "assets/images/Sellix_logo.svg";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
+import Scrollspy from 'react-scrollspy'
 import "./style.scss";
 
 const NAVITATIONS = [
@@ -54,38 +55,52 @@ class Documentation extends React.Component {
     if (key === "")
       key = "introduction";
 
+    var items = NAVITATIONS.map((nav => {
+        return nav.key
+      }
+    ))
+
+    NAVITATIONS[5].children.map(child => {
+      items.push(child.key)
+    })
+
+
+
+    console.log(items)
+
     return (
       <div className="documentation-screen">
         <div className="animated fadeIn">
           <div className="d-wrapper">          
             <div className="side-nav">
               <div className="d-nav">
-                <ul className="section-nav">
+                <Scrollspy items={ items } 
+                  className="section-nav"
+                  currentClassName="active">
                   {
                     NAVITATIONS.map((nav, index) => {
                       return (
-                        <>
-                          <li key={index}>
-                            <a 
-                              href={`/documentation#${nav.key}`} 
-                              className={ key === nav.key && "active"}
-                            >{nav.value}</a>
-                          </li>
-                          { nav.children && nav.children.map((child, cindex) => {
-                            return (
-                              <li className="sub-nav" key={cindex}>                                
-                                <a 
-                                  href={`/documentation#${child.key}`} 
-                                  className={ key === child.key && "active"}
-                                >{child.value}</a>
-                              </li>
-                            )
-                          })}
-                        </>
+                        <li key={index}>
+                          <a 
+                            href={`/documentation#${nav.key}`} 
+                          >{nav.value}</a>
+                        </li>
                       )
                     })
                   }
-                </ul>
+                  {
+                    NAVITATIONS[5].children.map((child, cindex) => {
+                      return (
+                        <li className="sub-nav" key={cindex}>
+                          <a 
+                            href={`/documentation#${child.key}`} 
+                            
+                          >{child.value}</a>
+                        </li>
+                      )
+                    })
+                  }
+                </Scrollspy>
               </div>
             </div>
             <div className="d-content">
