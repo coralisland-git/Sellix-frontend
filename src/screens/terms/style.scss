@@ -1,7 +1,31 @@
-.home-screen {
+.terms-screen {
   * {
     font-family: var(--font-family-sans-serif);
   }
+
+  .section {
+    &:first-child {
+      padding-top: 10rem;
+      padding-bottom: 6rem;
+      background: rgb(103, 41, 173);
+      background: linear-gradient(148deg, #6729ad 0%, #6939d8c0 80%);
+      color: #fff;
+
+      h1 {
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+      }
+
+      p.large {
+        font-size: 1.2rem !important;
+        font-weight: 200;
+        color: #fff;
+      }
+    }
+  }
+
+
 
   background-color: #f8f8f8;
   header {

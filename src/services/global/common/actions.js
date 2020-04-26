@@ -172,7 +172,6 @@ export const getInvoice = (id) => {
 
 
 export const getPayPalInvoice = (id) => {
-  console.log(id)
   return (dispatch) => {
     let data = {
       method: 'get',
@@ -240,7 +239,6 @@ export const getUserProductsByCategory = (filter) => {
       url: `/categories/unique/${filter}`,
     }
     return api(data).then(res => {
-      console.log(res)
       if(res && res.status == 200) {
         dispatch({
           type: COMMON.USER_PRODUCTS,

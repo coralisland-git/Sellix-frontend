@@ -41,7 +41,7 @@ const mainRoutes = [
   // Fees, terms
   { path: '/fees', name: 'LandingLayout', component: LandingLayout },
   { path: '/terms', name: 'LandingLayout', component: LandingLayout },
-  { path: '/tickets', name: 'LandingLayout', component: LandingLayout },
+  { path: '/ticket', name: 'LandingLayout', component: LandingLayout },
   { path: '/404', name: 'LandingLayout', component: LandingLayout },
   { path: '/changelog', name: 'LandingLayout', component: LandingLayout },
 

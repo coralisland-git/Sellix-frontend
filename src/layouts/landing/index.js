@@ -47,6 +47,8 @@ class LandingLayout extends React.Component {
   componentDidMount () {
     const preUrl = `/${window.localStorage.getItem('userId')}`
 
+    this.props.authActions.getSelfUser()
+
     if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
       this.props.history.push(preUrl)
     }

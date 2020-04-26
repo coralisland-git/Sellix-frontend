@@ -248,8 +248,6 @@ class EditProductGroup extends React.Component {
 	handleSubmit(values) {
 		this.setState({saving: true})
 
-		console.log('handleSubmit', values)
-
 		this.props.actions.editProductGroup(values).then(res => {
 
 			this.props.history.push(`/dashboard/${user}/groups/all`)
