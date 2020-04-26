@@ -33,9 +33,13 @@ class ShopGroupModal extends React.Component {
 
     const isRatingGold = rating > 4
 
+    const productStock = getProductStock(product)
+
+    const isDisabled = productStock == 0
+
     const isSelected = product.uniqid === this.state.selectedProduct.uniqid
 
-    return <div className={"option-select-option " + (isSelected && "is-selected")}>
+    return <div className={"option-select-option " + (isSelected && "is-selected") + " " + (isDisabled && "is-disabled")}>
       <div>
         <span>{product.title}</span>
         <span className={isRatingGold && "text-gold"} style={{marginLeft: '10px'}}>
@@ -48,7 +52,7 @@ class ShopGroupModal extends React.Component {
           {'  ●  '}
         </span>
         <span className="stock">
-            <span className="stock-size" style={getProductStock(product) === '∞' ? { position: 'relative', top: '1px' } : getProductStock(product) == 0?{color:'red'}:{}}>{getProductStock(product)}</span>
+            <span className="stock-size" style={productStock === '∞' ? { position: 'relative', top: '1px' } : productStock == 0?{color:'red'}:{}}>{productStock}</span>
             {' '}in stock
         </span>
       </div>
@@ -94,6 +98,15 @@ class ShopGroupModal extends React.Component {
           .option-select input {
             opacity: 0 !important;
           }
+          *[class$=-menu] *[class$=-option] {
+            cursor: inherit !important;
+          }
+          .option-select-option.is-disabled {
+            opacity: 0.6;
+            pointer-events: none;
+            cursor: not-allowed !important;
+          }
+          
           `}
         </style>
         <div>
@@ -104,7 +117,16 @@ class ShopGroupModal extends React.Component {
               <Select 
                 defaultValue={group.products_bound[0]}
                 formatOptionLabel={this.formatProductOption}
-                options={group.products_bound}
+                options={group.products_bound.map(product => {
+                  const productStock = getProductStock(product)
+
+                  const isDisabled = productStock == 0
+
+                  return {
+                    ...product,
+                    isDisabled
+                  }
+                })}
                 className="option-select"
                 onChange={product => this.setState({ selectedProduct: product})}
                 // menuIsOpen={true}

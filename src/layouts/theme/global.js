@@ -262,7 +262,6 @@ export const GlobalStyles = createGlobalStyle`
 
         *[class$=-menu] *[class$=-option] {
             background-color: ${theme.widgetBorder} !important;
-            cursor:pointer;
         }
 
         *[class$=-menu] *[class$=-option]:hover {
