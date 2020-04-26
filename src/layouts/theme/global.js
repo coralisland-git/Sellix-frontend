@@ -245,4 +245,14 @@ export const GlobalStyles = createGlobalStyle`
     .cursor-pointer {
         cursor: pointer;
     }
+
+    *[class$=control] {
+        background-color: ${({ theme }) => theme.widget} !important;
+        border: 1px solid ${({ theme }) => theme.widgetBorder} !important;
+    }
+
+    *[class$=control] * {
+        color: ${({ theme }) => theme.text} !important;
+    }
+     
 `

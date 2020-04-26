@@ -125,7 +125,7 @@ class CreateCoupon extends React.Component {
     
 
     let initialValues = (this.isEdit() && currentCouponData)
-      ? { ...currentCouponData, discount_value: [currentCouponData.discount], products_bound: currentCouponData.products_bound.length === 0 ? [''] : currentCouponData.products_bound}
+      ? { ...currentCouponData, discount_value: [currentCouponData.discount], products_bound: currentCouponData.products_bound.length === 0 ? [''] : currentCouponData.products_bound.map(id => this.props.products.find(p => p.value === id))}
       : { discount_value: [50] }
     return (
       <div className="product-screen mt-3">
@@ -202,7 +202,7 @@ class CreateCoupon extends React.Component {
                                   <Select
                                     className="select-default-width"
                                     id="products_bound"
-                                    multi
+                                    isMulti
                                     options={this.props.products}
                                     name="products_bound"
                                     placeholder="Select Products"
