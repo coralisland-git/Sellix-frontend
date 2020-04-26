@@ -278,4 +278,18 @@ export const GlobalStyles = createGlobalStyle`
             color: black !important;
         }
     `}
+
+    *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold) {
+        color: ${({ theme }) => theme.baseOpposite} !important;
+    }
+
+    *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold) {
+        color: ${({ theme }) => theme.baseOpposite} !important;
+    }
+    
+    ${({theme}) => theme.name === 'light' && `
+        .option-select > * > * > *:not([class$=-singleValue]):not([class$=-indicatorContainer]):not([class$=-Input]) {
+            background: white !important;
+        }
+    `}
 `

@@ -88,12 +88,6 @@ class ShopGroupModal extends React.Component {
           *[class$=-singleValue] > .option-select-option span:not(.text-gold) {
             color: rgba(0,0,0,.9) !important;
           }
-          *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold) {
-            color: black !important;
-          }
-          *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold) {
-            color: black !important;
-          }
           .option-select > div:first-of-type > div:first-child {
             height: 50px;
           }
