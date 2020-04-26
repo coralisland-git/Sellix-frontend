@@ -12,7 +12,6 @@ class AvatarUploader extends React.Component {
     } else {
       this.props.addFile(accepted);
       this.setState({ warningMsg: "" });
-      console.log(accepted[0].preview);
 
       var blobPromise = new Promise((resolve, reject) => {
         const reader = new window.FileReader();
@@ -23,7 +22,7 @@ class AvatarUploader extends React.Component {
         };
       });
       blobPromise.then(value => {
-        // console.log(value);
+
       });
     }
   };

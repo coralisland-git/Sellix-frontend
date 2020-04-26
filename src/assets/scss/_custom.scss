@@ -574,3 +574,13 @@ table {
         }
     }
 }
+
+.mde-textarea-wrapper textarea.mde-text:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
+}
+
+.mde-header .mde-tabs button:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
+}

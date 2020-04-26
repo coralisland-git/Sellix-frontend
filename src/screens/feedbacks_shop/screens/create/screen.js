@@ -53,7 +53,7 @@ class LeaveFeedback extends React.Component {
     let { user } = this.props;
 
     if(prevProps.user !== user) {
-      document.title = `${user.username} Feedback | Sellix`;
+      document.title = `${user.username || ""} Feedback | Sellix`;
     }
   }
 

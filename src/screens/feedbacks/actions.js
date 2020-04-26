@@ -19,7 +19,6 @@ export const getFeedbacks = () => {
           type: FEEDBACKS.FEEDBACKS,
           payload: res.data.feedback
         })
-        console.log({res})
         return res
         
       } else {

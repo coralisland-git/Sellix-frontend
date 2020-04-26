@@ -128,14 +128,14 @@ class ShopLayout extends React.Component {
 				<section className="pb-3">
 					<div className="text-center align-items-center logo-content">
 						<h4 className="mb-0 mt-3 mb-2">
-							{user.username} 
-							{user.verified == '1' && 
+							{user.username}
+							{user.verified == '1' &&
 								<span>
 									<img src={verifiedIcon} width="20" className="verified-icon mb-1" id="verifiedTooltip"/>
-									<Tooltip 
-										placement="right" 
-										isOpen={verifiedTooltipOpen} 
-										target="verifiedTooltip" 
+									<Tooltip
+										placement="right"
+										isOpen={verifiedTooltipOpen}
+										target="verifiedTooltip"
 										toggle={this.verifiedTooltipToggle.bind(this)}>
 										This shop has verified its brand identity to Sellix.
 									</Tooltip>

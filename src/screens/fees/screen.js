@@ -41,7 +41,6 @@ class Fees extends React.Component {
 
     feeAction.getFees().then(res => {
       const data = res.data.fees
-      console.log(data)
       this.setState({
         site_fee_percentage: data.site_fee_percentage,
         paypal: data.paypal,
@@ -60,9 +59,9 @@ class Fees extends React.Component {
     return (
       <div className="fees-screen">
         <div className="animated fadeIn">
-          <div className="section text-center " style={{paddingTop: 100, paddingBottom: 50}}>
+          <div className="section text-center ">
             <Container className="home-container" fluid>
-              <h3>Fees</h3>
+              <h1>Fees</h1>
               <p className="large">
                 How much we charge over orders
               </p>

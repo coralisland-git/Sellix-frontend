@@ -254,8 +254,6 @@ class EditCategory extends React.Component {
                                           name="SMTP-auth"
                                           onChange={(e) => {
                                             props.handleChange('unlisted')(e.target.checked?1:0)
-
-                                            console.log(props.values)
                                           }}
                                           checked={(props.values.unlisted === '1' || props.values.unlisted === 1)?true:false}
                                         />
