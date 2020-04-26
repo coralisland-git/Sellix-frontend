@@ -1,6 +1,7 @@
 import React from 'react'
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
+import { Link, animateScroll as scroll } from "react-scroll";
+import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { landingRoutes } from 'routes'
@@ -96,53 +97,83 @@ class LandingLayout extends React.Component {
             
                 <Router>
                   <Switch>
-                  {landingRoutes.map(({ path, component: Component, name, exact}, key) => (
-                    <Route path={path} key={key} exact={exact} render={() => (
-                         <>
-                             <header className={`pt-3 pb-3 ${name === 'Home'?'home-header':''}`}>
-                                 <Navbar  color="white" light expand="lg">
-                                     <NavbarBrand href="/">
-                                         <img className="logo" src={name === 'Home'?sellix_logo:sellix_logo_footer}/>
-                                     </NavbarBrand>
-                                     <Collapse className="mr-3" isOpen={isOpen} navbar>
-                                         <Nav className="ml-auto" navbar>
-                                             <NavItem className="active">
-                                                 <NavLink href="/">Home</NavLink>
-                                             </NavItem>
-                                             <NavItem>
-                                                 <NavLink href="/">Features</NavLink>
-                                             </NavItem>
-                                             <NavItem>
-                                                 <NavLink href="/auth/register">Get Started</NavLink>
-                                             </NavItem>
-                                             <NavItem>
-                                                 <NavLink href="/" />
-                                             </NavItem>
+                  {
+                      landingRoutes.map((prop, key) => {
+                      if (prop.redirect)
+                          return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                      return (
+                          <Route
+                            path={prop.path}
+                            component={() => (
+                              <>
+                                <header className={`pt-3 pb-3 ${prop.name === 'Home'?'home-header':''}`}>
+                                  <Navbar  color="white" light expand="lg">
+                                      <NavbarBrand href="/">
+                                          <img className="logo" src={prop.name === 'Home'?sellix_logo:sellix_logo_footer}/>
+                                      </NavbarBrand>
+                                      
+                                      {
+                                        prop.name === 'Home' &&
+                                          <Collapse className="mr-5" isOpen={isOpen} navbar>
+                                            <Nav className="ml-auto" navbar>
+                                              <Link
+                                                activeClass="active"
+                                                to="home_section"
+                                                spy={true}
+                                                smooth={true}
+                                                offset={-70}
+                                                duration= {500}
+                                              >Home</Link>
+                                              <Link
+                                                activeClass="active"
+                                                to="feature_section"
+                                                spy={true}
+                                                smooth={true}
+                                                offset={-70}
+                                                duration= {500}
+                                              >Features</Link>
+                                              <Link
+                                                activeClass="active"
+                                                to="started_section"
+                                                spy={true}
+                                                smooth={true}
+                                                offset={-70}
+                                                duration= {500}
+                                              >Get Started</Link>
+                                            </Nav>
+                                          </Collapse>
+                                      }
 
-                                         </Nav>
-                                     </Collapse>
-                                     <div>
-                                         { user?
-                                             <Button className="mr-3 landing-primary-button text-white menu" onClick={() => history.push(dashboardUrl)}>
-                                                 Dashboard
-                                             </Button>
-                                             :
-                                             <>
-                                                 <Button className="landing-secondary-button menu mr-2" onClick={() => history.push('/auth/login')}>
-                                                     Log In
-                                                 </Button>
-                                                 <Button className="landing-primary-button menu" onClick={() => history.push('/auth/register')}>
-                                                     Sign Up
-                                                 </Button>
-                                             </>
-                                         }
-                                     </div>
-                                 </Navbar>
-                             </header>
-                             <Component/>
-                         </>
-                     )} />
-                  ))}
+                                      <div>
+                                        { user?
+                                            <Button className="mr-3 landing-primary-button text-white menu" 
+                                              onClick={() => this.props.history.push(dashboardUrl)}
+                                            >
+                                              Dashboard
+                                            </Button>
+                                            :
+                                            <>  
+                                              <Button className="landing-secondary-button menu mr-2" 
+                                                onClick={() => this.props.history.push('/auth/login')}>
+                                                Log In
+                                              </Button>
+                                              <Button className="landing-primary-button menu" 
+                                                onClick={() => this.props.history.push('/auth/register')}>
+                                                Sign Up
+                                              </Button>
+                                            </>
+                                          }
+                                      </div>
+                                      </Navbar>
+                                  </header>
+                                <prop.component/>
+                              </>
+                            )}
+                            key={key}
+                          />
+                      )
+                      })
+                  }
                   </Switch>
                 </Router>
 

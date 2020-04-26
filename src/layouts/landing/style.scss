@@ -6,7 +6,7 @@
 
     .landing-primary-button {
       background-color: #6727AD;
-      border-radius: 8px !important;
+      border-radius: 3px !important;
       line-height: 1em;
       color: white !important;
       padding-top:11px;
@@ -15,10 +15,7 @@
       min-height: 0 !important;
 
       &.menu {
-        padding-top: 8px;
-        padding-bottom: 10px;
-        padding-left: 40px;
-        padding-right: 40px;
+        border-radius: 3px!important;
         font-weight: bold !important;
       }
 
@@ -29,7 +26,7 @@
 
     .landing-secondary-button {
       background-color: white;
-      border-radius: 8px !important;
+      border-radius: 3px !important;
       line-height: 1em;
       color:  #3D2E87!important;
       padding-top:11px;
@@ -98,15 +95,16 @@
           max-width: 1330px;
           margin: 0 auto;
     
-          .nav-item a{
-            margin: 0 15px;
+          a{
+            margin: 0 25px;
             color: white !important;
             font-weight: 600;
             font-size: 15px;
+            cursor: pointer;
           }
       
-          .nav-item a:hover,
-          .nav-item.active a {
+          a:hover,
+          a.active {
             color: white !important;
           }
         }
@@ -116,16 +114,18 @@
         background-color: transparent !important;
         max-width: 1330px;
         margin: 0 auto;
+        justify-content: space-between !important;
   
-        .nav-item a{
-          margin: 0 15px;
+        a{
+          margin: 0 25px;
           color: #613bea !important;
           font-weight: 600;
           font-size: 15px;
+          cursor: pointer;
         }
     
-        .nav-item a:hover,
-        .nav-item.active a {
+        a:hover,
+        a.active {
           color: #613bea !important;
         }
       }

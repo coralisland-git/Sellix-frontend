@@ -28,6 +28,7 @@ const mainRoutes = [
   { path: '/ivembed', name: 'EmbedInvoiceLayout', component: EmbedInvoiceLayout },
   { path: '/invoice', name: 'InvoiceLayout', component: InvoiceLayout },
   { path: '/product', name: 'ProductLayout', component: ProductLayout },
+  { path: '/group', name: 'ProductLayout', component: ProductLayout },
 
   // User
   { path: `/dashboard/${user}`, name: 'UserLayout', component: UserLayout },

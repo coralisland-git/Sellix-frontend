@@ -134,9 +134,9 @@ class SettingsLayout extends React.Component {
               </Suspense>
             </AppHeader>
             <div className="app-body">
-              <AppSidebar fixed className="pt-4 mb-5" display="lg">
+              <AppSidebar fixed className="pt-3 mb-5" display="lg">
                 <Suspense fallback={Loading()}>
-                  <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router} />
+                  <AppSidebarNav navConfig={mainNavigation()} location={this.props.location} router={router} />
                 </Suspense>
               </AppSidebar>
 

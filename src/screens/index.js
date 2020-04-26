@@ -42,10 +42,12 @@ import WebhookLogs from './webhook_logs'
 import Pages from './pages'
 import CreatePage from './pages/screens/create'
 import Contact from './contact'
+import QueryView from './contact/screens/detail'
 import ShopFeedback from './feedbacks_shop'
 import LeaveFeedback from './feedbacks_shop/screens/create'
 import ShopProducts from './product_shop'
 import ShopProductDetail from './product_shop/screens/detail'
+import ShopGroupDetail from './product_shop/screens/group_detail'
 import BlackList from './blacklist'
 import CreateBlacklist from './blacklist/screens/create'
 import EditBlacklist from './blacklist/screens/create'
@@ -73,7 +75,6 @@ import Documentation from './documentation/screen.js'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
 import "react-toastify/dist/ReactToastify.css"
-import 'react-select/dist/react-select.css'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
@@ -109,6 +110,7 @@ export {
   
   Contact,
   Contacts,
+  QueryView,
   Order,
   Analytics,
   Reports,
@@ -128,6 +130,7 @@ export {
   LeaveFeedback,
   ShopProducts,
   ShopProductDetail,
+  ShopGroupDetail,
   PaypalPaying,
   BlackList,
   CreateBlacklist,

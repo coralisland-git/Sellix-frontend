@@ -245,6 +245,8 @@ class Queries extends React.Component {
     const { loading } = this.state
     const { product_list } = this.props
 
+    alert()
+
     return (
       <div className="product-screen">
         <div className="animated fadeIn">

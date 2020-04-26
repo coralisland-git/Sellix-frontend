@@ -56,7 +56,7 @@ class Home extends React.Component {
       <div className="home-screen" style={{backgroundImage: "url(" + background1 + ")"}}>
 
         
-        <div className="section" style={{paddingTop: 0, paddingBottom: 50}}>
+        <div className="section" id="home_section" style={{paddingTop: 0, paddingBottom: 50}}>
           <Container className="home-container p-0" fluid>
             <Row className="flex-row">
               <Col md={7} className="mb-3" style={{paddingTop: '10%'}}>
@@ -73,7 +73,7 @@ class Home extends React.Component {
           </Container>
         </div>
         <div className="background2-img" style={{backgroundImage: "url(" + background2 + ")"}}>
-          <div className="section pt-0 pb-5 text-center">
+          <div className="section pt-0 pb-5 text-center" id="feature_section">
             <Container className="home-container" fluid>
               <h1 className="text-pink">Start selling with Sellix</h1>
               <p className="large text-darkgrey">
@@ -94,7 +94,7 @@ class Home extends React.Component {
                     <img className="service-img" src={service2}/>
                     <h4 className="mt-4 text-pink f-b">Payment Flexibility</h4>
                     <p className="small text-pink">
-                    Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrencie for your store.
+                    Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrency for your shop.
                     </p>
                     <p className="text-pink f-b mt-5"><Link to="/fees" className="text-pink">Fees →</Link></p>
                   </div>
@@ -152,7 +152,7 @@ class Home extends React.Component {
 
         </div>
         
-        <div className="section white text-center" style={{paddingBottom: 125}}>
+        <div className="section white text-center" style={{paddingBottom: 125}} id="started_section">
           <Container className="mr-auto ml-auto p-0 purple" fluid style={{maxWidth: 1330}}>
             <h1 className="mb-4">Start using <b>Sellix</b> now!</h1>
             <p className="mr-auto ml-auto f-20 col-lg-4 col-md-5">Create an account and start selling your products. Are you ready? Because we are.</p>

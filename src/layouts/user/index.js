@@ -130,14 +130,14 @@ class AdminLayout extends React.Component {
               </Suspense>
             </AppHeader>
             <div className="app-body">
-              <AppSidebar  className="pt-4 mb-5" fixed display="lg">
+              <AppSidebar  className="pt-3 mb-5" fixed display="lg">
                 <Suspense>
                   <Switch>
                     <Route path="/admin">
                       <AppSidebarNav navConfig={adminNavigation} location={this.props.location} router={router}/>
                     </Route>
                     <Route>
-                      <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router}/>
+                      <AppSidebarNav navConfig={mainNavigation()} location={this.props.location} router={router}/>
                     </Route>
                   </Switch>
                 </Suspense>

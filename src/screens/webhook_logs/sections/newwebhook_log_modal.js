@@ -68,14 +68,6 @@ class NewWebhookLogModal extends React.Component {
       initialValues,
     } = this.state
 
-    var event_options = EVENT_OPTIONS.filter(option => {
-      for(let i=0; i<chosenEvents.length; i++){        
-        if(option['value'] == chosenEvents[i])
-          return false
-      }
-      return true
-    })
-
     return (
       <div>
         <Modal isOpen={openModal}
@@ -123,7 +115,7 @@ class NewWebhookLogModal extends React.Component {
                         <Select 
                           id="event"
                           placeholder="Select event" 
-                          options={event_options}
+                          options={EVENT_OPTIONS}
                           searchable={false}
                           value={props.values.event}
                           onChange={(option) => {

@@ -264,8 +264,8 @@ class Invoice extends React.Component {
   render() {
     const {loading, invoice, timer, showAlert, openQRModal, seconds} = this.state
 
-    if(seconds < 0)
-      invoice.status = 2
+    // if(seconds < 0)
+    //   invoice.status = 2
 
     return (
       <div>

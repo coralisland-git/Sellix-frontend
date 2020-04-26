@@ -102,7 +102,7 @@ class Purchase extends React.Component {
 		this.setState({
 			coupon_code
 		}, () => {
-			this.props.setCoupon(this.state.coupon_code)
+			// this.props.setCoupon(this.state.coupon_code)
 		})
 	}
 
@@ -166,13 +166,14 @@ class Purchase extends React.Component {
 		}
 
 		api(data).then(res => {
-			if(res.status == 200)
+			if(res.status == 200) {
+				this.props.setCoupon(coupon_code)
 				return this.setState({
 					appliedCoupon: res.data.coupon,
 					couponSuccess: true,
 					couponLoading: false
 				})
-			else if(res.status == 400)
+			} else if(res.status == 400)
 				return this.setState({
 					couponError: true,
 					couponLoading: false
@@ -201,7 +202,7 @@ class Purchase extends React.Component {
 				</div>
 
 				<div className="text-center">
-					<h3>{currency}{(productInfo.price_display * quantity * (appliedCoupon ? appliedCoupon.discount / 100 : 1)).toFixed(2) || 0}</h3>
+					<h3>{currency}{(productInfo.price_display * quantity * (appliedCoupon ? (100 - appliedCoupon.discount) / 100 : 1)).toFixed(2) || 0}</h3>
 					<div className="mt-3">
 						{!showPaymentOptions && <Button color="primary" className="mr-auto ml-auto d-block" onClick={this.showPaymentOptions} style={{width: 170}}>Purchase</Button>}
 						{showPaymentOptions && paymentOptions.length === 0 && <p className="mt-3 mb-3 text-grey">This product has no payment options.</p>}

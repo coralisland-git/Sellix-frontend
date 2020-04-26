@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
@@ -8,352 +8,174 @@ import {
   Button,
   Row,
   Col,
+  Label,
   Form,
   FormGroup,
-  Input,
-  Label
+  Input
 } from 'reactstrap'
-import Select from 'react-select'
-
+import * as Yup from "yup";
+import * as cn from 'classnames'
+import * as _ from 'lodash'
+import { Formik } from 'formik'
+import { replyQuerie } from './actions'
+import { Spin } from 'components'
+import { getQuerie } from './actions'
+import { closeQuerie } from './actions'
+import { reopenQuerie } from './actions'
+import {
+  CommonActions
+} from 'services/global'
 
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
+    querie: state.queries.querie,
+    user: state.common.general_info,
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    replyQuerie: bindActionCreators(replyQuerie, dispatch),
+    actions: bindActionCreators({ getQuerie }, dispatch),
+    closeQuerie: bindActionCreators({ closeQuerie }, dispatch),
+    reopenQuerie: bindActionCreators({ reopenQuerie }, dispatch),
   })
 }
 
-class DetailContact extends React.Component {
-  
+class ReplyToQuerie extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
     }
+  }
 
+  componentDidUpdate(prevProps) {
+    let { user } = this.props;
+    if(user || prevProps.user !== user) {
+      document.title = `Contacts | Sellix`;
+    }
+  }
+
+  componentDidMount() {
+    document.title = `Contacts | Sellix`;
+    this.props.actions.getQuerie(this.props.match.params.id)
+  }
+
+  handleSubmit(values) {
+    this.setState({ loading: true })
+    this.props.replyQuerie({ ...values, uniqid: this.props.match.params.id }).then(res => {
+      this.props.actions.getQuerie(this.props.match.params.id)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  }
+
+  renderMessages = () => {
+    return _.map(this.props.querie, querie => {
+      return <div className={querie.role === 'customer' ? 'alignForCustomerCS' : 'AlignForYouCS'}>
+        <div className='querieMessageBlockCS'>
+          <div className='querieMessageTitle'>{querie.role === 'customer' ? 'You' : 'Seller'}</div>
+          <div>{querie.message}</div>
+          <div className='querieMessageDate'>{querie.day_value}-{querie.month}-{querie.year}</div>
+        </div>
+      </div>
+    })
+  }
+
+  closeQuerie = (uniqid) => {
+    this.props.closeQuerie.closeQuerie({ uniqid }).then((res) => {
+      this.props.commonActions.tostifyAlert('success', res.message)
+      this.props.actions.getQuerie(this.props.match.params.id)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+    })
   }
 
   render() {
-
+    const { loading } = this.state
+    const currentQuerie = _.find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
+    if (!currentQuerie) { return null }
     return (
-      <div className="create-contact-screen">
+      <div className="query-view-screen mt-3">
         <div className="animated fadeIn">
-          <Row>
-            <Col lg={12} className="mx-auto">
-              <Card>
-                <CardHeader>
-                  <Row>
-                    <Col lg={12}>
-                      <div className="h4 mb-0 d-flex align-items-center">
-                        <i className="nav-icon fas fa-id-card-alt" />
-                        <span className="ml-2">Update Contact</span>
-                      </div>
-                    </Col>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col lg={12}>
-                      <Form>
-                        <h4 className="mb-4">Contact Name</h4>
-                        <Row>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Refrence Code</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Type</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row className="row-wrapper">
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Full Name</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Middle Name</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Last Name</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <hr/>
-                        <h4 className="mb-3 mt-3">Contact Details</h4>
-                        <Row className="row-wrapper">
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Contact Type</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Organization Name</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">PO Box Number</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row className="row-wrapper">
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Email</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Telephone</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Mobile Number</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row className="row-wrapper">
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Address Line1</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Address Line2</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Address Line3</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row className="row-wrapper">
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Country</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">State Region</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">City</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row className="row-wrapper">
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Post Zip Code</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        
-                        <hr/>
-                        <h4 className="mb-3 mt-3">Invoicing Details</h4>
-                        <Row className="row-wrapper">
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Billing Email</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Contract PO Number</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row className="row-wrapper">
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Vat Registration Number</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="4">
-                            <FormGroup>
-                              <Label htmlFor="select">Currency Code</Label>
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={12} className="mt-5 d-flex align-items-center justify-content-between">
-                            <FormGroup>
-                              <Button color="danger" className="btn-square">
-                                <i className="fa fa-trash"></i> Delete
-                              </Button>
-                            </FormGroup>
-                            <FormGroup className="text-right">
-                              <Button type="submit" color="primary" className="btn-square mr-3">
-                                <i className="fa fa-dot-circle-o"></i> Update
-                              </Button>
-                              <Button color="secondary" className="btn-square" 
-                                onClick={() => {this.props.history.push('/admin/master/contact')}}>
-                                <i className="fa fa-ban"></i> Cancel
-                              </Button>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                      </Form>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+          <Formik
+            noValidate="noValidate"
+						initialValues={{message: ''}}
+            onSubmit={(values) => {
+              this.handleSubmit(values)
+            }}
+            validationSchema={Yup.object().shape({
+							message: Yup.string().required('Message is required'),
+						})}>{props => (
+              <Form onSubmit={props.handleSubmit}>
+                <Card>
+                  <CardHeader>
+                    <Row style={{ alignItems: 'center' }}>
+                      <Col md={12}>
+                        <div className='querieTitle'>
+                          <h1>TICKET - {this.props.querie[0].uniqid} 
+                            { this.props.querie[0].status == 'closed' && 
+                              <span className={`query-badge badge-closed ml-2`}>
+                                closed
+                              </span>
+                            }
+                            </h1>
+                          {this.props.querie[0].status != 'closed' && <Button color="default" onClick={(e) => this.closeQuerie(this.props.match.params.id)}>Close</Button>}
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardHeader>
+                  <CardBody className="p5-4 pb-5">
+                    <Row>
+                      <Col lg={12}>
+                        <div className='QuerieChatBlock'>
+                          {this.renderMessages()}
+                        </div>
+                        {
+                          this.props.querie[0].status != 'closed' && 
+                          <FormGroup>
+                            <Input
+                              type="textarea"
+                              className="pt-3 pb-3 "
+                              rows={7}
+                              name='message'
+                              placeholder="Reply to Seller"
+                              onChange={props.handleChange}
+                              value={props.values.message}
+                              className={
+                                props.errors.message && props.touched.message
+                                  ? "is-invalid"
+                                  : ""
+                              }
+                            />
+                            {props.errors.message && props.touched.message && (
+                              <div className="invalid-feedback">{props.errors.message}</div>
+                            )}
+                          </FormGroup>
+                        }
+                      </Col>
+                    </Row>
+                    {
+                      this.props.querie[0].status != 'closed' && 
+                      <Button color="primary" className="mt-4 mb-3" disabled={loading}>{loading?<Spin/>:'Submit'}</Button>
+                    }
+                  </CardBody>
+                </Card>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailContact)
+export default connect(mapStateToProps, mapDispatchToProps)(ReplyToQuerie)
