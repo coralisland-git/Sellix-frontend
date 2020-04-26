@@ -23,7 +23,7 @@ const OPTIONS = [
 
 const ZENDESK_KEY = "fDcM3Ib5ADtloi5i2xHLMsuNvSHnXIOr3z6crmHo";
 const ZENDESK_URL = "https://sellix.zendesk.com/api/v2/tickets.json";
-const ZENDESK_EMAIL = "fmarzahl137@gmail.com";
+const ZENDESK_EMAIL = "pavlenkovictor92@gmail.com";
 
 class Tickets extends React.Component {
 
@@ -55,15 +55,16 @@ class Tickets extends React.Component {
             const response = await api.post(ZENDESK_URL, JSON.stringify({ ticket }), {
                 headers: {
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': "*",
                     'Authorization': `Basic ${btoa(`${ZENDESK_EMAIL}/token:${ZENDESK_KEY}`)}`
                 }
             });
 
-            if (response.request) {
-                console.log(response.request)
+            if (response.ticket) {
+                console.log(response.ticket)
                 this.props.commonActions.tostifyAlert('success', "Your ticket has been created. Additional information have been sent to your email.")
             } else {
-                console.log(response.request)
+                console.log(response)
                 this.props.commonActions.tostifyAlert('error', response || 'Seomthing went wrong!')
             }
 
