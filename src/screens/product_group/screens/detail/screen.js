@@ -289,6 +289,8 @@ class EditProductGroup extends React.Component {
       this.props.actions.getProductGroupByID(this.id).then(res => {
         let group = res.data.group
 
+        console.log('multiValue initial', group.products_bound.map(pro => {return {value: pro.uniqid, label:pro.title}}))
+
         this.setState({
           initialValues: {
               ...group,
@@ -425,11 +427,13 @@ class EditProductGroup extends React.Component {
                                                                         isMulti
                                                                         options={product_options}
                                                                         placeholder="Select Products"
-                                                                        value={this.state.multiValue}
+                                                                        value={console.log('value', this.state.multiValue) || this.state.multiValue}
                                                                         onChange={(option) => {
                                                                             this.setState({
                                                                             multiValue: option
                                                                             })
+
+                                                                            console.log('option', option)
 
                                                                             props.handleChange("products_bound")(option.map(o => o.value).toString());
                                                                         }}
