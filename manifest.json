@@ -1,0 +1,37 @@
+{
+  "name": "My App",
+  "author": {
+    "name": "Jean Thompson",
+    "email": "support@omniwear.com",
+    "url": "https://www.omniwear.com/profiles/jthompson"
+  },
+  "defaultLocale": "en",
+  "private": false,
+  "location": {
+    "support": {
+      "background": "assets/iframe.html",
+      "ticket_sidebar": {
+        "autoLoad": false
+      },
+      "top_bar": {
+        "autoHide": true,
+        "url": "assets/top_bar.html",
+        "size": {
+          "width": "450px",
+          "height": "500px"
+        }
+      }
+    }
+  },
+  "domainWhitelist": ["omniwear.com"],
+  "parameters": [
+    {
+      "name": "token",
+      "type": "text",
+      "secure": true,
+      "required": true
+    }
+  ],
+  "version": "1.0",
+  "frameworkVersion": "2.0"
+}

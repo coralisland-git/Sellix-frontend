@@ -29,7 +29,9 @@ class Tickets extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            client: null
+        }
     }
 
     componentDidMount() {
@@ -40,6 +42,13 @@ class Tickets extends React.Component {
             this.props.authActions.getSelfUser()
         } else {
             this.props.history.push('/')
+        }
+
+        if(window.ZAFClient) {
+            let client = window.ZAFClient.init();
+            this.setState({
+                client
+            })
         }
     }
 
@@ -56,27 +65,50 @@ class Tickets extends React.Component {
             custom_fields
         };
 
-        try {
-            const response = await api.post(ZENDESK_URL, JSON.stringify({ ticket }), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Authorization': `Basic ${btoa(`${ZENDESK_EMAIL}/token:${ZENDESK_KEY}`)}`
-                }
-            });
+        if(this.state.client) {
 
-            if (!response.request) {
-                console.log(response)
-                this.props.commonActions.tostifyAlert('error', response || 'Seomthing went wrong!')
-            } else {
-                console.log(response)
+            var settings = {
+                url: ZENDESK_URL,
+                headers: {'Authorization': `Basic ${btoa(`${ZENDESK_EMAIL}/token:${ZENDESK_KEY}`)}`},
+                secure: true,
+                cors: true,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ ticket })
+            };
+
+            this.state.client.request(settings).then((res) => {
+                console.log(res)
                 this.props.commonActions.tostifyAlert('success', "Your ticket has been created. Additional information have been sent to your email.")
-            }
+            });
+        } else {
+            try {
+                const response = await api.post(ZENDESK_URL, JSON.stringify({ ticket }), {
+                    // credentials: true,
+                    // withCredentials: true,
+                    // withCors: true,
+                    // enablePreflight: false,
+                    // crossDomain: true,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Origin": "*",
+                        'Authorization': `Basic ${btoa(`${ZENDESK_EMAIL}/token:${ZENDESK_KEY}`)}`
+                    }
+                });
 
-        } catch (error) {
-            console.log(error)
-            this.props.commonActions.tostifyAlert('error', error || 'Seomthing went wrong!')
-            return error;
+                if (!response.request) {
+                    console.log(response)
+                    this.props.commonActions.tostifyAlert('error', response || 'Seomthing went wrong!')
+                } else {
+                    console.log(response)
+                    this.props.commonActions.tostifyAlert('success', "Your ticket has been created. Additional information have been sent to your email.")
+                }
+
+            } catch (error) {
+                console.log(error)
+                this.props.commonActions.tostifyAlert('error', error || 'Seomthing went wrong!')
+                return error;
+            }
         }
     }
 
@@ -91,7 +123,6 @@ class Tickets extends React.Component {
             message: Yup.string().required('The message fields is required')
         });
 
-
         return (
             <div className="ticket-screen light">
                 <div className="animated fadeIn">
@@ -103,7 +134,7 @@ class Tickets extends React.Component {
                         </Container>
                     </div>
 
-                    <div className="section text-center bg-white" style={{ padding: "3rem 0 "}}>
+                    <div className="section bg-white" style={{ padding: "3rem 0 "}}>
                         <Container className="home-container">
                             <Formik onSubmit={this.handleSubmit} validationSchema={validationSchema}>
                                 {({handleSubmit, values, errors, handleChange, touched}) => (

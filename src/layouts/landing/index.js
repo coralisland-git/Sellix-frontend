@@ -106,7 +106,7 @@ class LandingLayout extends React.Component {
                             path={prop.path}
                             component={() => (
                               <>
-                                <header className={`pt-3 pb-3 ${prop.name === 'Home'?'home-header':''}`}>
+                                <header className={`pt-2 pb-2 ${prop.name === 'Home'?'home-header':''}`}>
                                   <Navbar  color="white" light expand="lg">
                                       <NavbarBrand href="/">
                                           <img className="logo" src={prop.name === 'Home'?sellix_logo:sellix_logo_footer}/>
