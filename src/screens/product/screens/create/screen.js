@@ -639,7 +639,9 @@ class CreateProduct extends React.Component {
 																					})
 	
 																					props.handleChange("type")(option.value);
-																				}}>                                       
+																				}}
+																				// menuIsOpen={true}                                 
+																				>     
 																			</Select>
 																		</FormGroup>
 																	</Col>
