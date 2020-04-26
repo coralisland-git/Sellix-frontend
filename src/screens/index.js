@@ -41,6 +41,7 @@ import WebhookLogs from './webhook_logs'
 import Pages from './pages'
 import CreatePage from './pages/screens/create'
 import Contact from './contact'
+import QueryView from './contact/screens/detail'
 import ShopFeedback from './feedbacks_shop'
 import LeaveFeedback from './feedbacks_shop/screens/create'
 import ShopProducts from './product_shop'
@@ -108,6 +109,7 @@ export {
   
   Contact,
   Contacts,
+  QueryView,
   Order,
   Analytics,
   Reports,

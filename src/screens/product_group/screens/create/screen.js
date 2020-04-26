@@ -311,7 +311,7 @@ class CreateProductGroup extends React.Component {
 															</Col>
 														</Row>
 													:
-														<Row className="mb-4">
+														<Row>
 															<Col lg={3} className="p-0">
 																<div className="page_description_card bg-grey p-3 mr-2 mb-4">
                                                                     <h6 className="text-grey mb-3">REFERENCE</h6>

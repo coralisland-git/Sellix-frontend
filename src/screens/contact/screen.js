@@ -63,7 +63,7 @@ class Contact extends React.Component {
         pathname: `/${user}/query/${res.data.uniqid}`
       })
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.message)
+      this.props.commonActions.tostifyAlert('error', err.error)
     }).finally(() => {
       this.setState({ loading: false })
     })
