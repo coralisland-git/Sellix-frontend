@@ -254,5 +254,27 @@ export const GlobalStyles = createGlobalStyle`
     *[class$=control] * {
         color: ${({ theme }) => theme.text} !important;
     }
+
+    *[class$=-menu] {
+        background-color: ${({ theme }) => theme.widgetBorder} !important;
+    }
+
+    *[class$=-menu] *[class$=-option] {
+        background-color: ${({ theme }) => theme.widgetBorder} !important;
+        cursor:pointer;
+    }
+
+    *[class$=-menu] *[class$=-option]:hover {
+        background-color: ${({ theme }) => theme.widget} !important;
+    }
+
+    *[class$=multiValue] * {
+        color: black !important;
+    }
      
+    ${({theme}) => theme.name === 'dark' && `
+        *[class$=control] * {
+            color: ${({ theme }) => theme.text} !important;
+        }
+    `}
 `
