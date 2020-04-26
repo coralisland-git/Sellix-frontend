@@ -284,6 +284,7 @@ class EditProduct extends React.Component {
 
 		values.remove_image = images.length == 0?true:false
 		values.remove_file= files.length == 0?true:false
+		values.currency = values.currency.value
 
 		values.webhooks = webhook_fields
 
@@ -349,7 +350,10 @@ class EditProduct extends React.Component {
 		product.price = product.price_display
         
         this.setState({
-		  initialValues: product,
+		  initialValues: {
+			  ...product,
+			  currency: CURRENCY_LIST.find(x => x.value === product.currency)
+		  },
 		  delimiter: delimiter,
 		  serials: serials,
           files: product.file_attachment?
@@ -521,7 +525,7 @@ class EditProduct extends React.Component {
 																						searchable={false}
 																						value={props.values.currency}
 																						onChange={(option) => {
-																							props.handleChange("currency")(option.value);
+																							props.handleChange("currency")(option);
 																						}}
 																						className={
 																							props.errors.currency && props.touched.currency

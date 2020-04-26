@@ -269,6 +269,7 @@ class CreateProduct extends React.Component {
 		values.service_stock = showServiceStock?values.service_stock:-1	
 
 		values.webhooks = webhook_fields
+		values.currency = values.currency.value
 
 		if(values.quantity_max == "") {
 			values.quantity_max = "0"
@@ -430,7 +431,7 @@ class CreateProduct extends React.Component {
 																					placeholder="USD"
 																					value={props.values.currency}
 																					onChange={(option) => {
-																						props.handleChange("currency")(option.value);
+																						props.handleChange("currency")(option);
 																					}}
 																					searchable={false}
 																					className={
