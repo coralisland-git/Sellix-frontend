@@ -186,7 +186,7 @@ class ShopLayout extends React.Component {
 							</NavItem>
 							<NavItem
 								className="px-1"
-								active={pathname == `/${userId}/contact`}
+								active={pathname == `/${userId}/contact` || pathname.includes(`/${userId}/query`)}
 							>
 								<NavLink to={`/${userId}/contact`} className="nav-link">
 									Contact
