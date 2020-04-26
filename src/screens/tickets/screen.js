@@ -51,28 +51,23 @@ class Tickets extends React.Component {
             custom_fields
         };
 
-        try {
-            const response = await api.post(ZENDESK_URL, JSON.stringify({ ticket }), {
+             api.post(ZENDESK_URL, JSON.stringify({ ticket }), {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': "*",
+                    'Access-Control-Allow-Origin': '*',
                     'Authorization': `Basic ${btoa(`${ZENDESK_EMAIL}/token:${ZENDESK_KEY}`)}`
                 }
-            });
-
-            if (response.ticket) {
-                console.log(response.ticket)
-                this.props.commonActions.tostifyAlert('success', "Your ticket has been created. Additional information have been sent to your email.")
-            } else {
-                console.log(response)
-                this.props.commonActions.tostifyAlert('error', response || 'Seomthing went wrong!')
-            }
-
-        } catch (error) {
-            console.log(error)
-            this.props.commonActions.tostifyAlert('error', error || 'Seomthing went wrong!')
-            return error;
-        }
+            }).then((response) => {
+                 if (response.ticket) {
+                     this.props.commonActions.tostifyAlert('success', "Your ticket has been created. Additional information have been sent to your email.")
+                 } else {
+                     this.props.commonActions.tostifyAlert('error', response || 'Seomthing went wrong!')
+                 }
+             })
+                 .catch((error) => {
+                     this.props.commonActions.tostifyAlert('error', error || 'Seomthing went wrong!')
+                     return error;
+                 })
     }
 
 
