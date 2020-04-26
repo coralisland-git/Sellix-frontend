@@ -90,7 +90,6 @@ class ReplyToQuerie extends React.Component {
   }
 
   render() {
-    console.log({ querie: this.props.querie })
     const currentQuerie = _.find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
     if (!currentQuerie) { return null }
     return (

@@ -239,8 +239,6 @@ class ProductGroups extends React.Component {
   render() {
     const { loading, search_key } = this.state
 
-    console.log(this.props.all_product_groups)
-
     const all_product_groups = search_key?this.searchProducts(this.props.all_product_groups):this.props.all_product_groups
 
     return (

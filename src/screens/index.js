@@ -1,5 +1,6 @@
 import Home from './home'
 import Fees from './fees'
+import Tickets from './tickets'
 import Changelog from './changelog'
 import LogIn from './log_in'
 import TwoFactorAuthentication from './2fa'
@@ -92,6 +93,7 @@ export {
   TwoFactorAuthentication,
   Invoice,
   Terms,
+  Tickets,
 
 
   EditCoupon,

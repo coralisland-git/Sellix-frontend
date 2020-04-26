@@ -53,7 +53,6 @@ class Purchase extends React.Component {
 	}
 
 	backToProducts = () => {
-		console.log(this.props.history, this.state.showPaymentOptions)
 		if(this.state.showPaymentOptions) {
 			this.setState({ showPaymentOptions: false })
 		} else {
@@ -167,7 +166,6 @@ class Purchase extends React.Component {
 		}
 
 		api(data).then(res => {
-			console.log(res)
 			if(res.status == 200) {
 				this.props.setCoupon(coupon_code)
 				return this.setState({

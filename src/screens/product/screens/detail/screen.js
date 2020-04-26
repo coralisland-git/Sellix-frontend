@@ -802,8 +802,7 @@ class EditProduct extends React.Component {
 																						this.setState({
 																							delimiter: option
 																						})
-																						
-																						console.log(option.value)
+
 																						if(option.value !== 'custom')
 																							props.handleChange("stock_delimiter")(option.value)
 																						else props.handleChange("stock_delimiter")('')

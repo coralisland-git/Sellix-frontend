@@ -1,6 +1,4 @@
-import { Home, Fees, Terms } from 'screens'
-import { Changelog } from 'screens'
-
+import { Home, Fees, Terms, Tickets, Changelog } from 'screens'
 import { NotFound } from 'components'
 
 const landingRoutes = [
@@ -23,6 +21,11 @@ const landingRoutes = [
     path: '/404',
     component: NotFound,
     name: '404'
+  },
+  {
+    path: '/ticket',
+    component: Tickets.screen,
+    name: 'Tickets'
   },
   {
     path: '/',

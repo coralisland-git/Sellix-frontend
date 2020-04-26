@@ -13,7 +13,7 @@ const mapData = {
 };
 
 const handleClick = (e, countryCode) => {
-  console.log(countryCode);
+
 };
 
 const RevenueMap = () => {

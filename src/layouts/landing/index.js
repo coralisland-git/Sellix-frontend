@@ -5,41 +5,32 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { landingRoutes } from 'routes'
-import {
-  AuthActions,
-  CommonActions
-} from 'services/global'
-import {NotFound} from 'components'
+import { AuthActions, CommonActions } from 'services/global'
 
 import {
     Button,
-    Col,
     Container,
-    Row,
     Collapse,
     Navbar,
-    NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
     NavLink
-  } from 'reactstrap'
+} from 'reactstrap'
 
 import sellix_logo from 'assets/images/home/logo-1@2x.png'
 import sellix_logo_footer from 'assets/images/Sellix_logo_beta.svg'
 import './style.scss'
 
-const mapStateToProps = (state) => {
-  return ({
+const mapStateToProps = (state) => ({
     is_authed: state.auth.is_authed
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
+})
+
+const mapDispatchToProps = (dispatch) => ({
     authActions: bindActionCreators(AuthActions, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+})
+
 
 class LandingLayout extends React.Component {
 
@@ -50,13 +41,14 @@ class LandingLayout extends React.Component {
     }
   }
 
-
   toggle() {
     this.setState({isOpen: !this.state.isOpen})
   }
 
   componentDidMount () {
     const preUrl = `/${window.localStorage.getItem('userId')}`
+
+    this.props.authActions.getSelfUser()
 
     if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
       this.props.history.push(preUrl)
@@ -92,9 +84,10 @@ class LandingLayout extends React.Component {
       zIndex: 1999
     }
 
-    const { isOpen } = this.state
+    const { isOpen } = this.state;
+    const { history } = this.props;
     const user = window.localStorage.getItem('userId')
-    var dashboardUrl = user? `/dashboard/${user}/home` : '/'
+    let dashboardUrl = user? `/dashboard/${user}/home` : '/'
 
     return (
     <div className="landing-layout">
@@ -113,14 +106,14 @@ class LandingLayout extends React.Component {
                             path={prop.path}
                             component={() => (
                               <>
-                                <header className={`pt-3 pb-3 ${prop.name === 'Home'?'home-header':''}`}>
+                                <header className={`pt-2 pb-2 ${prop.name === 'Home'?'home-header':''}`}>
                                   <Navbar  color="white" light expand="lg">
                                       <NavbarBrand href="/">
                                           <img className="logo" src={prop.name === 'Home'?sellix_logo:sellix_logo_footer}/>
                                       </NavbarBrand>
                                       
                                       {
-                                        prop.name === 'Home' && 
+                                        prop.name === 'Home' &&
                                           <Collapse className="mr-5" isOpen={isOpen} navbar>
                                             <Nav className="ml-auto" navbar>
                                               <Link
@@ -150,7 +143,7 @@ class LandingLayout extends React.Component {
                                             </Nav>
                                           </Collapse>
                                       }
-                                      
+
                                       <div>
                                         { user?
                                             <Button className="mr-3 landing-primary-button text-white menu" 
@@ -249,10 +242,8 @@ class LandingLayout extends React.Component {
                             </Nav>
                         </div>
                         </div>
-                    
                     </Container>
                 </div>
-                
                 </footer>
             </div>
         </div>

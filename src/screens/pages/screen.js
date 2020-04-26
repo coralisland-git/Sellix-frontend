@@ -8,10 +8,8 @@ import {
   Button,
   Row,
   Col,
-  ButtonGroup,
   Input
 } from 'reactstrap'
-import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 
 import { Loader } from 'components'
@@ -57,7 +55,6 @@ class Pages extends React.Component {
     }
 
     this.options = {
-      paginationPosition: 'bottom',
       page: 1,
       sizePerPage: 5,  // which size per page you want to locate as default
       pageStartIndex: 1, // where to start counting the pages

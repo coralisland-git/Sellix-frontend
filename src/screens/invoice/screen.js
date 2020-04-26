@@ -346,7 +346,6 @@ class Invoice extends React.Component {
                             <div className="mt-5">
                               <PayPalButton
                                 createOrder={(data, actions) => {
-                                  console.log('111111111')
                                     return invoice.paypal_tx_id;
                                 }}
                                 onApprove={(data, actions) => {
@@ -354,7 +353,6 @@ class Invoice extends React.Component {
                                     this.getPayPalInvoice()
                                 }}
                                 onError = {() => {
-                                    console.log('33333333333')
                                 }}
                                 style={{
                                     layout: 'horizontal',

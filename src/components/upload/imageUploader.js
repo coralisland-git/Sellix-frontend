@@ -22,7 +22,7 @@ class ImageUpload extends React.Component {
         };
       });
       blobPromise.then(value => {
-        // console.log(value);
+
       });
     }
   };
