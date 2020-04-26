@@ -60,6 +60,7 @@ class Tickets extends React.Component {
             const response = await api.post(ZENDESK_URL, JSON.stringify({ ticket }), {
                 headers: {
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
                     'Authorization': `Basic ${btoa(`${ZENDESK_EMAIL}/token:${ZENDESK_KEY}`)}`
                 }
             });
