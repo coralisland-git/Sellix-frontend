@@ -94,7 +94,7 @@ class Home extends React.Component {
                     <img className="service-img" src={service2}/>
                     <h4 className="mt-4 text-pink f-b">Payment Flexibility</h4>
                     <p className="small text-pink">
-                    Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrencie for your store.
+                    Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrency for your shop.
                     </p>
                     <p className="text-pink f-b mt-5"><Link to="/fees" className="text-pink">Fees →</Link></p>
                   </div>
