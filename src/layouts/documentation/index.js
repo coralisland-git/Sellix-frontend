@@ -82,25 +82,23 @@ class documentationLayout extends React.Component {
             </Suspense>
           </AppHeader>
           <div className="app-body">
-            <main className="main mb-5">
-              <Container className="p-0" fluid>
-                <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
-                <Switch>
-                {
-                  documentationRoutes.map((prop, key) => {              
-                    return (
-                      <Route
-                        path={prop.path}
-                        component={prop.component}
-                        exact={true}
-                        key={key}
-                      />
-                    )
-                  })
-                }
-                <Route path="*" component={NotFound}/>
-                </Switch>
-              </Container>
+            <main className="main">
+              <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
+              <Switch>
+              {
+                documentationRoutes.map((prop, key) => {              
+                  return (
+                    <Route
+                      path={prop.path}
+                      component={prop.component}
+                      exact={true}
+                      key={key}
+                    />
+                  )
+                })
+              }
+              <Route path="*" component={NotFound}/>
+              </Switch>
             </main>
           </div>
         </div>

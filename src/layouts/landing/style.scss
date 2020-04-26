@@ -6,7 +6,7 @@
 
     .landing-primary-button {
       background-color: #6727AD;
-      border-radius: 8px !important;
+      border-radius: 3px !important;
       line-height: 1em;
       color: white !important;
       padding-top:11px;
@@ -15,10 +15,7 @@
       min-height: 0 !important;
 
       &.menu {
-        padding-top: 8px;
-        padding-bottom: 10px;
-        padding-left: 40px;
-        padding-right: 40px;
+        border-radius: 3px!important;
         font-weight: bold !important;
       }
 
@@ -29,7 +26,7 @@
 
     .landing-secondary-button {
       background-color: white;
-      border-radius: 8px !important;
+      border-radius: 3px !important;
       line-height: 1em;
       color:  #3D2E87!important;
       padding-top:11px;

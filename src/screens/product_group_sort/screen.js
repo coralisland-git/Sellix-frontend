@@ -16,7 +16,7 @@ import RLDD from 'react-list-drag-and-drop/lib/RLDD';
 import {
   CommonActions,
 } from 'services/global'
-import ProductCard from "../product_shop/productCard"
+import GroupCard from "../product_shop/groupCard"
 import VirtualDraggableGrid from 'react-virtual-draggable-grid';
 import { DragAndDropGrid } from '../product_sort/dragAndDropGrid2'
 import * as ProductGroupActions from '../product_group/actions'
@@ -42,15 +42,7 @@ const mapDispatchToProps = (dispatch) => {
 const ProductGroupCardExtended = ({ group }) => (
     <div style={{ background: 'white', marginRight: '15px', marginLeft: '15px', borderRadius: '5px'}} 
          className="product-card-extended">
-      <Card className="bg-white p-0 product-card">
-            <div style={{ minHeight: 150, width: '100%' }}>
-                {group.image_attachment && <img src={config.API_ROOT_URL + '/attachments/image/' + group.image_attachment} alt={group.title} />}
-            </div>
-            
-            <div className="p-3 d-flex flex-column h-100">
-                <h5 className="mb-1 text-black">{group.title}</h5>
-            </div> 
-        </Card>
+      <GroupCard group={group} preventDefault />
     </div>
 )
 

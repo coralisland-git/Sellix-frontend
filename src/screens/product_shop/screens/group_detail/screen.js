@@ -13,50 +13,29 @@ import { getProductStock } from 'screens/product_shop/productCard';
 import config from 'constants/config';
 
 
-const mapStateToProps = ({ common: { user_products } }) => ({
-  user_products
-});
-
-const mapDispatchToProps = dispatch => ({
-  commonActions: bindActionCreators(CommonActions, dispatch)
-});
-
-
-class ShopGroupDetail extends React.Component {
+class ShopGroupModal extends React.Component {
 
   state = {
     loading: true,
-    selectedProduct: null,
-    group: null
+    selectedProduct: null
   }
 
   componentDidMount() {
-    let data = {
-      method: 'GET',
-      url: `groups/unique/${this.props.match.params.id}`
-    }
+    const { group } = this.props
 
-    return api(data).then(res => {
-      if (res.status === 200) {
-        this.setState({
-          loading: false,
-          group: res.data.group,
-          selectedProduct: res.data.group.products_bound[0]
-        })
-      } else {
-        throw res
-      }     
-    }).catch(err => {
-      throw err
+    this.setState({
+      selectedProduct: group.products_bound[0]
     })
   }
 
   formatProductOption = product => {
     const rating = product.average_score || 0
 
-    const isRatingGold = rating > 4 
+    const isRatingGold = rating > 4
 
-    return <div className="option-select-option">
+    const isSelected = product.uniqid === this.state.selectedProduct.uniqid
+
+    return <div className={"option-select-option " + (isSelected && "is-selected")}>
       <div>
         <span>{product.title}</span>
         <span className={isRatingGold && "text-gold"} style={{marginLeft: '10px'}}>
@@ -78,35 +57,54 @@ class ShopGroupDetail extends React.Component {
 
   render() {
 
-    const { loading, selectedProduct, group } = this.state
-    let { history } = this.props;
+    const { selectedProduct } = this.state
+    let { group, onGoBack, onProductSelect, className } = this.props;
 
-    return loading ? Loading() : (
+    return (
       <div>
         <style>
           {`
+          body {
+            padding-right: 0px !important;
+          }
           .text-gold {
             color: gold !important;
           }
           .option-select, .option-select * {
             user-select: none !important;
           }
-          .option-select > * > * > * {
+          .option-select > * > * > *:not([class$=-singleValue]):not([class$=-indicatorContainer]) {
             background: white !important;
+            padding: 0;
           }
-          // .option-select-option:hover {
-          //   background: rgba(0,0,0,.1);
-          //   margin: 0;
-          // }
+          *:not([class$=-singleValue]) > .option-select-option {
+            padding: 8px 12px;
+          }
+          *:not([class$=-singleValue]) > .option-select-option:hover {
+            background: rgba(0,0,0,.1);
+            margin: 0;
+            
+          }
+          *[class$=-singleValue] > .option-select-option span:not(.text-gold) {
+            color: rgba(0,0,0,.9) !important;
+          }
+          *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold) {
+            color: black !important;
+          }
+          *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold) {
+            color: black !important;
+          }
+          .option-select > div:first-of-type > div:first-child {
+            height: 50px;
+          }
+          .option-select input {
+            opacity: 0 !important;
+          }
           `}
         </style>
-        <div style={{filter: 'blur(10px)'}}>
-          <ShopProductDetail {...this.props} selectedProduct={selectedProduct} group={group}
-          handleProductChange={product => []/*this.setState({ selectedProduct: product })*/} />
-        </div>
         <div>
-          <Modal isOpen={true} className="blur" centered={true}>
-            <ModalHeader><span>{group.title}</span></ModalHeader>
+          <Modal isOpen={true} className="blur" centered={true} className={className}>
+            <ModalHeader><span style={{color: '#613BEA'}}>{group.title}</span></ModalHeader>
             <ModalBody>
               <p>Select option:</p>
               <Select 
@@ -115,11 +113,12 @@ class ShopGroupDetail extends React.Component {
                 options={group.products_bound}
                 className="option-select"
                 onChange={product => this.setState({ selectedProduct: product})}
+                // menuIsOpen={true}
               />
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={() => history.push(`/product/${selectedProduct.uniqid}`)}>Next</Button>{' '}
-              <Button color="secondary" onClick={() => history.push(`/${selectedProduct.username}`)}>Go Back</Button>
+              <Button color="primary" onClick={() => onProductSelect(selectedProduct)}>Next</Button>{' '}
+              <Button color="secondary" onClick={() => onGoBack()}>Go Back</Button>
             </ModalFooter>
           </Modal>
         </div>
@@ -128,4 +127,4 @@ class ShopGroupDetail extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopGroupDetail)
+export default ShopGroupModal

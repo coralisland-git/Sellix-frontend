@@ -52,8 +52,8 @@ export const getGeneralUserInfo = (username) => {
     return api(data)
         .then(res => {
           let { status, data } = res;
-          let { shop_dark_mode } = data.user;
           if(status === 200) {
+            let { shop_dark_mode } = data.user;
             dispatch({
               type: COMMON.SHOP_THEME,
               payload: shop_dark_mode === '1' ? 'dark' : 'light'
