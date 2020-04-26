@@ -245,36 +245,37 @@ export const GlobalStyles = createGlobalStyle`
     .cursor-pointer {
         cursor: pointer;
     }
-
-    *[class$=control] {
-        background-color: ${({ theme }) => theme.widget} !important;
-        border: 1px solid ${({ theme }) => theme.widgetBorder} !important;
-    }
-
-    *[class$=control] * {
-        color: ${({ theme }) => theme.text} !important;
-    }
-
-    *[class$=-menu] {
-        background-color: ${({ theme }) => theme.widgetBorder} !important;
-    }
-
-    *[class$=-menu] *[class$=-option] {
-        background-color: ${({ theme }) => theme.widgetBorder} !important;
-        cursor:pointer;
-    }
-
-    *[class$=-menu] *[class$=-option]:hover {
-        background-color: ${({ theme }) => theme.widget} !important;
-    }
-
-    *[class$=multiValue] * {
-        color: black !important;
-    }
      
     ${({theme}) => theme.name === 'dark' && `
+        *[class$=control] {
+            background-color: ${theme.widget} !important;
+            border: 1px solid ${theme.widgetBorder} !important;
+        }
+
         *[class$=control] * {
-            color: ${({ theme }) => theme.text} !important;
+            color: ${theme.text} !important;
+        }
+
+        *[class$=-menu] {
+            background-color: ${theme.widgetBorder} !important;
+        }
+
+        *[class$=-menu] *[class$=-option] {
+            background-color: ${theme.widgetBorder} !important;
+            cursor:pointer;
+        }
+
+        *[class$=-menu] *[class$=-option]:hover {
+            background-color: ${theme.widget} !important;
+            color: white !important;
+        }
+
+        *[class$=control] * {
+            color: ${theme.text} !important;
+        }
+
+        *[class$=multiValue] * {
+            color: black !important;
         }
     `}
 `

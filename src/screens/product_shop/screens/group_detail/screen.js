@@ -74,7 +74,7 @@ class ShopGroupModal extends React.Component {
             user-select: none !important;
           }
           .option-select > * > * > *:not([class$=-singleValue]):not([class$=-indicatorContainer]):not([class$=-Input]) {
-            background: white !important;
+            // background: white !important;
             padding: 0;
           }
           *:not([class$=-singleValue]) > .option-select-option {
