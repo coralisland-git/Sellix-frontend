@@ -17,7 +17,7 @@ const ProductsList = ({ products, groups, loading, history }) => {
 	if(loading) {
 		return  <Loader />
 	}
-	if(!products.length) {
+	if(!products.length && !groups.length) {
 		return <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>
 	}
 
