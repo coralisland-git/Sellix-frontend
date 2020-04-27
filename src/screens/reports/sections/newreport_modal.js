@@ -5,7 +5,6 @@ import {
   Col,
   Form,
   FormGroup,
-  Input,
   Label,
   Modal,
   ModalHeader, 
@@ -14,13 +13,11 @@ import {
 } from 'reactstrap'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Select from 'react-select'
-import _ from 'lodash'
 import moment from 'moment'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pdfIcon from 'assets/images/pdf.png'
-import { DateRangePicker2, Spin } from 'components'
+import { Spin } from 'components'
 
 import { Formik } from 'formik';
 import * as Yup from "yup";

@@ -5,7 +5,6 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	Button,
 	Row,
 	Col,
 	FormGroup,
@@ -15,7 +14,7 @@ import {
 	Input
 } from 'reactstrap'
 import Select from 'react-select'
-import ReactQuill from 'react-quill';
+import { Button } from 'components';
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.snow.css';
 import ReactMde from "react-mde";

@@ -5,7 +5,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Form,
   Col,
@@ -17,7 +16,7 @@ import {
 import Select from 'react-select'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import _ from "lodash"
+import { Button } from 'components';
 import { Spin, ImageUpload, Loader } from 'components'
 import config from 'constants/config'
 import { Product } from 'screens'
