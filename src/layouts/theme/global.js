@@ -257,11 +257,12 @@ export const GlobalStyles = createGlobalStyle`
         }
 
         *[class$=-menu] {
-            background-color: ${theme.widgetBorder} !important;
+            background-color: #241e4c !important;
+            border-radius: 5px !important;
         }
 
         *[class$=-menu] *[class$=-option] {
-            background-color: ${theme.widgetBorder} !important;
+            background-color: #241e4c !important;
             cursor:pointer;
         }
 
