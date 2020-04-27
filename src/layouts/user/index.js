@@ -3,6 +3,12 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import * as router from 'react-router-dom';
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 
 import { Container } from 'reactstrap'
 import {
@@ -24,7 +30,10 @@ import {
   CommonActions
 } from 'services/global'
 
-import { mainNavigation, adminNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
+import { 
+  mainBrowserNavigation, 
+  mainMobileNavigation,
+  adminNavigation } from 'constants/navigation'
 
 import {
   Aside,
@@ -137,7 +146,12 @@ class AdminLayout extends React.Component {
                       <AppSidebarNav navConfig={adminNavigation} location={this.props.location} router={router}/>
                     </Route>
                     <Route>
-                      <AppSidebarNav navConfig={mainNavigation()} location={this.props.location} router={router}/>
+                      <BrowserView>
+                        <AppSidebarNav navConfig={mainBrowserNavigation()} location={this.props.location} router={router}/>
+                      </BrowserView>
+                      <MobileView>
+                        <AppSidebarNav navConfig={mainMobileNavigation()} location={this.props.location} router={router}/>
+                      </MobileView>
                     </Route>
                   </Switch>
                 </Suspense>
