@@ -100,6 +100,17 @@ class SettingsLayout extends React.Component {
       }
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
     }
+
+    var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (iOS) {
+      for (let i = 0; i < document.getElementsByClassName('nav-link').length ; i ++) {
+        let element = document.getElementsByClassName('nav-link')[i];
+        element.addEventListener("mouseenter", function( event ) {   
+          element.click();
+        }, false);
+      }
+    }
   }
 
   changeTheme() {
