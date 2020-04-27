@@ -10,7 +10,7 @@
   height: 100%;
   -webkit-box-pack: justify;
   section {
-    padding: 4rem;
+    padding: 8rem 4rem 0;
     flex-direction: row;    
     align-items: flex-start;
     display: flex;
@@ -121,6 +121,7 @@
     .d-content {
       margin-left: auto;
       margin-right: auto;
+      margin-top: -4rem;
       width: calc(100% - 200px);
     }
   }
