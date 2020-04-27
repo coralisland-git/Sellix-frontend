@@ -83,7 +83,8 @@ class Home extends React.Component {
                     <p className="small text-pink">
                     Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrency for your shop.
                     </p>
-                    <p className="text-pink f-b mt-5"><Link to="/fees" className="text-pink">Fees →</Link></p>
+                    <p className="text-pink f-b mt-5">
+                      <NavLink href="/fees" className="text-pink p-0" style={{width: 'fit-content'}}>Fees →</NavLink></p>
                   </div>
                 </Col>
                 <Col md={4} className="p-0">
