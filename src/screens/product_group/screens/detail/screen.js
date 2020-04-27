@@ -338,7 +338,7 @@ class EditProductGroup extends React.Component {
                 <div className="animated fadeIn">
                     <Breadcrumb className="mb-0">
                         <BreadcrumbItem active className="mb-0">
-                            <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/>Product Groups</a>
+                            <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Product Groups</a>
                         </BreadcrumbItem>
                     </Breadcrumb>
                     {loading ? <Loader/> : <Formik
@@ -390,7 +390,7 @@ class EditProductGroup extends React.Component {
                                                                     In order to create a group, please fill its Title, select which products should be contained in it and give it an image!
                                                                     </p>
                                                                 </div>
-                                                              </Col>
+                                                            </Col>
                                                             <Col lg={9} className="mt-3">
                                                                 <Row>
                                                                     <Col lg={12}>

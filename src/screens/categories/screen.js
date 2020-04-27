@@ -189,7 +189,7 @@ class Categories extends React.Component {
                           <TableHeaderColumn
                             dataField="products_count"
                             dataSort
-                            dataAlign="right"
+                            dataAlign="center"
                           >
                             Product Count
                           </TableHeaderColumn>
