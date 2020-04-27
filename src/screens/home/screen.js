@@ -26,7 +26,7 @@ class Home extends React.Component {
     this.state = {
       isOpen: false
     }
-    document.title = `Home | Sellix`;
+    document.title = `Sellix: Digital Selling with Ease`;
   }
 
   toggle() {

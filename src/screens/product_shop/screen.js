@@ -155,11 +155,11 @@ class ShopProducts extends React.Component {
                 {
                   categories.length !== 0 &&
                     <Col md={12} className="filter-button d-flex flex-wrap mb-4">
-                      <Button color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
+                      <Button skip color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
                         All
                       </Button>
                       {categories.map(({ uniqid, title }) =>
-                        <Button key={uniqid} color={filter === uniqid ? 'primary' : 'white' } className="mr-2" disabled={loading} onClick={this.setFilter(uniqid)}>
+                        <Button skip key={uniqid} color={filter === uniqid ? 'primary' : 'white' } className="mr-2" disabled={loading} onClick={this.setFilter(uniqid)}>
                           {title}
                         </Button>
                       )}

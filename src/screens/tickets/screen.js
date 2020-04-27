@@ -53,16 +53,21 @@ class Ticket extends React.Component {
                              category: null,
                          })
                      } else {
-                         console.log(data, error.details.base[0].description)
-                         this.props.commonActions.tostifyAlert(
-                             'error',
-                             data || (error && error.details && error.details.base[0].description) || 'Seomthing went wrong!'
-                         )
+                         if(error.details && error.details.base.length) {
+                             this.props.commonActions.tostifyAlert(
+                                 'error', error.details.base[0].description || 'Seomthing went wrong!'
+                             )
+                         } else {
+                             this.props.commonActions.tostifyAlert(
+                                 'error', error || 'Seomthing went wrong!'
+                             )
+                         }
                      }
                  })
-                 .catch((error) => {
-                     this.props.commonActions.tostifyAlert('error', error || 'Seomthing went wrong!')
-                     return error;
+                 .catch((res) => {
+                     console.log(res)
+                     this.props.commonActions.tostifyAlert('error', '' || 'Seomthing went wrong!')
+                     return false
                  })
                  .finally(() => {
                      setSubmitting(false)
@@ -99,7 +104,6 @@ class Ticket extends React.Component {
                             <Formik onSubmit={this.handleSubmit} validationSchema={validationSchema}>
                                 {({handleSubmit, values, errors, handleChange, touched, isSubmitting}) => (
                                     <Form onSubmit={handleSubmit}>
-                                        {console.log(values)}
                                         <Card>
                                             <CardBody className="p-4 mb-2 ">
                                                 {loading && <Row><Col lg={12}><Loader/></Col></Row>}
@@ -163,7 +167,6 @@ class Ticket extends React.Component {
                                                 }
                                             </CardBody>
 
-                                            {console.log(isSubmitting)}
                                             <Button color="primary" type="submit" className="" style={{width: 200, margin: "0 auto"}} disabled={isSubmitting}>
                                                 {isSubmitting ? <Spin/> : 'Send Message'}
                                             </Button>
