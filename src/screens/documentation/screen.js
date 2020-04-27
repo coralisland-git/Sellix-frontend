@@ -54,16 +54,16 @@ class Documentation extends React.Component {
       key = "introduction";
 
     var items = ['get_started'];
-    NAVITATIONS.map(nav => {
+    NAVITATIONS.map((nav => {
         items.push(nav.key)
-    })
+    }))
 
     items.push('api_reference');
     items.push('blacklist');
 
-    API_NAVIGATIONS.map(nav => {
+    API_NAVIGATIONS.map((nav => {
       items.push(nav.key)
-    })
+    }))
 
     return (
       <div className="documentation-screen">
@@ -74,11 +74,13 @@ class Documentation extends React.Component {
                 <Scrollspy items={ items }
                   className="section-nav"
                   currentClassName="active"
+                  offset={ -50 }
                   onUpdate={
                     (el) => {
+                      this.props.history.push(`/documentation#${el.id}`)
                     }
                   }>
-                  <div className="field"><span>GET STARTED</span></div>                
+                  <li className="field">GET STARTED</li>
                   {
                     NAVITATIONS.map((nav, index) => {
                       return (
@@ -90,7 +92,7 @@ class Documentation extends React.Component {
                       )
                     })
                   }
-                  <div className="field"><span>API REFERENCE</span></div>
+                  <li className="field">API REFERENCE</li>
                   <li><a href="/documentation#blacklist" >Black list</a></li>
                   {
                      API_NAVIGATIONS.map((child, cindex) => {
