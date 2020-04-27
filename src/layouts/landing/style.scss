@@ -13,13 +13,15 @@
       padding-bottom:12px;
       border: none !important;
       min-height: 0 !important;
+      min-width: 100px;
 
       &.menu {
         border-radius: 3px!important;
         font-weight: bold !important;
       }
 
-      &:hover {
+      &:hover,
+      &:active {
         background-color: #4b1586;
       }
     }
@@ -31,14 +33,12 @@
       color:  #3D2E87!important;
       padding-top:11px;
       padding-bottom:12px;
+      min-width: 100px;
       border: none !important;
       min-height: 0 !important;
 
       &.menu {
-        padding-top: 8px;
-        padding-bottom: 9px;
-        padding-left: 40px;
-        padding-right: 40px;
+        border-radius: 3px!important;
         font-weight: bold !important;
       }
     }

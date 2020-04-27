@@ -47,7 +47,6 @@ const mainRoutes = [
 
   // Shop
   { path: `/documentation`,  name: 'DocumentationLayout', component: DocumentationLayout },
-
   { path: `/:username`, name: 'ShopLayout', component: ShopLayout },
 
   // Landing
