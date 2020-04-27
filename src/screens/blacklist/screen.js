@@ -1,23 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as _ from 'lodash'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  Button,
-} from 'reactstrap'
+import { Button } from 'components';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import {
-  BlackListChart
-} from './sections'
 import { confirmAlert } from 'react-confirm-alert';
 import { getBlacklist, deleteFromBlacklist } from './actions'
-import {
-  CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 import './style.scss'
 
 const user = window.localStorage.getItem('userId')

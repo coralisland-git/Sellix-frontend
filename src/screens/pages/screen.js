@@ -5,11 +5,11 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   Input
-} from 'reactstrap'
+} from 'reactstrap';
+import { Button } from 'components';
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 
 import { Loader } from 'components'

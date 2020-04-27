@@ -7,7 +7,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   FormGroup,
@@ -15,6 +14,7 @@ import {
   Input,
   Form,
 } from 'reactstrap'
+import { Button } from 'components';
 import Select from 'react-select'
 import { Formik } from 'formik'
 import { Loader, DataSlider } from 'components'

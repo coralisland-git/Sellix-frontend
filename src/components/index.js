@@ -16,11 +16,13 @@ import LeaveFeedbackModal from './feedback_leave_modal'
 import Affix from './affix'
 import NotFound from './404'
 import SetTitle from './set_title'
+import Button from './button'
 
 export {
   Loading,
   Loader,
   Spin,
+  Button,
   Aside,
   Header,
   Footer,

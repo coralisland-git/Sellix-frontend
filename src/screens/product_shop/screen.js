@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Card, CardHeader, Button, Row, Col, Input, CardBody} from 'reactstrap'
+import {Card, CardHeader, Row, Col, Input } from 'reactstrap'
+import { Button } from 'components';
 import { CommonActions } from 'services/global'
 import { Route, Switch, withRouter, matchPath } from 'react-router-dom'
 import { Loader } from 'components'

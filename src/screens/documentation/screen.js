@@ -46,24 +46,26 @@ class Documentation extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  render() {
-
-    const { history } = this.props;
-    var key = history.location.hash.substr(1);
-    if (key === "")
-      key = "introduction";
+  componentDidMount() {
+    var key = this.props.history.location.hash.substr(1);    
+    if (key !== "")
+      this.setState({initial : true})
+  }
+   
+  render() {   
 
     var items = ['get_started'];
-    NAVITATIONS.map(nav => {
+    NAVITATIONS.map((nav => {
         items.push(nav.key)
-    })
+    }))
 
     items.push('api_reference');
     items.push('blacklist');
 
-    API_NAVIGATIONS.map(nav => {
+    API_NAVIGATIONS.map((nav => {
       items.push(nav.key)
-    })
+    }))
+
 
     return (
       <div className="documentation-screen">
@@ -74,11 +76,17 @@ class Documentation extends React.Component {
                 <Scrollspy items={ items }
                   className="section-nav"
                   currentClassName="active"
+                  offset={ -50 }                  
                   onUpdate={
-                    (el) => {
+                    (el) => {                      
+                      if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
+                        this.props.history.push(`/documentation#${el.id}`)
+                      }
+                      else
+                        this.setState({initial: false})
                     }
                   }>
-                  <div className="field"><span>GET STARTED</span></div>                
+                  <li className="field">GET STARTED</li>
                   {
                     NAVITATIONS.map((nav, index) => {
                       return (
@@ -90,7 +98,7 @@ class Documentation extends React.Component {
                       )
                     })
                   }
-                  <div className="field"><span>API REFERENCE</span></div>
+                  <li className="field">API REFERENCE</li>
                   <li><a href="/documentation#blacklist" >Black list</a></li>
                   {
                      API_NAVIGATIONS.map((child, cindex) => {
@@ -209,6 +217,12 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     The Sellix API uses the following error codes:
                   </p>
                   <table className="border-table">
+                    <thead>
+                      <tr>
+                        <td>STATUS</td>
+                        <td>MEANING</td>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr>
                         <td><p className="param">400</p></td>
@@ -305,6 +319,11 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     webhook event type. A list of supported events from <a href="#">Webhook Endpoints</a> can be found below.
                   </p>
                   <table className="border-table">
+                    <thead>
+                      <tr>
+                        <th className="table-title">EVENT</th>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr>
                         <td><span className="badge-mark">feedback:updated</span></td>

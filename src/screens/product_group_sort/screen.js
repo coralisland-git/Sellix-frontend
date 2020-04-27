@@ -1,23 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import config from 'constants/config'
 import {
   Card,
   CardHeader,
-  CardBody,
-  Button,
   Row,
-  Col,
-  Input
+  Col
 } from 'reactstrap'
 import { Loader, Spin } from 'components'
-import RLDD from 'react-list-drag-and-drop/lib/RLDD';
 import {
   CommonActions,
 } from 'services/global'
 import GroupCard from "../product_shop/groupCard"
-import VirtualDraggableGrid from 'react-virtual-draggable-grid';
+import { Button } from 'components';
 import { DragAndDropGrid } from '../product_sort/dragAndDropGrid2'
 import * as ProductGroupActions from '../product_group/actions'
 

@@ -4,16 +4,14 @@ import { bindActionCreators } from 'redux'
 import {
   Card,
   CardBody,
-  Button,
   Row,
   Col,
   Label,
   Form,
   FormGroup,
-  Input,
-  ButtonToolbar,
-  ButtonGroup
+  Input
 } from 'reactstrap'
+import { Button } from 'components';
 import { Formik } from 'formik'
 import { createFeedback } from './actions'
 import {

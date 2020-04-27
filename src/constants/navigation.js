@@ -1,6 +1,6 @@
 const user = window.localStorage.getItem('userId')
 
-export const mainNavigation = () => ({
+export const mainBrowserNavigation = () => ({
   items: [
     {
       name: 'Dashboard',
@@ -98,6 +98,91 @@ export const mainNavigation = () => ({
     //   url: `/dashboard/${user}/pages`,
     //   icon: 'fa fa-file',
     // }
+  ]
+})
+
+
+export const mainMobileNavigation = () => ({
+  items: [
+    {
+      name: 'Dashboard',
+      url: `/dashboard/${user}/home`,
+      icon: 'fas fa-home fa-lg'
+    },
+    {
+      name: 'Products',
+      url: window.location.pathname.includes('/groups') ? `/dashboard/${user}/groups` : `/dashboard/${user}/products`,
+      icon: 'fas fa-boxes',
+      children: [
+        {
+          name: 'All Products',
+          url: `/dashboard/${user}/products/all`
+        },
+        {
+          name: 'Groups',
+          url: `/dashboard/${user}/groups/all`
+        },
+        {
+          name: 'Categories',
+          url: `/dashboard/${user}/products/categories/all`,
+        }
+      ]
+    },
+    {
+      name: 'Orders',
+      url: `/dashboard/${user}/orders`,
+      icon: 'fas fa-credit-card',
+    },
+    {
+      name: 'Analytics',
+      url: `/dashboard/${user}/analytics`,
+      icon: 'fas fa-bar-chart',
+      children: [
+        {
+          name: 'All Analytics',
+          url: `/dashboard/${user}/analytics/stats`,
+        },
+        {
+          name: 'Reports',
+          url: `/dashboard/${user}/analytics/reports`,
+        },
+      ]
+    },
+    {
+      name: 'Coupons',
+      url: `/dashboard/${user}/coupons`,
+      icon: 'fa fa-tags',
+    },
+    {
+      name: 'Queries',
+      url: `/dashboard/${user}/queries`,
+      icon: 'fas fa-question-circle',
+    },
+    {
+      name: 'Feedback',
+      url: `/dashboard/${user}/feedback`,
+      icon: "fa fa-commenting",
+    },
+    {
+      name: 'Blacklist',
+      url: `/dashboard/${user}/blacklist`,
+      icon: 'fas fa-ban',
+    },
+    {
+      name: 'Developer',
+      url: `/dashboard/${user}/developer`,
+      icon: 'fas fa-code',
+      children: [
+        {
+          name: 'Webhooks',
+          url: `/dashboard/${user}/developer/webhooks/all`,
+        },
+        {
+          name: 'Webhook Logs',
+          url: `/dashboard/${user}/developer/webhooks/logs`,
+        }
+      ]
+    }
   ]
 })
 

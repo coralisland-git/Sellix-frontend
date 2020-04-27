@@ -1,6 +1,6 @@
 import React from 'react'
+import { Button } from 'components';
 import {
-  Button,
   Row,
   Col,
   Form,
@@ -12,8 +12,6 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap'
-import Select from 'react-select'
-import _ from 'lodash'
 
 import { Formik } from 'formik';
 import * as Yup from "yup";

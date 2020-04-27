@@ -1,29 +1,13 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { Button } from 'components';
 import {
-  Button,
   Col,
   Container,
   Row,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
   NavLink
 } from 'reactstrap'
-import {
-  AppHeader
-} from '@coreui/react'
-
 import './style.scss'
-
-import {
-  Loading
-} from 'components'
 
 import service1 from 'assets/images/home/service1.svg'
 import service2 from 'assets/images/home/service2.svg'
@@ -64,7 +48,10 @@ class Home extends React.Component {
                 <p className="large pr-3 text-white col-lg-8 p-0">
                 You provide the products on Sellix, we take care of the rest. Day and night.
                 </p>
-                <Button className="landing-primary-button f-20 f-b"><NavLink className="p-0 text-white" href="/auth/register">Get Started for Free</NavLink></Button>
+                <NavLink className="p-0 text-white" href="/auth/register">
+                  <Button className="landing-primary-button f-20 f-b">
+                    Get Started for Free</Button>
+                </NavLink>
               </Col>
               <Col md={5} className="text-center">
                 <img src={Hero_Iphone_Mockup} className="digital-img"/>
@@ -96,7 +83,8 @@ class Home extends React.Component {
                     <p className="small text-pink">
                     Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrency for your shop.
                     </p>
-                    <p className="text-pink f-b mt-5"><Link to="/fees" className="text-pink">Fees →</Link></p>
+                    <p className="text-pink f-b mt-5">
+                      <NavLink href="/fees" className="text-pink p-0" style={{width: 'fit-content'}}>Fees →</NavLink></p>
                   </div>
                 </Col>
                 <Col md={4} className="p-0">
@@ -143,7 +131,9 @@ class Home extends React.Component {
                     <p className="text-pink f-20 col-11 p-0">
                     We provide very low fees for each transaction. With our unique payment processing method, we keep transaction fees at the lowest amount. Find out more about our fees.
                     </p>
-                    <Button className="landing-primary-button"><NavLink className="p-0 text-white mb-1" href="/fees">Our  Fees →</NavLink></Button>
+                    <NavLink className="p-0 text-white" href="/fees">
+                      <Button className="landing-primary-button">Our Fees →</Button>
+                    </NavLink>
                   </div>
                 </Col>
               </Row>
@@ -156,7 +146,9 @@ class Home extends React.Component {
           <Container className="mr-auto ml-auto p-0 purple" fluid style={{maxWidth: 1330}}>
             <h1 className="mb-4">Start using <b>Sellix</b> now!</h1>
             <p className="mr-auto ml-auto f-20 col-lg-4 col-md-5">Create an account and start selling your products. Are you ready? Because we are.</p>
-            <Button className="landing-secondary-button f-20"><NavLink className="p-0" href="/auth/register">Get Started →</NavLink></Button>
+            <NavLink className="p-0 text-white" href="/auth/register">
+              <Button className="landing-secondary-button f-20">Get Started →</Button>
+            </NavLink>
           </Container>
         </div>
       </div>

@@ -6,11 +6,10 @@ import {
   CardHeader,
   CardBody,
   Row,
-  Col,
-  Button,
+  Col
 } from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import StarRatings from 'react-star-ratings';
+import { Button } from 'components';
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import ReactTimeAgo from 'react-time-ago'

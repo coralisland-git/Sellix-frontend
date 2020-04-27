@@ -3,6 +3,10 @@ import * as router from 'react-router-dom';
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {
+  BrowserView,
+  MobileView
+} from "react-device-detect";
 
 import { Container, Collapse, NavbarToggler, Navbar } from 'reactstrap'
 import {
@@ -23,7 +27,8 @@ import {
 } from 'services/global'
 
 import {
-  mainNavigation,
+  mainBrowserNavigation,
+  mainMobileNavigation,
   accountSettingsNavigation,
   shopSettingsNavigation
 } from 'constants/navigation'
@@ -95,6 +100,17 @@ class SettingsLayout extends React.Component {
       }
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
     }
+
+    var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (iOS) {
+      for (let i = 0; i < document.getElementsByClassName('nav-link').length ; i ++) {
+        let element = document.getElementsByClassName('nav-link')[i];
+        element.addEventListener("mouseenter", function( event ) {   
+          element.click();
+        }, false);
+      }
+    }
   }
 
   changeTheme() {
@@ -136,7 +152,12 @@ class SettingsLayout extends React.Component {
             <div className="app-body">
               <AppSidebar fixed className="pt-3 mb-5" display="lg">
                 <Suspense fallback={Loading()}>
-                  <AppSidebarNav navConfig={mainNavigation()} location={this.props.location} router={router} />
+                  <BrowserView>
+                    <AppSidebarNav navConfig={mainBrowserNavigation()} location={this.props.location} router={router}/>
+                  </BrowserView>
+                  <MobileView>
+                    <AppSidebarNav navConfig={mainMobileNavigation()} location={this.props.location} router={router}/>
+                  </MobileView>
                 </Suspense>
               </AppSidebar>
 

@@ -3,6 +3,10 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import * as router from 'react-router-dom';
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {
+  BrowserView,
+  MobileView
+} from "react-device-detect";
 
 import { Container } from 'reactstrap'
 import {
@@ -24,7 +28,10 @@ import {
   CommonActions
 } from 'services/global'
 
-import { mainNavigation, adminNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
+import { 
+  mainBrowserNavigation, 
+  mainMobileNavigation,
+  adminNavigation } from 'constants/navigation'
 
 import {
   Aside,
@@ -94,6 +101,16 @@ class AdminLayout extends React.Component {
       }
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
     }
+
+    var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+    if (iOS) {
+      for (let i = 0; i < document.getElementsByClassName('nav-link').length ; i ++) {
+        let element = document.getElementsByClassName('nav-link')[i];
+        element.addEventListener("mouseenter", function( event ) {   
+          element.click();
+        }, false);
+      }
+    }
   }
 
   changeTheme() {
@@ -137,7 +154,12 @@ class AdminLayout extends React.Component {
                       <AppSidebarNav navConfig={adminNavigation} location={this.props.location} router={router}/>
                     </Route>
                     <Route>
-                      <AppSidebarNav navConfig={mainNavigation()} location={this.props.location} router={router}/>
+                      <BrowserView>
+                        <AppSidebarNav navConfig={mainBrowserNavigation()} location={this.props.location} router={router}/>
+                      </BrowserView>
+                      <MobileView>
+                        <AppSidebarNav navConfig={mainMobileNavigation()} location={this.props.location} router={router}/>
+                      </MobileView>
                     </Route>
                   </Switch>
                 </Suspense>
