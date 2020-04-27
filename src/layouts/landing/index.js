@@ -165,7 +165,7 @@ class LandingLayout extends React.Component {
                                       </div>
                                       </Navbar>
                                   </header>
-                                <prop.component/>
+                                <prop.component {...this.props}/>
                               </>
                             )}
                             key={key}
