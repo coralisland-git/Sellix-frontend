@@ -46,11 +46,11 @@ class ShopProducts extends React.Component {
     let { categories, filter } = this.state;
 
     if(prevProps.user !== user) {
-      document.title = `${user ? user.username : ""} | Sellix`;
+      document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
     }
 
     if(filter === 'all') {
-      document.title = `${user.username} | Sellix`;
+      document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
     } else {
       if(categories.length) {
         document.title = `Category: ${categories.find(({ uniqid }) => uniqid === filter).title} | Sellix`;
@@ -63,14 +63,15 @@ class ShopProducts extends React.Component {
   }
 
   componentDidMount () {
+    const { user } = this.props;
+    document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
+
     if(this.state.categories.length > 0 && this.state.filter !== 'all') {
       this.state.categories.categories.map(({ uniqid, title }) => {
         if(this.state.filter === uniqid) {
           document.title = `Category: ${title} | Sellix`;
         }
       })
-    } else {
-      document.title = `${this.props.user ? this.props.user.username : ''} | Sellix`;
     }
     this.initializeData()
   }

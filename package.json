@@ -80,6 +80,7 @@
     "react-time-ago": "^5.0.7",
     "react-toastify": "^5.2.1",
     "react-virtual-draggable-grid": "^0.9.1-beta",
+    "react-zendesk": "^0.1.9",
     "reactstrap": "^8.0.0",
     "recharts": "^1.8.5",
     "redux": "^4.0.4",

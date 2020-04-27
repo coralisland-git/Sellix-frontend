@@ -84,7 +84,7 @@ const CUSTOM_TYPE = [
     { value: 'hidden', label: 'Hidden' },
     { value: 'largetextbox', label: 'Large Textbox' },
     { value: 'checkbox', label: 'Checkbox' },
-    
+
 ]
 
 const CURRENCY_LIST = [
@@ -124,13 +124,13 @@ const EDITOR_MODULES  = {
 }
 
 class EditProductGroup extends React.Component {
-    
+
     constructor(props) {
         super(props)
         this.state = {
               loading: false,
             saving: false,
-            duplicating: false,  
+            duplicating: false,
             unlistedTooltipOpen: false,
             privateTooltipOpen: false,
             blockTooltipOpen: false,
@@ -248,8 +248,6 @@ class EditProductGroup extends React.Component {
     handleSubmit(values) {
         this.setState({saving: true})
 
-        console.log('handleSubmit', values)
-
         this.props.actions.editProductGroup(values).then(res => {
 
             this.props.history.push(`/dashboard/${user}/groups/all`)
@@ -291,6 +289,8 @@ class EditProductGroup extends React.Component {
       this.props.actions.getProductGroupByID(this.id).then(res => {
         let group = res.data.group
 
+        console.log('multiValue initial', group.products_bound.map(pro => {return {value: pro.uniqid, label:pro.title}}))
+
         this.setState({
           initialValues: {
               ...group,
@@ -307,15 +307,15 @@ class EditProductGroup extends React.Component {
   }
 
     render() {
-        const { 
-            loading, 
+        const {
+            loading,
             saving,
             duplicating,
-            unlistedTooltipOpen, 
+            unlistedTooltipOpen,
             privateTooltipOpen,
             blockTooltipOpen,
             paypalTooltipOpen,
-            files, 
+            files,
             serials,
             images,
             selectedTab,
@@ -424,14 +424,16 @@ class EditProductGroup extends React.Component {
                                                                         className="select-default-width"
                                                                         id="product_bounds"
                                                                         name="product_bounds"
-                                                                        multi
+                                                                        isMulti
                                                                         options={product_options}
                                                                         placeholder="Select Products"
-                                                                        value={this.state.multiValue}
+                                                                        value={console.log('value', this.state.multiValue) || this.state.multiValue}
                                                                         onChange={(option) => {
                                                                             this.setState({
                                                                             multiValue: option
                                                                             })
+
+                                                                            console.log('option', option)
 
                                                                             props.handleChange("products_bound")(option.map(o => o.value).toString());
                                                                         }}
@@ -448,13 +450,13 @@ class EditProductGroup extends React.Component {
                                                                     </Col>
                                                                 </Row>
 
-                                                                
+
                                                                 <Row>
                                                                     <Col lg={12}>
                                                                         <FormGroup className="mb-3">
                                                                             <Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
                                                                             <ImageUpload addFile={(file) => {
-                                                                            props.handleChange('image')(file[0]); 
+                                                                            props.handleChange('image')(file[0]);
                                                                             this.addImages(file)}} files={images}/>
                                                                         </FormGroup>
                                                                     </Col>
@@ -463,7 +465,7 @@ class EditProductGroup extends React.Component {
                                                                     <Col lg={12} className="d-flex flex-wrap">
                                                                         <FormGroup check inline className="mb-3 mr-4">
                                                                             <div className="custom-checkbox custom-control">
-                                                                                <input 
+                                                                                <input
                                                                                     className="custom-control-input"
                                                                                     type="checkbox"
                                                                                     id="unlisted"
@@ -476,18 +478,18 @@ class EditProductGroup extends React.Component {
                                                                                 <label className="custom-control-label" htmlFor="unlisted">
                                                                                     Unlisted &nbsp;
                                                                                     <span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
-                                                                                    <Tooltip placement="right" isOpen={unlistedTooltipOpen} target="unlistedTooltip" 
+                                                                                    <Tooltip placement="right" isOpen={unlistedTooltipOpen} target="unlistedTooltip"
                                                                                         toggle={this.unlistedTooltipToggle.bind(this)}>
                                                                                         The product group wont be displayed on your Shop, but can still be accessed via direct URL.
                                                                                     </Tooltip>
                                                                                 </label>
                                                                             </div>
                                                                         </FormGroup>
-                                                                        
+
                                                                     </Col>
                                                                 </Row>
                                                             </Col>
-                              
+
                                                         </Row>
                                                 }
                                             </CardBody>
@@ -495,7 +497,7 @@ class EditProductGroup extends React.Component {
                                             <Button color="primary" type="submit" className="" style={{width: 200}}>
                                                 Save Product Group
                                             </Button>
-                                            
+
                                         </Card>
                                     </Form> )}
                             </Formik>}

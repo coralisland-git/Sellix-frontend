@@ -245,4 +245,59 @@ export const GlobalStyles = createGlobalStyle`
     .cursor-pointer {
         cursor: pointer;
     }
+     
+    ${({theme}) => theme.name === 'dark' && `
+        *[class$=control] {
+            background-color: ${theme.widget} !important;
+            border: 1px solid ${theme.widgetBorder} !important;
+        }
+
+        *[class$=control] * {
+            color: ${theme.text} !important;
+        }
+
+        *[class$=-menu] {
+            background-color: ${theme.widgetBorder} !important;
+        }
+
+        *[class$=-menu] *[class$=-option] {
+            background-color: ${theme.widgetBorder} !important;
+            cursor:pointer;
+        }
+
+        *[class$=-menu] *[class$=-option]:hover {
+            background-color: ${theme.widget} !important;
+            color: white !important;
+        }
+
+        *[class$=control] * {
+            color: ${theme.text} !important;
+        }
+
+        *[class$=multiValue] * {
+            color: black !important;
+        }
+    `}
+
+    *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold) {
+        color: ${({ theme }) => theme.baseOpposite} !important;
+    }
+
+    *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold) {
+        color: ${({ theme }) => theme.baseOpposite} !important;
+    }
+    
+    ${({theme}) => theme.name === 'light' && `
+        .option-select > * > * > *:not([class$=-singleValue]):not([class$=-indicatorContainer]):not([class$=-Input]) {
+            background: white !important;
+        }
+
+        .option-select-option:not(.is-disabled) * {
+            color: black !important;
+        }
+
+        .option-select-option:not(.is-disabled):not(.is-selected) * {
+            opacity: 0.85 !important;
+        }
+    `}
 `

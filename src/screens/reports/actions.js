@@ -27,7 +27,6 @@ export const getReports = () => {
 
 // Create Report
 export const createReport = (period) => {
-  console.log('11111')
   return (dispatch) => {
     let data = {
       method: 'POST',

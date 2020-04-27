@@ -17,6 +17,9 @@ export const lightTheme = {
 
     borderRight: '#f4f6ff',
     cardBody: 'white',
+
+    base: 'white',
+    baseOpposite: 'black'
 }
   
 export const darkTheme = {
@@ -47,4 +50,7 @@ export const darkTheme = {
     text: '#B4AEBC',
     toggleBorder: '#6B8096',
     gradient: 'linear-gradient(#091236, #1E215D)',
+
+    base: 'black',
+    baseOpposite: 'white'
 }
