@@ -15,6 +15,7 @@ const ProductList = React.lazy(() => import('./productList'))
 
 const mapStateToProps = ({ common: { general_info } }) => ({
   shop_search_enabled: Number(general_info.shop_search_enabled),
+  shop_hide_out_of_stock: Number(general_info.shop_hide_out_of_stock),
   user: general_info,
 })
 
@@ -139,7 +140,7 @@ class ShopProducts extends React.Component {
 
   render() {
     const { loading, filter, categories, products, groups } = this.state;
-    const { shop_search_enabled } = this.props;
+    const { shop_search_enabled, shop_hide_out_of_stock } = this.props;
 
     let searchProducts = this.searchProducts(products);
     let searchGroups = this.searchGroups(groups)
@@ -186,7 +187,14 @@ class ShopProducts extends React.Component {
               <div className="p-0">
                 <Row>
                   <Switch>
-                    <Route to={'/:username/category/:id'} render={(props) => <ProductList products={searchProducts} groups={searchGroups} loading={loading} {...props} />} />
+                    <Route to={'/:username/category/:id'} render={(props) => 
+                      <ProductList 
+                        products={searchProducts} 
+                        groups={searchGroups} 
+                        loading={loading} 
+                        hide_out_of_stock={shop_hide_out_of_stock}
+                        {...props}
+                      />} />
                   </Switch>
                 </Row>
               </div>
