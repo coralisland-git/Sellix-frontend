@@ -43,7 +43,7 @@ class Tickets extends React.Component {
         const { email, username } = this.props.user;
         const requester = { name: username, email: email };
         const comment = { body: message };
-        const custom_fields = [{ id: 360006801217, value: category }]
+        const custom_fields = [{ id: 360006801217, value: category.value }]
         const ticket = {
             requester,
             subject,
@@ -112,7 +112,7 @@ class Tickets extends React.Component {
                                                                         id="category"
                                                                         value={values.category}
                                                                         searchable={false}
-                                                                        onChange={({value}) => handleChange("category")(value)}
+                                                                        onChange={(option) => handleChange("category")(option)}
                                                                         className={errors.category && touched.category && "is-invalid"}
                                                                         name="category"
                                                                     />

@@ -257,11 +257,12 @@ export const GlobalStyles = createGlobalStyle`
         }
 
         *[class$=-menu] {
-            background-color: ${theme.widgetBorder} !important;
+            background-color: #241e4c !important;
+            border-radius: 5px !important;
         }
 
         *[class$=-menu] *[class$=-option] {
-            background-color: ${theme.widgetBorder} !important;
+            background-color: #241e4c !important;
             cursor:pointer;
         }
 
@@ -299,5 +300,19 @@ export const GlobalStyles = createGlobalStyle`
         .option-select-option:not(.is-disabled):not(.is-selected) * {
             opacity: 0.85 !important;
         }
+
+        *[class$=-control][class*=css-]{
+            background-color: #FCFCFE !important;
+            border: 1px solid ${theme.widgetBorder} !important;
+        }
     `}
+
+    .currency-select {
+        top: 0;
+        height: 100%;
+    }
+
+    .currency-select > div:first-of-type {
+        height: 100%;
+    }
 `

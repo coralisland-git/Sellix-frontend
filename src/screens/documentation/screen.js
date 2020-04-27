@@ -53,16 +53,17 @@ class Documentation extends React.Component {
     if (key === "")
       key = "introduction";
 
-    var items = NAVITATIONS.map((nav => {
-        return nav.key
-      }
-    ))    
+    var items = ['get_started'];
+    NAVITATIONS.map((nav => {
+        items.push(nav.key)
+    }))
 
-    var apiItems = ['blacklist'];    
+    items.push('api_reference');
+    items.push('blacklist');
 
-    API_NAVIGATIONS.map(nav => {
-      apiItems.push(nav.key)
-    })
+    API_NAVIGATIONS.map((nav => {
+      items.push(nav.key)
+    }))
 
     return (
       <div className="documentation-screen">
@@ -70,14 +71,16 @@ class Documentation extends React.Component {
           <div className="d-wrapper">          
             <div className="side-nav">
               <div className="d-nav">
-                <div className="field"><span>GET STARTED</span></div>                
                 <Scrollspy items={ items }
                   className="section-nav"
                   currentClassName="active"
+                  offset={ -50 }
                   onUpdate={
                     (el) => {
+                      this.props.history.push(`/documentation#${el.id}`)
                     }
                   }>
+                  <li className="field">GET STARTED</li>
                   {
                     NAVITATIONS.map((nav, index) => {
                       return (
@@ -89,15 +92,7 @@ class Documentation extends React.Component {
                       )
                     })
                   }
-                </Scrollspy>
-                <div className="field"><span>API REFERENCE</span></div>
-                <Scrollspy items={ apiItems }
-                  className="section-nav"
-                  currentClassName="active"
-                  onUpdate={
-                    (el) => {
-                    }
-                  }>
+                  <li className="field">API REFERENCE</li>
                   <li><a href="/documentation#blacklist" >Black list</a></li>
                   {
                      API_NAVIGATIONS.map((child, cindex) => {
