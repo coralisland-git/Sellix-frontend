@@ -21,7 +21,7 @@
 
     .d-ex {
       width: 50%;
-      padding-left: 3vw;
+      padding-left: 4vw;
       position: sticky;
       top: 78px;
       max-height: calc(100vh - 78px);
@@ -30,22 +30,66 @@
     }
 
     .code-block {
-      background-color: #cfcfcf;
-      border-radius: 10px;
+      //background-color: #cfcfcf;
+      background-color: #3c4257;
+
+      border-radius: 3px;
       font-weight: 600;
       margin-bottom: 20px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.07);
 
       .code-block-header {
-        padding: 20px;
+        padding: 12px 20px;
+        color: #a3acb9;
+        display: flex;
+        justify-content: space-between;
+
+        p {
+          margin-bottom: 0px !important;
+        }        
+        
+        button {
+          background-color: inherit;
+          border: none;
+          padding: 0.3rem;
+          outline: none;
+          border-radius: 3px;
+
+          &:hover {
+            background-color: #4f566b;
+          }
+
+          &:active {
+            background-color: #494f60;
+          }
+
+          i {
+            color: #a3acb9;
+          }
+        }
       }
 
       pre {
         padding: 25px 20px !important;
         line-height: 1.4rem;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        background-color: #e3e3e3 !important;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        //background-color: #e3e3e3 !important;
+        background-color: #4f566b !important;
         margin-bottom: 0px !important;
+      }
+    }
+
+    .code-block.response {
+      background-color: #e3e8ee;    
+
+      .code-block-header {
+        padding: 16px 20px;
+        color: #697386;
+      } 
+
+      pre {
+        background-color: #f7fafc !important;
       }
     }
 
@@ -147,12 +191,15 @@
     font-weight: 500;
     color: inherit !important;
     font-size: 13px !important;
+    background: #e3e8ee;
   }
 
   table {
     margin-left: -0.6rem;
     margin-right: -0.6rem;
     margin-top: 1.5em;
+    overflow: hidden;
+    border-radius: 3px;
   }
 
   td:nth-child(even) {
@@ -182,13 +229,14 @@
 
   .border-table {
     margin-left: 0px !important;
+    background: #f7fafc;
 
     tr {
-      border: 1px solid #A7A5B4 !important;
+      border: 1px solid rgba(0, 0, 0, 0.07) !important;
     }
 
     td:nth-child(even) {
-      border-left: 1px solid #A7A5B4 !important;
+      border-left: 1px solid rgba(0, 0, 0, 0.07) !important;
     }
   }
 }
