@@ -87,8 +87,8 @@ class Tickets extends React.Component {
 
                     <div className="section text-center ">
                         <Container className="home-container" fluid>
-                            <h1>Create a Tickets</h1>
-                            <p className={'large'}>Describe your problem in detail</p>
+                            <h1>Contact Us</h1>
+                            <p className={'large'}>Explain your issue as detailed as possible</p>
                         </Container>
                     </div>
 
@@ -128,7 +128,7 @@ class Tickets extends React.Component {
                                                                         type="text"
                                                                         id="subject"
                                                                         name="subject"
-                                                                        placeholder="Question regarding dashboard"
+                                                                        placeholder="Your subject here"
                                                                         onChange={handleChange}
                                                                         value={values.subject || ""}
                                                                         className={errors.subject && touched.subject && "is-invalid"}
@@ -144,7 +144,7 @@ class Tickets extends React.Component {
                                                                         type="textarea"
                                                                         id="message"
                                                                         name="message"
-                                                                        placeholder="Explain exactly what went wrong and try to provide as much information as possible."
+                                                                        placeholder="Let us know the reason why you are contacting us."
                                                                         onChange={handleChange}
                                                                         value={values.message}
                                                                         className={errors.message && touched.message && "is-invalid"}
@@ -161,7 +161,7 @@ class Tickets extends React.Component {
                                             </CardBody>
 
                                             <Button color="primary" type="submit" className="" style={{width: 200, margin: "0 auto"}}>
-                                                Create ticket
+                                                Send Message
                                             </Button>
 
                                         </Card>
