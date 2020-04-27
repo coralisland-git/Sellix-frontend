@@ -5,7 +5,6 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	Button,
 	Row,
 	Col,
 	FormGroup,
@@ -15,18 +14,14 @@ import {
 	Input
 } from 'reactstrap'
 import Select from 'react-select'
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { AppSwitch } from '@coreui/react'
-import { Loader, ImageUpload, FileUpload, DataSlider, Spin } from 'components'
+import { Loader, ImageUpload, Button } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import config from 'constants/config'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import { Product } from 'screens'
@@ -35,13 +30,6 @@ import { CommonActions } from 'services/global'
 
 import './style.scss'
 
-import bitcoinIcon from 'assets/images/crypto/btc.svg'
-import ethereumIcon from 'assets/images/crypto/eth.svg'
-import stripeIcon from 'assets/images/crypto/stripe.svg'
-import bitcoinCashIcon from 'assets/images/crypto/bitcoincash.svg'
-import litecoinIcon from 'assets/images/crypto/ltc.svg'
-import skrillIcon from 'assets/images/crypto/skrill.svg'
-import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
 
 const mapDispatchToProps = (dispatch) => {

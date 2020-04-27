@@ -1,11 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { Button } from 'components';
 import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Input,
   Col,
@@ -13,7 +12,7 @@ import {
   FormGroup,
   Label
 } from 'reactstrap'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import ImagesUploader from 'react-images-uploader'
 import Select from 'react-select'
 

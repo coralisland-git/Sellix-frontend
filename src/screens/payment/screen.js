@@ -6,20 +6,12 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Row,
   Col,
   ButtonGroup,
-  Form,
-  FormGroup,
-  Input,
-  Label,
+  Input
 } from 'reactstrap'
-import Select from 'react-select'
+import { Button } from 'components';
 import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import DateRangePicker from 'react-bootstrap-daterangepicker'

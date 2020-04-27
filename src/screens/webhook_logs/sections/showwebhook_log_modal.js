@@ -1,27 +1,17 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
 import {
-  Button,
   Row,
   Col,
-  Form,
   FormGroup,
-  Input,
   Label,
   Modal,
   ModalHeader, 
   ModalBody,
   ModalFooter,
 } from 'reactstrap'
-import Select from 'react-select'
-import _ from 'lodash'
 import moment from 'moment'
+import { Button } from 'components';
 
-import { DateRangePicker2 } from 'components'
-
-import { Formik } from 'formik';
-import * as Yup from "yup";
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
 

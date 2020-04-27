@@ -1,11 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { Button } from 'components';
 import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   Form,
@@ -14,7 +13,6 @@ import {
   Label
 } from 'reactstrap'
 import Select from 'react-select'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import DatePicker from 'react-datepicker'
 
 import 'react-datepicker/dist/react-datepicker.css'

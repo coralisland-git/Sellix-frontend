@@ -5,7 +5,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   Form,
@@ -13,6 +12,7 @@ import {
   Input,
   Label
 } from 'reactstrap'
+import { Button } from 'components';
 import Select from 'react-select'
 
 import { Formik } from 'formik';

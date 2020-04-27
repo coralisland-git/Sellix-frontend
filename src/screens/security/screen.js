@@ -3,9 +3,7 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
-  CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   FormGroup,
@@ -14,9 +12,7 @@ import {
   Input
 } from 'reactstrap'
 import { AppSwitch } from '@coreui/react'
-import Select from 'react-select'
-import { Loader, ImageUpload, DataSlider, Spin } from 'components'
-import { confirmAlert } from 'react-confirm-alert'; 
+import { Loader, Button, Spin } from 'components'
 import { TwoFactorModal } from './sections'
 import { Formik } from 'formik';
 import * as Yup from "yup";

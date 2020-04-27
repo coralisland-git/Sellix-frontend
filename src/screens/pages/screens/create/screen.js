@@ -5,16 +5,14 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   FormGroup,
   Label,
-  Tooltip,
   Input
 } from 'reactstrap'
-import Select from 'react-select'
-import { Loader, ImageUpload, DataSlider } from 'components'
+import { Button } from 'components';
+import { Loader } from 'components'
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";

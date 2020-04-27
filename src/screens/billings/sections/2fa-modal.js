@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Button,
   Row,
   Col,
   Form,
@@ -12,8 +11,7 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap'
-import Select from 'react-select'
-import _ from 'lodash'
+import { Button } from 'components';
 
 import QRCode from 'react-qr-code';
 import { Formik } from 'formik';
