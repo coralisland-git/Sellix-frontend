@@ -21,18 +21,16 @@ const NAVITATIONS = [
   { key: 'authentication', value: 'Authentication' },
   { key: 'pagination', value: 'Pagination' },
   { key: 'errors', value: 'Errors' },
-  { key: 'webhooks', value: 'Webhooks' },
-  { key: 'blacklist', 
-    value: 'Blacklist',
-    children: [
-      { key: 'blacklist-object', value: 'Blacklist Object' },    
-      { key: 'get-blacklist', value: 'Get Blacklist' },
-      { key: 'list-blacklist', value: 'List Blacklist' },
-      { key: 'create-blacklist', value: 'Create a Blacklist' },
-      { key: 'update-blacklist', value: 'Update a Blacklist' },
-      { key: 'destroy-blacklist', value: 'Destroy a Blacklist' },
-    ]
- }
+  { key: 'webhooks', value: 'Webhooks' }
+]
+
+const API_NAVIGATIONS = [
+  { key: 'blacklist-object', value: 'Blacklist Object' },    
+  { key: 'get-blacklist', value: 'Get Blacklist' },
+  { key: 'list-blacklist', value: 'List Blacklist' },
+  { key: 'create-blacklist', value: 'Create a Blacklist' },
+  { key: 'update-blacklist', value: 'Update a Blacklist' },
+  { key: 'destroy-blacklist', value: 'Destroy a Blacklist' }
 ]
 
 
@@ -58,10 +56,12 @@ class Documentation extends React.Component {
     var items = NAVITATIONS.map((nav => {
         return nav.key
       }
-    ))
+    ))    
 
-    NAVITATIONS[5].children.map(child => {
-      items.push(child.key)
+    var apiItems = ['blacklist'];    
+
+    API_NAVIGATIONS.map(nav => {
+      apiItems.push(nav.key)
     })
 
     return (
@@ -70,14 +70,14 @@ class Documentation extends React.Component {
           <div className="d-wrapper">          
             <div className="side-nav">
               <div className="d-nav">
-                <Scrollspy items={ items } 
+                <div className="field"><span>GET STARTED</span></div>                
+                <Scrollspy items={ items }
                   className="section-nav"
                   currentClassName="active"
                   onUpdate={
                     (el) => {
                     }
-                  }
-                >
+                  }>
                   {
                     NAVITATIONS.map((nav, index) => {
                       return (
@@ -89,17 +89,27 @@ class Documentation extends React.Component {
                       )
                     })
                   }
+                </Scrollspy>
+                <div className="field"><span>API REFERENCE</span></div>
+                <Scrollspy items={ apiItems }
+                  className="section-nav"
+                  currentClassName="active"
+                  onUpdate={
+                    (el) => {
+                    }
+                  }>
+                  <li><a href="/documentation#blacklist" >Black list</a></li>
                   {
-                    NAVITATIONS[5].children.map((child, cindex) => {
-                      return (
-                        <li className="sub-nav" key={cindex}>
-                          <a 
-                            href={`/documentation#${child.key}`} 
-                          >{child.value}</a>
-                        </li>
-                      )
-                    })
-                  }
+                     API_NAVIGATIONS.map((child, cindex) => {
+                       return (
+                         <li className="sub-nav" key={cindex}>
+                           <a 
+                             href={`/documentation#${child.key}`} 
+                           >{child.value}</a>
+                         </li>
+                       )
+                     })
+                   }
                 </Scrollspy>
               </div>
             </div>

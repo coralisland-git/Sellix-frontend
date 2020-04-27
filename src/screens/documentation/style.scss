@@ -71,12 +71,12 @@
       overflow: auto;
       position: fixed;
       position: fixed;      
-      padding-right: 0;      
+      padding: 2rem;
     }
 
     .section-nav {
       list-style: none;
-      padding: 2rem;
+      padding-left: 0 !important;
 
       li {
         padding: .7rem 0;
@@ -90,6 +90,13 @@
       .active {
         color: #613BEA !important;
       }
+
+    }
+
+    .field {
+      font-size: 12px;
+      color: #cfcfcf;
+      padding: 1rem 0 .5rem;
     }
 
     .sub-nav {
