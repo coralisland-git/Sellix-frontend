@@ -6,7 +6,8 @@ import {
   Button,
   Col,  
   Row,
-  Collapse,  
+  Collapse,
+  Container
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import sellix_logo from "assets/images/Sellix_logo.svg";
@@ -18,7 +19,7 @@ import "./style.scss";
 const NAVITATIONS = [
   { key: 'introduction', value: 'Introduction' },
   { key: 'authentication', value: 'Authentication' },
-  { key: 'pagenation', value: 'Pagenation' },
+  { key: 'pagination', value: 'Pagination' },
   { key: 'errors', value: 'Errors' },
   { key: 'webhooks', value: 'Webhooks' },
   { key: 'blacklist', 
@@ -102,7 +103,7 @@ class Documentation extends React.Component {
                 </Scrollspy>
               </div>
             </div>
-            <div className="d-content">
+            <Container className="d-content" fluid>
               <section id="introduction">
                 <div className="d-ins">
                   <h3><b>Introduction</b></h3>
@@ -119,7 +120,7 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       ROOT URL
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`https://sellix.io/api/v2`}
                     </SyntaxHighlighter>                    
                   </div>
@@ -140,7 +141,7 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       SETUP AUTHENTICATION
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`require 'sellix'
 sellix.api_key = 'api key'
 sellix.api_email = 'email'`}
@@ -148,9 +149,9 @@ sellix.api_email = 'email'`}
                   </div>
                 </div>
               </section>
-              <section id="pagenation">
+              <section id="pagination">
                 <div className="d-ins">
-                  <h3><b>Pagenation</b></h3>
+                  <h3><b>Pagination</b></h3>
                   <p>
                     Sellix offers the ability to paginate any list endpoint. The <span class="badge-mark">X-Total-Pages</span> header returns 
                     the total number of pages for the resources at the specific endpoint you're using. <br/><br/>
@@ -186,7 +187,7 @@ sellix.api_email = 'email'`}
                     <div className="code-block-header">
                       PAGINATING ORDERS EXAMPLE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`# Page 10 
 Sellix::Orders::List(page: 10)
 # Page 10 and 50 per page 
@@ -204,7 +205,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     Validation errors will feature a <span class="badge-mark">errors</span> attribute containing an array of error message strings. <br /><br />
                     The Sellix API uses the following error codes:
                   </p>
-                  <table>
+                  <table className="border-table">
                     <tbody>
                       <tr>
                         <td><p className="param">400</p></td>
@@ -246,7 +247,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       AUTHENTICATION ERROR
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
   "message": "Unable to authenticate"
 }`}
@@ -256,7 +257,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       AUTHENTICATION ERROR
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
   "message": "You are not authorized to perform this action"
 }`}
@@ -266,7 +267,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       VALIDATION ERROR
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
   "message": "Validation failed",
   "errors": [
@@ -300,32 +301,34 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     Each webhook request will feature a <span class="badge-mark">X-Sellix-Event</span> header containing the 
                     webhook event type. A list of supported events from <a href="#">Webhook Endpoints</a> can be found below.
                   </p>
-                  <table>
+                  <table className="border-table">
                     <tbody>
                       <tr>
-                        <td><p className="param">feedback:updated</p></td>
+                        <td><span className="badge-mark">feedback:updated</span></td>
                       </tr>
                       <tr>
-                        <td><p className="param">order:created</p></td>
+                        <td><span className="badge-mark">order:created</span></td>
                       </tr>
                       <tr>
-                        <td><p className="param">order:updated</p></td>
+                        <td><span className="badge-mark">order:updated</span></td>
                       </tr>
                       <tr>
-                        <td><p className="param">order:paid</p></td>
+                        <td><span className="badge-mark">order:paid</span></td>
                       </tr>
                       <tr>
-                        <td><p className="param">product:out_of_stock</p></td>
+                        <td><span className="badge-mark">product:out_of_stock</span></td>
                       </tr>
                       <tr>
-                        <td><p className="param">query:created</p></td>
+                        <td><span className="badge-mark">query:created</span></td>
                       </tr>
                       <tr>
-                        <td><p className="param">query:replied</p></td>
+                        <td><span className="badge-mark">query:replied</span></td>
                       </tr>
                     </tbody>
                   </table>
-                  <p><b>Logs</b></p>
+                  <p>
+                    <br /><br /><b>Logs</b>
+                  </p>
                   <p>
                     Each webhook request will create a <a href="#">Webhook Log</a>. The object is created by the request 
                     has been sent. Before the request response has actually been received, the <span class="badge-mark">response_code</span> will 
@@ -339,7 +342,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       VALIDATING SIGNED WEBHOOK SIGNATURE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`require 'openssl'
 require 'active_support'
 secret = 'your webhook secret'
@@ -361,7 +364,7 @@ end`}
                     <div className="code-block-header">
                       ENDPOINTS
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`GET /api/v2/blacklist/:id
 GET /api/v2/blacklist
 POST /api/v2/blacklist
@@ -438,7 +441,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       THE BLACKLIST OBJECT
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "ZW",
@@ -477,7 +480,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       GET A BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`Sellix::Blacklist.retrieve('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
@@ -485,7 +488,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "ZW",
@@ -512,7 +515,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       LIST ALL BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`Sellix::Blacklist.list`}
                     </SyntaxHighlighter>
                   </div>
@@ -520,7 +523,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`[
   {
     "id": "bGYSEexV",
@@ -581,7 +584,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       CREATE A BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`Sellix::Blacklist.create(
     blocked_data: 'ZW',
     blacklist_type: 3
@@ -592,7 +595,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "ZW",
@@ -649,7 +652,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       UPDATE A BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`Sellix::Blacklist.update('bGYSEexV',
     blocked_data: 'GR'
 )`}
@@ -659,7 +662,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "GR",
@@ -685,7 +688,7 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       DESTROY A BLACKLIST
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`Sellix::Blacklist.destroy('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
@@ -693,13 +696,13 @@ DELETE /api/v2/blacklist/:id`}
                     <div className="code-block-header">
                       RESPONSE
                     </div>
-                    <SyntaxHighlighter language="javascript" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`// No Content: 204 HTTP status`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
-            </div>  
+            </Container>  
           </div>          
         </div>        
       </div>
