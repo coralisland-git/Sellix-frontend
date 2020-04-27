@@ -37,6 +37,9 @@ class documentationLayout extends React.Component {
   }
 
   componentDidMount () {
+
+    document.title = `Developer | Sellix`;
+
     const preUrl = `/${window.localStorage.getItem('userId')}`
       
     if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
