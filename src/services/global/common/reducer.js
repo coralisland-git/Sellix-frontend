@@ -4,9 +4,7 @@ const initState = {
   is_loading: false,
   version: '',
   tostifyAlertFunc: null,
-  general_info: {
-    shop_dark_mode: "1"
-  },
+  general_info: {},
   user_feedback: [],
   user_categories: [],
   user_products: [],
