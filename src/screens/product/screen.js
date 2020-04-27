@@ -5,13 +5,12 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   Input
-} from 'reactstrap'
+} from 'reactstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import { Loader } from 'components'
+import { Loader, Button } from 'components'
 import { confirmAlert } from 'react-confirm-alert'; 
 import { tableOptions } from 'constants/tableoptions'
 import config from 'constants/config'
@@ -237,7 +236,8 @@ class Product extends React.Component {
                       />
                     </div>
                     <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/dashboard/${user}/products/all/new`)}>
-                      Add Product</Button>
+                      Add Product
+                    </Button>
                   </div>
                 </Col>
               </Row>

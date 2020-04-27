@@ -1,10 +1,10 @@
 import backIcon from "assets/images/x.png";
 import config from "constants/config";
-import { Collapse, Button, Input } from "reactstrap";
+import { Collapse, Input } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import React from "react";
-import { Loading } from 'components'
-import { api, formData } from 'utils'
+import { api, formData } from 'utils';
+import { Button } from 'components';
 
 const ButtonOptions = ({ option, setPaymentOptions, index }) => {
 	if(option === '') {

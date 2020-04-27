@@ -8,7 +8,6 @@ import { landingRoutes } from 'routes'
 import { AuthActions, CommonActions } from 'services/global'
 
 import {
-    Button,
     Container,
     Collapse,
     Navbar,
@@ -17,7 +16,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap'
-
+import { Button } from 'components'
 import sellix_logo from 'assets/images/home/logo-1@2x.png'
 import sellix_logo_footer from 'assets/images/Sellix_logo_beta.svg'
 import './style.scss'

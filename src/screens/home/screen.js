@@ -1,29 +1,13 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { Button } from 'components';
 import {
-  Button,
   Col,
   Container,
   Row,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
   NavLink
 } from 'reactstrap'
-import {
-  AppHeader
-} from '@coreui/react'
-
 import './style.scss'
-
-import {
-  Loading
-} from 'components'
 
 import service1 from 'assets/images/home/service1.svg'
 import service2 from 'assets/images/home/service2.svg'

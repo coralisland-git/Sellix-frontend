@@ -6,7 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   Label,
@@ -14,6 +13,7 @@ import {
   FormGroup,
   Input
 } from 'reactstrap'
+import { Button } from 'components';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import config from 'constants/config'
 import moment from 'moment'

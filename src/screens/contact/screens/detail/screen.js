@@ -5,7 +5,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   Label,
@@ -13,6 +12,7 @@ import {
   FormGroup,
   Input
 } from 'reactstrap'
+import { Button } from 'components';
 import * as Yup from "yup";
 import * as cn from 'classnames'
 import * as _ from 'lodash'

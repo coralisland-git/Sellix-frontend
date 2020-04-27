@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux'
 import {
   Card,
   CardBody,
-  Button,
   Row,
   Col,
   FormGroup,
   Label,
   Input
 } from 'reactstrap'
+import { Button } from 'components';
 import { CommonActions, AuthActions } from 'services/global'
 import { Loader } from 'components'
 import * as Actions from './actions'

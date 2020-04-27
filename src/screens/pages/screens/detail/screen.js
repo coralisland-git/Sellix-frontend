@@ -1,11 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
 import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   Form,
@@ -14,7 +12,7 @@ import {
   Label
 } from 'reactstrap'
 import Select from 'react-select'
-
+import { Button } from 'components';
 
 import './style.scss'
 

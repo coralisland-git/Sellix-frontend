@@ -3,19 +3,15 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
-  CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   FormGroup,
   Label,
-  Tooltip,
   Input
 } from 'reactstrap'
-import Select from 'react-select'
+import { Button } from 'components';
 import { Loader, FaviconUploader } from 'components'
-import ColorPicker from 'rc-color-picker'
 
 import * as ProductActions from './actions'
 

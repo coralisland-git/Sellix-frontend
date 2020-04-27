@@ -1,10 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Button } from 'components';
 import {
-  Button,
-  Row,
-  Col,
   Form,
   FormGroup,
   Input,
@@ -12,18 +10,10 @@ import {
   Modal,
   ModalHeader, 
   ModalBody,
-  ModalFooter,
 } from 'reactstrap'
-import Select from 'react-select'
-import _ from 'lodash'
-import { Alert } from 'reactstrap'
-import { Spin } from 'components'
-import QRCode from 'react-qr-code';
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import {
-  CommonActions,
-  AuthActions
+  CommonActions
 } from 'services/global'
 
 import * as Actions from '../../../actions'
