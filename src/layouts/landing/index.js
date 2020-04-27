@@ -227,14 +227,12 @@ class LandingLayout extends React.Component {
                                 <NavLink href="#">Help Center</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">Contact Us</NavLink>
+                                <NavLink href="/contact">Contact Us</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="https://t.me/sellixio">Telegram</NavLink>
                             </NavItem>
-                            <NavItem>
-                                <NavLink href="#">Status</NavLink>
-                            </NavItem>
+
                             </Nav>
                         </div>
                         </div>
