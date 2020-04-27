@@ -24,9 +24,17 @@ export const ORDER = {
   ALL_ORDERS: 'ALL_ORDERS'
 }
 
+export const INVOICES = {
+  INVOICES: 'INVOICES'
+}
+
 export const ANALYTICS = {
   ALL_REPORTS: 'ALL_REPORTS',
   NEW_REPORT: 'NEW_REPORT'
+}
+
+export const SETTINGS = {
+  SETTINGS: 'SETTINGS'
 }
 
 export const USERS = {
@@ -96,9 +104,6 @@ export const EXPENSE = {
   EXPENSE_LIST: 'EXPENSE_LIST'
 }
 
-export const SETTINGS = {
-
-}
 
 export const CUSTOMER_INVOICE = {
   CUSTOMER_INVOICE_LIST: 'CUSTOMER_INVOICE_LIST'

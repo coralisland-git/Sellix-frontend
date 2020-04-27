@@ -111,60 +111,16 @@ export const adminNavigation =  {
       icon: 'fas fa-credit-card',
     },
     {
-      name: 'Analytics',
-      url: `/dashboard/analytics`,
-      icon: 'fas fa-area-chart',
-      children: [
-        {
-          name: 'All Analytics',
-          url: `/dashboard/analytics/all`,
-        },
-        {
-          name: 'Reports',
-          url: `/dashboard/analytics/reports`,
-        },
-      ]
+      name: 'Settings',
+      url: `/admin/settings`,
+      icon: 'fas fa-credit-card',
     },
     {
-      name: 'Coupons',
-      url: `/dashboard/coupons`,
-      icon: 'fa fa-tags',
+      name: 'Invoices',
+      url: `/admin/invoices`,
+      icon: 'fas fa-credit-card',
     },
-    {
-      name: 'Queries',
-      url: `/dashboard/queries`,
-      icon: 'fas fa-question-circle',
-    },
-    {
-      name: 'Feedback',
-      url: `/dashboard/feedback`,
-      icon: "fa fa-commenting",
-    },
-    {
-      name: 'Blacklist',
-      url: `/dashboard/blacklist`,
-      icon: 'fas fa-ban',
-    },
-    // {
-    //   name: 'Developer',
-    //   url: `/dashboard/developer`,
-    //   icon: 'fas fa-code',
-    //   children: [
-    //     {
-    //       name: 'Webhooks',
-    //       url: `/dashboard/developer/webhooks`,
-    //     },
-    //     {
-    //       name: 'Webhook Logs',
-    //       url: `/dashboard/developer/webhook-logos`,
-    //     }
-    //   ]
-    // },
-    {
-      name: 'Pages',
-      url: `/dashboard/pages`,
-      icon: 'fa fa-file',
-    }
+    
   ]
 }
 

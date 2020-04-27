@@ -125,7 +125,7 @@ class OrderDetail extends React.Component {
         this.setState({order: res.data.invoice})
       else throw res
     }).catch((err) => {
-      this.props.commonActions.tostifyAlert('error', err.error)
+      this.props.commonActions.tostifyAlert('error', err.message)
       this.props.history.push(`/dashboard/${user}/orders`)
     }).finally(() => {
       this.setState({ loading: false })

@@ -181,13 +181,27 @@ class User extends React.Component {
     return <Button color="default" onClick={(e) => this.viewProductAdmin(e, row.uniqid)}>Edit</Button>
   }
 
+  editUser = () => {
+    this.props.history.push({
+      pathname: `/admin/users/view/${this.props.match.params.id}/edit/${this.props.match.params.id}`
+    })
+  }
 
   render() {
     const { loading } = this.state
     console.log({user: this.props.user})
     return (
       <div className="detail-product-screen">
-        <div className="animated fadeIn">
+        <div className="animated fadeIn adminUser">
+          <div className='adminUserBlock'>
+            <h5>User</h5>
+            <div className="userBlockRow">ID: {this.props.user.id}</div>
+            <div className="userBlockRow">Username: {this.props.user.username}</div>
+            <div className="userBlockRow">Email: {this.props.user.email}</div>
+            <div className="userBlockRow">Email_2fa: {this.props.user.email_2fa === '0' ? 'False' : "True"}</div>
+            <div className="userBlockRow">otp_2fa: {this.props.user.otp_2fa === '0' ? 'False' : "True"}</div>
+            <Button color="default" className='mt-4 mb-3 btn btn-primary' onClick={() => this.editUser()}>Edit</Button>
+          </div>
           <Row>
             <Col lg={12} className="mx-auto">
               <Card>

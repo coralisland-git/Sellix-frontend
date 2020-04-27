@@ -23,10 +23,14 @@ import {
   Reports,
   Users,
   TopUsers,
+  Settings,
+  Invoices
 } from 'screens'
 
 
 const reducer = combineReducers({
+  settings: Settings.reducer,
+  invoices: Invoices.reducer,
   users: Users.reducer,
   topUsers: TopUsers.reducer,
   common: CommonReducer,

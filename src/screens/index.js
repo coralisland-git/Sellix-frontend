@@ -58,6 +58,10 @@ import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
 import OrderAdminDetail from './users/screens/viewOrder/screens/detail'
+import Settings from './settings'
+import SettingsEdit from './settings/screens/detail'
+import AdminEditUser from './users/screens/detail/editUser'
+import Invoices from './invoices'
 
 import GeneralSettings from './general_settings'
 import Customization from './customization'
@@ -87,6 +91,10 @@ export {
   User,
   OrderAdminDetail,
   TopUsers,
+  Settings,
+  SettingsEdit,
+  AdminEditUser,
+  Invoices,
 
 
   EditCoupon,

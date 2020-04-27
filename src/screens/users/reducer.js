@@ -2,7 +2,7 @@ import { USERS, USER } from 'constants/types'
 
 const initState = {
   users: [],
-  user:[]
+  user:{}
 }
 
 
@@ -17,7 +17,7 @@ const Users = (state = initState, action) => {
       case USER.USER:
       return {
         ...state,
-        user: Object.assign([], payload)
+        user: payload
       }
     default:
       return state

@@ -25,7 +25,11 @@ import {
   Users,
   User,
   TopUsers,
-  OrderAdminDetail
+  OrderAdminDetail,
+  Settings,
+  SettingsEdit,
+  AdminEditUser,
+  Invoices
 } from 'screens'
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
@@ -33,6 +37,31 @@ import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback 
 const user = window.localStorage.getItem('userId')
 
 const adminRoutes = [
+  {
+    path: `/admin/invoices/view/:id`,
+    name: 'InvoicesView',
+    component: OrderDetail.screen
+  },
+  {
+    path: `/admin/invoices`,
+    name: 'Invoices',
+    component: Invoices.screen
+  },
+  {
+    path: `/admin/settings/edit`,
+    name: 'SettingsEdit',
+    component: SettingsEdit.screen
+  },
+  {
+    path: `/admin/settings`,
+    name: 'Settings',
+    component: Settings.screen
+  },
+  {
+    path: `/admin/users/view/:id/edit/:id`,
+    name: 'EditAdminUser',
+    component: AdminEditUser
+  },
   {
     path: `/admin/users/view/:id/product/edit/:id`,
     name: 'EditAdminProduct',

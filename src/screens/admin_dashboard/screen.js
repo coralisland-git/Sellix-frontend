@@ -74,7 +74,7 @@ class AdminDashboard extends React.Component {
           <Card>
             <CardBody>
               <div className="flex-wrapper align-items-center">
-                <h1 className="title">Dashboardasda</h1>
+                <h1 className="title">Dashboard</h1>
                 <div className="card-header-actions">
                   <div className="new-select fill">
                     <select className="form-control" ref={this.dateRangeSelect}>
