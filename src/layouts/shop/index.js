@@ -275,7 +275,7 @@ class ShopLayout extends React.Component {
 				<GlobalStyles />
 				<div style={{
 					position: 'fixed',
-					zIndex: 999,
+					zIndex: 99999,
 					left: 0,
 					right: 0,
 					height: '100%',
