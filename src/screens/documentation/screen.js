@@ -46,12 +46,13 @@ class Documentation extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  render() {
-
-    const { history } = this.props;
-    var key = history.location.hash.substr(1);
-    if (key === "")
-      key = "introduction";
+  componentDidMount() {
+    var key = this.props.history.location.hash.substr(1);    
+    if (key !== "")
+      this.setState({initial : true})
+  }
+   
+  render() {   
 
     var items = ['get_started'];
     NAVITATIONS.map((nav => {
@@ -65,6 +66,7 @@ class Documentation extends React.Component {
       items.push(nav.key)
     }))
 
+
     return (
       <div className="documentation-screen">
         <div className="animated fadeIn">
@@ -74,10 +76,14 @@ class Documentation extends React.Component {
                 <Scrollspy items={ items }
                   className="section-nav"
                   currentClassName="active"
-                  offset={ -50 }
+                  offset={ -50 }                  
                   onUpdate={
-                    (el) => {
-                      this.props.history.push(`/documentation#${el.id}`)
+                    (el) => {                      
+                      if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
+                        this.props.history.push(`/documentation#${el.id}`)
+                      }
+                      else
+                        this.setState({initial: false})
                     }
                   }>
                   <li className="field">GET STARTED</li>
@@ -211,6 +217,12 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     The Sellix API uses the following error codes:
                   </p>
                   <table className="border-table">
+                    <thead>
+                      <tr>
+                        <td>STATUS</td>
+                        <td>MEANING</td>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr>
                         <td><p className="param">400</p></td>
@@ -307,6 +319,11 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     webhook event type. A list of supported events from <a href="#">Webhook Endpoints</a> can be found below.
                   </p>
                   <table className="border-table">
+                    <thead>
+                      <tr>
+                        <th className="table-title">EVENT</th>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr>
                         <td><span className="badge-mark">feedback:updated</span></td>
