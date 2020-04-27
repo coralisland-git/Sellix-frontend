@@ -262,6 +262,7 @@ export const GlobalStyles = createGlobalStyle`
 
         *[class$=-menu] *[class$=-option] {
             background-color: ${theme.widgetBorder} !important;
+            cursor:pointer;
         }
 
         *[class$=-menu] *[class$=-option]:hover {
@@ -289,6 +290,14 @@ export const GlobalStyles = createGlobalStyle`
     ${({theme}) => theme.name === 'light' && `
         .option-select > * > * > *:not([class$=-singleValue]):not([class$=-indicatorContainer]):not([class$=-Input]) {
             background: white !important;
+        }
+
+        .option-select-option:not(.is-disabled) * {
+            color: black !important;
+        }
+
+        .option-select-option:not(.is-disabled):not(.is-selected) * {
+            opacity: 0.85 !important;
         }
     `}
 `
