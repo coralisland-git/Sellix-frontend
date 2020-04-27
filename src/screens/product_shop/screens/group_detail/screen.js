@@ -133,6 +133,7 @@ class ShopGroupModal extends React.Component {
                 })}
                 className="option-select"
                 onChange={product => this.setState({ selectedProduct: product})}
+                isSearchable={false}
                 // menuIsOpen={true}
               />
             </ModalBody>
