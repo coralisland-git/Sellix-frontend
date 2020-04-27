@@ -27,6 +27,7 @@ class ShopGroupModal extends React.Component {
       selectedProduct: group.products_bound[0]
     })
   }
+  
 
   formatProductOption = product => {
     const rating = product.average_score || 0
@@ -62,7 +63,10 @@ class ShopGroupModal extends React.Component {
   render() {
 
     const { selectedProduct } = this.state
-    let { group, onGoBack, onProductSelect, className } = this.props;
+    let { group, onGoBack, onProductSelect, className, hide_out_of_stock } = this.props;
+
+    if(hide_out_of_stock === 1)
+      group.products_bound = group.products_bound.filter(product => getProductStock(product) != 0)
 
     return (
       <div>

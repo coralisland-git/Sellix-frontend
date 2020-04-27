@@ -4,13 +4,11 @@ import ProductCard from './productCard';
 import GroupCard from './groupCard';
 import { Loader } from 'components';
 import GroupModal from './screens/group_detail/screen'
+import { getProductStock } from 'screens/product_shop/productCard';
 
 import './style.scss'
 
-
-
-
-const ProductsList = ({ products, groups, loading, history }) => {
+const ProductsList = ({ products, groups, loading, history, hide_out_of_stock }) => {
 
 	const [selectedGroup, setSelectedGroup] = useState(null)
 
@@ -20,6 +18,10 @@ const ProductsList = ({ products, groups, loading, history }) => {
 	if(!products.length && !groups.length) {
 		return <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>
 	}
+
+
+	if(hide_out_of_stock === 1) 
+		products = products.filter(product => {return getProductStock(product) != 0 })
 
 	return (
 		<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} duration={300}>
@@ -34,7 +36,9 @@ const ProductsList = ({ products, groups, loading, history }) => {
 				</div> 
 			)}
 			{ selectedGroup && 
-				<GroupModal group={selectedGroup} 
+				<GroupModal 
+					group={selectedGroup} 
+					hide_out_of_stock={hide_out_of_stock}
 					className="group-modal"
 					onGoBack={() => {
 						document.querySelector('.group-modal').remove()

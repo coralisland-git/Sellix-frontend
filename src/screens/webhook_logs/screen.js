@@ -49,17 +49,20 @@ class WebhookLogs extends React.Component {
   }
 
   componentDidMount () {
-    this.initializeData()
+    this.initializeData();    
+    setInterval(async () => {
+      this.props.actions.getWebhookLogList()
+    }, 20000)
   }
 
-  initializeData = () => {
+  initializeData = () => {    
     this.setState({ loading: true })    
     this.props.actions.getWebhookLogList().catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({ loading: false })
     })
-  }
+  }  
 
   renderStatus (cell, row) {
     if (row.response_code && row.response_code != 0) {

@@ -23,7 +23,7 @@ const landingRoutes = [
     name: '404'
   },
   {
-    path: '/ticket',
+    path: '/contact',
     component: Tickets.screen,
     name: 'Tickets'
   },
