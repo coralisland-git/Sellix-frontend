@@ -26,7 +26,8 @@ import {
   CreateProductGroup,
   EditProductGroup,
   ProductGroups,
-  ProductGroupSort
+  ProductGroupSort,
+  EmbedProduct
 } from 'screens';
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
@@ -243,6 +244,13 @@ const adminRoutes = [
     name: 'Pages',
     component: Pages.screen,
     title: 'Pages'
+  },
+
+  {
+    path: `/dashboard/${user}/developer/embed-product`,
+    name: 'Embed Product',
+    component: EmbedProduct.screen,
+    title: 'Embed Product'
   },
 
   {
