@@ -244,10 +244,7 @@ class ShopLayout extends React.Component {
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
 				<GlobalStyles />
 				<LoaderFullscreen loaderRemovedInitially={!userIsLoading}/>
-				<div className={'shop-container'} style={{
-					opacity: userIsLoading ? 0 : 1,
-					transition: 'opacity 0.5s ease-in'
-				}}>
+				<div className={'shop-container'}>
 					<div className="app">
 						<AppHeader>
 							<Suspense fallback={Loading()}>
