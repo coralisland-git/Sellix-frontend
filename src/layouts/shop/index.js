@@ -17,7 +17,7 @@ import LazyImage from "react-lazy-progressive-image";
 import Sellix from '../../assets/images/user_placeholder.svg';
 
 
-import { Loading } from 'components'
+import { Loader, Loading } from 'components'
 
 import Header from './header'
 
@@ -47,7 +47,10 @@ class ShopLayout extends React.Component {
 		this.state = {
 			theme: 'light',
 			verifiedTooltipOpen: false,
-			userIsBanned: false
+			userIsBanned: false,
+
+			loaderFadingOut: false,
+			loaderRemoved: false
 		}
 	}
 
@@ -98,6 +101,28 @@ class ShopLayout extends React.Component {
 			}
 		}
 		this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+
+
+		const { user } = this.props
+
+		const userIsLoading = Object.keys(user).length == 0;
+
+		if(userIsLoading) {
+			setTimeout(() => {
+				this.setState({
+					loaderFadingOut: true
+				})
+				setTimeout(() => {
+					this.setState({
+						loaderRemoved: true
+					})
+				}, 1000)
+			}, 1000)
+		} else {
+			this.setState({
+				loaderRemoved: true
+			})
+		}
 	}
 
 	changeTheme() {
@@ -120,6 +145,8 @@ class ShopLayout extends React.Component {
     	const userId = this.props.match.params.username
 		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
 		const { verifiedTooltipOpen, userIsBanned } = this.state
+
+		console.log('theme', user, theme)
 
 		const appBody = userIsBanned ? (<div style={{
 			textAlign: 'center',
@@ -238,10 +265,32 @@ class ShopLayout extends React.Component {
 			</div>
 		)
 
+		const userIsLoading = Object.keys(user).length == 0;
+
+		const { loaderFadingOut, loaderRemoved } = this.state;
+
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
 				<GlobalStyles />
-				<div className={'shop-container'}>
+				<div style={{
+					position: 'fixed',
+					zIndex: 99999,
+					left: 0,
+					right: 0,
+					height: '100%',
+					display: loaderRemoved ? 'none' : 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					background: '#211d3d',
+					opacity: loaderFadingOut ? 0 : 1,
+					transition: 'opacity 1s ease-in'
+				}}>
+					<Loader/>
+				</div>
+				<div className={'shop-container'} style={{
+					opacity: userIsLoading ? 0 : 1,
+					transition: 'opacity 0.5s ease-in'
+				}}>
 					<div className="app">
 						<AppHeader>
 							<Suspense fallback={Loading()}>

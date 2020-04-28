@@ -146,7 +146,7 @@ class CreatePage extends React.Component {
                                     placeholder="Type"
                                     options={TYPE_OPTIONS}
                                     onChange={(option) => {
-                                      props.setFieldValue('type', option.value)
+                                      props.setFieldValue('type', option)
                                     }}
                                     value={props.values.type}
                                     className={

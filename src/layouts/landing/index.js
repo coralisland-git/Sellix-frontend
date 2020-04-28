@@ -84,6 +84,9 @@ class LandingLayout extends React.Component {
     }
 
     const { isOpen } = this.state;
+    const { history } = this.props;
+
+    const page = this.props.match.url
     const user = window.localStorage.getItem('userId')
     const dashboardUrl = user ? `/dashboard/${user}/home` : '/'
 
@@ -92,7 +95,66 @@ class LandingLayout extends React.Component {
         <div className="animated fadeIn">
             <div className="initial-container">
               <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
-            
+              <header className={`pt-2 pb-2 ${page == '/'?'home-header':''}`}>
+                <Navbar  color="white" light expand="lg">
+                  <NavbarBrand href="/">
+                      <img className="logo" src={page === '/'?sellix_logo:sellix_logo_footer}/>
+                  </NavbarBrand>
+
+                  {
+                    page == '/' &&
+                      <Collapse className="mr-5" isOpen={isOpen} navbar>
+                        <Nav className="ml-auto" navbar>
+                          <Link
+                            activeClass="active"
+                            to="home_section"
+                            spy={true}
+                            smooth={true}
+                            offset={-70}
+                            duration= {500}
+                          >Home</Link>
+                          <Link
+                            activeClass="active"
+                            to="feature_section"
+                            spy={true}
+                            smooth={true}
+                            offset={-70}
+                            duration= {500}
+                          >Features</Link>
+                          <Link
+                            activeClass="active"
+                            to="started_section"
+                            spy={true}
+                            smooth={true}
+                            offset={-70}
+                            duration= {500}
+                          >Get Started</Link>
+                        </Nav>
+                      </Collapse>
+                    }
+
+                    <div>
+                      { user?
+                          <Button className="mr-3 landing-primary-button text-white menu"
+                            onClick={() => this.props.history.push(dashboardUrl)}
+                          >
+                            Dashboard
+                          </Button>
+                          :
+                          <>
+                            <Button className="landing-secondary-button menu mr-2"
+                              onClick={() => this.props.history.push('/auth/login')}>
+                              Log In
+                            </Button>
+                            <Button className="landing-primary-button menu"
+                              onClick={() => this.props.history.push('/auth/register')}>
+                              Sign Up
+                            </Button>
+                          </>
+                        }
+                    </div>
+                  </Navbar>
+                </header>
                 <Router>
                   <Switch>
                   {
@@ -100,71 +162,9 @@ class LandingLayout extends React.Component {
                       if (prop.redirect)
                           return <Redirect from={prop.path} to={prop.pathTo} key={key} />
                       return (
-                          <Route path={prop.path} component={() => (
-                              <>
-                                <header className={`pt-2 pb-2 ${prop.name === 'Home'?'home-header':''}`}>
-                                  <Navbar  color="white" light expand="lg">
-                                      <NavbarBrand href="/">
-                                          <img className="logo" src={prop.name === 'Home'?sellix_logo:sellix_logo_footer}/>
-                                      </NavbarBrand>
-                                      
-                                      {
-                                        prop.name === 'Home' &&
-                                          <Collapse className="mr-5" isOpen={isOpen} navbar>
-                                            <Nav className="ml-auto" navbar>
-                                              <Link
-                                                activeClass="active"
-                                                to="home_section"
-                                                spy={true}
-                                                smooth={true}
-                                                offset={-70}
-                                                duration= {500}
-                                              >Home</Link>
-                                              <Link
-                                                activeClass="active"
-                                                to="feature_section"
-                                                spy={true}
-                                                smooth={true}
-                                                offset={-70}
-                                                duration= {500}
-                                              >Features</Link>
-                                              <Link
-                                                activeClass="active"
-                                                to="started_section"
-                                                spy={true}
-                                                smooth={true}
-                                                offset={-70}
-                                                duration= {500}
-                                              >Get Started</Link>
-                                            </Nav>
-                                          </Collapse>
-                                      }
-
-                                      <div>
-                                        { user?
-                                            <Button className="mr-3 landing-primary-button text-white menu" 
-                                              onClick={() => this.props.history.push(dashboardUrl)}
-                                            >
-                                              Dashboard
-                                            </Button>
-                                            :
-                                            <>  
-                                              <Button className="landing-secondary-button menu mr-2" 
-                                                onClick={() => this.props.history.push('/auth/login')}>
-                                                Log In
-                                              </Button>
-                                              <Button className="landing-primary-button menu" 
-                                                onClick={() => this.props.history.push('/auth/register')}>
-                                                Sign Up
-                                              </Button>
-                                            </>
-                                          }
-                                      </div>
-                                      </Navbar>
-                                  </header>
-                                <prop.component/>
-                              </>
-                            )}
+                          <Route
+                            path={prop.path}
+                            component={prop.component}
                             key={key}
                           />
                       )
@@ -227,14 +227,12 @@ class LandingLayout extends React.Component {
                                 <NavLink href="#">Help Center</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">Contact Us</NavLink>
+                                <NavLink href="/contact">Contact Us</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="https://t.me/sellixio">Telegram</NavLink>
                             </NavItem>
-                            <NavItem>
-                                <NavLink href="#">Status</NavLink>
-                            </NavItem>
+
                             </Nav>
                         </div>
                         </div>

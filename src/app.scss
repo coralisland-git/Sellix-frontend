@@ -7,6 +7,10 @@
 @import '~simple-line-icons/css/simple-line-icons.css';
 @import './assets/scss/style.scss';
 
+body {
+  transition: background 1s;
+}
+
 body.dark {
   background: #211d3d;
 }

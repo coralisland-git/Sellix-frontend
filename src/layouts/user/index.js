@@ -5,9 +5,7 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile
+  MobileView
 } from "react-device-detect";
 
 import { Container } from 'reactstrap'
@@ -102,6 +100,16 @@ class AdminLayout extends React.Component {
         }
       }
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+    }
+
+    var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+    if (iOS) {
+      for (let i = 0; i < document.getElementsByClassName('nav-link').length ; i ++) {
+        let element = document.getElementsByClassName('nav-link')[i];
+        element.addEventListener("mouseenter", function( event ) {   
+          element.click();
+        }, false);
+      }
     }
   }
 
