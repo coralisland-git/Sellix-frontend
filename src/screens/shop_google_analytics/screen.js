@@ -81,7 +81,7 @@ class Payments extends React.Component {
                   <Row className="">
                     <Col lg={12}>
                       <FormGroup className="mb-4">
-                        <h4 className="title">Google Analytics</h4>
+                        <h4 className="title">Analytics</h4>
                       </FormGroup>
                     </Col>
                     <Col lg={12}>

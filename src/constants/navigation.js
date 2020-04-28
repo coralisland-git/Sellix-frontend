@@ -301,8 +301,8 @@ export const shopSettingsNavigation =  {
     },
 
     {
-      name: 'Google Analytics',
-      url: `/settings/${user}/google-analytics`
+      name: 'Analytics',
+      url: `/settings/${user}/analytics`
     },
     // {
     //   name: 'Billing',

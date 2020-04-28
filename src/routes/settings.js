@@ -44,10 +44,10 @@ import {
     },
 
     {
-      path: `/settings/${user}/google-analytics`,
-      name: 'Google Analytics',
+      path: `/settings/${user}/analytics`,
+      name: 'Analytics',
       component: ShopGoogleAnalytics.screen,
-        title: 'Settings - Google Analytics'
+        title: 'Settings - Analytics'
     },
     // {
     //     path: `/settings/${user}/memebers`,
