@@ -1,13 +1,6 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { converter } from 'constants/config'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import { CommonActions } from 'services/global'
-import { Loader, Affix } from 'components'
-import ShopProductDetail from '../detail/screen'
-import { Loading } from 'components'
-import { api } from 'utils'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Button } from 'components';
 import Select from 'react-select'
 import { getProductStock } from 'screens/product_shop/productCard';
 import config from 'constants/config';
@@ -133,6 +126,7 @@ class ShopGroupModal extends React.Component {
                 })}
                 className="option-select"
                 onChange={product => this.setState({ selectedProduct: product})}
+                isSearchable={false}
                 // menuIsOpen={true}
               />
             </ModalBody>

@@ -3,9 +3,7 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
-  CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   FormGroup,
@@ -13,7 +11,7 @@ import {
   Form,
   Input
 } from 'reactstrap'
-import Select from 'react-select'
+import { Button } from 'components';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { Loader, ImageUpload, AvatarUploader } from 'components'

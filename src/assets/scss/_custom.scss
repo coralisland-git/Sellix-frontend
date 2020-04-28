@@ -81,23 +81,58 @@ body {
     background-color: #F1F1F1 !important;
     color: #A7A5B4 !important;
     border: none !important;
+
+    &:hover {
+        background-color: #ececec !important;
+    }
 }
 
 .btn-primary {
     background-color: #613BEA !important;
     color: white !important;
+
+    &:hover {
+        background-color: #4f29dc !important;
+    }
 }
 
 .btn-secondary {
     background-color: white;
     border: 2px solid #613BEA !important;
     color: #613BEA !important;
+
+    &:hover {
+        background-color: darken(#fff, 10%) !important;
+    }
 }
 
 .btn-white {
     background-color: white;
     color: #A7A5B4 !important;
+
+    &:hover {
+        background-color: #ececec !important;
+    }
 }
+
+.dark {
+    & .btn-default {
+        &:hover {
+            background-color: #231b52 !important;
+        }
+    }
+}
+
+
+
+.react-bootstrap-daterangepicker-container {
+    & button.btn {
+        &:hover {
+            background-color: transparent !important;
+        }
+    }
+}
+
 
 
 .breadcrumb li,

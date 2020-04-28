@@ -1,8 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
 import {
-  Button,
   Row,
   Col,
   Form,
@@ -15,9 +12,7 @@ import {
   ModalFooter,
 } from 'reactstrap'
 import Select from 'react-select'
-import _ from 'lodash'
-
-import { DateRangePicker2 } from 'components'
+import { Button } from 'components';
 
 import { Formik } from 'formik';
 import * as Yup from "yup";

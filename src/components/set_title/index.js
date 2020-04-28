@@ -17,6 +17,9 @@ class SetTitle extends Component {
 
 	componentDidMount() {
 	    const { notifications, title} = this.props;
+	    if(title === 'Home') {
+		    document.title = 'Sellix: Digital Selling with Ease'
+	    }
 		document.title = notifications ? `(${notifications}) ${title} | Sellix` : `${title} | Sellix`;
 	}
 

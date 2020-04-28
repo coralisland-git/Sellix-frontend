@@ -60,10 +60,7 @@ class Header extends Component {
                 <DropdownItem onClick={() => this.props.history.push('/admin')}>
                    Help Center
                 </DropdownItem>
-                <DropdownItem onClick={() => this.props.history.push('/shop')}>
-                   Tickets
-                </DropdownItem>
-                <DropdownItem onClick={() => this.props.history.push('/shop/contact')}>
+                <DropdownItem onClick={() => this.props.history.push('/contact')}>
                    Contact Us
                 </DropdownItem>
               </DropdownMenu>

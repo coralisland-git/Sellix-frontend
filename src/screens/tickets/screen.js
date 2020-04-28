@@ -1,16 +1,16 @@
 import React from 'react'
-import {Button, Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap'
-
+import { Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap'
+import { Button } from 'components';
 import {Formik} from "formik";
 import * as Yup from "yup";
-import {Loader} from "../../components";
+import { Spin } from "../../components";
 import Select from "react-select";
 import {connect} from 'react-redux'
-import {api} from "../../utils";
+import {authApi} from "../../utils";
 import { withRouter } from "react-router-dom";
 import './style.scss'
-import {bindActionCreators} from "redux";
-import {AuthActions, CommonActions} from "../../services/global";
+import { bindActionCreators } from "redux";
+import { CommonActions } from "../../services/global";
 
 
 const OPTIONS = [
@@ -21,62 +21,65 @@ const OPTIONS = [
     {value: 'other', label: 'Other'},
 ]
 
-const ZENDESK_KEY = "fDcM3Ib5ADtloi5i2xHLMsuNvSHnXIOr3z6crmHo";
-const ZENDESK_URL = "https://sellix.zendesk.com/api/v2/tickets.json";
-const ZENDESK_EMAIL = "pavlenkovictor92@gmail.com";
-
-class Tickets extends React.Component {
+class Ticket extends React.Component {
 
     componentDidMount() {
+
         document.title = `Create Ticket | Sellix`;
         let isLoggedin = window.localStorage.getItem('userId')
 
-        if(isLoggedin) {
-            this.props.authActions.getSelfUser()
-        } else {
+        if(!isLoggedin) {
             this.props.history.push('/')
         }
     }
 
-    handleSubmit = async ({ subject, message, category }) => {
+    handleSubmit = async ({ subject, message, category }, { resetForm, setSubmitting }) => {
 
-        const { email, username } = this.props.user;
-        const requester = { name: username, email: email };
-        const comment = { body: message };
-        const custom_fields = [{ id: 360006801217, value: category.value }]
-        const ticket = {
-            requester,
-            subject,
-            comment,
-            custom_fields
-        };
+            const custom_id = 360006801217;
+            const form = new FormData();
+                    form.append('subject', subject || '');
+                    form.append('message', message);
+                    form.append('custom_id', custom_id);
+                    form.append('custom_value', category.value);
 
-             api.post(ZENDESK_URL, JSON.stringify({ ticket }), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Authorization': `Basic ${btoa(`${ZENDESK_EMAIL}/token:${ZENDESK_KEY}`)}`
-                }
-            }).then((response) => {
-                 if (response.ticket) {
-                     this.props.commonActions.tostifyAlert('success', "Your ticket has been created. Additional information have been sent to your email.")
-                 } else {
-                     this.props.commonActions.tostifyAlert('error', response || 'Seomthing went wrong!')
-                 }
-             })
-                 .catch((error) => {
-                     this.props.commonActions.tostifyAlert('error', error || 'Seomthing went wrong!')
-                     return error;
+             authApi.post('/zendesk/create', form)
+                 .then(({ data, error }) => {
+                     if (data && data.ticket) {
+                         this.props.commonActions.tostifyAlert('success', "Your ticket has been created. Additional information have been sent to your email.");
+                         resetForm({
+                             message: "",
+                             subject: "",
+                             category: null,
+                         })
+                     } else {
+                         if(error.details && error.details.base.length) {
+                             this.props.commonActions.tostifyAlert(
+                                 'error', error.details.base[0].description || 'Seomthing went wrong!'
+                             )
+                         } else {
+                             this.props.commonActions.tostifyAlert(
+                                 'error', error || 'Seomthing went wrong!'
+                             )
+                         }
+                     }
+                 })
+                 .catch((res) => {
+                     console.log(res)
+                     this.props.commonActions.tostifyAlert('error', '' || 'Seomthing went wrong!')
+                     return false
+                 })
+                 .finally(() => {
+                     setSubmitting(false)
                  })
     }
 
-
-
     render() {
 
-        let loading = false;
         let validationSchema = Yup.object().shape({
-            category: Yup.string().required('Category is required'),
+            category: Yup.object().shape({
+                label: Yup.string(),
+                value: Yup.string()
+            }).nullable().required('Category is required'),
             subject: Yup.string().required('Subject is required'),
             message: Yup.string().required('The message fields is required')
         });
@@ -95,12 +98,10 @@ class Tickets extends React.Component {
                     <div className="section bg-white" style={{ padding: "3rem 0 "}}>
                         <Container className="home-container">
                             <Formik onSubmit={this.handleSubmit} validationSchema={validationSchema}>
-                                {({handleSubmit, values, errors, handleChange, touched}) => (
+                                {({handleSubmit, values, errors, handleChange, touched, isSubmitting}) => (
                                     <Form onSubmit={handleSubmit}>
                                         <Card>
                                             <CardBody className="p-4 mb-2 ">
-                                                {loading && <Row><Col lg={12}><Loader/></Col></Row>}
-                                                {!loading &&
                                                 <Row className="mb-2">
                                                     <Col lg={12}>
                                                         <Row className={'justify-content-center'}>
@@ -157,11 +158,10 @@ class Tickets extends React.Component {
                                                         </Row>
                                                     </Col>
                                                 </Row>
-                                                }
                                             </CardBody>
 
-                                            <Button color="primary" type="submit" className="" style={{width: 200, margin: "0 auto"}}>
-                                                Send Message
+                                            <Button color="primary" type="submit" className="" style={{width: 200, margin: "0 auto"}} disabled={isSubmitting}>
+                                                {isSubmitting ? <Spin/> : 'Send Message'}
                                             </Button>
 
                                         </Card>
@@ -177,13 +177,8 @@ class Tickets extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({
-    user: state.auth.profile
-});
-
 const mapDispatchToProps = (dispatch) => ({
-    authActions: bindActionCreators(AuthActions, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Tickets))
+export default withRouter(connect(null, mapDispatchToProps)(Ticket))

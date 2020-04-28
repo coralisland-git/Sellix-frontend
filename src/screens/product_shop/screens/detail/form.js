@@ -1,9 +1,10 @@
 import React from "react";
 import backIcon from "assets/images/x.png";
-import { Button, FormGroup, Input, Label, Form } from "reactstrap";
+import { FormGroup, Input, Label, Form } from "reactstrap";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Spin } from "components";
+import { Button } from 'components';
 
 
 const Forms = ({ gateway, sending, productInfo, handleSubmit, setCustomFields, reset }) => {

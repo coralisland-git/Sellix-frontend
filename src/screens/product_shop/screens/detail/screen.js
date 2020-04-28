@@ -44,7 +44,7 @@ class ShopProductDetail extends React.Component {
     const { createInvoice, tostifyAlert } = this.props.commonActions;
 
     data.custom_fields = JSON.stringify({ custom_fields });
-    data.gateway = gateway.toLowerCase();
+    data.gateway = gateway.toLowerCase().replace(' ', '');
     data.email = values.email;
     data.product_id = productInfo.uniqid;
 

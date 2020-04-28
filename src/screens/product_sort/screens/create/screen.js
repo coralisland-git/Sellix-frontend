@@ -5,7 +5,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   FormGroup,
@@ -13,6 +12,7 @@ import {
   Tooltip,
   Input
 } from 'reactstrap'
+import { Button } from 'components';
 import Select from 'react-select'
 import { Editor } from "react-draft-wysiwyg"
 import { EditorState } from "draft-js"

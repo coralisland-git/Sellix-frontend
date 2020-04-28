@@ -12,8 +12,10 @@ import {
 import { Link } from "react-router-dom";
 import sellix_logo from "assets/images/Sellix_logo.svg";
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import Scrollspy from 'react-scrollspy'
+import { sunburst, atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import Scrollspy from 'react-scrollspy';
+import Clipboard from 'react-clipboard.js';
+
 import "./style.scss";
 
 const NAVITATIONS = [
@@ -21,6 +23,7 @@ const NAVITATIONS = [
   { key: 'authentication', value: 'Authentication' },
   { key: 'pagination', value: 'Pagination' },
   { key: 'errors', value: 'Errors' },
+  { key: 'embed', value: 'Embed' },
   { key: 'webhooks', value: 'Webhooks' }
 ]
 
@@ -46,12 +49,13 @@ class Documentation extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  render() {
-
-    const { history } = this.props;
-    var key = history.location.hash.substr(1);
-    if (key === "")
-      key = "introduction";
+  componentDidMount() {
+    var key = this.props.history.location.hash.substr(1);    
+    if (key !== "")
+      this.setState({initial : true})
+  }
+   
+  render() {   
 
     var items = ['get_started'];
     NAVITATIONS.map((nav => {
@@ -65,6 +69,7 @@ class Documentation extends React.Component {
       items.push(nav.key)
     }))
 
+
     return (
       <div className="documentation-screen">
         <div className="animated fadeIn">
@@ -74,10 +79,14 @@ class Documentation extends React.Component {
                 <Scrollspy items={ items }
                   className="section-nav"
                   currentClassName="active"
-                  offset={ -50 }
+                  offset={ -50 }                  
                   onUpdate={
-                    (el) => {
-                      this.props.history.push(`/documentation#${el.id}`)
+                    (el) => {                      
+                      if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
+                        this.props.history.push(`/documentation#${el.id}`)
+                      }
+                      else
+                        this.setState({initial: false})
                     }
                   }>
                   <li className="field">GET STARTED</li>
@@ -123,9 +132,12 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      ROOT URL
+                      <p>ROOT URL</p>
+                      <Clipboard data-clipboard-text={ `https://sellix.io/api/v2` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`https://sellix.io/api/v2`}
                     </SyntaxHighlighter>                    
                   </div>
@@ -136,7 +148,7 @@ class Documentation extends React.Component {
                   <h3><b>Authentication</b></h3>
                   <p>
                     Sellix's API uses <a href="#">Basic authentication</a> with your account email and API key. This is usually done
-                    via the <span class="badge-mark">Authorization</span> header <br /><br />
+                    via the <span className="badge-mark">Authorization</span> header <br /><br />
                     Your API key can be accessed and re-generated <a href="#">here</a><br /><br />
                     All API requests must be made over HTTPS.
                   </p>
@@ -144,9 +156,16 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      SETUP AUTHENTICATION
+                      <p>SETUP AUTHENTICATION</p>
+                      <Clipboard 
+                      data-clipboard-text={ `require 'sellix'
+sellix.api_key = 'api key'
+sellix.api_email = 'email'` } 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`require 'sellix'
 sellix.api_key = 'api key'
 sellix.api_email = 'email'`}
@@ -158,10 +177,10 @@ sellix.api_email = 'email'`}
                 <div className="d-ins">
                   <h3><b>Pagination</b></h3>
                   <p>
-                    Sellix offers the ability to paginate any list endpoint. The <span class="badge-mark">X-Total-Pages</span> header returns 
+                    Sellix offers the ability to paginate any list endpoint. The <span className="badge-mark">X-Total-Pages</span> header returns 
                     the total number of pages for the resources at the specific endpoint you're using. <br/><br/>
 
-                    By default, <span class="badge-mark">20</span> resources are displayed per page.
+                    By default, <span className="badge-mark">20</span> resources are displayed per page.
                   </p>
                   <p><b>Parameters</b></p>
                   <table>
@@ -190,9 +209,17 @@ sellix.api_email = 'email'`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      PAGINATING ORDERS EXAMPLE
+                      <p>PAGINATING ORDERS EXAMPLE</p>
+                      <Clipboard 
+                      data-clipboard-text={ `# Page 10 
+Sellix::Orders::List(page: 10)
+# Page 10 and 50 per page 
+Sellix::Orders::List(page: 10, per_page: 50)` } 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`# Page 10 
 Sellix::Orders::List(page: 10)
 # Page 10 and 50 per page 
@@ -205,12 +232,18 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                 <div className="d-ins">
                   <h3><b>Errors</b></h3>
                   <p>
-                    Errors will only ever be present with a <span class="badge-mark">400</span> to <span class="badge-mark">503</span> HTTP response 
-                    status. All errors will include a <span class="badge-mark">message</span> attribute detailing the error message. <br /><br />
-                    Validation errors will feature a <span class="badge-mark">errors</span> attribute containing an array of error message strings. <br /><br />
+                    Errors will only ever be present with a <span className="badge-mark">400</span> to <span className="badge-mark">503</span> HTTP response 
+                    status. All errors will include a <span className="badge-mark">message</span> attribute detailing the error message. <br /><br />
+                    Validation errors will feature a <span className="badge-mark">errors</span> attribute containing an array of error message strings. <br /><br />
                     The Sellix API uses the following error codes:
                   </p>
                   <table className="border-table">
+                    <thead>
+                      <tr>
+                        <th>STATUS</th>
+                        <th>MEANING</th>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr>
                         <td><p className="param">400</p></td>
@@ -248,7 +281,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       AUTHENTICATION ERROR
                     </div>
@@ -258,7 +291,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
 }`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       AUTHENTICATION ERROR
                     </div>
@@ -268,7 +301,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
 }`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       VALIDATION ERROR
                     </div>
@@ -285,6 +318,90 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   </div>
                 </div>
               </section>
+              <section id="embed">
+                <div className="d-ins">
+                  <h3><b>Embed</b></h3>
+                  <p>
+                    We offer the possibility to embed our products directly into your site, without having to rely on our shop page.
+                    In order to do this, you first have to include our embed.js through this link <br /><br />
+                    After adding this, you can then proceed with the button HTML that will activate our payment modal<br /><br />
+                    Replace <span className="badge-mark">PRODUCT_UNIQID</span> with the uniqid of your product, you can add custom classes to the button. <br /><br />
+                    You can also specify custom fields in the button HTML, like this <br /><br />
+                    This will add <span className="badge-mark">reference</span> and <span className="badge-mark">discord</span> to the custom fields array of the invoice that will be created.
+                    If the product already has custom fields, you can still specify additional ones that will be passed to the invoice.
+                    If you specify a custom field that the product already has, the user will not be asked for it when proceeding with the purchase. <br /><br />
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>EMBED JAVASCRIPT</p>
+                      <Clipboard 
+                      data-clipboard-text={'<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js"></script>'} 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="javascript" style={sunburst}>
+                      {`<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js"></script>`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>BASIC BUTTON</p>
+                      <Clipboard 
+                      data-clipboard-text={`<button
+  data-sellix-product=“PRODUCT_UNIQID“
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`} 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="javascript" style={sunburst}>
+                      {`<button
+  data-sellix-product=“PRODUCT_UNIQID“
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>CUSTOM BUTTON</p>
+                      <Clipboard 
+                      data-clipboard-text={`<button
+  data-sellix-product=“PRODUCT_UNIQID“
+  data-sellix-custom-reference=“12345678”
+  data-sellix-custom-discord=“@Sample#8634”
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`} 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="javascript" style={sunburst}>
+                      {`<button
+  data-sellix-product=“PRODUCT_UNIQID“
+  data-sellix-custom-reference=“12345678”
+  data-sellix-custom-discord=“@Sample#8634”
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
               <section id="webhooks">
                 <div className="d-ins">
                   <h3><b>Webhooks</b></h3>
@@ -297,16 +414,21 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   <p><b>Signing/Validating</b></p>
                   <p>
                     To verify the authenticity of a webhook request and its payload, each webhook request includes 
-                    a <span class="badge-mark">X-Sellix-Signature</span> header with a 
+                    a <span className="badge-mark">X-Sellix-Signature</span> header with a 
                     HMAC signature comprised of the JSON encoded request body and your webhook secret. 
                     Your webhook secret can be changed in your <a href="#">settings page</a>. <br /><br />
                   </p>
                   <p><b>Events</b></p>
                   <p>
-                    Each webhook request will feature a <span class="badge-mark">X-Sellix-Event</span> header containing the 
+                    Each webhook request will feature a <span className="badge-mark">X-Sellix-Event</span> header containing the 
                     webhook event type. A list of supported events from <a href="#">Webhook Endpoints</a> can be found below.
                   </p>
                   <table className="border-table">
+                    <thead>
+                      <tr>
+                        <th className="table-title">EVENT</th>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr>
                         <td><span className="badge-mark">feedback:updated</span></td>
@@ -336,18 +458,30 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   </p>
                   <p>
                     Each webhook request will create a <a href="#">Webhook Log</a>. The object is created by the request 
-                    has been sent. Before the request response has actually been received, the <span class="badge-mark">response_code</span> will 
-                    be <span class="badge-mark">0</span>, indicating it is pending.<br /><br />
-                    Each webhook request will also include a <span class="badge-mark">X-Sellix-Webhook</span> request header 
-                    containing the <a href="#">Webhook Log</a> <span class="badge-mark">id</span>.
+                    has been sent. Before the request response has actually been received, the <span className="badge-mark">response_code</span> will 
+                    be <span className="badge-mark">0</span>, indicating it is pending.<br /><br />
+                    Each webhook request will also include a <span className="badge-mark">X-Sellix-Webhook</span> request header 
+                    containing the <a href="#">Webhook Log</a> <span className="badge-mark">id</span>.
                   </p>
                 </div>
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      VALIDATING SIGNED WEBHOOK SIGNATURE
+                      <p>VALIDATING SIGNED WEBHOOK SIGNATURE</p>
+                      <Clipboard 
+                      data-clipboard-text={ `require 'openssl'
+require 'active_support'
+secret = 'your webhook secret'
+signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha512'), secret, payload.to_json)
+is_valid_signature = ActiveSupport::SecurityUtils.secure_compare(request.headers['X-Sellix-Signature'], signature)
+if is_valid_signature
+    # Webhook is valid
+end` } 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`require 'openssl'
 require 'active_support'
 secret = 'your webhook secret'
@@ -365,7 +499,7 @@ end`}
                   <h3><b>Blacklist</b></h3>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       ENDPOINTS
                     </div>
@@ -442,7 +576,7 @@ DELETE /api/v2/blacklist/:id`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       THE BLACKLIST OBJECT
                     </div>
@@ -483,13 +617,16 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      GET A BLACKLIST
+                      <p>GET A BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.retrieve('bGYSEexV')` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.retrieve('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>
@@ -518,13 +655,16 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      LIST ALL BLACKLIST
+                      <p>LIST ALL BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.list` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.list`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>
@@ -587,16 +727,22 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      CREATE A BLACKLIST
+                      <p>CREATE A BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.create(
+    blocked_data: 'ZW',
+    blacklist_type: 3
+)` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.create(
     blocked_data: 'ZW',
     blacklist_type: 3
 )`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>
@@ -655,15 +801,20 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      UPDATE A BLACKLIST
+                      <p>UPDATE A BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.update('bGYSEexV',
+    blocked_data: 'GR'
+)` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.update('bGYSEexV',
     blocked_data: 'GR'
 )`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>
@@ -691,13 +842,16 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      DESTROY A BLACKLIST
+                      <p>DESTROY A BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.destroy('bGYSEexV')` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.destroy('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>

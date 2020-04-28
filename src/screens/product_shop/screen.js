@@ -1,10 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Card, CardHeader, Button, Row, Col, Input, CardBody} from 'reactstrap'
+import {Card, CardHeader, Row, Col, Input } from 'reactstrap'
+import { Button } from 'components';
 import { CommonActions } from 'services/global'
 import { Route, Switch, withRouter, matchPath } from 'react-router-dom'
-import { Loader } from 'components'
+import { Loader, LoaderFullscreen } from 'components'
 import { debounce } from 'lodash'
 
 import './style.scss'
@@ -154,11 +155,11 @@ class ShopProducts extends React.Component {
                 {
                   categories.length !== 0 &&
                     <Col md={12} className="filter-button d-flex flex-wrap mb-4">
-                      <Button color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
+                      <Button skip color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
                         All
                       </Button>
                       {categories.map(({ uniqid, title }) =>
-                        <Button key={uniqid} color={filter === uniqid ? 'primary' : 'white' } className="mr-2" disabled={loading} onClick={this.setFilter(uniqid)}>
+                        <Button skip key={uniqid} color={filter === uniqid ? 'primary' : 'white' } className="mr-2" disabled={loading} onClick={this.setFilter(uniqid)}>
                           {title}
                         </Button>
                       )}

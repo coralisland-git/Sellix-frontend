@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  Button,
   Card,
   CardBody,
   CardGroup,
@@ -17,8 +16,7 @@ import {
 } from 'reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import ReCaptcha from "@matt-block/react-recaptcha-v2";
-import config from 'constants/config'
+import { Button } from 'components';
 
 import { AuthActions, CommonActions } from 'services/global'
 

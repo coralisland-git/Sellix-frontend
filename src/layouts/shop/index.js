@@ -13,14 +13,18 @@ import { AuthActions, CommonActions } from 'services/global'
 import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
+import LazyImage from "react-lazy-progressive-image";
+import Sellix from '../../assets/images/user_placeholder.svg';
 
-import { Loading } from 'components'
+
+import { LoaderFullscreen, Loading } from 'components'
 
 import Header from './header'
 
 import './style.scss'
 import verifiedIcon from 'assets/images/sellix_verified.svg'
 import LockIcon from 'assets/images/Lock.svg'
+import config from "../../constants/config";
 
 const mapStateToProps = (state) => {
 	return {
@@ -117,6 +121,8 @@ class ShopLayout extends React.Component {
 		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
 		const { verifiedTooltipOpen, userIsBanned } = this.state
 
+		console.log('theme', user, theme)
+
 		const appBody = userIsBanned ? (<div style={{
 			textAlign: 'center',
 			margin: '100px'
@@ -131,7 +137,9 @@ class ShopLayout extends React.Component {
 							{user.username}
 							{user.verified == '1' &&
 								<span>
-									<img src={verifiedIcon} width="20" className="verified-icon mb-1" id="verifiedTooltip"/>
+					                <LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>
+					                    {(src) => <img src={src} width="20" className="verified-icon mb-1" id="verifiedTooltip" />}
+					                </LazyImage>
 									<Tooltip
 										placement="right"
 										isOpen={verifiedTooltipOpen}
@@ -140,20 +148,11 @@ class ShopLayout extends React.Component {
 										This shop has verified its brand identity to Sellix.
 									</Tooltip>
 								</span>
-							}</h4>
-						{user.profile_attachment ? (
-							<img
-								src={user.profile_attachment}
-								width="130"
-								height="130"
-								style={{ borderRadius: '50%' }}
-							/>
-						) : (
-							<i
-								className="fa fa-user-circle text-primary avatar-icon"
-								style={{ fontSize: 130 }}
-							/>
-						)}
+							}
+						</h4>
+						<LazyImage placeholder={Sellix} src={user.profile_attachment}>
+							{src => <img src={src} width="130" height="130" style={{ borderRadius: '50%' }} />}
+						</LazyImage>
 					</div>
 					<Card
 						className="report-count mb-3 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row"
@@ -239,9 +238,12 @@ class ShopLayout extends React.Component {
 			</div>
 		)
 
+		const userIsLoading = Object.keys(user).length == 0;
+
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
 				<GlobalStyles />
+				<LoaderFullscreen loaderRemovedInitially={!userIsLoading}/>
 				<div className={'shop-container'}>
 					<div className="app">
 						<AppHeader>

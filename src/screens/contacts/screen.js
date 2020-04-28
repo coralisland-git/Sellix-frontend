@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardBody,
   Row,
-  Col,
-  Button
+  Col
 } from 'reactstrap'
+import { Button } from 'components';
 import * as _ from 'lodash'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'

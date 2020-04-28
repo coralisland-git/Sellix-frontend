@@ -1,19 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { Button } from 'components';
 import {
   Card,
-  CardHeader,
-  CardBody,
-  Button,
   Row,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  Label
+  Col
 } from 'reactstrap'
-import Select from 'react-select'
 import { LeaveFeedbackModal } from 'components'
 
 import shop_brand from 'assets/images/brand/paypal-logo.svg'
