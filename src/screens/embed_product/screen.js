@@ -126,7 +126,6 @@ class EmbedProduct extends React.Component {
                       </SyntaxHighlighter>
                     </div>
                     <Button 
-                      className="ml-3" 
                       color="primary"
                       data-sellix-product="5ea869ce3e971" 
                       data-sellix-custom-demo="dummy"
