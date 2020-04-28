@@ -32,12 +32,11 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-const CategoryCard = ({ category }) => (
-  <CardBody style={{ background: 'white', marginRight: '15px', marginLeft: '15px', padding: '15px', borderRadius: '5px' }}
-    className="category-card-extended">
+const CategoryCard = ({ category }, key) => (
+  <CardBody style={{ background: 'white', marginRight: '15px', marginLeft: '15px', padding: '15px', borderRadius: '5px' }} className="category-card-extended" key={key}>
     <h2 style={{display: 'inline-block'}}>{category.title}</h2> 
-    <span class="text-right" style={{float: 'right'}}>{category.products_count} product{category.products_count == 1 ? '' : 's'}</span> <br/>
-    {category.products_bound.map(product => <>{product.title}<br/></>)}
+    <span className="text-right" style={{float: 'right'}}>{category.products_count} product{category.products_count == 1 ? '' : 's'}</span> <br/>
+    {category.products_bound.map((product, key) => <React.Fragment key={key}>{product.title}<br/></React.Fragment>)}
   </CardBody>
 )
 
