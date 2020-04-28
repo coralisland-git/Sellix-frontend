@@ -23,7 +23,6 @@ const NAVITATIONS = [
   { key: 'authentication', value: 'Authentication' },
   { key: 'pagination', value: 'Pagination' },
   { key: 'errors', value: 'Errors' },
-  { key: 'embed', value: 'Embed' },
   { key: 'webhooks', value: 'Webhooks' }
 ]
 
