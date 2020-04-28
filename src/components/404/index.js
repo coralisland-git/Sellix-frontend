@@ -16,6 +16,13 @@ class NotFound extends Component {
         paddingBottom: '200px',
         background: 'white'
       }}>
+        <style>
+          {`
+            .footer-hr {
+              display: none;
+            }
+          `}
+        </style>
         <img src={pageNotFound} width="150"/>
         <h1 className="text-primary" style={{marginTop: '50px'}}>404 Page Not Found</h1>
       </div>
