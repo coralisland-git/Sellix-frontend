@@ -85,7 +85,7 @@ class ShopProducts extends React.Component {
 
     let loader = setTimeout(() => {
       this.setState({ showPlaceholder: true });
-    }, 300);
+    }, 200);
 
     this.setState({ loading: true });
 
@@ -213,8 +213,6 @@ class ShopProducts extends React.Component {
                 </div>
               </Card>
             }
-
-            {!showPlaceholder && <Placeholder />}
         </div>
       </div>
     )
