@@ -156,7 +156,7 @@ class NewWebhookModal extends React.Component {
                     <Col>
                       <FormGroup>
                         <Label htmlFor="event">{chosenEvents.length} events</Label>
-                        <ul className="chosen-events">
+                        <ul className="chosen-events control">
                           { chosenEvents.map((event, index) => {
                             return(
                               <li key={index} className="d-flex pt-1 pb-1">
