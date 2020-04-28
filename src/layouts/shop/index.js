@@ -16,6 +16,8 @@ import { GlobalStyles } from 'layouts/theme/global'
 import LazyImage from "react-lazy-progressive-image";
 import Sellix from '../../assets/images/user_placeholder.svg';
 
+import GoogleAnalytics from './googleAnalytics'
+
 
 import { LoaderFullscreen, Loading, NotFound } from 'components'
 
@@ -275,6 +277,7 @@ class ShopLayout extends React.Component {
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
 				<GlobalStyles />
+				<GoogleAnalytics tracking_id={user.shop_google_analytics_tracking_id}/>
 				<LoaderFullscreen loaderRemovedInitially={!userIsLoading}/>
 				<div className={'shop-container'}>
 					<div className="app">
