@@ -175,11 +175,9 @@ class ShopLayout extends React.Component {
 								</span>
 							}
 						</h4>
-						{user.profile_attachment && (
-							<LazyImage placeholder={Sellix} src={user.profile_attachment}>
-								{src => <img src={src} width="130" height="130" style={{ borderRadius: '50%' }} />}
-							</LazyImage>
-						)}
+						<LazyImage placeholder={Sellix} src={user.profile_attachment}>
+							{src => <img src={src} width="130" height="130" style={{ borderRadius: '50%' }} />}
+						</LazyImage>
 					</div>
 					<Card
 						className="report-count mb-3 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row"
