@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
+
     h1, h2, h3, h4, h5, p, label, span:not(.badge):not(.small-badge):not(.text-red):not(.text-green), a, th, td, input, select, textarea, .Select-placeholder {
         color: ${({ theme }) => theme.text} !important;
     }

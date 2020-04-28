@@ -13,14 +13,18 @@ import { AuthActions, CommonActions } from 'services/global'
 import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
+import LazyImage from "react-lazy-progressive-image";
+import Sellix from '../../assets/images/user_placeholder.svg';
 
-import { Loading } from 'components'
+
+import { Loader, Loading } from 'components'
 
 import Header from './header'
 
 import './style.scss'
 import verifiedIcon from 'assets/images/sellix_verified.svg'
 import LockIcon from 'assets/images/Lock.svg'
+import config from "../../constants/config";
 
 const mapStateToProps = (state) => {
 	return {
@@ -43,7 +47,10 @@ class ShopLayout extends React.Component {
 		this.state = {
 			theme: 'light',
 			verifiedTooltipOpen: false,
-			userIsBanned: false
+			userIsBanned: false,
+
+			loaderFadingOut: false,
+			loaderRemoved: false
 		}
 	}
 
@@ -94,6 +101,28 @@ class ShopLayout extends React.Component {
 			}
 		}
 		this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+
+
+		const { user } = this.props
+
+		const userIsLoading = Object.keys(user).length == 0;
+
+		if(userIsLoading) {
+			setTimeout(() => {
+				this.setState({
+					loaderFadingOut: true
+				})
+				setTimeout(() => {
+					this.setState({
+						loaderRemoved: true
+					})
+				}, 1000)
+			}, 1000)
+		} else {
+			this.setState({
+				loaderRemoved: true
+			})
+		}
 	}
 
 	changeTheme() {
@@ -117,6 +146,8 @@ class ShopLayout extends React.Component {
 		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
 		const { verifiedTooltipOpen, userIsBanned } = this.state
 
+		console.log('theme', user, theme)
+
 		const appBody = userIsBanned ? (<div style={{
 			textAlign: 'center',
 			margin: '100px'
@@ -131,7 +162,9 @@ class ShopLayout extends React.Component {
 							{user.username}
 							{user.verified == '1' &&
 								<span>
-									<img src={verifiedIcon} width="20" className="verified-icon mb-1" id="verifiedTooltip"/>
+					                <LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>
+					                    {(src) => <img src={src} width="20" className="verified-icon mb-1" id="verifiedTooltip" />}
+					                </LazyImage>
 									<Tooltip
 										placement="right"
 										isOpen={verifiedTooltipOpen}
@@ -140,20 +173,11 @@ class ShopLayout extends React.Component {
 										This shop has verified its brand identity to Sellix.
 									</Tooltip>
 								</span>
-							}</h4>
-						{user.profile_attachment ? (
-							<img
-								src={user.profile_attachment}
-								width="130"
-								height="130"
-								style={{ borderRadius: '50%' }}
-							/>
-						) : (
-							<i
-								className="fa fa-user-circle text-primary avatar-icon"
-								style={{ fontSize: 130 }}
-							/>
-						)}
+							}
+						</h4>
+						<LazyImage placeholder={Sellix} src={user.profile_attachment}>
+							{src => <img src={src} width="130" height="130" style={{ borderRadius: '50%' }} />}
+						</LazyImage>
 					</div>
 					<Card
 						className="report-count mb-3 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row"
@@ -239,10 +263,32 @@ class ShopLayout extends React.Component {
 			</div>
 		)
 
+		const userIsLoading = Object.keys(user).length == 0;
+
+		const { loaderFadingOut, loaderRemoved } = this.state;
+
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
 				<GlobalStyles />
-				<div className={'shop-container'}>
+				<div style={{
+					position: 'fixed',
+					zIndex: 99999,
+					left: 0,
+					right: 0,
+					height: '100%',
+					display: loaderRemoved ? 'none' : 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					background: '#211d3d',
+					opacity: loaderFadingOut ? 0 : 1,
+					transition: 'opacity 1s ease-in'
+				}}>
+					<Loader/>
+				</div>
+				<div className={'shop-container'} style={{
+					opacity: userIsLoading ? 0 : 1,
+					transition: 'opacity 0.5s ease-in'
+				}}>
 					<div className="app">
 						<AppHeader>
 							<Suspense fallback={Loading()}>

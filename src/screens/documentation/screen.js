@@ -12,8 +12,10 @@ import {
 import { Link } from "react-router-dom";
 import sellix_logo from "assets/images/Sellix_logo.svg";
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import Scrollspy from 'react-scrollspy'
+import { sunburst, atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import Scrollspy from 'react-scrollspy';
+import Clipboard from 'react-clipboard.js';
+
 import "./style.scss";
 
 const NAVITATIONS = [
@@ -129,9 +131,12 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      ROOT URL
+                      <p>ROOT URL</p>
+                      <Clipboard data-clipboard-text={ `https://sellix.io/api/v2` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`https://sellix.io/api/v2`}
                     </SyntaxHighlighter>                    
                   </div>
@@ -150,9 +155,16 @@ class Documentation extends React.Component {
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      SETUP AUTHENTICATION
+                      <p>SETUP AUTHENTICATION</p>
+                      <Clipboard 
+                      data-clipboard-text={ `require 'sellix'
+sellix.api_key = 'api key'
+sellix.api_email = 'email'` } 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`require 'sellix'
 sellix.api_key = 'api key'
 sellix.api_email = 'email'`}
@@ -196,9 +208,17 @@ sellix.api_email = 'email'`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      PAGINATING ORDERS EXAMPLE
+                      <p>PAGINATING ORDERS EXAMPLE</p>
+                      <Clipboard 
+                      data-clipboard-text={ `# Page 10 
+Sellix::Orders::List(page: 10)
+# Page 10 and 50 per page 
+Sellix::Orders::List(page: 10, per_page: 50)` } 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`# Page 10 
 Sellix::Orders::List(page: 10)
 # Page 10 and 50 per page 
@@ -219,8 +239,8 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   <table className="border-table">
                     <thead>
                       <tr>
-                        <td>STATUS</td>
-                        <td>MEANING</td>
+                        <th>STATUS</th>
+                        <th>MEANING</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -260,7 +280,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       AUTHENTICATION ERROR
                     </div>
@@ -270,7 +290,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
 }`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       AUTHENTICATION ERROR
                     </div>
@@ -280,7 +300,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
 }`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       VALIDATION ERROR
                     </div>
@@ -362,9 +382,21 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      VALIDATING SIGNED WEBHOOK SIGNATURE
+                      <p>VALIDATING SIGNED WEBHOOK SIGNATURE</p>
+                      <Clipboard 
+                      data-clipboard-text={ `require 'openssl'
+require 'active_support'
+secret = 'your webhook secret'
+signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha512'), secret, payload.to_json)
+is_valid_signature = ActiveSupport::SecurityUtils.secure_compare(request.headers['X-Sellix-Signature'], signature)
+if is_valid_signature
+    # Webhook is valid
+end` } 
+                      button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`require 'openssl'
 require 'active_support'
 secret = 'your webhook secret'
@@ -382,7 +414,7 @@ end`}
                   <h3><b>Blacklist</b></h3>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       ENDPOINTS
                     </div>
@@ -459,7 +491,7 @@ DELETE /api/v2/blacklist/:id`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       THE BLACKLIST OBJECT
                     </div>
@@ -500,13 +532,16 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      GET A BLACKLIST
+                      <p>GET A BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.retrieve('bGYSEexV')` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.retrieve('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>
@@ -535,13 +570,16 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      LIST ALL BLACKLIST
+                      <p>LIST ALL BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.list` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.list`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>
@@ -604,16 +642,22 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      CREATE A BLACKLIST
+                      <p>CREATE A BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.create(
+    blocked_data: 'ZW',
+    blacklist_type: 3
+)` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.create(
     blocked_data: 'ZW',
     blacklist_type: 3
 )`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>
@@ -672,15 +716,20 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      UPDATE A BLACKLIST
+                      <p>UPDATE A BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.update('bGYSEexV',
+    blocked_data: 'GR'
+)` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.update('bGYSEexV',
     blocked_data: 'GR'
 )`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>
@@ -708,13 +757,16 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      DESTROY A BLACKLIST
+                      <p>DESTROY A BLACKLIST</p>
+                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.destroy('bGYSEexV')` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Sellix::Blacklist.destroy('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       RESPONSE
                     </div>

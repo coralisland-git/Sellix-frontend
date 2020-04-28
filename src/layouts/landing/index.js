@@ -49,7 +49,7 @@ class LandingLayout extends React.Component {
 
     this.props.authActions.getSelfUser()
 
-    if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
+    if (window.localStorage.getItem('accessToken') && this.props.is_authed && this.props.match.path !== '/contact') {
       this.props.history.push(preUrl)
     }
 
@@ -85,10 +85,10 @@ class LandingLayout extends React.Component {
 
     const { isOpen } = this.state;
     const { history } = this.props;
-    
+
     const page = this.props.match.url
     const user = window.localStorage.getItem('userId')
-    let dashboardUrl = user? `/dashboard/${user}/home` : '/'
+    const dashboardUrl = user ? `/dashboard/${user}/home` : '/'
 
     return (
     <div className="landing-layout">
@@ -100,7 +100,7 @@ class LandingLayout extends React.Component {
                   <NavbarBrand href="/">
                       <img className="logo" src={page === '/'?sellix_logo:sellix_logo_footer}/>
                   </NavbarBrand>
-                  
+
                   {
                     page == '/' &&
                       <Collapse className="mr-5" isOpen={isOpen} navbar>
@@ -135,18 +135,18 @@ class LandingLayout extends React.Component {
 
                     <div>
                       { user?
-                          <Button className="mr-3 landing-primary-button text-white menu" 
+                          <Button className="mr-3 landing-primary-button text-white menu"
                             onClick={() => this.props.history.push(dashboardUrl)}
                           >
                             Dashboard
                           </Button>
                           :
-                          <>  
-                            <Button className="landing-secondary-button menu mr-2" 
+                          <>
+                            <Button className="landing-secondary-button menu mr-2"
                               onClick={() => this.props.history.push('/auth/login')}>
                               Log In
                             </Button>
-                            <Button className="landing-primary-button menu" 
+                            <Button className="landing-primary-button menu"
                               onClick={() => this.props.history.push('/auth/register')}>
                               Sign Up
                             </Button>
