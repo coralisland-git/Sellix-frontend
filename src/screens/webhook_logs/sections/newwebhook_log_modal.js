@@ -46,6 +46,7 @@ class NewWebhookLogModal extends React.Component {
   }
 
   handleSubmit(values) {
+    values.event = values.event.value;
     this.props.actions.createWebhookSimulator(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message || 'Created successfully');
       this.props.actions.getWebhookLogList();
@@ -114,7 +115,7 @@ class NewWebhookLogModal extends React.Component {
                           searchable={false}
                           value={props.values.event}
                           onChange={(option) => {
-                            props.handleChange("event")(option.value);
+                            props.handleChange("event")(option);
                           }}
                           className={
                             props.errors.event && props.touched.event
