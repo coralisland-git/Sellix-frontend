@@ -17,7 +17,7 @@ import LazyImage from "react-lazy-progressive-image";
 import Sellix from '../../assets/images/user_placeholder.svg';
 
 
-import { LoaderFullscreen, Loading } from 'components'
+import { LoaderFullscreen, Loading, NotFound } from 'components'
 
 import Header from './header'
 
@@ -25,6 +25,10 @@ import './style.scss'
 import verifiedIcon from 'assets/images/sellix_verified.svg'
 import LockIcon from 'assets/images/Lock.svg'
 import config from "../../constants/config";
+
+import LandingFooter from "../../layouts/landing/footer"
+
+import '../../layouts/landing/style.scss'
 
 const mapStateToProps = (state) => {
 	return {
@@ -48,7 +52,8 @@ class ShopLayout extends React.Component {
 		this.state = {
 			theme: 'light',
 			verifiedTooltipOpen: false,
-			userIsBanned: false
+			userIsBanned: false,
+			userIsNotFound: false
 		}
 	}
 
@@ -76,9 +81,9 @@ class ShopLayout extends React.Component {
 			.getGeneralUserInfo(this.props.match.params.username)
 			.catch((e) => {
 				if (e.status == 404) {
-					if (window.location.pathname !== '/404') {
-						window.location = '/404'
-					}
+					this.setState({
+						userIsNotFound: true
+					})
 				}
 				if(e.status == 400) {
 					if(e.error.includes('user has been banned')) {
@@ -127,28 +132,40 @@ class ShopLayout extends React.Component {
 		}
 
 		const { pathname } = this.props.history.location;
-		const { user } = this.props;
-    	const userId = this.props.match.params.username;
-		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light';
-		const { verifiedTooltipOpen, userIsBanned } = this.state;
+		const { user } = this.props
+    	const userId = this.props.match.params.username
+		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
+		const { verifiedTooltipOpen, userIsBanned, userIsNotFound } = this.state
 
-		const appBody = userIsBanned ? (<div style={{
-			textAlign: 'center',
-			margin: '100px'
-		}}>
-			<img src={LockIcon} width="150"/>
-			<h1 className="text-primary" style={{marginTop: '50px'}}>User has been banned</h1>
-		</div>) : (
-			<div className="shop-content flex-column">
+		const dashboardUrl = user.username ? `/dashboard/${user.username}/home` : '/'
+
+		console.log('theme', user, theme)
+
+		var appBody
+
+		if(userIsBanned) {
+			appBody = <div style={{
+				textAlign: 'center',
+				margin: '100px'
+			}}>
+				<img src={LockIcon} width="150"/>
+				<h1 className="text-primary" style={{marginTop: '50px'}}>User has been banned</h1>
+			</div>
+		} else if(userIsNotFound) {
+			appBody = <div>
+				<NotFound/>
+			</div>
+		} else {
+			appBody = <div className="shop-content flex-column">
 				<section className="pb-3">
 					<div className="text-center align-items-center logo-content">
 						<h4 className="mb-0 mt-3 mb-2">
 							<span>{user.username}&nbsp;</span>
 							{user.verified == '1' &&
 								<span>
-					                <LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>
-					                    {(src) => <img src={src} width="20" className="verified-icon mb-1" id="verifiedTooltip" />}
-					                </LazyImage>
+									<LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>
+										{(src) => <img src={src} width="20" className="verified-icon mb-1" id="verifiedTooltip" />}
+									</LazyImage>
 									<Tooltip
 										placement="right"
 										isOpen={verifiedTooltipOpen}
@@ -245,7 +262,24 @@ class ShopLayout extends React.Component {
 					</div>
 				</div>
 			</div>
-		)
+		}
+
+		var appFooter
+
+		if(userIsNotFound) {
+			appFooter = <div className="landing-layout"><LandingFooter dashboardUrl={dashboardUrl} /></div>
+		} else {
+			appFooter = <AppFooter style={userIsBanned ? {
+				position: 'fixed',
+				bottom: 0,
+				width: '100%'
+			} : {}}>
+				<p className="text-center text-grey footer-report py-4 m-0">
+					Copyright by Sellix.io -{' '}
+					<a href="mailto:abuse@sellix.io">Report Abuse</a>
+				</p>
+			</AppFooter>
+		}
 
 		const userIsLoading = Object.keys(user).length == 0;
 
@@ -263,16 +297,7 @@ class ShopLayout extends React.Component {
 
 						{appBody}
 
-						<AppFooter style={userIsBanned ? {
-							position: 'fixed',
-							bottom: 0,
-							width: '100%'
-						} : {}}>
-							<p className="text-center text-grey footer-report py-4 m-0">
-								Copyright by Sellix.io -{' '}
-								<a href="mailto:abuse@sellix.io">Report Abuse</a>
-							</p>
-						</AppFooter>
+						{appFooter}
 					</div>
 				</div>
 			</ThemeProvider>
