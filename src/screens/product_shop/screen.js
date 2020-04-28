@@ -5,7 +5,7 @@ import {Card, CardHeader, Row, Col, Input } from 'reactstrap'
 import { Button } from 'components';
 import { CommonActions } from 'services/global'
 import { Route, Switch, withRouter, matchPath } from 'react-router-dom'
-import { Loader } from 'components'
+import { Loader, LoaderFullscreen } from 'components'
 import { debounce } from 'lodash'
 
 import './style.scss'

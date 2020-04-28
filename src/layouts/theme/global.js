@@ -260,6 +260,7 @@ export const GlobalStyles = createGlobalStyle`
         *[class$=-menu] {
             background-color: #241e4c !important;
             border-radius: 5px !important;
+            color: ${theme.text} !important;
         }
 
         *[class$=-menu] *[class$=-option] {
