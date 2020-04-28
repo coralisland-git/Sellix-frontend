@@ -13,6 +13,7 @@ class NotFound extends Component {
       <div style={{
         textAlign: 'center',
         padding: '100px',
+        paddingBottom: '200px',
         background: 'white'
       }}>
         <img src={pageNotFound} width="150"/>
