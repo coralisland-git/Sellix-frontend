@@ -1,30 +1,22 @@
 import React from 'react';
+import Analytics from 'react-router-ga';
 
 export function GoogleAnalytics(props) {
 
     const { tracking_id } = props
 
     if(!tracking_id) {
-        return ""
+        console.log('rendered non-GA')
+        return <>
+            {props.children}
+        </>
     }
 
-    return <>
-        {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${tracking_id}`}></script>
-        <script>
-            {`
-                console.log('Google Analytics START')
+    console.log('rendered GA')
 
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-        
-                gtag('config', '${tracking_id}');
-
-                console.log('Google Analytics END')
-            `}
-        </script>
-    </>
+    return <Analytics id={tracking_id} debug>
+        {props.children}
+    </Analytics>
 }
 
 export default GoogleAnalytics
