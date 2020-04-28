@@ -10,7 +10,7 @@ import {
   Label,
   Input
 } from 'reactstrap'
-import { Button } from 'components';
+import {Button, Spin} from 'components';
 import { AppSwitch } from '@coreui/react'
 import { CommonActions, AuthActions } from 'services/global'
 import { Loader } from 'components'
@@ -62,9 +62,9 @@ class Payments extends React.Component {
       const settings = res.data.settings
       this.setState({
         discord_link: settings.shop_discord_link || '',
-        search_enabled: settings.shop_search_enabled == '1'?true:false,
-        dark_mode: settings.shop_dark_mode == '1'?true:false,
-        hide_out_of_stock: settings.shop_hide_out_of_stock == '1'?true:false
+        search_enabled: settings.shop_search_enabled === '1',
+        dark_mode: settings.shop_dark_mode === '1',
+        hide_out_of_stock: settings.shop_hide_out_of_stock === '1'
       })
     }).finally(() => {
       this.setState({loading: false})
@@ -78,15 +78,12 @@ class Payments extends React.Component {
       <div className="shop-settings-screen">
         <div className="animated fadeIn">
           <Card>
-            <CardBody className="p-4 mb-4">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                : 
+            <CardBody className="p-4 mb-4 position-relative">
+              {loading &&
+              <div className={"loader-container"}>
+                <Loader/>
+              </div>
+              }
                   <Row className="">
                     <Col lg={12}>
                       <FormGroup className="mb-4">
@@ -181,10 +178,10 @@ class Payments extends React.Component {
                       </Row>
                     </Col>
                   </Row>
-              }
+
             </CardBody>
             <Button color="primary" className="mb-4" style={{ width: 200 }} onClick={this.saveDesign.bind(this)}>
-              Save Settings
+              {loading ? <Spin/> : 'Save Settings'}
             </Button>
             
           </Card>

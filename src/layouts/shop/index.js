@@ -42,12 +42,29 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class ShopLayout extends React.Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
 			theme: 'light',
 			verifiedTooltipOpen: false,
 			userIsBanned: false
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+
+		if(prevProps.user.username !== this.props.user.username) {
+			const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
+
+			window.localStorage.setItem('theme', theme)
+			document.body.classList.remove('light');
+			document.body.classList.remove('dark');
+			document.body.classList.add(theme);
+
+			document.documentElement.classList.remove('light')
+			document.documentElement.classList.remove('dark')
+			document.documentElement.classList.add(theme);
 		}
 	}
 
@@ -100,12 +117,6 @@ class ShopLayout extends React.Component {
 		this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
 	}
 
-	changeTheme() {
-		const theme = window.localStorage.getItem('theme') || 'light'
-		window.localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
-		this.setState({ theme: theme === 'light' ? 'dark' : 'light' })
-	}
-
 	verifiedTooltipToggle() {
 		this.setState({verifiedTooltipOpen: !this.state.verifiedTooltipOpen})
 	}
@@ -116,10 +127,10 @@ class ShopLayout extends React.Component {
 		}
 
 		const { pathname } = this.props.history.location;
-		const { user } = this.props
-    	const userId = this.props.match.params.username
-		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
-		const { verifiedTooltipOpen, userIsBanned } = this.state
+		const { user } = this.props;
+    	const userId = this.props.match.params.username;
+		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light';
+		const { verifiedTooltipOpen, userIsBanned } = this.state;
 
 		const appBody = userIsBanned ? (<div style={{
 			textAlign: 'center',
@@ -246,11 +257,7 @@ class ShopLayout extends React.Component {
 					<div className="app">
 						<AppHeader>
 							<Suspense fallback={Loading()}>
-								<Header
-									{...this.props}
-									theme={theme}
-									changeTheme={this.changeTheme.bind(this)}
-								/>
+								<Header {...this.props} />
 							</Suspense>
 						</AppHeader>
 

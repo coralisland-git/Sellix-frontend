@@ -153,7 +153,6 @@ class ShopProducts extends React.Component {
     let searchGroups = this.searchGroups(groups)
 
 
-
     return (
       <div className="shop-product-screen">
         <div className="">

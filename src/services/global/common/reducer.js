@@ -30,9 +30,6 @@ const CommonReducer = (state = initState, action) => {
       }
 
     case COMMON.SHOP_THEME:
-      document.body.classList.add(payload);
-      document.documentElement.classList.add(payload)
-
       return {
         ...state,
         theme: payload,

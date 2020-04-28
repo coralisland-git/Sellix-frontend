@@ -30,7 +30,7 @@ class Header extends Component {
   }
 
   render() {
-    const { user, profile, children, theme, is_authed, ...attributes } = this.props
+    const { user, profile, children, is_authed, ...attributes } = this.props
 
     return (
       <React.Fragment>

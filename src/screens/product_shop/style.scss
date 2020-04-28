@@ -69,10 +69,27 @@
   }
 }
 
+.placeholder-card {
+  height: 249px;
+
+  div {
+    background: #1d183d;
+  }
+}
+
+.light .placeholder-card {
+  height: 249px;
+
+  div {
+    background: white;
+  }
+}
+
 .placeholder-loading {
   position: relative;
   overflow: hidden;
   background: #1d183d;
+
   &::after {
     content: "";
     display: block;
@@ -93,7 +110,7 @@
     background: white;
     &::after {
       background: rgb(255,255,255);
-      background: linear-gradient(90deg, rgba(255,255,255,1) 20%, rgba(96,59,234,0.2679446778711485) 61%, rgba(255,255,255,1) 100%);
+      background: linear-gradient(110deg, #fff 10%, #ebe6ff 50%, #fff 80%);
     }
   }
 }
