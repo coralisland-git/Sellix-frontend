@@ -3,6 +3,11 @@
     color: #20a8d8;
   }
 
+  .purchase-card {
+    max-width: 1100px;
+    width: 100%;
+  }
+
   .description {
     img {
       max-width: 100%;
@@ -14,22 +19,39 @@
     line-height: 1.3em;
   }
   .pay-button {
-    
-    i {
-      color: #27346A !important;
-      font-size: 18px;
-    }
+    font-size: 15px !important;
+    font-weight: 400 !important;
     color: #A7A5B4 !important;
     background-color: #FCFCFE !important;
     border: 1px solid #F5F5F5 !important; 
+
+    &:hover {
+      background-color: #613BEA !important;
+      color: white !important;
+    }
   }
 
   .stock-count {
     span {
-      font-size: 16px;
+      font-size: 15px;
+      line-height: 1em;
       font-weight: bold;
       display: block;
       cursor: pointer;
+    }
+    input {
+      background: transparent;
+      border: none;
+      width: 50px;
+      text-align: center;
+      font-weight: bold;
+      outline: none;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(121, 88, 237, 0.5);
+        border-radius: 5px;
+      }
     }
   }
 
@@ -39,7 +61,7 @@
   .paypal-instant {
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
-    border-radius: 10px;
+    border-radius: 3px;
     // width: 230px;
     margin: 0 auto;
     font-size: 14px;
@@ -60,21 +82,23 @@
       height: 25px;
       min-height: 25px;
       border: none !important;
-      border-radius: 5px !important;
+      border-radius: 3px !important;
       background: #D6E6FF;
       color: #27346A !important;
       font-size: 10px !important;
-      font-family: 'Poppins-semiBold' !important;
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
     }
   }
 
   .stock-info {
     background-color: #E4D6FF;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 
     .bold {
-      font-family: 'Poppins-SemiBold';
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
     }
   }
 
@@ -84,4 +108,29 @@
       line-height: 3em;
     }
   }
+
+  .description {
+    p {
+      font-size: .9rem;
+      margin: 0;
+      line-height: 1.4rem;
+      margin-bottom: .6rem;
+    }
+
+    pre {
+      background: #181432;
+      padding: 1rem;
+      border-radius: 3px;
+      margin-top: 1rem;
+      color: #b3adbb;
+      overflow: auto;
+      display: block;
+      line-height: 1rem;
+    }
+  }
+}
+
+.light .detail-product-screen .description pre {
+  background: #f3edff;
+  color: #000;
 }

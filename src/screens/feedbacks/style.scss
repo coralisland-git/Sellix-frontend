@@ -15,3 +15,21 @@
     }
   }
 }
+
+.react-stars-rating.is-dashboard {
+  display: flex;
+  transform: scale(0.75);
+  & > span {
+    margin: 2px;
+  }
+}
+
+.feedback-table .star {
+  display: flex;
+}
+
+.feedback-table .star-rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

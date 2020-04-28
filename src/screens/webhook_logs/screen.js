@@ -12,23 +12,26 @@ import {
   Input
 } from 'reactstrap'
 import { ToastContainer, toast } from 'react-toastify'
+import moment from 'moment'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
-import { NewWebhookModal } from './sections'
+import { NewWebhookLogModal, ShowWebhookLogModal } from './sections'
+import { CommonActions } from 'services/global';
+import * as WebhooksActions from './actions'
 
-import * as ProductActions from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    webhook_log_list: state.webhookLogs.webhook_log_list
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    actions: bindActionCreators(WebhooksActions, dispatch)    
   })
 }
 
@@ -37,39 +40,55 @@ class WebhookLogs extends React.Component {
     super(props)
     this.state = {
       loading: true,
-      openModal: false
-    }
-
-    this.initializeData = this.initializeData.bind(this)
+      openModal: false,
+      openShowModal: false,
+      search_key: null,
+      webhook: {},
+      chosenEvents: []
+    }    
   }
 
   componentDidMount () {
-    this.initializeData()
+    this.initializeData();    
+    setInterval(async () => {
+      this.props.actions.getWebhookLogList()
+    }, 20000)
   }
 
-  initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
-  }
+  initializeData = () => {    
+    this.setState({ loading: true })    
+    this.props.actions.getWebhookLogList().catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  }  
 
   renderStatus (cell, row) {
-    if (
-      row.status
-    ) {
+    if (row.response_code && row.response_code != 0) {
+      var status = "success"
+      if (row.response_code.startsWith("3"))
+        status = "warning"
+      if (row.response_code.startsWith("4"))
+        status = "error"
       return (
-        <div className={`badge badge-${row.status.toLowerCase()}`}>
-          {row.status}
+        <div className={`badge badge-${status}`}>
+          {row.response_code}
         </div>
       )  
     } else {
-      return (
-        <p className="caption">No specified</p>
-      )
+      if(row.retries == 20)
+        return (
+          <div className="badge badge-error">
+            Invalid
+          </div>
+        )      
+      else
+        return (
+          <div className="badge badge-pending">
+            Pending
+          </div>
+        )
     }
   }
 
@@ -86,37 +105,119 @@ class WebhookLogs extends React.Component {
     )
   }
 
+  renderPayload = (cell, row) => {
+    return(
+      <>
+        <div className="badge badge-payload" 
+          onClick={ ()=> this.setState({
+            openShowModal: true,
+            webhook: row
+          })}
+        >
+          Payload
+        </div>        
+      </>
+    )
+  }
+
+  renderOrderTime(cell, row) {
+    return (
+      <div>
+        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+      </div>
+    )
+  }
+
+  renderRetries(cell, row) {
+    return (
+      <p>{row.retries}/20</p>
+    )
+  }
+
+  renderEvents (cell, row) {
+    return(
+      <ul className="p-0">
+        {
+          row.event.split(',').map((event, index) => {
+            return (
+              <li key={index} className="p-1">{event}</li>
+            )
+          })
+        }
+      </ul>
+    )
+  }
+
   openNewWebhookModal() {
     this.setState({openModal: true})
   }
 
   closeNewWebhookModal() {
-    this.setState({openModal: false})
+    this.setState({
+      openModal: false,      
+      chosenEvents: []
+    })
+  }
+
+  updateEvents(events) {
+    this.setState({chosenEvents: events})
+  }
+
+  searchWebhookLogs = (webhooks) => {
+    const { search_key } = this.state
+    const search_fields = ['url', 'event']
+
+    const data = webhooks.filter(webhook => {
+      for(let i=0; i<search_fields.length; i++)
+        if(webhook[search_fields[i]] && webhook[search_fields[i]].includes(search_key))
+          return true
+      return false
+    })
+
+    return data
   }
 
   render() {
-    const { loading, openModal } = this.state
-    const { product_list } = this.props
+    const { loading, openModal, search_key, openShowModal, webhook, chosenEvents } = this.state    
+    const webhook_log_list = search_key?this.searchWebhookLogs(this.props.webhook_log_list):this.props.webhook_log_list
 
 
     return (
-      <div className="product-screen">
+      <div className="webhook-screen">
         <div className="animated fadeIn">
-          <NewWebhookModal openModal={openModal} closeModal={this.closeNewWebhookModal.bind(this)}/>
+          <NewWebhookLogModal            
+            openModal={openModal}
+            closeModal={this.closeNewWebhookModal.bind(this)}
+            actions={this.props.actions}
+            commonActions={this.props.commonActions}
+            chosenEvents={chosenEvents}
+            updateEvents={this.updateEvents.bind(this)}
+          />
+          <ShowWebhookLogModal            
+            openModal={openShowModal}
+            webhook={webhook}
+            closeModal={ ()=> this.setState({openShowModal: false})}            
+          />
           <Card className="grey">
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
                 <Col md={4}>
-                  <h1>Webhook Logs</h1>
+                  <h1>Webhooks</h1>
                 </Col>
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
                     <div className="searchbar white">
                       <i className="fas fa-search"/>
-                      <Input placeholder="Search..." className="header-search-input"></Input>
+                      <Input placeholder="Search..." 
+                        className="header-search-input"
+                        onChange={(e) => {
+                          this.setState({search_key: e.target.value})
+                        }}
+                      />
                     </div>
                     <Button className="ml-3" color="primary" onClick={this.openNewWebhookModal.bind(this)}>
-                      Webhook Simulator</Button>
+                      Simulator</Button>
                   </div>
                 </Col>
               </Row>
@@ -134,52 +235,73 @@ class WebhookLogs extends React.Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          options={ tableOptions() }
-                          data={product_list}
+                          options={{...tableOptions(), sizePerPage: 15}}
+                          data={webhook_log_list}
                           version="4"
                           pagination
-                          totalSize={product_list ? product_list.length : 0}
-                          className="product-table"
+                          totalSize={webhook_log_list ? webhook_log_list.length : 0}
+                          className="webhook-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="id"
-                            dataSort
-                          >
-                            ID
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
                             dataField="url"
                             dataSort
+                            width='35%'
                           >
                             Webhook URL
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="events"
+                            dataField="event"
                             dataSort
+                            dataAlign="center"
+                            width='13%'
+                            dataFormat={this.renderEvents}
                           >
-                            Events
+                            Event
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="status"
+                            dataField="response_code"
                             dataSort
                             dataFormat={this.renderStatus}
+                            dataAlign="center"
+                            width='13%'
                           >
-                            Status
+                            Response
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="events"
+                            dataField="retries"                            
                             dataSort
+                            dataAlign="center"
+                            dataFormat={this.renderRetries}
+                            width='13%'
                           >
                             Retries
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="sentAt"
-                            dataAlign="right"
+                            dataField=""
+                            width='13%'
+                            dataAlign="center"
+                            dataFormat={this.renderPayload}
                           >
-                            Sent at
+                            Payload
                           </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="created_at"
+                            dataAlign="right"
+                            width='13%'
+                            dataFormat={this.renderOrderTime}
+                          >
+                            Created at
+                          </TableHeaderColumn>
+                          {/*<TableHeaderColumn
+                              dataField="id"
+                              dataAlign="right"
+                              dataFormat={this.renderOptions}
+                              width='15%'                              
+                            >
+                              Options
+                            </TableHeaderColumn>*/}
                         </BootstrapTable>
                       </div>
                     </Col>

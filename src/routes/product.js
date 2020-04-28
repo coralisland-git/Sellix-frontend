@@ -1,5 +1,6 @@
 import {
-    ShopProductDetail
+    ShopProductDetail,
+    ShopGroupDetail
   } from 'screens'
   
   const paymentRoutes = [
@@ -7,6 +8,11 @@ import {
       path: '/product/:id',
       name: 'ShopProductDetail',
       component: ShopProductDetail.screen
+    },
+    {
+      path: '/group/:id',
+      name: 'ShopGroupDetail',
+      component: ShopGroupDetail.screen
     }
   ]
   

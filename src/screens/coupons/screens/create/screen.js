@@ -21,7 +21,7 @@ import { Loader, DataSlider } from 'components'
 import { createCoupon } from './actions'
 import { getCoupons } from '../../actions'
 import { editCoupon } from '../detail/actions'
-import { getProducts } from './actions'
+import { getProducts, getCouponByID } from './actions'
 import {
   CommonActions
 } from 'services/global'
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
       ...coupon,
       discount_value: [+coupon.discount]
     })),
-    products: [{ label: 'Select all products', value: ''}, ..._.map(state.coupons.products, product => ({label: product.title, value: product.id})) ] 
+    products: [{ label: 'All products', value: ''}, ..._.map(state.coupons.products, product => ({label: product.title, value: product.uniqid})) ] 
   })
 }
 
@@ -48,11 +48,12 @@ const mapDispatchToProps = (dispatch) => {
     createCoupon: bindActionCreators(createCoupon, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch),
     getProducts: bindActionCreators(getProducts, dispatch),
+    getCouponByID: bindActionCreators(getCouponByID, dispatch)
   })
 }
 
 const MockProducts = [
-  { label: 'Select all products', value: ''},
+  { label: 'All products', value: ''},
   { label: 'id1', value: '1' },
   { label: 'id2', value: '2' },
   { label: 'id3', value: '3' }
@@ -66,12 +67,21 @@ class CreateCoupon extends React.Component {
       loading: false,
       tooltipOpen: false,
       files: [],
-      codeFromGenerator: null
+      codeFromGenerator: null,
+      currentCouponData: null
     }
   }
 
   componentDidMount() {
-    this.props.actions.getCoupons()
+    if(this.isEdit()) {
+      this.setState({ loading: true })
+      this.props.getCouponByID(this.props.match.params.id).then(res => {
+        this.setState({currentCouponData: res.data.coupon})
+      }).finally(() => {
+        this.setState({loading: false})
+      })
+    }
+    
     this.props.getProducts()
   }
 
@@ -111,17 +121,11 @@ class CreateCoupon extends React.Component {
   }
 
   render() {
-
+    const { loading, currentCouponData } = this.state
     
-    console.log(random(16))
-    const { loading } = this.state
-    const currentCouponData = _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id)
 
-    if (this.isEdit() && !currentCouponData) {
-      return 'load'
-    }
-    let initialValues = this.isEdit()
-      ? { ...currentCouponData, products_bound: currentCouponData.products_bound.length === 0 ? [''] : currentCouponData.products_bound}
+    let initialValues = (this.isEdit() && currentCouponData)
+      ? { ...currentCouponData, discount_value: [currentCouponData.discount], products_bound: currentCouponData.products_bound.length === 0 ? [''] : currentCouponData.products_bound.map(id => this.props.products.find(p => p.value === id))}
       : { discount_value: [50] }
     return (
       <div className="product-screen mt-3">
@@ -142,11 +146,11 @@ class CreateCoupon extends React.Component {
                   <CardHeader>
                     <Row style={{ alignItems: 'center' }}>
                       <Col md={12}>
-                        <h1>New Coupon</h1>
+                        <h1>{this.isEdit()?'Edit Coupon':'New Coupon'}</h1>
                       </Col>
                     </Row>
                   </CardHeader>
-                  <CardBody className="p-4 mb-5">
+                  <CardBody className="mb-4">
                     {
                       loading ?
                         <Row>
@@ -155,7 +159,7 @@ class CreateCoupon extends React.Component {
                           </Col>
                         </Row>
                         :
-                        <Row className="mt-4 mb-4">
+                        <Row className="mt-2 mb-2">
                           <Col lg={12}>
                             <Row>
                               <Col lg={12}>
@@ -198,7 +202,7 @@ class CreateCoupon extends React.Component {
                                   <Select
                                     className="select-default-width"
                                     id="products_bound"
-                                    multi
+                                    isMulti
                                     options={this.props.products}
                                     name="products_bound"
                                     placeholder="Select Products"

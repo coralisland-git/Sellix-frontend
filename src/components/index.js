@@ -8,11 +8,14 @@ import Footer from './footer'
 import DateRangePicker2 from './datepicker'
 import ConfirmDeleteModal from './confirm_delete_modal'
 import ImageUpload from './upload/imageUploader'
+import FileUpload from './upload/fileUploader'
 import AvatarUploader from './upload/avatarUploader'
 import FaviconUploader from './upload/faviconUploader'
 import DataSlider from './slider'
 import LeaveFeedbackModal from './feedback_leave_modal'
+import Affix from './affix'
 import NotFound from './404'
+import SetTitle from './set_title'
 
 export {
   Loading,
@@ -25,9 +28,12 @@ export {
   DateRangePicker2,
   ConfirmDeleteModal,
   ImageUpload,
+  FileUpload,
   DataSlider,
   AvatarUploader,
   FaviconUploader,
   LeaveFeedbackModal,
-  NotFound
+  Affix,
+  NotFound,
+  SetTitle
 }

@@ -110,6 +110,7 @@ class EditCategory extends React.Component {
     if (this.id) {
       this.setState({ loading: true });
       this.props.actions.getCategoryByID(this.id).then(res => {
+        console.log('initialData 1', res.data.category)
         this.setState({
           initialData: res.data.category,
           files: res.data.category.image_attachment === ''?[]:
@@ -117,6 +118,7 @@ class EditCategory extends React.Component {
         })
       }).finally(() => {
         this.props.productActions.getProductList().then(res => {
+          console.log('initialData 2', this.state.initialData)
           this.setState({
             selected_products: this.state.initialData.products_bound.map(pro => {return {value: pro.uniqid, label:pro.title}})
           })
@@ -168,15 +170,31 @@ class EditCategory extends React.Component {
                         </Col>
                       </Row>
                     </CardHeader>
-                    <CardBody className="p-4 mb-5">
-                      {loading ? (
-                          <Loader></Loader>
-                        ) : (
-                          <Row className="mt-4 mb-4">
-                            <Col lg={12}>
+                    <CardBody className="mb-4 pt-3 pb-3">
+                      {loading ? <Loader /> :
+                          (
+                          <Row>
+                            <Col lg={3} className="p-0">
+                              <div className="page_description_card bg-grey p-3 mr-2">
+                                  <h6 className="text-grey mb-3">REFERENCE</h6>
+                                  <p className="page_description text-grey mb-0">
+                                  Using Categories is a way to separate different types of products.
+                                  <br/>
+                                  <br/>
+                                  Unlike normal products, categories are displayed as smaller tabs above the search bar, they do not have an image.
+                                  <br/>
+                                  <br/>
+                                  Once selected, every other product that does not belong to that category will disappear with a super cool animation and the customer will be able to better see what he wants to purchase.
+                                  <br/>
+                                  <br/>
+                                  In order to create a category, please fill its title, select which products should be contained in it and then, you can proceed!
+                                  </p>
+                              </div>
+                          </Col>
+                          <Col lg={9}>
                               <Row>
                                 <Col lg={12}>
-                                  <FormGroup className="mb-3">
+                                  <FormGroup className="mb-3 mt-3">
                                     <Label htmlFor="title">Title</Label>
                                     <Input
                                       type="text"
@@ -205,7 +223,7 @@ class EditCategory extends React.Component {
                                       className="select-default-width"
                                       id="product_bounds"
                                       name="product_bounds"
-                                      multi
+                                      isMulti
                                       options={product_options}
                                       placeholder="Select Products"
                                       value={this.state.selected_products}
@@ -213,6 +231,8 @@ class EditCategory extends React.Component {
                                         this.setState({
                                           selected_products: option
                                         })
+
+                                        console.log('option', option)
 
                                         props.handleChange("products_bound")(option.map(o => o.value).toString());
                                       }}
@@ -228,17 +248,7 @@ class EditCategory extends React.Component {
                                   </FormGroup>
                                 </Col>
                               </Row>
-                              <Row>
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
-                                    <ImageUpload addFile={(file) => {
-                                      
-                                      props.handleChange('image')(file.length>0?file[0]:null); 
-                                      this.addFile(file)}} files={files} files={files}/>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
+                          
                               <Row>
                                 <Col lg={2}>
                                   <FormGroup className="mb-3">
@@ -255,7 +265,7 @@ class EditCategory extends React.Component {
                                 </Col>
                               </Row>
                               <Row>
-                                <Col lg={2}>
+                                <Col lg={12}>
                                   <FormGroup check inline className="mb-3">
                                       <div className="custom-checkbox custom-control">
                                         <input 
@@ -265,8 +275,6 @@ class EditCategory extends React.Component {
                                           name="SMTP-auth"
                                           onChange={(e) => {
                                             props.handleChange('unlisted')(e.target.checked?1:0)
-
-                                            console.log(props.values)
                                           }}
                                           checked={(props.values.unlisted === '1' || props.values.unlisted === 1)?true:false}
                                         />

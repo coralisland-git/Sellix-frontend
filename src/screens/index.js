@@ -1,5 +1,7 @@
 import Home from './home'
 import Fees from './fees'
+import Tickets from './tickets'
+import Changelog from './changelog'
 import LogIn from './log_in'
 import TwoFactorAuthentication from './2fa'
 import OTPLogin from './otp_2fa'
@@ -13,8 +15,13 @@ import Product from './product'
 import CreateProduct from './product/screens/create'
 import EditProduct from './product/screens/detail'
 
+import ProductGroups from './product_group'
+import CreateProductGroup from './product_group/screens/create'
+import EditProductGroup from './product_group/screens/detail'
+import ProductGroupSort from './product_group_sort'
+
 import ProductSort from './product_sort'
-import CateogrySort from './category_sort'
+import CategorySort from './category_sort'
 
 import Categories from './categories'
 import CreateCategories from './categories/screens/create'
@@ -30,14 +37,17 @@ import Queries from './queries'
 import Feedbacks from './feedbacks'
 import ReplyToFeedback from './feedbacks/screens/reply'
 import Webhooks from './webhooks'
+import CreateWebhookSimulator from './webhooks/screens/create'
 import WebhookLogs from './webhook_logs'
 import Pages from './pages'
 import CreatePage from './pages/screens/create'
 import Contact from './contact'
+import QueryView from './contact/screens/detail'
 import ShopFeedback from './feedbacks_shop'
 import LeaveFeedback from './feedbacks_shop/screens/create'
 import ShopProducts from './product_shop'
 import ShopProductDetail from './product_shop/screens/detail'
+import ShopGroupDetail from './product_shop/screens/group_detail'
 import BlackList from './blacklist'
 import CreateBlacklist from './blacklist/screens/create'
 import EditBlacklist from './blacklist/screens/create'
@@ -62,20 +72,24 @@ import Settings from './settings'
 import SettingsEdit from './settings/screens/detail'
 import AdminEditUser from './users/screens/detail/editUser'
 import Invoices from './invoices'
+import ShopDesign from './shop_design'
 
 import GeneralSettings from './general_settings'
 import Customization from './customization'
+import EmbededPayment from './embeded_payment'
+import EmbededInvoice from './embeded_invoice'
 
+import Documentation from './documentation/screen.js'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
 import "react-toastify/dist/ReactToastify.css"
-import 'react-select/dist/react-select.css'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export {
   AdminDashboard,
   Home,
+  Changelog,
   Fees,
   LogIn,
   Register,
@@ -95,6 +109,7 @@ export {
   SettingsEdit,
   AdminEditUser,
   Invoices,
+  Tickets,
 
 
   EditCoupon,
@@ -102,7 +117,7 @@ export {
   CreateProduct,
   EditProduct,
 
-  CateogrySort,
+  CategorySort,
   ProductSort,
 
   Categories,
@@ -111,6 +126,7 @@ export {
   
   Contact,
   Contacts,
+  QueryView,
   Order,
   Analytics,
   Reports,
@@ -121,6 +137,7 @@ export {
   Feedbacks,
   ReplyToFeedback,
   Webhooks,
+  CreateWebhookSimulator,
   Pages,
 
   CreatePage,
@@ -129,6 +146,7 @@ export {
   LeaveFeedback,
   ShopProducts,
   ShopProductDetail,
+  ShopGroupDetail,
   PaypalPaying,
   BlackList,
   CreateBlacklist,
@@ -138,7 +156,18 @@ export {
   MemberPage,
   Billings,
   GeneralSettings,
+  ShopDesign,
   Notification,
   Customization,
-  EditBlacklist
+  EditBlacklist,
+
+  EmbededPayment,
+  EmbededInvoice,
+
+  ProductGroups,
+  CreateProductGroup,
+  EditProductGroup,
+  ProductGroupSort,
+
+  Documentation
 }

@@ -43,22 +43,31 @@ export const checkDiscordChannel = (channel) => {
 
 export const getGeneralUserInfo = (username) => {
   return (dispatch) => {
+
     let data = {
       method: 'get',
       url: `/users/${username}`,
     }
-    return api(data).then(res => {
-      if(res && res.status == 200) {
-        console.log(res)
-        dispatch({
-          type: COMMON.GENERAL_USER_INFO,
-          payload: res.data
+
+    return api(data)
+        .then(res => {
+          let { status, data } = res;
+          if(status === 200) {
+            let { shop_dark_mode } = data.user;
+            dispatch({
+              type: COMMON.SHOP_THEME,
+              payload: shop_dark_mode === '1' ? 'dark' : 'light'
+            })
+            dispatch({
+              type: COMMON.GENERAL_USER_INFO,
+              payload: data
+            })
+          } else {
+            throw res
+          }
+        }).catch(err => {
+          throw err
         })
-        // return res
-      } else throw res
-    }).catch(err => {
-      throw err
-    })
   }
 }
 
@@ -101,6 +110,23 @@ export const getUserFeedbacks = (username) => {
 }
 
 
+export const getFeedbackByUniqid = (uniqid) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/feedback/unique/${uniqid}`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
 export const getUserProductById = (id) => {
   return (dispatch) => {
     let data = {
@@ -109,6 +135,11 @@ export const getUserProductById = (id) => {
     }
     return api(data).then(res => {
       if(res && res.status == 200) {
+        dispatch({
+          type: COMMON.SHOP_THEME,
+          payload: res.data.product.theme
+        })
+
         return res
       } else throw res
     }).catch(err => {
@@ -126,6 +157,10 @@ export const getInvoice = (id) => {
     }
     return api(data).then(res => {
       if(res && res.status == 200) {
+        dispatch({
+          type: COMMON.SHOP_THEME,
+          payload: res.data.invoice.theme
+        })
         return res
       } else throw res
     }).catch(err => {
@@ -137,14 +172,12 @@ export const getInvoice = (id) => {
 
 
 export const getPayPalInvoice = (id) => {
-  console.log(id)
   return (dispatch) => {
     let data = {
       method: 'get',
       url: `/invoices/paypal/${id}`,
     }
     return api(data).then(res => {
-      console.log(res)
       if(res && res.status == 200) {
         return res
       } else throw res
@@ -206,7 +239,6 @@ export const getUserProductsByCategory = (filter) => {
       url: `/categories/unique/${filter}`,
     }
     return api(data).then(res => {
-      console.log(res)
       if(res && res.status == 200) {
         dispatch({
           type: COMMON.USER_PRODUCTS,

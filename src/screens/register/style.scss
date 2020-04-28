@@ -14,19 +14,19 @@
   
       .card-body {
         border-radius: 0 !important;
-        border-top-right-radius: 10px !important;
-        border-bottom-right-radius: 10px !important;
+        border-top-right-radius: 3px !important;
+        border-bottom-right-radius: 3px !important;
       }
     }
   
     .second-card {
       max-width: 397px;
-      border-top-left-radius: 10px !important;
-      border-bottom-left-radius: 10px !important;
+      border-top-left-radius: 3px !important;
+      border-bottom-left-radius: 3px !important;
   
       .card-body {
-        border-top-left-radius: 10px !important;
-        border-bottom-left-radius: 10px !important;
+        border-top-left-radius: 3px !important;
+        border-bottom-left-radius: 3px !important;
         display: flex;
         flex-direction: column;
         align-items: center !important;
@@ -41,14 +41,14 @@
         }
   
         button {
-          border: 2px solid #F6F4FF !important;
+          border: 2px solid #f4f0ff !important;
         }
       }
     }
 
     @media screen and (max-width: 991.98px) {
         .card-body {
-            border-radius: 10px !important;
+            border-radius: 3px !important;
         }
     }
   }

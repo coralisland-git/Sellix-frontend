@@ -1,38 +1,32 @@
 import React, { Suspense } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import * as router from 'react-router-dom';
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-
 import { Container } from 'reactstrap'
 import {
   AppHeader,
+  AppFooter
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
-import { ThemeProvider, createGlobalStyle  } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
 import { productRoutes } from 'routes'
-import {
-  AuthActions,
-  CommonActions
-} from 'services/global'
+import { AuthActions, CommonActions } from 'services/global'
+import { Header, Loading } from 'components'
 
-
-import {
-  Aside,
-  Header,
-  Footer,
-  Loading
-} from 'components'
 
 import './style.scss'
+
 
 const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
-    is_authed: state.auth.is_authed
+    is_authed: state.auth.is_authed,
+    profile: state.auth.profile,
+    theme: state.common.theme,
+    user: state.common.general_info,
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -42,18 +36,16 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class DefaultLayout extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      theme: 'light'
-    }
-  }
+class ProductLayout extends React.Component {
 
   componentDidMount () {
-      this.props.authActions.getSelfUser().catch(err => {
-        this.props.authActions.logOut()
-      })
+
+      document.title = `Products | Sellix`;
+
+      this.props.authActions.getSelfUser()
+          .catch(err => {
+            this.props.authActions.logOut()
+          })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
@@ -79,36 +71,24 @@ class DefaultLayout extends React.Component {
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
   }
 
-  changeTheme() {
-    const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
-
-    this.setState({theme: theme == 'light'? 'dark': 'light'})
-  }
-
   render() {
-    const containerStyle = {
-      zIndex: 1999
-    }
-
-    const theme = window.localStorage.getItem('theme') || this.state || 'light'
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
+    const theme = this.props.theme
 
     return (
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">
-              <AppHeader fixed>
+              <AppHeader fixed className="border-bottom">
                 <Suspense fallback={Loading()}>
-                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
+                  <Header {...this.props} theme={theme} isShop={true}/>
                 </Suspense>
               </AppHeader>
               
-              <div className="app-body mt-5 mb-5 pt-5">
-                  <Container className="p-0 pt-3" fluid>
+              <div className="app-body mt-5 pt-5">
+                  <Container className="p-0" fluid>
                     <Suspense fallback={Loading()}>
-                      <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                      <ToastContainer position="top-right" autoClose={5000} style={{ zIndex: 1999 }} />
                       <Switch>
                         {
                           productRoutes.map((prop, key) => {
@@ -127,9 +107,11 @@ class DefaultLayout extends React.Component {
                     </Suspense>
                   </Container>
                 </div>
-                <p className="text-center text-grey footer-report pb-4">
-                  Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
-                </p>
+                <AppFooter>
+                  <p className="text-center text-grey footer-report py-4 m-0">
+                      Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
+                  </p>
+                </AppFooter>
             </div>
           </div>
       </ThemeProvider>
@@ -137,4 +119,4 @@ class DefaultLayout extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductLayout)

@@ -8,7 +8,7 @@
   }
 
   h4 {
-    font-size: 16px !important;
+    font-size: 18px !important;
   }
 
   label {
@@ -20,8 +20,8 @@
   .massage-editor {
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
     padding: 0 20px;
 
     .DraftEditor-editorContainer .public-DraftEditor-content {
@@ -35,8 +35,8 @@
     margin-bottom: -1px !important;
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
   }
 
   .price-select {
@@ -54,7 +54,6 @@
       border-top: none !important;
       border-bottom: none !important;
       height: 43px !important;
-      top: 1px;
     }
 
   }
@@ -84,7 +83,7 @@
     height: 60px;
     display: flex;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 3px;
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
     margin-right: 15px;
@@ -97,7 +96,7 @@
       padding-left: 10px;
       display: flex;
       align-items: center;
-      font-family: 'Poppins' !important;
+      font-family: var(--font-family-sans-serif);
       cursor: pointer;
 
       i, img {
@@ -109,6 +108,17 @@
 
     & label label::before, & label label::after {
       top: 0.20em;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .webhook-field {
+      .col-lg-11 {
+        width: 80% !important;
+      }
+      .col-lg-1 {
+        width: 20% !important;
+      }
     }
   }
 }

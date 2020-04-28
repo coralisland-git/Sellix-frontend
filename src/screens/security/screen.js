@@ -183,7 +183,7 @@ class SecurityPage extends React.Component {
               {props => (
                 <Form onSubmit={props.handleSubmit}>
                   <Card>
-                    <CardBody className="p-4 mb-5">
+                    <CardBody className="p-4 mb-4">
                       {
                         loading ?
                           <Row>
@@ -192,10 +192,10 @@ class SecurityPage extends React.Component {
                             </Col>
                           </Row>
                         : 
-                          <Row className="mt-4 mb-4">
+                          <Row className="">
                             <Col lg={12}>
-                              <FormGroup className="mb-5">
-                                <Label className="title">General</Label>
+                              <FormGroup className="mb-4">
+                                <h4 className="title">General</h4>
                               </FormGroup>
                             </Col>
                             <Col lg={12}>
@@ -270,7 +270,7 @@ class SecurityPage extends React.Component {
                                   <FormGroup>
                                     <Label>API Key</Label>
                                     <div className="d-flex input-group">
-                                      <Input className="bg-brown" disabled value={api_key}/>
+                                      <Input className="bg-grey" disabled value={api_key}/>
                                       <Button color="primary" disabled={generatingAPI} onClick={this.newAPIkey.bind(this)}>
                                         {generatingAPI ?<Spin/>:'Re-Generate' }</Button>
                                     </div>
@@ -285,7 +285,6 @@ class SecurityPage extends React.Component {
                                       type="text"
                                       id="webhook_secret"
                                       name="webhook_secret"
-                                      className="bg-brown" 
                                       onChange={props.handleChange}
                                       value={props.values.webhook_secret}
                                     />
@@ -296,7 +295,7 @@ class SecurityPage extends React.Component {
                           </Row>
                       }
                     </CardBody>
-                    <CardBody className="p-4 mb-5">
+                    <CardBody className="p-4 mb-4">
                       {
                         loading ?
                           <Row>
@@ -305,10 +304,10 @@ class SecurityPage extends React.Component {
                             </Col>
                           </Row>
                         : 
-                          <Row className="mt-4 mb-4">
+                          <Row className="">
                             <Col lg={12}>
-                              <FormGroup className="mb-5">
-                                <Label className="title">Multi Factor Authentication</Label>
+                              <FormGroup className="mb-4">
+                                <h4 className="title">Multi Factor Authentication</h4>
                               </FormGroup>
                               <FormGroup row>
                                 <Col className="d-flex align-items-center">
@@ -325,7 +324,7 @@ class SecurityPage extends React.Component {
                               </FormGroup>
                               <FormGroup row>
                                 <Col className="d-flex align-items-center mt-2">
-                                    <Label className="mb-0 mr-2" style={{width: 160}}>One Time Password: </Label>
+                                    <Label className="mb-0 mr-2" style={{width: 160}}>Two-Factor Authentication: </Label>
                                     {
                                       otp_enabled?
                                         <AppSwitch className="mx-1 file-switch mr-2"

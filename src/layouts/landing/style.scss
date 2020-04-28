@@ -1,40 +1,136 @@
 .landing-layout {
     * {
-      font-family: 'Poppins';
+      font-family: var(--font-family-sans-serif);
     }
-  
-    background-color: #f8f8f8;
-    header {
-      // position: fixed;
-      width: 100%;
-      // z-index: 9999;
-      // top: 0;
+
+
+    .landing-primary-button {
+      background-color: #6727AD;
+      border-radius: 3px !important;
+      line-height: 1em;
+      color: white !important;
+      padding-top:11px;
+      padding-bottom:12px;
+      border: none !important;
+      min-height: 0 !important;
+      min-width: 100px;
+
+      &.menu {
+        border-radius: 3px!important;
+        font-weight: bold !important;
+      }
+
+      &:hover,
+      &:active {
+        background-color: #4b1586;
+      }
+    }
+
+    .landing-secondary-button {
       background-color: white;
-      // border-bottom: 1px solid grey;
+      border-radius: 3px !important;
+      line-height: 1em;
+      color:  #3D2E87!important;
+      padding-top:11px;
+      padding-bottom:12px;
+      min-width: 100px;
+      border: none !important;
+      min-height: 0 !important;
+
+      &.menu {
+        border-radius: 3px!important;
+        font-weight: bold !important;
+      }
     }
-    .navbar {
-      
-      max-width: 1252px;
-      margin: 0 auto;
   
+    .f-20 {
+      font-size: 21px !important;
+    }
+  
+    .f-b {
+      font-weight: bold !important;
+    }
+
+    .text-pink {
+      color: #3D2E87 !important;
+    }
+
+    .text-darkgrey {
+      color: #898989 !important;
+    }
+  
+    .navbar-brand {
+      margin-left: 0 !important;
+
       .logo {
-        width: 88px !important;
-        height: 25px;
+        width: 117px !important;
+        // height: 48px;
+
+        @media (max-width: 768px){ 
+          & {
+            width: 100px !important;
+          }
+        }
+
+        @media (max-width: 420px){ 
+          & {
+            width: 80px !important;
+          }
+        }
       }
-  
-      .nav-item a{
-        margin: 0 15px;
-        color: #A7A5B4 !important;
-        font-weight: 600;
-        font-size: 15px;
+      
+    }
+    
+    
+    header {
+      position: relative;
+      width: 100%;
+      z-index: 2;
+      background-color: white;
+
+      &.home-header {
+        background-color: transparent !important;
+        .navbar {
+          background-color: transparent !important;
+          max-width: 1330px;
+          margin: 0 auto;
+    
+          a{
+            margin: 0 25px;
+            color: white !important;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+          }
+      
+          a:hover,
+          a.active {
+            color: white !important;
+          }
+        }
       }
+
+      .navbar {
+        background-color: transparent !important;
+        max-width: 1330px;
+        margin: 0 auto;
+        justify-content: space-between !important;
   
-      .nav-item a:hover,
-      .nav-item.active a {
-        color: #613BEA !important;
+        a{
+          margin: 0 25px;
+          color: #613bea !important;
+          font-weight: 600;
+          font-size: 15px;
+          cursor: pointer;
+        }
+    
+        a:hover,
+        a.active {
+          color: #613bea !important;
+        }
       }
     }
-  
+
     .section {
       padding-left: 15px;
       padding-right: 15px;
@@ -57,31 +153,6 @@
       line-height: 2em;
     }
   
-    h1 {
-      color: #613BEA;
-      font-size: 30px;
-      font-weight: 600;
-    }
-  
-    h3 {
-      color: #613BEA;
-      font-size: 26px;
-      font-weight: 600;
-    }
-  
-    h4 {
-      color: #613BEA;
-      font-size: 22px;
-      font-weight: 600;
-    }
-  
-    h5 {
-      line-height: 1.4em;
-      color: #613BEA;
-      font-size: 15px;
-      font-weight: 600;
-    }
-  
     p.large {
       font-size: 20px;
     }
@@ -91,15 +162,31 @@
     }
 
     .home-container {
-      max-width: 1252px;
+      max-width: 1200px !important;
       .service-row {
         margin-top: 100px;
       }
     }
-  
+    
     footer {
+      background-color: white;
+      .footer-hr {
+        border-top: 2px solid rgba(128, 54, 206, 0.2) !important;
+        max-width: 1250px;
+        margin: 0 auto;
+        background: white;
+      }
+     
+
+      h5 {
+        color: #8036CE !important;
+      }
+      p {
+        color: #537190 !important;
+      }
       .nav-link {
         margin: 0 !important;
+        color: #537190 !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
         font-size: 14px !important;

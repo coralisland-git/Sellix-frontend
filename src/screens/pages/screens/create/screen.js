@@ -58,7 +58,6 @@ class CreatePage extends React.Component {
   }
 
   addFile = file => {
-    console.log(file);
     this.setState({
       files: file.map(file =>
         Object.assign(file, {
@@ -70,8 +69,6 @@ class CreatePage extends React.Component {
 
   render() {
     const { loading, tooltipOpen, files } = this.state
-
-    console.log(files)
 
     return (
       <div className="create-pages-screen mt-3">

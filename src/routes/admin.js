@@ -1,7 +1,7 @@
 import {
   Dashboard,
   ProductSort,
-  CateogrySort,
+  CategorySort,
   Product,
   EditProduct,
   Categories,
@@ -15,6 +15,7 @@ import {
   Queries,
   Feedbacks,
   Webhooks,
+  CreateWebhookSimulator,
   WebhookLogs,
   CreatePage,
   Pages,
@@ -29,8 +30,12 @@ import {
   Settings,
   SettingsEdit,
   AdminEditUser,
-  Invoices
-} from 'screens'
+  Invoices,
+  CreateProductGroup,
+  EditProductGroup,
+  ProductGroups,
+  ProductGroupSort
+} from 'screens';
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
 
@@ -85,7 +90,8 @@ const adminRoutes = [
   {
     path: `/admin/dashboard`,
     name: 'AdminDashboard',
-    component: AdminDashboard
+    component: AdminDashboard,
+    title: 'Dashboard'
   },
   {
     path: `/admin/users`,
@@ -96,162 +102,225 @@ const adminRoutes = [
   {
     path: `/dashboard/${user}/home`,
     name: 'Dashboard',
-    component: Dashboard.screen
+    component: Dashboard.screen,
+    title: 'Dashboard'
   },
 
   {
     path: `/dashboard/${user}/products/all/new`,
     name: 'New',
-    component: CreateProduct.screen
+    component: CreateProduct.screen,
+    title: 'Create Product'
   },
   {
     path: `/dashboard/${user}/products/all/edit/:id`,
     name: 'Edit',
-    component: EditProduct.screen
+    component: EditProduct.screen,
+    title: 'Edit Product'
   },
 
   {
-    path: `/dashboard/${user}/products/sort-products`,
+    path: `/dashboard/${user}/products/sort`,
     name: 'Product Sort',
-    component: ProductSort.screen
+    component: ProductSort.screen,
+    title: 'Sort Products'
   },
   {
-    path: `/dashboard/${user}/products/sort-categories`,
-    name: 'Cateogry Sort',
+    path: `/dashboard/${user}/products/categories/sort`,
+    name: 'Categories Sort',
     exact: true,
-    component: CateogrySort.screen
+    component: CategorySort.screen,
+    title: 'Sort Categories'
   },
 
 
   {
-    path: `/dashboard/${user}/products/categories/edit/:id`,
+    path: `/dashboard/${user}/products/categories/all/edit/:id`,
     name: 'Edit',
-    component: EditCategory.screen
+    component: EditCategory.screen,
+    title: 'Edit Category'
   },
   {
-    path: `/dashboard/${user}/products/categories/new`,
+    path: `/dashboard/${user}/products/categories/all/new`,
     name: 'New',
-    component: CreateCategories.screen
+    component: CreateCategories.screen,
+    title: 'Create Category'
   },
 
   {
-    path: `/dashboard/${user}/products/categories`,
+    path: `/dashboard/${user}/products/categories/all`,
     name: 'Categories',
-    component: Categories.screen
+    component: Categories.screen,
+    title: 'Categories'
   },
 
   {
     path: `/dashboard/${user}/products`,
     name: 'Products',
     exact: true,
-    component: Product.screen
+    component: Product.screen,
+    title: 'Products'
+  },
+
+  {
+    path: `/dashboard/${user}/groups/all/new`,
+    name: 'Product Group New',
+    exact: true,
+    component: CreateProductGroup.screen,
+    title: 'Create Group'
+  },
+  {
+    path: `/dashboard/${user}/groups/all/edit/:id`,
+    name: 'Product Group Edit',
+    exact: true,
+    component: EditProductGroup.screen,
+    title: 'Edit Group'
+  },
+  {
+    path: `/dashboard/${user}/groups/all`,
+    name: 'Groups',
+    exact: true,
+    component: ProductGroups.screen,
+    title: 'Groups'
+  },
+
+  {
+    path: `/dashboard/${user}/groups/sort`,
+    name: 'Sort Groups',
+    exact: true,
+    component: ProductGroupSort.screen,
+    title: 'Sort Groups'
   },
  
 
   {
     path: `/dashboard/${user}/orders/view/:id`,
     name: 'Detail',
-    component: OrderDetail.screen
+    component: OrderDetail.screen,
+    title: 'View Order'
   },
 
   {
     path: `/dashboard/${user}/orders`,
     name: 'Orders',
-    component: Order.screen
+    component: Order.screen,
+    title: 'Orders'
   },
 
 
   {
     path: `/dashboard/${user}/analytics/reports`,
     name: 'Reports',
-    component: Reports.screen
+    component: Reports.screen,
+    title: 'Reports'
   },
   {
     path: `/dashboard/${user}/analytics/stats`,
     name: 'Analytics',
-    component: Analytics.screen
+    component: Analytics.screen,
+    title: 'Analytics'
   },
 
 
   {
     path: `/dashboard/${user}/coupons/new`,
     name: 'New',
-    component: CreateCoupon.screen
+    component: CreateCoupon.screen,
+    title: 'Create Coupon'
   },
   {
     path: `/dashboard/${user}/coupons/edit/:id`,
     name: 'EditCoupon',
-    component: EditCoupon.screen
+    component: EditCoupon.screen,
+    title: 'Edit Coupon'
   },
   {
     path: `/dashboard/${user}/coupons`,
     name: 'Coupons',
-    component: Coupons.screen
+    component: Coupons.screen,
+    title: 'Coupons'
   },
 
   {
     path: `/dashboard/${user}/blacklist/new`,
     name: 'New',
-    component: CreateBlacklist.screen
+    component: CreateBlacklist.screen,
+    title: 'Create Blacklist'
   },
   {
     path: `/dashboard/${user}/blacklist/edit/:id`,
     name: 'EditBlacklist',
-    component: EditBlacklist.screen
+    component: EditBlacklist.screen,
+    title: 'Edit Blacklist'
   },
   {
     path: `/dashboard/${user}/blacklist`,
     name: 'Blacklist',
-    component: BlackList.screen
+    component: BlackList.screen,
+    title: 'Blacklists'
   },
   
 
   {
     path: `/dashboard/${user}/queries`,
     name: 'Queries',
-    component: Queries.screen
+    component: Queries.screen,
+    title: 'Queries'
   },
   {
-    path: `/dashboard/${user}/querie/view/:id`,
-    name: 'Reply to Querie',
-    component: ReplyToQuerie
+    path: `/dashboard/${user}/query/view/:id`,
+    name: 'Reply to Query',
+    component: ReplyToQuerie,
+    title: 'View Query'
   },
   
 
   {
     path: `/dashboard/${user}/feedback/reply/:id`,
     name: 'Reply to Feedback',
-    component: ReplyToFeedback
+    component: ReplyToFeedback,
+    title: 'Reply to Feedback'
   },
 
   {
     path: `/dashboard/${user}/feedback`,
     name: 'Feedback',
-    component: Feedbacks.screen
+    component: Feedbacks.screen,
+    title: 'Feedback'
   },
 
   {
     path: `/dashboard/${user}/pages/new`,
     name: 'New',
-    component: CreatePage.screen
+    component: CreatePage.screen,
+    title: 'Create page'
   },
 
   {
     path: `/dashboard/${user}/pages`,
     name: 'Pages',
-    component: Pages.screen
+    component: Pages.screen,
+    title: 'Pages'
   },
 
   {
-    path: `/dashboard/${user}/developer/webhooks`,
-    name: 'Weebhooks',
-    component: Webhooks.screen
+    path: `/dashboard/${user}/developer/webhooks/all`,
+    name: 'Webhooks',
+    component: Webhooks.screen,
+    title: 'Webhooks'
   },
 
+  // {
+  //   path: `/dashboard/${user}/developer/webhooks/new`,
+  //   name: 'New',
+  //   component: CreateWebhookSimulator.screen
+  // },
+
   {
-    path: `/dashboard/${user}/developer/webhook-logos`,
+    path: `/dashboard/${user}/developer/webhooks/logs`,
     name: 'Weebhook Logs',
-    component: WebhookLogs.screen
+    component: WebhookLogs.screen,
+    title: 'Webhook Logs'
   },
 
   {

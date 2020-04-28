@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -23,6 +24,7 @@ import {
 } from 'services/global'
 import {ResendModal} from './sections'
 import {IssueReplacementModal} from './sections'
+import {ProcessOrderModal} from './sections'
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
@@ -93,10 +95,12 @@ class OrderDetail extends React.Component {
       resending: false,
       openModal: false,
       openIssueReplacementModal: false,
+      openProcessOrderModal: false,
       order: {}
     }
 
     this.id = this.props.match.params.id
+    this.initializeData = this.initializeData.bind(this)
   }
 
   closeResendModal() {
@@ -107,12 +111,20 @@ class OrderDetail extends React.Component {
     this.setState({openIssueReplacementModal: false})
   }
 
+  closeProcessOrderModal() {
+    this.setState({openProcessOrderModal: false})
+  }
+
   openResendModal() {
     this.setState({openModal: true})
   }
 
   openIssueReplacementModal() {
     this.setState({openIssueReplacementModal: true})
+  }
+
+  openProcessOrderModal() {
+    this.setState({openProcessOrderModal: true})
   }
 
   componentDidMount () {
@@ -156,7 +168,14 @@ class OrderDetail extends React.Component {
   }
 
   render() {
-    const { loading, order, resending, openModal, openIssueReplacementModal } = this.state
+    const { 
+      loading, 
+      order, 
+      resending, 
+      openModal, 
+      openIssueReplacementModal, 
+      openProcessOrderModal 
+    } = this.state
 
     let custom_fields = []
     if(order.custom_fields){
@@ -179,6 +198,14 @@ class OrderDetail extends React.Component {
             invoiceId = {order.uniqid}
             // email = {order.customer_email}
             closeModal={this.closeIssueReplacementModal.bind(this)}/>
+          <ProcessOrderModal  
+            openModal={openProcessOrderModal}
+            invoiceId = {order.uniqid}
+            status = {order.status}
+            refreshOrder = {() => this.initializeData()}
+            email = {order.customer_email}
+            closeModal={this.closeProcessOrderModal.bind(this)}
+          />
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
               {this.routeHandle()}
@@ -194,24 +221,34 @@ class OrderDetail extends React.Component {
                     </Col>
                   </Row>
                 : 
-                  <Row className="mt-3 mb-2">
+                  <Row className="">
                     <Col lg={12}>
-                      <div className="d-flex justify-content-between align-items-center mb-4">
-                        <Label className="title">View Order {order.developer_invoice == '1' && 
+                      <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                        <h4 className="title">View Order {order.developer_invoice == '1' &&
                           <span className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
                             Developer
                           </span>
-                        }</Label>
-                        { 
-                          order.status && (order.status == '0' || order.status == '1') && <div className='orderHeaderButtons'>
-                            <Button color="primary" onClick={this.openResendModal.bind(this)}>
-                              Resend Order
-                            </Button>
-                            <Button color="primary" onClick={this.openIssueReplacementModal.bind(this)}>
-                              Issue Replacement
-                            </Button>
-                          </div>
-                        }
+                        }</h4>
+                        <div className='orderHeaderButtons'>
+                          {
+                            order.status && (['0', '1'].includes(order.status)) && 
+                              <Button color="primary" className="mr-2" onClick={this.openResendModal.bind(this)}>
+                                Resend Order
+                              </Button>
+                          }
+                          {
+                            order.status && (['1'].includes(order.status)) && 
+                              <Button color="primary" className="mr-2" onClick={this.openIssueReplacementModal.bind(this)}>
+                                Issue Replacement
+                              </Button>
+                          }
+                          { 
+                            order.status && (['4'].includes(order.status)) && 
+                              <Button color="primary" className="" onClick={this.openProcessOrderModal.bind(this)}>
+                                Process Order
+                              </Button>
+                          }
+                        </div>
                       </div>
                       
                     </Col>
@@ -219,7 +256,7 @@ class OrderDetail extends React.Component {
                       <Row className="flex">
                         <Col lg={12} className="mb-5">
                           <div className="d-flex align-items-center">
-                            <img src={PAYMENT_ICONS[order.gateway]} className="avatar mr-3"/>
+                            <img src={PAYMENT_ICONS[order.gateway]} className="avatar mr-2"/>
                             <div>
                               <p className="email text-primary mb-1 d-flex align-items-center">
                                 <a href={`mailto:${order.customer_email}`}>{order.customer_email}</a>
@@ -235,16 +272,18 @@ class OrderDetail extends React.Component {
                           <div className="d-flex">
                             <p className="title">Product</p>
                             <p>
-                              <a href="#">
-                              {order.developer_invoice == '1'?order.developer_title:(order.product && order.product.title || '')}</a></p>
+                              <Link to={`/dashboard/${user}/products/all/edit/${order.product_id}`}>
+                                {order.developer_invoice == '1'?order.developer_title:(order.product && order.product.title || '')}
+                              </Link>
+                            </p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Value</p>
-                            <p>{`${config.CURRENCY_LIST[order.currency]}${order.product_price} ${order.currency}`}</p>
+                            <p>{`${config.CURRENCY_LIST[order.currency]}${order.total_display} ${order.currency}`}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Created At</p>
-                            <p>{moment(new Date(order.created_at*1000)).format('DD MMM h:mm:ss')}</p>
+                            <p>{moment(new Date(order.created_at*1000)).format('DD, MMM YYYY HH:mm')}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Quantity</p>
@@ -265,7 +304,7 @@ class OrderDetail extends React.Component {
                           
                           <div className="d-flex">
                               <p className="title">IP Address</p>
-                              <p>{order.ip} {order.is_vpn_or_proxy == '1' && <span className="proxy-label">VPN/Proxy</span> }</p>
+                              <p>{order.ip} {order.is_vpn_or_proxy == '1' && <span className="small-badge proxy-label">VPN/Proxy</span> }</p>
                             </div>
                             <div className="d-flex">
                               <p className="title">Device</p>
@@ -295,10 +334,10 @@ class OrderDetail extends React.Component {
                         </Col>
                       </Row>
                     :
-                    <Row className="mt-3">
+                    <Row className="">
                       <Col lg={12}>
                         <FormGroup className="mb-4">
-                          <Label className="title">Delivered Webhooks</Label>
+                          <h4 className="title">Delivered Webhooks</h4>
                         </FormGroup>
                       </Col>
                       <Col lg={12}>
@@ -373,10 +412,10 @@ class OrderDetail extends React.Component {
                           </Col>
                         </Row>
                       :
-                      <Row className="mt-3">
+                      <Row className="">
                         <Col lg={12}>
                           <FormGroup className="mb-4">
-                            <Label className="title">Delivered Goods</Label>
+                            <h4 className="title">Delivered Goods</h4>
                           </FormGroup>
                         </Col>
                         <Col lg={12}>
@@ -385,7 +424,7 @@ class OrderDetail extends React.Component {
                               {
                                 (order.serials && order.serials.length == 0)?
                                   <label>No product has been delivered</label>:
-                                  (order.serials || []).map(ser => <p>{ser}</p>)
+                                  (order.serials || []).map(serial => <p key={serial}>{serial}</p>)
                               }
                               
                             </Col>
@@ -408,7 +447,7 @@ class OrderDetail extends React.Component {
                               </Col>
                             </Row>
                           :
-                          <Row className="mt-3">
+                          <Row className="">
                             <Col lg={12}>
                               <FormGroup className="mb-4">
                                 <Label className="title">Developer Settings</Label>
@@ -449,26 +488,74 @@ class OrderDetail extends React.Component {
                               </Col>
                             </Row>
                           :
-                          <Row className="mt-3">
+                          <Row className="">
                             <Col lg={12}>
                               <FormGroup className="mb-4">
-                                <Label className="title">{PAYMENT_OPTS[order.gateway]} Transactions</Label>
+                                <h4 className="title">{PAYMENT_OPTS[order.gateway]} Details</h4>
                               </FormGroup>
                             </Col>
                             <Col lg={12}>
+                              <Label className="title">General Info</Label>
                               <Row>
                                 <Col lg={12}>
                                   {
-                                    order.crypto_transactions && order.crypto_transactions.map(trans => 
-                                      <div className="d-flex">
+                                    ((order.crypto_transactions && order.crypto_transactions.length > 0) ? order.crypto_transactions : [undefined]).map(trans => 
+                                      <div className="d-info">
+                                        <p className="d-addr">
+                                          <label>Address:</label> <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                          {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                          {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                          {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                        </p>
                                         <p className="hash">
-                                          {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - {trans.hash}</p>
+                                          <label>Amount:</label> {trans !== undefined ? trans.crypto_amount : order.crypto_amount} 
+                                        </p>
                                       </div>
                                     )
                                   }
                                 </Col>
                               </Row>
                             </Col>
+                            {
+                              !["0", "2"].includes(order.status) && <Col lg={12}>
+                                <Label className="title">Transactions</Label>
+                                <Row>
+                                  <Col lg={12}>
+                                    {
+                                      order.crypto_transactions && order.crypto_transactions.map(trans => 
+                                        <div className="d-flex">
+                                          <p className="hash">
+                                            {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                            {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                            {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                            {order.gateway == 'ethereum' && <a href={`https://etherscan.io/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                          </p>
+                                        </div>
+                                      )
+                                    }
+                                  </Col>
+                                </Row>
+                              </Col>
+                            }
+                            {
+                              order.crypto_transactions && order.crypto_transactions.length == 1 && order.crypto_payout_transaction && (
+                                <Col lg={12}>
+                                  <Label className="title">Payout</Label>
+                                  <Row>
+                                    <Col lg={12}>
+                                      <div className="d-flex">
+                                        <p className="hash">
+                                          {order.crypto_payout_transaction.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                          {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
+                                          {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
+                                          {order.gateway == 'ethereum' && <a href={`https://etherscan.io/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
+                                        </p>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              )
+                            }
                           </Row>
                         }
                       </CardBody>
@@ -487,10 +574,10 @@ class OrderDetail extends React.Component {
                         </Col>
                       </Row>
                     :
-                    <Row className="mt-3">
+                    <Row className="">
                       <Col lg={12}>
                         <FormGroup className="mb-4">
-                          <Label className="title">Provided Custom Fields</Label>
+                          <h4 className="title">Provided Custom Fields</h4>
                         </FormGroup>
                       </Col>
                       <Col lg={12}>

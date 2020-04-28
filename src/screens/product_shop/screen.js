@@ -1,191 +1,205 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createBrowserHistory } from 'history'
-import config from 'constants/config'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  Row,
-  Col,
-  Input
-} from 'reactstrap'
+import {Card, CardHeader, Button, Row, Col, Input, CardBody} from 'reactstrap'
+import { CommonActions } from 'services/global'
+import { Route, Switch, withRouter, matchPath } from 'react-router-dom'
 import { Loader } from 'components'
-import {
-  CommonActions
-} from 'services/global'
-import shop_brand from 'assets/images/brand/shop_brand.png'
+import { debounce } from 'lodash'
 
-import * as ProductActions from './actions'
 import './style.scss'
 
 
+const ProductList = React.lazy(() => import('./productList'))
 
-const CURRENCY_LIST = { 
-  'USD': '$',
-  'EUR': '€',
-  'AUD': '$',
-  'GBP': '£',
-  'JPY': '¥',
-  'CAD': '$',
-  'CHF': '₣',
-  'CNY': '¥',
-  'SEK': 'kr',
-  'NZD': '$'
-}
 
-const mapStateToProps = (state) => {
-  return ({
-    user_categories: state.common.user_categories,
-    user_products: state.common.user_products
-  })
-}
+const mapStateToProps = ({ common: { general_info } }) => ({
+  shop_search_enabled: Number(general_info.shop_search_enabled),
+  shop_hide_out_of_stock: Number(general_info.shop_hide_out_of_stock),
+  user: general_info,
+})
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(CommonActions, dispatch)
+})
+
 
 class ShopProducts extends React.Component {
   
   constructor(props) {
-    super(props)
+    super(props);
+
+
+    const match = matchPath(props.location.pathname, { path: '/:username/category/:id' })
+
     this.state = {
       loading: false,
       search_key: null,
-      filter: this.props.match.params.id || 'all'
+      products: [],
+      groups: [],
+      categories: [],
+      filter: match ? match.params.id : 'all'
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    let { user } = this.props;
+    let { categories, filter } = this.state;
+
+    if(prevProps.user !== user) {
+      document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
     }
 
-    this.initializeData = this.initializeData.bind(this)
-    this.filterProduct = this.filterProduct.bind(this)
-    this.gotoDetail = this.gotoDetail.bind(this)
+    if(filter === 'all') {
+      document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
+    } else {
+      if(categories.length) {
+        document.title = `Category: ${categories.find(({ uniqid }) => uniqid === filter).title} | Sellix`;
+      } else {
+        if(categories.length !== prevState.categories.length) {
+          document.title = `Category: ${categories.find(({ uniqid }) => uniqid === filter).title} | Sellix`;
+        }
+      }
+    }
   }
 
   componentDidMount () {
+    const { user } = this.props;
+    document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
+
+    if(this.state.categories.length > 0 && this.state.filter !== 'all') {
+      this.state.categories.categories.map(({ uniqid, title }) => {
+        if(this.state.filter === uniqid) {
+          document.title = `Category: ${title} | Sellix`;
+        }
+      })
+    }
     this.initializeData()
   }
 
-  initializeData () {
-    this.props.commonActions.getUserCategories(this.props.match.params.username).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error)
-    })
+  initializeData = () => {
 
-    const filter = this.props.match.params.id || 'all'
+    const { actions: { getUserCategories, getUserProducts, tostifyAlert }, match: { params } } = this.props;
 
-    if(filter == 'all')
-      this.getAllProducts()
-    else this.getCategoryProducts()
+    this.setState({ loading: true });
+
+    Promise.all([getUserCategories(params.username), getUserProducts(params.username)])
+        .then(([{ data: { categories } }, { data: { products, groups }} ]) => {
+          this.setState({
+            updatedProducts: products,
+            products,
+            groups,
+            categories
+          })
+        })
+        .catch(err => {
+          tostifyAlert('error', err.error)
+        })
+        .finally(err => {
+          this.setState({ loading: false })
+        })
   }
 
 
-  getAllProducts() {
-    this.setState({loading:true})
-    this.props.commonActions.getUserProducts(this.props.match.params.username).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error)
-    }).finally(() => {
-      this.setState({loading: false})
-    })
+  setFilter = (filter) => () => {
+
+    const { username } = this.props.match.params;
+
+    this.setState({ filter });
+
+    this.props.history.push(filter === 'all' ? `/${username}` : `/${username}/category/${filter}`);
   }
 
-  getCategoryProducts() {
-    this.setState({loading: true})
-    this.props.commonActions.getUserProductsByCategory(this.props.match.params.id).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error)
-    }).finally(() => {
-      this.setState({loading: false})
-    })
+  setSearchKey = debounce((search_key) => this.setState({ search_key }), 300);
+
+  searchProducts = () => {    
+    const { search_key, filter, products, categories } = this.state;
+
+    let category = filter !== 'all' && categories.length ? categories.find(({ uniqid }) => uniqid === filter ).products_bound : products;
+    let productsByCategory = products.filter(({ uniqid: id }) => category.find(({ uniqid }) => uniqid === id))
+
+    return search_key ?
+        productsByCategory.filter(({ title, stock }) =>
+          title.toLowerCase().includes(search_key.toLowerCase()) ||
+          stock.toLowerCase().includes(search_key.toLowerCase())
+        ) : productsByCategory
   }
 
-  filterProduct(filter) {
-    if(filter == 'all')
-      this.props.history.push(`/u/${this.props.match.params.username}`)
-    else {
-      this.props.history.push(`/u/${this.props.match.params.username}/category/${filter}`)
-      this.setState({filter: filter, loading: true})
-      this.props.commonActions.getUserProductsByCategory(filter).catch(err => {
-        this.props.commonActions.tostifyAlert('error', err.error)
-      }).finally(() => {
-        this.setState({loading: false})
-      })
-    }
+  searchGroups = () => {
+    const { search_key, filter, groups, categories } = this.state;
+
+    let category = filter !== 'all' && categories.length ? categories.find(({ uniqid }) => uniqid === filter ) : null;
+    let groupsByCategory = category ? groups.filter(({ products_bound }) => products_bound.find(({ uniqid: id }) => category.products_bound.find(({uniqid}) => uniqid === id))) : groups
+
+    return search_key ?
+        groupsByCategory.filter(({ title }) =>
+          title.toLowerCase().includes(search_key.toLowerCase())
+        ) : groupsByCategory
   }
 
-  gotoDetail(e, id) {
-    this.props.history.push({
-      pathname: `/product/${id}`
-    })
-  }
 
   render() {
-    const { loading, filter, search } = this.state
-    const { user_categories, user_products } = this.props
+    const { loading, filter, categories, products, groups } = this.state;
+    const { shop_search_enabled, shop_hide_out_of_stock } = this.props;
+
+    let searchProducts = this.searchProducts(products);
+    let searchGroups = this.searchGroups(groups)
 
     return (
       <div className="shop-product-screen">
-        <div className="animated fadeIn">
+        <div className="animated customAnimation">
           <Card className="grey">
-            <CardHeader>
+            <CardHeader className="pb-1 pt-3">
               <Row>
-                <Col md={12} className="filter-button d-flex flex-wrap">
-                  <Button color={filter == 'all'?'primary':'white'} className="mr-2" disabled={loading}
-                    onClick={() => this.filterProduct('all')}>All</Button>
-                  {
-                    user_categories.map(category => 
-                      <Button key={category.uniqid} color={filter == category.uniqid?'primary':'white'} className="mr-2" disabled={loading}
-                        onClick={() => this.filterProduct(category.uniqid)}>{category.title}</Button>)
-                  }
-                </Col>
-                <Col md={12} className="mt-4 mb-2">
-                  <div className="d-flex justify-content-start">
-                    <div className="searchbar white w-100">
-                      <i className="fas fa-search"/>
-                      <Input placeholder="Search for a product..." 
-                        className="header-search-input"
-                        onChange={e => {this.setState({search_key: e.target.value})}}
-                      ></Input>
-                    </div>
-                  </div>
-                </Col>
+                {
+                  categories.length !== 0 &&
+                    <Col md={12} className="filter-button d-flex flex-wrap mb-4">
+                      <Button color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
+                        All
+                      </Button>
+                      {categories.map(({ uniqid, title }) =>
+                        <Button key={uniqid} color={filter === uniqid ? 'primary' : 'white' } className="mr-2" disabled={loading} onClick={this.setFilter(uniqid)}>
+                          {title}
+                        </Button>
+                      )}
+                    </Col>
+                }
+
+                {
+                  shop_search_enabled === 1 &&
+                    <Col md={12} className="mb-4">
+                      <div className="d-flex justify-content-start">
+                        <div className="searchbar white w-100">
+                          <i className="fas fa-search"/>
+                          <Input
+                              placeholder="Search for a product..."
+                              className="header-search-input"
+                              onChange={(e) => this.setSearchKey(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </Col>
+                }
               </Row>
             </CardHeader>
-            <CardBody className="p-0">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                :
-                  <Row>
-                    {
-                      user_products.map((pro, index) => 
-                        <Col md={3} key={index}>
-                          <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.uniqid)}>
-                            <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
-                              style={{borderTopLeftRadius: 10, borderTopRightRadius: 10}}
-                              width="100%" height="150"/>
-                            <div className="p-3">
-                              <h5 className="mb-3 text-black">{pro.title}</h5>
-                              <div className="d-flex justify-content-between mt-3 mb-2">
-                                <span className="price">{`${CURRENCY_LIST[pro.currency]}${pro.price_display}`}</span>
-                                <span className="stock">Stock: <span className="stock-size">
-                                {pro.type == 'file'?(pro.file_stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.file_stock):(pro.stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.stock) || 0}
-                                </span></span>
-                              </div>
-                            </div> 
-                          </Card>
-                        </Col>
-                      )
-                    }
-                    {user_products.length == 0 && <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>}
-                  </Row>
-              }
-              
-            </CardBody>
+
+            <React.Suspense fallback={<Loader />}>
+              <div className="p-0">
+                <Row>
+                  <Switch>
+                    <Route to={'/:username/category/:id'} render={(props) => 
+                      <ProductList 
+                        products={searchProducts} 
+                        groups={searchGroups} 
+                        loading={loading} 
+                        hide_out_of_stock={shop_hide_out_of_stock}
+                        {...props}
+                      />} />
+                  </Switch>
+                </Row>
+              </div>
+            </React.Suspense>
+
           </Card>
         </div>
       </div>
@@ -193,4 +207,4 @@ class ShopProducts extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopProducts)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShopProducts))

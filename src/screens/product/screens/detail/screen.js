@@ -21,7 +21,7 @@ import 'react-quill/dist/quill.snow.css';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import { AppSwitch } from '@coreui/react'
-import { Loader, ImageUpload, DataSlider, Spin } from 'components'
+import { Loader, ImageUpload,FileUpload, DataSlider, Spin } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
@@ -62,8 +62,9 @@ const converter = new Showdown.Converter({
 	tables: true,
 	simplifiedAutoLink: true,
 	strikethrough: true,
-	tasklists: true
-  });
+	tasklists: true,
+	simpleLineBreaks: true
+});
 
 const TYPE_OPTIONS = [
 	{ value: 'file', label: 'File' },
@@ -148,7 +149,8 @@ class EditProduct extends React.Component {
 				serials: '',
 				service_text: '',
 				file_stock: -1,
-				stock_delimeter: DELIMITER_OPTIONIS[0].value,
+				service_stock: -1,
+				stock_delimiter: DELIMITER_OPTIONIS[0].value,
 				quantity_min: 0,
 				quantity_max: 0,
 				delivery_text: '',
@@ -163,15 +165,21 @@ class EditProduct extends React.Component {
 				file: null
 			},
 			showFileStock: false,
+			showServiceStock: false,
 			gateways: {},
 			type: TYPE_OPTIONS[0],
 			delimiter: DELIMITER_OPTIONIS[0],
-			custom_fields: []
+			custom_fields: [],
+			webhook_fields: []
 		}
 
 		this.addCustomField = this.addCustomField.bind(this)
 		this.deleteCustomField = this.deleteCustomField.bind(this)
     	this.saveCustomField = this.saveCustomField.bind(this)
+
+    	this.addWebhookField = this.addWebhookField.bind(this)
+		this.deleteWebhookField = this.deleteWebhookField.bind(this)
+    	this.saveWebhookField = this.saveWebhookField.bind(this)
     
     	this.id = this.props.match.params.id
 	}
@@ -199,7 +207,6 @@ class EditProduct extends React.Component {
 
 
 	addFile = file => {
-		console.log(file);
 		this.setState({
 			files: file.map(file =>
 				Object.assign(file, {
@@ -220,6 +227,26 @@ class EditProduct extends React.Component {
 	};
 
 
+	addWebhookField() {
+		const webhook_fields = Object.assign([], this.state.webhook_fields)
+		webhook_fields.push('')
+
+		this.setState({webhook_fields: webhook_fields})
+	}
+
+	deleteWebhookField(e, index) {
+		const webhook_fields = Object.assign([], this.state.webhook_fields)
+		webhook_fields.splice(index, 1)
+
+		this.setState({webhook_fields: webhook_fields})
+	}
+
+	saveWebhookField(value, index) {
+		const webhook_fields = Object.assign([], this.state.webhook_fields)
+		webhook_fields[index] = value
+
+		this.setState({webhook_fields: webhook_fields})
+	}
 	/**  Custom Fields **/
 
 	addCustomField() {
@@ -245,13 +272,24 @@ class EditProduct extends React.Component {
 
 	handleSubmit(values) {
 		this.setState({saving: true})
-		const { gateways, custom_fields, showFileStock } = this.state
+		const { gateways, custom_fields, showFileStock, showServiceStock, images, files, webhook_fields } = this.state
 		delete gateways['']
 		values.gateways = Object.keys(gateways).filter(key => { return gateways[key]}).toString()
 		values.custom_fields = JSON.stringify({
 			custom_fields: custom_fields.map(field => { return {...field, type: field.type.value}})
 		})
 		values.file_stock = showFileStock?values.file_stock:-1
+		values.service_stock = showServiceStock?values.service_stock:-1
+
+		if(values.quantity_max == "") {
+			values.quantity_max = "0"
+		}
+
+		values.remove_image = images.length == 0?true:false
+		values.remove_file= files.length == 0?true:false
+		values.currency = values.currency.value
+
+		values.webhooks = webhook_fields
 
 		this.props.actions.editProduct(values).then(res => {
 			if(admin){
@@ -308,27 +346,32 @@ class EditProduct extends React.Component {
           gateways[key] = true
 		})
 		
-		if(product.stock_delimeter == ',')
+		if(product.stock_delimiter == ',')
 			delimiter = DELIMITER_OPTIONIS[0]
-		else if(product.stock_delimeter == '\n')
+		else if(product.stock_delimiter == '\n')
 			delimiter = DELIMITER_OPTIONIS[1]
 		else delimiter = DELIMITER_OPTIONIS[2]
 
-		product.serials = product.serials.join(product.stock_delimeter)
+		product.serials = product.serials.join(product.stock_delimiter)
 		product.price = product.price_display
         
         this.setState({
-		  initialValues: product,
+		  initialValues: {
+			  ...product,
+			  currency: CURRENCY_LIST.find(x => x.value === product.currency)
+		  },
 		  delimiter: delimiter,
 		  serials: serials,
           files: product.file_attachment?
-            [{preview: config.API_ROOT_URL+'/attachments/image/'+product.file_attachment}]:[],
+            [{name : product.file_attachment_info && product.file_attachment_info.original_name}]:[],
           images: product.image_attachment?
             [{preview: config.API_ROOT_URL+'/attachments/image/'+product.image_attachment}]:[],
           gateways: gateways,
           type: type[0],
           showFileStock: product.file_stock!=-1?true:false,
-          custom_fields: custom_fields
+          showServiceStock: product.service_stock!=-1?true:false,
+          custom_fields: custom_fields,
+          webhook_fields: product.webhooks
         })
       }).finally(() => {
           this.setState({loading: false})
@@ -350,12 +393,14 @@ class EditProduct extends React.Component {
 			images,
 			selectedTab,
 			showFileStock,
+			showServiceStock,
 			editorState,
 			initialValues,
       		type,
       		gateways,
 			delimiter,
-			custom_fields
+			custom_fields,
+			webhook_fields
 		} = this.state
 
 		return (
@@ -384,9 +429,10 @@ class EditProduct extends React.Component {
 							serials: Yup.string(),
 							service_text: Yup.string(),
 							file_stock: Yup.number(),
+							service_stock: Yup.number(),
 							quantity_min: Yup.number(),
 							quantity_max: Yup.number(),
-							stock_delimeter: Yup.string(),
+							stock_delimiter: Yup.string(),
 							delivery_text: Yup.string(),
 							crypto_confirmations: Yup.number(),
 							max_risk_level: Yup.number(),
@@ -423,11 +469,11 @@ class EditProduct extends React.Component {
 														</Col>
 													</Row>
 												:
-													<Row className="mt-4 mb-4">
+													<Row className="mb-4">
 														<Col lg={12}>
 															<Row>
 																<Col lg={12}>
-																	<h4 className="mb-4">General Information</h4>
+																	<h4 className="mb-4 mt-1 pb-1">General Information</h4>
 																</Col>
 															</Row>
 															<Row>
@@ -485,7 +531,7 @@ class EditProduct extends React.Component {
 																						searchable={false}
 																						value={props.values.currency}
 																						onChange={(option) => {
-																							props.handleChange("currency")(option.value);
+																							props.handleChange("currency")(option);
 																						}}
 																						className={
 																							props.errors.currency && props.touched.currency
@@ -672,7 +718,7 @@ class EditProduct extends React.Component {
 
 																<Row>
 																	<Col lg={12}>
-																		<h4 className="mb-4 mt-4">Product Stock</h4>
+																		<h4 className="mb-4 mt-2 pb-1">Product Stock</h4>
 																	</Col>
 																</Row>
 																<Row>
@@ -698,8 +744,8 @@ class EditProduct extends React.Component {
 																</Row>
 																{type.value === 'file' && <Row>
 																	<Col lg={12} className="mb-3">
-																		<ImageUpload addFile={(file) => {
-																			props.handleChange('file')(file[0]); 
+																		<FileUpload addFile={(file) => {
+																			props.handleChange('file')(file[0] || null); 
 																			this.addFile(file)}} files={files}/>
 																	</Col>
 																	<Col lg={12}>
@@ -755,18 +801,17 @@ class EditProduct extends React.Component {
 																					options={DELIMITER_OPTIONIS}
 																					searchable={false}
 																					className="mb-3"
-																					id="stock_delimeter"
-																					name="stock_delimeter"
+																					id="stock_delimiter"
+																					name="stock_delimiter"
 																					value={this.state.delimiter}
 																					onChange={(option) => {
 																						this.setState({
 																							delimiter: option
 																						})
-																						
-																						console.log(option.value)
+
 																						if(option.value !== 'custom')
-																							props.handleChange("stock_delimeter")(option.value)
-																						else props.handleChange("stock_delimeter")('')
+																							props.handleChange("stock_delimiter")(option.value)
+																						else props.handleChange("stock_delimiter")('')
 																					}}>                                       
 																				</Select>
 																			</FormGroup>
@@ -776,9 +821,9 @@ class EditProduct extends React.Component {
 																				<FormGroup className="mb-3">
 																					<Label htmlFor="product_code">Custom Stock Delimiter</Label>
 																					<Input type="text"
-																						id="stock_delimeter"
-																						name="stock_delimeter"
-																						value={props.values.stock_delimeter}
+																						id="stock_delimiter"
+																						name="stock_delimiter"
+																						value={props.values.stock_delimiter}
 																						onChange={props.handleChange}
 																					></Input>
 																				</FormGroup>
@@ -803,9 +848,13 @@ class EditProduct extends React.Component {
 																					id="quantity_max"
 																					
 																					name="quantity_max"
-																					value={props.values.quantity_max}
+																					value={props.values.quantity_max == 0 || props.values.quantity_max == -1 ? "" : props.values.quantity_max}
 																					onChange={props.handleChange}
 																				></Input>
+																				<p style={{
+																					margin: '10px 5px',
+																					color: 'gray'
+																				}}>Leave this field blank to set it to infinite</p>
 																			</FormGroup>
 																		</Col>
 																</Row></div>}
@@ -818,7 +867,38 @@ class EditProduct extends React.Component {
 																				id='service_text'
 																				name="service_text"
 																				value={props.values.service_text}
-																				rows={5} onChange={props.handleChange}></textarea>
+																				rows={5} onChange={props.handleChange}
+																			/>
+																		</FormGroup>
+																	</Col>
+																	<Col lg={12}>
+																		<FormGroup row>
+																			<Col xs="12" md="7" className="d-flex align-items-center">
+																				<AppSwitch className="mx-1 file-switch mr-2"
+																					style={{width: 50}}
+																					variant={'pill'} 
+																					color={'primary'}
+																					checked={showServiceStock}
+																					onChange={(e) => {
+																						this.setState({
+																							showServiceStock: e.target.checked
+																						})
+																					}}
+																					size="sm"
+																					/><span>Set how many this service can be sold </span>
+																			</Col>
+																		</FormGroup>
+																	</Col>
+																</Row>}
+																
+																{showServiceStock && type.value === 'service' && <Row>
+																	<Col lg={4}>
+																		<FormGroup>
+																			<Label htmlFor="product_code">Stock Amount <small className="font-italic">(leave <b>-1</b> for unlimited times)</small></Label>
+																			<Input type="number" id="service_stock" name="service_stock"
+																				min={-1}
+																				value={props.values.service_stock}
+																				onChange={props.handleChange}/>
 																		</FormGroup>
 																	</Col>
 																</Row>}
@@ -827,7 +907,7 @@ class EditProduct extends React.Component {
 																<hr className="mt-4"/>
 																<Row>
 																	<Col lg={12}>
-																		<h4 className="mb-4 mt-4">Customization</h4>
+																		<h4 className="mb-4 mt-2">Customization</h4>
 																	</Col>
 																</Row>
 																<Row>
@@ -835,8 +915,9 @@ class EditProduct extends React.Component {
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
 																			<ImageUpload addFile={(file) => {
-																			props.handleChange('image')(file[0]); 
-																			this.addImages(file)}} files={images}/>
+																				props.handleChange('image')(file[0]); 
+																				this.addImages(file)
+																			}} files={images}/>
 																		</FormGroup>
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Note to Customer <small className="font-italic">(optional)</small></Label>
@@ -884,7 +965,7 @@ class EditProduct extends React.Component {
 																								/>
 																							</FormGroup>
 																						</Col>
-																						<Col lg={3}>																						
+																						<Col lg={3}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Required</Label>
 																								<div className="d-flex align-items-center mt-2">
@@ -918,10 +999,53 @@ class EditProduct extends React.Component {
 																<hr className="mt-4"/>
 																<Row>
 																	<Col lg={12}>
-																		<h4 className="mb-4 mt-4">Miscellaneous</h4>
+																		<h4 className="mb-4 mt-2">Miscellaneous</h4>
 																	</Col>
 																</Row>
 																
+																<Row>
+																	<Col lg={12}>
+																		<FormGroup className="mb-0">
+																			<Label htmlFor="product_code" style={{width: '100%'}}>Webhook URLs <small className="font-italic">(optional)</small></Label>
+																		</FormGroup>
+																	</Col>
+
+																	{
+																		webhook_fields.map((field, index) => {
+																			return(
+																				<Col lg={12} key={index}>
+																					<Row className="webhook-field">
+																						<Col lg={11}>
+																							<FormGroup className="mb-3">
+																								<Input type="text" value={field} 
+																									placeholder="https://www.example.com/endpoint"
+																									onChange={(e) => {
+																									this.saveWebhookField(e.target.value, index)
+																								}}/>
+																							</FormGroup>
+																						</Col>
+																						<Col lg={1}>
+																							<FormGroup className="mb-3">
+																								<div className="d-flex align-items-center mt-2">
+																									<a onClick={(e) => this.deleteWebhookField(e, index)} style={{fontSize: 20}}>
+																										<i className="fas fa-trash"/>
+																									</a>
+																								</div>
+																							</FormGroup>
+																						</Col>
+																					</Row>
+																				</Col>
+																			)
+																		})
+																	}
+																	
+																	<Col lg={12}>
+																		<FormGroup className="mb-3">
+																			<Button color="default" onClick={this.addWebhookField}>Add webhook</Button>
+																		</FormGroup>
+																	</Col>
+																</Row>
+
 																<Row>
 																	<Col lg={6}>
 																		<FormGroup className="mb-3">
@@ -943,7 +1067,8 @@ class EditProduct extends React.Component {
 																			<DataSlider 
 																				domain={[0, 100]} 
 																				value={[props.values.max_risk_level]} 
-																				ticks={[1, 50, 100]}
+																				suffix="%"
+																				ticks={[0, 50, 100]}
 																				receiveValue = {(value) => {
 																					props.handleChange('max_risk_level')(value)
 																				}}/>
@@ -1026,7 +1151,6 @@ class EditProduct extends React.Component {
 																					id="paypal-email"
 																					name="SMTP-auth"
 																					/>
-																				
 																			</div>
 																		</FormGroup>
 																	</Col>

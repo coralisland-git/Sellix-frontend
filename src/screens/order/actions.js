@@ -26,6 +26,27 @@ export const getOrderList = () => {
 }
 
 
+// Get Live Orders
+export const getLiveOrders = () => {
+  return (dispatch) => {
+    let data = {
+      method: 'GET',
+      url: '/self/invoices/live'
+    }
+
+    return authApi(data).then(res => {
+      dispatch({
+        type: ORDER.ALL_ORDERS,
+        payload: res.data.invoices
+      })
+      return res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
 // Get Invoice By ID
 export const getOrderByID = (id) => {
   return (dispatch) => {
@@ -59,6 +80,26 @@ export const resendInvoice = (invoice) => {
     })
   }
 }
+
+
+// Process Invoice
+export const processOrder = (invoice) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/invoices/process`,
+      data: formData(invoice)
+    }
+
+    return authApi(data).then(res => {
+      return res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
 export const issueReplacement = (coupon) => {
   return (dispatch) => {
     let data = {

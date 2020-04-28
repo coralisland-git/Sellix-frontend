@@ -2,55 +2,63 @@ import {
     SecurityPage,
     Notification,
     Payments,
-    MemberPage,
-    Billings,
     GeneralSettings,
-    Customization
+    ShopDesign
   } from 'screens'
 
   const user = window.localStorage.getItem('userId')
   
   const settingsRoute = [
     {
-      path: `/settings/general`,
+      path: `/settings/${user}/general`,
       name: 'GeneralSettings',
-      component: GeneralSettings.screen
+      component: GeneralSettings.screen,
+        title: 'Settings - Details'
     },
     {
-      path: `/settings/security`,
+      path: `/settings/${user}/security`,
       name: 'Security',
-      component: SecurityPage.screen
+      component: SecurityPage.screen,
+        title: 'Settings - Security'
     },
     {
-        path: `/settings/notifications`,
+        path: `/settings/${user}/notifications`,
         name: 'Notifications',
-        component: Notification.screen
+        component: Notification.screen,
+        title: 'Settings - Notifications'
     },
 
     {
-        path: `/settings/payments`,
+        path: `/settings/${user}/payments`,
         name: 'Payments',
-        component: Payments.screen
+        component: Payments.screen,
+        title: 'Settings - Payments'
     },
 
+    {
+      path: `/settings/${user}/design`,
+      name: 'Design',
+      component: ShopDesign.screen,
+        title: 'Settings - Design'
+    },
     // {
-    //     path: `/settings/memebers`,
+    //     path: `/settings/${user}/memebers`,
     //     name: 'Memebers',
     //     component: MemberPage.screen
     // },
     // {
-    //   path: `/settings/billing`,
+    //   path: `/settings/${user}/billing`,
     //   name: 'Billings',
     //   component: Billings.screen
     // },
     // {
-    //   path: `/settings/customization`,
+    //   path: `/settings/${user}/customization`,
     //   name: 'Customization',
     //   component: Customization.screen
     // },
     {
       redirect: true,
-      pathTo: `/settings/general`,
+      pathTo: `/settings/${user}/general`,
       path: `/settings`,
       name: 'GeneralSettings',
     },

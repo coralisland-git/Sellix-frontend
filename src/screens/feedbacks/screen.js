@@ -13,6 +13,8 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import StarRatings from 'react-star-ratings';
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
+import ReactTimeAgo from 'react-time-ago'
+import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
 import {getFeedbacks} from './actions'
 import './style.scss'
@@ -20,11 +22,9 @@ import './style.scss'
 const user = window.localStorage.getItem('userId')
 
 
-const mapStateToProps = (state) => {
-  return ({
-    feedbacks: state.feedbacks.feedbacks
-  })
-}
+const mapStateToProps = ({ feedbacks: { feedbacks } }) => ({
+  feedbacks
+})
 
 const mapDispatchToProps = (dispatch) => {
   return ({
@@ -63,15 +63,9 @@ class Feedbacks extends React.Component {
   
 
   renderThumb = (row) => {
-    if(this.props.feedbacks[0].feedback === 'positive'){
-      return <i className="fa fa-thumbs-down fa-lg mr-3" style={{color: '#B22424'}}></i>
-    }
-    if(this.props.feedbacks[0].feedback === 'negative'){
-      return <i className="fa fa-thumbs-up fa-lg mr-3" style={{color: '#2BB224'}}></i>
-    }
-    if(this.props.feedbacks[0].feedback === 'neutral'){
-      return <i className="fas fa-hand-paper fa-lg mr-3" style={{ color: '#A7A5B4' }}></i>
-    }
+    const item = this.props.feedbacks.filter(x => x.id == row)[0]
+  
+    return <ReactStarsRating isEdit={false} value={item.score || 5} isHalf={false} className="transparent-bg react-stars-rating is-dashboard"/>
   }
 
   renderFeedback = (cell, row) => {
@@ -92,26 +86,52 @@ class Feedbacks extends React.Component {
 
   renderOption (cell, row) {
     return (
-      <Button color="default" onClick={(e) => this.replyToFeedback(e, row.id)}>Reply</Button>
+      <Button color="default" onClick={(e) => this.replyToFeedback(e, row.uniqid)}>Reply</Button>
     )
   }
 
+  renderMessage = (cell, row) => {
+    const feedback = row;
+    return <p>
+        {feedback.message}
+        {feedback.reply && <p style={{
+          borderLeft: '3px solid #613bea',
+          marginLeft: '10px',
+          padding: '10px'
+        }}>
+          {feedback.reply}  
+          <p className="reply-from-seller">— reply from the Seller</p>
+          <style>
+            {`
+            .reply-from-seller {
+              font-size: 11px;
+              color: gray !important;
+              margin: 8px 0;
+            }
+            `}
+          </style>
+        </p>}
+    </p>
+  }
+
   renderTime(cell, row) {
-    let newDate = 0
+
+    const formatDate = (timestamp) => {
+      return <ReactTimeAgo date={timestamp*1000/1} locale="en"/>
+    }
     if (
-      row.date
+      row.created_at
     ) {
-      newDate = (Date.now() - (+row.date * 1000)) / (3600 * 24 * 1000)
-      if(newDate > 0){
-        if(newDate === 1){
-          newDate = `${newDate.toFixed(0)} day ago`
-        }else{
-          newDate = `${newDate.toFixed(0)} days ago`
-        }
-      }
+      
       return (
-        <div>
-          <p>{newDate}</p>
+        <div style={{
+          minWidth: '100px',
+          textAlign: 'center'
+        }}>
+          <p>{formatDate(row.created_at)}</p>
+          {row.updated_at && row.updated_at !== row.created_at && <p>
+            (updated {formatDate(row.updated_at)})
+          </p>}
         </div>
       )
     } else {
@@ -155,14 +175,14 @@ class Feedbacks extends React.Component {
                           version="4"
                           pagination
                           // totalSize={product_list ? product_list.length : 0}
-                          className="product-table"
+                          className="product-table feedback-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn
                             isKey
                             dataField="title"
                             dataSort
-                            width="20%"
+                            width="10%"
                             dataFormat={this.renderFeedback}
                           >
                             Feedback
@@ -171,13 +191,14 @@ class Feedbacks extends React.Component {
                             dataField="message"
                             dataSort
                             width = "30%"
+                            dataFormat={this.renderMessage}
                           >
                             Message
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"
                             dataSort
-                            width="10%"
+                            width="50%"
                             dataAlign="center"
                             dataFormat={this.renderThumb}
                           >
@@ -186,6 +207,7 @@ class Feedbacks extends React.Component {
                           <TableHeaderColumn
                             dataField="id"
                             dataSort
+                            width="20%"
                             dataFormat={this.renderOption}
                           >
                             Option
@@ -196,7 +218,7 @@ class Feedbacks extends React.Component {
                             dataAlign="right"
                             dataSort
                           >
-                            Time
+                            Time posted
                           </TableHeaderColumn>
                         </BootstrapTable>
                       </div>

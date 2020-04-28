@@ -1,56 +1,34 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React from 'react'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col
-} from 'reactstrap'
-import { Loader } from 'components'
-import {
-  DashBoardChart
-} from './sections'
-import moment from 'moment'
-import * as DashboardActions from './actions'
+import NumberFormat from 'react-number-format';
+import moment from 'moment';
+import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
+
+import { DateRangePicker2, Loader } from 'components'
+import { DashBoardChart } from './sections'
+import { getAnalyticsData } from './actions'
 
 import './style.scss'
 
-
-const mapStateToProps = (state) => {
-  return ({
-
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(DashboardActions, dispatch)
-  })
-}
-
-const DATE_RANGES =  {
-  'last-24hours': [moment().subtract(1, 'days'), moment(), 'daily'],
-  'total': [moment().startOf(99, 'years'), moment(), 'yearly'],
-  'this-month': [moment().startOf('month'), moment().endOf('month'), 'daily'],
-  'this-year': [moment().startOf('year'), moment(), 'monthly'],
-  'last-30days': [moment().subtract(29, 'days'), moment(), 'daily'],
-}
+const mapDispatchToProps = dispatch => ({
+  getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch)
+})
 
 const Progress = ({ progress, isPositive, is24 }) => {
   if(is24) {
     return (
         <div className={'progress-indicator'} >
-          {
-            progress != 0 ? 
-              <i className={`fas fa-caret-${isPositive ? 'up' : 'down'}`} />:
-              <i className={`fa fa-minus`} />
+          {progress !== 0 ?
+              (isPositive ?
+                  <span>+<b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span> :
+                  <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>) :
+              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>
           }
-          
-          {progress != 0 ?
-             (isPositive ?
-              <span>+<b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span> :
-              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span>) :
-              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span>
+          {
+            progress !== 0 ?
+                <i className={`fas fa-caret-${isPositive ? 'up' : 'down'}`} />:
+                <i className={`fa fa-minus`} />
           }
         </div>
     )
@@ -58,6 +36,16 @@ const Progress = ({ progress, isPositive, is24 }) => {
     return null
   }
 }
+
+
+const DATE_RANGES =  {
+  'Last 24 hours': [moment().subtract(1, 'days'), moment(), 'daily'],
+  'Last 30 days': [moment().subtract(29, 'days'), moment(), 'daily'],
+  'This month': [moment().startOf('month'), moment().endOf('month'), 'daily'],
+  'This year': [moment().startOf('year'), moment(), 'monthly'],
+  'Total': [moment(new Date('2019-01-01')), moment(new Date().setDate(new Date().getDate() + 1)), 'yearly'],
+}
+
 
 class Dashboard extends React.Component {
   
@@ -78,36 +66,60 @@ class Dashboard extends React.Component {
     }
   }
 
-  changeRange(e) {
-    const range = DATE_RANGES[e.target.value]
-    this.setState({range:e.target.value})
-    this.getAnalyticsData(range)
-  }
+  getAnalyticsData = (date, initial) => {
+    const startDate = date.startDate.format('MM/DD/YYYY');
+    const endDate = date.endDate.format('MM/DD/YYYY');
+    const { getAnalyticsData } = this.props;
 
-  getAnalyticsData = (range) => {
     this.setState({loading: true})
-    this.props.actions.getAnalyticsData(range[0].format('MM/DD/YYYY'), range[1].format('MM/DD/YYYY')).then(res => {
-      const total = res.data.analytics.total
 
-      this.setState({
-        totalRevenue: total.revenue || 0,
-        totalOrders: total.orders_count || 0,
-        totalViews: total.views_count || 0,
-        totalQueries: total.queries_count || 0,
-        revenueProgress: total.revenue_progress || 0,
-        ordersProgress: total.orders_count_progress || 0,
-        viewsProgress: total.views_count_progress || 0,
-        queriesProgress: total.queries_count_progress || 0,
-        chartData: res.data.analytics[range[2]]
+    if(initial) {
+      Promise.all([
+          getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
+          getAnalyticsData(startDate, endDate)
+      ]).then(([{ data: { analytics }}, { data: { analytics: { total } }}]) => {
+
+        this.setState({
+          totalRevenue: total.revenue || 0,
+          totalOrders: total.orders_count || 0,
+          totalViews: total.views_count || 0,
+          totalQueries: total.queries_count || 0,
+          revenueProgress: total.revenue_progress || 0,
+          ordersProgress: total.orders_count_progress || 0,
+          viewsProgress: total.views_count_progress || 0,
+          queriesProgress: total.queries_count_progress || 0,
+          chartData: analytics['daily']
+        })
+      })   .finally(() => {
+        this.setState({loading: false})
       })
-    }).finally(() => {
-      this.setState({loading: false})
-    })
+    } else {
+      getAnalyticsData(startDate, endDate)
+          .then(({ data: { analytics } }) => {
+            const { total } = analytics;
+
+            this.setState({
+              totalRevenue: total.revenue || 0,
+              totalOrders: total.orders_count || 0,
+              totalViews: total.views_count || 0,
+              totalQueries: total.queries_count || 0,
+              revenueProgress: total.revenue_progress || 0,
+              ordersProgress: total.orders_count_progress || 0,
+              viewsProgress: total.views_count_progress || 0,
+              queriesProgress: total.queries_count_progress || 0,
+              chartData: analytics[DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]]
+            })
+          })
+          .finally(() => {
+            this.setState({loading: false})
+          })
+    }
+
   }
 
   componentDidMount() {
-    const range = DATE_RANGES['last-24hours']
-    this.getAnalyticsData(range)
+    const [startDate, endDate] = DATE_RANGES['Last 24 hours'];
+    this.getAnalyticsData({ startDate, endDate }, true)
   }
 
   render() {
@@ -121,29 +133,27 @@ class Dashboard extends React.Component {
       revenueProgress,
       ordersProgress,
       viewsProgress,
-      queriesProgress
+      queriesProgress,
+      range
     } = this.state
 
     return (
-      <div className="dashboard-screen mt-4">
+      <div className="dashboard-screen">
         <div className="animated fadeIn">
           <Card>
-            <CardBody>
-              <div className="flex-wrapper align-items-center">
-                <h1 className="title">Dashboard</h1>
-                <div className="card-header-actions">
-                  <div className="new-select fill">
-                    <select className="form-control" onChange={this.changeRange.bind(this)}>
-                      <option value="last-24hours">Last 24 hours</option>
-                      <option value="last-30days">Last 30 days</option>
-                      <option value="this-month">This Month</option>
-                      <option value="this-year">This Year</option>
-                      <option value="total">Total</option>
-                    </select>
-                    <i className="fa fa-caret-down fa-lg mt-4"/>
+            <CardHeader>
+              <Row>
+                <Col lg={12}>
+                  <div className="flex-wrapper align-items-center">
+                    <h1 className="title">Dashboard</h1>
+                    <div className="card-header-actions">
+                      <DateRangePicker2 showCustomRangeLabel={false} ranges={DATE_RANGES} getDate={this.getAnalyticsData} opens={'left'}/>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </Col>
+              </Row>
+            </CardHeader>
+            <div className="pt-4">
               {
                 loading ?
                   <Row>
@@ -154,48 +164,94 @@ class Dashboard extends React.Component {
                 : <div>
                     <Row className="mt-4">
                       <Col lg={3}>
-                        <Card className="grey">
-                          <CardBody className="p-4">
-                            <h3 className="text-primary">${totalRevenue}</h3>
+                        <Card>
+                          <CardBody className="p-4 bg-white">
                             <p className="report-title">Revenue</p>
-                            <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
+                            <div className="d-flex justify-content-between align-items-center">
+                              <NumberFormat value={totalRevenue} 
+                                displayType={'text'} 
+                                thousandSeparator={true} 
+                                prefix={'$'} 
+                                renderText={value => <h3 className="text-primary mb-0">{value}</h3>} />
+
+                              <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
+                            </div>
+                            <div className="progress-xs mt-3 progress">
+                              <div 
+                                className={`progress-bar ${revenueProgress>0?'bg-success':(revenueProgress==0?'bg-warning':'bg-danger')}`} 
+                                role="progressbar" 
+                                style={{width: `${revenueProgress==0?1:Math.abs(revenueProgress)}%`}}
+                                aria-valuemin="0" 
+                                aria-valuemax="100" />
+                            </div>
                           </CardBody>
                         </Card>
                       </Col>
                       <Col lg={3}>
-                        <Card className="grey">
-                          <CardBody className="p-4">
-                            <h3 className="text-primary">{totalOrders}</h3>
+                        <Card>
+                          <CardBody className="p-4 bg-white">
                             <p className="report-title">Orders</p>
-                            <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
+                            <div className="d-flex justify-content-between align-items-center">
+                              <h3 className="text-primary mb-0">{totalOrders}</h3>
+                              <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
+                            </div>
+                            <div className="progress-xs mt-3 progress">
+                              <div 
+                                className={`progress-bar ${ordersProgress>0?'bg-success':(ordersProgress==0?'bg-warning':'bg-danger')}`} 
+                                role="progressbar" 
+                                style={{width: `${ordersProgress==0?1:Math.abs(ordersProgress)}%`}}
+                                aria-valuemin="0" 
+                                aria-valuemax="100"></div>
+                            </div>
                           </CardBody>
                         </Card>
                       </Col>
                       <Col lg={3}>
-                        <Card className="grey">
-                          <CardBody className="p-4">
-                            <h3 className="text-primary">{totalViews}</h3>
+                        <Card>
+                          <CardBody className="p-4 bg-white">
                             <p className="report-title">Views</p>
-                            <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
+                            <div className="d-flex justify-content-between align-items-center">
+                              <h3 className="text-primary mb-0">{totalViews}</h3>
+                              <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
+                            </div>
+                            <div className="progress-xs mt-3 progress">
+                              <div 
+                                className={`progress-bar ${viewsProgress>0?'bg-success':(viewsProgress==0?'bg-warning':'bg-danger')}`} 
+                                role="progressbar" 
+                                style={{width: `${viewsProgress == 0?1:Math.abs(viewsProgress)}%`}}
+                                aria-valuemin="0" 
+                                aria-valuemax="100"></div>
+                            </div>
                           </CardBody>
                         </Card>
                       </Col>
                       <Col lg={3}>
-                        <Card className="grey">
-                          <CardBody className="p-4">
-                          <h3 className="text-primary">{totalQueries}</h3>
+                        <Card>
+                          <CardBody className="p-4 bg-white">
                             <p className="report-title">Queries</p>
-                            <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress>=0} />
+                            <div className="d-flex justify-content-between align-items-center">
+                              <h3 className="text-primary mb-0">{totalQueries}</h3>
+                              <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress>=0} />
+                            </div>
+                            <div className="progress-xs mt-3 progress">
+                              <div 
+                                className={`progress-bar ${queriesProgress>0?'bg-success':(queriesProgress==0?'bg-warning':'bg-danger')}`} 
+                                role="progressbar" 
+                                style={{width: `${queriesProgress == 0?1:Math.abs(queriesProgress)}%`}}
+                                aria-valuemin="0" 
+                                aria-valuemax="100"></div>
+                            </div>
                           </CardBody>
                         </Card>
                       </Col>
                     </Row>
-                    <div className="mt-3">
+                    <CardBody className="">
+                      <h5 className="mb-4">Revenues | Orders</h5>
                       <DashBoardChart height="350px" data={chartData}/>
-                    </div>
+                    </CardBody>
                   </div>
               }
-            </CardBody>
+            </div>
           </Card>
         </div>
       </div>
@@ -203,4 +259,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(null, mapDispatchToProps)(Dashboard)

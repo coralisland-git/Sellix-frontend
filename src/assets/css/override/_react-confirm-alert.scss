@@ -1,0 +1,142 @@
+body .react-confirm-alert {
+
+  &-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    animation: react-confirm-alert-fadeIn 350ms forwards;
+    z-index: 9999 !important;
+    background: #211e3799 !important;
+  }
+
+  &-body {
+    font-family: var(--font-family-sans-serif);
+    width: 28rem;
+    padding: 2rem 0 1.5rem;
+    background: #302a60;
+    border-radius: 5px;
+    box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
+    text-align: center;
+    font-weight: 500;
+    transform:scale(0);
+    animation: zoomIn 350ms cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+    h1 {
+      font-size: 25px !important;
+      color: white !important;
+      margin-top: 0;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff !important;
+    }
+  }
+
+  &-button-group {
+    display: flex;
+    justify-content: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #454166;
+    margin-top: 2rem;
+
+    & > button {
+      outline: none;
+      padding: .5rem 2rem;
+      margin-right: 1.5rem;
+      cursor: pointer;
+      background-color: #613BEA;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 600;
+      min-height: 2.5rem;
+      white-space: nowrap;
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(121, 88, 237, 0.5);
+      }
+    }
+  }
+
+}
+
+body .light.react-confirm-alert {
+
+  .react-confirm-alert-overlay {
+    background: #613ce9ab;
+  }
+
+  .react-confirm-alert-body {
+    background: #e8e1ff;
+    h1 {
+      color: #3e3e3f !important;
+    }
+    h3 {
+      color: #4d4d4d !important;
+    }
+  }
+
+  .react-confirm-alert-button-group {
+    border-top: 1px solid #d9cefe;
+  }
+
+}
+
+@keyframes zoomIn {
+  0% {
+    transform:scale(0);
+  }
+  100% {
+    transform:scale(1);
+  }
+}
+
+body.react-confirm-alert-body-element {
+  overflow: hidden;
+}
+
+
+@-webkit-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

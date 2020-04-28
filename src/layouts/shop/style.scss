@@ -5,8 +5,6 @@
     }
     .shop-header {
         box-shadow: none !important;
-
-        
     }
     .nav-link.active {
         color: #613BEA !important;
@@ -18,7 +16,7 @@
         top: 0;
         left: 0;
         height: 200px;
-        border-radius: 10px;
+        border-radius: 3px;
     }
     .logo-content {
         position: relative;
@@ -40,15 +38,36 @@
 
 .shop-container {
     .report-count {
+        justify-content: center;
+        background-color: #F5F5FE;
+        border-radius: 3px !important;
+        padding: 5px 15px !important;
+        width: fit-content;
+        width: -moz-fit-content;
+
         span {
             font-size: 16px !important;
+            font-weight: bold;
         }
     }
+
+    .verified-icon {
+        margin-left: 0.2rem;
+    }
+
+
+    .app-header .dropdown-item:hover,
+    .app-header .dropdown-item:focus,
+    .app-header .dropdown-item:active {
+        color: #613BEA !important;
+        background-color: white;
+    }
+
     .app-footer {
         margin-left: 0 !important;
     }
     .app-header {
-        border-bottom: none;
+        // border-bottom: none;
         // border-radius: 10px;
         box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.2);
         margin: 0 auto;
@@ -56,6 +75,13 @@
         // height: 100px;
         // margin: 0 20px;
         // margin-top: 30px;
+
+        .logo {
+            img {
+                margin-left: 10px;
+                width: 87px !important;
+            }
+        }
         
         button:focus {
           outline: none;
@@ -68,27 +94,41 @@
           color: #73818f;
         }
         .header-icon {
-          font-size: 18px;
+          font-size: 20px;
           color: #73818f;
         }
         .my-link {
           cursor: pointer;
           color: #73818f;
         }
+
+        .avatar-icon {
+            margin-top: 10px;
+            font-size: 37px;
+        }
+
+        .nav-link {
+            width: fit-content !important;
+        }
       }
       .nav-link {
-          font-family: 'Poppins';
+          font-family: var(--font-family-sans-serif);
           font-size: 16px !important;
+          background-color: #F5F5FE;
+          border-radius: 3px !important;
+          width: 110px;
+          text-align: center;
+          margin-bottom: 10px;
       }
 
-      .nav-link.active {
-        font-family: 'Poppins';
+    .nav-link.active {
+        font-family: var(--font-family-sans-serif);
     }
 
     .nav-item.active {
         .nav-link {
-            font-family: 'Poppins-SemiBold';
-            font-size: 18px !important;
+            color: white !important;
+            background-color: #613BEA !important;
         }
     }
     header {
@@ -122,10 +162,6 @@
         position:  relative !important;
     }
 
-    .nav-link.active {
-        color: #613BEA !important;
-    }
-
     .shop-main {
         max-width: 1250px;
         margin: 0 auto;
@@ -147,3 +183,22 @@
         font-size: 15px;
     }
 }
+
+
+@keyframes customAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transition: 0.3s ease-out;
+        transform: translateY(0px);
+    }
+}
+
+.customAnimation {
+    animation-name: customAnimation !important;
+}
+

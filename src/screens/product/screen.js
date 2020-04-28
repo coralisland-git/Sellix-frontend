@@ -10,14 +10,12 @@ import {
   Col,
   Input
 } from 'reactstrap'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { confirmAlert } from 'react-confirm-alert'; 
 import { tableOptions } from 'constants/tableoptions'
 import config from 'constants/config'
-import {
-  CommonActions,
-} from 'services/global'
+import { CommonActions } from 'services/global'
 
 import * as ProductActions from './actions'
 import './style.scss'
@@ -38,6 +36,22 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
+const Confirm = ({ onClose, title, message, onDelete }) => {
+  return <div className={"react-confirm-alert" + ` ${window.localStorage.getItem('theme') || 'light'}`}>
+    <div className="react-confirm-alert-body">
+      <h1>{title}</h1>
+      <h3>{message}</h3>
+      <div className="react-confirm-alert-button-group">
+        <button onClick={() => {
+          onDelete()
+          onClose()
+        }}>Yes, Delete it!</button>
+        <button onClick={onClose}>No</button>
+      </div>
+    </div>
+  </div>
+}
+
 class Product extends React.Component {
   
   constructor(props) {
@@ -46,18 +60,13 @@ class Product extends React.Component {
       loading: false,
       search_key: null
     }
-
-    this.initializeData = this.initializeData.bind(this)
-    this.gotoEditPage = this.gotoEditPage.bind(this)
-    this.deleteProduct = this.deleteProduct.bind(this)
-    this.renderOptions = this.renderOptions.bind(this)
   }
 
   componentDidMount () {
     this.initializeData()
   }
 
-  initializeData () {
+  initializeData = () => {
     this.setState({ loading: true })
     this.props.actions.getProductList().catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
@@ -66,48 +75,31 @@ class Product extends React.Component {
     })
   }
 
-  gotoEditPage(e, id){
+  gotoEditPage = (e, id) => {
     this.props.history.push({
       pathname: `/dashboard/${user}/products/all/edit/${id}`
     })
   }
 
-  deleteProduct(e, id) {
+  deleteProduct = (e, id) => {
     confirmAlert({
-      title: 'Are you sure?',
-      message: 'You want to delete this product?',
-      buttons: [
-        {
-          label: 'Yes, Delete it!',
-          onClick: () => {
-            this.setState({ loading: true })
-            this.props.actions.deleteProduct({
-              uniqid: id
-            }).then(res => {
-              this.props.actions.getProductList()
-              this.props.commonActions.tostifyAlert('success', res.message)
-            }).catch(err => {
-              this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
-            }).finally(() => {
-              this.setState({ loading: false })
-            })
-          }
-        },
-        {
-          label: 'No',
-          onClick: () => {return true}
-        }
-      ]
+      title: "Are you sure?",
+      message: "You want to delete this product?",
+      customUI:  (props) => <Confirm {...props} onDelete={this.onDeleteProduct(id)}/>
     });
   }
 
-  renderProductInfo (cell, row) {
+  renderProductInfo = (cell, row) => {
     if (
       row.title && row.uniqid
     ) {
       return (
         <div>
-          <p><a href="#">{row.title}</a></p>
+          <p>
+            <a href={`/dashboard/${user}/products/all/edit/${row.uniqid}`} >
+              {row.title}
+            </a>
+          </p>
           <p className="caption">{row.uniqid}</p>
         </div>
       )  
@@ -118,7 +110,22 @@ class Product extends React.Component {
     }
   }
 
-  renderProductType (cell, row) {
+  onDeleteProduct = (uniqid) => () => {
+    this.setState({ loading: true })
+    this.props.actions.deleteProduct({ uniqid })
+        .then(res => {
+          this.props.actions.getProductList()
+          this.props.commonActions.tostifyAlert('success', res.message)
+        })
+        .catch(err => {
+          this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+        })
+        .finally(() => {
+          this.setState({ loading: false })
+        })
+  }
+
+  renderProductType = (cell, row) => {
     if (
       row.type
     ) {
@@ -134,7 +141,7 @@ class Product extends React.Component {
     }
   }
 
-  renderProductPrice(cell, row) {
+  renderProductPrice = (cell, row) => {
     return (
       <p>
         {config.CURRENCY_LIST[row.currency]}{row.price_display}
@@ -142,7 +149,7 @@ class Product extends React.Component {
     )  
   }
 
-  renderFileStock(cell, row) {
+  renderFileStock = (cell, row) => {
 
       if(row.type === 'serials'){
         return <p>
@@ -150,17 +157,24 @@ class Product extends React.Component {
          </p>
       }
       if(row.type === 'service'){
-        return <p>
-          <span style={{fontSize:  20}}>∞</span>
-         </p>
-      }
-      if(row.type === 'file'){
-        if(row.file_stock === -1){
+        if(row.service_stock === '-1'){
           return <p>
             <span style={{fontSize:  20}}>∞</span>
           </p>
         }
-        if(row.file_stock != -1){
+        if(row.service_stock != '-1'){
+          return <p>
+            {row.service_stock}
+          </p>
+        }
+      }
+      if(row.type === 'file'){
+        if(row.file_stock === '-1'){
+          return <p>
+            <span style={{fontSize:  20}}>∞</span>
+          </p>
+        }
+        if(row.file_stock != '-1'){
           return <p>
             {row.file_stock}
           </p>
@@ -168,7 +182,7 @@ class Product extends React.Component {
       }
   }
 
-  renderOptions(cell, row) {
+  renderOptions = (cell, row) => {
     return (
       <div className="d-flex actions">
         <a onClick={(e) => this.gotoEditPage(e, row.uniqid)}>
@@ -184,7 +198,7 @@ class Product extends React.Component {
     )
   }
 
-  searchProducts(products) {
+  searchProducts = (products) => {
     const { search_key } = this.state
     const search_fields = ['title', 'type', 'stock', 'revenue']
 

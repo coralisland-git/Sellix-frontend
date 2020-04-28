@@ -1,30 +1,18 @@
 import React, { Component } from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
   Nav,
-  NavItem,
-  UncontrolledDropdown,
-  Input,
-  Badge
+  UncontrolledDropdown
 } from 'reactstrap'
 import PropTypes from 'prop-types'
-
-import {
-  AppAsideToggler,
-  AppNavbarBrand,
-  AppSidebarToggler
-} from '@coreui/react'
 
 import './style.scss'
 
 
 
 import sellix_logo from 'assets/images/Sellix_logo.svg'
-import avatar from 'assets/images/avatars/6.png'
-import chevron from 'assets/images/chevron-down-solid.png'
 
 const propTypes = {
   children: PropTypes.node
@@ -36,40 +24,23 @@ const userId = window.localStorage.getItem('userId')
 
 class Header extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-
-    this.signOut = this.signOut.bind(this)
-  }
-
-  signOut () {
+  signOut = () => {
     this.props.authActions.logOut()
-    this.props.history.push('/login')
-  }
-
-  setTheme(){
-    this.props.changeTheme()
+    this.props.history.push('/auth/login')
   }
 
   render() {
-    const { user, children, theme, is_authed, ...attributes } = this.props
-    
-    console.log(this.props)
+    const { user, profile, children, theme, is_authed, ...attributes } = this.props
+
     return (
       <React.Fragment>
-        <AppNavbarBrand
-          className="p-2"
-          href="/"
-          full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
-        />
+        <a href="/" className="logo"><img src={sellix_logo} alt='Sellix Logo'/></a>
         <Nav className="ml-auto shop-header" navbar style={{flex:1, justifyContent: 'flex-end'}}>
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
               <div>
-                {user && user.profile_attachment?
-                  <img src={user.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}}/>:
+                {profile && profile.profile_attachment?
+                  <img src={profile.profile_attachment} className="mt-2" width="45" height="45" style={{borderRadius: '50%'}}/>:
                   <i className="fa fa-user-circle text-primary avatar-icon"/>
                 }
               </div>
@@ -79,6 +50,9 @@ class Header extends Component {
                 <DropdownMenu right className="mt-2">
                   <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
                     Dashboard
+                  </DropdownItem>
+                  <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
+                    Settings
                   </DropdownItem>
                   <DropdownItem onClick={() => this.signOut()}>
                     Sign Out

@@ -1,43 +1,81 @@
 .home-screen {
   * {
-    font-family: 'Poppins';
+    font-family: var(--font-family-sans-serif);
   }
+
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% auto;
+  margin-top: -108px;
+  padding-top: 111px;
+  background-color: white !important;
 
   a.text-white:hover {
     color: white !important;
   }
-
-  background-color: #f8f8f8;
-  header {
-    // position: fixed;
-    width: 100%;
-    // z-index: 9999;
-    // top: 0;
-    background-color: white;
-    // border-bottom: 1px solid grey;
-  }
-  .navbar {
-    
-    max-width: 1252px;
+  
+  .background2-img {
+    // width: 136% !important;
     margin: 0 auto;
+    top: -50%;
+    width: 100%;
+    z-index: 0;
+    background-position: center 58%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    
 
-    .logo {
-      width: 88px !important;
-      height: 25px;
+    @media (max-width: 1800px){ 
+      & {
+        background-size: 100% auto;
+        background-position: center 58%;
+      }
     }
 
-    .nav-item a{
-      margin: 0 15px;
-      color: #A7A5B4 !important;
-      font-weight: 600;
-      font-size: 15px;
+    @media (max-width: 1440px){ 
+      & {
+        // background-size: auto;
+        background-position: center 55%;
+      }
     }
 
-    .nav-item a:hover,
-    .nav-item.active a {
-      color: #613BEA !important;
+    @media (max-width: 1024px){ 
+      & {
+        // background-size: auto;
+        background-position: center 60%;
+      }
+    }
+
+    @media (max-width: 768px){ 
+      & {
+        background-size: 125%;
+        background-position: 94% 71% !important;
+      }
+    }
+
+    @media (max-width: 420px){ 
+      & {
+        background-size: 195%;
+        background-position: 94% 74% !important;
+      }
+    }
+
+    @media (max-width: 375px){ 
+      & {
+        background-size: 195%;
+        background-position: 94% 76% !important;
+      }
+    }
+
+    @media (max-width: 320px){ 
+      & {
+        background-size: 195%;
+        background-position: 94% 78% !important;
+      }
     }
   }
+
 
   .section {
     padding-left: 15px;
@@ -49,22 +87,60 @@
   }
 
   .purple {
-    background-color: #613BEA;
+    background-image: linear-gradient(#3D2E87, #8C2DDF);
+    padding: 70px 30px !important;
+    border-radius: 22px;
+    box-shadow: -23px 15px 111px 0 rgba(0, 52, 74, 0.18) !important;
+
+    h1 {
+      font-size: 32px !important;
+      font-weight: 400 !important;
+    }
 
     h1, p {
       color: white !important;
+    }
+
+    button {
+      height: 40px !important;
+      font-weight: 400 !important;
+      padding: 0 30px !important;
+      a {
+        line-height: 26px;
+        color: #822DD5 !important;
+        padding-bottom: 2px !important;
+      }
+    }
+  }
+
+  .payment-fee {
+    h2 {
+      font-weight: 400 !important;
+    }
+    button {
+      background-color: #504293 !important;
+      font-size: 22px !important;
+      font-weight: bold !important;
+      padding: 0px 50px !important;
+      height: 40px;
     }
   }
 
   p {
     color: #A7A5B4;
-    line-height: 2em;
+    line-height: 1.5em !important;
   }
 
   h1 {
     color: #613BEA;
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 45px;
+    font-weight: 700;
+  }
+
+  h2 {
+    color: #613BEA;
+    font-size: 40px;
+    font-weight: 700;
   }
 
   h3 {
@@ -87,11 +163,12 @@
   }
 
   p.large {
-    font-size: 20px;
+    font-size: 24px !important;
+    font-weight: 400;
   }
 
   p.small {
-    font-size: 18px;
+    font-size: 16px !important;
   }
 
   img {
@@ -99,44 +176,103 @@
     height: 100%;
   }
 
-  .service-img {
-    max-width: 120px;
-    max-height: 120px;
+  .service-card {
+    text-align: left;
+    background-color: white;
+    border-radius: 22px;
+    padding: 15px;
+
+    &.service-card-shadow {
+      box-shadow: 0px 15px 80px 0 rgba(0, 52, 74, 0.18) !important;
+    }
+
+    &.zindex-2 {
+      position: relative;
+      z-index: 2;
+    }
+
+    &.zindex-3 {
+      position: relative;
+      z-index: 3;
+    }
+
+    p, h4 {
+      padding: 0 20px;
+    }
+    .service-img {
+      max-width: 64px !important;
+      max-height: 64px !important;
+    }
   }
 
+  
+
   .undraw-img {
-    max-width: 600px;
-    max-height: 440px;
+    width: 100% !important;
+    max-width: 700px !important;
+    margin-right: -15px !important;
   }
 
   .pc-img  {
-    max-width: 680px;
-    max-height: 380px;
+    max-width: 760px !important;
+    max-height: 760px !important;
   }
 
   .digital-img {
-    max-width: 570px;
+    max-width: 442px !important;
   }
 
   .home-container {
     max-width: 1252px;
-
-    
-
     .service-row {
       margin-top: 100px;
     }
-
-    
   }
 
-  footer {
-    .nav-link {
-      margin: 0 !important;
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-      font-size: 14px !important;
-      font-weight: normal !important;
+
+  @media (max-width: 1300px){ 
+    & {
+      background-size: auto 100%;
     }
+  }
+
+
+  @media (max-width: 1024px){ 
+    
+    h1 { font-size: 40px;}
+    h2 { font-size: 35px;}
+    .purple h1 { font-size: 35px !important;}
+    p.large { font-size: 22px !important;}
+    p.small { font-size: 18px !important;}
+  }
+
+  @media (max-width: 768px){ 
+    & {
+      background-size: auto 125%;
+    }
+    h1 { font-size: 32px;}
+    .purple h1 { font-size: 30px !important;}
+    h2 { font-size: 30px;}
+    p.large { font-size: 18px !important;}
+    p.small { font-size: 16px !important;}
+    .f-20 { font-size: 18px !important; }
+    .purple {padding: 25px !important;}
+    .service-card {margin: 15px 10px !important;}
+    .row { margin-top: 0px !important;}
+    .payment-fee button { font-size: 18px !important;}
+    .section { padding-top: 0px !important; padding-bottom: 30px !important}
+  }
+
+  @media (max-width: 420px){ 
+    h1 { font-size: 28px;}
+    .purple {padding: 20px !important;}
+    .purple h1 { font-size: 25px !important;}
+    h2 { font-size: 26px;}
+    p.large { font-size: 15px !important;}
+    .service-card {margin: 15px 0px !important;}
+    p.small { font-size: 14px !important;}
+    .row { margin-top: 0px !important;}
+    .f-20 { font-size: 15px !important; }
+    .payment-fee button { font-size: 15px !important;}
   }
 }

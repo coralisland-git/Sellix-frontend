@@ -19,12 +19,14 @@ import { createFeedback } from './actions'
 import {
   CommonActions
 } from 'services/global'
+import { Loading } from 'components'
+import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-
+    user: state.common.general_info,
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -40,27 +42,80 @@ class LeaveFeedback extends React.Component {
     super(props)
     this.state = {
       loading: false,
+      loadingInitialValues: true,
+      initialValues: {}
     }
+
+    this.initializeData = this.initializeData.bind(this)
+  }
+
+  componentDidUpdate(prevProps) {
+    let { user } = this.props;
+
+    if(prevProps.user !== user) {
+      document.title = `${user.username || ""} Feedback | Sellix`;
+    }
+  }
+
+  componentDidMount () {
+    this.initializeData()
+  }
+
+  initializeData () {
+    this.props.commonActions.getFeedbackByUniqid(this.props.match.params.id).then(res => {
+      if (res.status === 200) {
+        var existingFeedback = res.data.feedback
+
+        if(existingFeedback) {
+          if(!existingFeedback.score && existingFeedback.feedback) {
+            existingFeedback.score = {
+              'negative': 1,
+              'neutral': 3,
+              'positive': 5
+            }[existingFeedback.feedback]
+          }
+
+          this.setState({ 
+            initialValues: {
+              'message': existingFeedback.message,
+              'score': existingFeedback.score
+            },
+            loadingInitialValues: false
+          })
+
+        } else {
+          window.location = "/404"
+          this.setState({
+            loadingInitialValues: false
+          })
+        }
+      }
+    })
   }
 
   handleSubmit(values) {
     this.setState({ loading: true })
-    this.props.createFeedback({ ...values, uniqid: 'testing-uniqid' }).then(res => { // IMPORTANT uniqid should be this.props.match.params.id looks like API acept only mock uniqid now - testing-uniqid
+    this.props.createFeedback({ ...values, uniqid: this.props.match.params.id }).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       // this.props.history.push({
       //   pathname: '/admin/blacklist'
       // })
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.message)
+      this.props.commonActions.tostifyAlert('error', err.error)
     }).finally(() => {
       this.setState({ loading: false })
     })
   }
 
   render() {
+    if(this.state.loadingInitialValues) {
+      return Loading()
+    }
+
     return (
       <div className="animated fadeIn">
         <Formik
+          initialValues={this.state.initialValues}
           onSubmit={(values) => {
             this.handleSubmit(values)
           }}>{props => (
@@ -74,13 +129,18 @@ class LeaveFeedback extends React.Component {
                         <p className="text-grey mt-3 mb-4">Was the product good? Write your feedback about it here.</p>
                       </div>
                       <div className="mb-4 feedback-radioGroup">
-                        <ButtonToolbar aria-label="Toolbar with button groups">
-                          <ButtonGroup className="mr-2 feedback-radioGroup" aria-label="First group">
-                            <Button onClick={() => props.setFieldValue('feedback', 'positive')}type='button'><i className="fa fa-thumbs-up fa-lg mr-3" style={{ color: '#2BB224' }}></i></Button>
-                            <Button onClick={() => props.setFieldValue('feedback', 'negative')} type='button'><i className="fa fa-thumbs-down fa-lg mr-3" style={{ color: '#B22424' }}></i></Button>
-                            <Button onClick={() => props.setFieldValue('feedback', 'neutral')} type='button'><i className="fas fa-hand-paper fa-lg mr-3" style={{ color: '#A7A5B4' }}></i></Button>
-                          </ButtonGroup>
-                        </ButtonToolbar>
+                      <ReactStarsRating className="transparent-bg cursor-pointer react-stars-rating" onChange={score => {
+                        props.setFieldValue('score', score)
+                        const feedback = {
+                          1: 'negative',
+                          2: 'negative',
+                          3: 'neutral',
+                          4: 'positive',
+                          5: 'positive' 
+                        }[score]
+                        props.setFieldValue('feedback', feedback)
+                      }} 
+                                        value={props.values.score || 5} isHalf={false}/>
                       </div>
                       <Row>
                         <Col>

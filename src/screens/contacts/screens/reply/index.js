@@ -31,7 +31,8 @@ const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({
-    querie: state.queries.querie
+    querie: state.queries.querie,
+    user: state.common.general_info,
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -53,8 +54,15 @@ class ReplyToQuerie extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    let { user } = this.props;
+    if(user || prevProps.user !== user) {
+      document.title = `Contacts | Sellix`;
+    }
+  }
+
   componentDidMount() {
-    // this.props.actions.getFeedbacks()
+    document.title = `Contacts | Sellix`;
     this.props.actions.getQuerie(this.props.match.params.id)
   }
 
@@ -103,7 +111,6 @@ class ReplyToQuerie extends React.Component {
   }
 
   render() {
-    console.log({ querie: this.props.querie })
     const currentQuerie = _.find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
     if (!currentQuerie) { return null }
     return (

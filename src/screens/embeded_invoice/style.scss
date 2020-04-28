@@ -1,0 +1,85 @@
+.embeded-paying-screen {
+
+  .sk-spinner-pulse {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    margin-right: 5px;
+    background-color: #613bea;
+  }
+
+  .invoice-card {
+    width: 100%;
+  }
+
+  .top {
+    .badge {
+      background-color: #E4D6FF;
+      display: inline-block;
+      padding: 9px;
+      height: 30px;
+      border-radius: 3px;
+      min-width: 80px;
+    }
+
+    span, p {
+      font-size: 13px !important;
+    }
+
+    h4 {
+      font-size: 16px;
+    }
+    
+    .bold {
+      font-family: var(--font-family-sans-serif);
+      font-weight: 600;
+    }
+
+    .btc-address {
+      height: 40px;
+      border-radius: 3px;
+      line-height: 40px;
+      background-color: #FCFCFE;
+      border: 1px solid #F5F5F5;
+    }
+    
+  }
+
+  .bottom {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: #E4D6FF;
+
+    > div > div {
+      position:  relative !important;
+      padding: 0 !important;
+      background: transparent !important;
+      outline : none;
+    }
+
+    div:contains-selector(div.sweet-alert ) { 
+      position: relative;
+    }
+
+    h4 {
+      font-size: 16px;
+    }
+    span, h5 {
+      font-size: 13px !important;
+    }
+  }
+
+  .float-logo {
+    text-align: center;
+    z-index: 99;
+    position: relative;    
+  }
+
+  .detail {
+    border-radius: 5px !important;
+  }
+
+  .embed-block {
+    width: 380px;
+  }
+}

@@ -25,21 +25,24 @@ import {
   Loading
 } from 'components'
 
-import top1 from 'assets/images/home/top1.svg'
 import service1 from 'assets/images/home/service1.svg'
 import service2 from 'assets/images/home/service2.svg'
 import service3 from 'assets/images/home/service3.svg'
-import undraw from 'assets/images/home/undraw.svg'
-import undraw1 from 'assets/images/home/undraw_wallet_aym5.svg'
-import sellix_logo from 'assets/images/Sellix_logo.svg'
+import background1 from 'assets/images/home/only_hero_bg.svg'
+import background2 from 'assets/images/home/Bg2@2x.png'
+
+import bottom_isometric from 'assets/images/home/Bottom_Isometric.svg'
+import Hero_Iphone_Mockup from 'assets/images/home/Hero_Iphone_Mockup.svg'
+import Reliable_Payment from 'assets/images/home/Reliable_Payment.svg'
 
 class Home extends React.Component {
   
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isOpen: false
     }
+    document.title = `Home | Sellix`;
   }
 
   toggle() {
@@ -50,104 +53,111 @@ class Home extends React.Component {
     const { isOpen } = this.state
 
     return (
-      <div className="home-screen">
-        <div className="section white" style={{paddingTop: 50, paddingBottom: 100}}>
-            <Container className="home-container p-0" fluid>
-              <Row className="flex-row align-items-center">
-                <Col md={6} className="mb-5">
-                  <h1>Sell Digital Goods Online</h1>
-                  <p className="large pr-3">
-                    E-commerce is easy with Sellix. Create your own online store with a couple of clicks.
-                  </p>
-                  <Button color="primary"><NavLink className="p-0 text-white" href="/auth/register">Get Started for Free</NavLink></Button>
+      <div className="home-screen" style={{backgroundImage: "url(" + background1 + ")"}}>
+
+        
+        <div className="section" id="home_section" style={{paddingTop: 0, paddingBottom: 50}}>
+          <Container className="home-container p-0" fluid>
+            <Row className="flex-row">
+              <Col md={7} className="mb-3" style={{paddingTop: '10%'}}>
+                <h1 className="text-white">Digital Selling With Ease</h1>
+                <p className="large pr-3 text-white col-lg-8 p-0">
+                You provide the products on Sellix, we take care of the rest. Day and night.
+                </p>
+                <Button className="landing-primary-button f-20 f-b"><NavLink className="p-0 text-white" href="/auth/register">Get Started for Free</NavLink></Button>
+              </Col>
+              <Col md={5} className="text-center">
+                <img src={Hero_Iphone_Mockup} className="digital-img"/>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+        <div className="background2-img" style={{backgroundImage: "url(" + background2 + ")"}}>
+          <div className="section pt-0 pb-5 text-center" id="feature_section">
+            <Container className="home-container" fluid>
+              <h1 className="text-pink">Start selling with Sellix</h1>
+              <p className="large text-darkgrey">
+                Put the ability to create a full customizable online storefront right at your fingertips
+              </p>
+              <Row className="mt-5 pt-4">
+                <Col md={4} className="p-0">
+                  <div className="service-card service-card-shadow zindex-2 m-2">
+                    <img className="service-img" src={service1}/>
+                    <h4 className="mt-4 text-pink f-b">Customizable Shop</h4>
+                    <p className="small text-pink">
+                    Our platforms offers coupons, blacklist, tickets, automated delivery, webhooks and many more features that you can fully customize for your needs.
+                    </p>
+                  </div>
                 </Col>
-                <Col md={6}>
-                  <img src={top1} className="digital-img"/>
+                <Col md={4} className="p-0">
+                  <div className="service-card service-card-shadow zindex-3 m-2">
+                    <img className="service-img" src={service2}/>
+                    <h4 className="mt-4 text-pink f-b">Payment Flexibility</h4>
+                    <p className="small text-pink">
+                    Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrency for your shop.
+                    </p>
+                    <p className="text-pink f-b mt-5"><Link to="/fees" className="text-pink">Fees →</Link></p>
+                  </div>
+                </Col>
+                <Col md={4} className="p-0">
+                  <div className="service-card service-card-shadow zindex-2 m-2">
+                    <img className="service-img" src={service3}/>
+                    <h4 className="mt-4 text-pink f-b">All-in-One Platform</h4>
+                    <p className="small text-pink">
+                    With Sellix you got everything in one platform. Statistics about your online store and features make sure you know everything about your orders.
+                    </p>
+                  </div>
                 </Col>
               </Row>
             </Container>
           </div>
-        <div className="section pt-5 pb-5 text-center">
-          <Container className="home-container" fluid>
-            <h3>E-commerce, Your Way!</h3>
-            <p className="large">
-              Put the ability to create a full customizable online storefront right at your fingertips
-            </p>
-            <Row className="service-row">
-              <Col md={4}>
-                <img className="service-img" src={service1}/>
-                <h4 className="mt-4">Customizable Shop</h4>
-                <p className="small">
-                Our platforms offers coupons, blacklist, tickets, 
-                automated delivery, webhooks and many more features 
-                that you can fully customize for your needs.
-                </p>
-              </Col>
-              <Col md={4}>
-                <img className="service-img" src={service2}/>
-                <h4 className="mt-4">Payment Flexibility</h4>
-                <p className="small">
-                Looking for a specific type of payment option? Don't look further. 
-                We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrencie for your store.
-                </p>
-              </Col>
-              <Col md={4}>
-                <img className="service-img" src={service3}/>
-                <h4 className="mt-4">All-in-One Platform</h4>
-                <p className="small">
-                With Sellix you got everything in one platform. 
-                Various statistics about your online store and features are making sure you know everything 
-                about your orders and success.
-                </p>
-              </Col>
-            </Row>
-          </Container>
-        </div>
-
-        <div className="section white pt-5 pb-5" style={{paddingBottom: 100}}>
-          <Container className="home-container p-0" fluid>
-            <Row className="flex-row align-items-center">
-              <Col md={6} className="mb-3">
-                <div style={{width: '75%'}}>
-                  <h1>Reliable Payment Processing</h1>
-                  <p className="small">
-                  Sellix uses the newest payment processing technologies to ensure your
-                    payment gets processed with the lowest cost of transaction fees at any time.
-                  </p>
-                </div>
+          <div className="section" style={{paddingBottom: 100, paddingTop: 150}}>
+            <Container className="p-0" fluid>
+              <Row className="flex-row align-items-center" style={{position: 'relative'}}>
                 
-              </Col>
-              <Col md={6} className="text-right">
-                <img className="undraw-img" src={undraw}/>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+                <Col md={5} className="mb-3">
+                  <div className="float-right" style={{maxWidth: 450}}>
+                    <h1 className="text-pink">Reliable Payment Processing</h1>
+                    <p className="text-pink f-20">
+                    Sellix uses the newest payment processing technologies to ensure your payment gets processed with the lowest cost of transaction fees at any time.
+                    </p>
+                  </div>
+                  
+                </Col>
+                <Col md={7} className="text-right" style={{position: 'relative'}}>
+                  <img className="undraw-img" src={Reliable_Payment}/>
+                </Col>
+              </Row>
+            </Container>
+          </div>
 
-        <div className="section white pt-5 pb-5" style={{paddingBottom: 100}}>
-          <Container className="home-container p-0" fluid>
-            <Row className="flex-row align-items-center">
-              <Col md={7} className="mb-5">
-                <img className="pc-img" src={undraw1}/>
-              </Col>
-              <Col md={5}>
-                <div className="float-right" style={{maxWidth: 447}}>
-                  <h1>Cheap Payment Fees</h1>
-                  <p className="small">
-                    We provide very low fees for each transaction. With our unique payment processing method, 
-                    we keep transaction fees at the lowest amount. Find out more about our fees.
-                  </p>
-                  <NavLink className="p-0" href="/fees"><Button color="primary">Our  Fees</Button></NavLink>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+          <div className="section pt-5 payment-fee">
+            <Container className="p-0" fluid style={{maxWidth: 1330}}>
+              <Row className="flex-row align-items-center">
+                <Col md={7}>
+                  <img className="pc-img" src={bottom_isometric}/>
+                </Col>
+                <Col md={5}>
+                  <div className="float-left pb-3" style={{maxWidth: 447}}>
+                    <h1 className="text-pink">Cheap Payment Fees</h1>
+                    <p className="text-pink f-20 col-11 p-0">
+                    We provide very low fees for each transaction. With our unique payment processing method, we keep transaction fees at the lowest amount. Find out more about our fees.
+                    </p>
+                    <Button className="landing-primary-button"><NavLink className="p-0 text-white mb-1" href="/fees">Our  Fees →</NavLink></Button>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
 
-        <div className="section purple text-center" style={{paddingBottom: 100, paddingTop: 100}}>
-          <h1>Ready to start selling?</h1>
-          <p className="small">Create an account and get started</p>
-          <Button color="secondary"><NavLink className="p-0" href="/auth/register">Get Started for Free</NavLink></Button>
+        </div>
+        
+        <div className="section white text-center" style={{paddingBottom: 125}} id="started_section">
+          <Container className="mr-auto ml-auto p-0 purple" fluid style={{maxWidth: 1330}}>
+            <h1 className="mb-4">Start using <b>Sellix</b> now!</h1>
+            <p className="mr-auto ml-auto f-20 col-lg-4 col-md-5">Create an account and start selling your products. Are you ready? Because we are.</p>
+            <Button className="landing-secondary-button f-20"><NavLink className="p-0" href="/auth/register">Get Started →</NavLink></Button>
+          </Container>
         </div>
       </div>
     )

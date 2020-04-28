@@ -74,7 +74,6 @@ class NewReportModal extends React.Component {
       if (res.status === 200) {
         this.props.closeModal()
       } else if(res.error) {
-        console.log(res)
         this.props.commonActions.tostifyAlert('error', res.error)
       }
 

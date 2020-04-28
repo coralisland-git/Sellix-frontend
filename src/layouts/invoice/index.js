@@ -6,11 +6,8 @@ import { bindActionCreators } from 'redux'
 
 import { Container } from 'reactstrap'
 import {
-  AppAside,
-  AppBreadcrumb,
+  AppFooter,
   AppHeader,
-  AppSidebar,
-  AppSidebarNav,
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider, createGlobalStyle  } from 'styled-components';
@@ -37,7 +34,9 @@ import { invoiceRoutes } from '../../routes';
 const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
-    is_authed: state.auth.is_authed
+    is_authed: state.auth.is_authed,
+    profile: state.auth.profile,
+    theme: state.common.theme
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -86,9 +85,9 @@ class DefaultLayout extends React.Component {
 
   changeTheme() {
     const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
+    window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
 
-    this.setState({theme: theme == 'light'? 'dark': 'light'})
+    this.setState({theme: theme === 'light' ? 'dark': 'light'})
   }
 
   render() {
@@ -96,21 +95,20 @@ class DefaultLayout extends React.Component {
       zIndex: 1999
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state || 'light'
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
+    const { theme } = this.props
 
     return (
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">
-              <AppHeader fixed>
+              <AppHeader fixed className="border-bottom">
                 <Suspense fallback={Loading()}>
                   <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
                 </Suspense>
               </AppHeader>
               
-              <div className="app-body mt-5 mb-5 pt-5">
+              <div className="app-body mt-4 pt-5">
                   <Container className="p-0 pt-3" fluid>
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
@@ -132,9 +130,11 @@ class DefaultLayout extends React.Component {
                     </Suspense>
                   </Container>
                 </div>
-                <p className="text-center text-grey footer-report pb-4">
-                  Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
-                </p>
+                <AppFooter>
+                  <p className="text-center text-grey footer-report py-4 m-0">
+                      Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
+                  </p>
+                </AppFooter>
             </div>
           </div>
       </ThemeProvider>

@@ -1,7 +1,8 @@
 import { ORDER } from 'constants/types'
 
 const initState = {
-  order_list : []
+  order_list : [],
+  live_order_display: 'all'
 }
 
 const InvoiceReducer = (state = initState, action) => {
@@ -13,6 +14,12 @@ const InvoiceReducer = (state = initState, action) => {
       return {
         ...state,
         order_list: Object.assign([], payload)
+      }
+
+    case ORDER.LIVE_ORDER_DISPLAY:
+      return {
+        ...state,
+        live_order_display: payload
       }
 
     default:

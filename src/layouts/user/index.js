@@ -3,6 +3,12 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import * as router from 'react-router-dom';
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 
 import { Container } from 'reactstrap'
 import {
@@ -24,13 +30,17 @@ import {
   CommonActions
 } from 'services/global'
 
-import { mainNavigation, adminNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
+import { 
+  mainBrowserNavigation, 
+  mainMobileNavigation,
+  adminNavigation } from 'constants/navigation'
 
 import {
   Aside,
   Header,
   Footer,
-  Loading
+  Loading,
+  SetTitle
 } from 'components'
 
 import './style.scss'
@@ -38,7 +48,7 @@ import './style.scss'
 const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
-    user: state.auth.profile,
+    profile: state.auth.profile,
     is_authed: state.auth.is_authed
   })
 }
@@ -50,10 +60,14 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class AdminLayout extends React.Component {
+
   constructor(props) {
-    super(props)
+    super(props);
+    let theme = window.localStorage.getItem('theme') || 'light'
+    document.body.classList.add(theme);
+    document.documentElement.classList.add(theme);
     this.state = {
-      theme: window.localStorage.getItem('theme') || 'light'
+      theme: theme
     }
   }
 
@@ -95,6 +109,15 @@ class AdminLayout extends React.Component {
     const theme = window.localStorage.getItem('theme') || 'light'
     window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
 
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+    document.body.classList.add(theme === 'light' ? 'dark': 'light');
+
+    document.documentElement.classList.remove('light')
+    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.add(theme === 'light' ? 'dark': 'light');
+
+
     this.setState({theme: theme === 'light' ? 'dark': 'light'})
   }
 
@@ -103,27 +126,32 @@ class AdminLayout extends React.Component {
       zIndex: 1999
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state || 'light'
+    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
         <div className={"admin-container "  + window.localStorage.getItem('theme') || 'light'}>
           <div className="app">
-            <AppHeader fixed>
+            <AppHeader fixed className="border-bottom">
               <Suspense fallback={Loading()}>
                 <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}/>
               </Suspense>
             </AppHeader>
             <div className="app-body">
-              <AppSidebar  className="pt-4 mb-5" fixed display="lg">
+              <AppSidebar  className="pt-3 mb-5" fixed display="lg">
                 <Suspense>
                   <Switch>
                     <Route path="/admin">
                       <AppSidebarNav navConfig={adminNavigation} location={this.props.location} router={router}/>
                     </Route>
                     <Route>
-                      <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router}/>
+                      <BrowserView>
+                        <AppSidebarNav navConfig={mainBrowserNavigation()} location={this.props.location} router={router}/>
+                      </BrowserView>
+                      <MobileView>
+                        <AppSidebarNav navConfig={mainMobileNavigation()} location={this.props.location} router={router}/>
+                      </MobileView>
                     </Route>
                   </Switch>
                 </Suspense>
@@ -134,16 +162,14 @@ class AdminLayout extends React.Component {
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
                     <Switch>
                       {
-                        adminRoutes.map((prop, key) => {
-                          if (prop.redirect)
-                            return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                          return (
-                            <Route
-                              path={prop.path}
-                              component={prop.component}
-                              key={key}
-                            />
-                          )
+                        adminRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) => {
+                          if (redirect) {
+                            return <Redirect from={path} to={pathTo} key={key} />
+                          } else {
+                            return (
+                                <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key}/>
+                            )
+                          }
                         })
                       }
                     </Switch>

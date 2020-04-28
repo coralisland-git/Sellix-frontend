@@ -2,12 +2,12 @@
     // padding: 0 10px;
   
     .nav-link {
-      font-family: "Poppins";
+      font-family: var(--font-family-sans-serif);
       font-weight: 600;
       font-size: 15px;
     }
   
-    background-color: #F6F4FF;
+    background-color: #f4f0ff;
   
     .app-header {
       border-bottom: none;
@@ -64,7 +64,7 @@
     }
   
     .sidebar {
-      background: #F6F4FF;
+      background: #f4f0ff;
 
       .ps-container {
         .nav-dropdown-items {
@@ -81,7 +81,7 @@
       }
       .nav-link {
         padding: 0 1rem !important;
-        font-family: Poppins-SemiBold !important;
+        font-family: var(--font-family-sans-serif);
         color: #A7A5B4;
         display: flex;
         align-items: center;

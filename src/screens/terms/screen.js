@@ -1,28 +1,17 @@
 import React from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Row,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
-import { Link } from "react-router-dom";
-import sellix_logo from "assets/images/Sellix_logo.svg";
+import { Container } from "reactstrap";
 
 import "./style.scss";
 
 class Terms extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
     };
+
+    document.title = `Terms | Sellix`;
   }
 
   toggle() {
@@ -31,12 +20,17 @@ class Terms extends React.Component {
 
   render() {
     return (
-      <div className="home-screen">
+      <div className="terms-screen">
         <div className="animated fadeIn">
-          
+          <div className="section text-center ">
+            <Container className="home-container" fluid>
+              <h1>Terms of Service</h1>
+              <p className={'large'}>Rules and policies of Sellix</p>
+            </Container>
+          </div>
+          <div className="section text-center bg-white" style={{paddingBottom:50}}>
+            <Container className="home-container">
           <div className="termsWrapper">
-            <div className="termsTitle">Terms of Service</div>
-            <div className="termsSubTitle">Rules and policies of Sellix</div>
             <div className="termsText">
               <div className="termsTextTitle">
                 By accessing this site, you are agreeing to be bound by these
@@ -457,6 +451,8 @@ class Terms extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
+            </Container>
           </div>
         </div>
       </div>

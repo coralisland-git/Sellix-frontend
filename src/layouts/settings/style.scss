@@ -1,16 +1,26 @@
 .admin-container {
     // padding: 0 10px;
+
+    @media (max-width: 577px){
+      .settings-sidebar {
+        width: 100% !important;
+        margin-right: 0 !important;
+        
+      }
+      .settings-container {
+        width: 100%;
+      }
+    }
   
     .nav-link {
-      font-family: "Poppins";
+      font-family: var(--font-family-sans-serif);
       font-weight: 600;
       font-size: 15px;
     }
   
-    background-color: #F6F4FF;
+    background-color: #f4f0ff;
   
     .app-header {
-      border-bottom: none;
       // border-radius: 10px;
       // padding: 20px 10px;
       // height: 100px;
@@ -70,17 +80,19 @@
     }
   
     .settings-sidebar {
-      width: 120px;
+      width: 180px;
+      background-color: white;
+      height: fit-content;
+      border-radius: 3px;
+
       .nav-link {
         font-size: 14px !important;
       }
-
-      
     }
 
     
     .sidebar {
-      background: #F6F4FF;
+      background: #f4f0ff;
 
       .ps-container {
         .nav-dropdown-items {
@@ -97,12 +109,13 @@
       }
       .nav-link {
         padding: 0 1rem !important;
-        font-family: Poppins-SemiBold !important;
-        color: #A7A5B4;
+        font-family: var(--font-family-sans-serif);
+        font-weight: 600;
+        color: #85848f;
         display: flex;
         align-items: center;
         .nav-icon {
-          color: #A7A5B4;
+          color: #85848f;
           margin-right: 30px;
           font-size: 25px;
         }
@@ -110,18 +123,19 @@
   
       .nav-link:hover,
       .nav-link.active {
+        transition: all .3s ease;
         background: transparent;
         color: #613BEA;
         .nav-icon {
           color: #613BEA;
         }
       }
-  
+
       .nav-dropdown {
         .nav-link {
-          color: #A7A5B4;
+          color: #85848f;
           .nav-icon {
-            color: #A7A5B4;
+            color: #85848f;
           }
         }
   
@@ -136,17 +150,15 @@
   
             .nav-link:hover,
             .nav-link.active {
-              font-weight: 600 !important;
+              transition: all .3s ease;
               color: #613BEA;
               .nav-icon {
+                transition: all .3s ease;
                 color: #613BEA;
               }
             }
           }
   
-          .nav-item:first-child {
-            padding-top: 1.5rem !important;
-          }
         }
   
         // .nav-dropdown-toggle:before {
@@ -171,9 +183,9 @@
       .nav-dropdown.open {
         background-color: transparent;
         .nav-link {
-          color: #A7A5B4;
+          color: #85848f;
           .nav-icon {
-            color: #A7A5B4;
+            color: #85848f;
           }
         }
         .nav-link:hover,
@@ -220,19 +232,9 @@
       }
       .nav-link {
           padding: 5px 0 !important;
-          font-size: 13px !important;
+          font-size: 14px !important;
           color: #707070;
       }
     }
-
-    
-  
   }
 
-  @media (max-width: 577px){
-    .settings-sidebar {
-      width: 100% !important;
-      margin-right: 0;
-      
-    }
-  }

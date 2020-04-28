@@ -102,8 +102,6 @@ class CreateProduct extends React.Component {
 
     const  {vat_list, product_parent, product_ware_house } = this.props
 
-    console.log()
-
     return (
       <div className="create-product-screen">
         <div className="animated fadeIn">

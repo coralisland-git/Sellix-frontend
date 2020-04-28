@@ -1,4 +1,4 @@
-.product-screen {
+.webhook-screen {
   .card-header {
     color: #20a8d8;
   }
@@ -8,10 +8,40 @@
     }
   }
 
-  .product-table {
+  .webhook-table {
     .my-link {
       text-decoration: none;
       cursor: pointer;
     }
+  }
+
+  .badge {
+    margin: auto;
+  }
+
+  .badge-200 {
+    background-color: #E4D6FF;
+    color: #613BEA;
+  }
+
+  .badge-payload {
+    background-color: #F5F5FE;
+  }
+}
+
+.chosen-events {
+  outline: 0;
+  background-color: #FCFCFE;
+  border: 1px solid #F5F5F5 !important;
+  padding: 10px 25px;
+  border-radius: 3px !important;
+  font-size: 14px !important;
+  min-height: 140px;
+  max-height: 200px;
+  overflow: scroll;
+
+  i {
+    color: #A7A5B4 !important;
+    -webkit-text-stroke: 1px #ffffff;
   }
 }

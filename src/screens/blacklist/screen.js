@@ -35,6 +35,22 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const Confirm = ({ onClose, title, message, onDelete }) => {
+  return <div className={"react-confirm-alert" + ` ${window.localStorage.getItem('theme') || 'light'}`}>
+    <div className="react-confirm-alert-body">
+      <h1>{title}</h1>
+      <h3>{message}</h3>
+      <div className="react-confirm-alert-button-group">
+        <button onClick={() => {
+          onDelete()
+          onClose()
+        }}>Yes, Delete it!</button>
+        <button onClick={onClose}>No</button>
+      </div>
+    </div>
+  </div>
+}
+
 class Blacklist extends React.Component {
 
   constructor(props) {
@@ -56,32 +72,25 @@ class Blacklist extends React.Component {
     })
   }
 
+  onDeleteFromBlacklist = (id) => () => {
+    this.setState({ loading: true })
+    this.props.deleteFromBlacklist.deleteFromBlacklist({
+      uniqid: id
+    }).then(res => {
+      this.props.actions.getBlacklist()
+      this.props.commonActions.tostifyAlert('success', res.message)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  }
+
   deleteFromBlacklist(e, id) {
     confirmAlert({
       title: 'Are you sure?',
       message: 'You want to delete this user from blacklist?',
-      buttons: [
-        {
-          label: 'Yes, Delete it!',
-          onClick: () => {
-            this.setState({ loading: true })
-            this.props.deleteFromBlacklist.deleteFromBlacklist({
-              uniqid: id
-            }).then(res => {
-              this.props.actions.getBlacklist()
-              this.props.commonActions.tostifyAlert('success', res.message)
-            }).catch(err => {
-              this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
-            }).finally(() => {
-              this.setState({ loading: false })
-            })
-          }
-        },
-        {
-          label: 'No',
-          onClick: () => {return true}
-        }
-      ]
+      customUI:  (props) => <Confirm {...props} onDelete={this.onDeleteFromBlacklist(id)}/>
     });
   }
 
@@ -133,7 +142,7 @@ class Blacklist extends React.Component {
       <div className="blacklist-screen mt-3">
         <div className="animated fadeIn">
           <div className='blacklist-header'>
-            <div className='blacklist-title'>Blacklist</div>
+            <h1 className='blacklist-title'>Blacklist</h1>
             <Button className="ml-3" color="primary"
             onClick={() => this.props.history.push(`/dashboard/${user}/blacklist/new`)}>Create blacklist</Button>
           </div>

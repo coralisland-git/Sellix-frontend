@@ -36,6 +36,22 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const Confirm = ({ onClose, title, message, onDelete }) => {
+  return <div className={"react-confirm-alert" + ` ${window.localStorage.getItem('theme') || 'light'}`}>
+    <div className="react-confirm-alert-body">
+      <h1>{title}</h1>
+      <h3>{message}</h3>
+      <div className="react-confirm-alert-button-group">
+        <button onClick={() => {
+          onDelete()
+          onClose()
+        }}>Yes, Delete it!</button>
+        <button onClick={onClose}>No</button>
+      </div>
+    </div>
+  </div>
+}
+
 class Categories extends React.Component {
   constructor(props) {
     super(props)
@@ -73,7 +89,21 @@ class Categories extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/dashboard/${user}/products/categories/edit/${id}`
+      pathname: `/dashboard/${user}/products/categories/all/edit/${id}`
+    })
+  }
+
+  onDeleteCateogry = (id) => () => {
+    this.setState({ loading: true })
+    this.props.actions.deleteCategory({
+      uniqid: id
+    }).then(res => {
+      this.props.actions.getCategoryList()
+      this.props.commonActions.tostifyAlert('success', res.message)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
     })
   }
 
@@ -81,28 +111,7 @@ class Categories extends React.Component {
     confirmAlert({
       title: 'Are you sure?',
       message: 'You want to delete this category?',
-      buttons: [
-        {
-          label: 'Yes, Delete it!',
-          onClick: () => {
-            this.setState({ loading: true })
-            this.props.actions.deleteCategory({
-              uniqid: id
-            }).then(res => {
-              this.props.actions.getCategoryList()
-              this.props.commonActions.tostifyAlert('success', res.message)
-            }).catch(err => {
-              this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
-            }).finally(() => {
-              this.setState({ loading: false })
-            })
-          }
-        },
-        {
-          label: 'No',
-          onClick: () => {return true}
-        }
-      ]
+      customUI:  (props) => <Confirm {...props} onDelete={this.onDeleteCateogry(id)}/>
     });
   }
 
@@ -136,7 +145,7 @@ class Categories extends React.Component {
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
                     <Button className="ml-3" color="primary" 
-                      onClick={() => this.props.history.push(`/dashboard/${user}/products/categories/new`)}>Add Category</Button>
+                      onClick={() => this.props.history.push(`/dashboard/${user}/products/categories/all/new`)}>Add Category</Button>
                   </div>
                 </Col>
               </Row>
@@ -180,7 +189,7 @@ class Categories extends React.Component {
                           <TableHeaderColumn
                             dataField="products_count"
                             dataSort
-                            dataAlign="right"
+                            dataAlign="center"
                           >
                             Product Count
                           </TableHeaderColumn>

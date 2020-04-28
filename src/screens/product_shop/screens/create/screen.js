@@ -86,7 +86,6 @@ class CreateProduct extends React.Component {
   }
 
   addFile = file => {
-    console.log(file);
     this.setState({
       files: file.map(file =>
         Object.assign(file, {

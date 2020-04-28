@@ -54,7 +54,7 @@ class CreateCategories extends React.Component {
         title: '',
         unlisted: 0,
         products_bound: '',
-        image: null,
+        image: '',
         sort_priority: 0
       },
       files: [],
@@ -135,7 +135,7 @@ class CreateCategories extends React.Component {
                 .required('Products is required'),
               sort_priority: Yup.number()
                 .required("Sort Priority is required"),
-              unlisted: Yup.number()
+              unlisted: Yup.boolean()
             })}>
               {props => (
                 <Form onSubmit={props.handleSubmit}>
@@ -147,12 +147,29 @@ class CreateCategories extends React.Component {
                         </Col>
                       </Row>
                     </CardHeader>
-                    <CardBody className="p-4 mb-5">
-                      <Row className="mt-4 mb-4">
-                        <Col lg={12}>
+                    <CardBody className="mb-4 pt-3 pb-3">
+                      <Row>
+                        <Col lg={3} className="p-0">
+                          <div className="page_description_card bg-grey p-3 mr-2">
+                            <h6 className="text-grey mb-3">REFERENCE</h6>
+                            <p className="page_description text-grey mb-0">
+                            Using Categories is a way to separate different types of products.
+                            <br/>
+                            <br/>
+                            Unlike normal products, categories are displayed as smaller tabs above the search bar, they do not have an image.
+                            <br/>
+                            <br/>
+                            Once selected, every other product that does not belong to that category will disappear with a super cool animation and the customer will be able to better see what he wants to purchase.
+                            <br/>
+                            <br/>
+                            In order to create a category, please fill its title, select which products should be contained in it and then, you can proceed!
+                            </p>
+                          </div>
+                        </Col>
+                        <Col lg={9}>
                           <Row>
                             <Col lg={12}>
-                              <FormGroup className="mb-3">
+                              <FormGroup className="mb-3 mt-3">
                                 <Label htmlFor="title">Title</Label>
                                 <Input
                                   type="text"
@@ -181,7 +198,7 @@ class CreateCategories extends React.Component {
                                   className="select-default-width"
                                   id="product_bounds"
                                   name="product_bounds"
-                                  multi
+                                  isMulti
                                   options={product_options}
                                   placeholder="Select Products"
                                   value={this.state.multiValue}
@@ -204,16 +221,7 @@ class CreateCategories extends React.Component {
                               </FormGroup>
                             </Col>
                           </Row>
-                          <Row>
-                            <Col lg={12}>
-                              <FormGroup className="mb-3">
-                                <Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
-                                <ImageUpload addFile={(file) => {
-                                  props.handleChange('image')(file[0]); 
-                                  this.addFile(file)}} files={files}/>
-                              </FormGroup>
-                            </Col>
-                          </Row>
+                          
                           <Row>
                             <Col lg={2}>
                               <FormGroup className="mb-3">
@@ -230,7 +238,7 @@ class CreateCategories extends React.Component {
                             </Col>
                           </Row>
                           <Row>
-                            <Col lg={2}>
+                            <Col lg={12}>
                               <FormGroup check inline className="mb-3">
                                   <div className="custom-checkbox custom-control">
                                     <input 
@@ -239,9 +247,9 @@ class CreateCategories extends React.Component {
                                       id="inline-radio1"
                                       name="SMTP-auth"
                                       onChange={(e) => {
-                                        props.handleChange('unlisted')(e.target.checked?1:0)
+                                        props.handleChange('unlisted')(e.target.checked)
                                       }}
-                                      checked={props.values.unlisted === 0?false:true}
+                                      checked={props.values.unlisted}
                                     />
                                     <label className="custom-control-label" htmlFor="inline-radio1">
                                       Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>

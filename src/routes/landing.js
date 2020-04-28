@@ -1,25 +1,38 @@
-import {
-    Home,
-    Fees,
-    Terms
-  } from 'screens'
-  
-  const landingRoutes = [
-    {
-      path: '/fees',
-      component: Fees.screen,
-      name: 'Fees'
-    },
-    {
-      path: '/terms',
-      component: Terms,
-      name: 'Terms'
-    },
-    {
-      path: '/',
-      component: Home.screen,
-      name: 'Home'
-    },
-  ]
-  
-  export default landingRoutes
+import { Home, Fees, Terms, Tickets, Changelog } from 'screens'
+import { NotFound } from 'components'
+
+const landingRoutes = [
+  {
+    path: '/fees',
+    component: Fees.screen,
+    name: 'Fees'
+  },
+  {
+    path: '/changelog',
+    component: Changelog,
+    name: 'Changelog'
+  },
+  {
+    path: '/terms',
+    component: Terms,
+    name: 'Terms'
+  },
+  {
+    path: '/404',
+    component: NotFound,
+    name: '404'
+  },
+  {
+    path: '/contact',
+    component: Tickets.screen,
+    name: 'Tickets'
+  },
+  {
+    path: '/',
+    component: Home.screen,
+    name: 'Home',
+    exact: true
+  },
+]
+
+export default landingRoutes

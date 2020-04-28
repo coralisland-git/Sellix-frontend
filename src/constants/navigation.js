@@ -1,6 +1,6 @@
 const user = window.localStorage.getItem('userId')
 
-export const mainNavigation =  {
+export const mainBrowserNavigation = () => ({
   items: [
     {
       name: 'Dashboard',
@@ -9,7 +9,7 @@ export const mainNavigation =  {
     },
     {
       name: 'Products',
-      url: `/dashboard/${user}/products`,
+      url: window.location.pathname.includes('/groups') ? `/dashboard/${user}/groups` : `/dashboard/${user}/products`,
       icon: 'fas fa-boxes',
       children: [
         {
@@ -17,17 +17,25 @@ export const mainNavigation =  {
           url: `/dashboard/${user}/products/all`
         },
         {
-          name: 'Categories',
-          url: `/dashboard/${user}/products/categories`,
+          name: 'Groups',
+          url: `/dashboard/${user}/groups/all`
         },
-        // {
-        //   name: 'Sort Products',
-        //   url: `/dashboard/${user}/products/sort-products`,
-        // },
-        // {
-        //   name: 'Sort Categories',
-        //   url: `/dashboard/${user}/products/sort-categories`,
-        // }
+        {
+          name: 'Categories',
+          url: `/dashboard/${user}/products/categories/all`,
+        },
+        {
+          name: 'Sort Products',
+          url: `/dashboard/${user}/products/sort`,
+        },
+        {
+          name: 'Sort Categories',
+          url: `/dashboard/${user}/products/categories/sort`,
+        },
+        {
+          name: 'Sort Groups',
+          url: `/dashboard/${user}/groups/sort`
+        },
       ]
     },
     {
@@ -38,7 +46,7 @@ export const mainNavigation =  {
     {
       name: 'Analytics',
       url: `/dashboard/${user}/analytics`,
-      icon: 'fas fa-area-chart',
+      icon: 'fas fa-bar-chart',
       children: [
         {
           name: 'All Analytics',
@@ -70,28 +78,113 @@ export const mainNavigation =  {
       url: `/dashboard/${user}/blacklist`,
       icon: 'fas fa-ban',
     },
-    // {
-    //   name: 'Developer',
-    //   url: `/dashboard/${user}/developer`,
-    //   icon: 'fas fa-code',
-    //   children: [
-    //     {
-    //       name: 'Webhooks',
-    //       url: `/dashboard/${user}/developer/webhooks`,
-    //     },
-    //     {
-    //       name: 'Webhook Logs',
-    //       url: `/dashboard/${user}/developer/webhook-logos`,
-    //     }
-    //   ]
-    // },
+    {
+      name: 'Developer',
+      url: `/dashboard/${user}/developer`,
+      icon: 'fas fa-code',
+      children: [
+        {
+          name: 'Webhooks',
+          url: `/dashboard/${user}/developer/webhooks/all`,
+        },
+        {
+          name: 'Webhook Logs',
+          url: `/dashboard/${user}/developer/webhooks/logs`,
+        }
+      ]
+    },
     // {
     //   name: 'Pages',
     //   url: `/dashboard/${user}/pages`,
     //   icon: 'fa fa-file',
     // }
   ]
-}
+})
+
+
+export const mainMobileNavigation = () => ({
+  items: [
+    {
+      name: 'Dashboard',
+      url: `/dashboard/${user}/home`,
+      icon: 'fas fa-home fa-lg'
+    },
+    {
+      name: 'Products',
+      url: window.location.pathname.includes('/groups') ? `/dashboard/${user}/groups` : `/dashboard/${user}/products`,
+      icon: 'fas fa-boxes',
+      children: [
+        {
+          name: 'All Products',
+          url: `/dashboard/${user}/products/all`
+        },
+        {
+          name: 'Groups',
+          url: `/dashboard/${user}/groups/all`
+        },
+        {
+          name: 'Categories',
+          url: `/dashboard/${user}/products/categories/all`,
+        }
+      ]
+    },
+    {
+      name: 'Orders',
+      url: `/dashboard/${user}/orders`,
+      icon: 'fas fa-credit-card',
+    },
+    {
+      name: 'Analytics',
+      url: `/dashboard/${user}/analytics`,
+      icon: 'fas fa-bar-chart',
+      children: [
+        {
+          name: 'All Analytics',
+          url: `/dashboard/${user}/analytics/stats`,
+        },
+        {
+          name: 'Reports',
+          url: `/dashboard/${user}/analytics/reports`,
+        },
+      ]
+    },
+    {
+      name: 'Coupons',
+      url: `/dashboard/${user}/coupons`,
+      icon: 'fa fa-tags',
+    },
+    {
+      name: 'Queries',
+      url: `/dashboard/${user}/queries`,
+      icon: 'fas fa-question-circle',
+    },
+    {
+      name: 'Feedback',
+      url: `/dashboard/${user}/feedback`,
+      icon: "fa fa-commenting",
+    },
+    {
+      name: 'Blacklist',
+      url: `/dashboard/${user}/blacklist`,
+      icon: 'fas fa-ban',
+    },
+    {
+      name: 'Developer',
+      url: `/dashboard/${user}/developer`,
+      icon: 'fas fa-code',
+      children: [
+        {
+          name: 'Webhooks',
+          url: `/dashboard/${user}/developer/webhooks/all`,
+        },
+        {
+          name: 'Webhook Logs',
+          url: `/dashboard/${user}/developer/webhooks/logs`,
+        }
+      ]
+    }
+  ]
+})
 
 export const adminNavigation =  {
   items: [
@@ -129,15 +222,15 @@ export const accountSettingsNavigation =  {
   items: [
     {
       name: 'General',
-      url: `/settings/general`
+      url: `/settings/${user}/general`
     },
     {
       name: 'Security',
-      url: `/settings/security`
+      url: `/settings/${user}/security`
     },
     {
       name: 'Notifications',
-      url: `/settings/notifications`
+      url: `/settings/${user}/notifications`
     }
   ]
 }
@@ -147,19 +240,24 @@ export const shopSettingsNavigation =  {
   items: [
     // {
     //   name: 'Members',
-    //   url: `/dashboard/${user}/settings/memebers`
+    //   url: `/dashboard/${user}/settings/${user}/memebers`
     // },
     {
       name: 'Payments',
-      url: `/settings/payments`
+      url: `/settings/${user}/payments`
+    },
+
+    {
+      name: 'Design',
+      url: `/settings/${user}/design`
     },
     // {
     //   name: 'Billing',
-    //   url: `/dashboard/${user}/settings/billing`
+    //   url: `/dashboard/${user}/settings/${user}/billing`
     // },
     // {
     //   name: 'Customization',
-    //   url: `/dashboard/${user}/settings/customization`
+    //   url: `/dashboard/${user}/settings/${user}/customization`
     // }
   ]
 }
