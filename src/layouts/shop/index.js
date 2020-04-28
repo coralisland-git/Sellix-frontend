@@ -240,25 +240,27 @@ class ShopLayout extends React.Component {
 									autoClose={5000}
 									style={containerStyle}
 								/>
-								<Switch>
-									{shopRoutes.map((prop, key) => {
-										if (prop.redirect)
+								<GoogleAnalytics tracking_id={user.shop_google_analytics_tracking_id}>
+									<Switch>
+										{shopRoutes.map((prop, key) => {
+											if (prop.redirect)
+												return (
+													<Redirect
+														from={prop.path}
+														to={prop.pathTo}
+														key={key}
+													/>
+												)
 											return (
-												<Redirect
-													from={prop.path}
-													to={prop.pathTo}
+												<Route
+													path={prop.path}
+													component={prop.component}
 													key={key}
 												/>
 											)
-										return (
-											<Route
-												path={prop.path}
-												component={prop.component}
-												key={key}
-											/>
-										)
-									})}
-								</Switch>
+										})}
+									</Switch>
+								</GoogleAnalytics>
 							</Suspense>
 						</Container>
 					</div>
@@ -288,7 +290,6 @@ class ShopLayout extends React.Component {
 		return (
 			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
 				<GlobalStyles />
-				<GoogleAnalytics tracking_id={user.shop_google_analytics_tracking_id}/>
 				<LoaderFullscreen loaderRemovedInitially={!userIsLoading}/>
 				<div className={'shop-container'}>
 					<div className="app">
