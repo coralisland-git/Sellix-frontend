@@ -9,16 +9,17 @@ export function GoogleAnalytics(props) {
     }
 
     return <>
-        {/* <!-- Google Analytics --> */}
+        {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${tracking_id}`}></script>
         <script>
             {`
-                window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-                ga('create', '${tracking_id}', 'auto');
-                ga('send', 'pageview');
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+        
+                gtag('config', '${tracking_id}');
             `}
         </script>
-        <script async src='https://www.google-analytics.com/analytics.js'></script>
-        {/* <!-- End Google Analytics --> */}
     </>
 }
 
