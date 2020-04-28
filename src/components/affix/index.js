@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom';
+import {isIE, isSafari} from 'react-device-detect';
 
 class Affix extends Component {
     constructor(props) {
@@ -33,8 +34,8 @@ class Affix extends Component {
             listenTarget.addEventListener('scroll', this.handleTargetChange)
 
             var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-            
-            if (!iOS) {
+
+            if (!iOS && !isSafari && !isIE) {
                 this.resizeObserver = new ResizeObserver((entries) => {
                     this.setState({
                         height: entries[0].contentRect.height
