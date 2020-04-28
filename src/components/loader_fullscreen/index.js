@@ -39,7 +39,7 @@ export class LoaderFullscreen extends React.Component {
             display: loaderRemoved ? 'none' : 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            background: 'white',
+            background: '#211d3d',
             opacity: loaderFadingOut ? 0 : 1,
             transition: 'opacity 1s ease-in'
         }}>
