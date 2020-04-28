@@ -32,13 +32,17 @@ class Affix extends Component {
             listenTarget.addEventListener('resize', this.handleTargetChange)
             listenTarget.addEventListener('scroll', this.handleTargetChange)
 
-            this.resizeObserver = new ResizeObserver((entries) => {
-                this.setState({
-                    height: entries[0].contentRect.height
-                }, this.handleTargetChange)
-            });
+            var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+            
+            if (!iOS) {
+                this.resizeObserver = new ResizeObserver((entries) => {
+                    this.setState({
+                        height: entries[0].contentRect.height
+                    }, this.handleTargetChange)
+                });
 
-            this.resizeObserver.observe(document.getElementById("affix-container"));
+                this.resizeObserver.observe(document.getElementById("affix-container"));
+            }
         }
     }
 
