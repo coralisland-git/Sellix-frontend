@@ -4,11 +4,13 @@
     margin: auto;
   }
 
-  .code-block {
-    width: 65%;
-  }
-
   .code-block.response .code-block-header {
     padding: 12px 20px;
+  }
+
+  .demo-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
   }
 }

@@ -84,7 +84,7 @@ export const mainBrowserNavigation = () => ({
       icon: 'fas fa-code',
       children: [
         {
-          name: 'Embed Product',
+          name: 'Embed Products',
           url: `/dashboard/${user}/developer/embed-product`,
         },
         {
