@@ -20,6 +20,7 @@ import './style.scss'
 import bitcoinIcon from "../../assets/images/crypto/btc.svg";
 import ethereumIcon from "../../assets/images/crypto/eth.svg";
 import litecoinIcon from "../../assets/images/crypto/ltc.svg";
+import bitcoinCashIcon from "../../assets/images/crypto/bitcoincash.svg";
 
 const mapStateToProps = (state) => ({
   product_list: state.product.product_list
@@ -41,7 +42,8 @@ class Payments extends React.Component {
       email_paypal: '',
       wallet_bitcoin: '',
       wallet_litecoin: '',
-      wallet_ethereum: ''
+      wallet_ethereum: '',
+      wallet_bitcoincash: ''
     }
   }
 
@@ -53,6 +55,7 @@ class Payments extends React.Component {
       wallet_bitcoin: this.state.wallet_bitcoin || '',
       wallet_litecoin: this.state.wallet_litecoin || '',
       wallet_ethereum: this.state.wallet_ethereum || '',
+      wallet_bitcoincash: this.state.wallet_bitcoincash || ''
     })
       .then(res => this.props.commonActions.tostifyAlert('success', res.message))
       .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
@@ -72,7 +75,7 @@ class Payments extends React.Component {
   }
 
   render() {
-    const { loading, email_paypal, wallet_bitcoin, wallet_ethereum, wallet_litecoin } = this.state;
+    const { loading, email_paypal, wallet_bitcoin, wallet_ethereum, wallet_litecoin, wallet_bitcoincash } = this.state;
 
     return (
       <div className="payments-screen">
@@ -142,6 +145,19 @@ class Payments extends React.Component {
                               placeholder="Litecoin Address"
                               value={wallet_litecoin}
                               onChange={e => this.setState({wallet_litecoin: e.target.value})}
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code"><img src={bitcoinCashIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Bitcoin Cash Address</Label>
+                            <Input 
+                              type="text" 
+                              placeholder="Bitcoin Cash Address"
+                              value={wallet_bitcoincash}
+                              onChange={e => this.setState({wallet_bitcoincash: e.target.value})}
                             />
                           </FormGroup>
                         </Col>
