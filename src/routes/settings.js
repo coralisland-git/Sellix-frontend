@@ -3,7 +3,8 @@ import {
     Notification,
     Payments,
     GeneralSettings,
-    ShopDesign
+    ShopDesign,
+    ShopGoogleAnalytics
   } from 'screens'
 
   const user = window.localStorage.getItem('userId')
@@ -40,6 +41,13 @@ import {
       name: 'Design',
       component: ShopDesign.screen,
         title: 'Settings - Design'
+    },
+
+    {
+      path: `/settings/${user}/google-analytics`,
+      name: 'Google Analytics',
+      component: ShopGoogleAnalytics.screen,
+        title: 'Settings - Google Analytics'
     },
     // {
     //     path: `/settings/${user}/memebers`,
