@@ -7,12 +7,14 @@ import {
     {
       path: '/product/:id',
       name: 'ShopProductDetail',
-      component: ShopProductDetail.screen
+      component: ShopProductDetail.screen,
+      exact: true,
     },
     {
       path: '/group/:id',
       name: 'ShopGroupDetail',
-      component: ShopGroupDetail.screen
+      component: ShopGroupDetail.screen,
+      exact: true,
     }
   ]
   

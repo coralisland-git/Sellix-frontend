@@ -29,9 +29,6 @@ const mapDispatchToProps = dispatch => ({
     authActions: bindActionCreators(AuthActions, dispatch)
 })
 
-const user = window.localStorage.getItem('userId')
-
-
 class LogIn extends React.Component {
   
   constructor(props) {
@@ -44,7 +41,21 @@ class LogIn extends React.Component {
     this.captcha = {}
   }
 
-  handleSubmit = (data) => {
+  componentDidMount() {
+      let { tostifyAlert, location: { state } } = this.props;
+      if(state.success) {
+          tostifyAlert('success', state.message)
+          return
+      }
+      if(state.code) {
+          tostifyAlert('success', state.message)
+      }
+      if(state.code === false) {
+          tostifyAlert('error', state.message)
+      }
+  }
+
+    handleSubmit = (data) => {
 
     let { captchaVerify } = this.state;
     let { tostifyAlert, history } = this.props;

@@ -39,61 +39,70 @@ const adminRoutes = [
     path: `/admin/dashboard`,
     name: 'AdminDashboard',
     component: AdminDashboard,
-    title: 'Dashboard'
+    title: 'Dashboard',
+    exact: true,
   },
   {
     path: `/dashboard/${user}/home`,
     name: 'Dashboard',
     component: Dashboard.screen,
-    title: 'Dashboard'
+    title: 'Dashboard',
+    exact: true,
   },
 
   {
-    path: `/dashboard/${user}/products/all/new`,
+    path: `/dashboard/${user}/products/new`,
     name: 'New',
     component: CreateProduct.screen,
-    title: 'Create Product'
+    title: 'Create Product',
+    exact: true,
   },
   {
-    path: `/dashboard/${user}/products/all/edit/:id`,
+    path: `/dashboard/${user}/products/edit/:id`,
     name: 'Edit',
     component: EditProduct.screen,
-    title: 'Edit Product'
+    title: 'Edit Product',
+    exact: true,
   },
 
   {
-    path: `/dashboard/${user}/products/sort`,
+    path: `/dashboard/${user}/sort/products`,
     name: 'Product Sort',
     component: ProductSort.screen,
-    title: 'Sort Products'
+    title: 'Sort Products',
+    exact: true,
+  },
+
+
+  {
+    path: `/dashboard/${user}/categories/new`,
+    name: 'New',
+    component: CreateCategories.screen,
+    title: 'Create Category',
+    exact: true,
   },
   {
-    path: `/dashboard/${user}/products/categories/sort`,
+    path: `/dashboard/${user}/categories/edit/:id`,
+    name: 'Edit',
+    component: EditCategory.screen,
+    title: 'Edit Category',
+    exact: true,
+  },
+
+  {
+    path: `/dashboard/${user}/sort/categories`,
     name: 'Categories Sort',
     exact: true,
     component: CategorySort.screen,
     title: 'Sort Categories'
   },
 
-
   {
-    path: `/dashboard/${user}/products/categories/all/edit/:id`,
-    name: 'Edit',
-    component: EditCategory.screen,
-    title: 'Edit Category'
-  },
-  {
-    path: `/dashboard/${user}/products/categories/all/new`,
-    name: 'New',
-    component: CreateCategories.screen,
-    title: 'Create Category'
-  },
-
-  {
-    path: `/dashboard/${user}/products/categories/all`,
+    path: `/dashboard/${user}/categories`,
     name: 'Categories',
     component: Categories.screen,
-    title: 'Categories'
+    title: 'Categories',
+    exact: true,
   },
 
   {
@@ -105,21 +114,21 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/groups/all/new`,
+    path: `/dashboard/${user}/groups/new`,
     name: 'Product Group New',
     exact: true,
     component: CreateProductGroup.screen,
     title: 'Create Group'
   },
   {
-    path: `/dashboard/${user}/groups/all/edit/:id`,
+    path: `/dashboard/${user}/groups/edit/:id`,
     name: 'Product Group Edit',
     exact: true,
     component: EditProductGroup.screen,
     title: 'Edit Group'
   },
   {
-    path: `/dashboard/${user}/groups/all`,
+    path: `/dashboard/${user}/groups`,
     name: 'Groups',
     exact: true,
     component: ProductGroups.screen,
@@ -127,7 +136,7 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/groups/sort`,
+    path: `/dashboard/${user}/sort/groups`,
     name: 'Sort Groups',
     exact: true,
     component: ProductGroupSort.screen,
@@ -139,14 +148,16 @@ const adminRoutes = [
     path: `/dashboard/${user}/orders/view/:id`,
     name: 'Detail',
     component: OrderDetail.screen,
-    title: 'View Order'
+    title: 'View Order',
+    exact: true,
   },
 
   {
     path: `/dashboard/${user}/orders`,
     name: 'Orders',
     component: Order.screen,
-    title: 'Orders'
+    title: 'Orders',
+    exact: true,
   },
 
 
@@ -154,13 +165,15 @@ const adminRoutes = [
     path: `/dashboard/${user}/analytics/reports`,
     name: 'Reports',
     component: Reports.screen,
-    title: 'Reports'
+    title: 'Reports',
+    exact: true,
   },
   {
     path: `/dashboard/${user}/analytics/stats`,
     name: 'Analytics',
     component: Analytics.screen,
-    title: 'Analytics'
+    title: 'Analytics',
+    exact: true,
   },
 
 
@@ -168,38 +181,44 @@ const adminRoutes = [
     path: `/dashboard/${user}/coupons/new`,
     name: 'New',
     component: CreateCoupon.screen,
-    title: 'Create Coupon'
+    title: 'Create Coupon',
+    exact: true,
   },
   {
     path: `/dashboard/${user}/coupons/edit/:id`,
     name: 'EditCoupon',
     component: EditCoupon.screen,
-    title: 'Edit Coupon'
+    title: 'Edit Coupon',
+    exact: true,
   },
   {
     path: `/dashboard/${user}/coupons`,
     name: 'Coupons',
     component: Coupons.screen,
-    title: 'Coupons'
+    title: 'Coupons',
+    exact: true,
   },
 
   {
     path: `/dashboard/${user}/blacklist/new`,
     name: 'New',
     component: CreateBlacklist.screen,
-    title: 'Create Blacklist'
+    title: 'Create Blacklist',
+    exact: true,
   },
   {
     path: `/dashboard/${user}/blacklist/edit/:id`,
     name: 'EditBlacklist',
     component: EditBlacklist.screen,
-    title: 'Edit Blacklist'
+    title: 'Edit Blacklist',
+    exact: true,
   },
   {
     path: `/dashboard/${user}/blacklist`,
     name: 'Blacklist',
     component: BlackList.screen,
-    title: 'Blacklists'
+    title: 'Blacklists',
+    exact: true,
   },
   
 
@@ -207,13 +226,15 @@ const adminRoutes = [
     path: `/dashboard/${user}/queries`,
     name: 'Queries',
     component: Queries.screen,
-    title: 'Queries'
+    title: 'Queries',
+    exact: true,
   },
   {
     path: `/dashboard/${user}/query/view/:id`,
     name: 'Reply to Query',
     component: ReplyToQuerie,
-    title: 'View Query'
+    title: 'View Query',
+    exact: true,
   },
   
 
@@ -221,35 +242,40 @@ const adminRoutes = [
     path: `/dashboard/${user}/feedback/reply/:id`,
     name: 'Reply to Feedback',
     component: ReplyToFeedback,
-    title: 'Reply to Feedback'
+    title: 'Reply to Feedback',
+    exact: true,
   },
 
   {
     path: `/dashboard/${user}/feedback`,
     name: 'Feedback',
     component: Feedbacks.screen,
-    title: 'Feedback'
+    title: 'Feedback',
+    exact: true,
   },
 
   {
     path: `/dashboard/${user}/pages/new`,
     name: 'New',
     component: CreatePage.screen,
-    title: 'Create page'
+    title: 'Create page',
+    exact: true,
   },
 
   {
     path: `/dashboard/${user}/pages`,
     name: 'Pages',
     component: Pages.screen,
-    title: 'Pages'
+    title: 'Pages',
+    exact: true,
   },
 
   {
-    path: `/dashboard/${user}/developer/webhooks/all`,
+    path: `/dashboard/${user}/developer/webhooks`,
     name: 'Webhooks',
     component: Webhooks.screen,
-    title: 'Webhooks'
+    title: 'Webhooks',
+    exact: true,
   },
 
   // {
@@ -262,7 +288,8 @@ const adminRoutes = [
     path: `/dashboard/${user}/developer/webhooks/logs`,
     name: 'Weebhook Logs',
     component: WebhookLogs.screen,
-    title: 'Webhook Logs'
+    title: 'Webhook Logs',
+    exact: true,
   },
 
   {

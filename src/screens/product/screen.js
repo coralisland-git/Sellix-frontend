@@ -76,7 +76,7 @@ class Product extends React.Component {
 
   gotoEditPage = (e, id) => {
     this.props.history.push({
-      pathname: `/dashboard/${user}/products/all/edit/${id}`
+      pathname: `/dashboard/${user}/products/edit/${id}`
     })
   }
 
@@ -95,7 +95,7 @@ class Product extends React.Component {
       return (
         <div>
           <p>
-            <a href={`/dashboard/${user}/products/all/edit/${row.uniqid}`} >
+            <a href={`/dashboard/${user}/products/edit/${row.uniqid}`} >
               {row.title}
             </a>
           </p>
@@ -235,7 +235,7 @@ class Product extends React.Component {
                         }}
                       />
                     </div>
-                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/dashboard/${user}/products/all/new`)}>
+                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/dashboard/${user}/products/new`)}>
                       Add Product
                     </Button>
                   </div>

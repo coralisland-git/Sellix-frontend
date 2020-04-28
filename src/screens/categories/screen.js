@@ -89,7 +89,7 @@ class Categories extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/dashboard/${user}/products/categories/all/edit/${id}`
+      pathname: `/dashboard/${user}/categories/edit/${id}`
     })
   }
 
@@ -145,7 +145,7 @@ class Categories extends React.Component {
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
                     <Button className="ml-3" color="primary" 
-                      onClick={() => this.props.history.push(`/dashboard/${user}/products/categories/all/new`)}>Add Category</Button>
+                      onClick={() => this.props.history.push(`/dashboard/${user}/categories/new`)}>Add Category</Button>
                   </div>
                 </Col>
               </Row>

@@ -9,32 +9,34 @@ export const mainBrowserNavigation = () => ({
     },
     {
       name: 'Products',
-      url: window.location.pathname.includes('/groups') ? `/dashboard/${user}/groups` : `/dashboard/${user}/products`,
+      url: window.location.pathname,
       icon: 'fas fa-boxes',
       children: [
         {
           name: 'All Products',
-          url: `/dashboard/${user}/products/all`
+          url: `/dashboard/${user}/products`
         },
         {
           name: 'Groups',
-          url: `/dashboard/${user}/groups/all`
+          url: `/dashboard/${user}/groups`,
+          exact: true
         },
         {
           name: 'Categories',
-          url: `/dashboard/${user}/products/categories/all`,
+          url: `/dashboard/${user}/categories`,
         },
         {
           name: 'Sort Products',
-          url: `/dashboard/${user}/products/sort`,
+          url: `/dashboard/${user}/sort/products`,
         },
         {
           name: 'Sort Categories',
-          url: `/dashboard/${user}/products/categories/sort`,
+          url: `/dashboard/${user}/sort/categories`,
         },
         {
           name: 'Sort Groups',
-          url: `/dashboard/${user}/groups/sort`
+          url: `/dashboard/${user}/sort/groups`,
+          exact: true
         },
       ]
     },
@@ -85,7 +87,7 @@ export const mainBrowserNavigation = () => ({
       children: [
         {
           name: 'Webhooks',
-          url: `/dashboard/${user}/developer/webhooks/all`,
+          url: `/dashboard/${user}/developer/webhooks`,
         },
         {
           name: 'Webhook Logs',
@@ -111,20 +113,20 @@ export const mainMobileNavigation = () => ({
     },
     {
       name: 'Products',
-      url: window.location.pathname.includes('/groups') ? `/dashboard/${user}/groups` : `/dashboard/${user}/products`,
+      url: window.location.pathname,
       icon: 'fas fa-boxes',
       children: [
         {
           name: 'All Products',
-          url: `/dashboard/${user}/products/all`
+          url: `/dashboard/${user}/products`
         },
         {
           name: 'Groups',
-          url: `/dashboard/${user}/groups/all`
+          url: `/dashboard/${user}/groups`
         },
         {
           name: 'Categories',
-          url: `/dashboard/${user}/products/categories/all`,
+          url: `/dashboard/${user}/categories`,
         }
       ]
     },
@@ -175,7 +177,7 @@ export const mainMobileNavigation = () => ({
       children: [
         {
           name: 'Webhooks',
-          url: `/dashboard/${user}/developer/webhooks/all`,
+          url: `/dashboard/${user}/developer/webhooks`,
         },
         {
           name: 'Webhook Logs',
@@ -210,7 +212,7 @@ export const adminNavigation =  {
       children: [
         {
           name: 'All Analytics',
-          url: `/dashboard/analytics/all`,
+          url: `/dashboard/analytics`,
         },
         {
           name: 'Reports',

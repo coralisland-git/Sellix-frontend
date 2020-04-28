@@ -30,7 +30,7 @@ export const saveCategoryOrder = (ids) => {
   return (dispatch) => {
     let data = {
       method: 'POST',
-      url: '/categories/sort',
+      url: '/sort/categories',
       data: formData(ids)
     }
 
