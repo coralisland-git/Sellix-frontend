@@ -51,6 +51,7 @@ class Payments extends React.Component {
       search_enabled: this.state.search_enabled,
       dark_mode: this.state.dark_mode,
       hide_out_of_stock: this.state.hide_out_of_stock,
+      google_analytics_tracking_id: this.state.google_analytics_tracking_id
     }
 
     // if(this.state.google_analytics_tracking_id) {
@@ -73,7 +74,8 @@ class Payments extends React.Component {
         search_enabled: settings.shop_search_enabled === '1',
         dark_mode: settings.shop_dark_mode === '1',
         hide_out_of_stock: settings.shop_hide_out_of_stock === '1',
-        // google_analytics_tracking_id: settings.shop_google_analytics_tracking_id || ''
+
+        google_analytics_tracking_id: settings.shop_google_analytics_tracking_id || ''
       })
     }).finally(() => {
       this.setState({loading: false})

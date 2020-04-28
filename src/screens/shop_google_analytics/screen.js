@@ -43,6 +43,11 @@ class Payments extends React.Component {
     this.setState({ loading: true });
 
     var settingsData = {
+      discord_link: this.state.discord_link,
+      search_enabled: this.state.search_enabled,
+      dark_mode: this.state.dark_mode,
+      hide_out_of_stock: this.state.hide_out_of_stock,
+
       google_analytics_tracking_id: this.state.google_analytics_tracking_id
     }
 
@@ -58,6 +63,11 @@ class Payments extends React.Component {
     this.props.authActions.getUserSettings().then(res => {
       const settings = res.data.settings
       this.setState({
+        discord_link: settings.shop_discord_link || '',
+        search_enabled: settings.shop_search_enabled === '1',
+        dark_mode: settings.shop_dark_mode === '1',
+        hide_out_of_stock: settings.shop_hide_out_of_stock === '1',
+
         google_analytics_tracking_id: settings.shop_google_analytics_tracking_id || ''
       })
     }).finally(() => {
