@@ -61,9 +61,6 @@ class Header extends Component {
                    Help Center
                 </DropdownItem>
                 <DropdownItem onClick={() => this.props.history.push('/contact')}>
-                   Tickets
-                </DropdownItem>
-                <DropdownItem onClick={() => this.props.history.push('/shop/contact')}>
                    Contact Us
                 </DropdownItem>
               </DropdownMenu>

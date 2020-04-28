@@ -3,14 +3,14 @@ import { Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} fro
 import { Button } from 'components';
 import {Formik} from "formik";
 import * as Yup from "yup";
-import {Loader, Spin} from "../../components";
+import { Spin } from "../../components";
 import Select from "react-select";
 import {connect} from 'react-redux'
 import {authApi} from "../../utils";
 import { withRouter } from "react-router-dom";
 import './style.scss'
-import {bindActionCreators} from "redux";
-import {AuthActions, CommonActions} from "../../services/global";
+import { bindActionCreators } from "redux";
+import { CommonActions } from "../../services/global";
 
 
 const OPTIONS = [
@@ -24,12 +24,11 @@ const OPTIONS = [
 class Ticket extends React.Component {
 
     componentDidMount() {
+
         document.title = `Create Ticket | Sellix`;
         let isLoggedin = window.localStorage.getItem('userId')
 
-        if(isLoggedin) {
-            this.props.authActions.getSelfUser()
-        } else {
+        if(!isLoggedin) {
             this.props.history.push('/')
         }
     }
@@ -74,11 +73,8 @@ class Ticket extends React.Component {
                  })
     }
 
-
-
     render() {
 
-        let loading = false;
         let validationSchema = Yup.object().shape({
             category: Yup.object().shape({
                 label: Yup.string(),
@@ -106,9 +102,7 @@ class Ticket extends React.Component {
                                     <Form onSubmit={handleSubmit}>
                                         <Card>
                                             <CardBody className="p-4 mb-2 ">
-                                                {loading && <Row><Col lg={12}><Loader/></Col></Row>}
-                                                {!loading &&
-                                                    <Row className="mb-2">
+                                                <Row className="mb-2">
                                                     <Col lg={12}>
                                                         <Row className={'justify-content-center'}>
                                                             <Col lg={8}>
@@ -164,7 +158,6 @@ class Ticket extends React.Component {
                                                         </Row>
                                                     </Col>
                                                 </Row>
-                                                }
                                             </CardBody>
 
                                             <Button color="primary" type="submit" className="" style={{width: 200, margin: "0 auto"}} disabled={isSubmitting}>
@@ -184,13 +177,8 @@ class Ticket extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({
-    user: state.auth.profile
-});
-
 const mapDispatchToProps = (dispatch) => ({
-    authActions: bindActionCreators(AuthActions, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Ticket))
+export default withRouter(connect(null, mapDispatchToProps)(Ticket))

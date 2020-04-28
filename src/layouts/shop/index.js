@@ -14,7 +14,8 @@ import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 import LazyImage from "react-lazy-progressive-image";
-import Sellix from '../../assets/images/loader_logo_dark.svg';
+import Sellix from '../../assets/images/user_placeholder.svg';
+
 
 import { LoaderFullscreen, Loading } from 'components'
 
@@ -136,8 +137,8 @@ class ShopLayout extends React.Component {
 							{user.username}
 							{user.verified == '1' &&
 								<span>
-					                <LazyImage placeholder={Sellix} src={verifiedIcon}>
-					                    {(src, loading) => <img src={src} width="20" className="verified-icon mb-1" id="verifiedTooltip" style={loading ? { padding: "2rem" } : {}}/>}
+					                <LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>
+					                    {(src) => <img src={src} width="20" className="verified-icon mb-1" id="verifiedTooltip" />}
 					                </LazyImage>
 									<Tooltip
 										placement="right"
@@ -149,16 +150,9 @@ class ShopLayout extends React.Component {
 								</span>
 							}
 						</h4>
-						{user.profile_attachment ? (
-							<LazyImage placeholder={Sellix} src={user.profile_attachment}>
-								{(src, loading) => <img src={src} width="130" height="130" style={loading ? { padding: "2rem", borderRadius: '50%' } : { borderRadius: '50%' }} />}
-							</LazyImage>
-						) : (
-							<i
-								className="fa fa-user-circle text-primary avatar-icon"
-								style={{ fontSize: 130 }}
-							/>
-						)}
+						<LazyImage placeholder={Sellix} src={user.profile_attachment}>
+							{src => <img src={src} width="130" height="130" style={{ borderRadius: '50%' }} />}
+						</LazyImage>
 					</div>
 					<Card
 						className="report-count mb-3 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row"
