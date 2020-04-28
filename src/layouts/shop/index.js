@@ -16,6 +16,8 @@ import { GlobalStyles } from 'layouts/theme/global'
 import LazyImage from "react-lazy-progressive-image";
 import Sellix from '../../assets/images/user_placeholder.svg';
 
+import GoogleAnalytics from './googleAnalytics'
+
 
 import { LoaderFullscreen, Loading, NotFound } from 'components'
 
@@ -238,25 +240,27 @@ class ShopLayout extends React.Component {
 									autoClose={5000}
 									style={containerStyle}
 								/>
-								<Switch>
-									{shopRoutes.map((prop, key) => {
-										if (prop.redirect)
+								<GoogleAnalytics tracking_id={user.shop_google_analytics_tracking_id}>
+									<Switch>
+										{shopRoutes.map((prop, key) => {
+											if (prop.redirect)
+												return (
+													<Redirect
+														from={prop.path}
+														to={prop.pathTo}
+														key={key}
+													/>
+												)
 											return (
-												<Redirect
-													from={prop.path}
-													to={prop.pathTo}
+												<Route
+													path={prop.path}
+													component={prop.component}
 													key={key}
 												/>
 											)
-										return (
-											<Route
-												path={prop.path}
-												component={prop.component}
-												key={key}
-											/>
-										)
-									})}
-								</Switch>
+										})}
+									</Switch>
+								</GoogleAnalytics>
 							</Suspense>
 						</Container>
 					</div>

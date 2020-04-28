@@ -66,12 +66,14 @@ import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
 import ShopDesign from './shop_design'
+import ShopGoogleAnalytics from './shop_google_analytics'
 
 import GeneralSettings from './general_settings'
 import Customization from './customization'
 import EmbededPayment from './embeded_payment'
 import EmbededInvoice from './embeded_invoice'
 
+import EmbedProduct from './embed_product'
 import Documentation from './documentation/screen.js'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
@@ -143,6 +145,7 @@ export {
   Billings,
   GeneralSettings,
   ShopDesign,
+  ShopGoogleAnalytics,
   Notification,
   Customization,
   EditBlacklist,
@@ -155,5 +158,6 @@ export {
   EditProductGroup,
   ProductGroupSort,
 
-  Documentation
+  Documentation,
+  EmbedProduct
 }

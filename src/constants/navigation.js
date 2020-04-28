@@ -86,6 +86,10 @@ export const mainBrowserNavigation = () => ({
       icon: 'fas fa-code',
       children: [
         {
+          name: 'Embed Products',
+          url: `/dashboard/${user}/developer/embed-product`,
+        },
+        {
           name: 'Webhooks',
           url: `/dashboard/${user}/developer/webhooks`,
         },
@@ -296,6 +300,11 @@ export const shopSettingsNavigation =  {
     {
       name: 'Design',
       url: `/settings/${user}/design`
+    },
+
+    {
+      name: 'Analytics',
+      url: `/settings/${user}/analytics`
     },
     // {
     //   name: 'Billing',

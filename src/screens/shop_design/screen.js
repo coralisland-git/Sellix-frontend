@@ -38,18 +38,27 @@ class Payments extends React.Component {
       discord_link: '',
       search_enabled: true,
       dark_mode: false,
-      hide_out_of_stock: false
+      hide_out_of_stock: false,
+      google_analytics_tracking_id: ''
     }
   }
 
   saveDesign(){
     this.setState({ loading: true });
-    this.props.actions.saveShopSettings({
+
+    var settingsData = {
       discord_link: this.state.discord_link,
       search_enabled: this.state.search_enabled,
       dark_mode: this.state.dark_mode,
-      hide_out_of_stock: this.state.hide_out_of_stock
-    })
+      hide_out_of_stock: this.state.hide_out_of_stock,
+      google_analytics_tracking_id: this.state.google_analytics_tracking_id
+    }
+
+    // if(this.state.google_analytics_tracking_id) {
+    //   settingsData.google_analytics_tracking_id = this.state.google_analytics_tracking_id
+    // }
+
+    this.props.actions.saveShopSettings(settingsData)
       .then(res => this.props.commonActions.tostifyAlert('success', res.message))
       .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
       .finally(() => this.setState({loading: false}))
@@ -64,7 +73,9 @@ class Payments extends React.Component {
         discord_link: settings.shop_discord_link || '',
         search_enabled: settings.shop_search_enabled === '1',
         dark_mode: settings.shop_dark_mode === '1',
-        hide_out_of_stock: settings.shop_hide_out_of_stock === '1'
+        hide_out_of_stock: settings.shop_hide_out_of_stock === '1',
+
+        google_analytics_tracking_id: settings.shop_google_analytics_tracking_id || ''
       })
     }).finally(() => {
       this.setState({loading: false})
@@ -72,7 +83,7 @@ class Payments extends React.Component {
   }
 
   render() {
-    const { loading, discord_link, search_enabled, dark_mode, hide_out_of_stock } = this.state;
+    const { loading, discord_link, search_enabled, dark_mode, hide_out_of_stock, google_analytics_tracking_id } = this.state;
 
     return (
       <div className="shop-settings-screen">
