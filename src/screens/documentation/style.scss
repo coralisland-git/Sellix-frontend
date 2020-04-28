@@ -35,9 +35,9 @@
     background-color: #3c4257;
 
     border-radius: 3px;
-    font-weight: 600;
     margin-bottom: 30px;
     box-shadow: 0 0 0 1px rgba(0,0,0,.07);
+    position: relative;
 
     .code-block-header {
       padding: 12px 20px;
@@ -47,6 +47,7 @@
 
       p {
         margin-bottom: 0px !important;
+        font-weight: 600;
       }        
       
       button {

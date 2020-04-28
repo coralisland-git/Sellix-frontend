@@ -36,7 +36,7 @@ class EmbedProduct extends React.Component {
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
                 <Col md={12}>
-                  <h1>Embed Product</h1>
+                  <h1>Embed Products</h1>
                 </Col>
               </Row>
             </CardHeader>
@@ -124,16 +124,17 @@ class EmbedProduct extends React.Component {
   Purchase
 </button>`}
                       </SyntaxHighlighter>
+                      <Button
+                        className="demo-btn"
+                        color="primary"
+                        data-sellix-product="5ea869ce3e971" 
+                        data-sellix-custom-demo="dummy"
+                        type="submit"
+                        alt="Embed Demo Button"
+                      >
+                        Demo
+                      </Button>
                     </div>
-                    <Button 
-                      color="primary"
-                      data-sellix-product="5ea869ce3e971" 
-                      data-sellix-custom-demo="dummy"
-                      type="submit"
-                      alt="Embed Demo Button"
-                    >
-                      Demo
-                    </Button>
                   </div>
                 </Col>
               </Row>              
