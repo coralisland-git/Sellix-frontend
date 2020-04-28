@@ -1,7 +1,6 @@
 import React from 'react'
 import config from 'constants/config'
 import { Card } from 'reactstrap';
-import LazyImage from "react-lazy-progressive-image";
 import Sellix from '../../assets/images/Sellix_logo.svg';
 
 
@@ -20,11 +19,13 @@ const ProductCard = ({ product, preventDefault, history }) => {
 
     let { image_attachment, title, price_display, currency, uniqid } = product;
 
+    let image = Sellix;
+    if(image_attachment) {
+        image = config.API_ROOT_URL + '/attachments/image/' + image_attachment;
+    }
     return <Card className="bg-white p-0 product-card" onClick={() => preventDefault ? null : history.push({ pathname: `/product/${uniqid}` })}>
             <div style={{ minHeight: 150, width: '100%' }}>
-                <LazyImage placeholder={Sellix} src={config.API_ROOT_URL + '/attachments/image/' + image_attachment}>
-                    {src => <img src={src} alt={title} style={image_attachment ? { objectFit: "fill" } : { objectFit: "fill", padding: "1rem" }}/>}
-                </LazyImage>
+                <img src={image} alt={title} style={image_attachment ? {} : { padding: "1rem", objectFit: "fill" }}/>
             </div>
             
             <div className="p-3 d-flex flex-column h-100">

@@ -49,7 +49,7 @@ class LandingLayout extends React.Component {
 
     this.props.authActions.getSelfUser()
 
-    if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
+    if (window.localStorage.getItem('accessToken') && this.props.is_authed && this.props.match.path !== '/contact') {
       this.props.history.push(preUrl)
     }
 
@@ -84,9 +84,8 @@ class LandingLayout extends React.Component {
     }
 
     const { isOpen } = this.state;
-    const { history } = this.props;
     const user = window.localStorage.getItem('userId')
-    let dashboardUrl = user? `/dashboard/${user}/home` : '/'
+    const dashboardUrl = user ? `/dashboard/${user}/home` : '/'
 
     return (
     <div className="landing-layout">
@@ -101,9 +100,7 @@ class LandingLayout extends React.Component {
                       if (prop.redirect)
                           return <Redirect from={prop.path} to={prop.pathTo} key={key} />
                       return (
-                          <Route
-                            path={prop.path}
-                            component={() => (
+                          <Route path={prop.path} component={() => (
                               <>
                                 <header className={`pt-2 pb-2 ${prop.name === 'Home'?'home-header':''}`}>
                                   <Navbar  color="white" light expand="lg">
