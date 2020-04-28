@@ -21,10 +21,26 @@ import './style.scss'
 class EmbedProduct extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      loading: true,
+      openModal: false,
+    }
   }
 
   componentDidMount () {
    
+  }
+
+  openNewWebhookModal() {
+    this.setState({
+      openModal: true      
+    })
+  }
+
+  closeNewWebhookModal() {
+    this.setState({
+      openModal: false
+    })
   }
 
   render() {
@@ -35,8 +51,14 @@ class EmbedProduct extends React.Component {
           <Card className="grey">
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
-                <Col md={12}>
+                <Col md={4}>
                   <h1>Embed Products</h1>
+                </Col>
+                <Col md={8}>
+                  <div className="d-flex justify-content-end">
+                    <Button color="primary" onClick={this.openNewWebhookModal.bind(this)}>
+                      Generate Code</Button>
+                  </div>
                 </Col>
               </Row>
             </CardHeader>
@@ -58,13 +80,11 @@ class EmbedProduct extends React.Component {
                         </Clipboard>
                       </div>
                       <SyntaxHighlighter language="html" style={atomOneLight} showLineNumbers={true}>
-                        {`<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js">
-</script>`}
+                        {`<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js"></script>`}
                       </SyntaxHighlighter>
                     </div>
                     <p className="page_description text-grey mb-4">
-                      After adding this, you can then proceed with the button HTML that will activate our payment modal<br />
-                      Replace <span className="badge-mark">PRODUCT_UNIQID</span> with the uniqid of your product, you can add custom classes to the button. <br />                      You can also specify custom fields in the button HTML, like this
+                      After adding this, you can then proceed with the button HTML that will activate our payment modal
                     </p>
                     <div className="code-block response">
                       <div className="code-block-header">
@@ -92,9 +112,8 @@ class EmbedProduct extends React.Component {
                       </SyntaxHighlighter>
                     </div>
                     <p className="page_description text-grey mb-4">
-                      This will add <span className="badge-mark">reference</span> and <span className="badge-mark">discord</span> to the custom fields array of the invoice that will be created. <br />
-                      If the product already has custom fields, you can still specify additional ones that will be passed to the invoice. <br />
-                      If you specify a custom field that the product already has, the user will not be asked for it when proceeding with the purchase.
+                      Replace <span className="badge-mark">PRODUCT_UNIQID</span> with the uniqid of your product, you can add custom classes to the button. <br /><br />
+                      You can also specify custom fields in the button HTML, like this
                     </p>
                     <div className="code-block response">
                       <div className="code-block-header">
@@ -135,6 +154,11 @@ class EmbedProduct extends React.Component {
                         Demo
                       </Button>
                     </div>
+                    <p className="page_description text-grey mb-4">
+                      This will add <span className="badge-mark">reference</span> and <span className="badge-mark">discord</span> to the custom fields array of the invoice that will be created. <br />
+                      If the product already has custom fields, you can still specify additional ones that will be passed to the invoice. <br />
+                      If you specify a custom field that the product already has, the user will not be asked for it when proceeding with the purchase.
+                    </p>
                   </div>
                 </Col>
               </Row>              
