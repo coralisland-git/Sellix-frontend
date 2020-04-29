@@ -44,6 +44,8 @@ class EmbedProduct extends React.Component {
     this.state = {
       loading: true,
       openModal: false,
+      custom_fields: [],
+      generateCode: null
     }
   }
 
@@ -60,6 +62,34 @@ class EmbedProduct extends React.Component {
     })
   }
 
+  addCustomField() {
+    const custom_fields = Object.assign([], this.state.custom_fields)
+    custom_fields.push({
+      name: '',
+      value: ''
+    })
+
+    this.setState({custom_fields: custom_fields})
+  }
+
+  deleteCustomField(e, index) {
+    const custom_fields = Object.assign([], this.state.custom_fields)
+    custom_fields.splice(index, 1)
+
+    this.setState({custom_fields: custom_fields})
+  }
+
+  saveCustomField(type, value, index) {
+    const custom_fields = Object.assign([], this.state.custom_fields)
+    custom_fields[index][type] = value
+
+    this.setState({custom_fields: custom_fields})
+  }
+
+  showGenerateCode(generateCode) {
+    this.setState({generateCode: generateCode})
+  }
+
   openNewWebhookModal() {
     this.setState({
       openModal: true      
@@ -68,21 +98,29 @@ class EmbedProduct extends React.Component {
 
   closeNewWebhookModal() {
     this.setState({
-      openModal: false
+      openModal: false,
+      custom_fields: [],
+      generateCode: null
     })
   }
 
   render() {
 
-    const { loading, openModal } = this.state
+    const { loading, openModal,custom_fields, generateCode } = this.state
 
     return (
       <div className="documentation-screen embed">
         <div className="animated fadeIn">
           <NewWebhookModal 
-            openModal={openModal} 
+            openModal={openModal}
+            custom_fields={custom_fields}
+            generateCode={generateCode}
             closeModal={this.closeNewWebhookModal.bind(this)}
             all_products={this.props.all_products}
+            addCustomField={this.addCustomField.bind(this)}
+            deleteCustomField={this.deleteCustomField.bind(this)}
+            saveCustomField={this.saveCustomField.bind(this)}
+            showGenerateCode={this.showGenerateCode.bind(this)}
           />
           <Card className="grey">
             <CardHeader>
