@@ -160,7 +160,7 @@ class ShopLayout extends React.Component {
 						<h4 className="mb-0 mt-3 mb-2">
 							<span style={{fontSize: 20}}>{user.username}&nbsp;</span>
 							{user.verified == '1' &&
-								<span style={{fontSize: 20}}>
+								<span>
 									<LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>
 										{(src) => <img src={src} width="20" className="verified-icon mb-1" id="verifiedTooltip" />}
 									</LazyImage>
