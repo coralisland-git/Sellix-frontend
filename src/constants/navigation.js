@@ -85,7 +85,7 @@ export const mainBrowserNavigation = () => ({
       children: [
         {
           name: 'Embed Products',
-          url: `/dashboard/${user}/developer/embed-product`,
+          url: `/dashboard/${user}/developer/embed`,
         },
         {
           name: 'Webhooks',

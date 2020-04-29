@@ -183,7 +183,7 @@ class NewCustomModal extends React.Component {
                         <FormGroup>
                           <div className="code-block response mb-0">
                             <div className="code-block-header">
-                              <p>Code</p>
+                              <p>{props.values.product.label} Embed Code</p>
                               <Clipboard 
                               data-clipboard-text={generateCode} 
                               button-title="Copy">

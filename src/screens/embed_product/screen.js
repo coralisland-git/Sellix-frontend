@@ -173,24 +173,24 @@ class EmbedProduct extends React.Component {
                             <p>BASIC BUTTON</p>
                             <Clipboard 
                             data-clipboard-text={`<button
-      data-sellix-product=“PRODUCT_UNIQID“
-      type="submit"
-      alt="Buy Now with Sellix.io"
-    >
-      Purchase
-    </button>`} 
+  data-sellix-product=“PRODUCT_UNIQID“
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`} 
                             button-title="Copy">
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
                           </div>
                           <SyntaxHighlighter language="html" style={atomOneLight} showLineNumbers={true}>
                             {`<button
-      data-sellix-product=“PRODUCT_UNIQID“
-      type="submit"
-      alt="Buy Now with Sellix.io"
-    >
-      Purchase
-    </button>`}
+  data-sellix-product=“PRODUCT_UNIQID“
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`}
                           </SyntaxHighlighter>
                         </div>
                         <p className="page_description text-grey mb-4">
@@ -202,28 +202,28 @@ class EmbedProduct extends React.Component {
                             <p>CUSTOM BUTTON</p>
                             <Clipboard 
                             data-clipboard-text={`<button
-      data-sellix-product="PRODUCT_UNIQID"
-      data-sellix-custom-reference=“12345678”
-      data-sellix-custom-discord=“@Sample#8634”
-      type="submit"
-      alt="Buy Now with Sellix.io"
-    >
-      Purchase
-    </button>`} 
+  data-sellix-product="PRODUCT_UNIQID"
+  data-sellix-custom-reference=“12345678”
+  data-sellix-custom-discord=“@Sample#8634”
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`} 
                             button-title="Copy">
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
                           </div>
                           <SyntaxHighlighter language="html" style={atomOneLight} showLineNumbers={true}>
                             {`<button
-      data-sellix-product="PRODUCT_UNIQID"
-      data-sellix-custom-reference=“12345678”
-      data-sellix-custom-discord=“@Sample#8634”
-      type="submit"
-      alt="Buy Now with Sellix.io"
-    >
-      Purchase
-    </button>`}
+  data-sellix-product="PRODUCT_UNIQID"
+  data-sellix-custom-reference=“12345678”
+  data-sellix-custom-discord=“@Sample#8634”
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`}
                           </SyntaxHighlighter>
                           <Button
                             className="demo-btn"

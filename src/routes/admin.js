@@ -247,7 +247,7 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/developer/embed-product`,
+    path: `/dashboard/${user}/developer/embed`,
     name: 'Embed Product',
     component: EmbedProduct.screen,
     title: 'Embed Product'
