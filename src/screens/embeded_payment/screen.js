@@ -617,29 +617,17 @@ class EmbededPayment extends React.Component {
                             :
                             paymentoptions.map(option => {
                             if(option != '') return(
-                            <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
-                              key={option} >
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
-                                  {PAYMENT_LABELS[option]}
+                              <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block"
+                                key={option} 
+                                onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
+                                >
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div>
+                                    <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
+                                    {PAYMENT_LABELS[option]}
+                                  </div>
                                 </div>
-                                <label className="custom-checkbox custom-control payment-checkbox ">
-                                  <input 
-                                    className="custom-control-input"
-                                    type="checkbox"
-                                    id={option}
-                                    name="SMTP-auth"
-                                    onChange={(e) => {
-                                      this.setState({optParam : PAYMENT_LABELS[option]})
-                                    }}
-                                    checked={ optParam === PAYMENT_LABELS[option] }
-                                  />
-                                  <label className="custom-control-label" htmlFor={option}>
-                                  </label>
-                                </label>
-                              </div>
-                            </Button>
+                              </Button>
                             )})
                           }
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
