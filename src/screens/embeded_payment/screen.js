@@ -112,8 +112,8 @@ class EmbededPayment extends React.Component {
       product_id: this.props.match.params.id,
       custom_fields: {},
       product_info: {},
-      optParam: 'PayPal',
-      coupon_discount:100,
+      optParam: '',
+      coupon_discount: 0,
       coupon_is_valid: true,
       coupon_applied: false
     }
@@ -192,7 +192,7 @@ class EmbededPayment extends React.Component {
     }).catch(err => {      
       this.setState({
         coupon_code: '',
-        coupon_discount: 100,
+        coupon_discount: 0,
         coupon_is_valid: coupon_value != ''? false:true,        
       })
     })
@@ -276,8 +276,8 @@ class EmbededPayment extends React.Component {
       showQuantityOption: true,
       showPaymentOptions: false,
       quantity: 1,
-      optParam: 'PayPal',
-      coupon_discount: 100
+      optParam: '',
+      coupon_discount: 0
     })
   }
 
@@ -305,7 +305,7 @@ class EmbededPayment extends React.Component {
     this.setState({
       coupon_code: '',
       coupon_value: '',
-      coupon_discount: 100,
+      coupon_discount: 0,
       openCoupon: false,
       coupon_is_valid: true,
       coupon_applied: false
@@ -366,6 +366,9 @@ class EmbededPayment extends React.Component {
     } = this.state
     
     var is_many = paymentoptions.length > 4 ? true : false
+    var initial_optParam = ''
+    if(paymentoptions.length > 0)
+      initial_optParam = PAYMENT_LABELS[paymentoptions[0]]
     let custom_fields = []    
 
     if(product_info && product_info.custom_fields)
@@ -403,7 +406,7 @@ class EmbededPayment extends React.Component {
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
               <p className="text-primary text-center" style={{fontSize: 14}}>by {product_info.username || ''}</p>
-              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * coupon_discount/100).toFixed(2) || 0}</p>                
+              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
               {
@@ -531,8 +534,7 @@ class EmbededPayment extends React.Component {
                     { !showPaymentOptions && (
                       <div className="pt-4 pl-4 pr-4">
                         <div className="text-center">
-                          <p className="grey desc">
-                            {product_info.description}
+                          <p className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
                           </p>
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                           onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
@@ -618,33 +620,21 @@ class EmbededPayment extends React.Component {
                             :
                             paymentoptions.map(option => {
                             if(option != '') return(
-                            <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
-                              key={option} >
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
-                                  {PAYMENT_LABELS[option]}
+                              <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block"
+                                key={option} 
+                                onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
+                                >
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div>
+                                    <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
+                                    {PAYMENT_LABELS[option]}
+                                  </div>
                                 </div>
-                                <label className="custom-checkbox custom-control payment-checkbox ">
-                                  <input 
-                                    className="custom-control-input"
-                                    type="checkbox"
-                                    id={option}
-                                    name="SMTP-auth"
-                                    onChange={(e) => {
-                                      this.setState({optParam : PAYMENT_LABELS[option]})
-                                    }}
-                                    checked={ optParam === PAYMENT_LABELS[option] }
-                                  />
-                                  <label className="custom-control-label" htmlFor={option}>
-                                  </label>
-                                </label>
-                              </div>
-                            </Button>
+                              </Button>
                             )})
                           }
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                            onClick={(e) => this.setPaymentOptions(e, optParam)}>Continue</Button>
+                            onClick={(e) => this.setPaymentOptions(e, initial_optParam)}>Continue</Button>
                         </div>
                       </div>
                     )}

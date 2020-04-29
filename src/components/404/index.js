@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import pageNotFound from 'assets/images/page-not-found.jpg'
+import pageNotFound from 'assets/images/Magnifying_glass_icon.svg'
 
 
 class NotFound extends Component {
@@ -10,11 +10,22 @@ class NotFound extends Component {
 
     render() {
     return (
-      <React.Fragment>
-        <div className="bg-white d-flex align-items-center justify-content-center w-100" style={{height: '100vh'}}>
-          <img src={pageNotFound} style={{width: '100%', maxWidth: 350}}/>
-        </div>
-      </React.Fragment>
+      <div style={{
+        textAlign: 'center',
+        padding: '100px',
+        paddingBottom: '200px',
+        background: 'white'
+      }}>
+        <style>
+          {`
+            .footer-hr {
+              display: none;
+            }
+          `}
+        </style>
+        <img src={pageNotFound} width="150"/>
+        <h1 className="text-primary" style={{marginTop: '50px'}}>404 Page Not Found</h1>
+      </div>
     );
   }
 }

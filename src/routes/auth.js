@@ -5,6 +5,7 @@ import {
   ForgotPassword,
   TwoFactorAuthentication,
   OTPLogin,
+  EmailConfirm,
   ResetOTP
 } from 'screens'
 
@@ -43,7 +44,11 @@ const initialRoutes = [
     path: '/auth/reset/:id',
     name: 'Reset Password',
     component: ResetPassword.screen
+  },
+  {
+    path: '/auth/validate/:code',
+    name: 'Email Confirm',
+    component: EmailConfirm.screen
   }
 ]
-
 export default initialRoutes

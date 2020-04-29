@@ -29,9 +29,6 @@ const mapDispatchToProps = dispatch => ({
     authActions: bindActionCreators(AuthActions, dispatch)
 })
 
-const user = window.localStorage.getItem('userId')
-
-
 class LogIn extends React.Component {
   
   constructor(props) {
@@ -44,7 +41,26 @@ class LogIn extends React.Component {
     this.captcha = {}
   }
 
-  handleSubmit = (data) => {
+  componentDidMount() {
+      let { tostifyAlert, location: { state } } = this.props;
+
+      if(state) {
+          if(state.success === false) {
+              tostifyAlert('error', state.message)
+              return
+          }
+          if(state.code) {
+              tostifyAlert('success', state.message)
+              return
+          }
+          if(state.code === false) {
+              tostifyAlert('error', state.message)
+              return
+          }
+      }
+  }
+
+    handleSubmit = (data) => {
 
     let { captchaVerify } = this.state;
     let { tostifyAlert, history } = this.props;
@@ -67,13 +83,14 @@ class LogIn extends React.Component {
             history.push('/auth/otp')
         }
 
-        if(res.status === 200)
-          getSelfUser().then(res => {
-            window.location.href = (`/dashboard/${res.data.user.username}/home`)
-          })
+        if(res.status === 200) {
+            getSelfUser().then(res => {
+                window.location.href = (`/dashboard/${res.data.user.username}/home`)
+            })
+        }
       })
       .catch(err => {
-          let errMsg = err.status === 403 ? 'reCAPTCHA verification failed, please try again.' : 'Invalid Email or Password. Please try again.';
+          let errMsg = err.status === 403 ? 'reCAPTCHA verification failed, please try again.' : err.error || 'Invalid Email or Password. Please try again.';
           tostifyAlert('error', errMsg)
           this.captcha.reset()
       })
@@ -91,6 +108,16 @@ class LogIn extends React.Component {
               .required("Password is required")
         });
 
+    let { location: { state } } = this.props;
+
+    let message = null;
+    if(state) {
+        if(state.success)
+            message = "A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.";
+        if(state.code)
+            message = 'Your email address has been successfully confirmed!'
+    }
+
     return (
       <div className="log-in-screen">
         <div className="animated fadeIn">
@@ -100,6 +127,7 @@ class LogIn extends React.Component {
                 <Col md="11">
                   <CardGroup>
                     <Card>
+                        {message && <div className={"reset-code-message"}>{message}</div>}
                       <CardBody className="p-4 bg-gray-100">
                         <Formik
                           initialValues={initialValues}

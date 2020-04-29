@@ -44,7 +44,7 @@ import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
 const user = window.localStorage.getItem('userId')
 
-const admin = _.includes(window.location.pathname, 'admin')
+
 
 const mapStateToProps = (state) => {
 	return ({
@@ -270,6 +270,7 @@ class EditProduct extends React.Component {
 	}
 
 	handleSubmit(values) {
+		const admin = _.includes(window.location.pathname, 'admin')
 		this.setState({saving: true})
 		const { gateways, custom_fields, showFileStock, showServiceStock, images, files, webhook_fields } = this.state
 		delete gateways['']

@@ -11,7 +11,7 @@ import {
   Form,
   Input
 } from 'reactstrap'
-import { Button } from 'components';
+import {Button, Spin} from 'components';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { Loader, ImageUpload, AvatarUploader } from 'components'
@@ -126,127 +126,123 @@ class GeneralSettings extends React.Component {
               {props => (
                 <Form onSubmit={props.handleSubmit}>
                   <Card>
-                    <CardBody className="p-4 mb-4">
-                      {
-                        loading ?
+                    <CardBody className="p-4 mb-4 position-relative">
+                      {loading &&
+                        <div className={"loader-container"}>
+                          <Loader/>
+                        </div>
+                      }
+
+                      <Row className="">
+                        <Col lg={12}>
                           <Row>
                             <Col lg={12}>
-                              <Loader />
+                              <FormGroup>
+                                <h4 className="mb-4">General Information</h4>
+                              </FormGroup>
                             </Col>
                           </Row>
-                        :
-                          <Row className="">
+                          <Row>
                             <Col lg={12}>
-                              <Row>
-                                <Col lg={12}>
-                                  <FormGroup>
-                                    <h4 className="mb-4">General Information</h4>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={12}>
-                                  <FormGroup className="mb-4">
-                                    {/* <AvatarUploader addFile={this.addFile} files={files} name="gavinice" 
-                                      caption="Click to change your avatar" /> */}
-                                    <Label htmlFor="profile_attachment">Avatar URL</Label>
-                                    <Input
-                                      type="text"
-                                      id="profile_attachment"
-                                      name="profile_attachment"
-                                      placeholder="Avatar URL"
-                                      onChange={props.handleChange}
-                                      value={props.values.profile_attachment}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={12}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="username">Username</Label>
-                                    <Input
-                                      type="text"
-                                      id="username"
-                                      name="username"
-                                      placeholder="Username"
-                                      onChange={props.handleChange}
-                                      value={props.values.username}
-                                      className={
-                                        props.errors.username && props.touched.username
-                                          ? "is-invalid"
-                                          : ""
-                                      }
-                                    />
-                                    {props.errors.username && props.touched.username && (
-                                      <div className="invalid-feedback">{props.errors.username}</div>
-                                    )}
-                                  </FormGroup>
-                                </Col>
-                                <Col lg={12}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input
-                                      type="text"
-                                      id="email"
-                                      name="email"
-                                      placeholder="Email"
-                                      onChange={props.handleChange}
-                                      value={props.values.email}
-                                      className={
-                                        props.errors.email && props.touched.email
-                                          ? "is-invalid"
-                                          : ""
-                                      }
-                                    />
-                                    {props.errors.email && props.touched.email && (
-                                      <div className="invalid-feedback">{props.errors.email}</div>
-                                    )}
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              {/* <Row>
-                                <Col lg={6}>
-                                  <FormGroup>
-                                    <Label>Currency</Label>
-                                    <Select options={CURRENCY_OPTIONS} className="mb-2"/>
-                                    <small>Analytics and Reports will show the total/partial revenue in US dollars, your products will be sold with the currency you choose when you create one.</small>
-                                  </FormGroup>
-                                </Col>
-                                <Col lg={6}>
-                                  <FormGroup>
-                                    <Label>Timezone</Label>
-                                    <Select options={TIMEAONES} className="mb-2"/>
-                                    <small>Currently our default timezone for invoices, orders, analytics and basic events is determined by the UTC primary time standard, more options will come in the future.</small>
-                                  </FormGroup>
-                                </Col>
-                              </Row> */}
-                              {/* <Row>
-                                <Col lg={12}>
-                                  <FormGroup>
-                                    <Label>API Key</Label>
-                                    <div className="d-flex">
-                                      <Input className="bg-brown" value="vXwyXyji89sxZGyDKyvxzmNnpTa3Bhg4h5jFjJSn5yy2eoVmDg"/>
-                                      <Button color="primary">Re-Generate</Button>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={12}>
-                                  <FormGroup>
-                                    <Label>Webhook Secret</Label>
-                                    <Select/>
-                                  </FormGroup>
-                                </Col>
-                              </Row> */}
-                              
+                              <FormGroup className="mb-4">
+                                {/* <AvatarUploader addFile={this.addFile} files={files} name="gavinice"
+                                  caption="Click to change your avatar" /> */}
+                                <Label htmlFor="profile_attachment">Avatar URL</Label>
+                                <Input
+                                  type="text"
+                                  id="profile_attachment"
+                                  name="profile_attachment"
+                                  placeholder="Avatar URL"
+                                  onChange={props.handleChange}
+                                  value={props.values.profile_attachment}
+                                />
+                              </FormGroup>
                             </Col>
                           </Row>
-                      }
+                          <Row>
+                            <Col lg={12}>
+                              <FormGroup className="mb-3">
+                                <Label htmlFor="username">Username</Label>
+                                <Input
+                                  type="text"
+                                  id="username"
+                                  name="username"
+                                  placeholder="Username"
+                                  onChange={props.handleChange}
+                                  value={props.values.username}
+                                  className={
+                                    props.errors.username && props.touched.username
+                                      ? "is-invalid"
+                                      : ""
+                                  }
+                                />
+                                {props.errors.username && props.touched.username && (
+                                  <div className="invalid-feedback">{props.errors.username}</div>
+                                )}
+                              </FormGroup>
+                            </Col>
+                            <Col lg={12}>
+                              <FormGroup className="mb-3">
+                                <Label htmlFor="email">Email</Label>
+                                <Input
+                                  type="text"
+                                  id="email"
+                                  name="email"
+                                  placeholder="Email"
+                                  onChange={props.handleChange}
+                                  value={props.values.email}
+                                  className={
+                                    props.errors.email && props.touched.email ? "is-invalid" : ""
+                                  }
+                                />
+                                {props.errors.email && props.touched.email && (
+                                  <div className="invalid-feedback">{props.errors.email}</div>
+                                )}
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                          {/* <Row>
+                            <Col lg={6}>
+                              <FormGroup>
+                                <Label>Currency</Label>
+                                <Select options={CURRENCY_OPTIONS} className="mb-2"/>
+                                <small>Analytics and Reports will show the total/partial revenue in US dollars, your products will be sold with the currency you choose when you create one.</small>
+                              </FormGroup>
+                            </Col>
+                            <Col lg={6}>
+                              <FormGroup>
+                                <Label>Timezone</Label>
+                                <Select options={TIMEAONES} className="mb-2"/>
+                                <small>Currently our default timezone for invoices, orders, analytics and basic events is determined by the UTC primary time standard, more options will come in the future.</small>
+                              </FormGroup>
+                            </Col>
+                          </Row> */}
+                          {/* <Row>
+                            <Col lg={12}>
+                              <FormGroup>
+                                <Label>API Key</Label>
+                                <div className="d-flex">
+                                  <Input className="bg-brown" value="vXwyXyji89sxZGyDKyvxzmNnpTa3Bhg4h5jFjJSn5yy2eoVmDg"/>
+                                  <Button color="primary">Re-Generate</Button>
+                                </div>
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col lg={12}>
+                              <FormGroup>
+                                <Label>Webhook Secret</Label>
+                                <Select/>
+                              </FormGroup>
+                            </Col>
+                          </Row> */}
+                        </Col>
+                      </Row>
                     </CardBody>
-                    <Button color="primary" type="submit" className="" style={{width: 200}}
-                    >Save Settings</Button>
+
+                    <Button color="primary" type="submit" className="" style={{width: 200}}>
+                      {loading ? <Spin/> : 'Save Settings'}
+                    </Button>
                     
                   </Card>
                 </Form>

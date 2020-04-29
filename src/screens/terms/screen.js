@@ -41,6 +41,7 @@ class Terms extends React.Component {
                 accessing this site. The materials contained in this site are
                 protected by applicable copyright and trademark law.
               </div>
+              <br/>
               <div className="termsTextTitle">
                 1. Subject Matter of the Terms
               </div>

@@ -161,14 +161,7 @@ export const register = (obj) => {
       data: formData(obj)
     }
     return api(data).then(res => {
-      if(res && res.status == 200) {
-        dispatch({
-          type: AUTH.SIGNED_IN
-        })
-        
-        window.localStorage.setItem('accessToken', res.data.token)
-        return res
-      } else throw res
+      return res
     }).catch(err => {
       throw err
     })

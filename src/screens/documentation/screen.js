@@ -23,7 +23,6 @@ const NAVITATIONS = [
   { key: 'authentication', value: 'Authentication' },
   { key: 'pagination', value: 'Pagination' },
   { key: 'errors', value: 'Errors' },
-  { key: 'embed', value: 'Embed' },
   { key: 'webhooks', value: 'Webhooks' }
 ]
 
@@ -137,7 +136,7 @@ class Documentation extends React.Component {
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`https://sellix.io/api/v2`}
                     </SyntaxHighlighter>                    
                   </div>
@@ -165,7 +164,7 @@ sellix.api_email = 'email'` }
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`require 'sellix'
 sellix.api_key = 'api key'
 sellix.api_email = 'email'`}
@@ -219,7 +218,7 @@ Sellix::Orders::List(page: 10, per_page: 50)` }
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`# Page 10 
 Sellix::Orders::List(page: 10)
 # Page 10 and 50 per page 
@@ -283,7 +282,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                 <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
-                      AUTHENTICATION ERROR
+                      <p>AUTHENTICATION ERROR</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -293,7 +292,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      AUTHENTICATION ERROR
+                      <p>AUTHENTICATION ERROR</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -303,7 +302,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      VALIDATION ERROR
+                      <p>VALIDATION ERROR</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -314,90 +313,6 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
     "Title must be present"
   ]
 }`}
-                    </SyntaxHighlighter>
-                  </div>
-                </div>
-              </section>
-              <section id="embed">
-                <div className="d-ins">
-                  <h3><b>Embed</b></h3>
-                  <p>
-                    We offer the possibility to embed our products directly into your site, without having to rely on our shop page.
-                    In order to do this, you first have to include our embed.js through this link <br /><br />
-                    After adding this, you can then proceed with the button HTML that will activate our payment modal<br /><br />
-                    Replace <span className="badge-mark">PRODUCT_UNIQID</span> with the uniqid of your product, you can add custom classes to the button. <br /><br />
-                    You can also specify custom fields in the button HTML, like this <br /><br />
-                    This will add <span className="badge-mark">reference</span> and <span className="badge-mark">discord</span> to the custom fields array of the invoice that will be created.
-                    If the product already has custom fields, you can still specify additional ones that will be passed to the invoice.
-                    If you specify a custom field that the product already has, the user will not be asked for it when proceeding with the purchase. <br /><br />
-                  </p>
-                </div>
-                <div className="d-ex">
-                  <div className="code-block">
-                    <div className="code-block-header">
-                      <p>EMBED JAVASCRIPT</p>
-                      <Clipboard 
-                      data-clipboard-text={'<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js"></script>'} 
-                      button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
-                      </Clipboard>
-                    </div>
-                    <SyntaxHighlighter language="javascript" style={sunburst}>
-                      {`<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js"></script>`}
-                    </SyntaxHighlighter>
-                  </div>
-                  <div className="code-block">
-                    <div className="code-block-header">
-                      <p>BASIC BUTTON</p>
-                      <Clipboard 
-                      data-clipboard-text={`<button
-  data-sellix-product=“PRODUCT_UNIQID“
-  type="submit"
-  alt="Buy Now with Sellix.io"
->
-  Purchase
-</button>`} 
-                      button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
-                      </Clipboard>
-                    </div>
-                    <SyntaxHighlighter language="javascript" style={sunburst}>
-                      {`<button
-  data-sellix-product=“PRODUCT_UNIQID“
-  type="submit"
-  alt="Buy Now with Sellix.io"
->
-  Purchase
-</button>`}
-                    </SyntaxHighlighter>
-                  </div>
-                  <div className="code-block">
-                    <div className="code-block-header">
-                      <p>CUSTOM BUTTON</p>
-                      <Clipboard 
-                      data-clipboard-text={`<button
-  data-sellix-product=“PRODUCT_UNIQID“
-  data-sellix-custom-reference=“12345678”
-  data-sellix-custom-discord=“@Sample#8634”
-  type="submit"
-  alt="Buy Now with Sellix.io"
->
-  Purchase
-</button>`} 
-                      button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
-                      </Clipboard>
-                    </div>
-                    <SyntaxHighlighter language="javascript" style={sunburst}>
-                      {`<button
-  data-sellix-product=“PRODUCT_UNIQID“
-  data-sellix-custom-reference=“12345678”
-  data-sellix-custom-discord=“@Sample#8634”
-  type="submit"
-  alt="Buy Now with Sellix.io"
->
-  Purchase
-</button>`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
@@ -481,7 +396,7 @@ end` }
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`require 'openssl'
 require 'active_support'
 secret = 'your webhook secret'
@@ -501,7 +416,7 @@ end`}
                 <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
-                      ENDPOINTS
+                      <p>ENDPOINTS</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`GET /api/v2/blacklist/:id
@@ -578,7 +493,7 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
-                      THE BLACKLIST OBJECT
+                      <p>THE BLACKLIST OBJECT</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -628,9 +543,9 @@ DELETE /api/v2/blacklist/:id`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                    <SyntaxHighlighter language="php" style={atomOneLight} showLineNumbers={true}>
                       {`{
   "id": "bGYSEexV",
   "blocked_data": "ZW",
@@ -660,13 +575,13 @@ DELETE /api/v2/blacklist/:id`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`Sellix::Blacklist.list`}
                     </SyntaxHighlighter>
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`[
@@ -735,7 +650,7 @@ DELETE /api/v2/blacklist/:id`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`Sellix::Blacklist.create(
     blocked_data: 'ZW',
     blacklist_type: 3
@@ -744,7 +659,7 @@ DELETE /api/v2/blacklist/:id`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -808,7 +723,7 @@ DELETE /api/v2/blacklist/:id`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`Sellix::Blacklist.update('bGYSEexV',
     blocked_data: 'GR'
 )`}
@@ -816,7 +731,7 @@ DELETE /api/v2/blacklist/:id`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -847,13 +762,13 @@ DELETE /api/v2/blacklist/:id`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`Sellix::Blacklist.destroy('bGYSEexV')`}
                     </SyntaxHighlighter>
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`// No Content: 204 HTTP status`}

@@ -5,15 +5,41 @@ import NumberFormat from 'react-number-format';
 import moment from 'moment';
 import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
 
-import { DateRangePicker2, Loader } from 'components'
+import {DateRangePicker2, Loader, Spin} from 'components'
 import { DashBoardChart } from './sections'
-import { getAnalyticsData } from './actions'
+import { getAnalyticsData, geLastInvoices } from './actions'
 
 import './style.scss'
+import {BootstrapTable, TableHeaderColumn} from "react-bootstrap-table";
+import {tableOptions} from "../../constants/tableoptions";
+import config from "../../constants/config";
+
+
+const ORDER_STATUS = {
+  '0': 'Pending',
+  '1': 'Completed',
+  '2': 'Cancelled',
+  '3': 'Confirmation',
+  '4': 'Partial'
+}
+
+const PAYMENT_OPTS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'BTC',
+  'litecoin': 'LTC',
+  'ethereum': 'ETH',
+  'skrill': 'Skrill',
+  'stripe': 'Stripe',
+  'bitcoincash': 'BTH',
+  'perfectmoney': 'Perfect Money'
+}
 
 const mapDispatchToProps = dispatch => ({
-  getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch)
+  getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch),
+  geLastInvoices: bindActionCreators(geLastInvoices, dispatch),
 })
+
+const userId = window.localStorage.getItem('userId')
 
 const Progress = ({ progress, isPositive, is24 }) => {
   if(is24) {
@@ -55,6 +81,7 @@ class Dashboard extends React.Component {
       range: 'last-24hours',
       loading: false,
       chartData: [],
+      invoices: [],
       totalRevenue: 0,
       totalOrders: 0,
       totalViews: 0,
@@ -69,15 +96,16 @@ class Dashboard extends React.Component {
   getAnalyticsData = (date, initial) => {
     const startDate = date.startDate.format('MM/DD/YYYY');
     const endDate = date.endDate.format('MM/DD/YYYY');
-    const { getAnalyticsData } = this.props;
+    const { getAnalyticsData, geLastInvoices } = this.props;
 
     this.setState({loading: true})
 
     if(initial) {
       Promise.all([
           getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
-          getAnalyticsData(startDate, endDate)
-      ]).then(([{ data: { analytics }}, { data: { analytics: { total } }}]) => {
+          getAnalyticsData(startDate, endDate),
+          geLastInvoices()
+      ]).then(([{ data: { analytics }}, { data: { analytics: { total } }}, { data: { invoices } }]) => {
 
         this.setState({
           totalRevenue: total.revenue || 0,
@@ -88,7 +116,8 @@ class Dashboard extends React.Component {
           ordersProgress: total.orders_count_progress || 0,
           viewsProgress: total.views_count_progress || 0,
           queriesProgress: total.queries_count_progress || 0,
-          chartData: analytics['daily']
+          chartData: analytics['daily'],
+          invoices: invoices
         })
       })   .finally(() => {
         this.setState({loading: false})
@@ -122,6 +151,44 @@ class Dashboard extends React.Component {
     this.getAnalyticsData({ startDate, endDate }, true)
   }
 
+
+  gotoDetail = (id) => {
+    this.props.history.push({
+      pathname: `/dashboard/${userId}/orders/view/${id}`
+    })
+  }
+
+  renderOrderInfo = (cell, row) => (
+      <div>
+        <p><a onClick={(e) => this.gotoDetail(row.uniqid)}>
+          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
+          </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+        </p>
+        <p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title}</p>
+      </div>
+  )
+
+  renderOrderStatus = (cell, row) => (
+      <div>
+        {PAYMENT_OPTS[row.gateway]}
+      </div>
+  )
+
+  renderOrderValue = (cell, row) => (
+      <div className="order">
+        <p className="order-value">{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
+        <p className="caption">{row.crypto_amount ? (row.crypto_amount + ' ') : ''} {PAYMENT_OPTS[row.gateway]}</p>
+      </div>
+  )
+
+  renderOrderTime = (cell, row) => (
+      <div>
+        <p>{moment(row.created_at*1000).format('DD, MMM YYYY')}</p>
+        <p>{moment(row.created_at*1000).format('HH:mm')}</p>
+      </div>
+  )
+
+
   render() {
     const {
       chartData,
@@ -134,8 +201,8 @@ class Dashboard extends React.Component {
       ordersProgress,
       viewsProgress,
       queriesProgress,
-      range
-    } = this.state
+      invoices
+    } = this.state;
 
     return (
       <div className="dashboard-screen">
@@ -153,15 +220,14 @@ class Dashboard extends React.Component {
                 </Col>
               </Row>
             </CardHeader>
+
             <div className="pt-4">
-              {
-                loading ?
-                  <Row>
+              {loading && <Row>
                     <Col lg={12}>
                       <Loader />
                     </Col>
-                  </Row>
-                : <div>
+                  </Row>}
+              {!loading && <div>
                     <Row className="mt-4">
                       <Col lg={3}>
                         <Card>
@@ -245,10 +311,69 @@ class Dashboard extends React.Component {
                         </Card>
                       </Col>
                     </Row>
+
+                    <h5 className="mb-4">Revenues | Orders</h5>
                     <CardBody className="">
-                      <h5 className="mb-4">Revenues | Orders</h5>
                       <DashBoardChart height="350px" data={chartData}/>
                     </CardBody>
+
+                    {!!invoices.length && <h5 className="mb-4 mt-4">Last 5 Orders</h5>}
+                    {!!invoices.length && <Row className={"mb-4"}>
+                      <Col lg={12}>
+                        <div className={"product-table"}>
+                          <BootstrapTable
+                              options={{
+                                ...tableOptions(),
+                                onRowClick: (row) => this.gotoDetail(row.uniqid),
+                                sizePerPage: 5
+                              }}
+                              data={invoices}
+                              version="4"
+                              totalSize={invoices.length}
+                              className="product-table"
+                              trClassName="cursor-pointer"
+                          >
+
+                            <TableHeaderColumn
+                                isKey
+                                dataField="customer_email"
+                                dataFormat={this.renderOrderInfo}
+                                dataSort
+                                width='45%'
+                            >
+                              Info
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
+                                dataField="total_display"
+                                dataAlign="center"
+                                dataSort
+                                dataFormat={this.renderOrderValue}
+                                width='20%'
+                            >
+                              Value
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
+                                dataField="status"
+                                dataAlign="center"
+                                dataFormat={this.renderOrderStatus}
+                                dataSort
+                                width='20%'
+                            >
+                              Payment Gateway
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
+                                dataField="created_at"
+                                dataAlign="right"
+                                dataFormat={this.renderOrderTime}
+                                dataSort
+                                width='15%'
+                            >
+                              Time
+                            </TableHeaderColumn>
+                          </BootstrapTable>
+                        </div>
+                      </Col>
+                    </Row>}
                   </div>
               }
             </div>

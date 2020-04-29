@@ -10,7 +10,7 @@ import {
   Label,
   Input
 } from 'reactstrap'
-import { Button } from 'components';
+import {Button, Spin} from 'components';
 import { AppSwitch } from '@coreui/react'
 import { CommonActions, AuthActions } from 'services/global'
 import { Loader } from 'components'
@@ -38,18 +38,27 @@ class Payments extends React.Component {
       discord_link: '',
       search_enabled: true,
       dark_mode: false,
-      hide_out_of_stock: false
+      hide_out_of_stock: false,
+      google_analytics_tracking_id: ''
     }
   }
 
   saveDesign(){
     this.setState({ loading: true });
-    this.props.actions.saveShopSettings({
+
+    var settingsData = {
       discord_link: this.state.discord_link,
       search_enabled: this.state.search_enabled,
       dark_mode: this.state.dark_mode,
-      hide_out_of_stock: this.state.hide_out_of_stock
-    })
+      hide_out_of_stock: this.state.hide_out_of_stock,
+      google_analytics_tracking_id: this.state.google_analytics_tracking_id
+    }
+
+    // if(this.state.google_analytics_tracking_id) {
+    //   settingsData.google_analytics_tracking_id = this.state.google_analytics_tracking_id
+    // }
+
+    this.props.actions.saveShopSettings(settingsData)
       .then(res => this.props.commonActions.tostifyAlert('success', res.message))
       .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
       .finally(() => this.setState({loading: false}))
@@ -62,9 +71,11 @@ class Payments extends React.Component {
       const settings = res.data.settings
       this.setState({
         discord_link: settings.shop_discord_link || '',
-        search_enabled: settings.shop_search_enabled == '1'?true:false,
-        dark_mode: settings.shop_dark_mode == '1'?true:false,
-        hide_out_of_stock: settings.shop_hide_out_of_stock == '1'?true:false
+        search_enabled: settings.shop_search_enabled === '1',
+        dark_mode: settings.shop_dark_mode === '1',
+        hide_out_of_stock: settings.shop_hide_out_of_stock === '1',
+
+        google_analytics_tracking_id: settings.shop_google_analytics_tracking_id || ''
       })
     }).finally(() => {
       this.setState({loading: false})
@@ -72,21 +83,18 @@ class Payments extends React.Component {
   }
 
   render() {
-    const { loading, discord_link, search_enabled, dark_mode, hide_out_of_stock } = this.state;
+    const { loading, discord_link, search_enabled, dark_mode, hide_out_of_stock, google_analytics_tracking_id } = this.state;
 
     return (
       <div className="shop-settings-screen">
         <div className="animated fadeIn">
           <Card>
-            <CardBody className="p-4 mb-4">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                : 
+            <CardBody className="p-4 mb-4 position-relative">
+              {loading &&
+              <div className={"loader-container"}>
+                <Loader/>
+              </div>
+              }
                   <Row className="">
                     <Col lg={12}>
                       <FormGroup className="mb-4">
@@ -181,10 +189,10 @@ class Payments extends React.Component {
                       </Row>
                     </Col>
                   </Row>
-              }
+
             </CardBody>
             <Button color="primary" className="mb-4" style={{ width: 200 }} onClick={this.saveDesign.bind(this)}>
-              Save Settings
+              {loading ? <Spin/> : 'Save Settings'}
             </Button>
             
           </Card>

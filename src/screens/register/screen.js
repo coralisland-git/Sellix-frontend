@@ -48,7 +48,7 @@ class Register extends React.Component {
     this.captcha = {}
   }
 
-  handleSubmit = (data) => {
+  handleSubmit = (data, { resetForm }) => {
 
     let { tostifyAlert, history } = this.props;
     let { register, getSelfUser } = this.props.authActions;
@@ -64,22 +64,24 @@ class Register extends React.Component {
     let obj = Object.assign({}, data)
     delete obj['confirm_password'];
 
-    register(obj).then(res => {
-      tostifyAlert('success', 'Registered Successfully.')
+    register(obj)
+        .then(res => {
+          if(res.status === 202) {
+            this.props.history.push({
+              pathname: '/auth/login',
+              state: {
+                success: true,
+                message: res.message
+              }
+            })
+          } else {
+            tostifyAlert('error', res.error)
+            this.captcha.reset();
+          }
 
-      if(res.status === 202) {
-        if(res.data.type == 'email')
-          history.push('/auth/email')
-        else if(res.data.type == 'otp')
-          history.push('/auth/otp')
-      }
-
-      this.props.authActions.getSelfUser().then(res => {
-        window.location.href = (`/dashboard/${res.data.user.username}/home`)
-      })
     }).catch(err => {
       tostifyAlert('error', err.error)
-      this.captcha.reset()
+      this.captcha.reset();
     })
   }
 
