@@ -123,7 +123,7 @@ export function mainBrowserNavigation(props){
           },
           {
             name: 'Webhooks',
-            url: `/dashboard/${user}/developer/webhooks`,
+            url: `/dashboard/${user}/developer/webhooks/all`,
           },
           {
             name: 'Webhook Logs',
