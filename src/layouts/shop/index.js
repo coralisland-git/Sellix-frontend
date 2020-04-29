@@ -63,8 +63,6 @@ class ShopLayout extends React.Component {
 
 		if(prevProps.user.username !== this.props.user.username) {
 			const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
-
-			window.localStorage.setItem('theme', theme)
 			document.body.classList.remove('light');
 			document.body.classList.remove('dark');
 			document.body.classList.add(theme);
@@ -140,8 +138,6 @@ class ShopLayout extends React.Component {
 		const { verifiedTooltipOpen, userIsBanned, userIsNotFound } = this.state
 
 		const dashboardUrl = user.username ? `/dashboard/${user.username}/home` : '/'
-
-		console.log('theme', user, theme)
 
 		var appBody
 
