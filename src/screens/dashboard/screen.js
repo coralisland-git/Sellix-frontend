@@ -203,9 +203,6 @@ class Dashboard extends React.Component {
       invoices
     } = this.state;
 
-    console.log(moment((invoices[0] || {}).created_at).format('hh:mm:ss, DD/MM/YYYY'));
-
-    console.log(invoices[0])
     return (
       <div className="dashboard-screen">
         <div className="animated fadeIn">
@@ -317,7 +314,7 @@ class Dashboard extends React.Component {
                     <Row className={"mb-4"}>
                         <Col lg={12}>
                           <div className={"product-table"}>
-                            <h5 className="mb-3">Last Invoices</h5>
+                            <h5 className="mb-3">Last 5 Orders</h5>
                             <BootstrapTable
                                 options={{...tableOptions(), onRowClick: (row) => this.gotoDetail(row.uniqid), sizePerPage: 5}}
                                 data={invoices}
