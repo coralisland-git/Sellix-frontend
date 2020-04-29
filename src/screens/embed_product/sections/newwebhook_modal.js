@@ -179,9 +179,9 @@ class NewCustomModal extends React.Component {
                     </Row>
                 )}
               </ModalBody>
-              <ModalFooter className="justify-content-start">
+              {/*<ModalFooter className="justify-content-start">
                  <Button color="primary" type="submit" className="mr-2">Ok</Button>
-               </ModalFooter>
+               </ModalFooter>*/}
             </Form>
             )}
           </Formik>
