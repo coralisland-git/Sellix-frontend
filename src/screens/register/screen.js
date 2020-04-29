@@ -66,20 +66,22 @@ class Register extends React.Component {
 
     register(obj)
         .then(res => {
+          if(res.status === 202) {
+            this.props.history.push({
+              pathname: '/auth/login',
+              state: {
+                success: true,
+                message: res.message
+              }
+            })
+          } else {
+            tostifyAlert('error', res.error)
+            this.captcha.reset();
+          }
 
     }).catch(err => {
-      if(err.status === 202 && err.message === "Validation Email Sent.") {
-        this.props.history.push({
-          pathname: '/auth/login',
-          state: {
-            success: true,
-            message: 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
-          }
-        })
-      } else {
-        tostifyAlert('error', err.error)
-        this.captcha.reset();
-      }
+      tostifyAlert('error', err.error)
+      this.captcha.reset();
     })
   }
 
