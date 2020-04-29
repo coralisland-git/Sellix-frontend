@@ -43,15 +43,18 @@ class LogIn extends React.Component {
 
   componentDidMount() {
       let { tostifyAlert, location: { state } } = this.props;
-      if(state.success) {
-          tostifyAlert('success', state.message)
-          return
-      }
-      if(state.code) {
-          tostifyAlert('success', state.message)
-      }
-      if(state.code === false) {
-          tostifyAlert('error', state.message)
+
+      if(state) {
+          if(state.success) {
+              tostifyAlert('success', state.message)
+              return
+          }
+          if(state.code) {
+              tostifyAlert('success', state.message)
+          }
+          if(state.code === false) {
+              tostifyAlert('error', state.message)
+          }
       }
   }
 
