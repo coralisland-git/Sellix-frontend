@@ -57,6 +57,9 @@ import ReplyToQuerie from './queries/screens/reply'
 import Contacts from './contacts/screens/reply/index.js'
 import Terms from './terms/screen.js'
 import AdminDashboard from './admin_dashboard/screen'
+import Users from './users'
+import User from './users/screens/detail'
+import TopUsers from './topUsers'
 
 import PaypalPaying from './paypal_paying'
 import Invoice from './invoice'
@@ -65,6 +68,11 @@ import Notification from './notification'
 import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
+import OrderAdminDetail from './users/screens/viewOrder/screens/detail'
+import Settings from './settings'
+import SettingsEdit from './settings/screens/detail'
+import AdminEditUser from './users/screens/detail/editUser'
+import Invoices from './invoices'
 import ShopDesign from './shop_design'
 import ShopGoogleAnalytics from './shop_google_analytics'
 import StripeCallback from './payments_stripe_callback'
@@ -97,6 +105,15 @@ export {
   TwoFactorAuthentication,
   Invoice,
   Terms,
+  Users,
+  User,
+  OrderAdminDetail,
+  TopUsers,
+  Settings,
+  SettingsEdit,
+  AdminEditUser,
+  Invoices,
+  // Tickets,
   Ticket,
   EmailConfirm,
 

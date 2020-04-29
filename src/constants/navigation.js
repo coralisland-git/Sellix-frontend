@@ -2,6 +2,37 @@ import { matchPath } from "react-router-dom";
 
 const user = window.localStorage.getItem('userId')
 
+export const adminNavigation =  {
+  items: [
+    {
+      name: 'Dashboard',
+      url: `/admin/dashboard`,
+      icon: 'fas fa-home fa-lg'
+    },
+    {
+      name: 'Users',
+      url: `/admin/users`,
+      icon: 'fas fa-users',
+    },
+    {
+      name: 'Top 10 users',
+      url: `/admin/top`,
+      icon: 'fas fa-star',
+    },
+    {
+      name: 'Settings',
+      url: `/admin/settings`,
+      icon: 'fas fa-cog',
+    },
+    {
+      name: 'Invoices',
+      url: `/admin/invoices`,
+      icon: 'fas fa-credit-card',
+    },
+    
+  ]
+}
+
 export function mainBrowserNavigation(props){
 
   let { pathname } = window.location;
@@ -123,7 +154,7 @@ export function mainBrowserNavigation(props){
           },
           {
             name: 'Webhooks',
-            url: `/dashboard/${user}/developer/webhooks`,
+            url: `/dashboard/${user}/developer/webhooks/all`,
           },
           {
             name: 'Webhook Logs',
@@ -225,80 +256,7 @@ export const mainMobileNavigation = () => ({
   ]
 })
 
-export const adminNavigation =  {
-  items: [
-    {
-      name: 'Dashboard',
-      url: `/dashboard/home`,
-      icon: 'fas fa-home fa-lg'
-    },
-    {
-      name: 'Users',
-      url: `/dashboard/products`,
-      icon: 'fas fa-boxes',
-    },
-    {
-      name: 'Top 10 users',
-      url: `/dashboard/orders`,
-      icon: 'fas fa-credit-card',
-    },
-    {
-      name: 'Analytics',
-      url: `/dashboard/analytics`,
-      icon: 'fas fa-area-chart',
-      children: [
-        {
-          name: 'All Analytics',
-          url: `/dashboard/analytics`,
-        },
-        {
-          name: 'Reports',
-          url: `/dashboard/analytics/reports`,
-        },
-      ]
-    },
-    {
-      name: 'Coupons',
-      url: `/dashboard/coupons`,
-      icon: 'fa fa-tags',
-    },
-    {
-      name: 'Queries',
-      url: `/dashboard/queries`,
-      icon: 'fas fa-question-circle',
-    },
-    {
-      name: 'Feedback',
-      url: `/dashboard/feedback`,
-      icon: "fa fa-commenting",
-    },
-    {
-      name: 'Blacklist',
-      url: `/dashboard/blacklist`,
-      icon: 'fas fa-ban',
-    },
-    // {
-    //   name: 'Developer',
-    //   url: `/dashboard/developer`,
-    //   icon: 'fas fa-code',
-    //   children: [
-    //     {
-    //       name: 'Webhooks',
-    //       url: `/dashboard/developer/webhooks`,
-    //     },
-    //     {
-    //       name: 'Webhook Logs',
-    //       url: `/dashboard/developer/webhook-logos`,
-    //     }
-    //   ]
-    // },
-    {
-      name: 'Pages',
-      url: `/dashboard/pages`,
-      icon: 'fa fa-file',
-    }
-  ]
-}
+
 
 
 export const accountSettingsNavigation =  {

@@ -45,7 +45,7 @@ class EmbedProduct extends React.Component {
       loading: true,
       openModal: false,
       custom_fields: [],
-      generateCode: null
+      embedCode: null
     }
   }
 
@@ -72,22 +72,47 @@ class EmbedProduct extends React.Component {
     this.setState({custom_fields: custom_fields})
   }
 
-  deleteCustomField(e, index) {
+  deleteCustomField(e, product, index) {
     const custom_fields = Object.assign([], this.state.custom_fields)
     custom_fields.splice(index, 1)
 
     this.setState({custom_fields: custom_fields})
+    this.generateCode(product, custom_fields)
   }
 
-  saveCustomField(type, value, index) {
+  saveCustomField(type, value, product, index) {
     const custom_fields = Object.assign([], this.state.custom_fields)
     custom_fields[index][type] = value
 
     this.setState({custom_fields: custom_fields})
+    this.generateCode(product, custom_fields)
   }
 
-  showGenerateCode(generateCode) {
-    this.setState({generateCode: generateCode})
+  generateCode(product, custom_fields) {    
+    var temp = []
+    var custom_fields = custom_fields.map(field => {
+      if(field.name !== "" && field.value !== "" && temp.indexOf(field.name) == -1 ){
+        temp.push(field.name)
+        return `data-sellix-custom-${field.name.toLowerCase()}="${field.value}"`
+      }
+    })
+    custom_fields = custom_fields.filter(field => {
+      if (field !== "")
+        return field
+    })
+    var embedCode = `<button
+  data-sellix-product="${product.uniqid}"`
+    if (custom_fields.length > 0)
+      embedCode += '\n  ' + custom_fields.join('\n  ')
+    embedCode += `
+  type="submit"
+  alt="Buy Now with Sellix.io"
+>
+  Purchase
+</button>`    
+    setTimeout(function() {
+      this.setState({embedCode: embedCode})      
+    }.bind(this), 500)
   }
 
   openNewWebhookModal() {
@@ -100,13 +125,13 @@ class EmbedProduct extends React.Component {
     this.setState({
       openModal: false,
       custom_fields: [],
-      generateCode: null
+      embedCode: null
     })
   }
 
   render() {
 
-    const { loading, openModal,custom_fields, generateCode } = this.state
+    const { loading, openModal,custom_fields, embedCode } = this.state
 
     return (
       <div className="documentation-screen embed">
@@ -114,13 +139,13 @@ class EmbedProduct extends React.Component {
           <NewWebhookModal 
             openModal={openModal}
             custom_fields={custom_fields}
-            generateCode={generateCode}
+            embedCode={embedCode}
             closeModal={this.closeNewWebhookModal.bind(this)}
             all_products={this.props.all_products}
             addCustomField={this.addCustomField.bind(this)}
             deleteCustomField={this.deleteCustomField.bind(this)}
             saveCustomField={this.saveCustomField.bind(this)}
-            showGenerateCode={this.showGenerateCode.bind(this)}
+            generateCode={this.generateCode.bind(this)}
           />
           <Card className="grey">
             <CardHeader>

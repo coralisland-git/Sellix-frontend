@@ -9,14 +9,22 @@
   }
 
   .perfectmoney-button {
-    background-color: #e4d6ff !important;
+    background-color: #e73c3c !important;
     border-radius: 4px;
     color: white !important;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
     border: none !important;
+
+    img {
+      width: 17px;
+      vertical-align: text-top;
+    }
   }
 
   .perfectmoney-button:hover {
-    background-color: #cbb9ec  !important;
+    background-color: #f35c5b  !important;
   }
 
   .invoice-card {

@@ -26,6 +26,7 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import config from 'constants/config'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import * as _ from 'lodash'
 
 import {
 	CommonActions
@@ -42,6 +43,8 @@ import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
 const user = window.localStorage.getItem('userId')
+
+
 
 const mapStateToProps = (state) => {
 	return ({
@@ -267,6 +270,7 @@ class EditProduct extends React.Component {
 	}
 
 	handleSubmit(values) {
+		const admin = _.includes(window.location.pathname, 'admin')
 		this.setState({saving: true})
 		const { gateways, custom_fields, showFileStock, showServiceStock, images, files, webhook_fields } = this.state
 		delete gateways['']
@@ -288,10 +292,13 @@ class EditProduct extends React.Component {
 		values.webhooks = webhook_fields
 
 		this.props.actions.editProduct(values).then(res => {
-
-			this.props.history.push(`/dashboard/${user}/products`)
-			this.props.commonActions.tostifyAlert('success', res.message)
-
+			if(admin){
+				window.history.back()
+				this.props.commonActions.tostifyAlert('success', res.message)
+			}else{
+				this.props.history.push(`/dashboard/${user}/products/all`)
+				this.props.commonActions.tostifyAlert('success', res.message)
+			}
 		}).catch(err => {
 			this.props.commonActions.tostifyAlert('error', err.error)
 		}).finally(() => {
@@ -310,7 +317,7 @@ class EditProduct extends React.Component {
 	this.setState({duplicating: true})
 	this.props.actions.duplicateProduct({uniqid: this.id}).then(res => {
 		this.props.commonActions.tostifyAlert('success', res.message)
-		this.props.history.push(`/dashboard/${user}/products`)
+		window.history.back()
 	}).catch(err => {
 		this.props.commonActions.tostifyAlert('error', err.error)
 	}).finally(() => {
@@ -373,6 +380,7 @@ class EditProduct extends React.Component {
   }
 
 	render() {
+		const admin = _.includes(window.location.pathname, 'admin')
 		const { 
 			loading, 
 			saving,
@@ -399,11 +407,11 @@ class EditProduct extends React.Component {
 		return (
 			<div className="create-product-screen mt-3">
 				<div className="animated fadeIn">
-					<Breadcrumb className="mb-0">
+					{!admin && <Breadcrumb className="mb-0">
 						<BreadcrumbItem active className="mb-0">
 							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Products</a>
 						</BreadcrumbItem>
-					</Breadcrumb>
+					</Breadcrumb>}
 					<Formik
 						noValidate="noValidate"
 						initialValues={initialValues}

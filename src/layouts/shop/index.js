@@ -35,15 +35,17 @@ import '../../layouts/landing/style.scss'
 const mapStateToProps = (state) => {
 	return {
 		version: state.common.version,
-		user: state.common.general_info,
-		profile: state.auth.profile,
+		user: state.common.general_info || {},
+		profile: state.auth.profile || {},
 		is_authed: state.auth.is_authed
 	}
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		authActions: bindActionCreators(AuthActions, dispatch),
-		commonActions: bindActionCreators(CommonActions, dispatch)
+		getSelfUser: bindActionCreators(AuthActions.getSelfUser, dispatch),
+		logOut: bindActionCreators(AuthActions.logOut, dispatch),
+		setTostifyAlertFunc: bindActionCreators(CommonActions.setTostifyAlertFunc, dispatch),
+		getGeneralUserInfo: bindActionCreators(CommonActions.getGeneralUserInfo, dispatch)
 	}
 }
 
@@ -63,8 +65,6 @@ class ShopLayout extends React.Component {
 
 		if(prevProps.user.username !== this.props.user.username) {
 			const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
-
-			window.localStorage.setItem('theme', theme)
 			document.body.classList.remove('light');
 			document.body.classList.remove('dark');
 			document.body.classList.add(theme);
@@ -75,19 +75,45 @@ class ShopLayout extends React.Component {
 		}
 	}
 
+	componentWillUnmount() {
+		if(window.$crisp && window.$crisp.on) {
+			window.$crisp.do('chat:hide')
+		}
+	}
+
 	componentDidMount() {
 
 		document.title = `Products | Sellix`;
+		const { username } = this.props.match.params;
+		const { getGeneralUserInfo, getSelfUser, setTostifyAlertFunc } = this.props;
 
-		this.props.commonActions
-			.getGeneralUserInfo(this.props.match.params.username)
+		if(window.$crisp && window.$crisp.on) {
+			window.$crisp.do('chat:show')
+		}
+
+		getSelfUser();
+
+		getGeneralUserInfo(username)
+			.then(({ user }) => {
+				if(user.shop_crisp_website_id) {
+					window.$crisp = [];
+					window.CRISP_WEBSITE_ID=user.shop_crisp_website_id;
+					const script = document.createElement("script");
+					script.src = "https://client.crisp.chat/l.js";
+					script.type = 'text/javascript';
+					script.async = true;
+					script.id = "crisp";
+					document.getElementsByTagName("head")[0].appendChild(script);
+				}
+			})
 			.catch((e) => {
-				if (e.status == 404) {
+				console.log(e)
+				if (e.status === 404) {
 					this.setState({
 						userIsNotFound: true
 					})
 				}
-				if(e.status == 400) {
+				if(e.status === 400) {
 					if(e.error.includes('user has been banned')) {
 						this.setState({
 							userIsBanned: true
@@ -96,10 +122,9 @@ class ShopLayout extends React.Component {
 					}
 				}
 			})
-		this.props.authActions.getSelfUser().catch((err) => {
-			this.props.authActions.logOut()
-		})
-		const toastifyAlert = (status, message) => {
+
+
+		setTostifyAlertFunc((status, message) => {
 			if (!message) {
 				message = 'Unexpected Error'
 			}
@@ -120,8 +145,7 @@ class ShopLayout extends React.Component {
 					position: toast.POSITION.TOP_RIGHT
 				})
 			}
-		}
-		this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+		})
 	}
 
 	verifiedTooltipToggle() {
@@ -134,14 +158,12 @@ class ShopLayout extends React.Component {
 		}
 
 		const { pathname } = this.props.history.location;
-		const { user } = this.props
-    	const userId = this.props.match.params.username
+		const { user } = this.props;
+    	const userId = this.props.match.params.username;
 		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
-		const { verifiedTooltipOpen, userIsBanned, userIsNotFound } = this.state
+		const { verifiedTooltipOpen, userIsBanned, userIsNotFound } = this.state;
 
 		const dashboardUrl = user.username ? `/dashboard/${user.username}/home` : '/'
-
-		console.log('theme', user, theme)
 
 		var appBody
 
@@ -162,7 +184,7 @@ class ShopLayout extends React.Component {
 				<section className="pb-3">
 					<div className="text-center align-items-center logo-content">
 						<h4 className="mb-0 mt-3 mb-2">
-							<span>{user.username}&nbsp;</span>
+							<span style={{fontSize: 20}}>{user.username}&nbsp;</span>
 							{user.verified == '1' &&
 								<span>
 									<LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>

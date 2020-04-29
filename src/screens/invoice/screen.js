@@ -425,7 +425,7 @@ class Invoice extends React.Component {
                                   <Button type="submit" 
                                     name="PAYMENT_METHOD" className="perfectmoney-button w-100 p-0" 
                                     value="Pay Now!" class="tabeladugme" id="pm-button">
-                                      <img src={perfectMoneyBtn} width="150"/>
+                                      <img src={perfectmoneyIcon} /> Perfect Money
                                   </Button>
                                 </form>
                               </div>

@@ -62,6 +62,7 @@ export const getGeneralUserInfo = (username) => {
               type: COMMON.GENERAL_USER_INFO,
               payload: data
             })
+            return data
           } else {
             throw res
           }

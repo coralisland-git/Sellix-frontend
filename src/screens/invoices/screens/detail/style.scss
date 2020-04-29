@@ -1,0 +1,31 @@
+.detail-product-screen {
+  .card-header {
+    color: #20a8d8;
+  }
+}
+
+.adminUser{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 300px;
+  position: relative;
+  .row{
+    min-width: 700px;
+  }
+}
+
+.adminUserBlock{
+  min-width: 250px;
+  height: 200px;
+  padding: 15px;
+  position: fixed;
+  z-index: 9999;
+  left: 340px;
+  border-radius: 10px;
+  background: #1D183D;
+}
+
+.userBlockRow{
+  margin-bottom: 10px;
+}
