@@ -32,6 +32,7 @@ const mainRoutes = [
 
   // User
   { path: `/dashboard/${user}`, name: 'UserLayout', component: UserLayout },
+  { path: `/admin`, name: 'ReallyAdminLayout', component: UserLayout },
 
   // Wrong user - redirect to dashboard
   { path: `/dashboard/`, name: 'WrongUser', component: RedirectToLogin },
