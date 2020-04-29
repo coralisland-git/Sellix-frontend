@@ -218,7 +218,7 @@ class Payments extends React.Component {
                                 document.location.reload()
                               })
 
-                            }}>Disconnect <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
+                            }}>Deauthorize <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
                           </FormGroup>
                         </Col>
                       </Row>
