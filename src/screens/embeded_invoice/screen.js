@@ -60,6 +60,17 @@ export const PAYMENT_ICONS = {
   skrill: skrillIcon
 }
 
+const PAYMENT_OPTS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'BTC',
+  'litecoin': 'LTC',
+  'ethereum': 'ETH',
+  'skrill': 'Skrill',
+  'stripe': 'Stripe',
+  'bitcoincash': 'BTH',
+  'perfectmoney': 'Perfect Money'
+}
+
 const mapStateToProps = (state) => {
   return ({
   })
@@ -306,7 +317,7 @@ class EmbededInvoice extends React.Component {
                             (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
                                 <p className="text-grey bold mt-4 text-center">
                                     Please send exactly <span className="badge text-primary bold">
-                                      {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> BTC to
+                                      {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> {PAYMENT_OPTS[invoice.gateway]} to
                                 </p>
                                 <p className="btc-address text-grey bold text-center">
                                   {invoice.crypto_address || ''}
