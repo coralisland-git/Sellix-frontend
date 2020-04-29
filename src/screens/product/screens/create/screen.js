@@ -127,7 +127,7 @@ class CreateProduct extends React.Component {
 				title: '',
 				price: '',
 				description: '',
-				currency: 'USD',
+				currency: CURRENCY_LIST[0],
 				gateways: '',
 				type: 'file',
 				serials: '',
