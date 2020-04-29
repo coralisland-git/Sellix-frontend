@@ -23,6 +23,7 @@ import litecoinIcon from "../../assets/images/crypto/ltc.svg";
 import bitcoinCashIcon from "../../assets/images/crypto/bitcoincash.svg";
 import perfectmoneyIcon from "../../assets/images/crypto/perfectmoney.svg";
 import stripeIcon from "../../assets/images/crypto/stripe.svg";
+import stripeBtnIcon from "../../assets/images/crypto/stripe_revised.svg";
 
 const mapStateToProps = (state) => ({
   product_list: state.product.product_list
@@ -210,14 +211,14 @@ class Payments extends React.Component {
                             {stripe_user_id && <p style={{marginBottom: '5px'}}>You are connected</p>}
                             {!stripe_user_id && <Button color="default" className="connect-discord" onClick={() => {
                               window.location = 'https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_H8NlXW3cDCE36GZyIwv5RFOZZmaT1lJx&scope=read_write&redirect_uri=https://sellix.io/settings/stripe/connect'
-                            }}>Connect</Button>}
+                            }}>Connect <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
                             {stripe_user_id && <Button color="default" className="connect-discord" onClick={() => {
 
                               this.props.actions.stripeDeauthorize().then(() => {
                                 document.location.reload()
                               })
 
-                            }}>Disconnect</Button>}
+                            }}>Disconnect <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
                           </FormGroup>
                         </Col>
                       </Row>
