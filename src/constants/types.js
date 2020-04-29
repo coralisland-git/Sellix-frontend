@@ -26,9 +26,29 @@ export const ORDER = {
   LIVE_ORDER_DISPLAY: 'LIVE_ORDER_DISPLAY'
 }
 
+export const INVOICES = {
+  INVOICES: 'INVOICES'
+}
+
 export const ANALYTICS = {
   ALL_REPORTS: 'ALL_REPORTS',
   NEW_REPORT: 'NEW_REPORT'
+}
+
+export const SETTINGS = {
+  SETTINGS: 'SETTINGS'
+}
+
+export const USERS = {
+  USERS: 'USERS'
+}
+
+export const USER = {
+  USER: 'USER'
+}
+
+export const TOP_USERS = {
+  TOP_USERS: 'TOP_USERS'
 }
 
 export const BLACKLIST = {
@@ -93,9 +113,6 @@ export const EXPENSE = {
   EXPENSE_LIST: 'EXPENSE_LIST'
 }
 
-export const SETTINGS = {
-
-}
 
 export const CUSTOMER_INVOICE = {
   CUSTOMER_INVOICE_LIST: 'CUSTOMER_INVOICE_LIST'
@@ -130,9 +147,9 @@ export const PAYMENT = {
   PAYMENT_LIST: 'PAYMENT_LIST'
 }
 
-export const USER = {
-  USER_LIST: 'USER_LIST'
-}
+// export const USER = {
+//   USER_LIST: 'USER_LIST'
+// }
 
 export const VAT = {
   VAT_LIST: 'VAT_LIST',

@@ -65,8 +65,6 @@ class ShopLayout extends React.Component {
 
 		if(prevProps.user.username !== this.props.user.username) {
 			const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
-
-			window.localStorage.setItem('theme', theme)
 			document.body.classList.remove('light');
 			document.body.classList.remove('dark');
 			document.body.classList.add(theme);
@@ -186,7 +184,7 @@ class ShopLayout extends React.Component {
 				<section className="pb-3">
 					<div className="text-center align-items-center logo-content">
 						<h4 className="mb-0 mt-3 mb-2">
-							<span>{user.username}&nbsp;</span>
+							<span style={{fontSize: 20}}>{user.username}&nbsp;</span>
 							{user.verified == '1' &&
 								<span>
 									<LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>

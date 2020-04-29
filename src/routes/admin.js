@@ -23,6 +23,14 @@ import {
   OrderDetail,
   ReplyToQuerie,
   AdminDashboard,
+  Users,
+  User,
+  TopUsers,
+  OrderAdminDetail,
+  Settings,
+  SettingsEdit,
+  AdminEditUser,
+  Invoices,
   CreateProductGroup,
   EditProductGroup,
   ProductGroups,
@@ -35,14 +43,64 @@ import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback 
 const user = window.localStorage.getItem('userId')
 
 const adminRoutes = [
-
+  {
+    path: `/admin/invoices/view/:id`,
+    name: 'InvoicesView',
+    component: OrderDetail.screen
+  },
+  {
+    path: `/admin/invoices`,
+    name: 'Invoices',
+    component: Invoices.screen
+  },
+  {
+    path: `/admin/settings/edit`,
+    name: 'SettingsEdit',
+    component: SettingsEdit.screen
+  },
+  {
+    path: `/admin/settings`,
+    name: 'Settings',
+    component: Settings.screen
+  },
+  {
+    path: `/admin/users/view/:id/edit/:id`,
+    name: 'EditAdminUser',
+    component: AdminEditUser
+  },
+  {
+    path: `/admin/users/view/:id/product/edit/:id`,
+    name: 'EditAdminProduct',
+    component: EditProduct.screen
+  },
+  {
+    path: `/admin/users/view/:id/order/:id`,
+    name: 'OrderAdminDetail',
+    component: OrderAdminDetail.screen
+  },
+  {
+    path: `/admin/users/view/:id`,
+    name: 'User',
+    component: User.screen
+  },
+  {
+    path: `/admin/top`,
+    name: 'TopUsers',
+    component: TopUsers.screen
+  },
   {
     path: `/admin/dashboard`,
     name: 'AdminDashboard',
-    component: AdminDashboard,
+    component: Dashboard.screen,
     title: 'Dashboard',
     exact: true,
   },
+  {
+    path: `/admin/users`,
+    name: 'Users',
+    component: Users.screen
+  },
+  
   {
     path: `/dashboard/${user}/home`,
     name: 'Dashboard',

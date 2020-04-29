@@ -18,9 +18,8 @@
     border-radius: 3px;
     background-color: white;
     box-shadow: 0 4px 30px #969ad680;
-    margin-bottom: 100px;
+    margin-bottom: 30px;
     transition: all .3s ease;
-    margin-top: -7rem;
     height: 365px !important;
 
     @media (max-width: 768px) {
@@ -44,11 +43,6 @@
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
       padding: 10px 10px 20px 10px;
-
-      img {
-        margin-top: 20px;
-        border-radius: 50%;
-      }
     }
 
     .content {
@@ -154,8 +148,19 @@
   }
 
   .service-img {
-    max-width: 120px;
-    max-height: 120px;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 70px;
+      height: 70px;
+    }
   }
 
   .undraw-img {

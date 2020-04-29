@@ -1,0 +1,40 @@
+.product-screen {
+  .card-header {
+    color: #20a8d8;
+  }
+  .btn-group {
+    .btn {
+      color: #ffffff !important;
+    }
+  }
+
+  .product-table {
+    .my-link {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.settingRow{
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.settingRowKey{
+  width: 300px;
+  margin-right: 15px;
+}
+
+.settings-titleBlock{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex: auto!important;
+  max-width: none!important;
+  Button{
+    margin-top: auto!important;
+  }
+}
