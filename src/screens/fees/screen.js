@@ -265,7 +265,7 @@ class Fees extends React.Component {
                       <div className="content p-2">
                           <p className="small text-primary">
                             {
-                              'Sellix does not take any additional fee to process Bitcoin Cash invoices.'
+                              'Sellix does not take any additional fee to process Stripe invoices.'
                             }
                           </p>
                           {/* <p className="small1 text-primary">
