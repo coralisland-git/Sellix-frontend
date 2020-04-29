@@ -531,8 +531,7 @@ class EmbededPayment extends React.Component {
                     { !showPaymentOptions && (
                       <div className="pt-4 pl-4 pr-4">
                         <div className="text-center">
-                          <p className="grey desc">
-                            {product_info.description}
+                          <p className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
                           </p>
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                           onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
