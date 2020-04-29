@@ -7,10 +7,14 @@ import {
 
 import './style.scss'
 
-import service1 from 'assets/images/crypto/b_paypal.jpg'
-import service2 from 'assets/images/crypto/b_btc.jpg'
-import service3 from 'assets/images/crypto/b_ltc.jpg'
-import service4 from 'assets/images/crypto/b_skrill.jpg'
+import service1 from 'assets/images/crypto/paypal.svg'
+import service2 from 'assets/images/crypto/btc.svg'
+import service3 from 'assets/images/crypto/ltc.svg'
+import service4 from 'assets/images/crypto/eth.svg'
+import service5 from 'assets/images/crypto/bitcoincash.svg'
+import service6 from 'assets/images/crypto/perfectmoney.svg'
+import service7 from 'assets/images/crypto/stripe.svg'
+import service8 from 'assets/images/crypto/stripe.svg'
 
 import * as feeAction from './actions'
 
@@ -68,15 +72,17 @@ class Fees extends React.Component {
             </Container>
           </div>
           <div className="section text-center bg-white" style={{paddingBottom:50}}>
-              <Container className="home-container">
-                <Row className="service-row ">
+              <Container className="home-container pt-5">
+                <Row>
                     <Col md={3}>
                         <div className="payment-card">
                             <div className="method">
                                 <h4 className="mt-4">Paypal</h4>
-                                <img className="service-img" src={service1}/>
+                                <div className="service-img">
+                                  <img src={service1}/>
+                                </div>
                             </div>
-                            <div className="content">
+                            <div className="content p-2">
                                 <p className="small text-primary">
                                   {paypal?
                                     'Paypal':
@@ -102,9 +108,11 @@ class Fees extends React.Component {
                         <div className={"payment-card "+ (showMoreBtc && "show-more")}>
                             <div className="method">
                                 <h4 className="mt-4">Bitcoin</h4>
-                                <img className="service-img" src={service2}/>
+                                <div className="service-img">
+                                  <img src={service2}/>
+                                </div>
                             </div>
-                            <div className="content">
+                            <div className="content p-2">
                                 <p className="small text-primary">
                                   {
                                     'Sellix does not take any additional fee to process Bitcoin invoices.'
@@ -131,9 +139,11 @@ class Fees extends React.Component {
                         <div className={"payment-card " + (showMoreLtc && "show-more")}>
                             <div className="method">
                                 <h4 className="mt-4">Litecoin</h4>
-                                <img className="service-img" src={service3}/>
+                                <div className="service-img">
+                                  <img src={service3}/>
+                                </div>
                             </div>
-                            <div className="content">
+                            <div className="content p-2">
                               <p className="small text-primary">
                                 {
                                   'Sellix does not take any additional fee to process Litecoin invoices.'
@@ -160,9 +170,11 @@ class Fees extends React.Component {
                         <div className="payment-card">
                             <div className="method">
                                 <h4 className="mt-4">Ethereum</h4>
-                                <img className="service-img" src={service4}/>
+                                <div className="service-img">
+                                  <img src={service4}/>
+                                </div>
                             </div>
-                            <div className="content">
+                            <div className="content p-2">
                               <p className="small text-primary">
                                 {
                                   'Sellix does not take any additional fee to process Ethereum invoices.'
@@ -178,6 +190,101 @@ class Fees extends React.Component {
                             </div>
                         </div>
                     </Col>
+                </Row>
+                <Row>
+                  <Col md={3}>
+                    <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                      <div className="method">
+                          <h4 className="mt-4">Bitcoin Cash</h4>
+                          <div className="service-img">
+                            <img src={service5}/>
+                          </div>
+                      </div>
+                      <div className="content p-2">
+                          <p className="small text-primary">
+                            {
+                              'Sellix does not take any additional fee to process Bitcoin Cash invoices.'
+                            }
+                          </p>
+                          {/* <p className="small1 text-primary">
+                            Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
+                          </p>
+                          <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
+                              <b>{bitcoincash.site_fee_low_price || 0} (${bitcoincash.site_fee_low_price_usd || 0})</b>
+                          </p>
+                          <Button className="btn-read-more" onClick={() => this.setState({ showMoreBtc: !this.state.showMoreBtc })}>
+                            read {showMoreBtc ? "less ▲" : "more ▼"}
+                          </Button>
+                          <Collapse isOpen={showMoreBtc}>
+                            <p className="small1 text-primary">
+                            if the order is less than ${bitcoincash.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                            </p>
+                          </Collapse> */}
+                      </div>
+                    </div>
+                  </Col>
+                  <Col md={3}>
+                    <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                      <div className="method">
+                          <h4 className="mt-4">Perfect Money</h4>
+                          <div className="service-img">
+                            <img src={service6}/>
+                          </div>
+                      </div>
+                      <div className="content p-2">
+                          <p className="small text-primary">
+                            {
+                              'Sellix does not take any additional fee to process Perfect Money invoices.'
+                            }
+                          </p>
+                          {/* <p className="small1 text-primary">
+                            Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
+                          </p>
+                          <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
+                              <b>{bitcoincash.site_fee_low_price || 0} (${bitcoincash.site_fee_low_price_usd || 0})</b>
+                          </p>
+                          <Button className="btn-read-more" onClick={() => this.setState({ showMoreBtc: !this.state.showMoreBtc })}>
+                            read {showMoreBtc ? "less ▲" : "more ▼"}
+                          </Button>
+                          <Collapse isOpen={showMoreBtc}>
+                            <p className="small1 text-primary">
+                            if the order is less than ${bitcoincash.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                            </p>
+                          </Collapse> */}
+                      </div>
+                    </div>
+                  </Col>
+                  <Col md={3}>
+                    <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                      <div className="method">
+                          <h4 className="mt-4">Stripe</h4>
+                          <div className="service-img">
+                            <img src={service7}/>
+                          </div>
+                      </div>
+                      <div className="content p-2">
+                          <p className="small text-primary">
+                            {
+                              'Sellix does not take any additional fee to process Bitcoin Cash invoices.'
+                            }
+                          </p>
+                          {/* <p className="small1 text-primary">
+                            Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
+                          </p>
+                          <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
+                              <b>{bitcoincash.site_fee_low_price || 0} (${bitcoincash.site_fee_low_price_usd || 0})</b>
+                          </p>
+                          <Button className="btn-read-more" onClick={() => this.setState({ showMoreBtc: !this.state.showMoreBtc })}>
+                            read {showMoreBtc ? "less ▲" : "more ▼"}
+                          </Button>
+                          <Collapse isOpen={showMoreBtc}>
+                            <p className="small1 text-primary">
+                            if the order is less than ${bitcoincash.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                            </p>
+                          </Collapse> */}
+                      </div>
+                    </div>
+                  </Col>
                 </Row>
               </Container>
           </div>
