@@ -4,7 +4,8 @@ import {
     Payments,
     GeneralSettings,
     ShopDesign,
-    ShopGoogleAnalytics
+    ShopGoogleAnalytics,
+    StripeCallback
   } from 'screens'
 
   const user = window.localStorage.getItem('userId')
@@ -48,6 +49,13 @@ import {
       name: 'Analytics',
       component: ShopGoogleAnalytics.screen,
         title: 'Settings - Analytics'
+    },
+
+    {
+      path: `/settings/stripe/connect`,
+      name: 'Stripe callback',
+      component: StripeCallback.screen,
+      title: 'Stripe Callback'
     },
     // {
     //     path: `/settings/${user}/memebers`,

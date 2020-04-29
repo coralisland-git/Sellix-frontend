@@ -10,16 +10,18 @@ export class LoaderFullscreen extends React.Component {
 
     componentDidMount() {
         if(!this.props.loaderRemovedInitially) {
-			setTimeout(() => {
-				this.setState({
-					loaderFadingOut: true
-				})
-				setTimeout(() => {
-					this.setState({
-						loaderRemoved: true
-					})
-				}, 1000)
-			}, 1000)
+            if(!this.props.alwaysLoading) {
+                setTimeout(() => {
+                    this.setState({
+                        loaderFadingOut: true
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            loaderRemoved: true
+                        })
+                    }, 1000)
+                }, 1000)
+            }
 		} else {
 			this.setState({
 				loaderRemoved: true

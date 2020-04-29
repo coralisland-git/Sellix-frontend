@@ -22,6 +22,7 @@ import ethereumIcon from "../../assets/images/crypto/eth.svg";
 import litecoinIcon from "../../assets/images/crypto/ltc.svg";
 import bitcoinCashIcon from "../../assets/images/crypto/bitcoincash.svg";
 import perfectmoneyIcon from "../../assets/images/crypto/perfectmoney.svg";
+import stripeIcon from "../../assets/images/crypto/stripe.svg";
 
 const mapStateToProps = (state) => ({
   product_list: state.product.product_list
@@ -59,7 +60,8 @@ class Payments extends React.Component {
       wallet_ethereum: this.state.wallet_ethereum || '',
       wallet_bitcoincash: this.state.wallet_bitcoincash || '',
       perfectmoney_id: this.state.perfectmoney_id || '',
-      perfectmoney_passphrase: this.state.perfectmoney_passphrase || ''
+      perfectmoney_passphrase: this.state.perfectmoney_passphrase || '',
+      stripe_user_id: this.state.stripe_user_id
     })
       .then(res => this.props.commonActions.tostifyAlert('success', res.message))
       .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
@@ -87,7 +89,8 @@ class Payments extends React.Component {
       wallet_litecoin, 
       wallet_bitcoincash,
       perfectmoney_id,
-      perfectmoney_passphrase
+      perfectmoney_passphrase,
+      stripe_user_id
     } = this.state;
 
     return (
@@ -196,6 +199,25 @@ class Payments extends React.Component {
                               value={wallet_bitcoincash}
                               onChange={e => this.setState({wallet_bitcoincash: e.target.value})}
                             />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code"><img src={stripeIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Stripe</Label>
+                            <br/>
+                            {stripe_user_id && <p style={{marginBottom: '5px'}}>You are connected</p>}
+                            {!stripe_user_id && <Button color="default" className="connect-discord" onClick={() => {
+                              window.location = 'https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_H8NlXW3cDCE36GZyIwv5RFOZZmaT1lJx&scope=read_write&redirect_uri=https://sellix.io/settings/stripe/connect'
+                            }}>Connect</Button>}
+                            {stripe_user_id && <Button color="default" className="connect-discord" onClick={() => {
+
+                              this.props.actions.stripeDeauthorize().then(() => {
+                                document.location.reload()
+                              })
+
+                            }}>Disconnect</Button>}
                           </FormGroup>
                         </Col>
                       </Row>
