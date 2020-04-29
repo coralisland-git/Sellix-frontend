@@ -31,6 +31,7 @@ import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
+import perfectMoneyBtn from 'assets/images/perfect_money_btn.png'
 
 import './style.scss'
 
@@ -261,11 +262,62 @@ class Invoice extends React.Component {
     return null
   }
 
+
+  getCryptoReceived({gateway, crypto_received}) {
+    if(gateway == 'paypal' || gateway == 'perfectmoney')
+      return null
+
+    return (
+      <div className="d-flex justify-content-between align-items-center">
+      <span className="text-primary">Received</span>
+      <h5 className="text-primary mb-0 d-flex align-items-center">
+        <img src={PAYMENT_ICONS[gateway]} className="mr-1" width="15" height="15"/>
+        {crypto_received}</h5>
+      </div>
+    )
+  }
+
+  getCryptoAmount({gateway, crypto_amount}) {
+    if(gateway == 'paypal' || gateway == 'perfectmoney')
+      return null
+    
+    return (
+      <span className="text-grey d-flex align-items-center">
+        <img src={PAYMENT_ICONS[gateway]} className="mr-1" width="15" height="15"/>
+        {crypto_amount || 0}
+      </span>
+    )
+  }
+
+  getPaymentForm(invoice) {
+    if(invoice.gateway == 'paypal') {
+      return ''
+    }
+
+    if(invoice.gateway == 'perfectmoney'){
+      return ''
+    }
+
+    if(Number(invoice.status) < 1 || Number(invoice.status) > 3)
+      return(
+        <div>
+          <p className="text-grey bold mt-4 text-center">
+              Please send exactly <span className="badge text-primary bold">
+                {((invoice.crypto_amount || 0) - (invoice.crypto_received || 0)).toFixed(8)}</span> {PAYMENT_OPTS[invoice.gateway]} to
+          </p>
+          <p className="btc-address text-grey bold text-center">
+            {invoice.crypto_address || ''}
+          </p>
+          <div className="d-flex justify-content-between align-items-center ">
+            <span className="text-grey cursor-pointer" onClick={this.openQrCodeModal.bind(this)}>QR Code</span>
+            <span className="text-grey">Pay in Wallet</span>
+          </div>
+        </div>
+      )
+  }
+
   render() {
     const {loading, invoice, timer, showAlert, openQRModal, seconds} = this.state
-
-    // if(seconds < 0)
-    //   invoice.status = 2
 
     return (
       <div>
@@ -306,17 +358,14 @@ class Invoice extends React.Component {
                         <div className="top p-4 pt-4">
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-                            <span className="badge text-primary bold status invoice-timer" id="status">{this.setInvoiceStatus(invoice.status)}</span>
+                            <span className="badge text-primary bold status invoice-timer" id="status">
+                              {this.setInvoiceStatus(invoice.status)}</span>
                           </div>
                           <p className="text-grey  mb-3">{invoice.uniqid}</p>
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.product || {}).title}</h4>
                             { 
-                              invoice.gateway != 'paypal' && 
-                                <span className="text-grey d-flex align-items-center">
-                                  <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
-                                  {invoice.crypto_amount || 0}
-                                </span>
+                              this.getCryptoAmount({...invoice})
                             }
                             
                           </div>
@@ -324,24 +373,11 @@ class Invoice extends React.Component {
                             <span className="text-grey">{invoice.product_id || ''}</span>
                             <span className="text-grey">{CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
                           </div>
-        
-                          {
-                            (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
-                                <p className="text-grey bold mt-4 text-center">
-                                    Please send exactly <span className="badge text-primary bold">
-                                      {((invoice.crypto_amount || 0) - (invoice.crypto_received || 0)).toFixed(8)}</span> {PAYMENT_OPTS[invoice.gateway]} to
-                                </p>
-                                <p className="btc-address text-grey bold text-center">
-                                  {invoice.crypto_address || ''}
-                                </p>
-                                <div className="d-flex justify-content-between align-items-center ">
-                                  <span className="text-grey cursor-pointer" onClick={this.openQrCodeModal.bind(this)}>QR Code</span>
-                                  <span className="text-grey">Pay in Wallet</span>
-                                </div>
-        
-                            </div>
-                          }
                           
+                          {
+                            this.getPaymentForm({...invoice})
+                          }
+
                           {(invoice.gateway == 'paypal' && invoice.status == 0) && 
                             <div className="mt-5">
                               <PayPalButton
@@ -367,7 +403,37 @@ class Invoice extends React.Component {
                               />
                             </div>
                           }
+
+                          {(invoice.gateway == 'perfectmoney' && invoice.status == 0) && 
+                            <div className="mt-5">
+                              <div className="d-flex input-group">
+                                <form id="pm-form" className="w-100" action="https://perfectmoney.is/api/step1.asp" target="_blank" method="POST">
+                                  <input type="hidden" name="PAYEE_ACCOUNT" value={invoice.perfectmoney_id}/>
+                                  <input type="hidden" name="PAYEE_NAME" value={invoice.username}/>
+                                  <input type='hidden' name='PAYMENT_ID' value={invoice.uniqid}/>
+                                  <input type="hidden" name="PAYMENT_AMOUNT" value={invoice.total_display}/>
+                                  <input type="hidden" name="PAYMENT_UNITS" value={invoice.currency}/>
+                                  <input type="hidden" name="STATUS_URL" value="https://api.sellix.io/v1/invoices/perfectmoney"/>
+                                  <input type="hidden" name="PAYMENT_URL" value={`https://sellix.io/invoice/${invoice.uniqid}`}/>
+                                  <input type="hidden" name="PAYMENT_URL_METHOD" value="LINK"/>
+                                  <input type="hidden" name="NOPAYMENT_URL" value={`https://sellix.io/invoice/${invoice.uniqid}`}/>
+                                  <input type="hidden" name="NOPAYMENT_URL_METHOD" value="LINK"/>
+                                  <input type="hidden" name="SUGGESTED_MEMO" value=""/>
+                                  <input type="hidden" name="INTERFACE_LANGUAGE" value="en_US"/>
+                                  <input type="hidden" name="BAGGAGE_FIELDS" value="IDENT"/>
+
+                                  <Button type="submit" 
+                                    name="PAYMENT_METHOD" className="perfectmoney-button w-100 p-0" 
+                                    value="Pay Now!" class="tabeladugme" id="pm-button">
+                                      <img src={perfectMoneyBtn} width="150"/>
+                                  </Button>
+                                </form>
+                              </div>
+                            </div>
+                          }
                         </div>
+
+
                         <div className="bottom p-4">
                           {invoice.status == 1 && 
                             <SweetAlert
@@ -394,44 +460,39 @@ class Invoice extends React.Component {
                               The invoice has expired or isn't available.
                             </SweetAlert>
                           }
+                          
                           { invoice.status != 1 && invoice.status != 2 &&
-                          <div>
-                            <h4 className="text-primary mb-3">Order Details</h4>
-                            {
-                              this.getInvoiceStatus2(invoice.status) != null && 
-                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                  <span className="text-primary">Status</span>
-                                  <h5 className="text-primary mb-0">{this.getInvoiceStatus2(invoice.status)}</h5>
-                                </div>
-                            }
-                            
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                              <span className="text-primary">Seller</span>
-                              <h5 className="text-primary mb-0">{invoice.username }</h5>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                              <span className="text-primary">Quantity</span>
-                              <h5 className="text-primary mb-0">{invoice.quantity}</h5>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                              <span className="text-primary">Email</span>
-                              <h5 className="text-primary mb-0">{invoice.customer_email}</h5>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                              <span className="text-primary">Created</span>
-                              <h5 className="text-primary mb-0">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
-                            </div>
-                            { 
-                                invoice.gateway != 'paypal' && 
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <span className="text-primary">Received</span>
-                                    <h5 className="text-primary mb-0 d-flex align-items-center">
-                                      <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
-                                      {invoice.crypto_received}</h5>
+                            <div>
+                              <h4 className="text-primary mb-3">Order Details</h4>
+                              {
+                                this.getInvoiceStatus2(invoice.status) != null && 
+                                  <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <span className="text-primary">Status</span>
+                                    <h5 className="text-primary mb-0">{this.getInvoiceStatus2(invoice.status)}</h5>
                                   </div>
-                            }
-                          </div>
-                        }
+                              }
+                              
+                              <div className="d-flex justify-content-between align-items-center mb-2">
+                                <span className="text-primary">Seller</span>
+                                <h5 className="text-primary mb-0">{invoice.username }</h5>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center mb-2">
+                                <span className="text-primary">Quantity</span>
+                                <h5 className="text-primary mb-0">{invoice.quantity}</h5>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center mb-2">
+                                <span className="text-primary">Email</span>
+                                <h5 className="text-primary mb-0">{invoice.customer_email}</h5>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center mb-2">
+                                <span className="text-primary">Created</span>
+                                <h5 className="text-primary mb-0">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
+                              </div>
+                              { 
+                                this.getCryptoReceived({...invoice})
+                              }
+                            </div>
+                          }
                         </div>
                       </Card>
                     </div>

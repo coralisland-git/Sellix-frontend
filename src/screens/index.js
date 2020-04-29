@@ -10,6 +10,7 @@ import Register from './register'
 import ForgotPassword from './forgot_password'
 import ResetPassword from './reset_password'
 import Dashboard from './dashboard'
+import EmailConfirm from './email_confirm'
 
 import Product from './product'
 import CreateProduct from './product/screens/create'
@@ -96,6 +97,7 @@ export {
   Invoice,
   Terms,
   Ticket,
+  EmailConfirm,
 
 
   EditCoupon,

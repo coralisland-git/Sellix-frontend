@@ -20,3 +20,17 @@ export const getAnalyticsData = (start, end) => () => {
         })
 }
 
+
+export const geLastInvoices = () => (dispatch) => {
+
+    return authApi.get('self/invoices/last')
+        .then(res => {
+            if (res.status === 200) {
+                return res
+            } else {
+                throw res
+            }
+        }).catch(err => {
+            throw err
+        })
+}

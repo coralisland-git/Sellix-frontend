@@ -282,7 +282,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                 <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
-                      AUTHENTICATION ERROR
+                      <p>AUTHENTICATION ERROR</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -292,7 +292,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      AUTHENTICATION ERROR
+                      <p>AUTHENTICATION ERROR</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -302,7 +302,7 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      VALIDATION ERROR
+                      <p>VALIDATION ERROR</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -416,7 +416,7 @@ end`}
                 <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
-                      ENDPOINTS
+                      <p>ENDPOINTS</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`GET /api/v2/blacklist/:id
@@ -493,7 +493,7 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
-                      THE BLACKLIST OBJECT
+                      <p>THE BLACKLIST OBJECT</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -543,7 +543,7 @@ DELETE /api/v2/blacklist/:id`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight} showLineNumbers={true}>
                       {`{
@@ -581,7 +581,7 @@ DELETE /api/v2/blacklist/:id`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`[
@@ -659,7 +659,7 @@ DELETE /api/v2/blacklist/:id`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -731,7 +731,7 @@ DELETE /api/v2/blacklist/:id`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -768,7 +768,7 @@ DELETE /api/v2/blacklist/:id`}
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      RESPONSE
+                      <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`// No Content: 204 HTTP status`}
