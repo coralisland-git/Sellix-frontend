@@ -173,7 +173,7 @@ class ReplyToFeedback extends React.Component {
                               <div className="d-flex">
                                 <p className="title">Product</p>
                                 <p>
-                                  <Link to={`/dashboard/${user}/products/all/edit/${currentFeedback.invoice.product_id}`}>
+                                  <Link to={`/dashboard/${user}/products/edit/${currentFeedback.invoice.product_id}`}>
                                     {currentFeedback.invoice.developer_invoice == '1'?currentFeedback.invoice.developer_title:(currentFeedback.product && currentFeedback.product.title || '')}
                                   </Link>
                                 </p>

@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Button } from 'components';
+import {Button, Spin} from 'components';
 import {
   Card,
   CardBody,
@@ -126,10 +126,12 @@ class Notification extends React.Component {
       <div className="notification-screen">
         <div className="animated fadeIn">
           <Card>
-            <CardBody>
-            {
-              loading ?
-                <Loader /> :
+            <CardBody className={"position-relative"}>
+              {loading &&
+                <div className={"loader-container"}>
+                  <Loader/>
+                </div>
+              }
                 <Row>
 
                   <Col lg={12}>
@@ -289,9 +291,11 @@ class Notification extends React.Component {
                     </FormGroup>
                   </Col> */}
                 </Row>
-            }
+
             </CardBody>
-            <Button color="primary" className="mt-4" style={{width: 200}} onClick={this.saveNotificationSettings.bind(this)}>Save Settings</Button>
+            <Button color="primary" className="mt-4" style={{width: 200}} onClick={this.saveNotificationSettings.bind(this)}>
+              {loading ? <Spin/> : 'Save Settings'}
+            </Button>
           </Card>
         </div>
       </div>

@@ -182,15 +182,21 @@
         color: #8036CE !important;
       }
       p {
-        color: #537190 !important;
+        color: #49535c !important;
       }
       .nav-link {
         margin: 0 !important;
-        color: #537190 !important;
+        color: #49535c !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
         font-size: 14px !important;
         font-weight: normal !important;
+        background: transparent !important;
+        text-align: left;
+
+        &:hover {
+          color: black !important;
+        }
       }
     }
   }

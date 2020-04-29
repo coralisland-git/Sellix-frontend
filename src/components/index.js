@@ -1,5 +1,6 @@
 import Loading from './loading'
 import Loader from './loader'
+import LoaderFullscreen from './loader_fullscreen'
 import Spin from './spin'
 import Aside from './aside'
 import Header from './header'
@@ -21,6 +22,7 @@ import Button from './button'
 export {
   Loading,
   Loader,
+  LoaderFullscreen,
   Spin,
   Button,
   Aside,

@@ -266,7 +266,7 @@ class OrderDetail extends React.Component {
                           <div className="d-flex">
                             <p className="title">Product</p>
                             <p>
-                              <Link to={`/dashboard/${user}/products/all/edit/${order.product_id}`}>
+                              <Link to={`/dashboard/${user}/products/edit/${order.product_id}`}>
                                 {order.developer_invoice == '1'?order.developer_title:(order.product && order.product.title || '')}
                               </Link>
                             </p>

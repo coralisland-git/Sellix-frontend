@@ -5,13 +5,13 @@ import {Card, CardHeader, Row, Col, Input } from 'reactstrap'
 import { Button } from 'components';
 import { CommonActions } from 'services/global'
 import { Route, Switch, withRouter, matchPath } from 'react-router-dom'
-import { Loader } from 'components'
+import { Loader, LoaderFullscreen } from 'components'
 import { debounce } from 'lodash'
 
 import './style.scss'
+import Placeholder from "./placeholder";
 
-
-const ProductList = React.lazy(() => import('./productList'))
+import ProductList from './productList'
 
 
 const mapStateToProps = ({ common: { general_info } }) => ({
@@ -35,6 +35,7 @@ class ShopProducts extends React.Component {
 
     this.state = {
       loading: false,
+      showPlaceholder: false,
       search_key: null,
       products: [],
       groups: [],
@@ -82,6 +83,10 @@ class ShopProducts extends React.Component {
 
     const { actions: { getUserCategories, getUserProducts, tostifyAlert }, match: { params } } = this.props;
 
+    let loader = setTimeout(() => {
+      this.setState({ showPlaceholder: true });
+    }, 200);
+
     this.setState({ loading: true });
 
     Promise.all([getUserCategories(params.username), getUserProducts(params.username)])
@@ -97,7 +102,8 @@ class ShopProducts extends React.Component {
           tostifyAlert('error', err.error)
         })
         .finally(err => {
-          this.setState({ loading: false })
+          clearTimeout(loader);
+          this.setState({ loading: false, showPlaceholder: false })
         })
   }
 
@@ -140,68 +146,72 @@ class ShopProducts extends React.Component {
 
 
   render() {
-    const { loading, filter, categories, products, groups } = this.state;
+    const { loading, showPlaceholder, filter, categories, products, groups } = this.state;
     const { shop_search_enabled, shop_hide_out_of_stock } = this.props;
 
     let searchProducts = this.searchProducts(products);
     let searchGroups = this.searchGroups(groups)
 
+
     return (
       <div className="shop-product-screen">
-        <div className="animated customAnimation">
-          <Card className="grey">
-            <CardHeader className="pb-1 pt-3">
-              <Row>
-                {
-                  categories.length !== 0 &&
-                    <Col md={12} className="filter-button d-flex flex-wrap mb-4">
-                      <Button skip color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
-                        All
-                      </Button>
-                      {categories.map(({ uniqid, title }) =>
-                        <Button skip key={uniqid} color={filter === uniqid ? 'primary' : 'white' } className="mr-2" disabled={loading} onClick={this.setFilter(uniqid)}>
-                          {title}
+        <div className="">
+
+
+            {showPlaceholder && <Placeholder />}
+
+            {!loading && !showPlaceholder &&
+              <Card className="grey">
+                <CardHeader className="pb-1 pt-3">
+                  <Row>
+                    {
+                      categories.length !== 0 &&
+                      <Col md={12} className="filter-button d-flex flex-wrap mb-4">
+                        <Button skip color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
+                          All
                         </Button>
-                      )}
-                    </Col>
-                }
+                        {categories.map(({ uniqid, title }) =>
+                            <Button skip key={uniqid} color={filter === uniqid ? 'primary' : 'white' } className="mr-2" disabled={loading} onClick={this.setFilter(uniqid)}>
+                              {title}
+                            </Button>
+                        )}
+                      </Col>
+                    }
 
-                {
-                  shop_search_enabled === 1 &&
-                    <Col md={12} className="mb-4">
-                      <div className="d-flex justify-content-start">
-                        <div className="searchbar white w-100">
-                          <i className="fas fa-search"/>
-                          <Input
-                              placeholder="Search for a product..."
-                              className="header-search-input"
-                              onChange={(e) => this.setSearchKey(e.target.value)}
-                          />
+                    {
+                      shop_search_enabled === 1 &&
+                      <Col md={12} className="mb-4">
+                        <div className="d-flex justify-content-start">
+                          <div className="searchbar white w-100">
+                            <i className="fas fa-search"/>
+                            <Input
+                                placeholder="Search for a product..."
+                                className="header-search-input"
+                                onChange={(e) => this.setSearchKey(e.target.value)}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </Col>
-                }
-              </Row>
-            </CardHeader>
+                      </Col>
+                    }
+                  </Row>
+                </CardHeader>
 
-            <React.Suspense fallback={<Loader />}>
-              <div className="p-0">
-                <Row>
-                  <Switch>
-                    <Route to={'/:username/category/:id'} render={(props) => 
-                      <ProductList 
-                        products={searchProducts} 
-                        groups={searchGroups} 
-                        loading={loading} 
-                        hide_out_of_stock={shop_hide_out_of_stock}
-                        {...props}
-                      />} />
-                  </Switch>
-                </Row>
-              </div>
-            </React.Suspense>
-
-          </Card>
+                <div className="p-0">
+                  <Row>
+                    <Switch>
+                      <Route to={'/:username/category/:id'} render={(props) =>
+                          <ProductList
+                              products={searchProducts}
+                              groups={searchGroups}
+                              loading={loading}
+                              hide_out_of_stock={shop_hide_out_of_stock}
+                              {...props}
+                          />} />
+                    </Switch>
+                  </Row>
+                </div>
+              </Card>
+            }
         </div>
       </div>
     )
