@@ -316,7 +316,7 @@ class EditProduct extends React.Component {
 	this.setState({duplicating: true})
 	this.props.actions.duplicateProduct({uniqid: this.id}).then(res => {
 		this.props.commonActions.tostifyAlert('success', res.message)
-		this.props.history.push(`/dashboard/${user}/products/all`)
+		window.history.back()
 	}).catch(err => {
 		this.props.commonActions.tostifyAlert('error', err.error)
 	}).finally(() => {

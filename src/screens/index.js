@@ -109,7 +109,7 @@ export {
   SettingsEdit,
   AdminEditUser,
   Invoices,
-  Tickets,
+  // Tickets,
   Ticket,
 
 

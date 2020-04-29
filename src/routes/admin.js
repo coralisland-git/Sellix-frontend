@@ -90,7 +90,7 @@ const adminRoutes = [
   {
     path: `/admin/dashboard`,
     name: 'AdminDashboard',
-    component: AdminDashboard,
+    component: Dashboard,
     title: 'Dashboard'
   },
   {
