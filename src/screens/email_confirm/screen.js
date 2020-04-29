@@ -1,4 +1,5 @@
 import React from 'react'
+import { api } from 'utils'
 
 class EmailConfirm extends React.Component {
 
@@ -6,19 +7,28 @@ class EmailConfirm extends React.Component {
 
     let { match: { params } } = this.props;
 
-    if(params.code) {
-      setTimeout(() => {
-        this.props.history.push({
-          pathname: '/auth/login',
-          state: { code: true, message: 'You have successfully activated your account' }
+    let form = new FormData();
+    form.append('secret', params.code)
+    api.post('validate', form)
+        .then((res) => {
+            if(res.status === 200) {
+                this.props.history.push({
+                    pathname: '/auth/login',
+                    state: { code: true, message: res.message }
+                })
+            } else {
+                this.props.history.push({
+                    pathname: '/auth/login',
+                    state: { code: false, message: res.error }
+                })
+            }
         })
-      }, 2000)
-    } else {
-      this.props.history.push({
-        pathname: '/',
-        state: { code: false, message: 'Something went wrong!' }
-      })
-    }
+        .catch((err) => {
+          this.props.history.push({
+            pathname: '/',
+            state: { code: false, message: err.error }
+          })
+        })
   }
 
   render() {

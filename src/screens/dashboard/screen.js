@@ -39,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
   geLastInvoices: bindActionCreators(geLastInvoices, dispatch),
 })
 
+const userId = window.localStorage.getItem('userId')
 
 const Progress = ({ progress, isPositive, is24 }) => {
   if(is24) {
@@ -151,9 +152,9 @@ class Dashboard extends React.Component {
   }
 
 
-  gotoDetail(id) {
+  gotoDetail = (id) => {
     this.props.history.push({
-      pathname: `/dashboard/$asd/orders/view/${id}`
+      pathname: `/dashboard/${userId}/orders/view/${id}`
     })
   }
 
@@ -311,63 +312,68 @@ class Dashboard extends React.Component {
                       </Col>
                     </Row>
 
-                    <Row className={"mb-4"}>
-                        <Col lg={12}>
-                          <div className={"product-table"}>
-                            <h5 className="mb-3">Last 5 Orders</h5>
-                            <BootstrapTable
-                                options={{...tableOptions(), onRowClick: (row) => this.gotoDetail(row.uniqid), sizePerPage: 5}}
-                                data={invoices}
-                                version="4"
-                                totalSize={invoices.length}
-                                className="product-table"
-                                trClassName="cursor-pointer"
-                            >
-
-                              <TableHeaderColumn
-                                  isKey
-                                  dataField="customer_email"
-                                  dataFormat={this.renderOrderInfo}
-                                  dataSort
-                                  width='45%'
-                              >
-                                Info
-                              </TableHeaderColumn>
-                              <TableHeaderColumn
-                                  dataField="total_display"
-                                  dataAlign="center"
-                                  dataSort
-                                  dataFormat={this.renderOrderValue}
-                                  width='20%'
-                              >
-                                Value
-                              </TableHeaderColumn>
-                              <TableHeaderColumn
-                                  dataField="status"
-                                  dataAlign="center"
-                                  dataFormat={this.renderOrderStatus}
-                                  dataSort
-                                  width='20%'
-                              >
-                                Payment Gateway
-                              </TableHeaderColumn>
-                              <TableHeaderColumn
-                                  dataField="created_at"
-                                  dataAlign="right"
-                                  dataFormat={this.renderOrderTime}
-                                  dataSort
-                                  width='15%'
-                              >
-                                Time
-                              </TableHeaderColumn>
-                            </BootstrapTable>
-                          </div>
-                        </Col>
-                      </Row>
                     <h5 className="mb-4">Revenues | Orders</h5>
                     <CardBody className="">
                       <DashBoardChart height="350px" data={chartData}/>
                     </CardBody>
+
+                    {!!invoices.length && <h5 className="mb-4 mt-4">Last 5 Orders</h5>}
+                    {!!invoices.length && <Row className={"mb-4"}>
+                      <Col lg={12}>
+                        <div className={"product-table"}>
+                          <BootstrapTable
+                              options={{
+                                ...tableOptions(),
+                                onRowClick: (row) => this.gotoDetail(row.uniqid),
+                                sizePerPage: 5
+                              }}
+                              data={invoices}
+                              version="4"
+                              totalSize={invoices.length}
+                              className="product-table"
+                              trClassName="cursor-pointer"
+                          >
+
+                            <TableHeaderColumn
+                                isKey
+                                dataField="customer_email"
+                                dataFormat={this.renderOrderInfo}
+                                dataSort
+                                width='45%'
+                            >
+                              Info
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
+                                dataField="total_display"
+                                dataAlign="center"
+                                dataSort
+                                dataFormat={this.renderOrderValue}
+                                width='20%'
+                            >
+                              Value
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
+                                dataField="status"
+                                dataAlign="center"
+                                dataFormat={this.renderOrderStatus}
+                                dataSort
+                                width='20%'
+                            >
+                              Payment Gateway
+                            </TableHeaderColumn>
+                            <TableHeaderColumn
+                                dataField="created_at"
+                                dataAlign="right"
+                                dataFormat={this.renderOrderTime}
+                                dataSort
+                                width='15%'
+                            >
+                              Time
+                            </TableHeaderColumn>
+                          </BootstrapTable>
+                        </div>
+                      </Col>
+                    </Row>}
                   </div>
               }
             </div>
