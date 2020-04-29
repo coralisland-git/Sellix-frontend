@@ -380,6 +380,7 @@ class EditProduct extends React.Component {
   }
 
 	render() {
+		const admin = _.includes(window.location.pathname, 'admin')
 		const { 
 			loading, 
 			saving,

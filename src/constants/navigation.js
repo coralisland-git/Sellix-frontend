@@ -2,6 +2,37 @@ import { matchPath } from "react-router-dom";
 
 const user = window.localStorage.getItem('userId')
 
+export const adminNavigation =  {
+  items: [
+    {
+      name: 'Dashboard',
+      url: `/admin/dashboard`,
+      icon: 'fas fa-home fa-lg'
+    },
+    {
+      name: 'Users',
+      url: `/admin/users`,
+      icon: 'fas fa-users',
+    },
+    {
+      name: 'Top 10 users',
+      url: `/admin/top`,
+      icon: 'fas fa-star',
+    },
+    {
+      name: 'Settings',
+      url: `/admin/settings`,
+      icon: 'fas fa-cog',
+    },
+    {
+      name: 'Invoices',
+      url: `/admin/invoices`,
+      icon: 'fas fa-credit-card',
+    },
+    
+  ]
+}
+
 export function mainBrowserNavigation(props){
 
   let { pathname } = window.location;
@@ -225,36 +256,7 @@ export const mainMobileNavigation = () => ({
   ]
 })
 
-export const adminNavigation =  {
-  items: [
-    {
-      name: 'Dashboard',
-      url: `/admin/dashboard`,
-      icon: 'fas fa-home fa-lg'
-    },
-    {
-      name: 'Users',
-      url: `/admin/users`,
-      icon: 'fas fa-users',
-    },
-    {
-      name: 'Top 10 users',
-      url: `/admin/top`,
-      icon: 'fas fa-star',
-    },
-    {
-      name: 'Settings',
-      url: `/admin/settings`,
-      icon: 'fas fa-cog',
-    },
-    {
-      name: 'Invoices',
-      url: `/admin/invoices`,
-      icon: 'fas fa-credit-card',
-    },
-    
-  ]
-}
+
 
 
 export const accountSettingsNavigation =  {
