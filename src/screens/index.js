@@ -10,6 +10,7 @@ import Register from './register'
 import ForgotPassword from './forgot_password'
 import ResetPassword from './reset_password'
 import Dashboard from './dashboard'
+import EmailConfirm from './email_confirm'
 
 import Product from './product'
 import CreateProduct from './product/screens/create'
@@ -65,12 +66,14 @@ import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
 import ShopDesign from './shop_design'
+import ShopGoogleAnalytics from './shop_google_analytics'
 
 import GeneralSettings from './general_settings'
 import Customization from './customization'
 import EmbededPayment from './embeded_payment'
 import EmbededInvoice from './embeded_invoice'
 
+import EmbedProduct from './embed_product'
 import Documentation from './documentation/screen.js'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
@@ -94,6 +97,7 @@ export {
   Invoice,
   Terms,
   Ticket,
+  EmailConfirm,
 
 
   EditCoupon,
@@ -141,6 +145,7 @@ export {
   Billings,
   GeneralSettings,
   ShopDesign,
+  ShopGoogleAnalytics,
   Notification,
   Customization,
   EditBlacklist,
@@ -153,5 +158,6 @@ export {
   EditProductGroup,
   ProductGroupSort,
 
-  Documentation
+  Documentation,
+  EmbedProduct
 }

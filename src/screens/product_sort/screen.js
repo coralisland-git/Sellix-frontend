@@ -107,7 +107,8 @@ class Product extends React.Component {
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
                     <Button className="ml-3" color="primary" onClick={this.saveOrder.bind(this)} disabled={saving}>
-                      {saving?<Spin/>:'Update Product Order'}</Button>
+                      {saving?<Spin/>:'Update Product Order'}
+                    </Button>
                   </div>
                 </Col>
               </Row>

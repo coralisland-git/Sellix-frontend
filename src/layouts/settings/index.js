@@ -115,7 +115,7 @@ class SettingsLayout extends React.Component {
 
   changeTheme() {
     const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme == 'light' ? 'dark' : 'light')
+    window.localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
     document.body.classList.remove('light');
     document.body.classList.remove('dark');
     document.body.classList.add(theme === 'light' ? 'dark': 'light');
@@ -162,19 +162,14 @@ class SettingsLayout extends React.Component {
               </AppSidebar>
 
               <main className="main mt-5 mb-5 settings-main">
-                <div
-                  className="settings-container"
-                  style={{ display: 'flex', flexDirection: 'column' }}
-                >
+                <div className="settings-container" style={{ display: 'flex', flexDirection: 'column' }}>
                   <div className="settings-sidebar mb-2 mr-4 mt-3 pt-2 pr-4 pl-4 pb-4">
                     <Navbar expand="xs" className="p-0">
                       <NavbarToggler onClick={this.toggle.bind(this)} />
                       <Collapse className="mr-5" isOpen={isOpen} navbar>
                         <div className="pt-3">
                           <Suspense fallback={Loading()}>
-                            <h4 style={{ color: 'black', fontSize: '16px' }}>
-                              Account
-                                            </h4>
+                            <h4 style={{ color: 'black', fontSize: '16px' }}>Account</h4>
                             <AppSidebarNav navConfig={accountSettingsNavigation} location={this.props.location} router={router} />
                           </Suspense>
                         </div>

@@ -179,16 +179,13 @@ class SecurityPage extends React.Component {
               {props => (
                 <Form onSubmit={props.handleSubmit}>
                   <Card>
-                    <CardBody className="p-4 mb-4">
-                      {
-                        loading ?
-                          <Row>
-                            <Col lg={12}>
-                              <Loader />
-                            </Col>
-                          </Row>
-                        : 
-                          <Row className="">
+                    <CardBody className="p-4 mb-4 position-relative">
+                      {loading &&
+                        <div className={"loader-container"}>
+                          <Loader/>
+                        </div>
+                      }
+                      <Row className="">
                             <Col lg={12}>
                               <FormGroup className="mb-4">
                                 <h4 className="title">General</h4>
@@ -289,18 +286,16 @@ class SecurityPage extends React.Component {
                               </Row>
                             </Col>
                           </Row>
-                      }
+
                     </CardBody>
-                    <CardBody className="p-4 mb-4">
-                      {
-                        loading ?
-                          <Row>
-                            <Col lg={12}>
-                              <Loader />
-                            </Col>
-                          </Row>
-                        : 
-                          <Row className="">
+
+                    <CardBody className="p-4 mb-4 position-relative">
+                      {loading &&
+                        <div className={"loader-container"}>
+                          <Loader/>
+                        </div>
+                      }
+                      <Row className="">
                             <Col lg={12}>
                               <FormGroup className="mb-4">
                                 <h4 className="title">Multi Factor Authentication</h4>
@@ -339,10 +334,11 @@ class SecurityPage extends React.Component {
                               </FormGroup>
                             </Col>
                           </Row>
-                      }
-                    </CardBody> 
-                    <Button color="primary" className="mb-4" style={{width: 200}}
-                    >Save Settings</Button>
+
+                    </CardBody>
+                    <Button color="primary" type="submit" className="" style={{width: 200}}>
+                      {loading ? <Spin/> : 'Save Settings'}
+                    </Button>
                   </Card> 
                 </Form>
               )}

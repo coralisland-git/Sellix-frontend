@@ -31,7 +31,7 @@ export const saveProductOrder = (ids) => {
   return (dispatch) => {
     let data = {
       method: 'POST',
-      url: '/products/sort',
+      url: '/sort/products',
       data: formData(ids)
     }
 

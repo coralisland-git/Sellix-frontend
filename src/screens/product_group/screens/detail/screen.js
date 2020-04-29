@@ -239,7 +239,7 @@ class EditProductGroup extends React.Component {
 
         this.props.actions.editProductGroup(values).then(res => {
 
-            this.props.history.push(`/dashboard/${user}/groups/all`)
+            this.props.history.push(`/dashboard/${user}/groups`)
             this.props.commonActions.tostifyAlert('success', res.message)
 
         }).catch(err => {
@@ -260,7 +260,7 @@ class EditProductGroup extends React.Component {
     this.setState({duplicating: true})
     this.props.actions.duplicateProduct({uniqid: this.id}).then(res => {
         this.props.commonActions.tostifyAlert('success', res.message)
-        this.props.history.push(`/dashboard/${user}/products/all`)
+        this.props.history.push(`/dashboard/${user}/products`)
     }).catch(err => {
         this.props.commonActions.tostifyAlert('error', err.error)
     }).finally(() => {

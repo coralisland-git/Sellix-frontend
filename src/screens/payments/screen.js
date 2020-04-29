@@ -10,7 +10,7 @@ import {
   Label,
   Input
 } from 'reactstrap'
-import { Button } from 'components';
+import {Button, Spin} from 'components';
 import { CommonActions, AuthActions } from 'services/global'
 import { Loader } from 'components'
 import * as Actions from './actions'
@@ -94,16 +94,13 @@ class Payments extends React.Component {
       <div className="payments-screen">
         <div className="animated fadeIn">
           <Card>
-            <CardBody className="p-4 mb-4">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                : 
-                  <Row className="">
+            <CardBody className="p-4 mb-4 position-relative">
+              {loading &&
+                <div className={"loader-container"}>
+                  <Loader/>
+                </div>
+              }
+              <Row className="">
                     <Col lg={12}>
                       <FormGroup className="mb-4">
                         <h4 className="title">Payments</h4>
@@ -240,12 +237,10 @@ class Payments extends React.Component {
                       </Row> */}
                     </Col>
                   </Row>
-              }
             </CardBody>
             <Button color="primary" className="mb-4" style={{ width: 200 }} onClick={this.savePayments.bind(this)}>
-              Save Settings
+              {loading ? <Spin/> : 'Save Settings'}
             </Button>
-            
           </Card>
           {/* <Card>
             <CardBody className="p-4 mb-5">
