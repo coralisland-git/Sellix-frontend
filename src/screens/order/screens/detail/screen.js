@@ -17,6 +17,7 @@ import { Loader, Spin } from 'components'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import * as _ from 'lodash'
 import {
 	CommonActions
 } from 'services/global'
@@ -160,6 +161,11 @@ class OrderDetail extends React.Component {
     })
   }
 
+  routeHandle = () => {
+    const isAdmin = _.includes(this.props.location.pathname, '/admin')
+    return <a onClick={(e) => this.props.history.push(isAdmin ? `/admin/invoices` : `/dashboard/${user}/orders`)}><i className="fas fa-chevron-left"/> {isAdmin ? 'Invoices' : 'Orders'}</a>
+  }
+
   render() {
     const { 
       loading, 
@@ -171,7 +177,6 @@ class OrderDetail extends React.Component {
     } = this.state
 
     let custom_fields = []
-
     if(order.custom_fields){
       const data = JSON.parse(order.custom_fields || {})['custom_fields'] || {}
       custom_fields = Object.keys(data).map((key) => {
@@ -202,7 +207,7 @@ class OrderDetail extends React.Component {
           />
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
-              <a onClick={(e) => this.props.history.push(`/dashboard/${user}/orders`)}><i className="fas fa-chevron-left"/> Orders</a>
+              {this.routeHandle()}
             </BreadcrumbItem>
           </Breadcrumb>
           <Card>

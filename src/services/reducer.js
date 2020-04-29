@@ -23,11 +23,19 @@ import {
   Coupons,
   Feedbacks,
   Reports,
+  Users,
+  TopUsers,
+  Settings,
+  Invoices,
   ProductGroups
 } from 'screens'
 
 
 const reducer = combineReducers({
+  settings: Settings.reducer,
+  invoices: Invoices.reducer,
+  users: Users.reducer,
+  topUsers: TopUsers.reducer,
   common: CommonReducer,
   queries: Queries.reducer,
   auth: AuthReducer,

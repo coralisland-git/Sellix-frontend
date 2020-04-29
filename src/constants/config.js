@@ -9,7 +9,9 @@ import skrillIcon from "../assets/images/crypto/skrill.svg";
 import { Converter } from "showdown";
 
 export default {
-  API_ROOT_URL: 'https://api.sellix.io/v1',
+
+  API_ROOT_URL: 'https://staging.sellix.io/api/v1',
+  // API_ROOT_URL: 'https://api.sellix.io/v1',
   CAPTCHA_SITE_KEY: '6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe',
   CURRENCY_LIST : { 
     'USD': '$',
