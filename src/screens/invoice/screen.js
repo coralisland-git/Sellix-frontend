@@ -31,9 +31,9 @@ import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
+import perfectMoneyBtn from 'assets/images/perfect_money_btn.png'
 
 import './style.scss'
-import Input from 'react-bootstrap-sweetalert/dist/components/Input';
 
 const CURRENCY_LIST = { 
   'USD': '$',
@@ -405,11 +405,29 @@ class Invoice extends React.Component {
                           }
 
                           {(invoice.gateway == 'perfectmoney' && invoice.status == 0) && 
-                            <div className="mt-4">
+                            <div className="mt-5">
                               <div className="d-flex input-group">
-                                <Input className="d-flex-1"/>
-                                <Button color="primary" className="mt-0">
-                                  Next</Button>
+                                <form id="pm-form" className="w-100" action="https://perfectmoney.is/api/step1.asp" target="_blank" method="POST">
+                                  <input type="hidden" name="PAYEE_ACCOUNT" value={invoice.perfectmoney_id}/>
+                                  <input type="hidden" name="PAYEE_NAME" value={invoice.username}/>
+                                  <input type='hidden' name='PAYMENT_ID' value={invoice.uniqid}/>
+                                  <input type="hidden" name="PAYMENT_AMOUNT" value={invoice.total_display}/>
+                                  <input type="hidden" name="PAYMENT_UNITS" value={invoice.currency}/>
+                                  <input type="hidden" name="STATUS_URL" value="https://api.sellix.io/v1/invoices/perfectmoney"/>
+                                  <input type="hidden" name="PAYMENT_URL" value={`https://sellix.io/invoice/${invoice.uniqid}`}/>
+                                  <input type="hidden" name="PAYMENT_URL_METHOD" value="LINK"/>
+                                  <input type="hidden" name="NOPAYMENT_URL" value={`https://sellix.io/invoice/${invoice.uniqid}`}/>
+                                  <input type="hidden" name="NOPAYMENT_URL_METHOD" value="LINK"/>
+                                  <input type="hidden" name="SUGGESTED_MEMO" value=""/>
+                                  <input type="hidden" name="INTERFACE_LANGUAGE" value="en_US"/>
+                                  <input type="hidden" name="BAGGAGE_FIELDS" value="IDENT"/>
+
+                                  <Button type="submit" 
+                                    name="PAYMENT_METHOD" className="perfectmoney-button w-100 p-0" 
+                                    value="Pay Now!" class="tabeladugme" id="pm-button">
+                                      <img src={perfectMoneyBtn} width="150"/>
+                                  </Button>
+                                </form>
                               </div>
                             </div>
                           }
