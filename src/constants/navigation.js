@@ -196,17 +196,17 @@ export const adminNavigation =  {
     {
       name: 'Users',
       url: `/admin/users`,
-      icon: 'fas fa-boxes',
+      icon: 'fas fa-users',
     },
     {
       name: 'Top 10 users',
       url: `/admin/top`,
-      icon: 'fas fa-credit-card',
+      icon: 'fas fa-star',
     },
     {
       name: 'Settings',
       url: `/admin/settings`,
-      icon: 'fas fa-credit-card',
+      icon: 'fas fa-cog',
     },
     {
       name: 'Invoices',
