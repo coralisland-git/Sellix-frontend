@@ -113,7 +113,7 @@ class EmbededPayment extends React.Component {
       custom_fields: {},
       product_info: {},
       optParam: 'PayPal',
-      coupon_discount:100,
+      coupon_discount: 0,
       coupon_is_valid: true,
       coupon_applied: false
     }
@@ -192,7 +192,7 @@ class EmbededPayment extends React.Component {
     }).catch(err => {      
       this.setState({
         coupon_code: '',
-        coupon_discount: 100,
+        coupon_discount: 0,
         coupon_is_valid: coupon_value != ''? false:true,        
       })
     })
@@ -277,7 +277,7 @@ class EmbededPayment extends React.Component {
       showPaymentOptions: false,
       quantity: 1,
       optParam: 'PayPal',
-      coupon_discount: 100
+      coupon_discount: 0
     })
   }
 
@@ -305,7 +305,7 @@ class EmbededPayment extends React.Component {
     this.setState({
       coupon_code: '',
       coupon_value: '',
-      coupon_discount: 100,
+      coupon_discount: 0,
       openCoupon: false,
       coupon_is_valid: true,
       coupon_applied: false
@@ -403,7 +403,7 @@ class EmbededPayment extends React.Component {
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
               <p className="text-primary text-center" style={{fontSize: 14}}>by {product_info.username || ''}</p>
-              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * coupon_discount/100).toFixed(2) || 0}</p>                
+              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
               {
