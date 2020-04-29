@@ -21,6 +21,7 @@ import bitcoinIcon from "../../assets/images/crypto/btc.svg";
 import ethereumIcon from "../../assets/images/crypto/eth.svg";
 import litecoinIcon from "../../assets/images/crypto/ltc.svg";
 import bitcoinCashIcon from "../../assets/images/crypto/bitcoincash.svg";
+import perfectmoneyIcon from "../../assets/images/crypto/perfectmoney.svg";
 
 const mapStateToProps = (state) => ({
   product_list: state.product.product_list
@@ -43,19 +44,22 @@ class Payments extends React.Component {
       wallet_bitcoin: '',
       wallet_litecoin: '',
       wallet_ethereum: '',
-      wallet_bitcoincash: ''
+      wallet_bitcoincash: '',
+      perfectmoney_id: '',
+      perfectmoney_passphrase: ''
     }
   }
 
   savePayments(){
-
     this.setState({ loading: true });
     this.props.actions.savePayments({
       email_paypal: this.state.email_paypal || '',
       wallet_bitcoin: this.state.wallet_bitcoin || '',
       wallet_litecoin: this.state.wallet_litecoin || '',
       wallet_ethereum: this.state.wallet_ethereum || '',
-      wallet_bitcoincash: this.state.wallet_bitcoincash || ''
+      wallet_bitcoincash: this.state.wallet_bitcoincash || '',
+      perfectmoney_id: this.state.perfectmoney_id || '',
+      perfectmoney_passphrase: this.state.perfectmoney_passphrase || ''
     })
       .then(res => this.props.commonActions.tostifyAlert('success', res.message))
       .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
@@ -75,7 +79,16 @@ class Payments extends React.Component {
   }
 
   render() {
-    const { loading, email_paypal, wallet_bitcoin, wallet_ethereum, wallet_litecoin, wallet_bitcoincash } = this.state;
+    const { 
+      loading, 
+      email_paypal, 
+      wallet_bitcoin, 
+      wallet_ethereum, 
+      wallet_litecoin, 
+      wallet_bitcoincash,
+      perfectmoney_id,
+      perfectmoney_passphrase
+    } = this.state;
 
     return (
       <div className="payments-screen">
@@ -107,6 +120,33 @@ class Payments extends React.Component {
                               value={email_paypal}
                               onChange={e => this.setState({email_paypal: e.target.value})}
                             />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-0">
+                            <Label htmlFor="product_code"><img src={perfectmoneyIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Perfect Money ID & Alternate Passphrase</Label>
+                            <Row>
+                              <Col lg={5}>
+                                <Input 
+                                  type="text" 
+                                  placeholder="Perfect Money ID"
+                                  value={perfectmoney_id}
+                                  className="mb-3"
+                                  onChange={e => this.setState({perfectmoney_id: e.target.value})}
+                                />
+                              </Col>
+                              <Col lg={7}>
+                                <Input 
+                                  type="text" 
+                                  placeholder="Perfect Money Alternate Passphrase"
+                                  value={perfectmoney_passphrase}
+                                  className="mb-3"
+                                  onChange={e => this.setState({perfectmoney_passphrase: e.target.value})}
+                                />
+                              </Col>
+                            </Row>
                           </FormGroup>
                         </Col>
                       </Row>
