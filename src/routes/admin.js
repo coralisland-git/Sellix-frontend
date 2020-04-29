@@ -279,7 +279,7 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/developer/webhooks`,
+    path: `/dashboard/${user}/developer/webhooks/all`,
     name: 'Webhooks',
     component: Webhooks.screen,
     title: 'Webhooks',

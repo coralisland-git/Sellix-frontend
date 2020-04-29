@@ -33,28 +33,7 @@ class NewCustomModal extends React.Component {
   }
 
   handleSubmit(values) {
-    var temp = []
-    var custom_fields = this.props.custom_fields.map(field => {
-      if(field.name !== "" && field.value !== "" && temp.indexOf(field.name) == -1 ){
-        temp.push(field.name)
-        return `data-sellix-custom-${field.name.toLowerCase()}="${field.value}"`
-      }
-    })
-    custom_fields = custom_fields.filter(field => {
-      if (field !== "")
-        return field
-    })
-    var generateCode = `<button
-  data-sellix-product="${values.product.uniqid}"`
-    if (custom_fields.length > 0)
-      generateCode += '\n  ' + custom_fields.join('\n  ')
-    generateCode += `
-  type="submit"
-  alt="Buy Now with Sellix.io"
->
-  Purchase
-</button>`    
-    this.props.showGenerateCode(generateCode)
+    this.props.closeModal();
   }
 
   render() {    
@@ -62,10 +41,11 @@ class NewCustomModal extends React.Component {
       closeModal, 
       all_products, 
       custom_fields,
-      generateCode,       
+      embedCode,       
       addCustomField,
       deleteCustomField,
-      saveCustomField
+      saveCustomField,
+      generateCode
     } = this.props
     var { 
       loading,
@@ -88,11 +68,10 @@ class NewCustomModal extends React.Component {
           onSubmit={(values) => {
             this.handleSubmit(values)
           }}
-          validationSchema={Yup.object().shape({                
-            product: Yup.string().required('Events is required')                
+          validationSchema={Yup.object().shape({
           })}>
           {props => (
-            <Form name="simpleForm" onSubmit={props.handleSubmit}>                
+            <Form name="simpleForm" onSubmit={props.handleSubmit}>
               <ModalHeader toggle={closeModal}>
                 Generate Code
               </ModalHeader>
@@ -109,6 +88,7 @@ class NewCustomModal extends React.Component {
                         value={props.values.product}
                         onChange={(option) => {
                           props.handleChange("product")(option);
+                          generateCode(option, custom_fields)
                         }}
                         className={
                           props.errors.product && props.touched.product
@@ -140,7 +120,7 @@ class NewCustomModal extends React.Component {
                                 <Input type="text" value={field.name} 
                                   placeholder="Field name"
                                   onChange={(e) => {
-                                  saveCustomField("name", e.target.value, index)
+                                  saveCustomField("name", e.target.value, props.values.product, index)
                                 }}/>
                               </FormGroup>
                             </Col>
@@ -149,14 +129,14 @@ class NewCustomModal extends React.Component {
                                 <Input type="text" value={field.value} 
                                   placeholder="Value"
                                   onChange={(e) => {
-                                  saveCustomField("value", e.target.value, index)
+                                  saveCustomField("value", e.target.value, props.values.product, index)
                                 }}/>
                               </FormGroup>
                             </Col>
                             <Col lg={2}>
                               <FormGroup className="mb-3">
                                 <div className="d-flex align-items-center mt-3">
-                                  <a onClick={(e) => deleteCustomField(e, index)}
+                                  <a onClick={(e) => deleteCustomField(e, props.values.product, index)}
                                     className="cursor-pointer" 
                                     style={{fontSize: 16}}>
                                     <i className="fas fa-trash"/>
@@ -177,21 +157,21 @@ class NewCustomModal extends React.Component {
                     </FormGroup>
                   </Col>
                 </Row>
-                { generateCode && (
+                { props.values.product && embedCode && (
                     <Row>
                       <Col lg={12}>
-                        <FormGroup>
+                        <FormGroup className="mb-0">
                           <div className="code-block response mb-0">
                             <div className="code-block-header">
                               <p>{props.values.product.label} Embed Code</p>
                               <Clipboard 
-                              data-clipboard-text={generateCode} 
+                              data-clipboard-text={embedCode} 
                               button-title="Copy">
                                 <i className="fa fa-clone" aria-hidden="true"></i>
                               </Clipboard>
                             </div>
                             <SyntaxHighlighter language="html" style={atomOneLight} showLineNumbers={true}>
-                              {generateCode}
+                              {embedCode}
                             </SyntaxHighlighter>
                           </div>
                         </FormGroup>
@@ -200,8 +180,8 @@ class NewCustomModal extends React.Component {
                 )}
               </ModalBody>
               <ModalFooter className="justify-content-start">
-                <Button color="primary" type="submit" className="mr-2">Generate</Button>
-              </ModalFooter>                
+                 <Button color="primary" type="submit" className="mr-2">Ok</Button>
+               </ModalFooter>
             </Form>
             )}
           </Formik>
