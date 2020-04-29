@@ -112,7 +112,7 @@ class EmbededPayment extends React.Component {
       product_id: this.props.match.params.id,
       custom_fields: {},
       product_info: {},
-      optParam: 'PayPal',
+      optParam: '',
       coupon_discount: 0,
       coupon_is_valid: true,
       coupon_applied: false
@@ -276,7 +276,7 @@ class EmbededPayment extends React.Component {
       showQuantityOption: true,
       showPaymentOptions: false,
       quantity: 1,
-      optParam: 'PayPal',
+      optParam: '',
       coupon_discount: 0
     })
   }
@@ -366,6 +366,9 @@ class EmbededPayment extends React.Component {
     } = this.state
     
     var is_many = paymentoptions.length > 4 ? true : false
+    var initial_optParam = ''
+    if(paymentoptions.length > 0)
+      initial_optParam = PAYMENT_LABELS[paymentoptions[0]]
     let custom_fields = []    
 
     if(product_info && product_info.custom_fields)
@@ -631,7 +634,7 @@ class EmbededPayment extends React.Component {
                             )})
                           }
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                            onClick={(e) => this.setPaymentOptions(e, optParam)}>Continue</Button>
+                            onClick={(e) => this.setPaymentOptions(e, initial_optParam)}>Continue</Button>
                         </div>
                       </div>
                     )}
