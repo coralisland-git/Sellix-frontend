@@ -31,7 +31,7 @@ export const saveProductGroupOrder = (ids) => {
   return (dispatch) => {
     let data = {
       method: 'POST',
-      url: '/sort/groups',
+      url: '/groups/sort',
       data: formData(ids)
     }
 
