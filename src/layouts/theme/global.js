@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
 
-    h1, h2, h3, h4, h5, p, label, a, th, td, input, select, textarea, .Select-placeholder, .close, span {
+    h1, h2, h3, h4, h5, p, label, a, th, td, input, select, textarea, .Select-placeholder, .close span, span.price {
         color: ${({ theme }) => theme.text} !important;
     }
 
@@ -17,7 +17,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .text-red {
-        color: #B22424 !important;
+        color: #f74141  !important;
     }
 
     .shop-container {

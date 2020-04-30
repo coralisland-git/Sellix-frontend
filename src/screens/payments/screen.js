@@ -24,6 +24,7 @@ import bitcoinCashIcon from "../../assets/images/crypto/bitcoincash.svg";
 import perfectmoneyIcon from "../../assets/images/crypto/perfectmoney.svg";
 import stripeIcon from "../../assets/images/crypto/stripe.svg";
 import stripeBtnIcon from "../../assets/images/crypto/stripe_revised.svg";
+import skrillIcon from "../../assets/images/crypto/skrill.svg";
 
 const mapStateToProps = (state) => ({
   product_list: state.product.product_list
@@ -48,7 +49,9 @@ class Payments extends React.Component {
       wallet_ethereum: '',
       wallet_bitcoincash: '',
       perfectmoney_id: '',
-      perfectmoney_passphrase: ''
+      perfectmoney_passphrase: '',
+      email_skrill: '',
+      secretword_skrill: ''
     }
   }
 
@@ -62,6 +65,8 @@ class Payments extends React.Component {
       wallet_bitcoincash: this.state.wallet_bitcoincash || '',
       perfectmoney_id: this.state.perfectmoney_id || '',
       perfectmoney_passphrase: this.state.perfectmoney_passphrase || '',
+      email_skrill: this.state.email_skrill || '',
+      secretword_skrill: this.state.secretword_skrill || '',
       stripe_user_id: this.state.stripe_user_id
     })
       .then(res => this.props.commonActions.tostifyAlert('success', res.message))
@@ -91,7 +96,9 @@ class Payments extends React.Component {
       wallet_bitcoincash,
       perfectmoney_id,
       perfectmoney_passphrase,
-      stripe_user_id
+      stripe_user_id,
+      email_skrill,
+      secretword_skrill
     } = this.state;
 
     return (
@@ -104,7 +111,7 @@ class Payments extends React.Component {
                   <Loader/>
                 </div>
               }
-              <Row className="">
+                <Row className="">
                     <Col lg={12}>
                       <FormGroup className="mb-4">
                         <h4 className="title">Payments</h4>
@@ -145,6 +152,33 @@ class Payments extends React.Component {
                                   value={perfectmoney_passphrase}
                                   className="mb-3"
                                   onChange={e => this.setState({perfectmoney_passphrase: e.target.value})}
+                                />
+                              </Col>
+                            </Row>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-0">
+                            <Label htmlFor="product_code"><img src={skrillIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Skrill Email & Secret Word</Label>
+                            <Row>
+                              <Col lg={5}>
+                                <Input 
+                                  type="text" 
+                                  placeholder="Skrill Email"
+                                  value={email_skrill}
+                                  className="mb-3"
+                                  onChange={e => this.setState({email_skrill: e.target.value})}
+                                />
+                              </Col>
+                              <Col lg={7}>
+                                <Input 
+                                  type="text" 
+                                  placeholder="Skrill Secret Word"
+                                  value={secretword_skrill}
+                                  className="mb-3"
+                                  onChange={e => this.setState({secretword_skrill: e.target.value})}
                                 />
                               </Col>
                             </Row>
