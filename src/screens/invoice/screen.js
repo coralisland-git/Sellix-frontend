@@ -382,7 +382,8 @@ class Invoice extends React.Component {
                             this.getPaymentForm({...invoice})
                           }
 
-                          {(invoice.gateway == 'paypal' && invoice.status == 0) && 
+                          {
+                          (invoice.gateway == 'paypal' && invoice.status == 0) && 
                             <div className="mt-5">
                               <PayPalButton
                                 createOrder={(data, actions) => {
@@ -435,19 +436,20 @@ class Invoice extends React.Component {
                               </div>
                             </div>
                           }
-                        </div>
 
-                        {(invoice.gateway == 'skrill' && invoice.status == 0) && 
+                          {
+                          (invoice.gateway == 'skrill' && invoice.status == 0) && 
                             <div className="mt-5">
                               <div className="d-flex input-group">
-                                <Button className="w-100 p-0 m-3">
-                                  <img src={skrillLinkIcon} height="40"/>
-                                </Button>
+                                <a target="_blacnk" href={invoice.skrill_link} className="w-100 p-0 text-center skrill-button">
+                                  <img src={skrillLinkIcon} height="45"/>
+                                </a>
                               </div>
-                              
                             </div>
+                          }
+                        </div>
 
-                        }
+                        
 
                         <div className="bottom p-4">
                           {invoice.status == 1 && 
