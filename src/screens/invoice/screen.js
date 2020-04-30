@@ -31,7 +31,7 @@ import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
-import perfectMoneyBtn from 'assets/images/perfect_money_btn.png'
+import skrillLinkIcon from 'assets/images/skrill_link.svg'
 
 import './style.scss'
 
@@ -264,7 +264,7 @@ class Invoice extends React.Component {
 
 
   getCryptoReceived({gateway, crypto_received}) {
-    if(gateway == 'paypal' || gateway == 'perfectmoney')
+    if(gateway == 'paypal' || gateway == 'perfectmoney' || gateway == 'skrill')
       return null
 
     return (
@@ -278,7 +278,7 @@ class Invoice extends React.Component {
   }
 
   getCryptoAmount({gateway, crypto_amount}) {
-    if(gateway == 'paypal' || gateway == 'perfectmoney')
+    if(gateway == 'paypal' || gateway == 'perfectmoney' || gateway == 'skrill')
       return null
     
     return (
@@ -295,6 +295,10 @@ class Invoice extends React.Component {
     }
 
     if(invoice.gateway == 'perfectmoney'){
+      return ''
+    }
+
+    if(invoice.gateway == 'skrill'){
       return ''
     }
 
@@ -358,7 +362,7 @@ class Invoice extends React.Component {
                         <div className="top p-4 pt-4">
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-                            <span className="badge text-primary bold status invoice-timer" id="status">
+                            <span className="badge text-primary bold status invoice-timer m-0" id="status">
                               {this.setInvoiceStatus(invoice.status)}</span>
                           </div>
                           <p className="text-grey  mb-3">{invoice.uniqid}</p>
@@ -433,6 +437,17 @@ class Invoice extends React.Component {
                           }
                         </div>
 
+                        {(invoice.gateway == 'skrill' && invoice.status == 0) && 
+                            <div className="mt-5">
+                              <div className="d-flex input-group">
+                                <Button className="w-100 p-0 m-3">
+                                  <img src={skrillLinkIcon} height="40"/>
+                                </Button>
+                              </div>
+                              
+                            </div>
+
+                        }
 
                         <div className="bottom p-4">
                           {invoice.status == 1 && 
