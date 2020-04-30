@@ -62,6 +62,15 @@ class WebhookLogs extends React.Component {
     })
   }  
 
+  renderSendAgain (cell, row) {
+    return (
+      <div className="badge badge-payload" 
+        onClick={ ()=> {}}>
+        Send again
+      </div> 
+    )
+  }
+
   renderStatus (cell, row) {
     if (row.response_code && row.response_code != 0) {
       var status = "success"
@@ -245,7 +254,7 @@ class WebhookLogs extends React.Component {
                             isKey
                             dataField="url"
                             dataSort
-                            width='35%'
+                            width='22%'
                           >
                             Webhook URL
                           </TableHeaderColumn>
@@ -268,13 +277,22 @@ class WebhookLogs extends React.Component {
                             Response
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="retries"                            
+                            dataField="retries"
                             dataSort
                             dataAlign="center"
                             dataFormat={this.renderRetries}
                             width='13%'
                           >
                             Retries
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="response_code"
+                            dataSort
+                            dataFormat={this.renderSendAgain}
+                            dataAlign="center"
+                            width='13%'
+                          >
+                            Send again
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField=""
@@ -296,7 +314,7 @@ class WebhookLogs extends React.Component {
                               dataField="id"
                               dataAlign="right"
                               dataFormat={this.renderOptions}
-                              width='15%'                              
+                              width='15%'
                             >
                               Options
                             </TableHeaderColumn>*/}

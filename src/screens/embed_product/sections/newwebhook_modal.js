@@ -16,7 +16,6 @@ import { Button } from 'components';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import {atomOneLight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Clipboard from 'react-clipboard.js';
 
 
@@ -37,8 +36,10 @@ class NewCustomModal extends React.Component {
   }
 
   render() {    
-    const { openModal, 
-      closeModal, 
+    const { openModal,
+      closeModal,
+      theme, 
+      codeStyle,
       all_products, 
       custom_fields,
       embedCode,       
@@ -62,7 +63,7 @@ class NewCustomModal extends React.Component {
 
     return (      
       <Modal isOpen={openModal}
-        className="modal-success documentation-screen">
+        className={`modal-success documentation-screen ${theme}`}>
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
@@ -75,7 +76,7 @@ class NewCustomModal extends React.Component {
               <ModalHeader toggle={closeModal}>
                 Generate Code
               </ModalHeader>
-              <ModalBody className="p-4">
+              <ModalBody className="p-4 embed">
                 <Row>
                   <Col>
                     <FormGroup>
@@ -170,7 +171,7 @@ class NewCustomModal extends React.Component {
                                 <i className="fa fa-clone" aria-hidden="true"></i>
                               </Clipboard>
                             </div>
-                            <SyntaxHighlighter language="html" style={atomOneLight} showLineNumbers={true}>
+                            <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
                               {embedCode}
                             </SyntaxHighlighter>
                           </div>
