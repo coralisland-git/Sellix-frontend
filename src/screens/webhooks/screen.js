@@ -147,14 +147,6 @@ class Webhooks extends React.Component {
     )
   }
 
-  renderPayload(cell, row) {
-    return(
-      <div className="badge badge-payload">
-        Payload
-      </div>
-    )
-  }
-
   renderOrderTime(cell, row) {
     return (
       <div>
