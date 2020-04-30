@@ -2,7 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
 
-    h1, h2, h3, h4, h5, p, label, a, th, td, input, select, textarea, .Select-placeholder, .close span, span.price, .neutral-count {
+    h1, h2, h3, h4, h5, p, label, a, th, td, input, select, textarea, 
+    .Select-placeholder, .close span, span.price, .neutral-count,
+    .order-detail-info span,
+    .stock-info span {
         color: ${({ theme }) => theme.text} !important;
     }
 
@@ -10,6 +13,10 @@ export const GlobalStyles = createGlobalStyle`
     .admin-container {
         background: ${({ theme }) => theme.body};
         color: ${({ theme }) => theme.text};
+    }
+
+    .sweet-alert h2 {
+        color: rgb(89, 89, 89) !important;
     }
 
     .text-green {

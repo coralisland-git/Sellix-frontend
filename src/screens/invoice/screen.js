@@ -235,6 +235,8 @@ class Invoice extends React.Component {
 
 
   getInvoiceStatus2(status) {
+    const { invoice } = this.state
+
     if(status == 0){
       this.startTimer()
       return (
@@ -250,7 +252,7 @@ class Invoice extends React.Component {
     else if(status == 3)
      return <div className="d-flex align-items-center">
               <div className="sk-spinner sk-spinner-pulse"></div>
-              Waiting for Confirmation
+                Waiting for Confirmation ({((invoice.crypto_transactions || []).slice(-1)[0] || {}).confirmations }/{invoice.crypto_confirmations || 0})
             </div>
     else if(status == 4)
       return (
@@ -448,10 +450,8 @@ class Invoice extends React.Component {
                             </div>
                           }
                         </div>
-
                         
-
-                        <div className="bottom p-4">
+                        <div className="bottom order-detail-info p-4">
                           {invoice.status == 1 && 
                             <SweetAlert
                               success
