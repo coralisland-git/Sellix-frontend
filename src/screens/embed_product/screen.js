@@ -133,7 +133,7 @@ class EmbedProduct extends React.Component {
   render() {
 
     const { loading, openModal,custom_fields, embedCode, theme } = this.state
-    const codeStyle = theme == 'light'? atomOneLight : atomOneDark
+    const codeStyle = atomOneDark
 
     return (
       <div className="documentation-screen embed">
