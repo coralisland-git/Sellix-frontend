@@ -186,10 +186,8 @@ class ShopLayout extends React.Component {
 						<h4 className="mb-0 mt-3 mb-2">
 							<span style={{fontSize: 20}}>{user.username}&nbsp;</span>
 							{user.verified == '1' &&
-								<span>
-									<LazyImage placeholder={user.profile_attachment} src={verifiedIcon}>
-										{(src) => <img src={src} width="20" className="verified-icon mb-1" id="verifiedTooltip" />}
-									</LazyImage>
+								<span style={{fontSize: 17}}>
+									<img src={verifiedIcon} width="20" className="verified-icon mb-1" id="verifiedTooltip" />
 									<Tooltip
 										placement="right"
 										isOpen={verifiedTooltipOpen}
@@ -212,7 +210,7 @@ class ShopLayout extends React.Component {
 							{user.feedback ? user.feedback.positive : 0}
 						</span>
 						<span className="" />
-						<span className="text-grey pl-2 pr-2">
+						<span className="neutral-count pl-2 pr-2">
 							{user.feedback ? user.feedback.neutral : 0}
 						</span>
 						<span className="" />
