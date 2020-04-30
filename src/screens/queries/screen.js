@@ -33,92 +33,6 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-const testdata = [
-  {
-    "id": "16",
-    "uniqid": "dc1a4b-806ee257dd-7346ca",
-    "customer_email": "testing@gmail.com",
-    "user_id": "14",
-    "role": "customer",
-    "title": "query title",
-    "message": "this is a testing query",
-    "day_value": "31",
-    "day": "Tue",
-    "month": "Mar",
-    "year": "2020",
-    "date": "1585670037",
-    "reply_to": null,
-    "status": "closed",
-    "section": "support"
-  },
-  {
-    "id": "1623",
-    "uniqid": "dc1a4b-806ee257dd-7346ca",
-    "customer_email": "testing@gmail.com",
-    "user_id": "14",
-    "role": "customer",
-    "title": "query title",
-    "message": "this is a testing query",
-    "day_value": "31",
-    "day": "Tue",
-    "month": "Mar",
-    "year": "2020",
-    "date": "1585680037",
-    "reply_to": null,
-    "status": "closed",
-    "section": "support"
-  },
-  {
-    "id": "14564",
-    "uniqid": "dc1a4b-806ee257dd-7346ca",
-    "customer_email": "testing@gmail.com",
-    "user_id": "14",
-    "role": "customer",
-    "title": "query title",
-    "message": "this is a testing query",
-    "day_value": "31",
-    "day": "Tue",
-    "month": "Mar",
-    "year": "2020",
-    "date": "1585680037",
-    "reply_to": null,
-    "status": "open",
-    "section": "support"
-  },{
-    "id": "16",
-    "uniqid": "dc1a4b-806ee257dd-7346ca",
-    "customer_email": "testing@gmail.com",
-    "user_id": "14",
-    "role": "customer",
-    "title": "query title",
-    "message": "this is a testing query",
-    "day_value": "31",
-    "day": "Tue",
-    "month": "Mar",
-    "year": "2020",
-    "date": "1585680037",
-    "reply_to": null,
-    "status": "pending",
-    "section": "support"
-  },{
-    "id": "16",
-    "uniqid": "dc1a4b-806ee257dd-7346ca",
-    "customer_email": "testing@gmail.com",
-    "user_id": "14",
-    "role": "customer",
-    "title": "query title",
-    "message": "this is a testing query",
-    "day_value": "31",
-    "day": "Tue",
-    "month": "Mar",
-    "year": "2020",
-    "date": "1585680037",
-    "reply_to": null,
-    "status": "open",
-    "section": "support"
-  },
-]
-
 class Queries extends React.Component {
   constructor(props) {
     super(props)
@@ -309,6 +223,7 @@ class Queries extends React.Component {
                           <TableHeaderColumn
                             dataField="email"
                             dataSort
+                            dataAlign="center"
                             width="30%"
                             dataFormat={this.renderQuerieEmail}
                           >
@@ -317,6 +232,8 @@ class Queries extends React.Component {
                           <TableHeaderColumn
                             dataField="status"
                             dataSort
+                            dataAlign="center"
+                            width="10%"
                             dataFormat={this.renderQueryStatus}
                           >
                             Status
@@ -324,8 +241,8 @@ class Queries extends React.Component {
                           <TableHeaderColumn
                             dataField="id"
                             dataSort
-                            width="30%"
-                            dataAlign="right"
+                            width="10%"
+                            dataAlign="center"
                             dataFormat={this.renderOption}
                           >
                             Option

@@ -64,7 +64,7 @@ class ReplyToQuerie extends React.Component {
         pathname: `/dashboard/${user}/queries`
       })
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.message)
+      this.props.commonActions.tostifyAlert('error', err.error)
     }).finally(() => {
       this.setState({ loading: false })
     })
