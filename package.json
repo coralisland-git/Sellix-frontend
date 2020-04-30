@@ -25,6 +25,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
+    "query-string": "^6.12.1",
     "random-letters": "^1.0.0-rc.1",
     "react": "^16.8.6",
     "react-ace": "^8.0.0",
