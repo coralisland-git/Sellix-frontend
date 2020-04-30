@@ -42,4 +42,132 @@
       font-size: 36px;
       font-weight: 600;
     }
+
+
+  .light {
+    .react-select {
+      &__control {
+        & > div * {
+          color: #6b7580 !important;
+        }
+      }
+
+      &__menu * {
+        color: #6b7580;
+      }
+
+      &__option {
+
+        &:active {
+          background-color: #e1dbf5;
+        }
+
+        &--is-selected {
+          background-color: #603bea !important;
+          color: white !important;
+
+          &.react-select__option--is-focused {
+            color: white !important;
+          }
+        }
+        &--is-focused {
+          background-color: lighten(#603bea, 30%);
+        }
+      }
+    }
   }
+
+
+
+  .react-select {
+
+    &__value-container {
+      padding-left: 25px;
+    }
+
+    &__control {
+      min-height: 45px;
+
+      * {
+        cursor: pointer !important;
+      }
+
+      &--is-focused {
+        box-shadow: none !important;
+      }
+
+      &--is-focused.react-select__control--menu-is-open {
+        box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25) !important;
+      }
+    }
+
+    &__menu * {
+      cursor: pointer !important;
+    }
+
+    &__option {
+
+    }
+  }
+
+  //
+  //*[class$=control] {
+  //  background-color: #221D3E !important;
+  //  border: 1px solid #1D183D !important;
+  //}
+  //
+  //*[class$=control] * {
+  //  color: #B4AEBC !important;
+  //}
+  //
+  //*[class$=-menu] {
+  //  background-color: #241e4c !important;
+  //  border-radius: 5px !important;
+  //  color: #B4AEBC !important;
+  //}
+  //
+  //*[class$=-menu] *[class$=-option] {
+  //  background-color: #241e4c !important;
+  //  cursor:pointer;
+  //}
+  //
+  //*[class$=-menu] *[class$=-option]:hover {
+  //  background-color: #221D3E !important;
+  //  color: white !important;
+  //}
+  //
+  //*[class$=control] * {
+  //  color: #B4AEBC !important;
+  //}
+  //
+  //*[class$=multiValue] * {
+  //  color: black !important;
+  //}
+  //
+  //*:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold) {
+  //  color: black !important;
+  //}
+  //
+  //*:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold) {
+  //  color: black !important;
+  //}
+
+
+  .option-select > * > * > *:not([class$=-singleValue]):not([class$=-indicatorContainer]):not([class$=-Input]) {
+    background: white !important;
+  }
+
+  .option-select-option:not(.is-disabled) * {
+    color: black !important;
+  }
+
+  .option-select-option:not(.is-disabled):not(.is-selected) * {
+    opacity: 0.85 !important;
+  }
+
+  *[class$=-control][class*=css-]{
+    background-color: #FCFCFE !important;
+    border: 1px solid #F5F5F5 !important;
+  }
+
+}

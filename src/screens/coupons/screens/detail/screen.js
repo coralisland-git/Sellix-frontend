@@ -103,6 +103,7 @@ class DetailProduct extends React.Component {
                               <Select
                                 className="select-default-width"
                                 options={[]}
+                                classNamePrefix={"react-select"}
                                 id="parent_product"
                                 name="parent_product"
                               />
@@ -126,6 +127,7 @@ class DetailProduct extends React.Component {
                               <Select
                                 className="select-default-width"
                                 options={[]}
+                                classNamePrefix={"react-select"}
                                 id="vat_percentage"
                                 name="vat_percentage"
                               />
@@ -153,6 +155,7 @@ class DetailProduct extends React.Component {
                               <Select
                                 className="select-default-width"
                                 options={[]}
+                                classNamePrefix={"react-select"}
                                 id="warehourse"
                                 name="warehourse"
                               />

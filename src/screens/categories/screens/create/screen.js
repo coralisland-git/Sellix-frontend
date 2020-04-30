@@ -198,6 +198,7 @@ class CreateCategories extends React.Component {
                                   className="select-default-width"
                                   id="product_bounds"
                                   name="product_bounds"
+                                  classNamePrefix={"react-select"}
                                   isMulti
                                   options={product_options}
                                   placeholder="Select Products"

@@ -421,7 +421,6 @@ class CreateProduct extends React.Component {
 																				</div>
 																				<div style={{marginLeft: -10}}>
 																				<Select
-																					className="currency-select"
 																					options={CURRENCY_LIST}
 																					id="currency"
 																					name="currency"
@@ -430,7 +429,8 @@ class CreateProduct extends React.Component {
 																					onChange={(option) => {
 																						props.handleChange("currency")(option);
 																					}}
-																					searchable={false}
+																					isSearchable={false}
+																					classNamePrefix={"react-select"}
 																					className={
 																						props.errors.currency && props.touched.currency
 																							? "is-invalid currency-select"
@@ -628,13 +628,13 @@ class CreateProduct extends React.Component {
 																				placeholder="Type" 
 																				options={TYPE_OPTIONS} 
 																				className="mb-3"
+																				classNamePrefix={"react-select"}
 																				value={this.state.type}
-																				searchable={false}
+																				isSearchable={false}
 																				onChange={(option) => {
 																					this.setState({
 																						type: option
 																					})
-	
 																					props.handleChange("type")(option.value);
 																				}}
 																				// menuIsOpen={true}                                 
@@ -700,8 +700,9 @@ class CreateProduct extends React.Component {
 																				<Select 
 																					placeholder="Type" 
 																					options={DELIMITER_OPTIONIS}
-																					searchable={false}
+																					isSearchable={false}
 																					className="mb-3"
+																					classNamePrefix={"react-select"}
 																					value={this.state.delimiter}
 																					onChange={(option) => {
 																						this.setState({
@@ -857,7 +858,8 @@ class CreateProduct extends React.Component {
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
 																								<Select options={CUSTOM_TYPE} 
 																									value={field.type}
-																									    searchable={false}
+																								    classNamePrefix={"react-select"}
+																								        isSearchable={false}
 																									onChange={(option) => {
 																										this.saveCustomField(option, index, 'type')
 																									}}
