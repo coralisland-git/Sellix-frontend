@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { Loader } from 'components'
 import sellix_logo from "assets/images/Sellix_logo.svg";
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import {atomOneLight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { atomOneLight, atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Clipboard from 'react-clipboard.js';
 import { NewWebhookModal } from './sections';
 import { CommonActions } from 'services/global';
@@ -45,7 +45,8 @@ class EmbedProduct extends React.Component {
       loading: true,
       openModal: false,
       custom_fields: [],
-      embedCode: null
+      embedCode: null,
+      theme: window.localStorage.getItem('theme') || 'light'
     }
   }
 
@@ -131,13 +132,16 @@ class EmbedProduct extends React.Component {
 
   render() {
 
-    const { loading, openModal,custom_fields, embedCode } = this.state
+    const { loading, openModal,custom_fields, embedCode, theme } = this.state
+    const codeStyle = theme == 'light'? atomOneLight : atomOneDark
 
     return (
       <div className="documentation-screen embed">
         <div className="animated fadeIn">
           <NewWebhookModal 
             openModal={openModal}
+            theme={theme}
+            codeStyle={codeStyle}
             custom_fields={custom_fields}
             embedCode={embedCode}
             closeModal={this.closeNewWebhookModal.bind(this)}
@@ -186,7 +190,7 @@ class EmbedProduct extends React.Component {
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
                           </div>
-                          <SyntaxHighlighter language="html" style={atomOneLight} showLineNumbers={true}>
+                          <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
                             {`<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js"></script>`}
                           </SyntaxHighlighter>
                         </div>
@@ -208,7 +212,7 @@ class EmbedProduct extends React.Component {
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
                           </div>
-                          <SyntaxHighlighter language="html" style={atomOneLight} showLineNumbers={true}>
+                          <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
                             {`<button
   data-sellix-product=“PRODUCT_UNIQID“
   type="submit"
@@ -239,7 +243,7 @@ class EmbedProduct extends React.Component {
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
                           </div>
-                          <SyntaxHighlighter language="html" style={atomOneLight} showLineNumbers={true}>
+                          <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
                             {`<button
   data-sellix-product="PRODUCT_UNIQID"
   data-sellix-custom-reference=“12345678”
