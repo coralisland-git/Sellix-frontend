@@ -148,9 +148,10 @@ class CreateWebhookSimulator extends React.Component {
                                   <Label htmlFor="event">Events</Label>
                                   <Select 
                                     id="event"
-                                    placeholder="Select events" 
+                                    placeholder="Select events"
+                                    classNamePrefix={"react-select"}
                                     options={EVENT_OPTIONS}
-                                    searchable={false}                              
+                                    isSearchable={false}
                                     value={props.values.event}
                                     onChange={(option) => {
                                       props.handleChange("event")(option.value);

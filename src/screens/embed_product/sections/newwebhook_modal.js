@@ -85,7 +85,8 @@ class NewCustomModal extends React.Component {
                         id="event"
                         placeholder="Select product" 
                         options={PRODUCT_LIST}
-                        searchable={false}
+                        classNamePrefix={"react-select"}
+                        isSearchable={false}
                         value={props.values.product}
                         onChange={(option) => {
                           props.handleChange("product")(option);

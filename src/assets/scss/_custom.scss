@@ -620,3 +620,71 @@ table {
     outline: none;
     box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
 }
+
+
+.light {
+    .react-select {
+        &__control {
+            & > div * {
+                color: #6b7580 !important;
+            }
+        }
+
+        &__menu * {
+            color: #6b7580;
+        }
+
+        &__option {
+
+            &:active {
+                background-color: #e1dbf5;
+            }
+
+            &--is-selected {
+                background-color: #603bea !important;
+                color: white !important;
+
+                &.react-select__option--is-focused {
+                    color: white !important;
+                }
+            }
+            &--is-focused {
+                background-color: lighten(#603bea, 30%);
+            }
+        }
+    }
+}
+
+
+
+.react-select {
+
+    &__value-container {
+        padding-left: 25px !important;
+    }
+
+    &__control {
+        min-height: 45px !important;
+
+        * {
+            cursor: pointer !important;
+        }
+
+        &--is-focused {
+            box-shadow: none !important;
+        }
+
+        &--is-focused.react-select__control--menu-is-open {
+            box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25) !important;
+        }
+    }
+
+    &__menu * {
+        cursor: pointer !important;
+    }
+
+    &__option {
+
+    }
+}
+
