@@ -43,3 +43,23 @@ export const createWebhookSimulator = (simulator) => {
     })
   }
 }
+
+export const retryWebhook = (webhook) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/webhooks/retry`,
+      data: formData(webhook)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
