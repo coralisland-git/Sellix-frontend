@@ -220,6 +220,7 @@ class EditCategory extends React.Component {
                                     <Label htmlFor="product_bounds">Products</Label>
                                     <Select
                                       className="select-default-width"
+                                      classNamePrefix={"react-select"}
                                       id="product_bounds"
                                       name="product_bounds"
                                       isMulti

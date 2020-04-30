@@ -53,6 +53,17 @@ class WebhookLogs extends React.Component {
     }, 20000)
   }
 
+  handleSendAgain(uniqid) {
+    this.props.actions.retryWebhook({
+      "uniqid": uniqid
+    }).then(res => {
+      this.props.commonActions.tostifyAlert('success', res.message || 'Sent successfully');
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+    }).finally(() => {
+    })    
+  }
+
   initializeData = () => {    
     this.setState({ loading: true })    
     this.props.actions.getWebhookLogList().catch(err => {
@@ -62,12 +73,13 @@ class WebhookLogs extends React.Component {
     })
   }  
 
-  renderSendAgain (cell, row) {
+  renderSendAgain = (cell, row) => {
     return (
-      <div className="badge badge-payload" 
-        onClick={ ()=> {}}>
+      <Button color="default"
+        className="badge-payload"
+        onClick={ ()=> this.handleSendAgain(row.uniqid) }>
         Send again
-      </div> 
+      </Button>
     )
   }
 
@@ -114,16 +126,15 @@ class WebhookLogs extends React.Component {
 
   renderPayload = (cell, row) => {
     return(
-      <>
-        <div className="badge badge-payload" 
-          onClick={ ()=> this.setState({
-            openShowModal: true,
-            webhook: row
-          })}
-        >
-          Payload
-        </div>        
-      </>
+      <Button color="default"
+        className="badge-payload"
+        onClick={ ()=> this.setState({
+          openShowModal: true,
+          webhook: row
+        })}
+      >
+        Payload          
+      </Button>      
     )
   }
 
@@ -286,7 +297,7 @@ class WebhookLogs extends React.Component {
                             Retries
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="response_code"
+                            dataField="uniqid"
                             dataSort
                             dataFormat={this.renderSendAgain}
                             dataAlign="center"

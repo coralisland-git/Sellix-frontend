@@ -148,13 +148,14 @@ class CreatePage extends React.Component {
                                     onChange={(option) => {
                                       props.setFieldValue('type', option)
                                     }}
+                                    classNamePrefix={"react-select"}
                                     value={props.values.type}
                                     className={
                                       props.errors.type && props.touched.type
                                           ? "is-invalid"
                                           : ""
                                     }
-                                    searchable={false}
+                                    isSearchable={false}
                                   />
                                   {props.errors.type && props.touched.type && (
                                       <div className="invalid-feedback">{props.errors.type}</div>

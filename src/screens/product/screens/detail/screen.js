@@ -524,12 +524,12 @@ class EditProduct extends React.Component {
 																				</div>
 																				<div style={{marginLeft: -10}}>
 																					<Select
-																						className="currency-select"
 																						options={CURRENCY_LIST}
+																						classNamePrefix={"react-select"}
 																						id="currency"
 																						name="currency"
 																						placeholder="USD"
-																						searchable={false}
+																						isSearchable={false}
 																						value={props.values.currency}
 																						onChange={(option) => {
 																							props.handleChange("currency")(option);
@@ -726,10 +726,10 @@ class EditProduct extends React.Component {
 																	<Col lg={12}>
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Type</Label>
-																			<Select 
+																			<Select classNamePrefix={"react-select"}
 																				placeholder="Type" 
 																				options={TYPE_OPTIONS}
-																				searchable={false}
+																				isSearchable={false}
 																				className="mb-3"
 																				value={this.state.type}
 																				onChange={(option) => {
@@ -797,10 +797,11 @@ class EditProduct extends React.Component {
 																		<Col lg={3}>
 																			<FormGroup className="mb-3">
 																				<Label htmlFor="product_code">Stock Delimiter</Label>
-																				<Select 
+																				<Select
+																					classNamePrefix={"react-select"}
 																					placeholder="Type" 
 																					options={DELIMITER_OPTIONIS}
-																					searchable={false}
+																					isSearchable={false}
 																					className="mb-3"
 																					id="stock_delimiter"
 																					name="stock_delimiter"
@@ -957,8 +958,10 @@ class EditProduct extends React.Component {
 																						<Col lg={4}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
-																								<Select options={CUSTOM_TYPE}
-																								        searchable={false}
+																								<Select
+																									classNamePrefix={"react-select"}
+																									options={CUSTOM_TYPE}
+																							        isSearchable={false}
 																									value={field.type}
 																									onChange={(option) => {
 																										this.saveCustomField(option, index, 'type')

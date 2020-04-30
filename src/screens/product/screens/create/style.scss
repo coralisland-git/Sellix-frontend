@@ -122,3 +122,14 @@
     }
   }
 }
+
+
+.currency-select {
+  .react-select__control {
+    border-radius: 0 3px 3px 0;
+  }
+  .react-select__value-container {
+    padding-left: 10px !important;
+  }
+}
+

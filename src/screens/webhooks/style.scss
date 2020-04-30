@@ -25,7 +25,10 @@
   }
 
   .badge-payload {
-    background-color: #F5F5FE;
+    min-height: auto;
+    font-weight: 400 !important;
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 }
 

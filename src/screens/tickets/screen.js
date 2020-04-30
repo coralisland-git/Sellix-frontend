@@ -112,7 +112,8 @@ class Ticket extends React.Component {
                                                                         options={OPTIONS}
                                                                         id="category"
                                                                         value={values.category}
-                                                                        searchable={false}
+                                                                        isSearchable={false}
+                                                                        classNamePrefix={'react-select'}
                                                                         onChange={(option) => handleChange("category")(option)}
                                                                         className={errors.category && touched.category && "is-invalid"}
                                                                         name="category"

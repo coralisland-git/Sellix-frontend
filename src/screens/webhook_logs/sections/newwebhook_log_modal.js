@@ -110,9 +110,10 @@ class NewWebhookLogModal extends React.Component {
                         <Label htmlFor="event">Event</Label>
                         <Select 
                           id="event"
-                          placeholder="Select event" 
+                          placeholder="Select event"
+                          classNamePrefix={"react-select"}
                           options={EVENT_OPTIONS}
-                          searchable={false}
+                          isSearchable={false}
                           value={props.values.event}
                           onChange={(option) => {
                             props.handleChange("event")(option);
