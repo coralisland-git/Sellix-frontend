@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledDropdown, Input, Badge } from 'reactstrap'
-import PropTypes from 'prop-types'
 import ReactTimeAgo from 'react-time-ago'
 import IntervalTimer from 'react-interval-timer';
 
@@ -29,8 +28,8 @@ class Header extends Component {
   }
 
   render() {
-    const { profile, children, theme, is_authed, isShop, isDocumentation, ...attributes } = this.props
-    const { notifications } = profile || {}
+    const { profile, children, theme, is_authed, isShop, history, isDocumentation, ...attributes } = this.props
+    const { notifications } = profile || {};
 
     return (
       <React.Fragment>
@@ -57,10 +56,10 @@ class Header extends Component {
               </DropdownToggle>
               
               <DropdownMenu right className="mt-2">
-                <DropdownItem onClick={() => this.props.history.push('/admin')}>
+                <DropdownItem onClick={() => history.push('/admin')}>
                    Help Center
                 </DropdownItem>
-                <DropdownItem onClick={() => this.props.history.push('/contact')}>
+                <DropdownItem onClick={() => history.push('/contact')}>
                    Contact Us
                 </DropdownItem>
               </DropdownMenu>
@@ -80,7 +79,7 @@ class Header extends Component {
 
               <IntervalTimer
                 timeout={30000}
-                callback={()=>{this.props.authActions.getSelfUser()}}
+                callback={this.props.authActions.getSelfUser}
                 enabled={true}
                 repeat={true}
               />
@@ -123,24 +122,28 @@ class Header extends Component {
               <DropdownToggle className="user-name" nav>
                 <div>
                   {profile && profile.profile_attachment?
-                    <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}}/>:
-                    <i className="fa fa-user-circle text-primary avatar-icon"/>
+                    <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}} />:
+                    <i className="fa fa-user-circle text-primary avatar-icon" />
                   }
-                  
                 </div>
               </DropdownToggle>
               {
                 is_authed? 
                   <DropdownMenu right className="mt-2">
-                    <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
+                    {
+                      profile && profile.rank !== "0" && <DropdownItem onClick={() => history.push(`/admin/dashboard`)}>
+                        Admin panel
+                      </DropdownItem>
+                    }
+                    <DropdownItem onClick={() => history.push(`/dashboard/${userId}`)}>
                       Dashboard
                     </DropdownItem>
                     {
-                      !isShop && <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
+                      !isShop && <DropdownItem onClick={() => history.push(`/${userId}`)}>
                         Your Shop
                       </DropdownItem>
                     }
-                    <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
+                    <DropdownItem onClick={() => history.push(`/settings/${userId}`)}>
                       Settings
                     </DropdownItem>
                     {
@@ -153,7 +156,7 @@ class Header extends Component {
                     </DropdownItem>
                   </DropdownMenu>:
                   <DropdownMenu right className="mt-2">
-                    <DropdownItem onClick={() => this.props.history.push(`/auth/login`)}>
+                    <DropdownItem onClick={() => history.push(`/auth/login`)}>
                       Log In
                     </DropdownItem>
                   </DropdownMenu>

@@ -78,13 +78,13 @@ class SettingsLayout extends React.Component {
     document.documentElement.classList.add(this.state.theme);
 
     if (!window.localStorage.getItem('accessToken')) {
-      this.props.history.push('/login')
+      this.props.history.push('/auth/login')
     } else {
       this.props.authActions.getSelfUser().then(() => {
 
       }).catch(err => {
         this.props.authActions.logOut()
-        this.props.history.push('/login')
+        this.props.history.push('/auth/login')
       })
 
       const toastifyAlert = (status, message) => {

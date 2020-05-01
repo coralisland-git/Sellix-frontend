@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 import moment from 'moment';
 import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
 
-import {DateRangePicker2, Loader, Spin} from 'components'
+import { DateRangePicker2, Loader } from 'components'
 import { DashBoardChart } from './sections'
 import { getAnalyticsData, geLastInvoices } from './actions'
 
@@ -13,15 +13,8 @@ import './style.scss'
 import {BootstrapTable, TableHeaderColumn} from "react-bootstrap-table";
 import {tableOptions} from "../../constants/tableoptions";
 import config from "../../constants/config";
-
-
-const ORDER_STATUS = {
-  '0': 'Pending',
-  '1': 'Completed',
-  '2': 'Cancelled',
-  '3': 'Confirmation',
-  '4': 'Partial'
-}
+import {getSelfUser} from "../../services/global/auth/actions";
+import { withRouter } from "react-router-dom";
 
 const PAYMENT_OPTS = {
   'paypal': 'PayPal',
@@ -37,6 +30,7 @@ const PAYMENT_OPTS = {
 const mapDispatchToProps = dispatch => ({
   getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch),
   geLastInvoices: bindActionCreators(geLastInvoices, dispatch),
+  getSelfUser: bindActionCreators(getSelfUser, dispatch),
 })
 
 const userId = window.localStorage.getItem('userId')
@@ -98,14 +92,26 @@ class Dashboard extends React.Component {
     const endDate = date.endDate.format('MM/DD/YYYY');
     const { getAnalyticsData, geLastInvoices } = this.props;
 
-    this.setState({loading: true})
+    this.setState({ loading: true });
+
+    const isAdmin = this.props.location.pathname === "/admin/dashboard";
 
     if(initial) {
-      Promise.all([
-          getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
-          getAnalyticsData(startDate, endDate),
-          geLastInvoices()
-      ]).then(([{ data: { analytics }}, { data: { analytics: { total } }}, { data: { invoices } }]) => {
+
+      let requests = [
+        getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY'), isAdmin),
+        getAnalyticsData(startDate, endDate, isAdmin)
+      ]
+
+      if(!isAdmin) {
+        requests.push(geLastInvoices())
+      }
+
+      Promise.all(requests).then((response) => {
+
+        let analytics = response[0].data.analytics;
+        let total = response[1].data.analytics.total;
+        let invoices = isAdmin ? [] : response[2].data.invoices;
 
         this.setState({
           totalRevenue: total.revenue || 0,
@@ -123,7 +129,7 @@ class Dashboard extends React.Component {
         this.setState({loading: false})
       })
     } else {
-      getAnalyticsData(startDate, endDate)
+      getAnalyticsData(startDate, endDate, isAdmin)
           .then(({ data: { analytics } }) => {
             const { total } = analytics;
 
@@ -267,7 +273,7 @@ class Dashboard extends React.Component {
                                 role="progressbar" 
                                 style={{width: `${ordersProgress==0?1:Math.abs(ordersProgress)}%`}}
                                 aria-valuemin="0" 
-                                aria-valuemax="100"></div>
+                                aria-valuemax="100"/>
                             </div>
                           </CardBody>
                         </Card>
@@ -286,7 +292,7 @@ class Dashboard extends React.Component {
                                 role="progressbar" 
                                 style={{width: `${viewsProgress == 0?1:Math.abs(viewsProgress)}%`}}
                                 aria-valuemin="0" 
-                                aria-valuemax="100"></div>
+                                aria-valuemax="100"/>
                             </div>
                           </CardBody>
                         </Card>
@@ -384,4 +390,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Dashboard)
+export default withRouter(connect(null, mapDispatchToProps)(Dashboard))

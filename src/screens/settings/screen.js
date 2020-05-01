@@ -1,74 +1,51 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Button
-} from 'reactstrap'
-import * as _ from 'lodash'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import { Card, CardHeader, CardBody, Row, Col, Button } from 'reactstrap'
+import { isEmpty, map } from 'lodash'
 import { Loader } from 'components'
-import { tableOptions } from 'constants/tableoptions'
+import { getSettings as fetchSettings } from './actions'
+import { CommonActions } from "../../services/global";
+import Sellix from "../../assets/images/loader_logo_dark.svg";
 
-import './style.scss'
-import { getSettings } from './actions'
-
-
-const user = window.localStorage.getItem('userId')
-
-const mapStateToProps = (state) => {
-  return ({
-    settings: state.settings.settings
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators({ getSettings }, dispatch),
-    
-  })
-}
+import './style.scss';
 
 
-class Settings extends React.Component {
+
+const mapStateToProps = ({ settings: { settings } }) => ({ settings })
+
+const mapDispatchToProps = dispatch => ({
+  getSettings: bindActionCreators(fetchSettings, dispatch)
+})
+
+
+class Settings extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
+      showPlaceholder: false
     }
-
-    this.initializeData = this.initializeData.bind(this)
   }
 
   componentDidMount() {
-    // this.initializeData()
-    this.props.actions.getSettings()
+
+    this.props.getSettings()
+        .then(({ status }) => {
+          if(status === 401) {
+            this.setState({ showPlaceholder: true })
+          }
+        })
   }
 
-  initializeData() {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
-  }
-
-  renderSettings = () => {
-    return _.map(this.props.settings, (value, key) => {
-      return <><div className="settingRow">
-        <div className='settingRowKey'>{key}:</div>
-        <div>{value }</div>
-      </div>
-      </>
-    })
-  }
+  renderSettings = (settings) => (
+      map(settings, (value, key) => (
+          <div className="settingRow" key={key}>
+            <div className='settingRowKey'>{key}:</div><div>{value}</div>
+          </div>
+      ))
+  )
 
   editSettings = () => {
     this.props.history.push({
@@ -78,36 +55,55 @@ class Settings extends React.Component {
 
 
   render() {
-    const { loading } = this.state
-    const { product_list } = this.props
-    console.log({stng: this.props.settings}, JSON.stringify(this.props.settings))
-    if(!this.props.settings){return null}
+
+    const { loading, showPlaceholder } = this.state;
+    const { settings } = this.props;
+
+    // background: #000;
+    // top: 0;
+    // left: 0;
+    // color: #fff;
+
     return (
-      <div className="product-screen">
-        <div className="animated fadeIn">
-          <Card className="grey">
+      <div className="product-screen h-100">
+        <div className="animated fadeIn h-100">
+          <Card className="grey h-100">
+
             <CardHeader>
               <Row style={{ alignItems: 'center' }}>
                 <Col md={4} className="settings-titleBlock">
                   <h1>Settings</h1>
-                  <Button color="primary" onClick={() => this.editSettings()} className="mt-4 mb-3">Edit</Button>
+                  <Button color="primary" onClick={this.editSettings} className="mt-4 mb-3">Edit</Button>
                 </Col>
               </Row>
-              
             </CardHeader>
+
             <CardBody className="p-0">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                  :
-                  this.renderSettings()
+              {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+              {!loading && this.renderSettings(settings)}
+              {(!loading && isEmpty(settings) && showPlaceholder) &&
+                <div
+                    className={'position-absolute w-100 h-100 d-flex justify-content-center'}
+                    style={{
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      fontSize: "1.5rem",
+                      color: "#6a3de3",
+                      fontWeight: 600,
+                      width: "calc(100% + 2rem)",
+                      height: "calc(100% + 2rem)"
+                    }}>
+                  <div className={"d-flex align-items-center justify-content-center flex-column flex-direction-column direction-column "}>
+                    <Loader className={"override-loader"} />
+                    <div>Unauthorized to view this content</div>
+                  </div>
+                </div>
               }
-              
             </CardBody>
+
           </Card>
         </div>
       </div>
