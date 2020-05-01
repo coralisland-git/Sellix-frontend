@@ -2,7 +2,8 @@ import { AUTH } from 'constants/types'
 import {
   api,
   authApi,
-  formData
+  formData,
+  sendAuthedWsMessage
 } from 'utils'
 
 export const checkJWT = () => {
@@ -57,6 +58,23 @@ export const getSelfUser = () => {
       }
     }).catch(err => {
       throw err
+    })
+  }
+}
+
+
+export const getSelfUserViaWebsocket = () => {
+  return (dispatch) => {
+    sendAuthedWsMessage({ event: 'user' }, 'user').then(user => {
+      dispatch({
+        type: AUTH.SIGNED_IN
+      })
+      dispatch({
+        type: AUTH.USER_PROFILE,
+        payload: {
+          data: user
+        }
+      })
     })
   }
 }
