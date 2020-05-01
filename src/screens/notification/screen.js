@@ -153,8 +153,8 @@ class Notification extends React.Component {
                                 onChange={(e) => this.setState({ invoice_notification: e.target.checked })}
                               />
                               <div className="ml-2">
-                                <Label>Invoices</Label>
-                                <p>Receive an email when an invoice status is updated</p>
+                                <Label>Orders</Label>
+                                <p>Receive an email when you made a new sale</p>
                               </div>
                             </Col>
                           </FormGroup>
