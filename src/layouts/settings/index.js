@@ -57,6 +57,7 @@ const mapDispatchToProps = (dispatch) => {
 
 
 class SettingsLayout extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -66,6 +67,16 @@ class SettingsLayout extends React.Component {
   }
 
   componentDidMount() {
+
+
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+    document.body.classList.add(this.state.theme);
+
+    document.documentElement.classList.remove('light')
+    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.add(this.state.theme);
+
     if (!window.localStorage.getItem('accessToken')) {
       this.props.history.push('/login')
     } else {
