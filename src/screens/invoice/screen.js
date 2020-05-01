@@ -32,6 +32,7 @@ import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import skrillLinkIcon from 'assets/images/skrill_link.svg'
+import StripeForm from './stripeForm'
 
 import './style.scss'
 
@@ -266,7 +267,7 @@ class Invoice extends React.Component {
 
 
   getCryptoReceived({gateway, crypto_received}) {
-    if(gateway == 'paypal' || gateway == 'perfectmoney' || gateway == 'skrill')
+    if(gateway == 'paypal' || gateway == 'perfectmoney' || gateway == 'skrill' || gateway == 'stripe')
       return null
 
     return (
@@ -280,7 +281,7 @@ class Invoice extends React.Component {
   }
 
   getCryptoAmount({gateway, crypto_amount}) {
-    if(gateway == 'paypal' || gateway == 'perfectmoney' || gateway == 'skrill')
+    if(gateway == 'paypal' || gateway == 'perfectmoney' || gateway == 'skrill' || gateway == 'stripe')
       return null
     
     return (
@@ -302,6 +303,10 @@ class Invoice extends React.Component {
 
     if(invoice.gateway == 'skrill'){
       return ''
+    }
+
+    if(invoice.gateway == 'stripe') {
+      return <StripeForm invoice={invoice}/>
     }
 
     if(Number(invoice.status) < 1 || Number(invoice.status) > 3)
