@@ -1,27 +1,36 @@
 import config from 'constants/config'
 import jwtDecode from 'jwt-decode'
 
-const ws = new WebSocket(config.WS_URL)
+var ws = null
 
 const callbackByKey = {}
 
-ws.addEventListener('open', function open() {
-    console.log('opened')
-});
-
-ws.addEventListener('message', function incoming(response) {
+function incomingListener(response) {
     const data = JSON.parse(response.data).data
     for(const key in data) {
         if(callbackByKey[key]) {
             callbackByKey[key](data[key])
         }
     }
-});
+};
+
+function lazyWsSend(message) {
+    if(ws === null) {
+        ws = new WebSocket(config.WS_URL)
+        ws.addEventListener('open', function open() {
+            console.log('ws opened')
+            ws.send(message)
+        });
+        ws.addEventListener('message', incomingListener)
+    } else {
+        ws.send(message)
+    }
+}
 
 export function sendWsMessage(json, responseKey) {
     return new Promise(resolve => {
         callbackByKey[responseKey] = resolve
-        ws.send(JSON.stringify(json))
+        lazyWsSend(JSON.stringify(json))
     })
 }
 
