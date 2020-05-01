@@ -95,7 +95,9 @@ class Invoice extends React.Component {
       seconds: 2*60*60,
       showAlert: true,
       openQRModal: false,
-      openFeedbackModal: false
+      openFeedbackModal: false,
+
+      fakeSuccess: false
     }
 
     this.timer = 0;
@@ -218,13 +220,16 @@ class Invoice extends React.Component {
   }
 
   setInvoiceStatus(status) {
-    if(status == 0){
+
+    const { fakeSuccess } = this.state
+
+    if(status == 0  && !fakeSuccess){
       this.startTimer()
       return `${this.state.time.h} :
         ${(this.state.time.m>9?this.state.time.m:'0'+this.state.time.m) || '00'} :
         ${this.state.time.s>9?this.state.time.s:'0'+this.state.time.s || '00'}`
     }
-    else if(status == 1)
+    else if(status == 1 || fakeSuccess)
       return 'Paid'
     else if(status == 2)
       return 'Cacelled'
@@ -306,7 +311,7 @@ class Invoice extends React.Component {
     }
 
     if(invoice.gateway == 'stripe') {
-      return <StripeForm invoice={invoice}/>
+      return <StripeForm invoice={invoice} onSuccess={() => this.setState({ fakeSuccess: true })}/>
     }
 
     if(Number(invoice.status) < 1 || Number(invoice.status) > 3)
@@ -328,7 +333,7 @@ class Invoice extends React.Component {
   }
 
   render() {
-    const {loading, invoice, timer, showAlert, openQRModal, seconds} = this.state
+    const {loading, invoice, timer, showAlert, openQRModal, seconds, fakeSuccess} = this.state
 
     return (
       <div>
@@ -457,7 +462,7 @@ class Invoice extends React.Component {
                         </div>
                         
                         <div className="bottom order-detail-info p-4">
-                          {invoice.status == 1 && 
+                          {(invoice.status == 1 || fakeSuccess) && 
                             <SweetAlert
                               success
                               title="Order completed!"
@@ -471,7 +476,7 @@ class Invoice extends React.Component {
                             </SweetAlert>
                           }
                   
-                          {invoice.status == 2 && 
+                          {invoice.status == 2 && !fakeSuccess &&
                             <SweetAlert
                               danger
                               title="Invoice Cancelled"
@@ -483,7 +488,7 @@ class Invoice extends React.Component {
                             </SweetAlert>
                           }
                           
-                          { invoice.status != 1 && invoice.status != 2 &&
+                          { invoice.status != 1 && invoice.status != 2 && !fakeSuccess &&
                             <div>
                               <h4 className="text-primary mb-3">Order Details</h4>
                               {

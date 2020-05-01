@@ -15,7 +15,7 @@ const StripeForm = (props) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const { invoice } = props
+  const { invoice, onSuccess } = props
 
   const { stripe_publishable_key, stripe_client_secret  } = invoice;
 
@@ -48,6 +48,7 @@ const StripeForm = (props) => {
                     // The payment succeeded!
                     setIsLoading(false);
                     setIsSuccess(true);
+                    onSuccess && onSuccess()
                 }
             });
     }, 100)
