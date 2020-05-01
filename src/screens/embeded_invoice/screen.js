@@ -235,7 +235,7 @@ class EmbededInvoice extends React.Component {
       return (
         <div className="d-flex align-items-center">
           <div className="sk-spinner sk-spinner-pulse"></div>
-          Awaiting for transaction</div>
+          Awaiting for payment</div>
       )  
     }
     else if(status == 1)
