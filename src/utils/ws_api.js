@@ -1,5 +1,4 @@
 import config from 'constants/config'
-import jwtDecode from 'jwt-decode'
 
 var ws = null
 
