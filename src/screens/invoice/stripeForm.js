@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import {loadStripe} from '@stripe/stripe-js';
+import {loadStripe} from '@stripe/stripe-js/pure';
 import {
   CardElement,
   Elements,
@@ -85,6 +85,7 @@ const StripeForm = (props) => {
 };
 
 const StripeFormContainer = (props) => {
+
     const { invoice } = props
 
     const { stripe_publishable_key, stripe_client_secret  } = invoice;
