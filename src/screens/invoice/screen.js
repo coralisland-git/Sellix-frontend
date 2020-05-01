@@ -311,6 +311,10 @@ class Invoice extends React.Component {
     }
 
     if(invoice.gateway == 'stripe') {
+      const { invoice, fakeSuccess } = this.state
+      if(invoice.status == 1 || fakeSuccess) {
+        return ""
+      }
       return <StripeForm invoice={invoice} onSuccess={() => this.setState({ fakeSuccess: true })}/>
     }
 
