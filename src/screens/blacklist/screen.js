@@ -68,7 +68,7 @@ class Blacklist extends React.Component {
       this.props.actions.getBlacklist()
       this.props.commonActions.tostifyAlert('success', res.message)
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({ loading: false })
     })

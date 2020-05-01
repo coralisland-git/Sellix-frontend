@@ -60,7 +60,7 @@ class Reports extends React.Component {
   initializeData () {
     this.setState({ loading: true })
     this.props.actions.getReports().catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({ loading: false })
     })

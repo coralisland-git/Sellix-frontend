@@ -54,18 +54,18 @@ class Ticket extends React.Component {
                      } else {
                          if(error.details && error.details.base.length) {
                              this.props.commonActions.tostifyAlert(
-                                 'error', error.details.base[0].description || 'Seomthing went wrong!'
+                                 'error', error.details.base[0].description || 'Something went wrong!'
                              )
                          } else {
                              this.props.commonActions.tostifyAlert(
-                                 'error', error || 'Seomthing went wrong!'
+                                 'error', error || 'Something went wrong!'
                              )
                          }
                      }
                  })
                  .catch((res) => {
                      console.log(res)
-                     this.props.commonActions.tostifyAlert('error', '' || 'Seomthing went wrong!')
+                     this.props.commonActions.tostifyAlert('error', '' || 'Something went wrong!')
                      return false
                  })
                  .finally(() => {

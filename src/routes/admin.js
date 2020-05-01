@@ -100,7 +100,10 @@ const adminRoutes = [
     name: 'Users',
     component: Users.screen
   },
-  
+
+
+
+
   {
     path: `/dashboard/${user}/home`,
     name: 'Dashboard',
@@ -131,8 +134,6 @@ const adminRoutes = [
     title: 'Sort Products',
     exact: true,
   },
-
-
   {
     path: `/dashboard/${user}/categories/new`,
     name: 'New',

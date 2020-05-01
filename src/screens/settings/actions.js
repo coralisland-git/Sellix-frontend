@@ -1,9 +1,6 @@
 import { SETTINGS } from 'constants/types'
-import {
-  api,
-  authApi,
-  formData
-} from 'utils'
+import { authApi } from 'utils'
+
 
 export const getSettings = () => {
   return (dispatch) => {
@@ -19,10 +16,11 @@ export const getSettings = () => {
           payload: res.data.settings
         })
         return res
-        
+      } else if (res.status === 401) {
+        return res
       } else {
         throw res
-      }     
+      }
     }).catch(err => {
       throw err
     })
