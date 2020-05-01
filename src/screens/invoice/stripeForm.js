@@ -58,9 +58,10 @@ const StripeForm = (props) => {
   console.log('isLoading', isLoading, 'isSuccess', isSuccess)
 
   if(isSuccess) {
-      return <div style={{textAlign: 'center'}}>
-          <SuccessIndicator size='96px' color='#613bea' />
-      </div>
+      return ""
+    //   return <div style={{textAlign: 'center'}}>
+    //       <SuccessIndicator size='96px' color='#613bea' />
+    //   </div>
   }
  
   return ( <>
