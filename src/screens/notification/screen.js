@@ -154,7 +154,7 @@ class Notification extends React.Component {
                               />
                               <div className="ml-2">
                                 <Label>Orders</Label>
-                                <p>Receive an email when you made a new sale</p>
+                                <p>Receive an email when you make a new sale</p>
                               </div>
                             </Col>
                           </FormGroup>
