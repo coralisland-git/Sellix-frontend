@@ -43,11 +43,20 @@ $spinkit-spinner-color: $body-color;
     position: absolute;
     top: 0;
     left: 0;
-    animation: sk-doubleBounce 1.0s infinite ease-in-out;
+    animation: sk-doubleBounce 1s infinite ease-in-out;
   }
 
   &-bounce2 {
-    animation-delay: -1.0s;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #bcabf5;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: sk-doubleBounce 1s infinite ease-in-out;
+    animation-delay: -1s !important;
   }
 
   img {

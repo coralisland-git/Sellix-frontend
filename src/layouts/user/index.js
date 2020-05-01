@@ -72,13 +72,25 @@ class AdminLayout extends React.Component {
 
   componentDidMount() {
     if (!window.localStorage.getItem('accessToken')) {
-      this.props.history.push('/login')
+      this.props.history.push('/auth/login')
     } else {
-      this.props.authActions.getSelfUser().catch(err => {
-        this.props.authActions.logOut()
-        this.props.history.push('/login')
-      })
-      const toastifyAlert = (status, message) => {
+      this.props.authActions.getSelfUser()
+          .then(({ status, data }) => {
+            if(status === 200) {
+               if(data.user.rank === "0") {
+                 this.props.history.push(`/dashboard/${data.user.username}/home`)
+               }
+            } else {
+              this.props.authActions.logOut()
+              this.props.history.push('/auth/login')
+            }
+          })
+          .catch(err => {
+            this.props.authActions.logOut()
+            this.props.history.push('/auth/login')
+          })
+
+      this.props.commonActions.setTostifyAlertFunc((status, message) => {
         if (!message) {
           message = 'Unexpected Error'
         }
@@ -99,11 +111,10 @@ class AdminLayout extends React.Component {
             position: toast.POSITION.TOP_RIGHT
           })
         }
-      }
-      this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+      })
     }
 
-    var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+    let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
     if (iOS) {
       for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
         let element = document.getElementsByClassName('nav-link')[i];
@@ -168,20 +179,16 @@ class AdminLayout extends React.Component {
             <div className="app-body">
               {this.renderNav()}
               <main className="main mb-5">
-                <Container className="p-0" fluid>
+                <Container className="p-0 h-100" fluid>
                   <Suspense fallback={Loading()}>
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true} />
                     <Switch>
                       {
-                        adminRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) => {
-                          if (redirect) {
-                            return <Redirect from={path} to={pathTo} key={key} />
-                          } else {
-                            return (
+                        adminRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) =>
+                          redirect ?
+                              <Redirect from={path} to={pathTo} key={key} /> :
                               <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key} />
-                            )
-                          }
-                        })
+                        )
                       }
                     </Switch>
                   </Suspense>

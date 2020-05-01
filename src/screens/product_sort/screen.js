@@ -62,7 +62,7 @@ class Product extends React.Component {
     this.props.actions.getProductList().then(res => {
       this.setState({product_list: res.data.products, loading: false})
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
       this.setState({ loading: false })
     })
   }
@@ -77,7 +77,7 @@ class Product extends React.Component {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.setState({ saving: false })
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
       this.setState({ saving: false })
     })
   }

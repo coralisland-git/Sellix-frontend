@@ -38,3 +38,15 @@
     margin-top: auto!important;
   }
 }
+
+.override-loader {
+  &.custom-loader {
+    width: 60px;
+    height: 60px;
+    margin-bottom: .5rem;
+
+    img {
+      width: 30px;
+    }
+  }
+}
