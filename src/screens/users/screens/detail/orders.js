@@ -14,19 +14,19 @@ class UserProductsTable extends Component {
 
   renderOrdersDate = (cell, row) => row.created_at ? <div>{moment(row.created_at * 1000).format('lll')}</div> : <p className="caption">No specified</p>
 
-  renderOrdersOptions = (cell, row) => <Button color="default" onClick={(e) => this.viewOrderAdmin(e, row.uniqid)}>Manage</Button>
+  renderOrdersOptions = (cell, row) => <Button style={{ minHeight: "35px"}} color="default" onClick={(e) => this.viewOrderAdmin(row.uniqid)}>Manage</Button>
 
   renderOrderStatus = (cell, row) => row.status ? <div>{row.status}</div> : <p className="caption">No specified</p>
 
   renderOrderTitle = (cell, row) => row.product_title ? <div>{row.product_title}</div> : <p className="caption">No specified</p>
 
-  viewOrderAdmin = (e, id) => this.props.history.push(`/admin/users/${this.props.match.params.id}/order/${id}`)
+  viewOrderAdmin = (id) => this.props.history.push(`/admin/users/${this.props.match.params.id}/order/${id}`)
 
   render() {
     const { invoices, loading } = this.props;
 
     return (
-        <Card>
+        <Card className={"user-screen"}>
           <CardBody className="p-4 mb-4">
             <Row>
               <Col lg={12}>
@@ -43,7 +43,7 @@ class UserProductsTable extends Component {
                   <Col lg={12}>
                     <div>
                       <BootstrapTable
-                          options={tableOptions()}
+                          options={tableOptions({ onRowClick: (row) => this.viewOrderAdmin(row.uniqid) })}
                           data={invoices}
                           version="4"
                           pagination

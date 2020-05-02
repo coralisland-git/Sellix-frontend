@@ -61,7 +61,7 @@ class UserEditForm extends Component {
                                         id="otp_2fa"
                                         name="otp_2fa"
                                         onChange={(e) => handleChange('otp_2fa')(e.target.checked)}
-                                        checked={Number(values.otp_2fa)}
+                                        checked={Boolean(Number(values.otp_2fa))}
                                     />
                                     <Label className="custom-control-label"  htmlFor="otp_2fa" check>
                                       OTP 2FA
@@ -69,6 +69,7 @@ class UserEditForm extends Component {
 
                                   </div>
                                 </FormGroup>
+
                                 <FormGroup check  className="mb-3 pl-0">
                                   <div className="custom-checkbox custom-control">
                                     <Input
@@ -77,12 +78,11 @@ class UserEditForm extends Component {
                                         id="email_2fa"
                                         name="email_2fa"
                                         onChange={(e) => handleChange('email_2fa')(e.target.checked)}
-                                        checked={Number(values.email_2fa)}
+                                        checked={Boolean(Number(values.email_2fa))}
                                     />
                                     <Label htmlFor="email_2fa" check className="custom-control-label">
                                       Email 2FA
                                     </Label>
-
                                   </div>
                                 </FormGroup>
 
@@ -91,7 +91,7 @@ class UserEditForm extends Component {
 
                           </Col>
 
-                          <Col lg={12} className={"mt-4"}>
+                          <Col lg={12} style={{ textAlign: "right"}}>
                             <Button color="primary" type="submit" className="" style={{width: 200}}>
                               {loading ? <Spin/> : 'Save Settings'}
                             </Button>

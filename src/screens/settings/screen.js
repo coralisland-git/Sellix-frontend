@@ -66,7 +66,7 @@ class Settings extends Component {
                     id="email_validation_required"
                     name="email_validation_required"
                     onChange={(e) => handleChange('email_validation_required')(e.target.checked)}
-                    checked={values.email_validation_required ? values.email_validation_required === "0" ? false : true : false}
+                    checked={values.email_validation_required ? values.email_validation_required !== "0" : false}
                 />
                 <Label className="custom-control-label"  htmlFor="email_validation_required" check>
                   Email Validation Required
@@ -153,13 +153,13 @@ class Settings extends Component {
                     <Navbar expand="xs" className="p-0">
                       <Collapse className="mr-5" isOpen={isOpen} navbar>
                         <div>
-                          <h4 style={{ color: 'black', fontSize: '16px' }}>Admin Settings</h4>
+                          <h4 style={{ color: 'black', fontSize: '16px' }} className={"mb-3"}>Admin Settings</h4>
                           <ul className="nav">
-                            <li className="nav-item"><NavLink to={'/admin/settings/general'} className="nav-link" activeClassName={"active"}>General</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} className="nav-link" to="/admin/settings/bitcoin">Bitcoin</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} className="nav-link" to="/admin/settings/litecoin">Litecoin</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} className="nav-link" to="/admin/settings/ethereum">Ethereum</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} className="nav-link" to="/admin/settings/b-cash">Bitcoin Cash</NavLink></li>
+                            <li className="nav-item"><NavLink to={'/admin/settings/general'} style={{ height: "32px" }} className="nav-link" activeClassName={"active"}>General</NavLink></li>
+                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/bitcoin">Bitcoin</NavLink></li>
+                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/litecoin">Litecoin</NavLink></li>
+                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/ethereum">Ethereum</NavLink></li>
+                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/b-cash">Bitcoin Cash</NavLink></li>
                           </ul>
                         </div>
                       </Collapse>
@@ -195,7 +195,7 @@ class Settings extends Component {
                                       <FormGroup>
                                         {pathname.includes('bitcoin') && <h4 className="mb-4">Bitcoin</h4>}
                                         {pathname.includes('litecoin') && <h4 className="mb-4">Litecoin</h4>}
-                                        {pathname.includes('bn-cash') && <h4 className="mb-4">Bitcoin Cash</h4>}
+                                        {pathname.includes('b-cash') && <h4 className="mb-4">Bitcoin Cash</h4>}
                                         {pathname.includes('ethereum') && <h4 className="mb-4">Ethereum</h4>}
                                         {(pathname.includes('general') || pathname === '/admin/settings') && <h4 className="mb-4">General Information</h4>}
                                       </FormGroup>
