@@ -72,7 +72,7 @@ class Categories extends React.Component {
   initializeData () {
     this.setState({ loading: true })
     this.props.actions.getCategoryList().catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({ loading: false })
     })
@@ -101,7 +101,7 @@ class Categories extends React.Component {
       this.props.actions.getCategoryList()
       this.props.commonActions.tostifyAlert('success', res.message)
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({ loading: false })
     })

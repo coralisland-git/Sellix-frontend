@@ -46,7 +46,7 @@ class ShopGroupModal extends React.Component {
           {'  ●  '}
         </span>
         <span className="stock">
-            <span className="stock-size" style={productStock === '∞' ? { position: 'relative', top: '1px' } : productStock == 0?{color:'red'}:{}}>{productStock}</span>
+            <span className={"stock-size " + (productStock == 0 ? "text-red" : "text-green")} style={productStock === '∞' ? { position: 'relative', top: '1px' } : {}}>{productStock}</span>
             {' '}in stock
         </span>
       </div>
@@ -85,9 +85,6 @@ class ShopGroupModal extends React.Component {
             background: rgba(0,0,0,.1);
             margin: 0;
             
-          }
-          *[class$=-singleValue] > .option-select-option span:not(.text-gold) {
-            color: rgba(0,0,0,.9) !important;
           }
           .option-select > div:first-of-type > div:first-child {
             height: 50px;
@@ -132,7 +129,7 @@ class ShopGroupModal extends React.Component {
             </ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={() => onProductSelect(selectedProduct)}>Next</Button>{' '}
-              <Button color="secondary" onClick={() => onGoBack()}>Go Back</Button>
+              <Button color="secondary" className="go-back-btn" onClick={() => onGoBack()}>Go Back</Button>
             </ModalFooter>
           </Modal>
         </div>

@@ -15,7 +15,7 @@ export const getUser = (id) => {
   return (dispatch) => {
     let data = {
       method: 'GET',
-      url: `/admin/users/view/${id}`
+      url: `/admin/users/${id}`
     }
 
     return authApi(data).then(res => {

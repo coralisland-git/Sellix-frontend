@@ -103,7 +103,7 @@ class SecurityPage extends React.Component {
         this.setState({otp_enabled: false})
       }
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({ [loading]: false })
     })
@@ -114,7 +114,7 @@ class SecurityPage extends React.Component {
     this.props.actions.newAPIkey().then(res => {
       this.setState({api_key: res.data.apikey})
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({generatingAPI: false})
     })

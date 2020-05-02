@@ -22,6 +22,7 @@ const EVENT_OPTIONS = [
     { value: 'order:updated', label: 'order:updated' },
     { value: 'order:partial', label: 'order:partial' },
     { value: 'order:paid', label: 'order:paid' },
+    { value: 'order:paid:product', label: 'order:paid:product'},
     { value: 'order:cancelled', label: 'order:cancelled' },
     { value: 'product:created', label: 'product:created' },
     { value: 'product:edited', label: 'product:edited' },

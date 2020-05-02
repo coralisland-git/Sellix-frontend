@@ -85,7 +85,7 @@ class Notification extends React.Component {
     }).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({ loading: false })
     })
@@ -153,8 +153,8 @@ class Notification extends React.Component {
                                 onChange={(e) => this.setState({ invoice_notification: e.target.checked })}
                               />
                               <div className="ml-2">
-                                <Label>Invoices</Label>
-                                <p>Receive an email when an invoice status is updated</p>
+                                <Label>Orders</Label>
+                                <p>Receive an email when you make a new sale</p>
                               </div>
                             </Col>
                           </FormGroup>

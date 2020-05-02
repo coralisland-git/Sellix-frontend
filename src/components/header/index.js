@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledDropdown, Input, Badge } from 'reactstrap'
-import PropTypes from 'prop-types'
 import ReactTimeAgo from 'react-time-ago'
 import IntervalTimer from 'react-interval-timer';
 
@@ -29,10 +28,16 @@ class Header extends Component {
   }
 
   render() {
+<<<<<<< HEAD
     const { profile, children, theme, is_authed, isShop, isDocumentation, ...attributes } = this.props
     const { notifications } = profile || {}
     const path = this.props.history.location.pathname
   
+=======
+    const { profile, children, theme, is_authed, isShop, history, isDocumentation, ...attributes } = this.props
+    const { notifications } = profile || {};
+
+>>>>>>> 520b236cc2794e178a87b43fcfffa244e9938f4c
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -43,6 +48,7 @@ class Header extends Component {
         />
         { !isDocumentation && (
           <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
+<<<<<<< HEAD
             {
               !isShop && 
                 <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
@@ -60,16 +66,19 @@ class Header extends Component {
                 </UncontrolledDropdown>
             } 
             
+=======
+
+>>>>>>> 520b236cc2794e178a87b43fcfffa244e9938f4c
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-3 mr-3">
               <DropdownToggle className="user-name" nav>
                 <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}} />
               </DropdownToggle>
               
               <DropdownMenu right className="mt-2">
-                <DropdownItem onClick={() => this.props.history.push('/admin')}>
+                <DropdownItem onClick={() => history.push('/admin')}>
                    Help Center
                 </DropdownItem>
-                <DropdownItem onClick={() => this.props.history.push('/contact')}>
+                <DropdownItem onClick={() => history.push('/contact')}>
                    Contact Us
                 </DropdownItem>
               </DropdownMenu>
@@ -88,8 +97,8 @@ class Header extends Component {
               </DropdownToggle>
 
               <IntervalTimer
-                timeout={30000}
-                callback={()=>{this.props.authActions.getSelfUser()}}
+                timeout={3000}
+                callback={this.props.authActions.getSelfUserViaWebsocket}
                 enabled={true}
                 repeat={true}
               />
@@ -132,20 +141,37 @@ class Header extends Component {
               <DropdownToggle className="user-name" nav>
                 <div>
                   {profile && profile.profile_attachment?
-                    <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}}/>:
-                    <i className="fa fa-user-circle text-primary avatar-icon"/>
+                    <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}} />:
+                    <i className="fa fa-user-circle text-primary avatar-icon" />
                   }
-                  
                 </div>
               </DropdownToggle>
               {
                 is_authed? 
                   <DropdownMenu right className="mt-2">
+<<<<<<< HEAD
                     <DropdownItem className={path.startsWith('/dashboard')?'active':''} onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
                       <i className={path.startsWith('/dashboard')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Dashboard
                     </DropdownItem>
                     <DropdownItem className={isShop?'active':''} onClick={() => this.props.history.push(`/${userId}`)}>
                       <i className={isShop?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Your Shop
+=======
+                    {
+                      profile && profile.rank !== "0" && <DropdownItem onClick={() => history.push(`/admin/dashboard`)}>
+                        Admin Panel
+                      </DropdownItem>
+                    }
+                    <DropdownItem onClick={() => history.push(`/dashboard/${userId}`)}>
+                      Dashboard
+                    </DropdownItem>
+                    {
+                      !isShop && <DropdownItem onClick={() => history.push(`/${userId}`)}>
+                        Your Shop
+                      </DropdownItem>
+                    }
+                    <DropdownItem onClick={() => history.push(`/settings/${userId}`)}>
+                      Settings
+>>>>>>> 520b236cc2794e178a87b43fcfffa244e9938f4c
                     </DropdownItem>
                     <DropdownItem className={path.startsWith('/settings')?'active':''} onClick={() => this.props.history.push(`/settings/${userId}`)}>
                       <i className={path.startsWith('/settings')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Settings
@@ -156,7 +182,7 @@ class Header extends Component {
                     </DropdownItem>
                   </DropdownMenu>:
                   <DropdownMenu right className="mt-2">
-                    <DropdownItem onClick={() => this.props.history.push(`/auth/login`)}>
+                    <DropdownItem onClick={() => history.push(`/auth/login`)}>
                       Log In
                     </DropdownItem>
                   </DropdownMenu>

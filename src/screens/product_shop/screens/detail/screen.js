@@ -53,6 +53,7 @@ class ShopProductDetail extends React.Component {
       tostifyAlert('success', 'Invoice is created successfully.');
 
       this.props.history.push({ pathname: `/invoice/${invoice.uniqid}` })
+      
     }).catch(({ error }) => {
       tostifyAlert('error', error)
     }).finally(() => {

@@ -163,13 +163,13 @@ class User extends React.Component {
 
   viewOrderAdmin = (e, id) => {
     this.props.history.push({
-      pathname: `/admin/users/view/${this.props.match.params.id}/order/${id}`
+      pathname: `/admin/users/${this.props.match.params.id}/order/${id}`
     })
   }
 
   viewProductAdmin = (e, id) => {
     this.props.history.push({
-      pathname: `/admin/users/view/${this.props.match.params.id}/product/edit/${id}`
+      pathname: `/admin/users/${this.props.match.params.id}/product/edit/${id}`
     })
   }
 
@@ -183,7 +183,7 @@ class User extends React.Component {
 
   editUser = () => {
     this.props.history.push({
-      pathname: `/admin/users/view/${this.props.match.params.id}/edit/${this.props.match.params.id}`
+      pathname: `/admin/users/${this.props.match.params.id}`
     })
   }
 

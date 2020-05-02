@@ -2,12 +2,11 @@ import { authApi } from 'utils'
 
 export const getAnalyticsData = (start, end) => () => {
 
-    let data = {
-      method: 'GET',
-      url: `/self/analytics?from=${start}&to=${end}&year=true`
-    };
 
-    return authApi(data)
+    let isAdmin = window.location.pathname.includes('admin');
+    let url = `/${isAdmin ? 'admin' : 'self'}/analytics?from=${start}&to=${end}&year=true`;
+
+    return authApi.get(url)
         .then(res => {
           if (res.status === 200) {
             return res

@@ -63,6 +63,7 @@ class ShopLayout extends React.Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 
+		console.log(prevProps.user.username, this.props.user.username)
 		if(prevProps.user.username !== this.props.user.username) {
 			const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
 			document.body.classList.remove('light');
@@ -82,6 +83,15 @@ class ShopLayout extends React.Component {
 	}
 
 	componentDidMount() {
+
+		const theme = 'dark';
+		document.body.classList.remove('light');
+		document.body.classList.remove('dark');
+		document.body.classList.add(theme);
+
+		document.documentElement.classList.remove('light')
+		document.documentElement.classList.remove('dark')
+		document.documentElement.classList.add(theme);
 
 		document.title = `Products | Sellix`;
 		const { username } = this.props.match.params;

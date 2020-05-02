@@ -241,8 +241,7 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.body} !important;
     }
 
-    .bitcoin-paying-screen .card,
-    .detail-product-screen .card {
+    .bitcoin-paying-screen .card {
         background-color: ${({ theme }) => theme.cardBody} !important;
     }
     
@@ -302,7 +301,7 @@ export const GlobalStyles = createGlobalStyle`
             border: 1px solid ${theme.widgetBorder} !important;
         }
 
-        *[class$=control] * {
+        *[class$=control] *:not(.text-green):not(.text-red) {
             color: ${theme.text} !important;
         }
 
@@ -322,20 +321,26 @@ export const GlobalStyles = createGlobalStyle`
             color: white !important;
         }
 
-        *[class$=control] * {
+        *[class$=control] *:not(.text-green):not(.text-red) {
             color: ${theme.text} !important;
         }
 
         *[class$=multiValue] * {
             color: black !important;
         }
+
+        .go-back-btn {
+            background: #270e84 !important;
+            color: white !important;
+            border: none !important;
+        }
     `}
 
-    *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold) {
+    *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold):not(.text-green):not(.text-red) {
         color: ${({ theme }) => theme.baseOpposite} !important;
     }
 
-    *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold) {
+    *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold):not(.text-green):not(.text-red) {
         color: ${({ theme }) => theme.baseOpposite} !important;
     }
     
@@ -344,7 +349,7 @@ export const GlobalStyles = createGlobalStyle`
             background: white !important;
         }
 
-        .option-select-option:not(.is-disabled) * {
+        .option-select-option:not(.is-disabled) *:not(.text-gold):not(.text-green):not(.text-red) {
             color: black !important;
         }
 
@@ -355,6 +360,10 @@ export const GlobalStyles = createGlobalStyle`
         *[class$=-control][class*=css-]{
             background-color: #FCFCFE !important;
             border: 1px solid ${theme.widgetBorder} !important;
+        }
+
+        *[class$=-singleValue] > .option-select-option span:not(.text-gold):not(.text-green):not(.text-red) {
+            color: rgba(0,0,0,.9) !important;
         }
     `}
 

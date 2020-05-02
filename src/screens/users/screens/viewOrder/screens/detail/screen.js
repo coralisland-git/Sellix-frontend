@@ -164,17 +164,15 @@ class OrderDetail extends React.Component {
     return (
       <div className="order-detail-screen mt-3">
         <div className="animated fadeIn">
-          <ResendModal openModal={openModal} 
-            resendInvoice = {this.resendInvoice.bind(this)}
-            invoiceId = {order.uniqid}
-            email = {order.customer_email}
-            closeModal={this.closeResendModal.bind(this)}/>
-          <IssueReplacementModal openModal={openIssueReplacementModal} 
-            // resendInvoice = {this.resendInvoice.bind(this)}
-            invoiceId = {order.uniqid}
-            // email = {order.customer_email}
-            closeModal={this.closeIssueReplacementModal.bind(this)}/>
-          {/*   */}
+          <ResendModal openModal={openModal} resendInvoice = {this.resendInvoice.bind(this)} invoiceId = {order.uniqid} email = {order.customer_email} closeModal={this.closeResendModal.bind(this)}/>
+          <IssueReplacementModal openModal={openIssueReplacementModal} invoiceId = {order.uniqid} closeModal={this.closeIssueReplacementModal.bind(this)}/>
+
+          <Breadcrumb className="mb-0">
+            <BreadcrumbItem active className="mb-0">
+              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> User</a>
+            </BreadcrumbItem>
+          </Breadcrumb>
+
           <Card>
             <CardBody className="p-4">
               {

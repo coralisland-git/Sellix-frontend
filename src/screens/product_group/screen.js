@@ -69,7 +69,7 @@ class ProductGroups extends React.Component {
   initializeData = () => {
     this.setState({ loading: true })
     this.props.actions.getProductGroupList().catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
     }).finally(() => {
       this.setState({ loading: false })
     })
@@ -139,7 +139,7 @@ class ProductGroups extends React.Component {
           this.props.commonActions.tostifyAlert('success', res.message)
         })
         .catch(err => {
-          this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+          this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
         })
         .finally(() => {
           this.setState({ loading: false })

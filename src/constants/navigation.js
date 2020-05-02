@@ -277,6 +277,28 @@ export const accountSettingsNavigation =  {
 }
 
 
+export const adminSettingsNavigation =  {
+  items: [
+    {
+      name: 'General',
+      url: `/admin/settings/general`
+    },
+    {
+      name: 'Bitcoin',
+      url: `/admin/settings/bitcoin`
+    },
+    {
+      name: 'Litecoin',
+      url: `/admin/settings/litecoin`
+    },
+    {
+      name: 'Ethereum',
+      url: `/admin/settings/ethereum`
+    }
+  ]
+}
+
+
 export const shopSettingsNavigation =  {
   items: [
     // {
