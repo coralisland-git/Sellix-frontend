@@ -12,6 +12,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader, Button } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { getTopUsers } from './actions'
+import { withRouter } from 'react-router-dom'
 
 import './style.scss'
 
@@ -41,23 +42,44 @@ class TopUsers extends Component {
 
   renderUserUsername = (cell, row) => row.username ? <div>{row.username}</div> : <p className="caption">No specified</p>
 
-  renderUserId = (cell, row) => row.id ? <div>{row.id}</div> : <p className="caption">No specified</p>
+  renderUserId = (cell) => {
+
+    let color = 'transparent';
+    switch (cell) {
+      case 1:
+        color = "#C9B037"
+        break
+      case 2:
+        color = "#D7D7D7"
+        break
+      case 3:
+        color = "#AD8A56"
+        break
+    }
+
+    return <div style={{ fontSize: "1rem" }}>
+      <i className={"fas fa-trophy"} style={{ marginRight: "1.3rem", fontSize: "1.2rem", color }} />#{cell}
+    </div>
+  }
 
   renderUserEmail = (cell, row) => row.email ? <div>{row.email}</div> : <p className="caption">No specified</p>
 
   renderUserRevenue = (cell, row) => row.revenue ? <div>{row.revenue}</div> : <p className="caption">No specified</p>
 
-  viewUser = (e, id) => this.props.history.push(`/admin/users/${id}`)
-
-  renderOption = (cell, row) => <Button color="default" onClick={(e) => this.viewUser(e, row.id)}>View</Button>
+  viewUser = (id) => this.props.history.push(`/admin/users/${id}`)
 
   render() {
 
     const { loading } = this.state;
     const { topUsers } = this.props;
 
+    let data = topUsers.map((user, key) => {
+      user.position = key + 1;
+      return user;
+    })
+
     return (
-      <div className="product-screen">
+      <div className="product-screen top-user">
         <div className="animated fadeIn">
           <Card className="grey">
 
@@ -76,8 +98,8 @@ class TopUsers extends Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          options={tableOptions({ sizePerPage: 10 })}
-                          data={topUsers}
+                          options={tableOptions({ onRowClick: (row) => this.viewUser(row.id), sizePerPage: 10 })}
+                          data={data}
                           version="4"
                           totalSize={topUsers ? topUsers.length : 0}
                           className="product-table"
@@ -85,12 +107,12 @@ class TopUsers extends Component {
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="id"
+                            dataField="position"
                             width='20%'
                             dataSort
                             dataFormat={this.renderUserId}
                           >
-                            ID
+                            Position
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="email"
@@ -127,4 +149,4 @@ class TopUsers extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopUsers)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopUsers))
