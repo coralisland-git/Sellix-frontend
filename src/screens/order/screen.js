@@ -194,7 +194,7 @@ class Order extends React.Component {
       <div className="order-screen">
         <div className="animated fadeIn">
           <IntervalTimer
-              timeout={3000}
+              timeout={2000}
               callback={() => this.props.actions.getLiveOrdersViaWebsocket()}
               enabled={live_order_display == 'live'}
               repeat={true}
