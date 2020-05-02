@@ -258,6 +258,7 @@ class Product extends React.Component {
                           data={this.props.coupons}
                           version="4"
                           pagination
+                          striped
                           totalSize={this.props.coupons ? this.props.coupons.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"

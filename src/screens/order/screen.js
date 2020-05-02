@@ -24,26 +24,16 @@ import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
 import * as OrderActions from './actions'
 import './style.scss'
+import cancelledIcon from 'assets/images/order/Cancelled_Icon.svg'
+import completedIcon from 'assets/images/order/Check_Icon.svg'
+import paritalIcon from 'assets/images/order/Partially_Icon.svg'
+import pendingIcon from 'assets/images/order/Pending_Icon.svg'
 
-const user = window.localStorage.getItem('userId')
-
-const mapStateToProps = (state) => {
-  return ({
-    order_list: state.order.order_list,
-    live_order_display: state.order.live_order_display
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(OrderActions, dispatch),
-    setFilter: (value) => { 
-      dispatch({
-        type: ORDER.LIVE_ORDER_DISPLAY,
-        payload: value
-      }) 
-    }
-  })
+const STATUS_ICON = {
+  '0': pendingIcon,
+  '1': completedIcon,
+  '2': cancelledIcon,
+  '4': paritalIcon,
 }
 
 const ORDER_STATUS = {
@@ -65,6 +55,26 @@ const PAYMENT_OPTS = {
   'perfectmoney': 'Perfect Money'
 }
 
+const user = window.localStorage.getItem('userId')
+
+const mapStateToProps = (state) => {
+  return ({
+    order_list: state.order.order_list,
+    live_order_display: state.order.live_order_display
+  })
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    actions: bindActionCreators(OrderActions, dispatch),
+    setFilter: (value) => { 
+      dispatch({
+        type: ORDER.LIVE_ORDER_DISPLAY,
+        payload: value
+      }) 
+    }
+  })
+}
 
 class Order extends React.Component { 
   constructor(props) {
@@ -116,19 +126,22 @@ class Order extends React.Component {
   renderOrderInfo (cell, row) {
     return (
       <div>
-        <p><a onClick={(e) => this.gotoDetail(row.uniqid)}>
-          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
-            </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+        <p><a onClick={(e) => this.gotoDetail(row.uniqid)} style={{fontSize: 15, fontWeight: 700}}>
+          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}></i>&nbsp;&nbsp;&nbsp;
+          {`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
-        <p className="caption">{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
+        <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
       </div>
     )  
   }
 
   renderOrderStatus (cell, row) {
     return (
-      <div className={`badge badge-${row.status ? ORDER_STATUS[row.status].toLowerCase() : ''}`} style={{  margin: '0 auto'}}>
-        {row.status ? <>{ORDER_STATUS[row.status]} {ORDER_STATUS == '3' && <Spin/>}</> : <p className="caption">No specified</p>}
+      <div className="order-status">
+        <div className={`order-badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+          <img src={STATUS_ICON[row.status]}/>
+        </div>
+        <span className={`text-${ORDER_STATUS[row.status].toLowerCase()}`}>{ORDER_STATUS[row.status]}</span>
       </div>
     )  
   }
@@ -136,7 +149,7 @@ class Order extends React.Component {
   renderOrderValue(cell, row) {
     return (
       <div className="order">
-        <p className="order-value">{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
+        <p className="order-value" style={{fontSize: 15, fontWeight: 700}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
         <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {PAYMENT_OPTS[row.gateway]}</p>
       </div>
     )  
@@ -145,8 +158,8 @@ class Order extends React.Component {
   renderOrderTime(cell, row) {
     return (
       <div>
-        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
-        <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+        <p style={{fontSize: 15, fontWeight: 700}}>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('MMM DD')}</p>
       </div>
     )  
   }
@@ -219,6 +232,7 @@ class Order extends React.Component {
                             options={tableOptions({ onRowClick: (row) => this.gotoDetail(row.uniqid), sizePerPage: 15 })}
                             data={order_list}
                             version="4"
+                            striped
                             pagination
                             totalSize={order_list ? order_list.length : 0}
                             className="product-table"
@@ -244,7 +258,7 @@ class Order extends React.Component {
                             </TableHeaderColumn>
                             <TableHeaderColumn
                               dataField="total_display"
-                              dataAlign="center"
+                              dataAlign="right"
                               dataSort
                               dataFormat={this.renderOrderValue}
                               width='20%'

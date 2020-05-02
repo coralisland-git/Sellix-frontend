@@ -80,6 +80,7 @@ class TopUsers extends Component {
                           data={topUsers}
                           version="4"
                           totalSize={topUsers ? topUsers.length : 0}
+                          striped
                           className="product-table"
                           trClassName="cursor-pointer"
                         >

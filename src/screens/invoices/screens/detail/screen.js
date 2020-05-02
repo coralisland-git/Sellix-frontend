@@ -231,6 +231,7 @@ class User extends React.Component {
                               data={this.props.user.products}
                               version="4"
                               pagination
+                              striped
                               // totalSize={product_list ? product_list.length : 0}
                               className="product-table"
                               trClassName="cursor-pointer"
@@ -320,6 +321,7 @@ class User extends React.Component {
                               data={this.props.user.invoices}
                               version="4"
                               pagination
+                              striped
                               // totalSize={product_list ? product_list.length : 0}
                               className="product-table"
                               trClassName="cursor-pointer"
@@ -408,6 +410,7 @@ class User extends React.Component {
                               data={this.props.user.ips}
                               version="4"
                               pagination
+                              striped
                               // totalSize={product_list ? product_list.length : 0}
                               className="product-table"
                               trClassName="cursor-pointer"

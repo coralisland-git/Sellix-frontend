@@ -42,6 +42,7 @@ class UserProductsTable extends Component {
                                         data={ips}
                                         version="4"
                                         pagination
+                                        striped
                                         totalSize={ips ? ips.length : 0}
                                         className="product-table"
                                         trClassName="cursor-pointer"

@@ -138,6 +138,7 @@ class Blacklist extends React.Component {
             options={this.options}
             data={this.props.blacklist_list}
             version="4"
+            striped
             totalSize={this.props.blacklist_list ? this.props.blacklist_list.length : 0}
             className="product-table"
             trClassName="cursor-pointer"

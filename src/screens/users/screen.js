@@ -93,6 +93,7 @@ class Users extends Component {
                           data={users}
                           version="4"
                           pagination
+                          striped
                           totalSize={users ? users.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"

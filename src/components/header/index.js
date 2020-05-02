@@ -30,7 +30,8 @@ class Header extends Component {
   render() {
     const { profile, children, theme, is_authed, isShop, history, isDocumentation, ...attributes } = this.props
     const { notifications } = profile || {};
-
+    const path = this.props.history.location.pathname
+    
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -41,7 +42,23 @@ class Header extends Component {
         />
         { !isDocumentation && (
           <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
+            {
+              !isShop && 
+                <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
+                  <div className="searchbar">
+                    <i className="fas fa-search"/>
+                    <Input placeholder="Search..." className="header-search-input" />
+                  </div>
+              </NavItem>
+            }
 
+            {
+              !isShop && 
+                <UncontrolledDropdown nav direction="down" className="ml-3 mr-2">
+                  <i className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
+                </UncontrolledDropdown>
+            } 
+            
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-3 mr-3">
               <DropdownToggle className="user-name" nav>
                 <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}} />
@@ -123,28 +140,24 @@ class Header extends Component {
                 is_authed? 
                   <DropdownMenu right className="mt-2">
                     {
-                      profile && profile.rank !== "0" && <DropdownItem onClick={() => history.push(`/admin/dashboard`)}>
-                        Admin Panel
+                      profile && profile.rank !== "0" && 
+                      <DropdownItem className={path.startsWith('/admin')?'active':''} onClick={() => history.push(`/admin/dashboard`)}>
+                        <i className={path.startsWith('/admin')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Admin Panel
                       </DropdownItem>
                     }
-                    <DropdownItem onClick={() => history.push(`/dashboard/${userId}`)}>
-                      Dashboard
+                    <DropdownItem className={path.startsWith('/dashboard')?'active':''} onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
+                      <i className={path.startsWith('/dashboard')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Dashboard
                     </DropdownItem>
-                    {
-                      !isShop && <DropdownItem onClick={() => history.push(`/${userId}`)}>
-                        Your Shop
-                      </DropdownItem>
-                    }
-                    <DropdownItem onClick={() => history.push(`/settings/${userId}`)}>
-                      Settings
+                    <DropdownItem className={isShop?'active':''} onClick={() => this.props.history.push(`/${userId}`)}>
+                      <i className={isShop?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Your Shop
+
                     </DropdownItem>
-                    {
-                      !isShop && <DropdownItem onClick={this.setTheme.bind(this)}>
-                        {(theme || 'light') === 'light' ? 'Dark Mode' : 'Light Mode'}
-                      </DropdownItem>
-                    }
+                    <DropdownItem className={path.startsWith('/settings')?'active':''} onClick={() => this.props.history.push(`/settings/${userId}`)}>
+                      <i className={path.startsWith('/settings')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Settings
+                    </DropdownItem>
+                    
                     <DropdownItem onClick={() => this.signOut()}>
-                      Sign Out
+                      <i className={path.startsWith('/signin')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Sign Out
                     </DropdownItem>
                   </DropdownMenu>:
                   <DropdownMenu right className="mt-2">

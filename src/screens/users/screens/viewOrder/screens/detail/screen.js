@@ -297,6 +297,7 @@ class OrderDetail extends React.Component {
                             data={order.webhooks || []}
                             version="4"
                             pagination
+                            striped
                             totalSize={order.webhooks ? order.webhooks.length : 0}
                             className="provided-custom-table"
                             trClassName="cursor-pointer"
@@ -487,6 +488,7 @@ class OrderDetail extends React.Component {
                           data={custom_fields}
                           version="4"
                           pagination
+                          striped
                           totalSize={custom_fields ? custom_fields.length : 0}
                           className="provided-custom-table"
                           trClassName="cursor-pointer"
