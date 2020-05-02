@@ -158,9 +158,9 @@ class Invoice extends React.Component {
 
 
   getInvoice() {
-    this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
+    this.props.commonActions.getInvoiceViaWebsocket(this.props.match.params.id).then(invoice => {
       this.setState({
-        invoice: res.data.invoice
+        invoice: invoice
       })
     })
   }

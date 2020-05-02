@@ -2,7 +2,8 @@ import { COMMON } from 'constants/types'
 import {
   api,
   authApi,
-  formData
+  formData,
+  sendWsMessage
 } from 'utils'
 
 export const startRequest = () => {
@@ -170,7 +171,17 @@ export const getInvoice = (id) => {
   }
 }
 
-
+export const getInvoiceViaWebsocket = (id) => {
+  return (dispatch) => {
+    return sendWsMessage({ event: 'invoice', uniqid: id }, 'invoice').then(invoice => {
+      dispatch({
+        type: COMMON.SHOP_THEME,
+        payload: invoice.theme
+      })
+      return invoice
+    })
+  }
+}
 
 export const getPayPalInvoice = (id) => {
   return (dispatch) => {
