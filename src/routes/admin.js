@@ -15,21 +15,18 @@ import {
   Queries,
   Feedbacks,
   Webhooks,
-  CreateWebhookSimulator,
   WebhookLogs,
   CreatePage,
   Pages,
   CreateProduct,
   OrderDetail,
   ReplyToQuerie,
-  AdminDashboard,
   Users,
   User,
   TopUsers,
   OrderAdminDetail,
   Settings,
   SettingsEdit,
-  AdminEditUser,
   Invoices,
   CreateProductGroup,
   EditProductGroup,
@@ -44,19 +41,14 @@ const user = window.localStorage.getItem('userId')
 
 const adminRoutes = [
   {
-    path: `/admin/invoices/view/:id`,
+    path: `/admin/invoices/:id`,
     name: 'InvoicesView',
     component: OrderDetail.screen
   },
   {
     path: `/admin/invoices`,
-    name: 'Invoices',
-    component: Invoices.screen
-  },
-  {
-    path: `/admin/settings/edit`,
-    name: 'SettingsEdit',
-    component: SettingsEdit.screen
+    name: 'Orders',
+    component: Order.screen
   },
   {
     path: `/admin/settings`,
@@ -64,25 +56,46 @@ const adminRoutes = [
     component: Settings.screen
   },
   {
-    path: `/admin/users/view/:id/edit/:id`,
-    name: 'EditAdminUser',
-    component: AdminEditUser
+    path: `/admin/settings/bitcoin`,
+    name: 'Settings',
+    component: Settings.screen
   },
   {
-    path: `/admin/users/view/:id/product/edit/:id`,
+    path: `/admin/settings/litecoin`,
+    name: 'Settings',
+    component: Settings.screen
+  },
+  {
+    path: `/admin/settings/ethereum`,
+    name: 'Settings',
+    component: Settings.screen
+  },
+
+
+
+
+  {
+    path: `/admin/users/:id/product/edit/:id`,
     name: 'EditAdminProduct',
     component: EditProduct.screen
   },
   {
-    path: `/admin/users/view/:id/order/:id`,
+    path: `/admin/users/:id/order/:id`,
     name: 'OrderAdminDetail',
     component: OrderAdminDetail.screen
   },
   {
-    path: `/admin/users/view/:id`,
+    path: `/admin/users/:id`,
     name: 'User',
     component: User.screen
   },
+  {
+    path: `/admin/users`,
+    name: 'Users',
+    component: Users.screen
+  },
+
+
   {
     path: `/admin/top`,
     name: 'TopUsers',
@@ -95,11 +108,7 @@ const adminRoutes = [
     title: 'Dashboard',
     exact: true,
   },
-  {
-    path: `/admin/users`,
-    name: 'Users',
-    component: Users.screen
-  },
+
 
 
 

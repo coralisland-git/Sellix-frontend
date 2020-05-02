@@ -199,8 +199,7 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.body} !important;
     }
 
-    .bitcoin-paying-screen .card,
-    .detail-product-screen .card {
+    .bitcoin-paying-screen .card {
         background-color: ${({ theme }) => theme.cardBody} !important;
     }
     

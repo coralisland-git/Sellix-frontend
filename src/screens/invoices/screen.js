@@ -9,140 +9,54 @@ import {
   Col,
   Button
 } from 'reactstrap'
-import * as _ from 'lodash'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
-
-import './style.scss'
 import { getInvoices } from './actions'
 
+import './style.scss'
 
-const user = window.localStorage.getItem('userId')
 
-const mapStateToProps = (state) => {
-  return ({
-    invoices: state.invoices.invoices
-  })
-}
+const mapStateToProps = (state) => ({
+  invoices: state.invoices.invoices
+})
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators({ getInvoices }, dispatch),
-    
-  })
-}
+const mapDispatchToProps = (dispatch) => ({
+  getInvoices: bindActionCreators(getInvoices, dispatch),
+})
 
 class Invoices extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
-      filterValue: 'noSorting',
+      loading: false
     }
-
-    this.initializeData = this.initializeData.bind(this)
   }
 
   componentDidMount() {
-    // this.initializeData()
-    this.props.actions.getInvoices()
+    this.setState({ loading: true })
+    this.props.getInvoices()
+        .finally(() => this.setState({ loading: false }))
   }
 
-  initializeData() {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
+  renderUserUsername = (cell, row) => row.username ? <div>{row.username}</div> : <p className="caption">No specified</p>
 
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
-  }
+  renderUserId = (cell, row) => row.uniqid ? <div>{row.uniqid}</div> : <p className="caption">No specified</p>
 
-  renderUserUsername(cell, row) {
-    if (
-      row.username
-    ) {
-      return (
-        <div>
-          {row.username}
-        </div>
-      )
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
+  renderUserEmail = (cell, row) => row.customer_email ? <div>{row.customer_email}</div> : <p className="caption">No specified</p>
 
-  renderUserId = (cell, row) => {
-    if (
-      row.uniqid
-    ) {
-      return (
-        <div>
-          {row.uniqid}
-        </div>
-      )
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
+  renderDate = (cell, row) => row.day ? <div>{row.day_value} - {row.day} - {row.month} - {row.year}</div> : <p className="caption">No specified</p>
 
-  renderUserEmail = (cell, row) => {
-    if (
-      row.customer_email
-    ) {
-      return (
-        <div>
-          {row.customer_email}
-        </div>
-      )
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
+  viewInvoice = (e, id) => this.props.history.push(`/admin/invoices/${id}`)
 
-  renderDate = (cell, row) => {
-    if (
-      row.day
-    ) {
-      return (
-        <div>
-          {row.day_value} - {row.day} - {row.month} - {row.year}
-        </div>
-      )
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
-
-  viewInvoice= (e, id) => {
-    this.props.history.push({
-      pathname: `/admin/invoices/view/${id}`
-    })
-  }
-
-  renderOption =  (cell, row) => {
-    return (<>
-      <Button color="default" onClick={(e) => this.viewInvoice(e, row.uniqid)}>View</Button>
-      </>
-    )
-  }
+  renderOption =  (cell, row) => <Button color="default" onClick={(e) => this.viewInvoice(e, row.uniqid)}>View</Button>
 
 
   render() {
+
     const { loading } = this.state
-    const { product_list } = this.props
-    console.log({invoices: this.props.invoices})
-    if(!this.props.invoices){return null}
+    const { invoices } = this.props;
+
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
@@ -155,29 +69,23 @@ class Invoices extends React.Component {
               </Row>
             </CardHeader>
             <CardBody className="p-0">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                  :
+              {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+              {!loading &&
                   <Row>
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
                           options={tableOptions()}
-                          data={this.props.invoices}
+                          data={invoices}
                           version="4"
                           pagination
-                          // totalSize={product_list ? product_list.length : 0}
+                          totalSize={invoices ? invoices.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="title"
+                            dataField="id"
                             width='20%'
                             dataSort
                             dataFormat={this.renderUserId}
@@ -193,8 +101,7 @@ class Invoices extends React.Component {
                             Email
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="status"
-                            // dataAlign="right"
+                            dataField="username"
                             dataSort
                             width="20%"
                             dataFormat={this.renderUserUsername}
@@ -202,8 +109,7 @@ class Invoices extends React.Component {
                             Username
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="updatedAt"
-                            // dataAlign="right"
+                            dataField="updated_at"
                             dataSort
                             width="20%"
                             dataFormat={this.renderDate}
@@ -212,7 +118,6 @@ class Invoices extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"
-                            dataSort
                             width="20%"
                             dataAlign="right"
                             dataFormat={this.renderOption}

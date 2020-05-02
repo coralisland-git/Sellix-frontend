@@ -41,15 +41,7 @@ class Header extends Component {
         />
         { !isDocumentation && (
           <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
-            {
-              !isShop && 
-                <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
-                  <div className="searchbar">
-                    <i className="fas fa-search"/>
-                    <Input placeholder="Search..." className="header-search-input" />
-                  </div>
-              </NavItem>
-            }
+
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-3 mr-3">
               <DropdownToggle className="user-name" nav>
                 <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}} />
@@ -132,7 +124,7 @@ class Header extends Component {
                   <DropdownMenu right className="mt-2">
                     {
                       profile && profile.rank !== "0" && <DropdownItem onClick={() => history.push(`/admin/dashboard`)}>
-                        Admin panel
+                        Admin Panel
                       </DropdownItem>
                     }
                     <DropdownItem onClick={() => history.push(`/dashboard/${userId}`)}>

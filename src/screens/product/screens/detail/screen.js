@@ -407,11 +407,11 @@ class EditProduct extends React.Component {
 		return (
 			<div className="create-product-screen mt-3">
 				<div className="animated fadeIn">
-					{!admin && <Breadcrumb className="mb-0">
+					<Breadcrumb className="mb-0">
 						<BreadcrumbItem active className="mb-0">
-							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Products</a>
+							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> {admin ? "User" : "Products"}</a>
 						</BreadcrumbItem>
-					</Breadcrumb>}
+					</Breadcrumb>
 					<Formik
 						noValidate="noValidate"
 						initialValues={initialValues}

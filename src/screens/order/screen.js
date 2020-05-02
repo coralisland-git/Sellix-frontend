@@ -87,14 +87,18 @@ class Order extends React.Component {
   initializeData (filter) {
     this.setState({ loading: true })
 
-    if(filter == 'all')
+    if(filter == 'all') {
       this.props.actions.getOrderList().finally(() => {
         this.setState({loading: false})
       })
-    else if(filter == 'live')
-      this.props.actions.getLiveOrders().finally(() => {
-        this.setState({loading: false})
-      })
+    } else {
+      let isAdmin = window.location.pathname.includes('admin');
+      if(!isAdmin) {
+        this.props.actions.getLiveOrders().finally(() => {
+          this.setState({loading: false})
+        })
+      }
+    }
   }
 
   changeFilter(filter) {
@@ -103,9 +107,10 @@ class Order extends React.Component {
   }
 
   gotoDetail(id) {
-    this.props.history.push({
-      pathname: `/dashboard/${user}/orders/view/${id}`
-    })
+    let isAdmin = window.location.pathname.includes('admin');
+    let url = isAdmin ? `/admin/invoices/${id}` : `/dashboard/${user}/orders/view/${id}`;
+
+    this.props.history.push(url)
   }
 
   renderOrderInfo (cell, row) {
@@ -122,8 +127,8 @@ class Order extends React.Component {
 
   renderOrderStatus (cell, row) {
     return (
-      <div className={`badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
-        {ORDER_STATUS[row.status]} {ORDER_STATUS == '3' && <Spin/>}
+      <div className={`badge badge-${row.status ? ORDER_STATUS[row.status].toLowerCase() : ''}`} style={{  margin: '0 auto'}}>
+        {row.status ? <>{ORDER_STATUS[row.status]} {ORDER_STATUS == '3' && <Spin/>}</> : <p className="caption">No specified</p>}
       </div>
     )  
   }
@@ -151,14 +156,14 @@ class Order extends React.Component {
     const { search_key } = this.state
     const search_fields = ['customer_email', 'total_display', 'uniqid', 'gateway', 'status']
 
-    const data = products.filter(product => {
-      for(let i=0; i<search_fields.length; i++)
-        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase()))
+    return products.filter(product => {
+      for(let i=0; i<search_fields.length; i++) {
+        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase())) {
           return true
+        }
+      }
       return false
     })
-
-    return data
   }
 
   render() {
@@ -169,6 +174,8 @@ class Order extends React.Component {
     if(search_key)
       order_list = this.searchOrders(order_list)
 
+    let isAdmin = window.location.pathname.includes('admin');
+
     return (
       <div className="order-screen">
         <div className="animated fadeIn">
@@ -177,11 +184,13 @@ class Order extends React.Component {
               <Row style={{alignItems: 'center'}}>
                 <Col md={6}>
                   <div className="d-flex align-items-center mb-2">
-                    <h1 className="mr-3 mb-1">Orders</h1>
-                    <div className="filter-button-group d-flex">
-                      <a className={`filter-btn ${live_order_display == 'all'?'active':''}`} onClick={(e) => this.changeFilter('all')}>All</a>
-                      <a className={`filter-btn ${live_order_display == 'live'?'active':''}`} onClick={(e) => this.changeFilter('live')}>Live</a>
-                    </div>
+                    <h1 className="mr-3 mb-1">{isAdmin ? "Invoices": "Orders"}</h1>
+                    {!isAdmin && <>
+                      <div className="filter-button-group d-flex">
+                        <a className={`filter-btn ${live_order_display == 'all'?'active':''}`} onClick={(e) => this.changeFilter('all')}>All</a>
+                        <a className={`filter-btn ${live_order_display == 'live'?'active':''}`} onClick={(e) => this.changeFilter('live')}>Live</a>
+                      </div>
+                    </>}
                   </div>
                 </Col>
                 <Col md={6}>
@@ -200,23 +209,14 @@ class Order extends React.Component {
               </Row>
             </CardHeader>
             { 
-              live_order_display == 'all' && 
+              live_order_display === 'all' &&
                 <CardBody className="p-0">
-                  {
-                    loading ?
-                      <Row>
-                        <Col lg={12}>
-                          <Loader />
-                        </Col>
-                      </Row>
-                    :
-                    <Row>
+                  {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+                  {!loading && <Row>
                       <Col lg={12}>
                         <div>
                           <BootstrapTable
-                            options={{...tableOptions(), onRowClick: (row) => {
-                              this.gotoDetail(row.uniqid)}, sizePerPage: 15
-                            }}
+                            options={tableOptions({ onRowClick: (row) => this.gotoDetail(row.uniqid), sizePerPage: 15 })}
                             data={order_list}
                             version="4"
                             pagination

@@ -70,8 +70,6 @@ import MemberPage from './memebers'
 import Billings from './billings'
 import OrderAdminDetail from './users/screens/viewOrder/screens/detail'
 import Settings from './settings'
-import SettingsEdit from './settings/screens/detail'
-import AdminEditUser from './users/screens/detail/editUser'
 import Invoices from './invoices'
 import ShopDesign from './shop_design'
 import ShopGoogleAnalytics from './shop_google_analytics'
@@ -110,8 +108,6 @@ export {
   OrderAdminDetail,
   TopUsers,
   Settings,
-  SettingsEdit,
-  AdminEditUser,
   Invoices,
   // Tickets,
   Ticket,
