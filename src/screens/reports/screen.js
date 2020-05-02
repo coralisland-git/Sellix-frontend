@@ -162,6 +162,7 @@ class Reports extends React.Component {
                           data={report_list}
                           version="4"
                           pagination
+                          striped
                           totalSize={report_list ? report_list.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"

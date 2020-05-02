@@ -46,25 +46,28 @@ class Header extends Component {
               </div>
             </DropdownToggle>
             {
-              is_authed?
-                <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
-                    Dashboard
-                  </DropdownItem>
-                  <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
-                    Settings
-                  </DropdownItem>
-                  <DropdownItem onClick={() => this.signOut()}>
-                    Sign Out
-                  </DropdownItem>
-                </DropdownMenu>
-                :
-                <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/auth/login`)}>
-                    Log In
-                  </DropdownItem>
-                </DropdownMenu>
-            }
+                is_authed? 
+                  <DropdownMenu right className="mt-4">
+                    <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
+                      <i className={"fa fa-circle-o fa-md"} /> Dashboard
+                    </DropdownItem>
+                    <DropdownItem className={'active'} onClick={() => this.props.history.push(`/${userId}`)}>
+                      <i className={"fa fa-dot-circle-o fa-md"} /> Your Shop
+                    </DropdownItem>
+                    <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
+                      <i className={"fa fa-circle-o fa-md"} /> Settings
+                    </DropdownItem>
+                    
+                    <DropdownItem onClick={() => this.signOut()}>
+                      <i className={"fa fa-circle-o fa-md"} /> Sign Out
+                    </DropdownItem>
+                  </DropdownMenu>:
+                  <DropdownMenu right className="mt-2">
+                    <DropdownItem onClick={() => this.props.history.push(`/auth/login`)}>
+                      Log In
+                    </DropdownItem>
+                  </DropdownMenu>
+              }
             
           </UncontrolledDropdown>
           

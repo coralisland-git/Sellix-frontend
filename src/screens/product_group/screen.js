@@ -284,6 +284,7 @@ class ProductGroups extends React.Component {
                           data={all_product_groups}
                           version="4"
                           pagination
+                          striped
                           totalSize={all_product_groups ? all_product_groups.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"

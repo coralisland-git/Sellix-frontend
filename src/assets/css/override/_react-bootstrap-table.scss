@@ -8,7 +8,7 @@
   border-left: none !important;
   border-right: none !important;
   border-top: none !important;
-  padding: 30px 20px!important;
+  padding: 0px 0px!important;
   background-color: white !important;
   border-radius: 3px !important;
   border-bottom: none !important;
@@ -19,6 +19,8 @@
     vertical-align: top;
     border-left: 0px !important;
     border-right: 0px !important;
+    padding: 15px 20px !important;
+    border-top: none !important;
     font-size: 13px;
     border-color: #f1f1f1;
     .btn-group {
@@ -44,6 +46,7 @@
     border-left: 0 !important;
     border-right: 0 !important;
     font-size: 14px !important;
+    padding: 5px 20px !important;
     text-transform: initial !important;
     color: #85838f !important;
     font-weight: 600 !important;

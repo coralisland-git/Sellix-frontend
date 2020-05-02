@@ -259,6 +259,7 @@ class Product extends React.Component {
                           data={all_products}
                           version="4"
                           pagination
+                          striped
                           totalSize={all_products ? all_products.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"

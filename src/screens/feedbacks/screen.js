@@ -173,6 +173,7 @@ class Feedbacks extends React.Component {
                           data={this.props.feedbacks}
                           version="4"
                           pagination
+                          striped
                           // totalSize={product_list ? product_list.length : 0}
                           className="product-table feedback-table"
                           trClassName="cursor-pointer"

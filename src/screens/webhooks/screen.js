@@ -245,6 +245,7 @@ class Webhooks extends React.Component {
                           data={webhook_list}
                           version="4"
                           pagination
+                          striped
                           totalSize={webhook_list ? webhook_list.length : 0}
                           className="webhook-table"
                           trClassName="cursor-pointer"

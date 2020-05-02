@@ -256,6 +256,7 @@ class WebhookLogs extends React.Component {
                           options={{...tableOptions(), sizePerPage: 15}}
                           data={webhook_log_list}
                           version="4"
+                          striped
                           pagination
                           totalSize={webhook_log_list ? webhook_log_list.length : 0}
                           className="webhook-table"

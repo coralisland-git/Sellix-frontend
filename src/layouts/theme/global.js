@@ -42,9 +42,51 @@ export const GlobalStyles = createGlobalStyle`
         background: ${({ theme }) => theme.cardBody} !important;
     }
 
-    .admin-container .app-header *:not(.badge) {
-        color: ${({ theme }) => theme.text} !important;
+    .moon-icon {
+        background: ${({ theme }) => theme.moonIconBg} !important;
+        color: ${({ theme }) => theme.moonIconColor} !important;
     }
+
+    
+    .admin-container .app-header *:not(.badge) {
+        color: ${({ theme }) => theme.text};
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: ${({ theme }) => theme.tableStripedRowBG} !important;
+    }
+
+    .shop-container .app-header .dropdown-item,
+    .admin-container .app-header .dropdown-item {
+        color: ${({ theme }) => theme.headerDropDownColor} !important;
+        i {color: ${({ theme }) => theme.headerDropDownColor};}
+    }
+
+    .order-screen {
+        .text-completed {
+            color: ${({ theme }) => theme.textCompleted} !important;
+        }
+        .text-pending {
+            color: ${({ theme }) => theme.textPending} !important;
+        }
+        .text-cancelled {
+            color: ${({ theme }) => theme.textCancelled} !important;
+        }
+        .text-partial {
+            color: ${({ theme }) => theme.textPartial} !important;
+        }
+    }
+
+    .shop-container .app-header .dropdown-item:hover,
+    .shop-container .app-header .dropdown-item.active,
+    .admin-container .app-header .dropdown-item:hover,
+    .admin-container .app-header .dropdown-item.active {
+        background: ${({ theme }) => theme.headerDropDownActiveBGColor} !important;
+        color: ${({ theme }) => theme.headerDropDownActiveColor} !important;
+        i {color: ${({ theme }) => theme.headerDropDownActiveColor} !important;}
+    }
+
+    
 
     .admin-container .sidebar {
         background: ${({ theme }) => theme.body};

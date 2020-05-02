@@ -329,6 +329,7 @@ class Dashboard extends React.Component {
                               }}
                               data={invoices}
                               version="4"
+                              striped
                               totalSize={invoices.length}
                               className="product-table"
                               trClassName="cursor-pointer"
