@@ -1,7 +1,9 @@
 import { authApi } from 'utils'
 
-export const getAnalyticsData = (start, end, isAdmin) => () => {
+export const getAnalyticsData = (start, end) => () => {
 
+
+    let isAdmin = window.location.pathname.includes('admin');
     let url = `/${isAdmin ? 'admin' : 'self'}/analytics?from=${start}&to=${end}&year=true`;
 
     return authApi.get(url)

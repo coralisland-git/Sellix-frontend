@@ -283,9 +283,8 @@ class CreateProduct extends React.Component {
                               <Row>
                                 <Col lg={4}>
                                   <FormGroup className="text-right">
-                                    <Button color="primary" type="button" className="btn-square" 
-                                        onClick={this.showWarehouseModal}>
-                                      <i className="fa fa-plus"></i> Add a Warehouse
+                                    <Button color="primary" type="button" className="btn-square" onClick={this.showWarehouseModal}>
+                                      <i className="fa fa-plus" /> Add a Warehouse
                                     </Button>
                                   </FormGroup>
                                 </Col>
@@ -310,14 +309,13 @@ class CreateProduct extends React.Component {
                                 <Col lg={12} className="mt-5">
                                   <FormGroup className="text-right">
                                     <Button type="submit" color="primary" className="btn-square mr-3">
-                                      <i className="fa fa-dot-circle-o"></i> Create
+                                      <i className="fa fa-dot-circle-o" /> Create
                                     </Button>
                                     <Button type="submit" color="primary" className="btn-square mr-3">
-                                      <i className="fa fa-repeat"></i> Create and More
+                                      <i className="fa fa-repeat" /> Create and More
                                     </Button>
-                                    <Button color="secondary" className="btn-square" 
-                                      onClick={() => {this.props.history.push('/admin/master/product')}}>
-                                      <i className="fa fa-ban"></i> Cancel
+                                    <Button color="secondary" className="btn-square" onClick={() => this.props.history.push('/admin/master/product')}>
+                                      <i className="fa fa-ban" /> Cancel
                                     </Button>
                                   </FormGroup>
                                 </Col>

@@ -1,19 +1,14 @@
 import { ORDER } from 'constants/types'
-import {
-  api,
-  authApi,
-  formData
-} from 'utils'
+import { authApi, formData } from 'utils'
 
 // Get Invoice List
 export const getOrderList = () => {
   return (dispatch) => {
-    let data = {
-      method: 'GET',
-      url: '/self/invoices'
-    }
 
-    return authApi(data).then(res => {
+    let isAdmin = window.location.pathname.includes('admin')
+    let url = `/${isAdmin ? 'admin' : 'self'}/invoices`;
+
+    return authApi.get(url).then(res => {
       dispatch({
         type: ORDER.ALL_ORDERS,
         payload: res.data.invoices
@@ -29,12 +24,10 @@ export const getOrderList = () => {
 // Get Live Orders
 export const getLiveOrders = () => {
   return (dispatch) => {
-    let data = {
-      method: 'GET',
-      url: '/self/invoices/live'
-    }
+    let isAdmin = window.location.pathname.includes('admin')
+    let url = `/${isAdmin ? 'admin' : 'self'}/invoices/live`;
 
-    return authApi(data).then(res => {
+    return authApi.get(url).then(res => {
       dispatch({
         type: ORDER.ALL_ORDERS,
         payload: res.data.invoices
@@ -48,19 +41,15 @@ export const getLiveOrders = () => {
 
 
 // Get Invoice By ID
-export const getOrderByID = (id) => {
-  return (dispatch) => {
-    let data = {
-      method: 'GET',
-      url: `/invoices/unique/${id}`
-    }
+export const getOrderByID = (id) =>  (dispatch) => {
+    let isAdmin = window.location.pathname.includes('admin')
+    let url = `${isAdmin ? 'admin' : ''}/invoices/unique/${id}`;
 
-    return authApi(data).then(res => {
+    return authApi.get(url).then(res => {
       return res
     }).catch(err => {
       throw err
     })
-  }
 }
 
 

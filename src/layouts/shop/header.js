@@ -30,7 +30,7 @@ class Header extends Component {
   }
 
   render() {
-    const { user, profile, children, is_authed, ...attributes } = this.props
+    const { user, profile, children, is_authed, history, ...attributes } = this.props
 
     return (
       <React.Fragment>
@@ -48,10 +48,15 @@ class Header extends Component {
             {
               is_authed?
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
+                  {
+                    profile && profile.rank !== "0" && <DropdownItem onClick={() => history.push(`/admin/dashboard`)}>
+                      Admin Panel
+                    </DropdownItem>
+                  }
+                  <DropdownItem onClick={() => history.push(`/dashboard/${userId}`)}>
                     Dashboard
                   </DropdownItem>
-                  <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
+                  <DropdownItem onClick={() => history.push(`/settings/${userId}`)}>
                     Settings
                   </DropdownItem>
                   <DropdownItem onClick={() => this.signOut()}>
@@ -60,7 +65,7 @@ class Header extends Component {
                 </DropdownMenu>
                 :
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/auth/login`)}>
+                  <DropdownItem onClick={() => history.push(`/auth/login`)}>
                     Log In
                   </DropdownItem>
                 </DropdownMenu>
