@@ -54,14 +54,14 @@ class Header extends Component {
 
             {
               !isShop && 
-                <UncontrolledDropdown nav direction="down" className="ml-3 mr-2">
+                <UncontrolledDropdown nav direction="down" className="ml-3">
                   <i className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
                 </UncontrolledDropdown>
             } 
             
-            <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-3 mr-3">
+            <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-2">
               <DropdownToggle className="user-name" nav>
-                <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}} />
+                <i className="fa icon-question nav-icon" style={{fontSize: 18, fontWeight: 'bold', marginTop: 2}} />
               </DropdownToggle>
               
               <DropdownMenu right className="mt-2">
