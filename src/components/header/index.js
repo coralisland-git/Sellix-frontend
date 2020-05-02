@@ -28,16 +28,10 @@ class Header extends Component {
   }
 
   render() {
-<<<<<<< HEAD
-    const { profile, children, theme, is_authed, isShop, isDocumentation, ...attributes } = this.props
-    const { notifications } = profile || {}
-    const path = this.props.history.location.pathname
-  
-=======
     const { profile, children, theme, is_authed, isShop, history, isDocumentation, ...attributes } = this.props
     const { notifications } = profile || {};
-
->>>>>>> 520b236cc2794e178a87b43fcfffa244e9938f4c
+    const path = this.props.history.location.pathname
+    
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -48,7 +42,6 @@ class Header extends Component {
         />
         { !isDocumentation && (
           <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
-<<<<<<< HEAD
             {
               !isShop && 
                 <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
@@ -66,9 +59,6 @@ class Header extends Component {
                 </UncontrolledDropdown>
             } 
             
-=======
-
->>>>>>> 520b236cc2794e178a87b43fcfffa244e9938f4c
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-3 mr-3">
               <DropdownToggle className="user-name" nav>
                 <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}} />
@@ -149,29 +139,18 @@ class Header extends Component {
               {
                 is_authed? 
                   <DropdownMenu right className="mt-2">
-<<<<<<< HEAD
+                    {
+                      profile && profile.rank !== "0" && 
+                      <DropdownItem className={path.startsWith('/admin')?'active':''} onClick={() => history.push(`/admin/dashboard`)}>
+                        <i className={path.startsWith('/admin')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Admin Panel
+                      </DropdownItem>
+                    }
                     <DropdownItem className={path.startsWith('/dashboard')?'active':''} onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
                       <i className={path.startsWith('/dashboard')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Dashboard
                     </DropdownItem>
                     <DropdownItem className={isShop?'active':''} onClick={() => this.props.history.push(`/${userId}`)}>
                       <i className={isShop?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Your Shop
-=======
-                    {
-                      profile && profile.rank !== "0" && <DropdownItem onClick={() => history.push(`/admin/dashboard`)}>
-                        Admin Panel
-                      </DropdownItem>
-                    }
-                    <DropdownItem onClick={() => history.push(`/dashboard/${userId}`)}>
-                      Dashboard
-                    </DropdownItem>
-                    {
-                      !isShop && <DropdownItem onClick={() => history.push(`/${userId}`)}>
-                        Your Shop
-                      </DropdownItem>
-                    }
-                    <DropdownItem onClick={() => history.push(`/settings/${userId}`)}>
-                      Settings
->>>>>>> 520b236cc2794e178a87b43fcfffa244e9938f4c
+
                     </DropdownItem>
                     <DropdownItem className={path.startsWith('/settings')?'active':''} onClick={() => this.props.history.push(`/settings/${userId}`)}>
                       <i className={path.startsWith('/settings')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Settings
