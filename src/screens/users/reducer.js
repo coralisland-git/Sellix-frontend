@@ -14,10 +14,18 @@ const Users = (state = initState, action) => {
         ...state,
         users: Object.assign([], payload)
       }
-      case USER.USER:
+    case USER.USER:
       return {
         ...state,
         user: payload
+      }
+    case USER.BAN:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          banned: payload
+        }
       }
     default:
       return state

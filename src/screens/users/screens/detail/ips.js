@@ -38,7 +38,7 @@ class UserProductsTable extends Component {
                             <Col lg={12}>
                                 <div>
                                     <BootstrapTable
-                                        options={tableOptions()}
+                                        options={tableOptions({ sizePerPage: 4})}
                                         data={ips}
                                         version="4"
                                         pagination

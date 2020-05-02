@@ -26,8 +26,6 @@ import {
   TopUsers,
   OrderAdminDetail,
   Settings,
-  SettingsEdit,
-  Invoices,
   CreateProductGroup,
   EditProductGroup,
   ProductGroups,

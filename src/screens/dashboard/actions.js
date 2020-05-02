@@ -8,11 +8,13 @@ export const getAnalyticsData = (start, end) => () => {
 
     return authApi.get(url)
         .then(res => {
-          if (res.status === 200) {
-            return res
-          } else {
-            throw res
-          }
+            if (res.status === 200) {
+                return res
+            } else if (res.status === 401) {
+                return res
+            } else {
+                throw res
+            }
         })
         .catch(err => {
           throw err

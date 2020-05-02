@@ -15,6 +15,7 @@ import { tableOptions } from "../../constants/tableoptions";
 import config from "../../constants/config";
 import { getSelfUser } from "../../services/global/auth/actions";
 import { withRouter } from "react-router-dom";
+import {isEmpty} from "lodash";
 
 const PAYMENT_OPTS = {
   'paypal': 'PayPal',
@@ -84,6 +85,7 @@ class Dashboard extends React.Component {
       ordersProgress: 0,
       viewsProgress: 0,
       queriesProgress: 0,
+      showPlaceholder: false,
     }
   }
 
@@ -95,9 +97,10 @@ class Dashboard extends React.Component {
     this.setState({ loading: true });
 
     if(initial) {
+
       let requests = [
         getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
-        getAnalyticsData(moment().subtract(1, 'days'), moment(), 'daily')
+        getAnalyticsData(moment().subtract(1, 'days').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY'))
       ]
 
       let isAdmin = window.location.pathname.includes('admin')
@@ -106,27 +109,34 @@ class Dashboard extends React.Component {
         requests.push(geLastInvoices())
       }
 
-      Promise.all(requests).then((response) => {
+      Promise.all(requests)
+          .then((response) => {
 
-        let analytics = response[0].data.analytics;
-        let total = response[1].data.analytics.total;
-        let invoices = isAdmin ? [] : response[2].data.invoices;
+            if(response[0].status === 401 || response[1].status === 401) {
+              this.setState({ showPlaceholder: true })
+              return
+            }
 
-        this.setState({
-          totalRevenue: total.revenue || 0,
-          totalOrders: total.orders_count || 0,
-          totalViews: total.views_count || 0,
-          totalQueries: total.queries_count || 0,
-          revenueProgress: total.revenue_progress || 0,
-          ordersProgress: total.orders_count_progress || 0,
-          viewsProgress: total.views_count_progress || 0,
-          queriesProgress: total.queries_count_progress || 0,
-          chartData: analytics['daily'],
-          invoices: invoices
-        })
-      })   .finally(() => {
-        this.setState({loading: false})
-      })
+            let analytics = response[0].data.analytics;
+            let total = response[1].data.analytics.total;
+            let invoices = isAdmin ? [] : response[2].data.invoices;
+
+            this.setState({
+              totalRevenue: total.revenue || 0,
+              totalOrders: total.orders_count || 0,
+              totalViews: total.views_count || 0,
+              totalQueries: total.queries_count || 0,
+              revenueProgress: total.revenue_progress || 0,
+              ordersProgress: total.orders_count_progress || 0,
+              viewsProgress: total.views_count_progress || 0,
+              queriesProgress: total.queries_count_progress || 0,
+              chartData: analytics['daily'],
+              invoices: invoices
+            })
+          })
+          .finally(() => {
+            this.setState({loading: false})
+          })
     } else {
       getAnalyticsData(startDate, endDate)
           .then(({ data: { analytics } }) => {
@@ -204,7 +214,8 @@ class Dashboard extends React.Component {
       ordersProgress,
       viewsProgress,
       queriesProgress,
-      invoices
+      invoices,
+      showPlaceholder
     } = this.state;
 
     return (
@@ -225,12 +236,15 @@ class Dashboard extends React.Component {
             </CardHeader>
 
             <div className="pt-4">
-              {loading && <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>}
-              {!loading && <div>
+              {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+
+              {(!loading && showPlaceholder) ?
+                  <div className={'mt-5 pt-5 unauthorized-container'}>
+                    <div>
+                      <Loader className={"override-loader"} />
+                      <div>Unauthorized to view this content</div>
+                    </div>
+                  </div> : <div>
                     <Row className="mt-4">
                       <Col lg={3}>
                         <Card>
