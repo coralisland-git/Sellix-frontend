@@ -24,6 +24,36 @@ import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
 import * as OrderActions from './actions'
 import './style.scss'
+import cancelledIcon from 'assets/images/order/Cancelled_Icon.svg'
+import completedIcon from 'assets/images/order/Check_Icon.svg'
+import paritalIcon from 'assets/images/order/Partially_Icon.svg'
+import pendingIcon from 'assets/images/order/Pending_Icon.svg'
+
+const STATUS_ICON = {
+  '0': pendingIcon,
+  '1': completedIcon,
+  '2': cancelledIcon,
+  '4': paritalIcon,
+}
+
+const ORDER_STATUS = {
+  '0': 'Pending',
+  '1': 'Completed',
+  '2': 'Cancelled',
+  '3': 'Confirmation',
+  '4': 'Partial'
+}
+
+const PAYMENT_OPTS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'BTC',
+  'litecoin': 'LTC',
+  'ethereum': 'ETH',
+  'skrill': 'Skrill',
+  'stripe': 'Stripe',
+  'bitcoincash': 'BTH',
+  'perfectmoney': 'Perfect Money'
+}
 
 const user = window.localStorage.getItem('userId')
 
@@ -46,26 +76,6 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-const ORDER_STATUS = {
-  '0': 'Pending',
-  '1': 'Completed',
-  '2': 'Cancelled',
-  '3': 'Confirmation',
-  '4': 'Partial'
-}
-
-const PAYMENT_OPTS = {
-  'paypal': 'PayPal',
-  'bitcoin': 'BTC',
-  'litecoin': 'LTC',
-  'ethereum': 'ETH',
-  'skrill': 'Skrill',
-  'stripe': 'Stripe',
-  'bitcoincash': 'BTH',
-  'perfectmoney': 'Perfect Money'
-}
-
-
 class Order extends React.Component { 
   constructor(props) {
     super(props)
@@ -87,14 +97,18 @@ class Order extends React.Component {
   initializeData (filter) {
     this.setState({ loading: true })
 
-    if(filter == 'all')
+    if(filter == 'all') {
       this.props.actions.getOrderList().finally(() => {
         this.setState({loading: false})
       })
-    else if(filter == 'live')
-      this.props.actions.getLiveOrders().finally(() => {
-        this.setState({loading: false})
-      })
+    } else {
+      let isAdmin = window.location.pathname.includes('admin');
+      if(!isAdmin) {
+        this.props.actions.getLiveOrders().finally(() => {
+          this.setState({loading: false})
+        })
+      }
+    }
   }
 
   changeFilter(filter) {
@@ -103,27 +117,31 @@ class Order extends React.Component {
   }
 
   gotoDetail(id) {
-    this.props.history.push({
-      pathname: `/dashboard/${user}/orders/view/${id}`
-    })
+    let isAdmin = window.location.pathname.includes('admin');
+    let url = isAdmin ? `/admin/invoices/${id}` : `/dashboard/${user}/orders/view/${id}`;
+
+    this.props.history.push(url)
   }
 
   renderOrderInfo (cell, row) {
     return (
       <div>
-        <p><a onClick={(e) => this.gotoDetail(row.uniqid)}>
-          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
-            </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+        <p><a onClick={(e) => this.gotoDetail(row.uniqid)} style={{fontSize: 15, fontWeight: 700}}>
+          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}></i>&nbsp;&nbsp;&nbsp;
+          {`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
-        <p className="caption">{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
+        <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
       </div>
     )  
   }
 
   renderOrderStatus (cell, row) {
     return (
-      <div className={`badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
-        {ORDER_STATUS[row.status]} {ORDER_STATUS == '3' && <Spin/>}
+      <div className="order-status">
+        <div className={`order-badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+          <img src={STATUS_ICON[row.status]}/>
+        </div>
+        <span className={`text-${ORDER_STATUS[row.status].toLowerCase()}`}>{ORDER_STATUS[row.status]}</span>
       </div>
     )  
   }
@@ -131,7 +149,7 @@ class Order extends React.Component {
   renderOrderValue(cell, row) {
     return (
       <div className="order">
-        <p className="order-value">{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
+        <p className="order-value" style={{fontSize: 15, fontWeight: 700}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
         <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {PAYMENT_OPTS[row.gateway]}</p>
       </div>
     )  
@@ -140,8 +158,8 @@ class Order extends React.Component {
   renderOrderTime(cell, row) {
     return (
       <div>
-        <p>{new moment(new Date(row.created_at*1000)).format('DD, MMM YYYY')}</p>
-        <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+        <p style={{fontSize: 15, fontWeight: 700}}>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('MMM DD')}</p>
       </div>
     )  
   }
@@ -151,14 +169,14 @@ class Order extends React.Component {
     const { search_key } = this.state
     const search_fields = ['customer_email', 'total_display', 'uniqid', 'gateway', 'status']
 
-    const data = products.filter(product => {
-      for(let i=0; i<search_fields.length; i++)
-        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase()))
+    return products.filter(product => {
+      for(let i=0; i<search_fields.length; i++) {
+        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase())) {
           return true
+        }
+      }
       return false
     })
-
-    return data
   }
 
   render() {
@@ -169,6 +187,8 @@ class Order extends React.Component {
     if(search_key)
       order_list = this.searchOrders(order_list)
 
+    let isAdmin = window.location.pathname.includes('admin');
+
     return (
       <div className="order-screen">
         <div className="animated fadeIn">
@@ -177,11 +197,13 @@ class Order extends React.Component {
               <Row style={{alignItems: 'center'}}>
                 <Col md={6}>
                   <div className="d-flex align-items-center mb-2">
-                    <h1 className="mr-3 mb-1">Orders</h1>
-                    <div className="filter-button-group d-flex">
-                      <a className={`filter-btn ${live_order_display == 'all'?'active':''}`} onClick={(e) => this.changeFilter('all')}>All</a>
-                      <a className={`filter-btn ${live_order_display == 'live'?'active':''}`} onClick={(e) => this.changeFilter('live')}>Live</a>
-                    </div>
+                    <h1 className="mr-3 mb-1">{isAdmin ? "Invoices": "Orders"}</h1>
+                    {!isAdmin && <>
+                      <div className="filter-button-group d-flex">
+                        <a className={`filter-btn ${live_order_display == 'all'?'active':''}`} onClick={(e) => this.changeFilter('all')}>All</a>
+                        <a className={`filter-btn ${live_order_display == 'live'?'active':''}`} onClick={(e) => this.changeFilter('live')}>Live</a>
+                      </div>
+                    </>}
                   </div>
                 </Col>
                 <Col md={6}>
@@ -200,25 +222,17 @@ class Order extends React.Component {
               </Row>
             </CardHeader>
             { 
-              live_order_display == 'all' && 
+              live_order_display === 'all' &&
                 <CardBody className="p-0">
-                  {
-                    loading ?
-                      <Row>
-                        <Col lg={12}>
-                          <Loader />
-                        </Col>
-                      </Row>
-                    :
-                    <Row>
+                  {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+                  {!loading && <Row>
                       <Col lg={12}>
                         <div>
                           <BootstrapTable
-                            options={{...tableOptions(), onRowClick: (row) => {
-                              this.gotoDetail(row.uniqid)}, sizePerPage: 15
-                            }}
+                            options={tableOptions({ onRowClick: (row) => this.gotoDetail(row.uniqid), sizePerPage: 15 })}
                             data={order_list}
                             version="4"
+                            striped
                             pagination
                             totalSize={order_list ? order_list.length : 0}
                             className="product-table"
@@ -244,7 +258,7 @@ class Order extends React.Component {
                             </TableHeaderColumn>
                             <TableHeaderColumn
                               dataField="total_display"
-                              dataAlign="center"
+                              dataAlign="right"
                               dataSort
                               dataFormat={this.renderOrderValue}
                               width='20%'

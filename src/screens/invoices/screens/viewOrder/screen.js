@@ -174,6 +174,7 @@ class Order extends React.Component {
                           data={order_list}
                           version="4"
                           pagination
+                          striped
                           totalSize={order_list ? order_list.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"

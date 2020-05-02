@@ -36,16 +36,14 @@
 }
 
 .admin-container .app-header .dropdown-item {
+  font-weight: bold;
   border-bottom: none;
-}
+  color: #444648;
 
-.admin-container .app-header .dropdown-item:hover,
-.admin-container .app-header .dropdown-item:focus,
-.admin-container .app-header .dropdown-item:active {
-  color: #613BEA !important;
-  background-color: white;
+  i {
+    color: #444648;
+  }
 }
-
 
 .app-header {
   .searchbar {
@@ -88,10 +86,20 @@
 }
 
 .nav-icon {
-  font-size: 22px;
+  font-size: 18px;
   color: #A7A5B4;
 }
 
+.moon-icon {
+  font-size: 15px !important;
+  height: 22px;
+  width: 22px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-top: 2px;
+  padding: 4px;
+}
 
 .notification-row {
   .title {

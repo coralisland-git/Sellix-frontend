@@ -163,13 +163,13 @@ class User extends React.Component {
 
   viewOrderAdmin = (e, id) => {
     this.props.history.push({
-      pathname: `/admin/users/view/${this.props.match.params.id}/order/${id}`
+      pathname: `/admin/users/${this.props.match.params.id}/order/${id}`
     })
   }
 
   viewProductAdmin = (e, id) => {
     this.props.history.push({
-      pathname: `/admin/users/view/${this.props.match.params.id}/product/edit/${id}`
+      pathname: `/admin/users/${this.props.match.params.id}/product/edit/${id}`
     })
   }
 
@@ -183,7 +183,7 @@ class User extends React.Component {
 
   editUser = () => {
     this.props.history.push({
-      pathname: `/admin/users/view/${this.props.match.params.id}/edit/${this.props.match.params.id}`
+      pathname: `/admin/users/${this.props.match.params.id}`
     })
   }
 
@@ -231,6 +231,7 @@ class User extends React.Component {
                               data={this.props.user.products}
                               version="4"
                               pagination
+                              striped
                               // totalSize={product_list ? product_list.length : 0}
                               className="product-table"
                               trClassName="cursor-pointer"
@@ -320,6 +321,7 @@ class User extends React.Component {
                               data={this.props.user.invoices}
                               version="4"
                               pagination
+                              striped
                               // totalSize={product_list ? product_list.length : 0}
                               className="product-table"
                               trClassName="cursor-pointer"
@@ -408,6 +410,7 @@ class User extends React.Component {
                               data={this.props.user.ips}
                               version="4"
                               pagination
+                              striped
                               // totalSize={product_list ? product_list.length : 0}
                               className="product-table"
                               trClassName="cursor-pointer"

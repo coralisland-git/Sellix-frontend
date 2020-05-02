@@ -10,10 +10,10 @@ import { DashBoardChart } from './sections'
 import { getAnalyticsData, geLastInvoices } from './actions'
 
 import './style.scss'
-import {BootstrapTable, TableHeaderColumn} from "react-bootstrap-table";
-import {tableOptions} from "../../constants/tableoptions";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+import { tableOptions } from "../../constants/tableoptions";
 import config from "../../constants/config";
-import {getSelfUser} from "../../services/global/auth/actions";
+import { getSelfUser } from "../../services/global/auth/actions";
 import { withRouter } from "react-router-dom";
 
 const PAYMENT_OPTS = {
@@ -94,14 +94,13 @@ class Dashboard extends React.Component {
 
     this.setState({ loading: true });
 
-    const isAdmin = this.props.location.pathname === "/admin/dashboard";
-
     if(initial) {
-
       let requests = [
-        getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY'), isAdmin),
-        getAnalyticsData(startDate, endDate, isAdmin)
+        getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
+        getAnalyticsData(moment().subtract(1, 'days'), moment(), 'daily')
       ]
+
+      let isAdmin = window.location.pathname.includes('admin')
 
       if(!isAdmin) {
         requests.push(geLastInvoices())
@@ -129,7 +128,7 @@ class Dashboard extends React.Component {
         this.setState({loading: false})
       })
     } else {
-      getAnalyticsData(startDate, endDate, isAdmin)
+      getAnalyticsData(startDate, endDate)
           .then(({ data: { analytics } }) => {
             const { total } = analytics;
 
@@ -159,9 +158,7 @@ class Dashboard extends React.Component {
 
 
   gotoDetail = (id) => {
-    this.props.history.push({
-      pathname: `/dashboard/${userId}/orders/view/${id}`
-    })
+    this.props.history.push(`/dashboard/${userId}/orders/view/${id}`)
   }
 
   renderOrderInfo = (cell, row) => (
@@ -335,6 +332,7 @@ class Dashboard extends React.Component {
                               }}
                               data={invoices}
                               version="4"
+                              striped
                               totalSize={invoices.length}
                               className="product-table"
                               trClassName="cursor-pointer"

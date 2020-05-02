@@ -13,6 +13,26 @@
     background-color: #613bea;
   }
 
+  .order-status {
+    span {
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .text-completed {
+      color: #087502;
+    }
+    .text-pending {
+      color: #393939;
+    }
+    .text-cancelled {
+      color: #75025C;
+    }
+    .text-partial {
+      color: #3D3AC6;
+    }
+  }
+  
+
   .filter-button-group {
     border-radius: 3px;
   }
@@ -69,9 +89,29 @@
     background-color: #613BEA;
   }
 
+  .order-badge {
+    width: 70px;
+    height: 25px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .badge-pending {
+    background-color: #C3C0C0;
+  }
+
+  .badge-partial {
+    background-color: #A5E4F8;
+  }
+
+  .badge-cancelled {
+    background-color: #FCA2B7;
+  }
+
   .badge-completed {
-    color: #2BB224;
-    background-color: #CBF4C9;
+    background-color: #A6FCA2;
   }
 
   .order-value {
