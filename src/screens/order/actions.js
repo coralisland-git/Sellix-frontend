@@ -1,5 +1,5 @@
 import { ORDER } from 'constants/types'
-import { authApi, formData } from 'utils'
+import { authApi, formData, sendAuthedWsMessage } from 'utils'
 
 // Get Invoice List
 export const getOrderList = () => {
@@ -38,6 +38,20 @@ export const getLiveOrders = () => {
     })
   }
 }
+
+export const getLiveOrdersViaWebsocket = () => {
+  return (dispatch) => {
+
+      sendAuthedWsMessage({ event: 'orders' }, 'invoices').then(invoices => {
+        dispatch({
+          type: ORDER.ALL_ORDERS,
+          payload: invoices
+        })
+        return invoices
+      })
+    }
+  }
+
 
 
 // Get Invoice By ID

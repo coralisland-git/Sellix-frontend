@@ -28,6 +28,7 @@ import cancelledIcon from 'assets/images/order/Cancelled_Icon.svg'
 import completedIcon from 'assets/images/order/Check_Icon.svg'
 import paritalIcon from 'assets/images/order/Partially_Icon.svg'
 import pendingIcon from 'assets/images/order/Pending_Icon.svg'
+import IntervalTimer from 'react-interval-timer';
 
 const STATUS_ICON = {
   '0': pendingIcon,
@@ -192,6 +193,12 @@ class Order extends React.Component {
     return (
       <div className="order-screen">
         <div className="animated fadeIn">
+          <IntervalTimer
+              timeout={3000}
+              callback={() => this.props.actions.getLiveOrdersViaWebsocket()}
+              enabled={live_order_display == 'live'}
+              repeat={true}
+          />
           <Card>
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
