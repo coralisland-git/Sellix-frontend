@@ -56,13 +56,12 @@ class User extends Component {
 
     const { updateUser, tostifyAlert } = this.props;
 
-    const dataForSend = pick(values, ['username', 'email', 'otp_2fa', 'email_2fa'])
-    const correctFormatForSend = mapValues(dataForSend, data => data === true ? 1 : data === false ? 0 : data );
+    const dataForSend = pick(values, ['username', 'email', 'otp_2fa', 'email_2fa', 'id'])
 
-    updateUser(correctFormatForSend)
+    updateUser(dataForSend)
         .then(res => {
           this.getUser()
-          tostifyAlert('success', res.message)
+          tostifyAlert('success', res.data.message)
         })
         .catch(err => {
           tostifyAlert('error', err.error)
