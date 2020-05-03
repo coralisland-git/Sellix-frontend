@@ -15,6 +15,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import { tableOptions } from 'constants/tableoptions'
 import config from 'constants/config'
 import { CommonActions } from 'services/global'
+import { Link } from 'react-router-dom'
 
 import * as ProductActions from './actions'
 import './style.scss'
@@ -95,9 +96,9 @@ class Product extends React.Component {
       return (
         <div>
           <p>
-            <a href={`/dashboard/${user}/products/edit/${row.uniqid}`} >
+            <Link to={`/dashboard/${user}/products/edit/${row.uniqid}`} >
               {row.title}
-            </a>
+            </Link>
           </p>
           <p className="caption">{row.uniqid}</p>
         </div>
