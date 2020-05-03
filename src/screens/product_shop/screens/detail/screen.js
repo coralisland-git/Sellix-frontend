@@ -111,6 +111,7 @@ class ShopProductDetail extends React.Component {
         if(res.status === 200) {
           this.setState({
             productInfo: {...res.data.product, paymentOptions: (res.data.product.gateways || '').split(',').filter(opt => opt !== '')},
+            quantity: res.data.product.quantity_min > 1 ? res.data.product.quantity_min : 1
           })
           document.title = `${res.data.product.title} | Sellix`;
         } else {
@@ -140,7 +141,7 @@ class ShopProductDetail extends React.Component {
       productInfo,
     } = this.state;
 
-    if(loading) {
+    if(loading || Object.keys(productInfo).length == 0) {
       return <Row><Col lg={12}><Loader /></Col></Row>
     }
 

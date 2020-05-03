@@ -32,7 +32,7 @@ class Purchase extends React.Component {
 		this.state = {
 			openCoupon: false,
 			showPaymentOptions: false,
-			quantity: 1,
+			quantity: this.props.productInfo.quantity_min == -1 ? 1 : this.props.productInfo.quantity_min,
 			appliedCoupon: null,
 			couponSuccess: false,
 			couponError: false,
@@ -77,21 +77,12 @@ class Purchase extends React.Component {
 		const { quantity } = this.state;
 		const { type, stock, file_stock, service_stock, quantity_max } = this.props.productInfo;
 
-		if((type == 'serials' && quantity_max != -1 && quantity >= quantity_max) ||
-			(type == 'serials' && quantity >= stock)) {
-			return true
-		}
-
-		if(type == 'file' &&  file_stock != -1 && quantity >= file_stock) {
-			return true
-		}
-
-		if(type == 'service' &&  service_stock != -1 && quantity >= service_stock) {
+		if(!this.isValidCount(parseInt(quantity)+1)) {
 			return true
 		}
 
 		this.setState({
-			quantity: Number(quantity + 1)
+			quantity: Number(quantity) + 1
 		}, () => {
 			this.props.setCount(this.state)
 		})
@@ -104,6 +95,41 @@ class Purchase extends React.Component {
 		}, () => {
 			// this.props.setCoupon(this.state.coupon_code)
 		})
+	}
+
+	isValidCount = (count) => {
+		if(isNaN(count)) {
+			return false
+		}
+
+		if(count < 1) {
+			return false
+		}
+
+		const { type, stock, file_stock, service_stock, quantity_max, quantity_min } = this.props.productInfo;
+
+		if((quantity_max != -1 && count > quantity_max) ||
+		   (quantity_min != -1 && count < quantity_min)) {
+			console.log('qnt_min_max_out_of_bounds', quantity_min, count, quantity_max)
+			return false
+		}
+
+		if((type == 'serials' && stock != -1 && count > stock)) {
+			console.log('stock_out_of_bounds', count, stock)
+			return false
+		}
+
+		if(type == 'file' && file_stock != -1 && count > file_stock) {
+			console.log('stock_out_of_bounds', count, file_stock)
+			return false
+		}
+
+		if(type == 'service' && service_stock != -1 && count > service_stock) {
+			console.log('stock_out_of_bounds', count, service_stock)
+			return false
+		}
+
+		return true;
 	}
 
 	setCount = (count) => {
@@ -187,10 +213,13 @@ class Purchase extends React.Component {
 
 	render() {
 
-		let { productInfo, quantity, setPaymentOptions } = this.props;
+		let { productInfo, setPaymentOptions } = this.props;
 		let { paymentOptions = [] } = productInfo;
-		let { openCoupon, showPaymentOptions, couponSuccess, couponError, couponLoading, appliedCoupon } = this.state;
+		let { openCoupon, showPaymentOptions, couponSuccess, couponError, couponLoading, appliedCoupon, quantity } = this.state;
 		let currency = config.CURRENCY_LIST[productInfo.currency];
+
+		console.log('quantity', quantity, productInfo)
+		console.log('validCnts', this.isValidCount(quantity - 1), this.isValidCount(quantity + 1))
 
 		return <div>
 			<div className="p-3 pt-2 pb-2">
@@ -213,7 +242,7 @@ class Purchase extends React.Component {
 						</Collapse>
 					</div>
 					<div className="d-flex justify-content-center align-items-center mt-3 stock-count">
-						<span className={quantity === 1 ? 'text-grey' : ''} style={{ padding: "1rem" }} onClick={this.decreaseCount}><i className="fas fa-minus"/></span>
+						<span className={"quantity-picker " + (!this.isValidCount(quantity-1) ? 'text-grey' : '')} style={{ padding: "1rem" }} onClick={this.decreaseCount}><i className="fas fa-minus"/></span>
 						<span style={{ fontSize: 20, minWidth: 25, marginBottom: 2.5 }}>
 			                <input
 				                type="text"
@@ -222,7 +251,7 @@ class Purchase extends React.Component {
 				                onBlur={(e) => this.onBlur(e.target.value)}
 			                />
 		                </span>
-						<span onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
+						<span className={"quantity-picker " + (!this.isValidCount(parseInt(quantity)+1) ? 'text-grey' : '')} onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
 					</div>
 
 					{openCoupon ?

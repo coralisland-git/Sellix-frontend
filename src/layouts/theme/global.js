@@ -339,6 +339,10 @@ export const GlobalStyles = createGlobalStyle`
         .go-back-btn:hover {
             background: #230c76 !important;
         }
+
+        .quantity-picker.text-grey {
+            opacity: 0.5 !important;
+        }
     `}
 
     *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold):not(.text-green):not(.text-red) {
