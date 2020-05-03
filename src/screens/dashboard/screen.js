@@ -60,7 +60,7 @@ const Progress = ({ progress, isPositive, is24 }) => {
 
 
 const DATE_RANGES =  {
-  'Last 24 hours': [moment().subtract(1, 'days'), moment(), 'daily'],
+  'Last 24 hours': [moment(), moment(), 'daily'],
   'Last 30 days': [moment().subtract(29, 'days'), moment(), 'daily'],
   'This month': [moment().startOf('month'), moment().endOf('month'), 'daily'],
   'This year': [moment().startOf('year'), moment(), 'monthly'],
@@ -100,7 +100,7 @@ class Dashboard extends React.Component {
 
       let requests = [
         getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
-        getAnalyticsData(moment().subtract(1, 'days').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY'))
+        getAnalyticsData(moment().format('MM/DD/YYYY'), moment().format('MM/DD/YYYY'))
       ]
 
       let isAdmin = window.location.pathname.includes('admin')

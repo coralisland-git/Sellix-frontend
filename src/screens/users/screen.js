@@ -44,9 +44,9 @@ class Users extends Component {
     const { search_key } = this.state;
     const search_fields = ['id', 'email', 'products_count', 'username'];
 
-    return users.filter(product => {
+    return users.filter(user => {
       for(let i=0; i < search_fields.length; i++) {
-        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase())) {
+        if(user[search_fields[i]] && user[search_fields[i]].toLowerCase().includes(search_key.toLowerCase())) {
           return true
         }
       }

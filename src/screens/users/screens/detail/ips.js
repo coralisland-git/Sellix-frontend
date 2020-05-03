@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Card, CardBody, Row, Col, CardHeader, FormGroup} from 'reactstrap'
+import {Card, CardBody, Row, Col, FormGroup} from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
 import { Loader } from 'components'
