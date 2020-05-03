@@ -82,7 +82,7 @@ class AdminLayout extends React.Component {
           .then(({ status, data }) => {
             if(status === 200) {
                if(data.user.rank === "0") {
-                 this.props.history.push(`/dashboard/${data.user.username}/home`)
+                //  this.props.history.push(`/dashboard/${data.user.username}/home`)
                }
             } else {
               this.props.authActions.logOut()
