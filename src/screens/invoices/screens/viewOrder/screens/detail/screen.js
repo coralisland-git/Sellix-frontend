@@ -370,7 +370,7 @@ class OrderDetail extends React.Component {
                           </FormGroup>
                         </Col>
                         <Col lg={12}>
-                          <Row style={{ maxHeight: "30rem", overflowY: "scroll" }}>
+                          <Row style={{ maxHeight: "20rem", overflowY: "scroll" }}>
                             <Col lg={12}>
                               {
                                 (order.serials && order.serials.length == 0)?

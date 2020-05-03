@@ -18,6 +18,9 @@
 
 .user-screen {
   .react-bs-table .table-bordered > tbody > tr > td {
-    padding: 1rem .75rem !important
+    padding: .75rem !important;
+    &:first-child {
+      padding: .75rem 2rem !important;
+    }
   }
 }

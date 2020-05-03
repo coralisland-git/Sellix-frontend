@@ -25,6 +25,7 @@
 $spinkit-spinner-color: $body-color;
 @import 'node_modules/spinkit/scss/spinkit.scss';
 @import "../css/override/react-select";
+
 // Loader
 .custom-loader {
   width: 40px;

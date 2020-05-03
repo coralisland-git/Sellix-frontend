@@ -8,8 +8,8 @@ import UserEditForm from './form'
 import UserProductsTable from './products'
 import UserOrdersTable from './orders'
 import UserIpsTable from './ips';
-import { pick, mapValues, isEmpty} from "lodash";
-import { withRouter } from "react-router-dom";
+import { pick } from "lodash";
+import { withRouter, Link } from "react-router-dom";
 
 import './style.scss'
 
@@ -121,10 +121,17 @@ class User extends Component {
             <Col lg={4} md={12} className="mx-auto">
               <UserEditForm user={user} loading={userLoading} handleSubmit={this.handleSubmit}/>
               <Row>
-                <Col lg={12} className={"mb-4"}>
-                  <Button color="primary" type="submit" className="" style={{width: "100%"}} onClick={this.banUser}>
+                <Col lg={6} className={"mb-4"}>
+                  <Button color="primary" type="submit" className={user.banned === "0" ? "ban-button" : "unban-button"} style={{ width: "100%" }} onClick={this.banUser}>
                     {loading ? <Spin/> : user.banned === "0" ? 'Ban user' : 'Unban user'}
                   </Button>
+                </Col>
+                <Col lg={6} className={"mb-4"}>
+                  <Link to={`/${user.username}`} target={"_blank"}>
+                    <Button color="primary" type="submit" style={{width: "100%"}}>
+                      Go to user's shop
+                    </Button>
+                  </Link>
                 </Col>
               </Row>
             </Col>

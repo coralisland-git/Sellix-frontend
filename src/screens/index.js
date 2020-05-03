@@ -68,7 +68,6 @@ import Notification from './notification'
 import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
-import OrderAdminDetail from './users/screens/viewOrder/screens/detail'
 import Settings from './settings'
 import Invoices from './invoices'
 import ShopDesign from './shop_design'
@@ -105,7 +104,6 @@ export {
   Terms,
   Users,
   User,
-  OrderAdminDetail,
   TopUsers,
   Settings,
   Invoices,
