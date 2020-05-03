@@ -131,12 +131,6 @@ class Purchase extends React.Component {
 	stockUnion = () => {
 		const { type, stock, file_stock, service_stock, quantity_max, quantity_min } = this.props.productInfo;
 
-		console.log('type', type, {
-			'serials': stock,
-			'file': file_stock,
-			'service': service_stock
-		}[type])
-
 		return {
 			'serials': stock,
 			'file': file_stock,
@@ -150,8 +144,6 @@ class Purchase extends React.Component {
 		const quantityMin = quantity_min == -1 ? 1 : quantity_min
 
 		const stockUnion = this.stockUnion()
-
-		console.log('isOutOfStock', stockUnion, quantityMin, stockUnion < quantityMin)
 
 		return parseInt(stockUnion) < parseInt(quantityMin)
 	}
