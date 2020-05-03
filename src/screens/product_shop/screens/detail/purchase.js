@@ -145,6 +145,10 @@ class Purchase extends React.Component {
 
 		const stockUnion = this.stockUnion()
 
+		if(stockUnion == -1) {
+			return false
+		}
+
 		return parseInt(stockUnion) < parseInt(quantityMin)
 	}
 
