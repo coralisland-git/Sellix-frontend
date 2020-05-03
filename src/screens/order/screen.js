@@ -6,15 +6,12 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
-  ButtonGroup,
   Input
 } from 'reactstrap'
-import { ToastContainer, toast } from 'react-toastify'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
-import moment from 'moment'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import * as moment from 'moment/moment'
 import config from 'constants/config'
 import { Loader, Spin } from 'components'
 import { tableOptions } from 'constants/tableoptions'
@@ -222,7 +219,7 @@ class Order extends React.Component {
                         onChange={(e) => {
                           this.setState({search_key: e.target.value})
                         }}
-                      ></Input>
+                      />
                     </div>
                   </div>
                 </Col>

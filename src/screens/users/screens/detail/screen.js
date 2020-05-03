@@ -8,8 +8,8 @@ import UserEditForm from './form'
 import UserProductsTable from './products'
 import UserOrdersTable from './orders'
 import UserIpsTable from './ips';
-import { pick, mapValues, isEmpty} from "lodash";
-import { withRouter } from "react-router-dom";
+import { pick } from "lodash";
+import { withRouter, Link } from "react-router-dom";
 
 import './style.scss'
 
@@ -45,6 +45,9 @@ class User extends Component {
 
   getUser = () => {
     this.props.getUser(this.props.match.params.id)
+        .then((res) => {
+            document.title = `User: ${res.data.user.username} | Sellix`
+        })
   }
 
 
@@ -53,13 +56,12 @@ class User extends Component {
 
     const { updateUser, tostifyAlert } = this.props;
 
-    const dataForSend = pick(values, ['username', 'email', 'otp_2fa', 'email_2fa'])
-    const correctFormatForSend = mapValues(dataForSend, data => data === true ? 1 : data === false ? 0 : data );
+    const dataForSend = pick(values, ['username', 'email', 'otp_2fa', 'email_2fa', 'id'])
 
-    updateUser(correctFormatForSend)
+    updateUser(dataForSend)
         .then(res => {
           this.getUser()
-          tostifyAlert('success', res.message)
+          tostifyAlert('success', res.data.message)
         })
         .catch(err => {
           tostifyAlert('error', err.error)
@@ -117,14 +119,21 @@ class User extends Component {
 
           <Row>
             <Col lg={4} md={12} className="mx-auto">
+              <UserEditForm user={user} loading={userLoading} handleSubmit={this.handleSubmit}/>
               <Row>
-                <Col lg={12} className={"mb-4"}>
-                  <Button color="primary" type="submit" className="" style={{width: "100%"}} onClick={this.banUser}>
-                    {loading ? <Spin/> : user.banned === "0" ? 'Bun user' : 'Unbun user'}
+                <Col lg={6} className={"mb-4"}>
+                  <Button color="primary" type="submit" className={user.banned === "0" ? "ban-button" : "unban-button"} style={{ width: "100%" }} onClick={this.banUser}>
+                    {loading ? <Spin/> : user.banned === "0" ? 'Ban user' : 'Unban user'}
                   </Button>
                 </Col>
+                <Col lg={6} className={"mb-4"}>
+                  <Link to={`/${user.username}`} target={"_blank"}>
+                    <Button color="primary" type="submit" style={{width: "100%"}}>
+                      Go to user's shop
+                    </Button>
+                  </Link>
+                </Col>
               </Row>
-              <UserEditForm user={user} loading={userLoading} handleSubmit={this.handleSubmit}/>
             </Col>
 
             <Col lg={8} md={12} className="mx-auto">

@@ -11,13 +11,13 @@ import {
   Label,
 } from 'reactstrap'
 import { Button } from 'components';
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import config from 'constants/config'
 import { Loader, Spin } from 'components'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import * as _ from 'lodash'
+import { includes } from 'lodash'
 import {
 	CommonActions
 } from 'services/global'
@@ -162,8 +162,11 @@ class OrderDetail extends React.Component {
   }
 
   routeHandle = () => {
-    const isAdmin = _.includes(this.props.location.pathname, '/admin')
-    return <a onClick={(e) => this.props.history.push(isAdmin ? `/admin/invoices` : `/dashboard/${user}/orders`)}><i className="fas fa-chevron-left"/> {isAdmin ? 'Invoices' : 'Orders'}</a>
+    const { location, history } = this.props;
+    const isAdmin = includes(location.pathname, '/admin')
+    return <a onClick={() => history.length > 1 ? history.go(-1) : history.push(isAdmin ? `/admin/invoices` : `/dashboard/${user}/orders`)}>
+      <i className="fas fa-chevron-left"/> Back
+    </a>
   }
 
   render() {
@@ -184,6 +187,8 @@ class OrderDetail extends React.Component {
       })
     }
 
+    let link = window.location.pathname.includes("admin/invoices") ? `/admin/users/${user}/product/edit/${order.product_id}` : `/dashboard/${user}/products/edit/${order.product_id}`
+    console.log(order)
     return (
       <div className="order-detail-screen mt-3">
         <div className="animated fadeIn">
@@ -271,7 +276,7 @@ class OrderDetail extends React.Component {
                           <div className="d-flex">
                             <p className="title">Product</p>
                             <p>
-                              <Link to={`/dashboard/${user}/products/edit/${order.product_id}`}>
+                              <Link to={link} target={"_blank"}>
                                 {order.developer_invoice == '1'?order.developer_title:(order.product && order.product.title || '')}
                               </Link>
                             </p>
@@ -382,9 +387,7 @@ class OrderDetail extends React.Component {
                           <TableHeaderColumn
                             dataField="created_at"
                             dataAlign='center'
-                            dataFormat={(cell, row) => <div>
-                              {moment(new Date(row.created_at*1000)).format('DD MMM hh:mm:ss')}
-                            </div>}
+                            dataFormat={(cell, row) => <div>{moment(new Date(row.created_at*1000)).format('DD MMM hh:mm:ss')}</div>}
                           >
                             Time
                           </TableHeaderColumn>
@@ -419,7 +422,7 @@ class OrderDetail extends React.Component {
                           </FormGroup>
                         </Col>
                         <Col lg={12}>
-                          <Row>
+                          <Row style={{ maxHeight: "20rem", overflowY: "scroll" }}>
                             <Col lg={12}>
                               {
                                 (order.serials && order.serials.length == 0)?
@@ -428,7 +431,6 @@ class OrderDetail extends React.Component {
                               }
                               
                             </Col>
-                            
                           </Row>
                         </Col>
                       </Row>

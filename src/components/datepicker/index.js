@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ButtonDropdown, DropdownToggle } from 'reactstrap'
-import moment from 'moment';
+import * as moment from 'moment/moment'
 
 import { DateRangePicker }  from 'react-bootstrap-daterangepicker'
 

@@ -10,7 +10,7 @@ import {
   Input
 } from 'reactstrap'
 import { Button } from 'components';
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'

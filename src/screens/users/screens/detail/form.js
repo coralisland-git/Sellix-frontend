@@ -16,13 +16,12 @@ import './style.scss'
 class UserEditForm extends Component {
 
   render() {
-    const { user, loading, handleSubmit } = this.props;
-    const { id } = user;
 
+    const { user, loading, handleSubmit } = this.props;
 
     return (
-        <Card>
-          <CardBody className="p-4 mb-4 position-relative">
+        <Card style={{ marginBottom: "1.3rem" }}>
+          <CardBody className="p-4 position-relative">
             <Formik initialValues={user} enableReinitialize={true} onSubmit={handleSubmit}>
               {({ handleSubmit, handleChange, values }) => (
                   <Form onSubmit={handleSubmit} >
@@ -92,8 +91,8 @@ class UserEditForm extends Component {
                           </Col>
 
                           <Col lg={12} style={{ textAlign: "right"}}>
-                            <Button color="primary" type="submit" className="" style={{width: 200}}>
-                              {loading ? <Spin/> : 'Save Settings'}
+                            <Button color="primary" type="submit" className="" style={{width: "50%"}}>
+                              {loading ? <Spin/> : 'Update User'}
                             </Button>
                           </Col>
                         </Row>

@@ -7,7 +7,7 @@ import config from 'constants/config'
 
 import { Charts } from './sections'
 import { Loader } from 'components'
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import { DateRangePicker2 } from 'components'
 import { getAnalyticsData } from './actions'
 

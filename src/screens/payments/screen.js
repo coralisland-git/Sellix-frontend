@@ -244,7 +244,7 @@ class Payments extends React.Component {
                             <br/>
                             {stripe_user_id && <p style={{marginBottom: '5px'}}>You are connected</p>}
                             {!stripe_user_id && <Button color="default" className="connect-discord" onClick={() => {
-                              window.location = 'https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_H8NlXW3cDCE36GZyIwv5RFOZZmaT1lJx&scope=read_write&redirect_uri=https://sellix.io/settings/stripe/connect'
+                              window.location = 'https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_H8Nl3tqGj85pnhyEoIOAIlUF5KoIvVaf&scope=read_write&redirect_uri=https://sellix.io/settings/stripe/connect'
                             }}>Connect <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
                             {stripe_user_id && <Button color="default" className="connect-discord" onClick={() => {
 

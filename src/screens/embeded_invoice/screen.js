@@ -4,24 +4,16 @@ import { bindActionCreators } from 'redux'
 import {
   Card,
   Row,
-  Col,
-  Button
+  Col
 } from 'reactstrap'
 import SweetAlert from 'react-bootstrap-sweetalert';
-import moment from 'moment'
-import { QRCodeModal } from 'components'
+import * as moment from 'moment/moment'
 import { PayPalButton } from "react-paypal-button-v2";
 import {
   CommonActions
 } from 'services/global'
-import {PaypalInvoice} from './sections'
-
-import { LeaveFeedbackModal, Loader} from 'components'
-
-import shop_brand from 'assets/images/brand/paypal-logo.svg'
-import paypal_white from 'assets/images/brand/paypal-white.svg'
+import { Loader } from 'components'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
-import backIcon from 'assets/images/x.png'
 
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
