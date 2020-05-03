@@ -16,13 +16,12 @@ import './style.scss'
 class UserEditForm extends Component {
 
   render() {
-    const { user, loading, handleSubmit } = this.props;
-    const { id } = user;
 
+    const { user, loading, handleSubmit } = this.props;
 
     return (
-        <Card>
-          <CardBody className="p-4 mb-4 position-relative">
+        <Card style={{ marginBottom: "1.3rem" }}>
+          <CardBody className="p-4 position-relative">
             <Formik initialValues={user} enableReinitialize={true} onSubmit={handleSubmit}>
               {({ handleSubmit, handleChange, values }) => (
                   <Form onSubmit={handleSubmit} >

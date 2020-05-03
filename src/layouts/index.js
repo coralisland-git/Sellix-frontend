@@ -1,5 +1,6 @@
 import AuthLayout from './auth'
-import UserLayout from './user'
+import AdminLayout from './admin'
+import DashboardLayout from './dashboard'
 import ShopLayout from './shop'
 import PaymentLayout from './default'
 import EmbedLayout from './embed'
@@ -12,7 +13,8 @@ import DocumentationLayout from './documentation'
 
 export {
   AuthLayout,
-  UserLayout,
+  AdminLayout,
+  DashboardLayout,
   ShopLayout,
   PaymentLayout,
   SettingsLayout,

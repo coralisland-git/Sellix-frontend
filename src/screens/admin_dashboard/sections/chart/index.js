@@ -5,7 +5,7 @@ import {
   Card,
   CardBody
 } from 'reactstrap'
-import moment from 'moment'
+import * as moment from 'moment/moment'
 
 import './style.scss'
 

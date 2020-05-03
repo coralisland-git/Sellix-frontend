@@ -11,7 +11,7 @@ import {
   FormGroup,
   Label,
 } from 'reactstrap'
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import config from 'constants/config'
 import { Loader, Spin } from 'components'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
@@ -369,7 +369,7 @@ class OrderDetail extends React.Component {
                           </FormGroup>
                         </Col>
                         <Col lg={12}>
-                          <Row>
+                          <Row style={{ maxHeight: "30rem", overflowY: "scroll" }}>
                             <Col lg={12}>
                               {
                                 (order.serials && order.serials.length == 0)?

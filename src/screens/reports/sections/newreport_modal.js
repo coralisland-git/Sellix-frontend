@@ -13,7 +13,7 @@ import {
 } from 'reactstrap'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pdfIcon from 'assets/images/pdf.png'

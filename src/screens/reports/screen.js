@@ -21,7 +21,7 @@ import {
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import * as ReportActions from './actions'
 import './style.scss'
 
