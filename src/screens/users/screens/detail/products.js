@@ -19,7 +19,7 @@ class UserProductsTable extends Component {
 
   renderProductsOptions = (cell, row) => <Button style={{ minHeight: "35px"}} color="default" onClick={() => this.viewProductAdmin(row.uniqid)}>Edit</Button>
 
-  viewProductAdmin = (id) => this.props.history.push(`/admin/users/${this.props.match.params.id}/product/edit/${id}`)
+  viewProductAdmin = (id, username) => this.props.history.push(`/admin/users/${username}/product/edit/${id}`)
 
   render() {
     const { products, loading } = this.props;
@@ -43,9 +43,10 @@ class UserProductsTable extends Component {
                   <Col lg={12}>
                     <div>
                       <BootstrapTable
-                          options={tableOptions({ onRowClick: (row) => this.viewProductAdmin(row.uniqid) })}
+                          options={tableOptions({ onRowClick: (row) => this.viewProductAdmin(row.uniqid, row.username) })}
                           data={products}
                           version="4"
+                          striped
                           pagination
                           totalSize={products ? products.length : 0}
                           className="product-table"

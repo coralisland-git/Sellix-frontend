@@ -11,7 +11,7 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import moment from 'moment'
+import * as moment from 'moment/moment'
 
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'

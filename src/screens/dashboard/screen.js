@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import NumberFormat from 'react-number-format';
-import moment from 'moment';
+import * as moment from 'moment/moment'
 import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
 
 import { DateRangePicker2, Loader } from 'components'

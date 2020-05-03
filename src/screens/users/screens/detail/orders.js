@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import {Card, CardBody, Row, Col, CardHeader, FormGroup} from 'reactstrap'
+import {Card, CardBody, Row, Col, FormGroup} from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
 import {Button, Loader} from 'components'
 import { withRouter } from "react-router-dom";
+import * as moment from 'moment/moment'
 
 import './style.scss'
-import moment from "moment";
 
 
 
@@ -20,7 +20,7 @@ class UserProductsTable extends Component {
 
   renderOrderTitle = (cell, row) => row.product_title ? <div>{row.product_title}</div> : <p className="caption">No specified</p>
 
-  viewOrderAdmin = (id) => this.props.history.push(`/admin/users/${this.props.match.params.id}/order/${id}`)
+  viewOrderAdmin = (id, username) => this.props.history.push(`/admin/users/${username}/order/${id}`)
 
   render() {
     const { invoices, loading } = this.props;
@@ -43,9 +43,10 @@ class UserProductsTable extends Component {
                   <Col lg={12}>
                     <div>
                       <BootstrapTable
-                          options={tableOptions({ onRowClick: (row) => this.viewOrderAdmin(row.uniqid) })}
+                          options={tableOptions({ onRowClick: (row) => this.viewOrderAdmin(row.uniqid, row.username) })}
                           data={invoices}
                           version="4"
+                          striped
                           pagination
                           totalSize={invoices ? invoices.length : 0}
                           className="product-table"

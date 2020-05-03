@@ -45,6 +45,9 @@ class User extends Component {
 
   getUser = () => {
     this.props.getUser(this.props.match.params.id)
+        .then((res) => {
+            document.title = `User: ${res.data.user.username} | Sellix`
+        })
   }
 
 
@@ -117,14 +120,14 @@ class User extends Component {
 
           <Row>
             <Col lg={4} md={12} className="mx-auto">
+              <UserEditForm user={user} loading={userLoading} handleSubmit={this.handleSubmit}/>
               <Row>
                 <Col lg={12} className={"mb-4"}>
                   <Button color="primary" type="submit" className="" style={{width: "100%"}} onClick={this.banUser}>
-                    {loading ? <Spin/> : user.banned === "0" ? 'Bun user' : 'Unbun user'}
+                    {loading ? <Spin/> : user.banned === "0" ? 'Ban user' : 'Unban user'}
                   </Button>
                 </Col>
               </Row>
-              <UserEditForm user={user} loading={userLoading} handleSubmit={this.handleSubmit}/>
             </Col>
 
             <Col lg={8} md={12} className="mx-auto">

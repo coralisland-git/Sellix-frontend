@@ -1,11 +1,5 @@
 import React, {Component} from 'react'
 import { Line } from 'react-chartjs-2'
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips'
-import {
-  Card,
-  CardBody
-} from 'reactstrap'
-import moment from 'moment'
 
 import './style.scss'
 

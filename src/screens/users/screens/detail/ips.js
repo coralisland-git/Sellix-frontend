@@ -4,7 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
 import { Loader } from 'components'
 import { withRouter } from "react-router-dom";
-import moment from "moment";
+import * as moment from 'moment/moment'
 
 import './style.scss'
 
@@ -38,7 +38,7 @@ class UserProductsTable extends Component {
                             <Col lg={12}>
                                 <div>
                                     <BootstrapTable
-                                        options={tableOptions({ sizePerPage: 4})}
+                                        options={tableOptions({ sizePerPage: 6 })}
                                         data={ips}
                                         version="4"
                                         pagination

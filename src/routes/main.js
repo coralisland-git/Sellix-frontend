@@ -1,8 +1,8 @@
 import {
   AuthLayout,
-  UserLayout,
+  DashboardLayout,
+  AdminLayout,
   ShopLayout,
-  PaymentLayout,
   EmbedLayout,
   SettingsLayout,
   InvoiceLayout,
@@ -31,8 +31,8 @@ const mainRoutes = [
   { path: '/group', name: 'ProductLayout', component: ProductLayout },
 
   // User
-  { path: `/dashboard/${user}`, name: 'UserLayout', component: UserLayout },
-  { path: `/admin`, name: 'ReallyAdminLayout', component: UserLayout },
+  { path: `/dashboard/${user}`, name: 'DashboardLayout', component: DashboardLayout },
+  { path: `/admin`, name: 'AdminLayout', component: AdminLayout },
 
   // Wrong user - redirect to dashboard
   { path: `/dashboard/`, name: 'WrongUser', component: RedirectToLogin },

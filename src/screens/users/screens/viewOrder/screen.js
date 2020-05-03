@@ -13,7 +13,7 @@ import {
 } from 'reactstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import config from 'constants/config'
 import { Loader, Spin } from 'components'
 import { tableOptions } from 'constants/tableoptions'

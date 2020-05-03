@@ -9,7 +9,8 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap'
-import moment from 'moment'
+import * as moment from 'moment/moment'
+
 import { Button } from 'components';
 
 import JSONPretty from 'react-json-pretty';
