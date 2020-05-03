@@ -2,25 +2,96 @@ import React, { Component } from 'react'
 import {Card, CardBody, Row, Col, FormGroup} from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
-import {Button, Loader} from 'components'
+import { Loader } from 'components'
 import { withRouter } from "react-router-dom";
 import * as moment from 'moment/moment'
+import cancelledIcon from 'assets/images/order/Cancelled_Icon.svg'
+import completedIcon from 'assets/images/order/Check_Icon.svg'
+import paritalIcon from 'assets/images/order/Partially_Icon.svg'
+import pendingIcon from 'assets/images/order/Pending_Icon.svg'
 
 import './style.scss'
+
+import config from "../../../../constants/config";
+
+const STATUS_ICON = {
+  '0': pendingIcon,
+  '1': completedIcon,
+  '2': cancelledIcon,
+  '4': paritalIcon,
+}
+
+const ORDER_STATUS = {
+  '0': 'Pending',
+  '1': 'Completed',
+  '2': 'Cancelled',
+  '3': 'Confirmation',
+  '4': 'Partial'
+}
+
+const PAYMENT_OPTS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'BTC',
+  'litecoin': 'LTC',
+  'ethereum': 'ETH',
+  'skrill': 'Skrill',
+  'stripe': 'Stripe',
+  'bitcoincash': 'BTH',
+  'perfectmoney': 'Perfect Money'
+}
 
 
 
 class UserProductsTable extends Component {
 
-  renderOrdersDate = (cell, row) => row.created_at ? <div>{moment(row.created_at * 1000).format('lll')}</div> : <p className="caption">No specified</p>
 
-  renderOrdersOptions = (cell, row) => <Button style={{ minHeight: "35px"}} color="default" onClick={(e) => this.viewOrderAdmin(row.uniqid)}>Manage</Button>
+  gotoDetail( id, username ) {
+    let isAdmin = window.location.pathname.includes('admin');
+    let url = isAdmin ? `/admin/invoices/${id}` : `/dashboard/${username}/orders/view/${id}`;
 
-  renderOrderStatus = (cell, row) => row.status ? <div>{row.status}</div> : <p className="caption">No specified</p>
+    this.props.history.push(url)
+  }
 
-  renderOrderTitle = (cell, row) => row.product_title ? <div>{row.product_title}</div> : <p className="caption">No specified</p>
+  renderOrderInfo = (cell, row) => {
+    return (
+        <div>
+          <p><a onClick={(e) => this.gotoDetail(row.uniqid, row.username)} style={{fontSize: 15, fontWeight: 700}}>
+            <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}></i>&nbsp;&nbsp;&nbsp;
+            {`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+          </p>
+          <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
+        </div>
+    )
+  }
 
-  viewOrderAdmin = (id, username) => this.props.history.push(`/admin/users/${username}/order/${id}`)
+  renderOrderStatus (cell, row) {
+    return (
+        <div className="order-status">
+          <div className={`order-badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+            <img src={STATUS_ICON[row.status]}/>
+          </div>
+          <span className={`text-${ORDER_STATUS[row.status].toLowerCase()}`}>{ORDER_STATUS[row.status]}</span>
+        </div>
+    )
+  }
+
+  renderOrderValue(cell, row) {
+    return (
+        <div className="order">
+          <p className="order-value" style={{fontSize: 15, fontWeight: 700}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
+          <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {PAYMENT_OPTS[row.gateway]}</p>
+        </div>
+    )
+  }
+
+  renderOrderTime(cell, row) {
+    return (
+        <div>
+          <p style={{fontSize: 15, fontWeight: 700}}>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+          <p>{new moment(new Date(row.created_at*1000)).format('MMM DD')}</p>
+        </div>
+    )
+  }
 
   render() {
     const { invoices, loading } = this.props;
@@ -41,9 +112,9 @@ class UserProductsTable extends Component {
                 {!loading &&
                 <Row>
                   <Col lg={12}>
-                    <div>
+                    <div className={"order-screen"}>
                       <BootstrapTable
-                          options={tableOptions({ onRowClick: (row) => this.viewOrderAdmin(row.uniqid, row.username) })}
+                          options={tableOptions({ onRowClick: (row) => this.gotoDetail(row.uniqid, row.username), sizePerPage: 5 })}
                           data={invoices}
                           version="4"
                           striped
@@ -54,38 +125,40 @@ class UserProductsTable extends Component {
                       >
                         <TableHeaderColumn
                             isKey
-                            dataField="title"
+                            dataField="customer_email"
+                            dataFormat={this.renderOrderInfo}
                             dataSort
-                            dataFormat={this.renderOrderTitle}
+                            width='45%'
                         >
-                          Product
+                          Info
                         </TableHeaderColumn>
                         <TableHeaderColumn
                             dataField="status"
-                            width="25%"
                             dataAlign="center"
-                            dataSort
                             dataFormat={this.renderOrderStatus}
+                            dataSort
+                            width='20%'
                         >
                           Status
                         </TableHeaderColumn>
                         <TableHeaderColumn
-                            dataField="updated_at"
-                            width="25%"
+                            dataField="total_display"
                             dataAlign="right"
                             dataSort
-                            dataFormat={this.renderOrdersDate  }
+                            dataFormat={this.renderOrderValue}
+                            width='20%'
                         >
-                          Date
+                          Value
                         </TableHeaderColumn>
                         <TableHeaderColumn
-                            width="25%"
+                            dataField="created_at"
                             dataAlign="right"
-                            dataFormat={this.renderOrdersOptions}
+                            dataFormat={this.renderOrderTime}
+                            dataSort
+                            width='15%'
                         >
-                          Option
+                          Time
                         </TableHeaderColumn>
-
                       </BootstrapTable>
                     </div>
                   </Col>

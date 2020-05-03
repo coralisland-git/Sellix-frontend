@@ -15,7 +15,6 @@ import { tableOptions } from "../../constants/tableoptions";
 import config from "../../constants/config";
 import { getSelfUser } from "../../services/global/auth/actions";
 import { withRouter } from "react-router-dom";
-import {isEmpty} from "lodash";
 
 const PAYMENT_OPTS = {
   'paypal': 'PayPal',
@@ -90,17 +89,28 @@ class Dashboard extends React.Component {
   }
 
   getAnalyticsData = (date, initial) => {
-    const startDate = date.startDate.format('MM/DD/YYYY');
-    const endDate = date.endDate.format('MM/DD/YYYY');
+
+    let startDate = null;
+    let endDate = null;
+
+    if(!date.startDate.isSame(date.endDate, 'day')) {
+      startDate = date.startDate.format('MM/DD/YYYY');
+      endDate = date.endDate.format('MM/DD/YYYY');
+    }
+
+    this.setState({
+      range: DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]
+    })
+
     const { getAnalyticsData, geLastInvoices } = this.props;
 
     this.setState({ loading: true });
 
-    if(initial) {
+    if(initial || !startDate) {
 
       let requests = [
         getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
-        getAnalyticsData(moment().format('MM/DD/YYYY'), moment().format('MM/DD/YYYY'))
+        getAnalyticsData()
       ]
 
       let isAdmin = window.location.pathname.includes('admin')
@@ -138,6 +148,7 @@ class Dashboard extends React.Component {
             this.setState({loading: false})
           })
     } else {
+
       getAnalyticsData(startDate, endDate)
           .then(({ data: { analytics } }) => {
             const { total } = analytics;
@@ -215,8 +226,11 @@ class Dashboard extends React.Component {
       viewsProgress,
       queriesProgress,
       invoices,
-      showPlaceholder
+      showPlaceholder,
+      range
     } = this.state;
+
+    console.log(range)
 
     return (
       <div className="dashboard-screen">
@@ -259,6 +273,7 @@ class Dashboard extends React.Component {
 
                               <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
                             </div>
+
                             <div className="progress-xs mt-3 progress">
                               <div 
                                 className={`progress-bar ${revenueProgress>0?'bg-success':(revenueProgress==0?'bg-warning':'bg-danger')}`} 
@@ -267,6 +282,7 @@ class Dashboard extends React.Component {
                                 aria-valuemin="0" 
                                 aria-valuemax="100" />
                             </div>
+
                           </CardBody>
                         </Card>
                       </Col>
@@ -330,8 +346,11 @@ class Dashboard extends React.Component {
                     </Row>
 
                     <h5 className="mb-4">Revenues | Orders</h5>
-                    <CardBody className="">
-                      <DashBoardChart height="350px" data={chartData}/>
+                    <CardBody className="position-relative">
+                      <div className={"position-absolute d-flex justify-content-flex-end"} style={{ fontSize: ".8rem", fontWeight: 200, top: "1rem", right: "1rem" }}>
+                        This graph will always show a 14 days or higher time span
+                      </div>
+                      <DashBoardChart range={range} height="350px" data={chartData}/>
                     </CardBody>
 
                     {!!invoices.length && <h5 className="mb-4 mt-4">Last 5 Orders</h5>}

@@ -9,7 +9,6 @@ import { Loader, LoaderFullscreen } from 'components'
 import { debounce } from 'lodash'
 
 import './style.scss'
-import Placeholder from "./placeholder";
 
 import ProductList from './productList'
 
@@ -35,7 +34,6 @@ class ShopProducts extends React.Component {
 
     this.state = {
       loading: false,
-      showPlaceholder: false,
       search_key: null,
       products: [],
       groups: [],
@@ -83,10 +81,6 @@ class ShopProducts extends React.Component {
 
     const { actions: { getUserCategories, getUserProducts, tostifyAlert }, match: { params } } = this.props;
 
-    let loader = setTimeout(() => {
-      this.setState({ showPlaceholder: true });
-    }, 200);
-
     this.setState({ loading: true });
 
     Promise.all([getUserCategories(params.username), getUserProducts(params.username)])
@@ -102,8 +96,7 @@ class ShopProducts extends React.Component {
           tostifyAlert('error', err.error)
         })
         .finally(err => {
-          clearTimeout(loader);
-          this.setState({ loading: false, showPlaceholder: false })
+          this.setState({ loading: false })
         })
   }
 
@@ -146,7 +139,7 @@ class ShopProducts extends React.Component {
 
 
   render() {
-    const { loading, showPlaceholder, filter, categories, products, groups } = this.state;
+    const { loading, filter, categories, products, groups } = this.state;
     const { shop_search_enabled, shop_hide_out_of_stock } = this.props;
 
     let searchProducts = this.searchProducts(products);
@@ -155,12 +148,12 @@ class ShopProducts extends React.Component {
 
     return (
       <div className="shop-product-screen">
-        <div className="">
+        <div className="animated customAnimation">
 
 
-            {showPlaceholder && <Placeholder />}
+            {loading && <Loader />}
 
-            {!loading && !showPlaceholder &&
+            {!loading &&
               <Card className="grey">
                 <CardHeader className="pb-1 pt-3">
                   <Row>

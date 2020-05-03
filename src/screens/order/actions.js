@@ -5,7 +5,7 @@ import { authApi, formData, sendAuthedWsMessage } from 'utils'
 export const getOrderList = () => {
   return (dispatch) => {
 
-    let isAdmin = window.location.pathname.includes('admin')
+    let isAdmin = window.location.pathname.includes('admin/invoices')
     let url = `/${isAdmin ? 'admin' : 'self'}/invoices`;
 
     return authApi.get(url).then(res => {
@@ -24,7 +24,7 @@ export const getOrderList = () => {
 // Get Live Orders
 export const getLiveOrders = () => {
   return (dispatch) => {
-    let isAdmin = window.location.pathname.includes('admin')
+    let isAdmin = window.location.pathname.includes('admin/invoices')
     let url = `/${isAdmin ? 'admin' : 'self'}/invoices/live`;
 
     return authApi.get(url).then(res => {
@@ -56,7 +56,7 @@ export const getLiveOrdersViaWebsocket = () => {
 
 // Get Invoice By ID
 export const getOrderByID = (id) =>  (dispatch) => {
-    let isAdmin = window.location.pathname.includes('admin')
+    let isAdmin = window.location.pathname.includes('admin/invoices')
     let url = `${isAdmin ? 'admin' : ''}/invoices/unique/${id}`;
 
     return authApi.get(url).then(res => {

@@ -91,8 +91,8 @@ class UserEditForm extends Component {
                           </Col>
 
                           <Col lg={12} style={{ textAlign: "right"}}>
-                            <Button color="primary" type="submit" className="" style={{width: 200}}>
-                              {loading ? <Spin/> : 'Save Settings'}
+                            <Button color="primary" type="submit" className="" style={{width: "50%"}}>
+                              {loading ? <Spin/> : 'Update User'}
                             </Button>
                           </Col>
                         </Row>

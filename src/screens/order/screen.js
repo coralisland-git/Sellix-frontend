@@ -219,7 +219,7 @@ class Order extends React.Component {
                         onChange={(e) => {
                           this.setState({search_key: e.target.value})
                         }}
-                      ></Input>
+                      />
                     </div>
                   </div>
                 </Col>

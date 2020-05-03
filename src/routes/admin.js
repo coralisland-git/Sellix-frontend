@@ -39,7 +39,7 @@ const adminRoutes = [
   {
     path: `/admin/users/:username/order/:id`,
     name: 'OrderAdminDetail',
-    component: OrderAdminDetail.screen,
+    component: OrderDetail.screen,
     title: 'User Order',
   },
   {

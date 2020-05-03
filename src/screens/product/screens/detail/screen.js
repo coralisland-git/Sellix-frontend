@@ -379,9 +379,24 @@ class EditProduct extends React.Component {
     }
   }
 
+  backLink = () => {
+
+	  const admin = _.includes(window.location.pathname, 'admin')
+	  const { history } = this.props;
+	  console.log(history.length, admin)
+	  if(history.length > 1) {
+		  history.go(-1)
+	  } else {
+	    if(admin) {
+		    history.push(`/admin/users/${this.state.initialValues.user_id}`)
+	    } else {
+		    history.push(`/dashboard/${user}/products/all`)
+	    }
+	  }
+  }
+
 	render() {
-		const admin = _.includes(window.location.pathname, 'admin')
-		const { 
+		const {
 			loading, 
 			saving,
 			duplicating,
@@ -409,7 +424,9 @@ class EditProduct extends React.Component {
 				<div className="animated fadeIn">
 					<Breadcrumb className="mb-0">
 						<BreadcrumbItem active className="mb-0">
-							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> {admin ? "User" : "Products"}</a>
+							<a onClick={this.backLink}>
+								<i className="fas fa-chevron-left"/> Back
+							</a>
 						</BreadcrumbItem>
 					</Breadcrumb>
 					<Formik
