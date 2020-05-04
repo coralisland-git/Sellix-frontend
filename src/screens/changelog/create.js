@@ -72,9 +72,21 @@ export class Changelog extends React.Component {
 
 	handleSubmit = (values) => {
 		this.setState({ loading: true })
-		this.props.createChangelog({ ...values, display_date: moment().format("DD/MM/YYYY") }).then(res => {
+		this.props.createChangelog({ ...values, display_date: moment().format("DD/MM/YYYY") })
+		.then(res => {
 			this.props.tostifyAlert('success', res.message)
-		}).catch(err => {
+			return api.get('/changelog');
+		})
+		.then(res => {
+			if (res.status === 200) {
+				this.setState({
+					changelog: res.data.changelog
+				})
+			} else {
+				throw res
+			}
+		})
+		.catch(err => {
 			this.props.tostifyAlert('error', err.error || err.message)
 		}).finally(() => {
 			this.setState({ loading: false })
