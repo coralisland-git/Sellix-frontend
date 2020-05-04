@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 import {
   DropdownItem,
   DropdownMenu,
@@ -7,6 +8,8 @@ import {
   UncontrolledDropdown
 } from 'reactstrap'
 import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { AuthActions } from 'services/global'
 
 import './style.scss'
 
@@ -21,6 +24,16 @@ const propTypes = {
 const defaultProps = {}
 
 const userId = window.localStorage.getItem('userId')
+
+const mapStateToProps = (state) => {
+  return ({
+  })
+}
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    authActions: bindActionCreators(AuthActions, dispatch)
+  })
+}
 
 class Header extends Component {
 
@@ -85,4 +98,4 @@ class Header extends Component {
 Header.propTypes = propTypes
 Header.defaultProps = defaultProps
 
-export default Header
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
