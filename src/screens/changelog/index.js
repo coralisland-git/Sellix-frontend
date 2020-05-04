@@ -1,3 +1,7 @@
-import Changelog from './screen'
+import screen from './screen'
+import create from './create'
 
-export default Changelog
+export default {
+	screen,
+	create,
+}

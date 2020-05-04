@@ -9,7 +9,7 @@ const landingRoutes = [
   },
   {
     path: '/changelog',
-    component: Changelog,
+    component: Changelog.screen,
     name: 'Changelog'
   },
   {
