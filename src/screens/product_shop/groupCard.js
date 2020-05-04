@@ -7,7 +7,7 @@ const GroupCard = ({ group, preventDefault, history, onClick }) => {
     let { image_attachment, title, uniqid, products_bound } = group;
 
     const minPrice = Math.min(...products_bound.map(p => parseFloat(p.price_display)))
-    const productWithMinPrice = products_bound.find(p => parseFloat(p.price_display) == minPrice)
+    const productWithMinPrice = products_bound.find(p => parseFloat(p.price_display) == minPrice) || {}
 
     return <Card className="bg-white p-0 product-card" onClick={() => preventDefault ? null : onClick && onClick()}>
             <div style={{ minHeight: 150, width: '100%' }}>

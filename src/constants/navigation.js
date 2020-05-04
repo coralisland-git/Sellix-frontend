@@ -29,6 +29,11 @@ export const adminNavigation =  {
       url: `/admin/invoices`,
       icon: 'fas fa-credit-card',
     },
+    {
+      name: 'Changelog',
+      url: `/admin/changelog`,
+      icon: 'fas fa-wrench',
+    },
     
   ]
 }

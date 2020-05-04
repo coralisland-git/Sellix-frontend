@@ -40,7 +40,7 @@ class GeneralSettings extends React.Component {
     }
   }
 
-  handleSubmit(data) {
+  handleSubmit = (data) => {
     this.setState({ loading: true });
     let { saveGeneralSettings, tostifyAlert } = this.props;
 

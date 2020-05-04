@@ -6,8 +6,8 @@ import {
   Users,
   User,
   TopUsers,
-  OrderAdminDetail,
-  Settings
+  Settings,
+  Changelog,
 } from 'screens';
 
 
@@ -65,6 +65,12 @@ const adminRoutes = [
     name: 'AdminDashboard',
     component: Dashboard.screen,
     title: 'Dashboard'
+  },
+  {
+    path: `/admin/changelog`,
+    name: 'AdminChangelof',
+    component: Changelog.create,
+    title: 'Changelog'
   },
   {
     redirect: true,
