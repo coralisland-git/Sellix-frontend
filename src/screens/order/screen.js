@@ -147,7 +147,7 @@ class Order extends React.Component {
   renderOrderValue(cell, row) {
     return (
       <div className="order">
-        <p className="order-value" style={{fontSize: 15, fontWeight: 700}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
+        <p className="order-value" style={{fontSize: 15, fontWeight: 600}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
         <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {PAYMENT_OPTS[row.gateway]}</p>
       </div>
     )  
