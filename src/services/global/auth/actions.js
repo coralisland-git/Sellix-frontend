@@ -39,6 +39,9 @@ export const getSelfUser = () => {
       method: 'get',
       url: `/self`
     }
+    if(!localStorage.accessToken) {
+      return Promise.reject("Not logged in")
+    }
     return authApi(data).then(res => {
       if (!res.error) {
         dispatch({
