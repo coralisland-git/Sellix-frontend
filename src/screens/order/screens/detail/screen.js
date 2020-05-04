@@ -187,7 +187,9 @@ class OrderDetail extends React.Component {
       })
     }
 
-    let link = window.location.pathname.includes("admin/invoices") ? `/admin/users/${user}/product/edit/${order.product_id}` : `/dashboard/${user}/products/edit/${order.product_id}`
+    let link = window.location.pathname.includes("admin/invoices") ?
+        `/admin/users/${order.username}/product/edit/${order.product_id}` :
+        `/dashboard/${user}/products/edit/${order.product_id}`
     console.log(order)
     return (
       <div className="order-detail-screen mt-3">

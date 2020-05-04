@@ -9,7 +9,7 @@ import {
   Col
 } from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import { Loader, Button } from 'components'
+import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { getTopUsers } from './actions'
 import { withRouter } from 'react-router-dom'

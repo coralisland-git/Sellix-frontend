@@ -14,7 +14,7 @@ import service4 from 'assets/images/crypto/eth.svg'
 import service5 from 'assets/images/crypto/bitcoincash.svg'
 import service6 from 'assets/images/crypto/perfectmoney.svg'
 import service7 from 'assets/images/crypto/stripe.svg'
-import service8 from 'assets/images/crypto/stripe.svg'
+import service9 from 'assets/images/crypto/skrill.svg'
 
 import * as feeAction from './actions'
 
@@ -260,6 +260,37 @@ class Fees extends React.Component {
                           <h4 className="mt-4">Stripe</h4>
                           <div className="service-img">
                             <img src={service7}/>
+                          </div>
+                      </div>
+                      <div className="content p-2">
+                          <p className="small text-primary">
+                            {
+                              'Sellix does not take any additional fee to process Stripe invoices.'
+                            }
+                          </p>
+                          {/* <p className="small1 text-primary">
+                            Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
+                          </p>
+                          <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
+                              <b>{bitcoincash.site_fee_low_price || 0} (${bitcoincash.site_fee_low_price_usd || 0})</b>
+                          </p>
+                          <Button className="btn-read-more" onClick={() => this.setState({ showMoreBtc: !this.state.showMoreBtc })}>
+                            read {showMoreBtc ? "less ▲" : "more ▼"}
+                          </Button>
+                          <Collapse isOpen={showMoreBtc}>
+                            <p className="small1 text-primary">
+                            if the order is less than ${bitcoincash.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                            </p>
+                          </Collapse> */}
+                      </div>
+                    </div>
+                  </Col>
+                  <Col md={3}>
+                    <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                      <div className="method">
+                          <h4 className="mt-4">Skrill</h4>
+                          <div className="service-img">
+                            <img src={service9}/>
                           </div>
                       </div>
                       <div className="content p-2">
