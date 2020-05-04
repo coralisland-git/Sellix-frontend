@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { api } from 'utils'
-import { Loader, Button, Spin } from 'components'
+import {Loader, Button, Spin, Loading} from 'components'
 import {
 	Card,
 	CardBody,
@@ -21,6 +21,25 @@ import {CommonActions} from "../../services/global";
 import * as moment from "moment/moment";
 
 import "./styles.scss";
+
+
+
+function ChangelogItem({ item }) {
+
+	const [showMore, setShowMore] = useState(false)
+
+	const hasShowMore = item.message.length > 75
+
+	return <div className={"changelog-container"}>
+		<h4>{item.title}</h4>
+		<div className={"changelog"}>
+			<p>{item.display_date}</p>
+			<p style={{ padding: '0 3rem', width: "30rem" }}>{hasShowMore && !showMore ? item.message.substr(0, 75) + '...' : item.message}</p>
+			<div className={'changelog-badge'}>{item.badge}</div>
+		</div>
+		{hasShowMore && <span onClick={() => setShowMore(!showMore)} className={'changelog-show-more'}>Show {showMore ? 'less' : 'more'}</span>}
+	</div>
+}
 
 
 const mapDispatchToProps = (dispatch) => ({
@@ -53,9 +72,21 @@ export class Changelog extends React.Component {
 
 	handleSubmit = (values) => {
 		this.setState({ loading: true })
-		this.props.createChangelog({ ...values, display_date: moment().format("DD/MM/YYYY") }).then(res => {
+		this.props.createChangelog({ ...values, display_date: moment().format("DD/MM/YYYY") })
+		.then(res => {
 			this.props.tostifyAlert('success', res.message)
-		}).catch(err => {
+			return api.get('/changelog');
+		})
+		.then(res => {
+			if (res.status === 200) {
+				this.setState({
+					changelog: res.data.changelog
+				})
+			} else {
+				throw res
+			}
+		})
+		.catch(err => {
 			this.props.tostifyAlert('error', err.error || err.message)
 		}).finally(() => {
 			this.setState({ loading: false })
@@ -63,14 +94,16 @@ export class Changelog extends React.Component {
 	}
 
 	render() {
-		const { loading } = this.state;
+		const { loading, changelog } = this.state;
 		const validationSchema = Yup.object().shape({
 			message: Yup.string().required('Message is required'),
 			title: Yup.string().required('Title is required'),
 			badge: Yup.string().required('Badge is required'),
-		})
+		});
 
-		return <div className={'changelog-screen'}>
+		console.log(changelog)
+
+		return <div className={'changelog-screen create'}>
 			<div className="animated fadeIn">
 
 					<Card className={"mb-0"}>
@@ -86,7 +119,7 @@ export class Changelog extends React.Component {
 					{loading && <Row><Col lg={12}><Loader /></Col></Row>}
 					{!loading &&
 						<Row>
-							<Col lg={12}>
+							<Col lg={4} md={12} className={"mb-5"}>
 								<Formik
 									noValidate="noValidate"
 									initialValues={{message: '', badge: '', title: ''}}
@@ -157,6 +190,9 @@ export class Changelog extends React.Component {
 										</Form>
 									)}
 								</Formik>
+							</Col>
+							<Col lg={8} md={12}>
+								{changelog === null ? <Loading /> : changelog.map((item, key) => <ChangelogItem key={key} item={item} />)}
 							</Col>
 						</Row>
 					}
