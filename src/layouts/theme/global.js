@@ -43,7 +43,6 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .moon-icon {
-        background: ${({ theme }) => theme.moonIconBg} !important;
         color: ${({ theme }) => theme.moonIconColor} !important;
     }
 
