@@ -188,7 +188,7 @@ class Dashboard extends React.Component {
           <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
           </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
-        <p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title}</p>
+        <p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title?row.product_title:row.product_id}</p>
       </div>
   )
 

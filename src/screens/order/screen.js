@@ -128,7 +128,7 @@ class Order extends React.Component {
           <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}></i>&nbsp;&nbsp;&nbsp;
           {`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
-        <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
+        <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title ? row.product_title : row.product_id}</p>
       </div>
     )  
   }
@@ -187,6 +187,7 @@ class Order extends React.Component {
 
     let isAdmin = window.location.pathname.includes('admin');
 
+    console.log(order_list)
     return (
       <div className="order-screen">
         <div className="animated fadeIn">
