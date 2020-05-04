@@ -61,7 +61,7 @@ class Header extends Component {
             
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none">
               <DropdownToggle className="user-name" nav>
-                <i className="fa icon-question nav-icon" style={{fontSize: 17, fontWeight: 'bold', marginTop: 2}} />
+                <i className="fa icon-question nav-icon" style={{fontSize: 17, fontWeight: 'bold' }} />
               </DropdownToggle>
               
               <DropdownMenu right className="mt-2">

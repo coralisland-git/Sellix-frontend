@@ -124,7 +124,7 @@ class Order extends React.Component {
   renderOrderInfo (cell, row) {
     return (
       <div>
-        <p><a onClick={(e) => this.gotoDetail(row.uniqid)} style={{fontSize: 15, fontWeight: 700}}>
+        <p><a onClick={(e) => this.gotoDetail(row.uniqid)} style={{fontSize: 15, fontWeight: 600}}>
           <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}></i>&nbsp;&nbsp;&nbsp;
           {`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
@@ -156,7 +156,7 @@ class Order extends React.Component {
   renderOrderTime(cell, row) {
     return (
       <div>
-        <p style={{fontSize: 15, fontWeight: 700}}>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+        <p style={{fontSize: 15, fontWeight: 600}}>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
         <p>{new moment(new Date(row.created_at*1000)).format('MMM DD')}</p>
       </div>
     )  
