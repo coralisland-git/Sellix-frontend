@@ -174,7 +174,7 @@ class Documentation extends React.Component {
                 <div className="d-ins">
                   <h3><b>Pagination</b></h3>
                   <p>
-                    Sellix offers the ability to paginate any list endpoint. <br/><br/>
+                    Sellix offers the ability to paginate any list endpoint. <br/>
                     By default, <span className="badge-mark">15</span> resources are displayed per page. <br/><br/>
                   </p>
                   <p><b>Parameters</b></p>
@@ -653,24 +653,25 @@ DELETE /blacklists/:uniqid`}
                 <div className="d-ins">
                   <h3><b>Create a Blacklist</b></h3>
                   <p>
-                    <span className="param">POST</span> /api/v2/blacklist <br />
-                    Creates a Blacklist and return the created Blacklist
+                    <span className="param">PUT</span> /blacklist <br />
+                    Creates a Blacklist and returns the Uniqid. <br /><br />
                   </p>
+                  <p><b>Argument</b></p>
                   <table>
                     <tbody>
                       <tr>
                         <td>
-                          <p className="param">blacklist_type</p>
-                          <p>integer</p>
+                          <p className="param">type</p>
+                          <p>string</p>
                           <p className="required">REQUIRED</p>
                         </td>
                         <td>
-                          1 for Email. 2 for IP address. 3 for Country Code
+                          Can be email, ip or country.
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <p className="param">blacklist_data</p>
+                          <p className="param">data</p>
                           <p>string</p>
                           <p className="required">REQUIRED</p>
                         </td>
@@ -684,7 +685,7 @@ DELETE /blacklists/:uniqid`}
                           <p>string</p>                          
                         </td>
                         <td>
-                          Internal note for the reasoning of the blacklist
+                          Internal note for the reasoning of the blacklist.
                         </td>
                       </tr>
                     </tbody>
@@ -693,19 +694,23 @@ DELETE /blacklists/:uniqid`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      <p>CREATE A BLACKLIST</p>
-                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.create(
-    blocked_data: 'ZW',
-    blacklist_type: 3
-)` } button-title="Copy">
+                      <p>CREATE BLACKLIST REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "type": "ip",
+    "data": "1.2.3.4",
+    "note": "demo"
+}
+` } button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`Sellix::Blacklist.create(
-    blocked_data: 'ZW',
-    blacklist_type: 3
-)`}
+                      {`{
+    "type": "ip",
+    "data": "1.2.3.4",
+    "note": "demo"
+}
+`}
                     </SyntaxHighlighter>
                   </div>
                   <div className="code-block response">
@@ -714,12 +719,14 @@ DELETE /blacklists/:uniqid`}
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
-  "id": "bGYSEexV",
-  "blocked_data": "ZW",
-  "blacklist_type": 3,
-  "note": "This is a demo blacklist",
-  "created_at": "2019-12-28T16:47:01.000+00:00",
-  "updated_at": "2019-12-28T16:47:01.000+00:00"
+    "status": 200,
+    "data": {
+        "uniqid": "testingbb6ac5"
+    },
+    "message": "Blacklist Created Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
 }`}
                     </SyntaxHighlighter>
                   </div>
@@ -727,29 +734,30 @@ DELETE /blacklists/:uniqid`}
               </section>
               <section id="update-blacklist">
                 <div className="d-ins">
-                  <h3><b>Update Blacklist</b></h3>
+                  <h3><b>Edit Blacklist</b></h3>
                   <p>
-                    <span className="param">PUT</span> /api/v2/blacklist/:id <br />
-                    Update a Blacklist by ID and return the updated Blacklist
+                    <span className="param">POST</span> /blacklists/:uniqid <br />
+                    Edits a Blacklist. <br /><br />
                   </p>
+                  <p><b>Argument</b></p>
                   <table>
                     <tbody>
                       <tr>
                         <td>
-                          <p className="param">blacklist_type</p>
-                          <p>integer</p>                          
+                          <p className="param">type</p>
+                          <p>string</p>                          
                         </td>
                         <td>
-                          1 for Email. 2 for IP address. 3 for Country Code
+                          Can be email, ip or country.
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <p className="param">blacklist_data</p>
+                          <p className="param">data</p>
                           <p>string</p>
                         </td>
                         <td>
-                          Blocked data. Either country code, email or IP address
+                          Blocked data. Either country code, email or IP address.
                         </td>
                       </tr>
                       <tr>
@@ -758,7 +766,7 @@ DELETE /blacklists/:uniqid`}
                           <p>string</p>                          
                         </td>
                         <td>
-                          Internal note for the reasoning of the blacklist
+                          Internal note for the reasoning of the blacklist.
                         </td>
                       </tr>
                     </tbody>
@@ -767,17 +775,21 @@ DELETE /blacklists/:uniqid`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      <p>UPDATE A BLACKLIST</p>
-                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.update('bGYSEexV',
-    blocked_data: 'GR'
-)` } button-title="Copy">
+                      <p>EDIT BLACKLIST REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "type": "country",
+    "data": "IT",
+    "note": "demo editing"
+}` } button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`Sellix::Blacklist.update('bGYSEexV',
-    blocked_data: 'GR'
-)`}
+                      {`{
+    "type": "country",
+    "data": "IT",
+    "note": "demo editing"
+}`}
                     </SyntaxHighlighter>
                   </div>
                   <div className="code-block response">
@@ -786,12 +798,12 @@ DELETE /blacklists/:uniqid`}
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
-  "id": "bGYSEexV",
-  "blocked_data": "GR",
-  "blacklist_type": 3,
-  "note": "This is a demo blacklist",
-  "created_at": "2019-12-28T16:47:01.000+00:00",
-  "updated_at": "2019-12-28T16:48:02.000+00:00"
+    "status": 200,
+    "data": null,
+    "message": "Blacklist Edited Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
 }`}
                     </SyntaxHighlighter>
                   </div>
@@ -799,30 +811,37 @@ DELETE /blacklists/:uniqid`}
               </section>
               <section id="destroy-blacklist">
                 <div className="d-ins">
-                  <h3><b>Destroy Blacklist</b></h3>
+                  <h3><b>Delete Blacklist</b></h3>
                   <p>
-                    <span className="required">DELETE</span> /api/v2/blacklist/:id <br />
-                    Destroys a Blacklist by ID
+                    <span className="required">DELETE</span> /blacklists/:uniqid <br />
+                    Deletes a Blacklist.
                   </p>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
-                    <div className="code-block-header">
-                      <p>DESTROY A BLACKLIST</p>
-                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.destroy('bGYSEexV')` } button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
-                      </Clipboard>
-                    </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`Sellix::Blacklist.destroy('bGYSEexV')`}
-                    </SyntaxHighlighter>
-                  </div>
+                  {/*<div className="code-block">
+                        <div className="code-block-header">
+                          <p>DESTROY A BLACKLIST</p>
+                          <Clipboard data-clipboard-text={ `Sellix::Blacklist.destroy('bGYSEexV')` } button-title="Copy">
+                            <i className="fa fa-clone" aria-hidden="true"></i>
+                          </Clipboard>
+                        </div>
+                        <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                          {`Sellix::Blacklist.destroy('bGYSEexV')`}
+                        </SyntaxHighlighter>
+                      </div>*/}
                   <div className="code-block response">
                     <div className="code-block-header">
                       <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`// No Content: 204 HTTP status`}
+                      {`{
+    "status": 200,
+    "data": null,
+    "message": "Blacklist Deleted Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
+}`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
