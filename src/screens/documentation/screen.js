@@ -35,6 +35,15 @@ const API_NAVIGATIONS = [
   { key: 'destroy-blacklist', value: 'Destroy a Blacklist' }
 ]
 
+const NAVITATIONS_2 = [
+  { key: 'category-object', value: 'Category Object' },
+  { key: 'get-category', value: 'Get a Category' },
+  { key: 'list-category', value: 'List All Categories' },
+  { key: 'create-category', value: 'Create a Category' },
+  { key: 'edit-category', value: 'Edit Category' },
+  { key: 'delete-category', value: 'Delete Category' }
+]
+
 const userId = window.localStorage.getItem('userId')
 
 class Documentation extends React.Component {
@@ -70,6 +79,12 @@ class Documentation extends React.Component {
     }))
 
 
+    items.push('categories');
+    NAVITATIONS_2.map((nav => {
+        items.push(nav.key)
+    }))
+
+
     return (
       <div className="documentation-screen">
         <div className="animated fadeIn">
@@ -102,18 +117,30 @@ class Documentation extends React.Component {
                     })
                   }
                   <li className="field">API REFERENCE</li>
-                  <li><a href="/documentation#blacklist" >Black list</a></li>
+                  <li><a href="/documentation#blacklist" >Blacklist</a></li>
                   {
-                     API_NAVIGATIONS.map((child, cindex) => {
-                       return (
-                         <li className="sub-nav" key={cindex}>
-                           <a 
-                             href={`/documentation#${child.key}`} 
-                           >{child.value}</a>
-                         </li>
+                    API_NAVIGATIONS.map((child, cindex) => {
+                      return (
+                        <li className="sub-nav" key={cindex}>
+                          <a 
+                            href={`/documentation#${child.key}`} 
+                          >{child.value}</a>
+                        </li>
                        )
                      })
-                   }
+                  }
+                  <li><a href="/documentation#categories" >Categories</a></li>
+                  {
+                    NAVITATIONS_2.map((nav, index) => {
+                      return (
+                        <li className="sub-nav" key={index}>
+                          <a 
+                            href={`/documentation#${nav.key}`} 
+                          >{nav.value}</a>
+                        </li>
+                      )
+                    })
+                  }
                 </Scrollspy>
               </div>
             </div>
@@ -846,7 +873,452 @@ DELETE /blacklists/:uniqid`}
                   </div>
                 </div>
               </section>
-            </Container>  
+              <section id="categories">
+                <div className="d-ins">
+                  <h3><b>Categories</b></h3>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`GET /categories/:uniqid
+GET /categories
+POST /categories
+PUT /categories/:uniqid
+DELETE /categories/:uniqid`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="category-object">
+                <div className="d-ins">
+                  <h3><b>Category Object</b></h3>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Unique id, auto incremented for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">uniqid</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Unique identifier for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">user_id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          ID of the user who created the category.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">title</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Title of the category, displayed in the site.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">unlisted</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          0 or 1, if 1 the category is not displayed on the shop page.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">sort_priority</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Used to order the categories on the shop page, ordered by ASC.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>
+                        </td>
+                        <td>
+                          Array of products objects that the category contains.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_count</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Count of how many items the products_bound array contains.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">created_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was created.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">updated_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was last updated. If never updated, it will be NULL.
+                        </td>
+                      </tr>
+                    </tbody>                          
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>THE CATEGORY OBJECT</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "id": 0,
+    "uniqid": "testing9ced89",
+    "user_id": 0,
+    "title": "Demo Category",
+    "unlisted": 0,
+    "sort_priority": 1,
+    "products_bound": [],
+    "products_count": 0,
+    "created_at": 1587110377,
+    "updated_at": null
+}
+`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="get-category">
+                <div className="d-ins">
+                  <h3><b>Get a Category</b></h3>
+                  <p>
+                    <span className="required">GET</span> /categories/:uniqid <br />
+                    Retrieves a Category by Uniqid.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "category": {
+            "id": 0,
+            "uniqid": "testing9ced89",
+            "user_id": 0,
+            "title": "Demo Category",
+            "unlisted": 0,
+            "sort_priority": 1,
+            "products_bound": [],
+            "products_count": 0,
+            "created_at": 1587110377,
+            "updated_at": null
+        }
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="list-category">
+                <div className="d-ins">
+                  <h3><b>List All Categories</b></h3>
+                  <p>
+                    <span className="required">GET</span> /categories <br />
+                    Returns a list of all the Categories. The categories are sorted by creation date, with the most recently created categories being first.
+                  </p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">page</p>
+                          <p>integer</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "categories": [
+            {
+                "id": 0,
+                "uniqid": "testing9ced89",
+                "user_id": 0,
+                "title": "Demo Category",
+                "unlisted": 0,
+                "sort_priority": 1,
+                "products_bound": [],
+                "products_count": 0,
+                "created_at": 1587110377,
+                "updated_at": null
+            }
+        ]
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="create-category">
+                <div className="d-ins">
+                  <h3><b>Create a Category</b></h3>
+                  <p>
+                    <span className="required">PUT</span> /categories <br />
+                    Creates a Category and returns the Uniqid.
+                  </p>
+                  <p><b>Argument</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">title</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Title of the category, displayed in the site.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">unlisted</p>
+                          <p>int or boolean</p>                          
+                        </td>
+                        <td>
+                          0 or 1, true or false, if 1/true the category is not displayed on the shop page.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">sort_priority</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Used to order the categories on the shop page, ordered by ASC.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Array of products uniqids that the category will contain.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>CREATE CATEGORY REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "title": "Demo Category",
+    "unlisted": false,
+    "sort_priority": 1,
+    "products_bound": [
+        "testing26bf06"
+    ]
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                      {`{
+    "title": "Demo Category",
+    "unlisted": false,
+    "sort_priority": 1,
+    "products_bound": [
+        "testing26bf06"
+    ]
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "uniqid": "testing391049"
+    },
+    "message": "Category Created Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="edit-category">
+                <div className="d-ins">
+                  <h3><b>Edit Category</b></h3>
+                  <p>
+                    <span className="required">POST</span> /categories/:uniqid <br />
+                    Edits a Category.
+                  </p>
+                  <p><b>Argument</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">title</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Title of the category, displayed in the site.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">unlisted</p>
+                          <p>int or boolean</p>                          
+                        </td>
+                        <td>
+                          0 or 1, true or false, if 1/true the category is not displayed on the shop page.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">sort_priority</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Used to order the categories on the shop page, ordered by ASC.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Array of products uniqids that the category will contain.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>EDIT CATEGORY REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "title": "Demo Category Edited",
+    "unlisted": false,
+    "sort_priority": 1,
+    "products_bound": [
+        "testing8h9ba4s"
+    ]
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                      {`{
+    "title": "Demo Category Edited",
+    "unlisted": false,
+    "sort_priority": 1,
+    "products_bound": [
+        "testing8h9ba4s"
+    ]
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "uniqid": "testing391049"
+    },
+    "message": "Category Edited Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="delete-category">
+                <div className="d-ins">
+                  <h3><b>Delete Category</b></h3>
+                  <p>
+                    <span className="required">DELETE</span> /categories/:uniqid <br />
+                    Deletes a Category.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": null,
+    "message": "Category Deleted Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+            </Container>
           </div>          
         </div>        
       </div>
