@@ -16,7 +16,7 @@ import {
 import { Button } from 'components';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import config from 'constants/config'
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import { getFeedbackById } from '../../actions'
 import { Loader, Spin } from 'components'
 import * as _ from 'lodash'

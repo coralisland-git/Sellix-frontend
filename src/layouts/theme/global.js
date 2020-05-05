@@ -43,7 +43,6 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .moon-icon {
-        background: ${({ theme }) => theme.moonIconBg} !important;
         color: ${({ theme }) => theme.moonIconColor} !important;
     }
 
@@ -334,6 +333,14 @@ export const GlobalStyles = createGlobalStyle`
             background: #270e84 !important;
             color: white !important;
             border: none !important;
+        }
+
+        .go-back-btn:hover {
+            background: #230c76 !important;
+        }
+
+        .quantity-picker.text-grey {
+            opacity: 0.5 !important;
         }
     `}
 

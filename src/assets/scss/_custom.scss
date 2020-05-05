@@ -664,32 +664,38 @@ box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
 
 .react-select {
 
-&__value-container {
-    padding-left: 25px !important;
-}
+    &__value-container {
+        padding-left: 25px !important;
+    }
 
-&__control {
-    min-height: 45px !important;
+    &__control {
+        min-height: 45px !important;
 
-    * {
+        * {
+            cursor: pointer !important;
+        }
+
+        &--is-focused {
+            box-shadow: none !important;
+        }
+
+        &--is-focused.react-select__control--menu-is-open {
+            box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25) !important;
+        }
+    }
+
+    &__menu * {
         cursor: pointer !important;
     }
 
-    &--is-focused {
-        box-shadow: none !important;
-    }
+    &__option {
 
-    &--is-focused.react-select__control--menu-is-open {
-        box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25) !important;
     }
 }
 
-&__menu * {
-    cursor: pointer !important;
+.light .progress {
+    background: #f0f3f5;
 }
-
-&__option {
-
+.progress {
+    background: #9b85ef;
 }
-}
-

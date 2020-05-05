@@ -33,9 +33,10 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    actions: bindActionCreators(Actions, dispatch),
-    authActions: bindActionCreators(AuthActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
+    saveNotificationSettings: bindActionCreators(Actions.saveNotificationSettings, dispatch),
+    getUserSettings: bindActionCreators(AuthActions.getUserSettings, dispatch),
+    checkDiscordChannel: bindActionCreators(CommonActions.checkDiscordChannel, dispatch),
+    tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
   })
 }
 
@@ -57,13 +58,14 @@ class Notification extends React.Component {
 
 
   testDiscordChannel() {
-    this.props.commonActions.checkDiscordChannel({
+
+    let { checkDiscordChannel, tostifyAlert } = this.props;
+
+    checkDiscordChannel({
       channel_id: this.state.discord_channel_id
-    }).then(res => {
-      this.props.commonActions.tostifyAlert('success', "Discord Test Succeeded.")
-    }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', 'Discord Test Failed.')
     })
+        .then(res => tostifyAlert('success', "Discord Test Succeeded"))
+        .catch(err => tostifyAlert('error', 'Discord Test Failed'))
   }
 
 
@@ -73,8 +75,11 @@ class Notification extends React.Component {
 
 
   saveNotificationSettings() {
-    this.setState({ loading: true })
-    this.props.actions.saveNotificationSettings({
+    this.setState({ loading: true });
+
+    let { saveNotificationSettings, tostifyAlert } = this.props;
+
+    saveNotificationSettings({
       notifications_invoices: this.state.invoice_notification,
       notifications_tickets: this.state.ticket_notification,
       notifications_feedback: this.state.feedback_notification,
@@ -82,32 +87,27 @@ class Notification extends React.Component {
       webhook_enabled: this.state.webhook_enabled,
       webhook_url: this.state.webhook_url,
       discord_channel_id: this.state.discord_channel_id
-    }).then(res => {
-      this.props.commonActions.tostifyAlert('success', res.message)
-    }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
-    }).finally(() => {
-      this.setState({ loading: false })
     })
+        .then(res => tostifyAlert('success', res.message))
+        .catch(err => tostifyAlert('error', err.error || 'Something went wrong!'))
+        .finally(() => this.setState({ loading: false }))
   }
 
   componentDidMount() {
     this.setState({loading: true})
-    this.props.authActions.getUserSettings().then(res => {
+    this.props.getUserSettings().then(res => {
       const settings = res.data.settings
 
       this.setState({
-        invoice_notification: settings.notifications_invoices == '1'?true:false,
-        ticket_notification: settings.notifications_tickets == '1'?true:false,
-        feedback_notification: settings.notifications_feedback == '1'?true:false,
-        reply_notification: settings.notifications_replies == '1'?true:false,
-        webhook_enabled: settings.webhook_enabled == '1'?true:false,
+        invoice_notification: settings.notifications_invoices === '1',
+        ticket_notification: settings.notifications_tickets === '1',
+        feedback_notification: settings.notifications_feedback === '1',
+        reply_notification: settings.notifications_replies === '1',
+        webhook_enabled: settings.webhook_enabled === '1',
         webhook_url: settings.webhook_url,
         discord_channel_id: settings.discord_channel_id
       })
-    }).finally(() => {
-      this.setState({loading: false})
-    })
+    }).finally(() => this.setState({loading: false}))
   }
 
   render() {
@@ -117,9 +117,7 @@ class Notification extends React.Component {
       ticket_notification, 
       feedback_notification, 
       reply_notification,
-      webhook_enabled,
-      discord_channel_id,
-      webhook_url
+      discord_channel_id
     } = this.state;
 
     return (

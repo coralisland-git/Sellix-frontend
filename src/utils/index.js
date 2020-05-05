@@ -3,7 +3,7 @@ import authApi from './auth_api'
 import * as selectOptionsFactory from './select_option_factory'
 import * as filterFactory from './filter_factory'
 import { formData } from './formdata'
-import { sendAuthedWsMessage } from './ws_api'
+import { sendAuthedWsMessage, sendWsMessage } from './ws_api'
 
 export {
   api,
@@ -11,5 +11,6 @@ export {
   selectOptionsFactory,
   filterFactory,
   formData,
-  sendAuthedWsMessage
+  sendAuthedWsMessage,
+  sendWsMessage
 }

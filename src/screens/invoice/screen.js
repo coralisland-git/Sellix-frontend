@@ -4,22 +4,17 @@ import { bindActionCreators } from 'redux'
 import {
   Card,
   Row,
-  Col,
-  Button
+  Col
 } from 'reactstrap'
 import SweetAlert from 'react-bootstrap-sweetalert';
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import { QRCodeModal } from 'components'
 import { PayPalButton } from "react-paypal-button-v2";
 import {
   CommonActions
 } from 'services/global'
-import {PaypalInvoice} from './sections'
+import { Loader, Button } from 'components'
 
-import { LeaveFeedbackModal, Loader} from 'components'
-
-import shop_brand from 'assets/images/brand/paypal-logo.svg'
-import paypal_white from 'assets/images/brand/paypal-white.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import backIcon from 'assets/images/x.png'
 
@@ -158,9 +153,9 @@ class Invoice extends React.Component {
 
 
   getInvoice() {
-    this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
+    this.props.commonActions.getInvoiceViaWebsocket(this.props.match.params.id).then(invoice => {
       this.setState({
-        invoice: res.data.invoice
+        invoice: invoice
       })
     })
   }

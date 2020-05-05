@@ -15,14 +15,14 @@ import {
 } from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
-import Select from 'react-select'
+import * as moment from 'moment/moment';
 import { Loader } from 'components'
 import {getUser} from './actions'
 
 
 
 import './style.scss'
-var moment = require('moment');
+
 
 const mapStateToProps = (state) => {
   return ({

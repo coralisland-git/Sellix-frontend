@@ -46,7 +46,7 @@ class Header extends Component {
               !isShop && 
                 <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
                   <div className="searchbar">
-                    <i className="fas fa-search"/>
+                    <i className="fas fa-search" style={{ fontSize: 17 }}/>
                     <Input placeholder="Search..." className="header-search-input" />
                   </div>
               </NavItem>
@@ -54,14 +54,14 @@ class Header extends Component {
 
             {
               !isShop && 
-                <UncontrolledDropdown nav direction="down" className="ml-3">
-                  <i className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
+                <UncontrolledDropdown nav direction="down" >
+                  <i style={{ fontSize: 17}} className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
                 </UncontrolledDropdown>
             } 
             
-            <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-2">
+            <UncontrolledDropdown nav direction="down" className="d-sm-down-none">
               <DropdownToggle className="user-name" nav>
-                <i className="fa icon-question nav-icon" style={{fontSize: 18, fontWeight: 'bold'}} />
+                <i className="fa icon-question nav-icon" style={{fontSize: 17, fontWeight: 'bold' }} />
               </DropdownToggle>
               
               <DropdownMenu right className="mt-2">
@@ -76,7 +76,7 @@ class Header extends Component {
 
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none mr-3">
               <DropdownToggle className="user-name" nav>
-                <i className="fas fa-bell nav-icon" style={{marginTop: 1}}/>
+                <i className="fas fa-bell nav-icon" style={{ fontSize: 17 }}/>
                 {notifications && notifications.length > 0 &&  
                   <sup>
                     <Badge color="danger" style={{ color: 'white', padding: '6px', height: '19px'}}>
@@ -130,7 +130,7 @@ class Header extends Component {
             <UncontrolledDropdown nav direction="down">
               <DropdownToggle className="user-name" nav>
                 <div>
-                  {profile && profile.profile_attachment?
+                  {profile && profile.profile_attachment ?
                     <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}} />:
                     <i className="fa fa-user-circle text-primary avatar-icon" />
                   }

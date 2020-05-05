@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Card, CardHeader, CardBody, Row, Col, Input} from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Col, Input } from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader, Button } from 'components'
+import { withRouter } from 'react-router-dom'
 import { tableOptions } from 'constants/tableoptions'
+import { getUsers } from './actions'
 
 import './style.scss'
-import { getUsers } from './actions'
 
 const mapStateToProps = ({ users: { users }}) => ({ users })
 const mapDispatchToProps = (dispatch) => ({ getUsers: bindActionCreators(getUsers, dispatch)})
@@ -35,21 +36,25 @@ class Users extends Component {
 
   renderUserProducts = (cell, row) => row.products_count ? <div>{row.products_count}</div> : <p className="caption">No specified</p>
 
-  renderOption =  (cell, row) => <Button color="default" onClick={() => this.props.history.push(`/admin/users/${row.id}`)}>View</Button>
+  renderOption =  (cell, row) => <Button color="default" style={{ minHeight: "35px", fontSize: ".9rem !important" }} onClick={() => this.props.history.push(`/admin/users/${row.id}`)}>View</Button>
+
+  viewUser = (id) => this.props.history.push(`/admin/users/${id}`)
 
   searchOrders(users) {
     const { search_key } = this.state;
     const search_fields = ['id', 'email', 'products_count', 'username'];
 
-    return users.filter(product => {
+    return users.filter(user => {
       for(let i=0; i < search_fields.length; i++) {
-        if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase())) {
+        if(user[search_fields[i]] && user[search_fields[i]].toLowerCase().includes(search_key.toLowerCase())) {
           return true
         }
       }
       return false
     })
   }
+
+  revertSortFunc = (a, b, order) => order === 'desc' ?  a.products_count - b.products_count : b.products_count - a.products_count;
 
   render() {
 
@@ -60,7 +65,7 @@ class Users extends Component {
       users = this.searchOrders(users)
 
     return (
-      <div className="product-screen">
+      <div className="product-screen user-screen">
         <div className="animated fadeIn">
           <Card className="grey">
 
@@ -89,7 +94,7 @@ class Users extends Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          options={tableOptions({ sizePerPage: 15, printToolBar: false })}
+                          options={tableOptions({ onRowClick: (row) => this.viewUser(row.id), sizePerPage: 15, printToolBar: false })}
                           data={users}
                           version="4"
                           pagination
@@ -126,6 +131,7 @@ class Users extends Component {
                             dataField="products_count"
                             dataFormat={this.renderUserProducts}
                             dataSort
+                            sortFunc={this.revertSortFunc}
                           >
                             Products
                           </TableHeaderColumn>
@@ -151,4 +157,4 @@ class Users extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Users))

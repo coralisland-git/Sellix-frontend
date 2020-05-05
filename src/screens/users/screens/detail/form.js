@@ -16,13 +16,12 @@ import './style.scss'
 class UserEditForm extends Component {
 
   render() {
-    const { user, loading, handleSubmit } = this.props;
-    const { id } = user;
 
+    const { user, loading, handleSubmit } = this.props;
 
     return (
-        <Card>
-          <CardBody className="p-4 mb-4 position-relative">
+        <Card style={{ marginBottom: "1.3rem" }}>
+          <CardBody className="p-4 position-relative">
             <Formik initialValues={user} enableReinitialize={true} onSubmit={handleSubmit}>
               {({ handleSubmit, handleChange, values }) => (
                   <Form onSubmit={handleSubmit} >
@@ -61,7 +60,7 @@ class UserEditForm extends Component {
                                         id="otp_2fa"
                                         name="otp_2fa"
                                         onChange={(e) => handleChange('otp_2fa')(e.target.checked)}
-                                        checked={Number(values.otp_2fa)}
+                                        checked={Boolean(Number(values.otp_2fa))}
                                     />
                                     <Label className="custom-control-label"  htmlFor="otp_2fa" check>
                                       OTP 2FA
@@ -69,6 +68,7 @@ class UserEditForm extends Component {
 
                                   </div>
                                 </FormGroup>
+
                                 <FormGroup check  className="mb-3 pl-0">
                                   <div className="custom-checkbox custom-control">
                                     <Input
@@ -77,12 +77,11 @@ class UserEditForm extends Component {
                                         id="email_2fa"
                                         name="email_2fa"
                                         onChange={(e) => handleChange('email_2fa')(e.target.checked)}
-                                        checked={Number(values.email_2fa)}
+                                        checked={Boolean(Number(values.email_2fa))}
                                     />
                                     <Label htmlFor="email_2fa" check className="custom-control-label">
                                       Email 2FA
                                     </Label>
-
                                   </div>
                                 </FormGroup>
 
@@ -91,9 +90,9 @@ class UserEditForm extends Component {
 
                           </Col>
 
-                          <Col lg={12} className={"mt-4"}>
-                            <Button color="primary" type="submit" className="" style={{width: 200}}>
-                              {loading ? <Spin/> : 'Save Settings'}
+                          <Col lg={12} style={{ textAlign: "right"}}>
+                            <Button color="primary" type="submit" className="" style={{width: "50%"}}>
+                              {loading ? <Spin/> : 'Update User'}
                             </Button>
                           </Col>
                         </Row>

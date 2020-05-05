@@ -26,7 +26,7 @@ const NAVITATIONS = [
   { key: 'webhooks', value: 'Webhooks' }
 ]
 
-const API_NAVIGATIONS = [
+const NAVIGATIONS_BlACKLIST = [
   { key: 'blacklist-object', value: 'Blacklist Object' },    
   { key: 'get-blacklist', value: 'Get Blacklist' },
   { key: 'list-blacklist', value: 'List Blacklist' },
@@ -35,6 +35,25 @@ const API_NAVIGATIONS = [
   { key: 'destroy-blacklist', value: 'Destroy a Blacklist' }
 ]
 
+const NAVITATIONS_CATEGORY = [
+  { key: 'category-object', value: 'Category Object' },
+  { key: 'get-category', value: 'Get a Category' },
+  { key: 'list-category', value: 'List All Categories' },
+  { key: 'create-category', value: 'Create a Category' },
+  { key: 'edit-category', value: 'Edit Category' },
+  { key: 'delete-category', value: 'Delete Category' }
+]
+
+const NAVITATIONS_COUPON = [
+  { key: 'coupon-object', value: 'Coupon Object' },
+  { key: 'get-coupon', value: 'Get a Coupon' },
+  { key: 'list-coupon', value: 'List All Coupons' },
+  { key: 'create-coupon', value: 'Create a Coupon' },
+  { key: 'edit-coupon', value: 'Edit Coupon' },
+  { key: 'delete-coupon', value: 'Delete Coupon' }
+]
+
+const userId = window.localStorage.getItem('userId')
 
 class Documentation extends React.Component {
   constructor(props) {
@@ -64,8 +83,19 @@ class Documentation extends React.Component {
     items.push('api_reference');
     items.push('blacklist');
 
-    API_NAVIGATIONS.map((nav => {
+    NAVIGATIONS_BlACKLIST.map((nav => {
       items.push(nav.key)
+    }))
+
+
+    items.push('categories');
+    NAVITATIONS_CATEGORY.map((nav => {
+        items.push(nav.key)
+    }))
+
+    items.push('coupons');
+    NAVITATIONS_COUPON.map((nav => {
+        items.push(nav.key)
     }))
 
 
@@ -101,18 +131,42 @@ class Documentation extends React.Component {
                     })
                   }
                   <li className="field">API REFERENCE</li>
-                  <li><a href="/documentation#blacklist" >Black list</a></li>
+                  <li><a href="/documentation#blacklist" >Blacklist</a></li>
                   {
-                     API_NAVIGATIONS.map((child, cindex) => {
-                       return (
-                         <li className="sub-nav" key={cindex}>
-                           <a 
-                             href={`/documentation#${child.key}`} 
-                           >{child.value}</a>
-                         </li>
+                    NAVIGATIONS_BlACKLIST.map((child, cindex) => {
+                      return (
+                        <li className="sub-nav" key={cindex}>
+                          <a 
+                            href={`/documentation#${child.key}`} 
+                          >{child.value}</a>
+                        </li>
                        )
                      })
-                   }
+                  }
+                  <li><a href="/documentation#categories" >Categories</a></li>
+                  {
+                    NAVITATIONS_CATEGORY.map((nav, index) => {
+                      return (
+                        <li className="sub-nav" key={index}>
+                          <a 
+                            href={`/documentation#${nav.key}`} 
+                          >{nav.value}</a>
+                        </li>
+                      )
+                    })
+                  }
+                  <li><a href="/documentation#coupons" >Coupons</a></li>
+                  {
+                    NAVITATIONS_COUPON.map((nav, index) => {
+                      return (
+                        <li className="sub-nav" key={index}>
+                          <a 
+                            href={`/documentation#${nav.key}`} 
+                          >{nav.value}</a>
+                        </li>
+                      )
+                    })
+                  }
                 </Scrollspy>
               </div>
             </div>
@@ -121,23 +175,22 @@ class Documentation extends React.Component {
                 <div className="d-ins">
                   <h3><b>Introduction</b></h3>
                   <p>
-                    Welcome to the Sellix REST API. You can use our API to access Sellix API endpoints to build
+                    Welcome to the Sellix REST API. You can use our API to access Sellix API endpoints to build 
                     your own systems on top of our platform. <br /><br />
-                    We have official API libraries in multiple languages. You can view code examples to the right, 
-                    and you can switch the programming language of the examples with the language selector at the
-                    top or any code block.
+                    You can view code examples to the right, at the moment the only available language to view 
+                    example code is PHP, more will come in the future.
                   </p>
                 </div>
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      <p>ROOT URL</p>
-                      <Clipboard data-clipboard-text={ `https://sellix.io/api/v2` } button-title="Copy">
+                      <p>API ROOT URL</p>
+                      <Clipboard data-clipboard-text={ `https://sellix.io/api/v1` } button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`https://sellix.io/api/v2`}
+                    <SyntaxHighlighter language="php" style={sunburst}>
+                      {`https://sellix.io/api/v1`}
                     </SyntaxHighlighter>                    
                   </div>
                 </div>
@@ -146,28 +199,26 @@ class Documentation extends React.Component {
                 <div className="d-ins">
                   <h3><b>Authentication</b></h3>
                   <p>
-                    Sellix's API uses <a href="#">Basic authentication</a> with your account email and API key. This is usually done
-                    via the <span className="badge-mark">Authorization</span> header <br /><br />
-                    Your API key can be accessed and re-generated <a href="#">here</a><br /><br />
+                    Sellix's API uses a Bearer authentication with your API Secret Key. 
+                    You will have to send your API Secret Key via the <span className="badge-mark">Authorization</span>  header. <br /><br />
+
+                    Your API key can be accessed and re-generated <a href={`https://sellix.io/settings/${userId}/security`}>here</a> in the security tab. <br /><br />
+
                     All API requests must be made over HTTPS.
                   </p>
                 </div>
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      <p>SETUP AUTHENTICATION</p>
+                      <p>SETUP AUTHENTICATION HEADER</p>
                       <Clipboard 
-                      data-clipboard-text={ `require 'sellix'
-sellix.api_key = 'api key'
-sellix.api_email = 'email'` } 
+                      data-clipboard-text={ `Authorization: Bearer testingjHdAZK6jG2pN6cabSQdZhlS2XqE8UvOSdqSDtlZAeOuF2jfr3a87KKs3Z` } 
                       button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`require 'sellix'
-sellix.api_key = 'api key'
-sellix.api_email = 'email'`}
+                    <SyntaxHighlighter language="php" style={sunburst}>
+                      {`Authorization: Bearer testingjHdAZK6jG2pN6cabSQdZhlS2XqE8UvOSdqSDtlZAeOuF2jfr3a87KKs3Z`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
@@ -176,10 +227,8 @@ sellix.api_email = 'email'`}
                 <div className="d-ins">
                   <h3><b>Pagination</b></h3>
                   <p>
-                    Sellix offers the ability to paginate any list endpoint. The <span className="badge-mark">X-Total-Pages</span> header returns 
-                    the total number of pages for the resources at the specific endpoint you're using. <br/><br/>
-
-                    By default, <span className="badge-mark">20</span> resources are displayed per page.
+                    Sellix offers the ability to paginate any list endpoint. <br/>
+                    By default, <span className="badge-mark">15</span> resources are displayed per page. <br/><br/>
                   </p>
                   <p><b>Parameters</b></p>
                   <table>
@@ -193,15 +242,6 @@ sellix.api_email = 'email'`}
                           The page number. Default to 1
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <p className="param">per_page</p>
-                          <p>integer</p>
-                        </td>
-                        <td>
-                          Records per page. Defaults to 20. Allowed values are  10 and 50
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -210,19 +250,13 @@ sellix.api_email = 'email'`}
                     <div className="code-block-header">
                       <p>PAGINATING ORDERS EXAMPLE</p>
                       <Clipboard 
-                      data-clipboard-text={ `# Page 10 
-Sellix::Orders::List(page: 10)
-# Page 10 and 50 per page 
-Sellix::Orders::List(page: 10, per_page: 50)` } 
+                      data-clipboard-text={ `/blacklists?page=1` } 
                       button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`# Page 10 
-Sellix::Orders::List(page: 10)
-# Page 10 and 50 per page 
-Sellix::Orders::List(page: 10, per_page: 50)`}
+                    <SyntaxHighlighter language="php" style={sunburst}>
+                      {`/blacklists?page=1`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
@@ -282,36 +316,46 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                 <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
-                      <p>AUTHENTICATION ERROR</p>
-                    </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`{
-  "message": "Unable to authenticate"
-}`}
-                    </SyntaxHighlighter>
-                  </div>
-                  <div className="code-block response">
-                    <div className="code-block-header">
-                      <p>AUTHENTICATION ERROR</p>
-                    </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`{
-  "message": "You are not authorized to perform this action"
-}`}
-                    </SyntaxHighlighter>
-                  </div>
-                  <div className="code-block response">
-                    <div className="code-block-header">
                       <p>VALIDATION ERROR</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
-  "message": "Validation failed",
-  "errors": [
-    "Title can't be blank",
-    "Title is too short (minimum is 2 characters)",
-    "Title must be present"
-  ]
+    "status": 400,
+    "data": null,
+    "message": null,
+    "log": null,
+    "error": "Invalid Product Title.",
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>AUTHENTICATION ERROR</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 401,
+    "data": null,
+    "message": null,
+    "log": "testingjHdAZK6jG2pN6cabSQdZhlS2XqE8UvOSdqSDtlZAeOuF2jfr3a87KKs3Z",
+    "error": "Unauthorized",
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>NOT FOUND ERROR</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 404,
+    "data": null,
+    "message": null,
+    "log": null,
+    "error": "Not Found.",
+    "env": "production"
 }`}
                     </SyntaxHighlighter>
                   </div>
@@ -321,50 +365,51 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                 <div className="d-ins">
                   <h3><b>Webhooks</b></h3>
                   <p>
-                    Sellix provides a webhooks system allowing you to subscribe to to events with <a href="#">Webhook Endpoints</a>, 
+                    Sellix provides a webhooks system allowing you to subscribe to to events 
+                    with <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/all`}>Webhook Endpoints</a>, 
                     alongside Product/Payment Order status webhooks and Dynamic Product webhooks. <br /><br />
                     Please note <b>only HTTPS webhook URLs are supported</b>.<br /><br />
-                    A webhook simulator is available allowing you to simulate webhooks to a URL. It can be accessed <a href="#">here</a>.<br /><br />
+                    A webhook simulator is available allowing you to simulate webhooks to a URL. It can be 
+                    accessed <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/logs`}>here</a>.<br /><br />
                   </p>
                   <p><b>Signing/Validating</b></p>
                   <p>
                     To verify the authenticity of a webhook request and its payload, each webhook request includes 
                     a <span className="badge-mark">X-Sellix-Signature</span> header with a 
                     HMAC signature comprised of the JSON encoded request body and your webhook secret. 
-                    Your webhook secret can be changed in your <a href="#">settings page</a>. <br /><br />
+                    Your webhook secret can be changed in your <a href={`https://sellix.io/settings/${userId}/security`}>settings page</a>. <br /><br />
                   </p>
                   <p><b>Events</b></p>
                   <p>
                     Each webhook request will feature a <span className="badge-mark">X-Sellix-Event</span> header containing the 
-                    webhook event type. A list of supported events from <a href="#">Webhook Endpoints</a> can be found below.
+                    webhook event type. A list of supported events from <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/all`}>Webhook Endpoints</a> can be found below.
                   </p>
                   <table className="border-table">
                     <thead>
                       <tr>
-                        <th className="table-title">EVENT</th>
+                        <th className="table-title text-center" colspan="3">EVENT</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td><span className="badge-mark">feedback:updated</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark">order:created</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark">order:updated</span></td>
+                        <td><span className="badge-mark">order:partial</span></td>                      
                       </tr>
                       <tr>
                         <td><span className="badge-mark">order:paid</span></td>
+                        <td><span className="badge-mark">order:paid:product</span></td>
+                        <td><span className="badge-mark">order:cancelled</span></td>
                       </tr>
                       <tr>
-                        <td><span className="badge-mark">product:out_of_stock</span></td>
+                        <td><span className="badge-mark">product:created</span></td>                      
+                        <td><span className="badge-mark">product:stock</span></td>
+                        <td><span className="badge-mark">product:edited</span></td>
                       </tr>
                       <tr>
                         <td><span className="badge-mark">query:created</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark">query:replied</span></td>
+                        <td><span className="badge-mark"> feedback:received</span></td>
                       </tr>
                     </tbody>
                   </table>
@@ -372,11 +417,9 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <br /><br /><b>Logs</b>
                   </p>
                   <p>
-                    Each webhook request will create a <a href="#">Webhook Log</a>. The object is created by the request 
+                    Each webhook request will create a <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/logs`}>Webhook Log</a>. The object is created by the request 
                     has been sent. Before the request response has actually been received, the <span className="badge-mark">response_code</span> will 
                     be <span className="badge-mark">0</span>, indicating it is pending.<br /><br />
-                    Each webhook request will also include a <span className="badge-mark">X-Sellix-Webhook</span> request header 
-                    containing the <a href="#">Webhook Log</a> <span className="badge-mark">id</span>.
                   </p>
                 </div>
                 <div className="d-ex">
@@ -384,27 +427,29 @@ Sellix::Orders::List(page: 10, per_page: 50)`}
                     <div className="code-block-header">
                       <p>VALIDATING SIGNED WEBHOOK SIGNATURE</p>
                       <Clipboard 
-                      data-clipboard-text={ `require 'openssl'
-require 'active_support'
-secret = 'your webhook secret'
-signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha512'), secret, payload.to_json)
-is_valid_signature = ActiveSupport::SecurityUtils.secure_compare(request.headers['X-Sellix-Signature'], signature)
-if is_valid_signature
-    # Webhook is valid
-end` } 
+                      data-clipboard-text={ `$payload = file_get_contents('php://input');
+
+$secret = "testing981y25n89byoas7by"; // replace with your webhook secret
+$header_signature = $_SERVER["HTTP_X_SELLIX_SIGNATURE"]; // get our signature header
+
+$signature = hash_hmac('sha512', $payload, $secret);
+if (hash_equals($signature, $header_signature)) {
+  // handle valid webhook
+}` } 
                       button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`require 'openssl'
-require 'active_support'
-secret = 'your webhook secret'
-signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha512'), secret, payload.to_json)
-is_valid_signature = ActiveSupport::SecurityUtils.secure_compare(request.headers['X-Sellix-Signature'], signature)
-if is_valid_signature
-    # Webhook is valid
-end`}
+                      {`$payload = file_get_contents('php://input');
+
+$secret = "testing981y25n89byoas7by"; // replace with your webhook secret
+$header_signature = $_SERVER["HTTP_X_SELLIX_SIGNATURE"]; // get our signature header
+
+$signature = hash_hmac('sha512', $payload, $secret);
+if (hash_equals($signature, $header_signature)) {
+  // handle valid webhook
+}`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
@@ -419,11 +464,11 @@ end`}
                       <p>ENDPOINTS</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`GET /api/v2/blacklist/:id
-GET /api/v2/blacklist
-POST /api/v2/blacklist
-PUT /api/v2/blacklist/:id
-DELETE /api/v2/blacklist/:id`}
+                      {`GET /blacklists/:uniqid
+GET /blacklists
+POST /blacklists
+PUT /blacklists/:uniqid
+DELETE /blacklists/:uniqid`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
@@ -436,6 +481,15 @@ DELETE /api/v2/blacklist/:id`}
                       <tr>
                         <td>
                           <p className="param">id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Unique id, auto incremented for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">uniqid</p>
                           <p>string</p>
                         </td>
                         <td>
@@ -444,20 +498,20 @@ DELETE /api/v2/blacklist/:id`}
                       </tr>
                       <tr>
                         <td>
-                          <p className="param">blacklist_type</p>
-                          <p>integer</p>
+                          <p className="param">type</p>
+                          <p>string</p>
                         </td>
                         <td>
-                          1 for Email. 2 for IP address. 3 for Country Code
+                          Can be email, ip or country.
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <p className="param">blocked_data</p>
+                          <p className="param">data</p>
                           <p>string</p>
                         </td>
                         <td>
-                          Blocked data. Either country code, email or IP address
+                          Blocked data. Either country code, email or IP address.
                         </td>
                       </tr>
                       <tr>
@@ -466,13 +520,13 @@ DELETE /api/v2/blacklist/:id`}
                           <p>string</p>
                         </td>
                         <td>
-                          Internal note for the reasoning of the blacklist
+                          Internal note for the reasoning of the blacklist.
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <p className="param">create_at</p>
-                          <p>datetime</p>
+                          <p className="param">created_at</p>
+                          <p>timestamp</p>
                         </td>
                         <td>
                           The date and time that the resource was created.
@@ -481,7 +535,7 @@ DELETE /api/v2/blacklist/:id`}
                       <tr>
                         <td>
                           <p className="param">update_at</p>
-                          <p>datetime</p>
+                          <p>timestamp</p>
                         </td>
                         <td>
                           The date and time that the resource was last updated. If never updated, it will be equal to created_at.
@@ -497,12 +551,14 @@ DELETE /api/v2/blacklist/:id`}
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
-  "id": "bGYSEexV",
-  "blocked_data": "ZW",
-  "blacklist_type": 3,
-  "note": "This is a demo blacklist",
-  "created_at": "2019-12-28T16:47:01.000+00:00",
-  "updated_at": "2019-12-28T16:47:01.000+00:00"
+    "id": 0,
+    "uniqid": "testing63d725",
+    "user_id": 0,
+    "type": "ip",
+    "data": "1.2.3.5.6",
+    "note": "Demo Blacklist",
+    "created_at": 1586045814,
+    "updated_at": 1586515431
 }`}
                     </SyntaxHighlighter>
                   </div>
@@ -514,6 +570,55 @@ DELETE /api/v2/blacklist/:id`}
                   <p>
                     <span className="param">GET</span> /api/v2/blacklist/:id <br />
                     Retrieves a Blacklist by ID
+                  </p>
+                </div>
+                <div className="d-ex">
+                  {/*<div className="code-block">
+                        <div className="code-block-header">
+                          <p>GET A BLACKLIST</p>
+                          <Clipboard data-clipboard-text={ `Sellix::Blacklist.retrieve('bGYSEexV')` } button-title="Copy">
+                            <i className="fa fa-clone" aria-hidden="true"></i>
+                          </Clipboard>
+                        </div>
+                        <SyntaxHighlighter language="php" style={sunburst}>
+                          {`Sellix::Blacklist.retrieve('bGYSEexV')`}
+                        </SyntaxHighlighter>
+                      </div>*/}
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight} showLineNumbers={true}>
+                      {`{
+    "status": 200,
+    "data": {
+        "blacklist": {
+            "id": 0,
+            "uniqid": "testing63d725",
+            "user_id": 0,
+            "type": "ip",
+            "data": "1.2.3.5.6",
+            "note": "Demo Blacklist",
+            "created_at": 1586045814,
+            "updated_at": 1586515431
+        }
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="list-blacklist">
+                <div className="d-ins">
+                  <h3><b>List Blacklist</b></h3>
+                  <p>
+                    <span className="param">GET</span> /blacklist <br />
+                    Returns a list of the Blacklist. The blacklist are sorted by creation date, with the most 
+                    recently created blacklist being first.
                   </p>
                   <table>
                     <tbody>
@@ -530,45 +635,7 @@ DELETE /api/v2/blacklist/:id`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
-                    <div className="code-block-header">
-                      <p>GET A BLACKLIST</p>
-                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.retrieve('bGYSEexV')` } button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
-                      </Clipboard>
-                    </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
-                      {`Sellix::Blacklist.retrieve('bGYSEexV')`}
-                    </SyntaxHighlighter>
-                  </div>
-                  <div className="code-block response">
-                    <div className="code-block-header">
-                      <p>RESPONSE</p>
-                    </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight} showLineNumbers={true}>
-                      {`{
-  "id": "bGYSEexV",
-  "blocked_data": "ZW",
-  "blacklist_type": 3,
-  "note": "This is a demo blacklist",
-  "created_at": "2019-12-28T16:47:01.000+00:00",
-  "updated_at": "2019-12-28T16:47:01.000+00:00"
-}`}
-                    </SyntaxHighlighter>
-                  </div>
-                </div>
-              </section>
-              <section id="list-blacklist">
-                <div className="d-ins">
-                  <h3><b>List Blacklist</b></h3>
-                  <p>
-                    <span className="param">GET</span> /api/v2/blacklist <br />
-                    Returns a list of the Blacklist. The blacklist are sorted by creation date, with the most 
-                    recently created blacklist being first.
-                  </p>
-                </div>
-                <div className="d-ex">
-                  <div className="code-block">
+                  {/*<div className="code-block">
                     <div className="code-block-header">
                       <p>LIST ALL BLACKLIST</p>
                       <Clipboard data-clipboard-text={ `Sellix::Blacklist.list` } button-title="Copy">
@@ -578,22 +645,33 @@ DELETE /api/v2/blacklist/:id`}
                     <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
                       {`Sellix::Blacklist.list`}
                     </SyntaxHighlighter>
-                  </div>
+                  </div>*/}
                   <div className="code-block response">
                     <div className="code-block-header">
                       <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`[
-  {
-    "id": "bGYSEexV",
-    "blocked_data": "ZW",
-    "blacklist_type": 3,
-    "note": "This is a demo blacklist",
-    "created_at": "2019-12-28T16:47:01.000+00:00",
-    "updated_at": "2019-12-28T16:47:01.000+00:00"
-  }
-]`}
+                      {`{
+    "status": 200,
+    "data": {
+        "blacklists": [
+            {
+                "id": 0,
+                "uniqid": "testing63d725",
+                "user_id": 0,
+                "type": "ip",
+                "data": "1.2.3.5.6",
+                "note": "Demo Blacklist",
+                "created_at": 1586045814,
+                "updated_at": 1586515431
+            }
+        ] 
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
@@ -602,24 +680,25 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ins">
                   <h3><b>Create a Blacklist</b></h3>
                   <p>
-                    <span className="param">POST</span> /api/v2/blacklist <br />
-                    Creates a Blacklist and return the created Blacklist
+                    <span className="param">PUT</span> /blacklist <br />
+                    Creates a Blacklist and returns the Uniqid. <br /><br />
                   </p>
+                  <p><b>Argument</b></p>
                   <table>
                     <tbody>
                       <tr>
                         <td>
-                          <p className="param">blacklist_type</p>
-                          <p>integer</p>
+                          <p className="param">type</p>
+                          <p>string</p>
                           <p className="required">REQUIRED</p>
                         </td>
                         <td>
-                          1 for Email. 2 for IP address. 3 for Country Code
+                          Can be email, ip or country.
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <p className="param">blacklist_data</p>
+                          <p className="param">data</p>
                           <p>string</p>
                           <p className="required">REQUIRED</p>
                         </td>
@@ -633,7 +712,7 @@ DELETE /api/v2/blacklist/:id`}
                           <p>string</p>                          
                         </td>
                         <td>
-                          Internal note for the reasoning of the blacklist
+                          Internal note for the reasoning of the blacklist.
                         </td>
                       </tr>
                     </tbody>
@@ -642,19 +721,22 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      <p>CREATE A BLACKLIST</p>
-                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.create(
-    blocked_data: 'ZW',
-    blacklist_type: 3
-)` } button-title="Copy">
+                      <p>CREATE BLACKLIST REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "type": "ip",
+    "data": "1.2.3.4",
+    "note": "demo"
+}
+` } button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`Sellix::Blacklist.create(
-    blocked_data: 'ZW',
-    blacklist_type: 3
-)`}
+                      {`{
+    "type": "ip",
+    "data": "1.2.3.4",
+    "note": "demo"
+}`}
                     </SyntaxHighlighter>
                   </div>
                   <div className="code-block response">
@@ -663,12 +745,14 @@ DELETE /api/v2/blacklist/:id`}
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
-  "id": "bGYSEexV",
-  "blocked_data": "ZW",
-  "blacklist_type": 3,
-  "note": "This is a demo blacklist",
-  "created_at": "2019-12-28T16:47:01.000+00:00",
-  "updated_at": "2019-12-28T16:47:01.000+00:00"
+    "status": 200,
+    "data": {
+        "uniqid": "testingbb6ac5"
+    },
+    "message": "Blacklist Created Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
 }`}
                     </SyntaxHighlighter>
                   </div>
@@ -676,29 +760,30 @@ DELETE /api/v2/blacklist/:id`}
               </section>
               <section id="update-blacklist">
                 <div className="d-ins">
-                  <h3><b>Update Blacklist</b></h3>
+                  <h3><b>Edit Blacklist</b></h3>
                   <p>
-                    <span className="param">PUT</span> /api/v2/blacklist/:id <br />
-                    Update a Blacklist by ID and return the updated Blacklist
+                    <span className="param">POST</span> /blacklists/:uniqid <br />
+                    Edits a Blacklist. <br /><br />
                   </p>
+                  <p><b>Argument</b></p>
                   <table>
                     <tbody>
                       <tr>
                         <td>
-                          <p className="param">blacklist_type</p>
-                          <p>integer</p>                          
+                          <p className="param">type</p>
+                          <p>string</p>                          
                         </td>
                         <td>
-                          1 for Email. 2 for IP address. 3 for Country Code
+                          Can be email, ip or country.
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <p className="param">blacklist_data</p>
+                          <p className="param">data</p>
                           <p>string</p>
                         </td>
                         <td>
-                          Blocked data. Either country code, email or IP address
+                          Blocked data. Either country code, email or IP address.
                         </td>
                       </tr>
                       <tr>
@@ -707,7 +792,7 @@ DELETE /api/v2/blacklist/:id`}
                           <p>string</p>                          
                         </td>
                         <td>
-                          Internal note for the reasoning of the blacklist
+                          Internal note for the reasoning of the blacklist.
                         </td>
                       </tr>
                     </tbody>
@@ -716,17 +801,21 @@ DELETE /api/v2/blacklist/:id`}
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      <p>UPDATE A BLACKLIST</p>
-                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.update('bGYSEexV',
-    blocked_data: 'GR'
-)` } button-title="Copy">
+                      <p>EDIT BLACKLIST REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "type": "country",
+    "data": "IT",
+    "note": "demo editing"
+}` } button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`Sellix::Blacklist.update('bGYSEexV',
-    blocked_data: 'GR'
-)`}
+                      {`{
+    "type": "country",
+    "data": "IT",
+    "note": "demo editing"
+}`}
                     </SyntaxHighlighter>
                   </div>
                   <div className="code-block response">
@@ -735,12 +824,12 @@ DELETE /api/v2/blacklist/:id`}
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
-  "id": "bGYSEexV",
-  "blocked_data": "GR",
-  "blacklist_type": 3,
-  "note": "This is a demo blacklist",
-  "created_at": "2019-12-28T16:47:01.000+00:00",
-  "updated_at": "2019-12-28T16:48:02.000+00:00"
+    "status": 200,
+    "data": null,
+    "message": "Blacklist Edited Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
 }`}
                     </SyntaxHighlighter>
                   </div>
@@ -748,22 +837,344 @@ DELETE /api/v2/blacklist/:id`}
               </section>
               <section id="destroy-blacklist">
                 <div className="d-ins">
-                  <h3><b>Destroy Blacklist</b></h3>
+                  <h3><b>Delete Blacklist</b></h3>
                   <p>
-                    <span className="required">DELETE</span> /api/v2/blacklist/:id <br />
-                    Destroys a Blacklist by ID
+                    <span className="required">DELETE</span> /blacklists/:uniqid <br />
+                    Deletes a Blacklist.
                   </p>
+                </div>
+                <div className="d-ex">
+                  {/*<div className="code-block">
+                        <div className="code-block-header">
+                          <p>DESTROY A BLACKLIST</p>
+                          <Clipboard data-clipboard-text={ `Sellix::Blacklist.destroy('bGYSEexV')` } button-title="Copy">
+                            <i className="fa fa-clone" aria-hidden="true"></i>
+                          </Clipboard>
+                        </div>
+                        <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                          {`Sellix::Blacklist.destroy('bGYSEexV')`}
+                        </SyntaxHighlighter>
+                      </div>*/}
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": null,
+    "message": "Blacklist Deleted Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="categories">
+                <div className="d-ins">
+                  <h3><b>Categories</b></h3>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`GET /categories/:uniqid
+GET /categories
+POST /categories
+PUT /categories/:uniqid
+DELETE /categories/:uniqid`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="category-object">
+                <div className="d-ins">
+                  <h3><b>Category Object</b></h3>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Unique id, auto incremented for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">uniqid</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Unique identifier for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">user_id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          ID of the user who created the category.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">title</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Title of the category, displayed in the site.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">unlisted</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          0 or 1, if 1 the category is not displayed on the shop page.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">sort_priority</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Used to order the categories on the shop page, ordered by ASC.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>
+                        </td>
+                        <td>
+                          Array of products objects that the category contains.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_count</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Count of how many items the products_bound array contains.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">created_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was created.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">updated_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was last updated. If never updated, it will be NULL.
+                        </td>
+                      </tr>
+                    </tbody>                          
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>THE CATEGORY OBJECT</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "id": 0,
+    "uniqid": "testing9ced89",
+    "user_id": 0,
+    "title": "Demo Category",
+    "unlisted": 0,
+    "sort_priority": 1,
+    "products_bound": [],
+    "products_count": 0,
+    "created_at": 1587110377,
+    "updated_at": null
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="get-category">
+                <div className="d-ins">
+                  <h3><b>Get a Category</b></h3>
+                  <p>
+                    <span className="required">GET</span> /categories/:uniqid <br />
+                    Retrieves a Category by Uniqid.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "category": {
+            "id": 0,
+            "uniqid": "testing9ced89",
+            "user_id": 0,
+            "title": "Demo Category",
+            "unlisted": 0,
+            "sort_priority": 1,
+            "products_bound": [],
+            "products_count": 0,
+            "created_at": 1587110377,
+            "updated_at": null
+        }
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="list-category">
+                <div className="d-ins">
+                  <h3><b>List All Categories</b></h3>
+                  <p>
+                    <span className="required">GET</span> /categories <br />
+                    Returns a list of all the Categories. The categories are sorted by creation date, with the most recently created categories being first.
+                  </p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">page</p>
+                          <p>integer</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "categories": [
+            {
+                "id": 0,
+                "uniqid": "testing9ced89",
+                "user_id": 0,
+                "title": "Demo Category",
+                "unlisted": 0,
+                "sort_priority": 1,
+                "products_bound": [],
+                "products_count": 0,
+                "created_at": 1587110377,
+                "updated_at": null
+            }
+        ]
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="create-category">
+                <div className="d-ins">
+                  <h3><b>Create a Category</b></h3>
+                  <p>
+                    <span className="required">PUT</span> /categories <br />
+                    Creates a Category and returns the Uniqid. <br /><br />
+                  </p>
+                  <p><b>Argument</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">title</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Title of the category, displayed in the site.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">unlisted</p>
+                          <p>int or boolean</p>                          
+                        </td>
+                        <td>
+                          0 or 1, true or false, if 1/true the category is not displayed on the shop page.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">sort_priority</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Used to order the categories on the shop page, ordered by ASC.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>                          
+                        </td>
+                        <td>
+                          Array of products uniqids that the category will contain.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <div className="d-ex">
                   <div className="code-block">
                     <div className="code-block-header">
-                      <p>DESTROY A BLACKLIST</p>
-                      <Clipboard data-clipboard-text={ `Sellix::Blacklist.destroy('bGYSEexV')` } button-title="Copy">
+                      <p>CREATE CATEGORY REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "title": "Demo Category",
+    "unlisted": false,
+    "sort_priority": 1,
+    "products_bound": [
+        "testing26bf06"
+    ]
+}` } button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
-                      {`Sellix::Blacklist.destroy('bGYSEexV')`}
+                      {`{
+    "title": "Demo Category",
+    "unlisted": false,
+    "sort_priority": 1,
+    "products_bound": [
+        "testing26bf06"
+    ]
+}`}
                     </SyntaxHighlighter>
                   </div>
                   <div className="code-block response">
@@ -771,12 +1182,616 @@ DELETE /api/v2/blacklist/:id`}
                       <p>RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`// No Content: 204 HTTP status`}
+                      {`{
+    "status": 200,
+    "data": {
+        "uniqid": "testing391049"
+    },
+    "message": "Category Created Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
-            </Container>  
+              <section id="edit-category">
+                <div className="d-ins">
+                  <h3><b>Edit Category</b></h3>
+                  <p>
+                    <span className="required">POST</span> /categories/:uniqid <br />
+                    Edits a Category. <br /><br />
+                  </p>
+                  <p><b>Argument</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">title</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Title of the category, displayed in the site.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">unlisted</p>
+                          <p>int or boolean</p>                          
+                        </td>
+                        <td>
+                          0 or 1, true or false, if 1/true the category is not displayed on the shop page.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">sort_priority</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Used to order the categories on the shop page, ordered by ASC.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>                          
+                        </td>
+                        <td>
+                          Array of products uniqids that the category will contain.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>EDIT CATEGORY REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "title": "Demo Category Edited",
+    "unlisted": false,
+    "sort_priority": 1,
+    "products_bound": [
+        "testing8h9ba4s"
+    ]
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                      {`{
+    "title": "Demo Category Edited",
+    "unlisted": false,
+    "sort_priority": 1,
+    "products_bound": [
+        "testing8h9ba4s"
+    ]
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "uniqid": "testing391049"
+    },
+    "message": "Category Edited Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="delete-category">
+                <div className="d-ins">
+                  <h3><b>Delete Category</b></h3>
+                  <p>
+                    <span className="required">DELETE</span> /categories/:uniqid <br />
+                    Deletes a Category.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": null,
+    "message": "Category Deleted Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="coupons">
+                <div className="d-ins">
+                  <h3><b>Coupons</b></h3>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`GET /coupons/:uniqid
+GET /coupons
+POST /coupons
+PUT /coupons/:uniqid
+DELETE /coupons/:uniqid`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="coupon-object">
+                <div className="d-ins">
+                  <h3><b>Coupon Object</b></h3>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Unique id, auto incremented for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">uniqid</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Unique identifier for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">user_id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          ID of the user who created the category.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">code</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Coupon code, used by customers to reedem the discount.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">use_type</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          0 or 1, if 0 means that the coupon is linked to specific products, 1 it’s valid for all.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">discount</p>
+                          <p>float</p>
+                        </td>
+                        <td>
+                          Percentage value of the discount.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">used</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          How many times the coupon has been used.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">max_uses</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          How many times can the coupon be used, -1 for unlimited.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>
+                        </td>
+                        <td>
+                          Array of products uniqids that the coupon is valid for.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_count</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Count of how many items the products_bound array contains.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">created_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was created.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">updated_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was last updated. If never updated, it will be NULL.
+                        </td>
+                      </tr>
+                    </tbody>                          
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>THE COUPON OBJECT</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "id": 0,
+    "uniqid": "testing1990aa",
+    "user_id": 0,
+    "code": "demo",
+    "use_type": 0,
+    "discount": 65,
+    "used": 0,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ],
+    "products_count": 1,
+    "created_at": 1585490881,
+    "updated_at": 1586354410
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="get-coupon">
+                <div className="d-ins">
+                  <h3><b>Get a Coupon</b></h3>
+                  <p>
+                    <span className="required">GET</span> /coupons/:uniqid <br />
+                    Retrieves a Coupon by Uniqid.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "coupon": {
+            "id": 0,
+            "uniqid": "testing1990aa",
+            "user_id": 0,
+            "code": "demo",
+            "use_type": 0,
+            "discount": 65,
+            "used": 0,
+            "max_uses": -1,
+            "products_bound": [
+                "testing1990aa"
+            ],
+            "products_count": 1,
+            "created_at": 1585490881,
+            "updated_at": 1586354410
+        }
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="list-coupon">
+                <div className="d-ins">
+                  <h3><b>List All Coupons</b></h3>
+                  <p>
+                    <span className="required">GET</span> /coupons <br />
+                    Returns a list of all the Coupons. The coupons are sorted by creation date, with the most recently created coupons being first.
+                  </p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">page</p>
+                          <p>integer</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "coupon": [
+            {
+                "id": 0,
+                "uniqid": "testing1990aa",
+                "user_id": 0,
+                "code": "demo",
+                "use_type": 0,
+                "discount": 65,
+                "used": 0,
+                "max_uses": -1,
+                "products_bound": [
+                    "testing1990aa"
+                ],
+                "products_count": 1,
+                "created_at": 1585490881,
+                "updated_at": 1586354410
+            }
+        ]
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="create-coupon">
+                <div className="d-ins">
+                  <h3><b>Create a Coupon</b></h3>
+                  <p>
+                    <span className="required">PUT</span> /coupon <br />
+                    Creates a Coupon and returns the Uniqid.<br /><br />
+                  </p>
+                  <p><b>Argument</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">code</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Code of the Coupon.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">discount_value</p>
+                          <p>float</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Percentage amount of the discount.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">max_uses</p>
+                          <p>int</p>                          
+                        </td>
+                        <td>
+                          How many times can the coupon be used, defaulted to -1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>                          
+                        </td>
+                        <td>
+                          Array of products uniqids that the category will contain.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>CREATE COUPON REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "code": "demo",
+    "discount_value": 65,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ]
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                      {`{
+    "code": "demo",
+    "discount_value": 65,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ]
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "uniqid": "testing391049"
+    },
+    "message": "Coupon Created Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="edit-coupon">
+                <div className="d-ins">
+                  <h3><b>Edit Coupon</b></h3>
+                  <p>
+                    <span className="required">POST</span> /coupons/:uniqid <br />
+                    Edits a Coupon. <br /><br />
+                  </p>
+                  <p><b>Argument</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">code</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Code of the Coupon.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">discount_value</p>
+                          <p>float</p>                          
+                        </td>
+                        <td>
+                          Percentage amount of the discount.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">max_uses</p>
+                          <p>int</p>                          
+                        </td>
+                        <td>
+                          How many times can the coupon be used, defaulted to -1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>                          
+                        </td>
+                        <td>
+                          Array of products uniqids that the category will contain.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>EDIT COUPON REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "code": "demo",
+    "discount_value": 65,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ]
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                      {`{
+    "code": "demo",
+    "discount_value": 65,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ]
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "uniqid": "testing391049"
+    },
+    "message": "Coupon Edited Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="delete-coupon">
+                <div className="d-ins">
+                  <h3><b>Delete Coupon</b></h3>
+                  <p>
+                    <span className="required">DELETE</span> /coupons/:uniqid <br />
+                    Deletes a Coupon.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": null,
+    "message": "Coupon Deleted Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+            </Container>
           </div>          
         </div>        
       </div>

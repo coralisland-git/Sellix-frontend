@@ -190,11 +190,12 @@ class AdminLayout extends React.Component {
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true} />
                     <Switch>
                       {
-                        adminRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) =>
-                          redirect ?
+                        adminRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) => {
+
+                          return redirect ?
                               <Redirect from={path} to={pathTo} key={key} /> :
                               <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key} />
-                        )
+                        })
                       }
                     </Switch>
                   </Suspense>

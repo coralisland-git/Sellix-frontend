@@ -44,7 +44,8 @@ export const USERS = {
 }
 
 export const USER = {
-  USER: 'USER'
+  USER: 'USER',
+  BAN: 'BAN'
 }
 
 export const TOP_USERS = {

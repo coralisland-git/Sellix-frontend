@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import { AreaChart, ResponsiveContainer, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { Loader } from 'components';
+import * as moment from 'moment/moment';
 
 import './style.scss'
 
@@ -8,8 +10,11 @@ class RevenueChart extends PureComponent {
 
   render() {
 
-    const { data, datakey } = this.props;
+    const { data, range } = this.props;
 
+    if(!data.length) {
+      return <Loader />
+    }
     const days = data.map(({ day_value }) => day_value)
     const months = data.map(({ month }) => month)
     const years = data.map(({ year }) => year)
@@ -25,7 +30,7 @@ class RevenueChart extends PureComponent {
         month: months[key],
         year: years[key],
         order: orders[key],
-      })
+      });
     });
 
     const CustomTooltip = ({ active, payload }) => {
@@ -45,6 +50,16 @@ class RevenueChart extends PureComponent {
       return null;
     };
 
+    const CustomizedAxisTick = ({ x, y, payload }) => {
+        return (
+            <text x={x} y={y} dy={16} dx={-6} fontSize={12} textAnchor="middle" fill="#666">
+              {range === 'daily' ? dataset[payload.index].day : null}
+              &nbsp;{dataset[payload.index].month}&nbsp;
+              {range !== 'daily' ? dataset[payload.index].year : null}
+            </text>
+        );
+    };
+
     return (
         <ResponsiveContainer width={"100%"} height={350}>
           <AreaChart height={350} data={dataset} margin={{ top: 10, right: 10, left: -30, bottom: 0 }} >
@@ -59,7 +74,11 @@ class RevenueChart extends PureComponent {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="0 0" vertical={false} />
-            <XAxis stroke={"#e8e8e8"} axisLine={{ stroke: "#666" }} tick={{ fontSize: 12, fill: '#666' }} dataKey={datakey} />
+            <XAxis
+                stroke={"#e8e8e8"}
+                tick={CustomizedAxisTick}
+                interval={dataset.length >= 14 ? 1 : 0}
+            />
             <YAxis stroke={"#e8e8e8"} axisLine={{ stroke: "#666" }} tick={{ fontSize: 12, fill: '#666' }}  />
             <Tooltip cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: "5 5" }} content={CustomTooltip}/>
             <Area

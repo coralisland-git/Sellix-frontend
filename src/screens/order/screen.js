@@ -6,15 +6,12 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
-  ButtonGroup,
   Input
 } from 'reactstrap'
-import { ToastContainer, toast } from 'react-toastify'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
-import moment from 'moment'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import * as moment from 'moment/moment'
 import config from 'constants/config'
 import { Loader, Spin } from 'components'
 import { tableOptions } from 'constants/tableoptions'
@@ -28,6 +25,7 @@ import cancelledIcon from 'assets/images/order/Cancelled_Icon.svg'
 import completedIcon from 'assets/images/order/Check_Icon.svg'
 import paritalIcon from 'assets/images/order/Partially_Icon.svg'
 import pendingIcon from 'assets/images/order/Pending_Icon.svg'
+import IntervalTimer from 'react-interval-timer';
 
 const STATUS_ICON = {
   '0': pendingIcon,
@@ -126,11 +124,11 @@ class Order extends React.Component {
   renderOrderInfo (cell, row) {
     return (
       <div>
-        <p><a onClick={(e) => this.gotoDetail(row.uniqid)} style={{fontSize: 15, fontWeight: 700}}>
+        <p><a onClick={(e) => this.gotoDetail(row.uniqid)} style={{fontSize: 15, fontWeight: 600}}>
           <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}></i>&nbsp;&nbsp;&nbsp;
           {`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
-        <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
+        <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title ? row.product_title : row.product_id}</p>
       </div>
     )  
   }
@@ -149,7 +147,7 @@ class Order extends React.Component {
   renderOrderValue(cell, row) {
     return (
       <div className="order">
-        <p className="order-value" style={{fontSize: 15, fontWeight: 700}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
+        <p className="order-value" style={{fontSize: 15, fontWeight: 600}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
         <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {PAYMENT_OPTS[row.gateway]}</p>
       </div>
     )  
@@ -158,7 +156,7 @@ class Order extends React.Component {
   renderOrderTime(cell, row) {
     return (
       <div>
-        <p style={{fontSize: 15, fontWeight: 700}}>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+        <p style={{fontSize: 15, fontWeight: 600}}>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
         <p>{new moment(new Date(row.created_at*1000)).format('MMM DD')}</p>
       </div>
     )  
@@ -189,9 +187,16 @@ class Order extends React.Component {
 
     let isAdmin = window.location.pathname.includes('admin');
 
+    console.log(order_list)
     return (
       <div className="order-screen">
         <div className="animated fadeIn">
+          <IntervalTimer
+              timeout={2000}
+              callback={() => this.props.actions.getLiveOrdersViaWebsocket()}
+              enabled={live_order_display == 'live'}
+              repeat={true}
+          />
           <Card>
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
@@ -215,7 +220,7 @@ class Order extends React.Component {
                         onChange={(e) => {
                           this.setState({search_key: e.target.value})
                         }}
-                      ></Input>
+                      />
                     </div>
                   </div>
                 </Col>

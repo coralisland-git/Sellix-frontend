@@ -34,3 +34,40 @@ export const updateUser = (user) => () => (
             throw err
           })
 )
+
+
+export const banUser = (id) => (dispatch) => (
+      authApi.post(`admin/users/ban`, formData({id}))
+          .then(res => {
+            if (res.status === 200) {
+                dispatch({
+                    type: USER.BAN,
+                    payload: "1"
+                })
+              return res
+            } else {
+              throw res
+            }
+          })
+          .catch(err => {
+            throw err
+          })
+)
+
+export const unbanUser = (id) => (dispatch) => (
+      authApi.post(`admin/users/unban`, formData({id}))
+          .then(res => {
+            if (res.status === 200) {
+                dispatch({
+                    type: USER.BAN,
+                    payload: "0"
+                })
+              return res
+            } else {
+              throw res
+            }
+          })
+          .catch(err => {
+            throw err
+          })
+)

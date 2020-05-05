@@ -2,17 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Card, CardHeader, Row, Col } from 'reactstrap'
-import { getUser, updateUser } from './actions'
+import { getUser, updateUser, banUser, unbanUser } from './actions'
 import { CommonActions } from "../../../../services/global";
-import moment from 'moment'
 import UserEditForm from './form'
 import UserProductsTable from './products'
 import UserOrdersTable from './orders'
 import UserIpsTable from './ips';
-import { pick, mapValues } from "lodash";
-import { withRouter } from "react-router-dom";
+import { pick } from "lodash";
+import { withRouter, Link } from "react-router-dom";
 
 import './style.scss'
+
+import { Button, Spin } from "../../../../components";
 
 
 
@@ -21,6 +22,8 @@ import './style.scss'
 
 const mapStateToProps = ({ users: { user }}) => ({ user })
 const mapDispatchToProps = (dispatch) => ({
+  unbanUser: bindActionCreators(unbanUser, dispatch),
+  banUser: bindActionCreators(banUser, dispatch),
   getUser: bindActionCreators(getUser, dispatch),
   updateUser: bindActionCreators(updateUser, dispatch),
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
@@ -37,7 +40,14 @@ class User extends Component {
   }
 
   componentDidMount(){
+    this.getUser()
+  }
+
+  getUser = () => {
     this.props.getUser(this.props.match.params.id)
+        .then((res) => {
+            document.title = `User: ${res.data.user.username} | Sellix`
+        })
   }
 
 
@@ -46,12 +56,12 @@ class User extends Component {
 
     const { updateUser, tostifyAlert } = this.props;
 
-    const dataForSend = pick(values, ['username', 'email', 'otp_2fa', 'email_2fa'])
-    const correctFormatForSend = mapValues(dataForSend, data => data === true ? 1 : data === false ? 0 : data );
+    const dataForSend = pick(values, ['username', 'email', 'otp_2fa', 'email_2fa', 'id'])
 
-    updateUser(correctFormatForSend)
+    updateUser(dataForSend)
         .then(res => {
-          tostifyAlert('success', res.message)
+          this.getUser()
+          tostifyAlert('success', res.data.message)
         })
         .catch(err => {
           tostifyAlert('error', err.error)
@@ -59,6 +69,30 @@ class User extends Component {
         .finally(() => {
           this.setState({ userLoading: false })
         })
+  }
+
+  banUser = () => {
+    const { user: { banned, id }, banUser, unbanUser, tostifyAlert } = this.props;
+
+    if(banned === "0") {
+      banUser(id)
+          .then(res => {
+            this.getUser()
+            tostifyAlert('success', res.data.message)
+          })
+          .catch(res => {
+            tostifyAlert('error', res.error)
+          })
+    } else {
+      unbanUser(id)
+          .then(res => {
+            this.getUser()
+            tostifyAlert('success', res.data.message)
+          })
+          .catch(res => {
+            tostifyAlert('error', res.error)
+          })
+    }
   }
 
 
@@ -86,22 +120,36 @@ class User extends Component {
           <Row>
             <Col lg={4} md={12} className="mx-auto">
               <UserEditForm user={user} loading={userLoading} handleSubmit={this.handleSubmit}/>
+              <Row>
+                <Col lg={6} className={"mb-4"}>
+                  <Button color="primary" type="submit" className={user.banned === "0" ? "ban-button" : "unban-button"} style={{ width: "100%" }} onClick={this.banUser}>
+                    {loading ? <Spin/> : user.banned === "0" ? 'Ban user' : 'Unban user'}
+                  </Button>
+                </Col>
+                <Col lg={6} className={"mb-4"}>
+                  <Link to={`/${user.username}`} target={"_blank"}>
+                    <Button color="primary" type="submit" style={{width: "100%"}}>
+                      Go to user's shop
+                    </Button>
+                  </Link>
+                </Col>
+              </Row>
             </Col>
 
             <Col lg={8} md={12} className="mx-auto">
-              <UserProductsTable products={products}/>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col lg={12} className="mx-auto">
-              <UserOrdersTable invoices={invoices} loading={loading}/>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col lg={12} className="mx-auto">
               <UserIpsTable ips={ips} loading={loading}/>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col lg={12} className="mx-auto">
+              <UserOrdersTable invoices={invoices} loading={loading} />
+            </Col>
+          </Row>
+
+          <Row>
+            <Col lg={12} className="mx-auto">
+              <UserProductsTable products={products}/>
             </Col>
           </Row>
 

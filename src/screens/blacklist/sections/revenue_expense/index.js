@@ -11,7 +11,8 @@ import {
   CardBody
 } from 'reactstrap'
 import { DateRangePicker2 } from 'components'
-import moment from 'moment'
+import * as moment from 'moment/moment'
+
 import './style.scss'
 
 const expenseOption = {

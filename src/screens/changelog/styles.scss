@@ -4,6 +4,16 @@
     font-family: var(--font-family-sans-serif);
   }
 
+  &.create {
+    .changelog-container {
+      display: block;
+
+      &:first-child {
+        padding-top: 0;
+      }
+    }
+  }
+
   .section {
     &:first-child {
       padding-top: 5rem;

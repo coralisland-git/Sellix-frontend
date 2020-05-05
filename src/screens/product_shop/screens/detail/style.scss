@@ -1,4 +1,12 @@
 .detail-product-screen {
+
+  .quantity-picker {
+    opacity: 0.75;
+    &:not(.text-grey):hover {
+      opacity: 1;
+    }
+  }
+
   .card-header {
     color: #20a8d8;
   }

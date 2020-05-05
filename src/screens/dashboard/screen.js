@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import NumberFormat from 'react-number-format';
-import moment from 'moment';
+import * as moment from 'moment/moment'
 import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
 
 import { DateRangePicker2, Loader } from 'components'
@@ -59,7 +59,7 @@ const Progress = ({ progress, isPositive, is24 }) => {
 
 
 const DATE_RANGES =  {
-  'Last 24 hours': [moment().subtract(1, 'days'), moment(), 'daily'],
+  'Last 24 hours': [moment(), moment(), 'daily'],
   'Last 30 days': [moment().subtract(29, 'days'), moment(), 'daily'],
   'This month': [moment().startOf('month'), moment().endOf('month'), 'daily'],
   'This year': [moment().startOf('year'), moment(), 'monthly'],
@@ -84,20 +84,33 @@ class Dashboard extends React.Component {
       ordersProgress: 0,
       viewsProgress: 0,
       queriesProgress: 0,
+      showPlaceholder: false,
     }
   }
 
   getAnalyticsData = (date, initial) => {
-    const startDate = date.startDate.format('MM/DD/YYYY');
-    const endDate = date.endDate.format('MM/DD/YYYY');
+
+    let startDate = null;
+    let endDate = null;
+
+    if(!date.startDate.isSame(date.endDate, 'day')) {
+      startDate = date.startDate.format('MM/DD/YYYY');
+      endDate = date.endDate.format('MM/DD/YYYY');
+    }
+
+    this.setState({
+      range: DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]
+    })
+
     const { getAnalyticsData, geLastInvoices } = this.props;
 
     this.setState({ loading: true });
 
-    if(initial) {
+    if(initial || !startDate) {
+
       let requests = [
         getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
-        getAnalyticsData(moment().subtract(1, 'days'), moment(), 'daily')
+        getAnalyticsData()
       ]
 
       let isAdmin = window.location.pathname.includes('admin')
@@ -106,28 +119,36 @@ class Dashboard extends React.Component {
         requests.push(geLastInvoices())
       }
 
-      Promise.all(requests).then((response) => {
+      Promise.all(requests)
+          .then((response) => {
 
-        let analytics = response[0].data.analytics;
-        let total = response[1].data.analytics.total;
-        let invoices = isAdmin ? [] : response[2].data.invoices;
+            if(response[0].status === 401 || response[1].status === 401) {
+              this.setState({ showPlaceholder: true })
+              return
+            }
 
-        this.setState({
-          totalRevenue: total.revenue || 0,
-          totalOrders: total.orders_count || 0,
-          totalViews: total.views_count || 0,
-          totalQueries: total.queries_count || 0,
-          revenueProgress: total.revenue_progress || 0,
-          ordersProgress: total.orders_count_progress || 0,
-          viewsProgress: total.views_count_progress || 0,
-          queriesProgress: total.queries_count_progress || 0,
-          chartData: analytics['daily'],
-          invoices: invoices
-        })
-      })   .finally(() => {
-        this.setState({loading: false})
-      })
+            let analytics = response[0].data.analytics;
+            let total = response[1].data.analytics.total;
+            let invoices = isAdmin ? [] : response[2].data.invoices;
+
+            this.setState({
+              totalRevenue: total.revenue || 0,
+              totalOrders: total.orders_count || 0,
+              totalViews: total.views_count || 0,
+              totalQueries: total.queries_count || 0,
+              revenueProgress: total.revenue_progress || 0,
+              ordersProgress: total.orders_count_progress || 0,
+              viewsProgress: total.views_count_progress || 0,
+              queriesProgress: total.queries_count_progress || 0,
+              chartData: analytics['daily'],
+              invoices: invoices
+            })
+          })
+          .finally(() => {
+            this.setState({loading: false})
+          })
     } else {
+
       getAnalyticsData(startDate, endDate)
           .then(({ data: { analytics } }) => {
             const { total } = analytics;
@@ -167,7 +188,7 @@ class Dashboard extends React.Component {
           <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
           </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
-        <p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title}</p>
+        <p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title?row.product_title:row.product_id}</p>
       </div>
   )
 
@@ -204,8 +225,12 @@ class Dashboard extends React.Component {
       ordersProgress,
       viewsProgress,
       queriesProgress,
-      invoices
+      invoices,
+      showPlaceholder,
+      range
     } = this.state;
+
+    console.log(range)
 
     return (
       <div className="dashboard-screen">
@@ -225,12 +250,15 @@ class Dashboard extends React.Component {
             </CardHeader>
 
             <div className="pt-4">
-              {loading && <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>}
-              {!loading && <div>
+              {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+
+              {(!loading && showPlaceholder) ?
+                  <div className={'mt-5 pt-5 unauthorized-container'}>
+                    <div>
+                      <Loader className={"override-loader"} />
+                      <div>Unauthorized to view this content</div>
+                    </div>
+                  </div> : <div>
                     <Row className="mt-4">
                       <Col lg={3}>
                         <Card>
@@ -245,6 +273,7 @@ class Dashboard extends React.Component {
 
                               <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
                             </div>
+
                             <div className="progress-xs mt-3 progress">
                               <div 
                                 className={`progress-bar ${revenueProgress>0?'bg-success':(revenueProgress==0?'bg-warning':'bg-danger')}`} 
@@ -253,6 +282,7 @@ class Dashboard extends React.Component {
                                 aria-valuemin="0" 
                                 aria-valuemax="100" />
                             </div>
+
                           </CardBody>
                         </Card>
                       </Col>
@@ -316,8 +346,11 @@ class Dashboard extends React.Component {
                     </Row>
 
                     <h5 className="mb-4">Revenues | Orders</h5>
-                    <CardBody className="">
-                      <DashBoardChart height="350px" data={chartData}/>
+                    <CardBody className="position-relative">
+                      <div className={"position-absolute d-flex justify-content-flex-end"} style={{ fontSize: ".8rem", fontWeight: 200, top: "1rem", right: "1rem" }}>
+                        This graph will always show a 14 days or higher time span
+                      </div>
+                      <DashBoardChart range={range} height="350px" data={chartData}/>
                     </CardBody>
 
                     {!!invoices.length && <h5 className="mb-4 mt-4">Last 5 Orders</h5>}

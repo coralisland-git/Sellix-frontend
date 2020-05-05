@@ -10,7 +10,7 @@ import {
   Input
 } from 'reactstrap'
 import { Button } from 'components';
-import moment from 'moment'
+import * as moment from 'moment/moment'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
@@ -155,7 +155,7 @@ class WebhookLogs extends React.Component {
 
   renderEvents (cell, row) {
     return(
-      <ul className="p-0 m-0">
+      <ul className="p-0 m-0 event-list">
         {
           row.event.split(',').map((event, index) => {
             return (
