@@ -60,7 +60,7 @@ const API_NAVIGATIONS = [
   { key: 'orders', value: 'Orders', has_children: true },
   { key: 'order-object', value: 'Order Object' },
   { key: 'get-order', value: 'Get an Order' },
-  { key: 'list-order', value: 'List All Orders' },
+  { key: 'list-orders', value: 'List All Orders' },
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -108,7 +108,8 @@ class Documentation extends React.Component {
                   currentClassName="active"
                   offset={ -50 }                  
                   onUpdate={
-                    (el) => {                      
+                    (el) => {
+                      console.log('~~~~~~~~~', el)
                       if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
                         this.props.history.push(`/documentation#${el.id}`)
                       }
@@ -2061,6 +2062,743 @@ POST /feedback/reply/:uniqid`}
     "error": null,
     "env": "staging"
 }`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+
+              <section id="orders">
+                <div className="d-ins">
+                  <h3><b>Orders</b></h3>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`GET /orders/:uniqid
+GET /oders`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="order-object">
+                <div className="d-ins">
+                  <h3><b>Order Object</b></h3>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">id</p>
+                          <p>int</p>
+                        </td>
+                        <td>Unique id, auto incremented for the object.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">uniqid</p>
+                          <p>string</p>
+                        </td>
+                        <td>Unique identifier for the object.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">total</p>
+                          <p>float</p>
+                        </td>
+                        <td>Total of the invoice in USD.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">total_display</p>
+                          <p>float</p>
+                        </td>
+                        <td>Total of the invoice in the product’s currency.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">currency</p>
+                          <p>float</p>
+                        </td>
+                        <td>Invoice currency, taken from the product’s.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">user_id</p>
+                          <p>int</p>
+                        </td>
+                        <td>ID of the user who created the product and earned the invoice (your id).</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">username</p>
+                          <p>string</p>
+                        </td>
+                        <td>username of the user who created the product and earned the invoice your username).</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">product_id</p>
+                          <p>string</p>
+                        </td>
+                        <td>Unique identifier for the invoice’s product.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">product_type</p>
+                          <p>string</p>
+                        </td>
+                        <td>Quick access, invoice’s product type, can be serials, file or service.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">product_price</p>
+                          <p>float</p>
+                        </td>
+                        <td>Price of the invoice’s product.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">file_attachment_uniqid</p>
+                          <p>string</p>
+                        </td>
+                        <td>If the product_type is file, the invoice has a linked file uniqid.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">gateway</p>
+                          <p>string</p>
+                        </td>
+                        <td>Can be bitcoin, litecoin, bitcoincash, ethereum, paypal, stripe, skrill, perfectmoney.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">paypal_email</p>
+                          <p>string</p>
+                        </td>
+                        <td>User’s PayPal email used to create the PayPal Order (your PayPal email).</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">paypal_tx_id</p>
+                          <p>string</p>
+                        </td>
+                        <td>PayPal transaction ID used to process the order.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">paypal_payer_email</p>
+                          <p>string</p>
+                        </td>
+                        <td>Email of the customer who bought through PayPal.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">skrill_email</p>
+                          <p>string</p>
+                        </td>
+                        <td>User’s Skrill email used to create the Skrill Order (your Skrill email).</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">skrill_sid</p>
+                          <p>string</p>
+                        </td>
+                        <td>Skrill transaction ID used to process the order.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">skrill_link</p>
+                          <p>string</p>
+                        </td>
+                        <td>Skrill link where the customer is redirected to proceed with the order.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">stripe_id</p>
+                          <p>string</p>
+                        </td>
+                        <td>Stripe PaymentIntend id.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">stripe_client_secret</p>
+                          <p>string</p>
+                        </td>
+                        <td>Stripe secret taken from the user (your client secret).</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">perfectmoney_id</p>
+                          <p>string</p>
+                        </td>
+                        <td>PerfectMoney user account id (your account id).</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">crypto_address</p>
+                          <p>string</p>
+                        </td>
+                        <td>Crypto Address where the crypto_amount should be sent to.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">crypto_amount</p>
+                          <p>float</p>
+                        </td>
+                        <td>Crypto Amount needed to fulfill the order.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">crypto_received</p>
+                          <p>float</p>
+                        </td>
+                        <td>Crypto Amount received so far.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">crypto_uri</p>
+                          <p>string</p>
+                        </td>
+                        <td>URI to create the Crypto QRCode.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">crypto_confirmations</p>
+                          <p>int</p>
+                        </td>
+                        <td>How many confirmations are needed to confirm a transaction.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">country</p>
+                          <p>string</p>
+                        </td>
+                        <td>Customer’s country.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">location</p>
+                          <p>string</p>
+                        </td>
+                        <td>Customer’s location</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">ip</p>
+                          <p>string</p>
+                        </td>
+                        <td>Customer’s IP</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">is_vpn_or_proxy</p>
+                          <p>bool</p>
+                        </td>
+                        <td>True if the customer IP is a VPN or a Proxy.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">user_agent</p>
+                          <p>string</p>
+                        </td>
+                        <td>Customer’s user agent.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">quantity</p>
+                          <p>int</p>
+                        </td>
+                        <td>Products quantity.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">coupon_id</p>
+                          <p>string</p>
+                        </td>
+                        <td>If a coupon is used, this will contain its ID.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">custom_fields</p>
+                          <p>object</p>
+                        </td>
+                        <td>Contains every custom field submitted for the order.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">developer_invoice</p>
+                          <p>bool</p>
+                        </td>
+                        <td>If true, this invoice was created through Sellix Developer’s API.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">developer_title</p>
+                          <p>string</p>
+                        </td>
+                        <td>Can be NULL, title specified when creating the invoice through Sellix Developer’s API.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">developer_webhook</p>
+                          <p>string</p>
+                        </td>
+                        <td>Can be NULL, webhook specified when creating the invoice through Sellix Developer’s API.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">developer_return_url</p>
+                          <p>string</p>
+                        </td>
+                        <td>Can be NULL, return url specified when creating the invoice through Sellix Developer’s API.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">status</p>
+                          <p>int</p>
+                        </td>
+                        <td>Invoice’s status, see more info about statuses below.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">discount</p>
+                          <p>float</p>
+                        </td>
+                        <td>If a coupon was applied, display how much was the discount.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">fee_fixed</p>
+                          <p>float</p>
+                        </td>
+                        <td>How much was taken into fees.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">fee_percentage</p>
+                          <p>float</p>
+                        </td>
+                        <td>How much was taken into percentage fees.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">day_value</p>
+                          <p>int</p>
+                        </td>
+                        <td>Used for analytics purpose, day of invoice creation.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">day</p>
+                          <p>string</p>
+                        </td>
+                        <td>Used for analytics purpose, string value of the day of invoice creation.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">month</p>
+                          <p>string</p>
+                        </td>
+                        <td>Used for analytics purpose, month of invoice creation.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">year</p>
+                          <p>int</p>
+                        </td>
+                        <td>Used for analytics purpose, year of invoice creation.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">created_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>The date and time that the resource was created.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">updated_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>The date and time that the resource was last updated. If never updated, it will be 0.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">serials</p>
+                          <p>array</p>
+                        </td>
+                        <td>Can be EMPTY, list of serials linked with this invoice.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">file</p>
+                          <p>object</p>
+                        </td>
+                        <td>Can be NULL, info of the file linked with this invoice.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">webhooks</p>
+                          <p>array</p>
+                        </td>
+                        <td>Can be EMPTY, list of webhooks sent for this invoice.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">crypto_payout</p>
+                          <p>bool</p>
+                        </td>
+                        <td>If true, the seller cut has been sent (you have received your money.).</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">crypto_payout_transaction</p>
+                          <p>object</p>
+                        </td>
+                        <td>Can be NULL, contains info about the payout transaction.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">crypto_transactions</p>
+                          <p>array</p>
+                        </td>
+                        <td>Can be EMPTY, list of all the crypto transactions for this invoice.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">stripe_user_id</p>
+                          <p>string</p>
+                        </td>
+                        <td>User’s stripe id used to create the order.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">stripe_publishable_key</p>
+                          <p>string</p>
+                        </td>
+                        <td>User’s stripe publishable key used to create the order.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">product</p>
+                          <p>object</p>
+                        </td>
+                        <td>Contains the full product object for this feedback.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>STATUSES (display this like EVENTS on webhooks)</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`0: PENDING
+1: COMPLETED
+2: CANCELLED
+3: WAITING FOR CONFIRMATIONS
+4: PARTIAL`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>THE ORDER OBJECT</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "id": 0,
+    "uniqid": "demo-c8cee7cfa1",
+    "total": 1.00,
+    "total_display": 1.00,
+    "currency": "USD",
+    "user_id": 0,
+    "username": "demo",
+    "customer_email": "demo@gmail.com",
+    "product_id": "demo8d66e",
+    "product_type": "serials",
+    "product_price": 0.50,
+    "file_attachment_uniqid": null,
+    "gateway": "stripe",
+    "paypal_email": null,
+    "paypal_tx_id": null,
+    "paypal_payer_email": null,
+    "skrill_email": null,
+    "skrill_sid": null,
+    "skrill_link": null,
+    "stripe_id": "demoMhCpr",
+    "stripe_client_secret": "demoJFSMHruJ5qL8",
+    "perfectmoney_id": null,
+    "crypto_address": null,
+    "crypto_amount": 0,
+    "crypto_received": 0,
+    "crypto_uri": null,
+    "crypto_confirmations": 1,
+    "country": "IT",
+    "location": "Italy, Europe",
+    "ip": "1.2.3.4",
+    "is_vpn_or_proxy": false,
+    "user_agent": "PostmanRuntime/7.6.0",
+    "quantity": 2,
+    "coupon_id": null,
+    "custom_fields": {
+        "Discord": "demo@gmail.com"
+    },
+    "developer_invoice": false,
+    "developer_title": null,
+    "developer_webhook": null,
+    "developer_return_url": null,
+    "status": 1,
+    "discount": 0,
+    "fee_fixed": 0,
+    "fee_percentage": 0,
+    "day_value": 23,
+    "day": "Thu",
+    "month": "Apr",
+    "year": 2020,
+    "created_at": 1587656376,
+    "updated_at": 1587656403,
+    "serials": [
+        "demo"
+    ],
+    "file": {
+        "id": 0,
+        "uniqid": "demo98agy",
+        "storage": "products",
+        "name": "demo",
+        "original_name": "originaldemo.jpg",
+        "extension": "jpg",
+        "user_id": 0,
+        "size": 1000,
+        "created_at": 1587656403
+    },
+    "webhooks": [
+        {
+            "uniqid": "demo81e98f",
+            "url": "https://demo.sellix.io/api/v1/webhook",
+            "event": "order:created",
+            "retries": 0,
+            "response_code": 200,
+            "created_at": 1587656376
+        }
+    ],
+    "crypto_payout": true,
+    "crypto_payout_transaction": {
+        "to_address" : "demotoaddress98uao8g9pan",
+        "from_address" : "demofromaddress98uao8g9pan",
+        "crypto_amount" : 0.001234,
+        "hash" : "demohash98yno8angs78aygn",
+        "created_at" : 1587656376
+    },
+    "crypto_transactions": [
+        {
+            "crypto_amount": 0.009876,
+            "hash": "demohash09889adn78a",
+            "confirmations": 2,
+            "created_at": 1587656376,
+            "updated_at": 1587656403
+        }
+    ],
+    "stripe_user_id": "demojCKqXa0g",
+    "stripe_publishable_key": "demoNU7ojI00sqQQjLGV",
+    "product": {
+        ...
+    }
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="get-order">
+                <div className="d-ins">
+                  <h3><b>Get an Order</b></h3>
+                  <p>
+                    <span className="required">GET</span> /order/:uniqid <br />
+                    Retrieves an Order by Uniqid.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "order": {
+            "id": 0,
+            "uniqid": "demo-c8cee7cfa1",
+            "total": 1.00,
+            "total_display": 1.00,
+            "currency": "USD",
+            "user_id": 0,
+            "username": "demo",
+            "customer_email": "demo@gmail.com",
+            "product_id": "demo8d66e",
+            "product_type": "serials",
+            "product_price": 0.50,
+            "file_attachment_uniqid": null,
+            "gateway": "stripe",
+            "paypal_email": null,
+            "paypal_tx_id": null,
+            "paypal_payer_email": null,
+            "skrill_email": null,
+            "skrill_sid": null,
+            "skrill_link": null,
+            "stripe_id": "demoMhCpr",
+            "stripe_client_secret": "demoJFSMHruJ5qL8",
+            "perfectmoney_id": null,
+            "crypto_address": null,
+            "crypto_amount": 0,
+            "crypto_received": 0,
+            "crypto_uri": null,
+            "crypto_confirmations": 1,
+            "country": "IT",
+            "location": "Italy, Europe",
+            "ip": "1.2.3.4",
+            "is_vpn_or_proxy": false,
+            "user_agent": "PostmanRuntime/7.6.0",
+            "quantity": 2,
+            "coupon_id": null,
+            "custom_fields": {},
+            "developer_invoice": false,
+            "developer_title": null,
+            "developer_webhook": null,
+            "developer_return_url": null,
+            "status": 1,
+            "discount": 0,
+            "fee_fixed": 0,
+            "fee_percentage": 0,
+            "day_value": 23,
+            "day": "Thu",
+            "month": "Apr",
+            "year": 2020,
+            "created_at": 1587656376,
+            "updated_at": 1587656403,
+            "serials": [],
+            "file": null,
+            "webhooks": [],
+            "crypto_payout": true,
+            "crypto_payout_transaction": null,
+            "crypto_transactions": [],
+            "stripe_user_id": "demojCKqXa0g",
+            "stripe_publishable_key": "demoNU7ojI00sqQQjLGV",
+            "product": {
+                ...
+            }
+        }
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="list-orders">
+                <div className="d-ins">
+                  <h3><b>List All Orders</b></h3>
+                  <p>
+                    <span className="required">GET</span> /order <br />
+                    Returns a list of all the Order. The order are sorted by creation date, with the most recently created order being first. <br />
+                    Product objects and additional info are not shown in the list endpoint.
+                  </p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">page</p>
+                          <p>integer</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "orders": [
+            {
+                "id": 0,
+                "uniqid": "demo-c8cee7cfa1",
+                "total": 1.00,
+                "total_display": 1.00,
+                "currency": "USD",
+                "user_id": 0,
+                "username": "demo",
+                "customer_email": "demo@gmail.com",
+                "product_id": "demo8d66e",
+                "product_type": "serials",
+                "product_price": 0.50,
+                "file_attachment_uniqid": null,
+                "gateway": "stripe",
+                "paypal_email": null,
+                "paypal_tx_id": null,
+                "paypal_payer_email": null,
+                "skrill_email": null,
+                "skrill_sid": null,
+                "skrill_link": null,
+                "stripe_id": "demoMhCpr",
+                "stripe_client_secret": "demoJFSMHruJ5qL8",
+                "perfectmoney_id": null,
+                "crypto_address": null,
+                "crypto_amount": 0,
+                "crypto_received": 0,
+                "crypto_uri": null,
+                "crypto_confirmations": 1,
+                "country": "IT",
+                "location": "Italy, Europe",
+                "ip": "1.2.3.4",
+                "is_vpn_or_proxy": false,
+                "user_agent": "PostmanRuntime/7.6.0",
+                "quantity": 2,
+                "coupon_id": null,
+                "custom_fields": {},
+                "developer_invoice": false,
+                "developer_title": null,
+                "developer_webhook": null,
+                "developer_return_url": null,
+                "status": 1,
+                "discount": 0,
+                "fee_fixed": 0,
+                "fee_percentage": 0,
+                "day_value": 23,
+                "day": "Thu",
+                "month": "Apr",
+                "year": 2020,
+                "created_at": 1587656376,
+                "updated_at": 1587656403,
+                "serials": [],
+                "file": null,
+                "webhooks": [],
+                "crypto_payout": true,
+                "crypto_payout_transaction": null,
+                "crypto_transactions": [],
+                    "stripe_user_id": "demojCKqXa0g",
+                    "stripe_publishable_key": "demoNU7ojI00sqQQjLGV",
+                    "product": {
+                        ...
+                    }
+                }
+            ]
+        },
+        "message": null,
+        "log": null,
+        "error": null,
+        "env": "production"
+    }
+    ...`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
