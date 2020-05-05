@@ -116,7 +116,7 @@ class Webhooks extends React.Component {
 
   renderEvents (cell, row) {
     return(
-      <ul className="p-0 m-0">
+      <ul className="p-0 m-0 event-list">
         {
           row.events.split(',').map((event, index) => {
             return (

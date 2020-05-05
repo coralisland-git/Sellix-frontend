@@ -441,11 +441,11 @@ class Documentation extends React.Component {
                     <br /><br /><b>Logs</b>
                   </p>
                   <p>
-                    Each webhook request will create a <a href="#">Webhook Log</a>. The object is created by the request 
+                    Each webhook request will create a <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/logs`}>Webhook Log</a>. The object is created by the request 
                     has been sent. Before the request response has actually been received, the <span className="badge-mark">response_code</span> will 
                     be <span className="badge-mark">0</span>, indicating it is pending.<br /><br />
                     Each webhook request will also include a <span className="badge-mark">X-Sellix-Webhook</span> request header 
-                    containing the <a href="#">Webhook Log</a> <span className="badge-mark">id</span>.
+                    containing the <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/logs`}>Webhook Log</a> <span className="badge-mark">id</span>.
                   </p>
                 </div>
                 <div className="d-ex">
