@@ -45,12 +45,12 @@ const NAVITATIONS_CATEGORY = [
 ]
 
 const NAVITATIONS_COUPON = [
-  { key: 'coupon-object', value: 'Coupons Object' },
-  { key: 'get-coupon', value: 'Get a Coupons' },
+  { key: 'coupon-object', value: 'Coupon Object' },
+  { key: 'get-coupon', value: 'Get a Coupon' },
   { key: 'list-coupon', value: 'List All Coupons' },
-  { key: 'create-coupon', value: 'Create a Coupons' },
-  { key: 'edit-coupon', value: 'Edit Coupons' },
-  { key: 'delete-coupon', value: 'Delete Coupons' }
+  { key: 'create-coupon', value: 'Create a Coupon' },
+  { key: 'edit-coupon', value: 'Edit Coupon' },
+  { key: 'delete-coupon', value: 'Delete Coupon' }
 ]
 
 const userId = window.localStorage.getItem('userId')
