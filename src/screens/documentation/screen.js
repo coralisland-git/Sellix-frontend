@@ -26,7 +26,7 @@ const NAVITATIONS = [
   { key: 'webhooks', value: 'Webhooks' }
 ]
 
-const API_NAVIGATIONS = [
+const NAVIGATIONS_BlACKLIST = [
   { key: 'blacklist-object', value: 'Blacklist Object' },    
   { key: 'get-blacklist', value: 'Get Blacklist' },
   { key: 'list-blacklist', value: 'List Blacklist' },
@@ -35,13 +35,22 @@ const API_NAVIGATIONS = [
   { key: 'destroy-blacklist', value: 'Destroy a Blacklist' }
 ]
 
-const NAVITATIONS_2 = [
+const NAVITATIONS_CATEGORY = [
   { key: 'category-object', value: 'Category Object' },
   { key: 'get-category', value: 'Get a Category' },
   { key: 'list-category', value: 'List All Categories' },
   { key: 'create-category', value: 'Create a Category' },
   { key: 'edit-category', value: 'Edit Category' },
   { key: 'delete-category', value: 'Delete Category' }
+]
+
+const NAVITATIONS_COUPON = [
+  { key: 'coupon-object', value: 'Coupons Object' },
+  { key: 'get-coupon', value: 'Get a Coupons' },
+  { key: 'list-coupon', value: 'List All Coupons' },
+  { key: 'create-coupon', value: 'Create a Coupons' },
+  { key: 'edit-coupon', value: 'Edit Coupons' },
+  { key: 'delete-coupon', value: 'Delete Coupons' }
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -74,13 +83,18 @@ class Documentation extends React.Component {
     items.push('api_reference');
     items.push('blacklist');
 
-    API_NAVIGATIONS.map((nav => {
+    NAVIGATIONS_BlACKLIST.map((nav => {
       items.push(nav.key)
     }))
 
 
     items.push('categories');
-    NAVITATIONS_2.map((nav => {
+    NAVITATIONS_CATEGORY.map((nav => {
+        items.push(nav.key)
+    }))
+
+    items.push('coupons');
+    NAVITATIONS_COUPON.map((nav => {
         items.push(nav.key)
     }))
 
@@ -119,7 +133,7 @@ class Documentation extends React.Component {
                   <li className="field">API REFERENCE</li>
                   <li><a href="/documentation#blacklist" >Blacklist</a></li>
                   {
-                    API_NAVIGATIONS.map((child, cindex) => {
+                    NAVIGATIONS_BlACKLIST.map((child, cindex) => {
                       return (
                         <li className="sub-nav" key={cindex}>
                           <a 
@@ -131,7 +145,19 @@ class Documentation extends React.Component {
                   }
                   <li><a href="/documentation#categories" >Categories</a></li>
                   {
-                    NAVITATIONS_2.map((nav, index) => {
+                    NAVITATIONS_CATEGORY.map((nav, index) => {
+                      return (
+                        <li className="sub-nav" key={index}>
+                          <a 
+                            href={`/documentation#${nav.key}`} 
+                          >{nav.value}</a>
+                        </li>
+                      )
+                    })
+                  }
+                  <li><a href="/documentation#coupons" >Coupons</a></li>
+                  {
+                    NAVITATIONS_COUPON.map((nav, index) => {
                       return (
                         <li className="sub-nav" key={index}>
                           <a 
@@ -1108,7 +1134,7 @@ DELETE /categories/:uniqid`}
                   <h3><b>Create a Category</b></h3>
                   <p>
                     <span className="required">PUT</span> /categories <br />
-                    Creates a Category and returns the Uniqid.
+                    Creates a Category and returns the Uniqid. <br /><br />
                   </p>
                   <p><b>Argument</b></p>
                   <table>
@@ -1144,7 +1170,7 @@ DELETE /categories/:uniqid`}
                       <tr>
                         <td>
                           <p className="param">products_bound</p>
-                          <p>string</p>                          
+                          <p>array</p>                          
                         </td>
                         <td>
                           Array of products uniqids that the category will contain.
@@ -1203,7 +1229,7 @@ DELETE /categories/:uniqid`}
                   <h3><b>Edit Category</b></h3>
                   <p>
                     <span className="required">POST</span> /categories/:uniqid <br />
-                    Edits a Category.
+                    Edits a Category. <br /><br />
                   </p>
                   <p><b>Argument</b></p>
                   <table>
@@ -1238,7 +1264,7 @@ DELETE /categories/:uniqid`}
                       <tr>
                         <td>
                           <p className="param">products_bound</p>
-                          <p>string</p>                          
+                          <p>array</p>                          
                         </td>
                         <td>
                           Array of products uniqids that the category will contain.
@@ -1310,6 +1336,482 @@ DELETE /categories/:uniqid`}
     "status": 200,
     "data": null,
     "message": "Category Deleted Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="coupons">
+                <div className="d-ins">
+                  <h3><b>Coupons</b></h3>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`GET /coupons/:uniqid
+GET /coupons
+POST /coupons
+PUT /coupons/:uniqid
+DELETE /coupons/:uniqid
+`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="coupon-object">
+                <div className="d-ins">
+                  <h3><b>Coupon Object</b></h3>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Unique id, auto incremented for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">uniqid</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Unique identifier for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">user_id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          ID of the user who created the category.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">code</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Coupon code, used by customers to reedem the discount.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">use_type</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          0 or 1, if 0 means that the coupon is linked to specific products, 1 it’s valid for all.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">discount</p>
+                          <p>float</p>
+                        </td>
+                        <td>
+                          Percentage value of the discount.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">used</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          How many times the coupon has been used.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">max_uses</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          How many times can the coupon be used, -1 for unlimited.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>
+                        </td>
+                        <td>
+                          Array of products uniqids that the coupon is valid for.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_count</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Count of how many items the products_bound array contains.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">created_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was created.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">updated_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was last updated. If never updated, it will be NULL.
+                        </td>
+                      </tr>
+                    </tbody>                          
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>THE COUPON OBJECT</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "id": 0,
+    "uniqid": "testing1990aa",
+    "user_id": 0,
+    "code": "demo",
+    "use_type": 0,
+    "discount": 65,
+    "used": 0,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ],
+    "products_count": 1,
+    "created_at": 1585490881,
+    "updated_at": 1586354410
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="get-coupon">
+                <div className="d-ins">
+                  <h3><b>Get a Coupon</b></h3>
+                  <p>
+                    <span className="required">GET</span> /coupons/:uniqid <br />
+                    Retrieves a Coupon by Uniqid.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "coupon": {
+            "id": 0,
+            "uniqid": "testing1990aa",
+            "user_id": 0,
+            "code": "demo",
+            "use_type": 0,
+            "discount": 65,
+            "used": 0,
+            "max_uses": -1,
+            "products_bound": [
+                "testing1990aa"
+            ],
+            "products_count": 1,
+            "created_at": 1585490881,
+            "updated_at": 1586354410
+        }
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="list-coupon">
+                <div className="d-ins">
+                  <h3><b>List All Coupons</b></h3>
+                  <p>
+                    <span className="required">GET</span> /coupons <br />
+                    Returns a list of all the Coupons. The coupons are sorted by creation date, with the most recently created coupons being first.
+                  </p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">page</p>
+                          <p>integer</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "coupon": [
+            {
+                "id": 0,
+                "uniqid": "testing1990aa",
+                "user_id": 0,
+                "code": "demo",
+                "use_type": 0,
+                "discount": 65,
+                "used": 0,
+                "max_uses": -1,
+                "products_bound": [
+                    "testing1990aa"
+                ],
+                "products_count": 1,
+                "created_at": 1585490881,
+                "updated_at": 1586354410
+            }
+        ]
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="create-coupon">
+                <div className="d-ins">
+                  <h3><b>Create a Coupon</b></h3>
+                  <p>
+                    <span className="required">PUT</span> /coupon <br />
+                    Creates a Coupon and returns the Uniqid.<br /><br />
+                  </p>
+                  <p><b>Argument</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">code</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Code of the Coupon.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">discount_value</p>
+                          <p>float</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Percentage amount of the discount.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">max_uses</p>
+                          <p>int</p>                          
+                        </td>
+                        <td>
+                          How many times can the coupon be used, defaulted to -1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>                          
+                        </td>
+                        <td>
+                          Array of products uniqids that the category will contain.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>CREATE COUPON REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "code": "demo",
+    "discount_value": 65,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ]
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                      {`{
+    "code": "demo",
+    "discount_value": 65,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ]
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "uniqid": "testing391049"
+    },
+    "message": "Coupon Created Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="edit-coupon">
+                <div className="d-ins">
+                  <h3><b>Edit Coupon</b></h3>
+                  <p>
+                    <span className="required">POST</span> /coupons/:uniqid <br />
+                    Edits a Coupon. <br /><br />
+                  </p>
+                  <p><b>Argument</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">code</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Code of the Coupon.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">discount_value</p>
+                          <p>float</p>                          
+                        </td>
+                        <td>
+                          Percentage amount of the discount.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">max_uses</p>
+                          <p>int</p>                          
+                        </td>
+                        <td>
+                          How many times can the coupon be used, defaulted to -1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">products_bound</p>
+                          <p>array</p>                          
+                        </td>
+                        <td>
+                          Array of products uniqids that the category will contain.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>EDIT COUPON REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "code": "demo",
+    "discount_value": 65,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ]
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                      {`{
+    "code": "demo",
+    "discount_value": 65,
+    "max_uses": -1,
+    "products_bound": [
+        "testing1990aa"
+    ]
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "uniqid": "testing391049"
+    },
+    "message": "Coupon Edited Successfully.",
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="delete-coupon">
+                <div className="d-ins">
+                  <h3><b>Delete Coupon</b></h3>
+                  <p>
+                    <span className="required">DELETE</span> /coupons/:uniqid <br />
+                    Deletes a Coupon.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": null,
+    "message": "Coupon Deleted Successfully.",
     "log": null,
     "error": null,
     "env": "staging"
