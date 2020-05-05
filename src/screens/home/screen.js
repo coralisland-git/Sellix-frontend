@@ -16,7 +16,7 @@ import background1 from 'assets/images/home/only_hero_bg.svg'
 import background2 from 'assets/images/home/Bg2@2x.png'
 
 import bottom_isometric from 'assets/images/home/Bottom_Isometric.svg'
-import Hero_Iphone_Mockup from 'assets/images/home/Hero_Iphone_Mockup.svg'
+import Hero_Iphone_Mockup from 'assets/images/home/hero_iphone.svg'
 import Reliable_Payment from 'assets/images/home/Reliable_Payment.svg'
 
 class Home extends React.Component {

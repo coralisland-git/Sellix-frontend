@@ -61,7 +61,7 @@ class Header extends Component {
             
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-2">
               <DropdownToggle className="user-name" nav>
-                <i className="fa icon-question nav-icon" style={{fontSize: 18, fontWeight: 'bold', marginTop: 2}} />
+                <i className="fa icon-question nav-icon" style={{fontSize: 18, fontWeight: 'bold'}} />
               </DropdownToggle>
               
               <DropdownMenu right className="mt-2">
@@ -76,7 +76,7 @@ class Header extends Component {
 
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none mr-3">
               <DropdownToggle className="user-name" nav>
-                <i className="fas fa-bell nav-icon" />
+                <i className="fas fa-bell nav-icon" style={{marginTop: 1}}/>
                 {notifications && notifications.length > 0 &&  
                   <sup>
                     <Badge color="danger" style={{ color: 'white', padding: '6px', height: '19px'}}>
