@@ -26,31 +26,36 @@ const NAVITATIONS = [
   { key: 'webhooks', value: 'Webhooks' }
 ]
 
-const NAVIGATIONS_BlACKLIST = [
-  { key: 'blacklist-object', value: 'Blacklist Object' },    
+const API_NAVIGATIONS = [
+  { key: 'blacklist', value: 'Blacklist', has_children: true },
+  { key: 'blacklist-object', value: 'Blacklist Object' },
   { key: 'get-blacklist', value: 'Get Blacklist' },
   { key: 'list-blacklist', value: 'List Blacklist' },
   { key: 'create-blacklist', value: 'Create a Blacklist' },
   { key: 'update-blacklist', value: 'Update a Blacklist' },
-  { key: 'destroy-blacklist', value: 'Destroy a Blacklist' }
-]
-
-const NAVITATIONS_CATEGORY = [
+  { key: 'destroy-blacklist', value: 'Destroy a Blacklist' },
+  
+  { key: 'categories', value: 'Categories', has_children: true },
   { key: 'category-object', value: 'Category Object' },
   { key: 'get-category', value: 'Get a Category' },
   { key: 'list-category', value: 'List All Categories' },
   { key: 'create-category', value: 'Create a Category' },
   { key: 'edit-category', value: 'Edit Category' },
-  { key: 'delete-category', value: 'Delete Category' }
-]
-
-const NAVITATIONS_COUPON = [
+  { key: 'delete-category', value: 'Delete Category' },
+  
+  { key: 'coupons', value: 'Coupons', has_children: true },
   { key: 'coupon-object', value: 'Coupon Object' },
   { key: 'get-coupon', value: 'Get a Coupon' },
   { key: 'list-coupon', value: 'List All Coupons' },
   { key: 'create-coupon', value: 'Create a Coupon' },
   { key: 'edit-coupon', value: 'Edit Coupon' },
-  { key: 'delete-coupon', value: 'Delete Coupon' }
+  { key: 'delete-coupon', value: 'Delete Coupon' },
+
+  { key: 'feedback', value: 'Feedback', has_children: true },
+  { key: 'feedback-object', value: 'Feedback Object' },
+  { key: 'get-feedback', value: 'Get a Feedback' },
+  { key: 'list-feedback', value: 'List All Feedback' },
+  { key: 'reply-feedback', value: 'Reply a Feedback' },
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -80,22 +85,10 @@ class Documentation extends React.Component {
         items.push(nav.key)
     }))
 
-    items.push('api_reference');
-    items.push('blacklist');
+    items.push('api_reference');    
 
-    NAVIGATIONS_BlACKLIST.map((nav => {
+    API_NAVIGATIONS.map((nav => {
       items.push(nav.key)
-    }))
-
-
-    items.push('categories');
-    NAVITATIONS_CATEGORY.map((nav => {
-        items.push(nav.key)
-    }))
-
-    items.push('coupons');
-    NAVITATIONS_COUPON.map((nav => {
-        items.push(nav.key)
     }))
 
 
@@ -130,42 +123,17 @@ class Documentation extends React.Component {
                       )
                     })
                   }
-                  <li className="field">API REFERENCE</li>
-                  <li><a href="/documentation#blacklist" >Blacklist</a></li>
+                  <li className="field">API REFERENCE</li>                  
                   {
-                    NAVIGATIONS_BlACKLIST.map((child, cindex) => {
+                    API_NAVIGATIONS.map((nav, cindex) => {
                       return (
-                        <li className="sub-nav" key={cindex}>
+                        <li className={ !nav.has_children && "sub-nav" } key={cindex}>
                           <a 
-                            href={`/documentation#${child.key}`} 
-                          >{child.value}</a>
+                            href={`/documentation#${nav.key}`} 
+                          >{nav.value}</a>
                         </li>
                        )
                      })
-                  }
-                  <li><a href="/documentation#categories" >Categories</a></li>
-                  {
-                    NAVITATIONS_CATEGORY.map((nav, index) => {
-                      return (
-                        <li className="sub-nav" key={index}>
-                          <a 
-                            href={`/documentation#${nav.key}`} 
-                          >{nav.value}</a>
-                        </li>
-                      )
-                    })
-                  }
-                  <li><a href="/documentation#coupons" >Coupons</a></li>
-                  {
-                    NAVITATIONS_COUPON.map((nav, index) => {
-                      return (
-                        <li className="sub-nav" key={index}>
-                          <a 
-                            href={`/documentation#${nav.key}`} 
-                          >{nav.value}</a>
-                        </li>
-                      )
-                    })
                   }
                 </Scrollspy>
               </div>
@@ -1547,7 +1515,7 @@ DELETE /coupons/:uniqid`}
                       {`{
     "status": 200,
     "data": {
-        "coupon": [
+        "coupons": [
             {
                 "id": 0,
                 "uniqid": "testing1990aa",
