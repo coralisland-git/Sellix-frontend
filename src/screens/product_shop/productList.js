@@ -15,7 +15,7 @@ const ProductsList = ({ products, groups, loading, history, hide_out_of_stock })
 	const [selectedGroup, setSelectedGroup] = useState(null)
 
 	if(loading) {
-		return  <Loader />
+		return <Loader />
 	}
 	if(!products.length && !groups.length) {
 		return <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>
@@ -23,7 +23,7 @@ const ProductsList = ({ products, groups, loading, history, hide_out_of_stock })
 
 
 	if(hide_out_of_stock === 1) 
-		products = products.filter(product => {return getProductStock(product) != 0 })
+		products = products.filter(product => getProductStock(product) != 0)
 
 	return (
 		<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} duration={300}>
