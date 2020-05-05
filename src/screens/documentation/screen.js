@@ -189,7 +189,7 @@ class Documentation extends React.Component {
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`https://sellix.io/api/v1`}
                     </SyntaxHighlighter>                    
                   </div>
@@ -217,7 +217,7 @@ class Documentation extends React.Component {
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`Authorization: Bearer testingjHdAZK6jG2pN6cabSQdZhlS2XqE8UvOSdqSDtlZAeOuF2jfr3a87KKs3Z`}
                     </SyntaxHighlighter>
                   </div>
@@ -242,14 +242,6 @@ class Documentation extends React.Component {
                           The page number. Default to 1
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <p className="param">[remove per_page text]</p>
-                          <p></p>
-                        </td>
-                        <td>                          
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -263,7 +255,7 @@ class Documentation extends React.Component {
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={sunburst}>
                       {`/blacklists?page=1`}
                     </SyntaxHighlighter>
                   </div>
@@ -395,44 +387,28 @@ class Documentation extends React.Component {
                   <table className="border-table">
                     <thead>
                       <tr>
-                        <th className="table-title">EVENT</th>
+                        <th className="table-title text-center" colspan="3">EVENT</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td><span className="badge-mark">order:created</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark">order:updated</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="badge-mark">order:partial</span></td>
+                        <td><span className="badge-mark">order:partial</span></td>                      
                       </tr>
                       <tr>
                         <td><span className="badge-mark">order:paid</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark">order:paid:product</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark">order:cancelled</span></td>
                       </tr>
                       <tr>
-                        <td><span className="badge-mark">product:created</span></td>
-                      </tr>
-                      <tr>
+                        <td><span className="badge-mark">product:created</span></td>                      
                         <td><span className="badge-mark">product:stock</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark">product:edited</span></td>
                       </tr>
                       <tr>
                         <td><span className="badge-mark">query:created</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark">query:replied</span></td>
-                      </tr>
-                      <tr>
                         <td><span className="badge-mark"> feedback:received</span></td>
                       </tr>
                     </tbody>
@@ -444,8 +420,6 @@ class Documentation extends React.Component {
                     Each webhook request will create a <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/logs`}>Webhook Log</a>. The object is created by the request 
                     has been sent. Before the request response has actually been received, the <span className="badge-mark">response_code</span> will 
                     be <span className="badge-mark">0</span>, indicating it is pending.<br /><br />
-                    Each webhook request will also include a <span className="badge-mark">X-Sellix-Webhook</span> request header 
-                    containing the <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/logs`}>Webhook Log</a> <span className="badge-mark">id</span>.
                   </p>
                 </div>
                 <div className="d-ex">
