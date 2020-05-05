@@ -762,8 +762,7 @@ DELETE /blacklists/:uniqid`}
     "type": "ip",
     "data": "1.2.3.4",
     "note": "demo"
-}
-`}
+}`}
                     </SyntaxHighlighter>
                   </div>
                   <div className="code-block response">
@@ -1033,8 +1032,7 @@ DELETE /categories/:uniqid`}
     "products_count": 0,
     "created_at": 1587110377,
     "updated_at": null
-}
-`}
+}`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
@@ -1358,8 +1356,7 @@ DELETE /categories/:uniqid`}
 GET /coupons
 POST /coupons
 PUT /coupons/:uniqid
-DELETE /coupons/:uniqid
-`}
+DELETE /coupons/:uniqid`}
                     </SyntaxHighlighter>
                   </div>
                 </div>
