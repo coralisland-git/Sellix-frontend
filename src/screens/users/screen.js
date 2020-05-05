@@ -54,6 +54,8 @@ class Users extends Component {
     })
   }
 
+  revertSortFunc = (a, b, order) => order === 'desc' ?  a.products_count - b.products_count : b.products_count - a.products_count;
+
   render() {
 
     const { loading, search_key } = this.state;
@@ -129,6 +131,7 @@ class Users extends Component {
                             dataField="products_count"
                             dataFormat={this.renderUserProducts}
                             dataSort
+                            sortFunc={this.revertSortFunc}
                           >
                             Products
                           </TableHeaderColumn>
