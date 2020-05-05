@@ -55,7 +55,12 @@ const API_NAVIGATIONS = [
   { key: 'feedback-object', value: 'Feedback Object' },
   { key: 'get-feedback', value: 'Get a Feedback' },
   { key: 'list-feedback', value: 'List All Feedback' },
-  { key: 'reply-feedback', value: 'Reply a Feedback' },
+  { key: 'reply-feedback', value: 'Reply Feedback' },
+
+  { key: 'orders', value: 'Orders', has_children: true },
+  { key: 'order-object', value: 'Order Object' },
+  { key: 'get-order', value: 'Get an Order' },
+  { key: 'list-order', value: 'List All Orders' },
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -651,7 +656,7 @@ DELETE /blacklists/:uniqid`}
                     <span className="param">PUT</span> /blacklist <br />
                     Creates a Blacklist and returns the Uniqid. <br /><br />
                   </p>
-                  <p><b>Argument</b></p>
+                  <p><b>Arguments</b></p>
                   <table>
                     <tbody>
                       <tr>
@@ -733,7 +738,7 @@ DELETE /blacklists/:uniqid`}
                     <span className="param">POST</span> /blacklists/:uniqid <br />
                     Edits a Blacklist. <br /><br />
                   </p>
-                  <p><b>Argument</b></p>
+                  <p><b>Arguments</b></p>
                   <table>
                     <tbody>
                       <tr>
@@ -1076,7 +1081,7 @@ DELETE /categories/:uniqid`}
                     <span className="required">PUT</span> /categories <br />
                     Creates a Category and returns the Uniqid. <br /><br />
                   </p>
-                  <p><b>Argument</b></p>
+                  <p><b>Arguments</b></p>
                   <table>
                     <tbody>
                       <tr>
@@ -1171,7 +1176,7 @@ DELETE /categories/:uniqid`}
                     <span className="required">POST</span> /categories/:uniqid <br />
                     Edits a Category. <br /><br />
                   </p>
-                  <p><b>Argument</b></p>
+                  <p><b>Arguments</b></p>
                   <table>
                     <tbody>
                       <tr>
@@ -1550,7 +1555,7 @@ DELETE /coupons/:uniqid`}
                     <span className="required">PUT</span> /coupon <br />
                     Creates a Coupon and returns the Uniqid.<br /><br />
                   </p>
-                  <p><b>Argument</b></p>
+                  <p><b>Arguments</b></p>
                   <table>
                     <tbody>
                       <tr>
@@ -1646,7 +1651,7 @@ DELETE /coupons/:uniqid`}
                     <span className="required">POST</span> /coupons/:uniqid <br />
                     Edits a Coupon. <br /><br />
                   </p>
-                  <p><b>Argument</b></p>
+                  <p><b>Arguments</b></p>
                   <table>
                     <tbody>
                       <tr>
@@ -1751,6 +1756,307 @@ DELETE /coupons/:uniqid`}
     "status": 200,
     "data": null,
     "message": "Coupon Deleted Successfully.",
+    "log": null,
+    "error": null,
+    "env": "staging"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+
+              <section id="feedback">
+                <div className="d-ins">
+                  <h3><b>Feedback</b></h3>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`GET /feedback/:uniqid
+GET /feedback
+POST /feedback/reply/:uniqid`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="feedback-object">
+                <div className="d-ins">
+                  <h3><b>Feedback Object</b></h3>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">id</p>
+                          <p>int</p>
+                        </td>
+                        <td>Unique id, auto incremented for the object.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">uniqid</p>
+                          <p>string</p>
+                        </td>
+                        <td>Unique identifier for the object.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">invoice_id</p>
+                          <p>string</p>
+                        </td>
+                        <td>Unique identifier for the feedback’s invoice.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">product_id</p>
+                          <p>string</p>
+                        </td>
+                        <td>Unique identifier for the feedback’s product.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">user_id</p>
+                          <p>int</p>
+                        </td>
+                        <td>ID of the user who created the product and earned the invoice.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">message</p>
+                          <p>string</p>
+                        </td>
+                        <td>Customer feedback message.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">reply</p>
+                          <p>string</p>
+                        </td>
+                        <td>Seller’s reply to the customer message.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">feedback</p>
+                          <p>string</p>
+                        </td>
+                        <td>Can be neutral, positive, negative.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">score</p>
+                          <p>int</p>
+                        </td>
+                        <td>Range from 0 (feedback not left yet) to 5.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">invoice</p>
+                          <p>object</p>
+                        </td>
+                        <td>Contains the full invoice object for this feedback.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">product</p>
+                          <p>object</p>
+                        </td>
+                        <td>Contains the full product object for this feedback.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">created_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>The date and time that the resource was created.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">updated_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>The date and time that the resource was last updated. If never updated, it will be 0.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>THE FEEDBACK OBJECT</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "id": 0,
+    "uniqid": "demo-a877c78890",
+    "invoice_id": "demo-bcbf00a68c",
+    "product_id": "demo930bf1",
+    "user_id": 0,
+    "message": "demo",
+    "reply": "demo reply",
+    "feedback": "neutral",
+    "score": 5,
+    "created_at": 1586207430,
+    "updated_at": 1588684803,
+    "invoice": {
+        ...
+    },
+    "product": {
+        ...
+    }
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="get-feedback">
+                <div className="d-ins">
+                  <h3><b>Get a Feedback</b></h3>
+                  <p>
+                    <span className="required">GET</span> /feedback/:uniqid <br />
+                    Retrieves a Feedback by Uniqid.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "feedback": {
+            "id": 0,
+            "uniqid": "demo-a877c78890",
+            "invoice_id": "demo-bcbf00a68c",
+            "product_id": "demo930bf1",
+            "user_id": 0,
+            "message": "demo",
+            "reply": "demo reply",
+            "feedback": "neutral",
+            "score": 5,
+            "created_at": 1586207430,
+            "updated_at": 1588684803,
+            "invoice": {
+                ...
+            },
+            "product": {
+                ...
+            }
+        }
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="list-feedback">
+                <div className="d-ins">
+                  <h3><b>List All Feedback</b></h3>
+                  <p>
+                    <span className="required">GET</span> /feedback <br />
+                    Returns a list of all the Feedback. The feedback are sorted by creation date, with the most recently created feedback being first. <br />
+                    Invoice and Product objects are not shown in the list endpoint.
+                  </p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">page</p>
+                          <p>integer</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": {
+        "feedbacks": [
+            {
+                "id": 0,
+                "uniqid": "demo-a877c78890",
+                "invoice_id": "demo-bcbf00a68c",
+                "product_id": "demo930bf1",
+                "user_id": 0,
+                "message": "demo",
+                "reply": "demo reply",
+                "feedback": "neutral",
+                "score": 5,
+                "created_at": 1586207430,
+                "updated_at": 1588684803
+            }
+        ]
+    },
+    "message": null,
+    "log": null,
+    "error": null,
+    "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="reply-feedback">
+                <div className="d-ins">
+                  <h3><b>Reply Feedback</b></h3>
+                  <p>
+                    <span className="required">POST</span> /feedback/:uniqid <br />
+                    Replies to a Feedback. <br /><br />
+                  </p>
+                  <p><b>Arguments</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">reply</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Desired reply to the feedback.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block">
+                    <div className="code-block-header">
+                      <p>REPLY FEEDBACK REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+    "reply": "demo feedback reply"
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                      {`{
+    "reply": "demo feedback reply"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+    "status": 200,
+    "data": null,
+    "message": "Feedback Replied Successfully.",
     "log": null,
     "error": null,
     "env": "staging"
