@@ -442,6 +442,7 @@ class EmbededPayment extends React.Component {
             </Row>
           :
           <div className="ml-auto mr-auto p-0 embed-block">
+            <i className="fa fa-times cursor-pointer"></i>
             <div className="stock-info text-center">
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
@@ -588,8 +589,8 @@ class EmbededPayment extends React.Component {
                     { !showPaymentOptions && (
                       <div className="pt-4 pl-4 pr-4">
                         <div className="text-center">
-                          <p className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
-                          </p>
+                          <div className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
+                          </div>
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                           onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
                           <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
