@@ -88,6 +88,8 @@
     line-height: 1.6rem;
     margin: auto;
     text-align: left !important;
+    max-height: 35vh;
+    overflow-y: scroll;
   }
 
   .grey {
@@ -142,8 +144,6 @@
     border-radius : 5px !important;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
-    max-height: 60vh;
-    overflow-y: scroll;
   }
 
   .detail {
