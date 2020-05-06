@@ -113,13 +113,13 @@ class Settings extends Component {
     const { settings, location: { pathname } } = this.props;
 
     let bitcoin = {
-      fee_fixed_bitcoin: settings.fee_fixed_bitcoin,
       change_address_bitcoin: settings.change_address_bitcoin,
+      fee_fixed_bitcoin: settings.fee_fixed_bitcoin,
       site_address_bitcoin: settings.site_address_bitcoin,
       transaction_fee_bitcoin: settings.transaction_fee_bitcoin,
     }
     let litecoin = {
-      change_address_bitcoin: settings.change_address_bitcoin,
+      change_address_litecoin: settings.change_address_litecoin,
       fee_fixed_litecoin: settings.fee_fixed_litecoin,
       site_address_litecoin: settings.site_address_litecoin,
       transaction_fee_litecoin: settings.transaction_fee_litecoin,

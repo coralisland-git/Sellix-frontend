@@ -383,7 +383,7 @@ class EditProduct extends React.Component {
 
 	  const admin = _.includes(window.location.pathname, 'admin')
 	  const { history } = this.props;
-	  console.log(history.length, admin)
+
 	  if(history.length > 1) {
 		  history.go(-1)
 	  } else {

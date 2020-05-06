@@ -63,7 +63,6 @@ class ShopLayout extends React.Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 
-		console.log(prevProps.user.username, this.props.user.username)
 		if(prevProps.user.username !== this.props.user.username) {
 			const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
 			document.body.classList.remove('light');
