@@ -142,6 +142,8 @@
     border-radius : 5px !important;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
+    max-height: 60vh;
+    overflow-y: scroll;
   }
 
   .detail {
@@ -169,5 +171,14 @@
 
   .embed-block {
     width: 390px;
+    position: relative;
+
+    .fa-times {
+      position: absolute;
+      right: 13px;
+      top: 13px;
+      font-size: 1.5rem;
+      -webkit-text-stroke: 3px #E4D6FF;
+    }
   }
 }
