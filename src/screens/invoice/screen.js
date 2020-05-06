@@ -95,7 +95,7 @@ class Invoice extends React.Component {
               this.setState({ invoice: res.data.invoice });
               this.setTheme(res.data.invoice)
               if(+res.data.invoice.status === 1) {
-                return getInvoiceInfo(this.props.match.params.id)
+                return this.props.getInvoiceInfo(this.props.match.params.id)
               }
           }
         })
@@ -132,7 +132,7 @@ class Invoice extends React.Component {
           this.setState({ invoice })
           this.setTheme(invoice)
           if(+invoice.status === 1) {
-            return getInvoiceInfo(id)
+            return this.props.getInvoiceInfo(id)
           }
         })
         .then((res) => {
