@@ -105,16 +105,15 @@
     }
 
     .side-nav {
-      min-width: 200px;
+      min-width: 210px;
     }
 
     .d-nav {
       border-right: 1px solid #ececec;      
       height: 95vh;
       overflow: auto;
-      position: fixed;
       position: fixed;      
-      padding: 2rem;
+      padding: 2.5rem;
     }
 
     .section-nav {
@@ -144,6 +143,11 @@
 
     .sub-nav {
       padding-left: 1rem !important;
+      display: none;
+
+      &.show{
+        display: block;
+      }
     }
 
     .action-list {
