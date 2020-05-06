@@ -49,16 +49,19 @@ class ShopProductDetail extends React.Component {
     data.product_id = productInfo.uniqid;
 
     this.setState({ sending: true })
-    createInvoice(data).then(({ data: { invoice }}) => {
-      tostifyAlert('success', 'Invoice is created successfully.');
+    createInvoice(data)
+        .then(({ data: { invoice }}) => {
 
-      this.props.history.push({ pathname: `/invoice/${invoice.uniqid}` })
-      
-    }).catch(({ error }) => {
-      tostifyAlert('error', error)
-    }).finally(() => {
-      this.setState({ sending: false })
-    })
+          window.localStorage.setItem(invoice.uniqid, invoice.secret)
+          tostifyAlert('success', 'Invoice is created successfully.');
+          this.props.history.push({ pathname: `/invoice/${invoice.uniqid}` })
+        })
+        .catch(({ error }) => {
+          tostifyAlert('error', error)
+        })
+        .finally(() => {
+          this.setState({ sending: false })
+        })
   }
 
   setCustomFields = (key, value) => {

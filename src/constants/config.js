@@ -9,7 +9,6 @@ import skrillIcon from "../assets/images/crypto/skrill.svg";
 import { Converter } from "showdown";
 
 export default {
-
   // API_ROOT_URL: 'https://staging.sellix.io/api/v1',
   API_ROOT_URL: 'https://api.sellix.io/v1',
   WS_URL: 'wss://wss.sellix.io/websocket',
@@ -26,6 +25,17 @@ export default {
     'SEK': 'kr',
     'NZD': '$'
   },
+  PAYMENT_OPTS : {
+    'paypal': 'PayPal',
+    'bitcoin': 'BTC',
+    'litecoin': 'LTC',
+    'ethereum': 'ETH',
+    'skrill': 'Skrill',
+    'stripe': 'Stripe',
+    'bitcoincash': 'BTH',
+    'perfectmoney': 'Perfect Money'
+  },
+
   DISCORD_CONNECT_URL: 'https://discordapp.com/oauth2/authorize?client_id=694529072046407703&permissions=2048&scope=bot',
 
   PAYMENT_ICONS: {

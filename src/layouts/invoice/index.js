@@ -1,35 +1,25 @@
 import React, { Suspense } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import * as router from 'react-router-dom';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { Container } from 'reactstrap'
-import {
-  AppFooter,
-  AppHeader,
-} from '@coreui/react'
+import { AppFooter, AppHeader } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
-import { ThemeProvider, createGlobalStyle  } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
-
-import { paymentRoutes } from 'routes'
+import { invoiceRoutes } from '../../routes';
 import {
   AuthActions,
   CommonActions
 } from 'services/global'
 
 
-import {
-  Aside,
-  Header,
-  Footer,
-  Loading
-} from 'components'
+import { Header, Loading } from 'components'
 
 import './style.scss'
-import { invoiceRoutes } from '../../routes';
+
 
 const mapStateToProps = (state) => {
   return ({
@@ -98,7 +88,7 @@ class DefaultLayout extends React.Component {
     const { theme } = this.props
 
     return (
-      <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">
@@ -109,23 +99,11 @@ class DefaultLayout extends React.Component {
               </AppHeader>
               
               <div className="app-body mt-4 pt-5">
-                  <Container className="p-0 pt-3" fluid>
+                  <Container className="p-0 pt-3">
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                       <Switch>
-                        {
-                          invoiceRoutes.map((prop, key) => {
-                            if (prop.redirect)
-                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                            return (
-                              <Route
-                                path={prop.path}
-                                component={prop.component}
-                                key={key}
-                              />
-                            )
-                          })
-                        }
+                        {invoiceRoutes.map((prop, key) => <Route {...prop} key={key} />)}
                       </Switch>
                     </Suspense>
                   </Container>
