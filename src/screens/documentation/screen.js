@@ -72,6 +72,16 @@ class Documentation extends React.Component {
       isOpen: false,
       activeNode: null
     };
+    
+    this.onUpdateScroll = (el) => {
+      if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
+        this.props.history.push(`/documentation#${el.id}`)
+      }
+      else
+        this.setState({initial: false})
+      if(el)
+        this.setState({activeNode: el.id.split('-')[1]})
+    }
   }
 
   toggle() {
@@ -84,14 +94,6 @@ class Documentation extends React.Component {
       this.setState({initial : true})
   }
 
-  onUpdateScroll(el) {
-    if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
-      this.props.history.push(`/documentation#${el.id}`)
-      this.setState({activeNode: el.id.split('-')[1]})
-    }
-    else
-      this.setState({initial: false})
-  }
    
   render() {
 
