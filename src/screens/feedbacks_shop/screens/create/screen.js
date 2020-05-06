@@ -118,13 +118,13 @@ class LeaveFeedback extends React.Component {
         <Formik initialValues={this.state.initialValues} onSubmit={this.handleSubmit}>
           {props => (
             <Form onSubmit={props.handleSubmit}>
-              <Card>
+              <Card className={"mb-0"}>
                 <CardBody className="p-4">
                   <div className="flex-wrapper align-items-center">
-                    <h4 className="text-primary text-center">Leave your feedback</h4>
-                    <p className="text-center text-grey mt-2 mb-4">Was the product good? Write your feedback about it here.</p>
+                    <h3 className="text-primary">Leave your feedback</h3>
+                    <p className="text-grey mt-3 mb-4">Was the product good? Write your feedback about it here.</p>
                   </div>
-                  <div className="mb-4 mt-4 feedback-radioGroup justify-content-center d-flex">
+                  <div className="mb-4 mt-4 feedback-radioGroup justify-content-flex-start d-flex">
                     <ReactStarsRating className="transparent-bg cursor-pointer react-stars-rating" onChange={score => {
                       props.setFieldValue('score', score)
                       const feedback = {
@@ -141,7 +141,6 @@ class LeaveFeedback extends React.Component {
                   <Row>
                     <Col>
                       <FormGroup>
-                        <Label htmlFor="warehouseName">Review</Label>
                         <Input
                             type="textarea"
                             className="pt-3 pb-3"
@@ -154,7 +153,7 @@ class LeaveFeedback extends React.Component {
                       </FormGroup>
                     </Col>
                   </Row>
-                  <Button color="primary" className="mt-4 mb-3" style={{ width: "200px"}}>Submit</Button>
+                  <Button color="primary" className="mt-3 mb-0" style={{ width: "200px"}}>Submit</Button>
                 </CardBody>
               </Card>
             </Form>

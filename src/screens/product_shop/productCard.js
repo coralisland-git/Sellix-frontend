@@ -25,7 +25,7 @@ const ProductCard = ({ product, preventDefault, history }) => {
     }
     return <Card className="bg-white p-0 product-card" onClick={() => preventDefault ? null : history.push({ pathname: `/product/${uniqid}` })}>
             <div style={{ minHeight: 150, width: '100%' }}>
-                <img src={image} alt={title} style={image_attachment ? {} : { padding: "1rem", objectFit: "fill" }}/>
+                <img src={image} alt={title} style={image_attachment ? {} : { padding: "3rem", objectFit: "fill" }}/>
             </div>
             
             <div className="p-3 d-flex flex-column h-100">

@@ -102,3 +102,511 @@
     top: -40px;
   }
 }
+
+.sw-container {
+  background-color: #1d183d;
+  z-index: 5400;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0 2rem;
+  overflow: hidden auto;
+
+  &.fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .sw {
+    display: flex;
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    outline: none;
+    width: 32em;
+    padding: 1.25rem;
+    margin: auto;
+    border-radius: 0.3125em;
+    text-align: center;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    z-index: 5600;
+    animation: 300ms ease 0s 1 normal none running showSweetAlert;
+
+    &-title {
+      position: relative;
+      max-width: 100%;
+      margin: 0 0 0.4em;
+      padding: 0;
+      color: rgb(89, 89, 89);
+      font-size: 1.875em;
+      font-weight: 600;
+      text-align: center;
+      text-transform: none;
+      overflow-wrap: break-word;
+    }
+
+    &-text {
+      z-index: 1;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+      color: rgb(84, 84, 84);
+      line-height: 1;
+      font-size: .9rem;
+      font-weight: 300;
+      text-align: center;
+      overflow-wrap: break-word;
+    }
+
+    &-icon-cancel {
+      width: 80px;
+      height: 80px;
+      border-width: 4px;
+      border-style: solid;
+      border-color: rgb(212, 63, 58);
+      border-radius: 50%;
+      margin: 20px auto;
+      position: relative;
+      box-sizing: content-box;
+      animation: 0.5s ease 0s 1 normal none running animateErrorIcon;
+
+      .elem-1 {
+        position: relative;
+        display: block;
+        animation: 0.5s ease 0s 1 normal none running animateXMark;
+      }
+
+      .elem-2 {
+        position: absolute;
+        height: 5px;
+        width: 47px;
+        background-color: rgb(217, 83, 79);
+        display: block;
+        top: 37px;
+        border-radius: 2px;
+        transform: rotate(45deg);
+        left: 17px;
+      }
+
+      .elem-3 {
+        position: absolute;
+        height: 5px;
+        width: 47px;
+        background-color: rgb(217, 83, 79);
+        display: block;
+        top: 37px;
+        border-radius: 2px;
+        transform: rotate(-45deg);
+        right: 16px;
+      }
+    }
+
+    &-icon-info {
+      width: 80px;
+      height: 80px;
+      border-width: 4px;
+      border-style: solid;
+      border-color: rgb(70, 184, 218);
+      border-radius: 50%;
+      margin: 20px auto;
+      position: relative;
+      box-sizing: content-box;
+
+      .elem-1 {
+        position: absolute;
+        width: 5px;
+        height: 29px;
+        left: 50%;
+        bottom: 17px;
+        border-radius: 2px;
+        margin-left: -2px;
+        background-color: rgb(91, 192, 222);
+      }
+
+      .elem-2 {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        margin-left: -3px;
+        left: 50%;
+        top: 19px;
+        background-color: rgb(91, 192, 222);
+      }
+    }
+
+    &-icon-success {
+      width: 80px;
+      height: 80px;
+      border-width: 4px;
+      border-style: solid;
+      border-color: rgb(76, 174, 76);
+      border-radius: 50%;
+      margin: 1rem auto;
+      position: relative;
+      box-sizing: content-box;
+
+      .elem-1 {
+        border-radius: 120px 0px 0px 120px; position: absolute; width: 60px; height: 100px; background: #1d183d; transform: rotate(-45deg); top: -7px; left: -33px; transform-origin: 60px 60px;
+      }
+
+      .elem-2 {
+        height: 5px; background-color: rgb(92, 184, 92); display: block; border-radius: 2px; position: absolute; z-index: 2; width: 25px; left: 14px; top: 46px; transform: rotate(45deg); animation: 0.75s ease 0s 1 normal none running animateSuccessTip;
+      }
+
+      .elem-3 {
+        height: 5px; background-color: rgb(92, 184, 92); display: block; border-radius: 2px; position: absolute; z-index: 2; width: 47px; right: 8px; top: 38px; transform: rotate(-45deg); animation: 0.75s ease 0s 1 normal none running animateSuccessLong;
+      }
+
+      .elem-4 {
+        width: 80px; height: 80px; border: 4px solid rgba(92, 184, 92, 0.2); border-radius: 50%; box-sizing: content-box; position: absolute; left: -4px; top: -4px; z-index: 2;
+      }
+
+      .elem-5 {
+        width: 5px; height: 90px; background-color: #1d183d; position: absolute; left: 28px; top: 8px; z-index: 1; transform: rotate(-45deg);
+      }
+
+      .elem-6 {
+        border-radius: 0px 120px 120px 0px; position: absolute; width: 60px; height: 120px; background: #1d183d; transform: rotate(-45deg); top: -11px; left: 30px; transform-origin: 0px 60px; animation: 4.25s ease-in 0s 1 normal none running rotatePlaceholder;
+      }
+    }
+  }
+}
+
+.light .sw-container {
+  background-color: white;
+
+  .sw {
+    background-color: rgb(255, 255, 255);
+
+    &-title {
+      color: rgb(89, 89, 89);
+    }
+
+    &-text {
+      color: rgb(84, 84, 84);
+    }
+
+    &-icon-success {
+      .elem-1 {
+        background: white;
+      }
+
+      .elem-5 {
+        background-color: white;
+      }
+
+      .elem-6 {
+        background: white;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+@-webkit-keyframes showSweetAlert {
+  0% {
+    transform: scale(0.7);
+    -webkit-transform: scale(0.7);
+  }
+  45% {
+    transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.95);
+    -webkit-tranform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+@keyframes showSweetAlert {
+  0% {
+    transform: scale(0.7);
+    -webkit-transform: scale(0.7);
+  }
+  45% {
+    transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.95);
+    -webkit-tranform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+@-webkit-keyframes hideSweetAlert {
+  0% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+  100% {
+    transform: scale(0.4);
+    -webkit-transform: scale(0.4);
+  }
+}
+@keyframes hideSweetAlert {
+  0% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+  100% {
+    transform: scale(0.4);
+    -webkit-transform: scale(0.4);
+  }
+}
+@-webkit-keyframes animateSuccessTip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 19px;
+  }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 19px;
+  }
+  70% {
+    width: 50px;
+    left: -8px;
+    top: 37px;
+  }
+  84% {
+    width: 17px;
+    left: 21px;
+    top: 48px;
+  }
+  100% {
+    width: 25px;
+    left: 14px;
+    top: 45px;
+  }
+}
+@keyframes animateSuccessTip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 19px;
+  }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 19px;
+  }
+  70% {
+    width: 50px;
+    left: -8px;
+    top: 37px;
+  }
+  84% {
+    width: 17px;
+    left: 21px;
+    top: 48px;
+  }
+  100% {
+    width: 25px;
+    left: 14px;
+    top: 45px;
+  }
+}
+@-webkit-keyframes animateSuccessLong {
+  0% {
+    width: 0;
+    right: 46px;
+    top: 54px;
+  }
+  65% {
+    width: 0;
+    right: 46px;
+    top: 54px;
+  }
+  84% {
+    width: 55px;
+    right: 0px;
+    top: 35px;
+  }
+  100% {
+    width: 47px;
+    right: 8px;
+    top: 38px;
+  }
+}
+@keyframes animateSuccessLong {
+  0% {
+    width: 0;
+    right: 46px;
+    top: 54px;
+  }
+  65% {
+    width: 0;
+    right: 46px;
+    top: 54px;
+  }
+  84% {
+    width: 55px;
+    right: 0px;
+    top: 35px;
+  }
+  100% {
+    width: 47px;
+    right: 8px;
+    top: 38px;
+  }
+}
+@-webkit-keyframes rotatePlaceholder {
+  0% {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  5% {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  12% {
+    transform: rotate(-405deg);
+    -webkit-transform: rotate(-405deg);
+  }
+  100% {
+    transform: rotate(-405deg);
+    -webkit-transform: rotate(-405deg);
+  }
+}
+@keyframes rotatePlaceholder {
+  0% {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  5% {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  12% {
+    transform: rotate(-405deg);
+    -webkit-transform: rotate(-405deg);
+  }
+  100% {
+    transform: rotate(-405deg);
+    -webkit-transform: rotate(-405deg);
+  }
+}
+@-webkit-keyframes animateErrorIcon {
+  0% {
+    transform: rotateX(100deg);
+    -webkit-transform: rotateX(100deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    -webkit-transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+@keyframes animateErrorIcon {
+  0% {
+    transform: rotateX(100deg);
+    -webkit-transform: rotateX(100deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    -webkit-transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes animateXMark {
+  0% {
+    transform: scale(0.4);
+    -webkit-transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.4);
+    -webkit-transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.15);
+    -webkit-transform: scale(1.15);
+    margin-top: -6px;
+  }
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    margin-top: 0;
+    opacity: 1;
+  }
+}
+@keyframes animateXMark {
+  0% {
+    transform: scale(0.4);
+    -webkit-transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.4);
+    -webkit-transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.15);
+    -webkit-transform: scale(1.15);
+    margin-top: -6px;
+  }
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    margin-top: 0;
+    opacity: 1;
+  }
+}
+@-webkit-keyframes pulseWarning {
+  0% {
+    border-color: #F8D486;
+  }
+  100% {
+    border-color: #F8BB86;
+  }
+}
+@keyframes pulseWarning {
+  0% {
+    border-color: #F8D486;
+  }
+  100% {
+    border-color: #F8BB86;
+  }
+}
+@-webkit-keyframes pulseWarningIns {
+  0% {
+    background-color: #F8D486;
+  }
+  100% {
+    background-color: #F8BB86;
+  }
+}
+@keyframes pulseWarningIns {
+  0% {
+    background-color: #F8D486;
+  }
+  100% {
+    background-color: #F8BB86;
+  }
+}

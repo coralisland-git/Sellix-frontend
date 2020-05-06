@@ -89,7 +89,6 @@ class Invoice extends React.Component {
   }
 
   getPayPalInvoice = () => {
-    console.log(1);
     return this.props.getPayPalInvoice(this.state.invoice.uniqid)
         .then(res => {
           if(res && res.data && res.data.invoice) {
@@ -308,20 +307,12 @@ class Invoice extends React.Component {
     let { invoice, info } = this.state;
 
     let el = document.createElement('textarea');
-    if(invoice.product_type === "serials") {
-        el.value = info.serials;
+        el.value = invoice.product_type === "serials" ? info.serials : invoice.product_type === "service" ? info.service_text : "";
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-    } else if(invoice.product_type === "service") {
-      console.log(info.service_text)
-        el.value = info.service_text;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-    }
+        this.props.tostifyAlert('success', "Copied!")
   }
 
   render() {
@@ -333,13 +324,27 @@ class Invoice extends React.Component {
         {loading && <Row><Col lg={12}><Loader /></Col></Row>}
 
         {!loading &&
-            <div className="bitcoin-paying-screen animated fadeIn mt-4">
+            <div className="bitcoin-paying-screen animated fadeIn">
                 <QRCodeModal openModal={openQRModal} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal}/>
 
-                {+invoice.status === 4 &&
-                  <SweetAlert info showConfirm={false} onCancel={this.hideAlert} title="We haven't received full amount" show={showAlert}>
-                    Transaction has been received but it’s not enough. We only received {invoice.crypto_received} of {invoice.crypto_amount}, please send the remaining amount in order to fulfill the invoice
-                  </SweetAlert>
+                {+invoice.status === 4 && showAlert &&
+                    <>
+                      <div className={"sw-container fixed"} onClick={this.hideAlert}>
+                        <div className="sw">
+
+                          <div className={"sw-icon-info"}>
+                            <div className={"elem-1"} />
+                            <div className={"elem-2"} />
+                          </div>
+
+                          <h2 className="sw-title">We haven't received full amount</h2>
+                          <div className="sw-text text-muted lead">
+                            Transaction has been received but it’s not enough. We only received {invoice.crypto_received} of {invoice.crypto_amount}, please send the remaining amount in order to fulfill the invoice
+                          </div>
+                        </div>
+                      </div>
+
+                  </>
                 }
 
                 <Row className="justify-content-center">
@@ -347,18 +352,23 @@ class Invoice extends React.Component {
                   {info &&
                   <Col lg={7}>
 
-                      <div className="text-left my-4">
+                      <div className="text-left my-4 mb-5">
                         <h1 className={"m-0"}>{invoice.username}</h1>
                       </div>
 
-                      <Card className={"p-4"}>
+                      <Card className={"p-4"} style={{ marginBottom: "calc(1.5rem + 4px)"}}>
                         <h3 className={"pb-2 pt-2 m-0"}>{info.product.title}</h3>
                         <span className={"pb-4"}>{info.delivery_text}</span>
-                        <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "4rem"}} className={"mb-4 m-0"}>
-                          {invoice.product_type === "file"}
-                          {invoice.product_type === "serials" && info.serials.map(v => <span><strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span>{v.split(':')[1]}</span><br/><br/></span> )}
+
+
+                        {invoice.product_type !== "file" && <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "7rem", background: "#f7f7f7", padding: "1rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
+                          {invoice.product_type === "serials" &&
+                            info.serials.map(v => <span style={{ fontSize: "12px", lineHeight: 1}}>
+                                  <strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span style={{ fontSize: "12px", lineHeight: 1}}>{v.split(':')[1]}</span><br/>
+                              </span>
+                            )}
                           {invoice.product_type === "service" && <span dangerouslySetInnerHTML={{ __html: info.service_text }}/>}
-                        </pre>
+                        </pre>}
                         <div className={"d-flex"}>
                           {invoice.product_type !== "file" && <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={this.copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>}
                           <Button color={"default"} style={{ width: "150px"}} onClick={this.onSaveFile}><i className={"fas fa-save"}/> Save as ...</Button>
@@ -372,15 +382,11 @@ class Invoice extends React.Component {
                   }
 
                   <Col lg={{ size: 5 }} >
-                    <div className="text-left my-4"><h1 className="m-0">&nbsp;</h1></div>
+                    <div className="text-left my-4 mb-5"><h1 className="m-0">&nbsp;</h1></div>
                     <Card className="invoice-card p-0 bg-white pt-3">
                       <div className="float-logo">
                         <img src={sellix_logo} width="153" alt={""}/>
                       </div>
-
-                      {!info && <div className="text-right pr-3">
-                        <img src={backIcon} width="15" height="15" onClick={() => {clearInterval(this.apiTimer); this.props.history.goBack()}} style={{ cursor: "pointer" }} alt={""}/>
-                      </div>}
 
                       <div className={info ? "top px-4 pb-4 pt-0" : "top p-4 pt-4"}>
 
@@ -389,7 +395,7 @@ class Invoice extends React.Component {
                           <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status)}</span>
                         </div>
 
-                        <p className="text-grey  mb-3">{invoice.uniqid}</p>
+                        <p className="text-grey mb-3">{invoice.uniqid}</p>
 
                         <div className="d-flex justify-content-between align-items-center ">
                           <h4 className="text-grey">{(invoice.product || {}).title}</h4>
@@ -438,28 +444,47 @@ class Invoice extends React.Component {
 
                       <div className="bottom order-detail-info p-4">
                         {(+invoice.status === 1 || fakeSuccess) &&
-                          <SweetAlert
-                              success
-                              title="Order completed!"
-                              show={showAlert}
-                              showConfirm={false}
-                              onConfirm={this.hideAlert}
-                          >
-                            Your invoice has been paid. <br/>
-                            You will receive the products within minutes, <br/>check your email!
-                          </SweetAlert>
+                            <>
+                              <div className={"sw-container"}>
+                                <div className="sw">
+
+                                  <div className={"sw-icon-success"}>
+                                    <div className={"elem-1"} />
+                                    <span className={"elem-2"} />
+                                    <span className={"elem-3"} />
+                                    <div className={"elem-4"} />
+                                    <div className={"elem-5"} />
+                                    <div className={"elem-6"} />
+                                  </div>
+
+                                  <h2 className="sw-title">Order completed!</h2>
+                                  <div className="sw-text text-muted lead">
+                                    Your invoice has been paid. <br/>You will receive the products within minutes, <br/>check your email!
+                                  </div>
+                                </div>
+                              </div>
+                          </>
                         }
 
                         {+invoice.status === 2 && !fakeSuccess &&
-                          <SweetAlert
-                              danger
-                              title="Invoice Cancelled"
-                              show={showAlert}
-                              showConfirm={false}
-                              onConfirm={this.hideAlert}
-                          >
-                            The invoice has expired or isn't available.
-                          </SweetAlert>
+                            <>
+                              <div className={"sw-container"}>
+                                <div className="sw">
+
+                                  <div className={"sw-icon-cancel"}>
+                                        <span className="elem-1">
+                                          <span className="elem-2" />
+                                          <span className="elem-3" />
+                                        </span>
+                                  </div>
+
+                                  <h2 className="sw-title">Invoice Cancelled</h2>
+                                  <div className="sw-text text-muted lead">
+                                    The invoice has expired or isn't available.
+                                  </div>
+                                </div>
+                              </div>
+                            </>
                         }
 
                         { +invoice.status !== 1 && +invoice.status !== 2 && !fakeSuccess &&
@@ -514,6 +539,7 @@ const mapDispatchToProps = (dispatch) => ({
   getInvoiceViaWebsocket: bindActionCreators(CommonActions.getInvoiceViaWebsocket, dispatch),
   getInvoiceInfo: bindActionCreators(getInvoiceInfo, dispatch),
   downloadInvoice: bindActionCreators(downloadInvoice, dispatch),
+  tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
 })
 
 export default connect(null, mapDispatchToProps)(Invoice)
