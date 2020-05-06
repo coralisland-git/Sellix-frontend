@@ -138,6 +138,12 @@
       font-family: var(--font-family-sans-serif);
       font-weight: 600;
     }
+
+    .user-name {
+      font-size: 14;
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .stock-stop {
@@ -175,7 +181,7 @@
 
     .fa-times {
       position: absolute;
-      right: 13px;
+      right: 12px;
       top: 13px;
       font-size: 1.5rem;
       -webkit-text-stroke: 3px #E4D6FF;

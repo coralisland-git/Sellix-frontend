@@ -261,7 +261,7 @@ class EmbededInvoice extends React.Component {
               </Col>
             </Row>
           :
-              <div className="embeded-paying-screen">        
+              <div className="embeded-paying-screen">
                 {invoice.status == 4 && 
                   <SweetAlert
                     info
@@ -279,10 +279,11 @@ class EmbededInvoice extends React.Component {
                         <div className="float-logo">
                           <img src={sellix_logo} width="153" style={{marginTop:-23}}/>
                         </div>
+                        <i className="fa fa-times"></i>
                         <div className="top p-4">
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-                            <span className="badge text-primary bold status invoice-timer" id="status">{this.setInvoiceStatus(invoice.status)}</span>
+                            <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status)}</span>
                           </div>
                           <p className="text-grey  mb-3">{invoice.uniqid}</p>
                           <div className="d-flex justify-content-between align-items-center ">
