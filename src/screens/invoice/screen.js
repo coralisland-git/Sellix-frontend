@@ -68,7 +68,6 @@ class Invoice extends React.Component {
 
     this.timer = 0;
     this.apiTimer = 1;
-    this.getPayPalInvoice = this.getPayPalInvoice.bind(this)
   }
 
   openQrCodeModal = () => {
@@ -79,11 +78,23 @@ class Invoice extends React.Component {
     this.setState({openQRModal: false})
   }
 
-  getPayPalInvoice() {
+  setTheme = ({ theme }) => {
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+    document.body.classList.add(theme);
+
+    document.documentElement.classList.remove('light')
+    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.add(theme);
+  }
+
+  getPayPalInvoice = () => {
+    console.log(1);
     return this.props.getPayPalInvoice(this.state.invoice.uniqid)
         .then(res => {
           if(res && res.data && res.data.invoice) {
               this.setState({ invoice: res.data.invoice });
+              this.setTheme(res.data.invoice)
               if(+res.data.invoice.status === 1) {
                 return getInvoiceInfo(this.props.match.params.id)
               }
@@ -120,6 +131,7 @@ class Invoice extends React.Component {
     getInvoiceViaWebsocket(id)
         .then(invoice => {
           this.setState({ invoice })
+          this.setTheme(invoice)
           if(+invoice.status === 1) {
             return getInvoiceInfo(id)
           }
@@ -172,6 +184,7 @@ class Invoice extends React.Component {
           let seconds = 2 * 60 * 60 - (new Date().getTime() - new Date(invoice.created_at * 1000).getTime()) / 1000
           let time = this.secondsToTime(seconds);
           this.setState({ seconds, invoice, time })
+          this.setTheme(invoice);
           if(+invoice.status === 1) {
             return getInvoiceInfo(id)
           }
@@ -281,23 +294,34 @@ class Invoice extends React.Component {
   }
 
   onSaveFile = () => {
+    let { match: { params } } = this.props;
+
+    let secret = localStorage.getItem(params.id);
+    if(secret) {
+      let url = `${config.API_ROOT_URL}/invoices/download/${params.id}/${secret}`;
+      let win = window.open(url, '_blank');
+      win.focus();
+    }
+  }
+
+  copyToClipboard = () => {
     let { invoice, info } = this.state;
-    let { downloadInvoice, match: { params: { id }} } = this.props;
 
-    let secret = localStorage.getItem(id);
-    let url = `https://api.sellix.io/v1/invoices/download/${id}/${secret}`;
-
-    let win = window.open(url, '_blank');
-        win.focus();
-    // d
-    downloadInvoice(id)
-    // if(invoice.product_type === "file") {
-    //
-    // } else if(invoice.product_type === "serials") {
-    //
-    // } else if(invoice.product_type === "service") {
-    //
-    // }
+    let el = document.createElement('textarea');
+    if(invoice.product_type === "serials") {
+        el.value = info.serials;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    } else if(invoice.product_type === "service") {
+      console.log(info.service_text)
+        el.value = info.service_text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    }
   }
 
   render() {
@@ -309,7 +333,7 @@ class Invoice extends React.Component {
         {loading && <Row><Col lg={12}><Loader /></Col></Row>}
 
         {!loading &&
-            <div className="bitcoin-paying-screen animated fadeIn mt-5 ">
+            <div className="bitcoin-paying-screen animated fadeIn mt-4">
                 <QRCodeModal openModal={openQRModal} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal}/>
 
                 {+invoice.status === 4 &&
@@ -318,30 +342,37 @@ class Invoice extends React.Component {
                   </SweetAlert>
                 }
 
-                {info && <Row>
-                  <Col lg={12} className={"mb-5 text-center"}><h1>{invoice.username}</h1></Col>
-                </Row>}
-
                 <Row className="justify-content-center">
 
-                  {info && <Col lg={7}>
-                    <Card className={"p-4"}>
-                      <h3 className={"pb-2 pt-2 m-0"}>{info.product.title}</h3>
-                      <span className={"pb-4"}>{info.delivery_text}</span>
-                      <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "4rem"}} className={"mb-4 m-0"}>
-                        {invoice.product_type === "file"}
-                        {invoice.product_type === "serials" && info.serials.map(v => <span><strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span>{v.split(':')[1]}</span><br/><br/></span> )}
-                        {invoice.product_type === "service" && <span dangerouslySetInnerHTML={{ __html: info.service_text }}/>}
-                      </pre>
-                      <div className={"d-flex"}>
-                        {invoice.product_type !== "file" && <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"}><i className={"fas fa-copy"}/> Copy to clipboard</Button>}
-                        <Button color={"default"} style={{ width: "150px"}} onClick={this.onSaveFile}><i className={"fas fa-save"}/> Save as ...</Button>
-                      </div>
-                    </Card>
-                    </Col>}
+                  {info &&
+                  <Col lg={7}>
 
-                  {/*<Col lg={{ size: 4, offset: 4 }} >*/}
+                      <div className="text-left my-4">
+                        <h1 className={"m-0"}>{invoice.username}</h1>
+                      </div>
+
+                      <Card className={"p-4"}>
+                        <h3 className={"pb-2 pt-2 m-0"}>{info.product.title}</h3>
+                        <span className={"pb-4"}>{info.delivery_text}</span>
+                        <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "4rem"}} className={"mb-4 m-0"}>
+                          {invoice.product_type === "file"}
+                          {invoice.product_type === "serials" && info.serials.map(v => <span><strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span>{v.split(':')[1]}</span><br/><br/></span> )}
+                          {invoice.product_type === "service" && <span dangerouslySetInnerHTML={{ __html: info.service_text }}/>}
+                        </pre>
+                        <div className={"d-flex"}>
+                          {invoice.product_type !== "file" && <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={this.copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>}
+                          <Button color={"default"} style={{ width: "150px"}} onClick={this.onSaveFile}><i className={"fas fa-save"}/> Save as ...</Button>
+                        </div>
+                      </Card>
+
+                      <Card>
+                        <LeaveFeedback uniqid={info.feedback_uniqid} />
+                      </Card>
+                    </Col>
+                  }
+
                   <Col lg={{ size: 5 }} >
+                    <div className="text-left my-4"><h1 className="m-0">&nbsp;</h1></div>
                     <Card className="invoice-card p-0 bg-white pt-3">
                       <div className="float-logo">
                         <img src={sellix_logo} width="153" alt={""}/>
@@ -465,8 +496,6 @@ class Invoice extends React.Component {
                         }
                       </div>
                     </Card>
-
-                    {info && <Card><LeaveFeedback uniqid={info.feedback_uniqid} /></Card>}
                   </Col>
 
                 </Row>

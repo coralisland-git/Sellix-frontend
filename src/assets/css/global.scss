@@ -123,6 +123,15 @@ h4 {
   font-size: 18px !important;
 }
 
+div.text-muted {
+  color: #1d183d !important;
+  font-size: .9rem !important;
+}
+
+div .sweet-alert h2 {
+  color: #603be9 !important
+}
+
 @import "override/modal";
 @import "override/react-autosuggest";
 @import "override/react-bootstrap-daterangepicker";
