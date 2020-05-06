@@ -442,7 +442,7 @@ class EmbededPayment extends React.Component {
             </Row>
           :
           <div className="ml-auto mr-auto p-0 embed-block">
-            <i className="fa fa-times cursor-pointer"></i>
+            <i className="fa fa-times"></i>
             <div className="stock-info text-center">
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
