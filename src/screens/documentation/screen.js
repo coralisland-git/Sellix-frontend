@@ -87,10 +87,11 @@ class Documentation extends React.Component {
   onUpdateScroll(el) {
     if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
       this.props.history.push(`/documentation#${el.id}`)
-      this.setState({activeNode: el.id.split('-')[1]})
     }
     else
       this.setState({initial: false})
+    if(el)
+      this.setState({activeNode: el.id.split('-')[1]})
   }
    
   render() {
