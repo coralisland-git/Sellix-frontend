@@ -178,6 +178,7 @@ class Invoice extends React.Component {
 
     document.title = `Invoice ${id} | Sellix`;
 
+
     getInvoice(id)
         .then(({ data: { invoice }}) => {
           let seconds = 2 * 60 * 60 - (new Date().getTime() - new Date(invoice.created_at * 1000).getTime()) / 1000
