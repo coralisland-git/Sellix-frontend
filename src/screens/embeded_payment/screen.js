@@ -7,7 +7,8 @@ import {
   Col,
   Form,
   FormGroup,
-  Input
+  Input,
+  Tooltip
 } from 'reactstrap'
 import { Button } from 'components';
 import {
@@ -32,17 +33,19 @@ import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import sellixLogoIcon from 'assets/images/Sellix_logo.svg'
 import { ReactComponent as CouponSvg } from 'assets/images/coupon.svg';
+import verifiedIcon from 'assets/images/sellix_verified.svg'
 import { validateCoupon } from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({    
+    user: state.common.general_info || {}
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
     actions: bindActionCreators({ validateCoupon }, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
+    commonActions: bindActionCreators(CommonActions, dispatch),
   })
 }
 
@@ -115,7 +118,8 @@ class EmbededPayment extends React.Component {
       optParam: '',
       coupon_discount: 0,
       coupon_is_valid: true,
-      coupon_applied: false
+      coupon_applied: false,
+      verifiedTooltipOpen: false
     }
   }
 
@@ -319,6 +323,10 @@ class EmbededPayment extends React.Component {
     })  
   }
 
+  verifiedTooltipToggle() {
+    this.setState({verifiedTooltipOpen: !this.state.verifiedTooltipOpen})
+  }
+
   componentDidMount() {
     this.setState({loading: true});
     document.title = "Selix - Payment"
@@ -332,11 +340,41 @@ class EmbededPayment extends React.Component {
     }
     this.setState({custom_fields : params});
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
-      if(res.status == 200)
+      if(res.status == 200){
         this.setState({
           product_info: res.data.product,
           paymentoptions: (res.data.product.gateways || '').split(',')
         })
+        this.props.commonActions.getGeneralUserInfo(res.data.product.username)
+          .then(({ user }) => {
+            if(user.shop_crisp_website_id) {
+              window.$crisp = [];
+              window.CRISP_WEBSITE_ID=user.shop_crisp_website_id;
+              const script = document.createElement("script");
+              script.src = "https://client.crisp.chat/l.js";
+              script.type = 'text/javascript';
+              script.async = true;
+              script.id = "crisp";
+              document.getElementsByTagName("head")[0].appendChild(script);
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+            if (e.status === 404) {
+              this.setState({
+                userIsNotFound: true
+              })
+            }
+            if(e.status === 400) {
+              if(e.error.includes('user has been banned')) {
+                this.setState({
+                  userIsBanned: true
+                })
+                document.title = 'Banned User | Sellix'
+              }
+            }
+          })
+      }
       else throw res
     }).catch((err) => {
       this.props.commonActions.tostifyAlert('error', err.error)
@@ -346,6 +384,7 @@ class EmbededPayment extends React.Component {
   }
 
   render() {
+    const { user } = this.props
     const {
       gateway, 
       showQuantityOption,
@@ -362,7 +401,8 @@ class EmbededPayment extends React.Component {
       coupon_code,
       coupon_discount,
       coupon_is_valid,
-      coupon_applied
+      coupon_applied,
+      verifiedTooltipOpen
     } = this.state
     
     var is_many = paymentoptions.length > 4 ? true : false
@@ -402,10 +442,25 @@ class EmbededPayment extends React.Component {
             </Row>
           :
           <div className="ml-auto mr-auto p-0 embed-block">
+            <i className="fa fa-times cursor-pointer"></i>
             <div className="stock-info text-center">
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
-              <p className="text-primary text-center" style={{fontSize: 14}}>by {product_info.username || ''}</p>
+              <p className="text-primary text-center" style={{fontSize: 14}}>
+                <span>by {product_info.username || ''}</span>
+                {user.verified == '1' &&
+                  <span style={{fontSize: 17}}>
+                    <img src={verifiedIcon} width="20" className="verified-icon ml-1" id="verifiedTooltip" />
+                    <Tooltip
+                      placement="right"
+                      isOpen={verifiedTooltipOpen}
+                      target="verifiedTooltip"
+                      toggle={this.verifiedTooltipToggle.bind(this)}>
+                      This shop has verified its brand identity to Sellix.
+                    </Tooltip>
+                  </span>
+                }
+              </p>
               <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
@@ -534,8 +589,8 @@ class EmbededPayment extends React.Component {
                     { !showPaymentOptions && (
                       <div className="pt-4 pl-4 pr-4">
                         <div className="text-center">
-                          <p className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
-                          </p>
+                          <div className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
+                          </div>
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                           onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
                           <div className="d-flex justify-content-center align-items-center mt-3 stock-count">

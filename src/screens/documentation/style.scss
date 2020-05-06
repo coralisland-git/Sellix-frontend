@@ -90,6 +90,7 @@
 
     pre {
       background-color: #f7fafc !important;
+      max-height: 60vh;
     }
   }
 
@@ -104,16 +105,15 @@
     }
 
     .side-nav {
-      min-width: 200px;
+      min-width: 210px;
     }
 
     .d-nav {
       border-right: 1px solid #ececec;      
       height: 95vh;
       overflow: auto;
-      position: fixed;
       position: fixed;      
-      padding: 2rem;
+      padding: 2.5rem;
     }
 
     .section-nav {
@@ -136,13 +136,18 @@
     }
 
     .field {
-      font-size: 12px;
+      font-size: 13px;
       color: #cfcfcf !important;
       padding: 1.5rem 0 .5rem !important;
     }
 
     .sub-nav {
       padding-left: 1rem !important;
+      display: none;
+
+      &.show{
+        display: block;
+      }
     }
 
     .action-list {
@@ -233,8 +238,12 @@
       border: 1px solid rgba(0, 0, 0, 0.07) !important;
     }
 
-    td:nth-child(even) {
-      border-left: 1px solid rgba(0, 0, 0, 0.07) !important;
+    td {
+      border-right: 1px solid rgba(0, 0, 0, 0.07) !important;
+    }
+    
+    td:last-child {
+      border-right: none !important;
     }
   }
 }

@@ -77,7 +77,14 @@ class AdminLayout extends React.Component {
   componentDidMount() {
     if (!window.localStorage.getItem('accessToken')) {
       this.props.history.push('/auth/login')
-    } else {
+    } else {      
+      const userId = window.localStorage.getItem('userId')
+      if(this.props.location.pathname === '/webhooks'){
+        this.props.history.push(`/dashboard/${userId}/developer/webhooks/all`)
+      }
+      if(this.props.location.pathname === '/webhooks/simulate'){
+        this.props.history.push(`/dashboard/${userId}/developer/webhooks/logs`)        
+      }
       this.props.authActions.getSelfUser()
           .then(({ status, data }) => {
             if(status === 200) {

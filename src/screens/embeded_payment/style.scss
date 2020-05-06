@@ -88,6 +88,8 @@
     line-height: 1.6rem;
     margin: auto;
     text-align: left !important;
+    max-height: 35vh;
+    overflow-y: scroll;
   }
 
   .grey {
@@ -169,5 +171,14 @@
 
   .embed-block {
     width: 390px;
+    position: relative;
+
+    .fa-times {
+      position: absolute;
+      right: 13px;
+      top: 13px;
+      font-size: 1.5rem;
+      -webkit-text-stroke: 3px #E4D6FF;
+    }
   }
 }

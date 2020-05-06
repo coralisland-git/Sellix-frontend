@@ -43,7 +43,7 @@ class ShopProducts extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    let { user } = this.props;
+    let { user, location } = this.props;
     let { categories, filter } = this.state;
 
     if(prevProps.user !== user) {
@@ -65,11 +65,12 @@ class ShopProducts extends React.Component {
 
   componentDidMount () {
     const { user } = this.props;
+    const { categories, filter } = this.state;
     document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
 
-    if(this.state.categories.length > 0 && this.state.filter !== 'all') {
-      this.state.categories.categories.map(({ uniqid, title }) => {
-        if(this.state.filter === uniqid) {
+    if(categories.length > 0 && filter !== 'all') {
+      categories.categories.map(({ uniqid, title }) => {
+        if(filter === uniqid) {
           document.title = `Category: ${title} | Sellix`;
         }
       })
@@ -191,7 +192,6 @@ class ShopProducts extends React.Component {
                 </CardHeader>
 
                 <div className="p-0">
-                  <Row>
                     <Switch>
                       <Route to={'/:username/category/:id'} render={(props) =>
                           <ProductList
@@ -202,7 +202,6 @@ class ShopProducts extends React.Component {
                               {...props}
                           />} />
                     </Switch>
-                  </Row>
                 </div>
               </Card>
             }

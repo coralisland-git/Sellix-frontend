@@ -155,7 +155,7 @@ class WebhookLogs extends React.Component {
 
   renderEvents (cell, row) {
     return(
-      <ul className="p-0 m-0">
+      <ul className="p-0 m-0 event-list">
         {
           row.event.split(',').map((event, index) => {
             return (

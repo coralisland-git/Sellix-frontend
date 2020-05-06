@@ -68,7 +68,8 @@ class UserProductsTable extends Component {
     return (
         <div className="order-status">
           <div className={`order-badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
-            <img src={STATUS_ICON[row.status]}/>
+              {+row.status === 3 && <i className={"far fa-hourglass"} style={{ fontSize: ".9rem", color: "#1d183d"}}/>}
+              {+row.status !== 3 && <img src={STATUS_ICON[row.status]} alt="" />}
           </div>
           <span className={`text-${ORDER_STATUS[row.status].toLowerCase()}`}>{ORDER_STATUS[row.status]}</span>
         </div>

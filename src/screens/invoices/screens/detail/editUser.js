@@ -130,8 +130,7 @@ class SettingsEdit extends React.Component {
       }
 
     render() {
-        const { loading } = this.state
-        console.log({userIdet: this.props.user})
+        const { loading } = this.state;
         if (!this.props.user) { return null }
         return (
             <div className="product-screen mt-3">

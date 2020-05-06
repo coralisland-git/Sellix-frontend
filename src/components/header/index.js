@@ -55,7 +55,7 @@ class Header extends Component {
             {
               !isShop && 
                 <UncontrolledDropdown nav direction="down" >
-                  <i style={{ fontSize: 17 }} className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
+                  <i style={{ fontSize: 17}} className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
                 </UncontrolledDropdown>
             } 
             
