@@ -27,40 +27,40 @@ const NAVITATIONS = [
 ]
 
 const API_NAVIGATIONS = [
-  { key: 'blacklist', value: 'Blacklist', has_children: true },
-  { key: 'blacklist-object', value: 'Blacklist Object' },
+  { key: 'blacklist-blacklist', value: 'Blacklist', has_children: true },
+  { key: 'object-blacklist', value: 'Blacklist Object' },
   { key: 'get-blacklist', value: 'Get Blacklist' },
   { key: 'list-blacklist', value: 'List Blacklist' },
   { key: 'create-blacklist', value: 'Create a Blacklist' },
   { key: 'update-blacklist', value: 'Update a Blacklist' },
   { key: 'destroy-blacklist', value: 'Destroy a Blacklist' },
   
-  { key: 'categories', value: 'Categories', has_children: true },
-  { key: 'category-object', value: 'Category Object' },
+  { key: 'categories-category', value: 'Categories', has_children: true },
+  { key: 'object-category', value: 'Category Object' },
   { key: 'get-category', value: 'Get a Category' },
   { key: 'list-category', value: 'List All Categories' },
   { key: 'create-category', value: 'Create a Category' },
   { key: 'edit-category', value: 'Edit Category' },
   { key: 'delete-category', value: 'Delete Category' },
   
-  { key: 'coupons', value: 'Coupons', has_children: true },
-  { key: 'coupon-object', value: 'Coupon Object' },
+  { key: 'coupons-coupon', value: 'Coupons', has_children: true },
+  { key: 'object-coupon', value: 'Coupon Object' },
   { key: 'get-coupon', value: 'Get a Coupon' },
   { key: 'list-coupon', value: 'List All Coupons' },
   { key: 'create-coupon', value: 'Create a Coupon' },
   { key: 'edit-coupon', value: 'Edit Coupon' },
   { key: 'delete-coupon', value: 'Delete Coupon' },
 
-  { key: 'feedback', value: 'Feedback', has_children: true },
-  { key: 'feedback-object', value: 'Feedback Object' },
+  { key: 'feedback-feedback', value: 'Feedback', has_children: true },
+  { key: 'object-feedback', value: 'Feedback Object' },
   { key: 'get-feedback', value: 'Get a Feedback' },
   { key: 'list-feedback', value: 'List All Feedback' },
   { key: 'reply-feedback', value: 'Reply Feedback' },
 
-  { key: 'orders', value: 'Orders', has_children: true },
-  { key: 'order-object', value: 'Order Object' },
+  { key: 'orders-order', value: 'Orders', has_children: true },
+  { key: 'object-order', value: 'Order Object' },
   { key: 'get-order', value: 'Get an Order' },
-  { key: 'list-orders', value: 'List All Orders' },
+  { key: 'list-order', value: 'List All Orders' },
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -70,6 +70,7 @@ class Documentation extends React.Component {
     super(props);
     this.state = {
       isOpen: false,
+      activeNode: null
     };
   }
 
@@ -82,8 +83,19 @@ class Documentation extends React.Component {
     if (key !== "")
       this.setState({initial : true})
   }
+
+  onUpdateScroll(el) {
+    if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
+      this.props.history.push(`/documentation#${el.id}`)
+      this.setState({activeNode: el.id.split('-')[1]})
+    }
+    else
+      this.setState({initial: false})
+  }
    
-  render() {   
+  render() {
+
+    var {activeNode} = this.state;
 
     var items = ['get_started'];
     NAVITATIONS.map((nav => {
@@ -108,14 +120,7 @@ class Documentation extends React.Component {
                   currentClassName="active"
                   offset={ -50 }                  
                   onUpdate={
-                    (el) => {
-                      console.log('~~~~~~~~~', el)
-                      if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
-                        this.props.history.push(`/documentation#${el.id}`)
-                      }
-                      else
-                        this.setState({initial: false})
-                    }
+                    (el) => this.onUpdateScroll(el)
                   }>
                   <li className="field">GET STARTED</li>
                   {
@@ -129,13 +134,12 @@ class Documentation extends React.Component {
                       )
                     })
                   }
-                  <li className="field">API REFERENCE</li>                  
+                  <li className="field">API REFERENCE</li>
                   {
                     API_NAVIGATIONS.map((nav, cindex) => {
                       return (
-                        <li className={ !nav.has_children && "sub-nav" } key={cindex}>
-                          <a 
-                            href={`/documentation#${nav.key}`} 
+                        <li className={ nav.has_children ? 'parent' : nav.key.indexOf(activeNode) > -1 ? 'sub-nav show' : 'sub-nav' } key={cindex}>
+                          <a href={`/documentation#${nav.key}`} 
                           >{nav.value}</a>
                         </li>
                        )
@@ -176,7 +180,7 @@ class Documentation extends React.Component {
                     Sellix's API uses a Bearer authentication with your API Secret Key. 
                     You will have to send your API Secret Key via the <span className="badge-mark">Authorization</span>  header. <br /><br />
 
-                    Your API key can be accessed and re-generated <a href={`https://sellix.io/settings/${userId}/security`}>here</a> in the security tab. <br /><br />
+                    Your API key can be accessed and re-generated <a href="https://sellix.io/settings/security">here</a> in the security tab. <br /><br />
 
                     All API requests must be made over HTTPS.
                   </p>
@@ -340,28 +344,28 @@ class Documentation extends React.Component {
                   <h3><b>Webhooks</b></h3>
                   <p>
                     Sellix provides a webhooks system allowing you to subscribe to to events 
-                    with <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/all`}>Webhook Endpoints</a>, 
+                    with <a href="https://sellix.io/webhooks">Webhook Endpoints</a>, 
                     alongside Product/Payment Order status webhooks and Dynamic Product webhooks. <br /><br />
                     Please note <b>only HTTPS webhook URLs are supported</b>.<br /><br />
                     A webhook simulator is available allowing you to simulate webhooks to a URL. It can be 
-                    accessed <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/logs`}>here</a>.<br /><br />
+                    accessed <a href="https://sellix.io/webhooks/simulate">here</a>.<br /><br />
                   </p>
                   <p><b>Signing/Validating</b></p>
                   <p>
                     To verify the authenticity of a webhook request and its payload, each webhook request includes 
                     a <span className="badge-mark">X-Sellix-Signature</span> header with a 
                     HMAC signature comprised of the JSON encoded request body and your webhook secret. 
-                    Your webhook secret can be changed in your <a href={`https://sellix.io/settings/${userId}/security`}>settings page</a>. <br /><br />
+                    Your webhook secret can be changed in your <a href='https://sellix.io/settings/security'>settings page</a>. <br /><br />
                   </p>
                   <p><b>Events</b></p>
                   <p>
                     Each webhook request will feature a <span className="badge-mark">X-Sellix-Event</span> header containing the 
-                    webhook event type. A list of supported events from <a href={`https://sellix.io/dashboard/${userId}/developer/webhooks/all`}>Webhook Endpoints</a> can be found below.
+                    webhook event type. A list of supported events from <a href="https://sellix.io/webhooks">Webhook Endpoints</a> can be found below.
                   </p>
                   <table className="border-table">
                     <thead>
                       <tr>
-                        <th className="table-title text-center" colspan="3">EVENT</th>
+                        <th className="table-title" colspan="3">EVENT</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -428,7 +432,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="blacklist">
+              <section id="blacklist-blacklist">
                 <div className="d-ins">
                   <h3><b>Blacklist</b></h3>
                 </div>
@@ -447,7 +451,7 @@ DELETE /blacklists/:uniqid`}
                   </div>
                 </div>
               </section>
-              <section id="blacklist-object">
+              <section id="object-blacklist">
                 <div className="d-ins">
                   <h3><b>Blacklist Object</b></h3>
                   <table>
@@ -846,7 +850,7 @@ DELETE /blacklists/:uniqid`}
                   </div>
                 </div>
               </section>
-              <section id="categories">
+              <section id="categories-category">
                 <div className="d-ins">
                   <h3><b>Categories</b></h3>
                 </div>
@@ -865,7 +869,7 @@ DELETE /categories/:uniqid`}
                   </div>
                 </div>
               </section>
-              <section id="category-object">
+              <section id="object-category">
                 <div className="d-ins">
                   <h3><b>Category Object</b></h3>
                   <table>
@@ -1290,7 +1294,7 @@ DELETE /categories/:uniqid`}
                   </div>
                 </div>
               </section>
-              <section id="coupons">
+              <section id="coupons-coupon">
                 <div className="d-ins">
                   <h3><b>Coupons</b></h3>
                 </div>
@@ -1309,7 +1313,7 @@ DELETE /coupons/:uniqid`}
                   </div>
                 </div>
               </section>
-              <section id="coupon-object">
+              <section id="object-coupon">
                 <div className="d-ins">
                   <h3><b>Coupon Object</b></h3>
                   <table>
@@ -1766,7 +1770,7 @@ DELETE /coupons/:uniqid`}
                 </div>
               </section>
 
-              <section id="feedback">
+              <section id="feedback-feedback">
                 <div className="d-ins">
                   <h3><b>Feedback</b></h3>
                 </div>
@@ -1783,7 +1787,7 @@ POST /feedback/reply/:uniqid`}
                   </div>
                 </div>
               </section>
-              <section id="feedback-object">
+              <section id="object-feedback">
                 <div className="d-ins">
                   <h3><b>Feedback Object</b></h3>
                   <table>
@@ -2067,7 +2071,7 @@ POST /feedback/reply/:uniqid`}
                 </div>
               </section>
 
-              <section id="orders">
+              <section id="orders-order">
                 <div className="d-ins">
                   <h3><b>Orders</b></h3>
                 </div>
@@ -2083,7 +2087,7 @@ GET /oders`}
                   </div>
                 </div>
               </section>
-              <section id="order-object">
+              <section id="object-order">
                 <div className="d-ins">
                   <h3><b>Order Object</b></h3>
                   <table>
@@ -2493,7 +2497,7 @@ GET /oders`}
                 <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
-                      <p>STATUSES (display this like EVENTS on webhooks)</p>
+                      <p>STATUSES</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`0: PENDING
@@ -2700,7 +2704,7 @@ GET /oders`}
                   </div>
                 </div>
               </section>
-              <section id="list-orders">
+              <section id="list-order">
                 <div className="d-ins">
                   <h3><b>List All Orders</b></h3>
                   <p>
