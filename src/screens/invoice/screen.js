@@ -319,6 +319,12 @@ class Invoice extends React.Component {
 
     const { loading, invoice, showAlert, openQRModal, fakeSuccess, info,  } = this.state;
 
+    // invoice.gateway = 'skrill'
+    // invoice.gateway = 'paypal'
+    // invoice.gateway = 'perfectmoney'
+    // invoice.gateway = 'stripe'
+    // invoice.status = 0
+
     return (
       <div>
         {loading && <Row><Col lg={12}><Loader /></Col></Row>}
@@ -353,15 +359,15 @@ class Invoice extends React.Component {
                   <Col lg={7}>
 
                       <div className="text-left my-4 mb-5">
-                        <h1 className={"m-0"}>{invoice.username}</h1>
+                        <h1 className={"m-0 px-4"}>{invoice.username}</h1>
                       </div>
 
-                      <Card className={"p-4"} style={{ marginBottom: "calc(1.5rem + 4px)"}}>
+                      <Card className={"p-4"} >
                         <h3 className={"pb-2 pt-2 m-0"}>{info.product.title}</h3>
                         <span className={"pb-4"}>{info.delivery_text}</span>
 
 
-                        {invoice.product_type !== "file" && <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "7rem", background: "#f7f7f7", padding: "1rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
+                        {invoice.product_type !== "file" && <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "14rem", background: "#f7f7f7", padding: "1rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
                           {invoice.product_type === "serials" &&
                             info.serials.map(v => <span style={{ fontSize: "12px", lineHeight: 1}}>
                                   <strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span style={{ fontSize: "12px", lineHeight: 1}}>{v.split(':')[1]}</span><br/>
@@ -371,19 +377,16 @@ class Invoice extends React.Component {
                         </pre>}
                         <div className={"d-flex"}>
                           {invoice.product_type !== "file" && <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={this.copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>}
-                          <Button color={"default"} style={{ width: "150px"}} onClick={this.onSaveFile}><i className={"fas fa-save"}/> Save as ...</Button>
+                          <Button color={"default"} style={{ width: "150px"}} onClick={this.onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Download File</Button>
                         </div>
                       </Card>
 
-                      <Card>
-                        <LeaveFeedback uniqid={info.feedback_uniqid} />
-                      </Card>
                     </Col>
                   }
 
                   <Col lg={{ size: 5 }} >
                     <div className="text-left my-4 mb-5"><h1 className="m-0">&nbsp;</h1></div>
-                    <Card className="invoice-card p-0 bg-white pt-3">
+                    <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: "calc(1.5rem + 4px)"}}>
                       <div className="float-logo">
                         <img src={sellix_logo} width="153" alt={""}/>
                       </div>
@@ -521,6 +524,10 @@ class Invoice extends React.Component {
                         }
                       </div>
                     </Card>
+
+                    {info && <Card>
+                      <LeaveFeedback uniqid={info.feedback_uniqid} />
+                    </Card>}
                   </Col>
 
                 </Row>
