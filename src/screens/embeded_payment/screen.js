@@ -461,6 +461,7 @@ class EmbededPayment extends React.Component {
                   </>
                 }
               </p>
+              {coupon_applied && <s className="text-primary price text-center" style={{ fontSize: 21 }}>{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</s>}
               <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>                
             </div>
             <Card className="bg-white stock-stop mb-0">
