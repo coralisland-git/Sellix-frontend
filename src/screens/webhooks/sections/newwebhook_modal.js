@@ -54,7 +54,7 @@ class NewWebhookModal extends React.Component {
       msg = 'Updated successfully'
     }
     action(values).then(res => {
-      this.props.commonActions.tostifyAlert('success', res.message || msg);
+      this.props.commonActions.tostifyAlert('success', res.messages || msg);
       this.props.actions.getWebhookList();
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
