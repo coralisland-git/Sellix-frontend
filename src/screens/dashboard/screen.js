@@ -12,7 +12,7 @@ import { getAnalyticsData, geLastInvoices } from './actions'
 import './style.scss'
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { tableOptions } from "../../constants/tableoptions";
-import config from "../../constants/config";
+import config from "constants/config";
 import { getSelfUser } from "../../services/global/auth/actions";
 import { withRouter } from "react-router-dom";
 
@@ -85,6 +85,7 @@ class Dashboard extends React.Component {
       viewsProgress: 0,
       queriesProgress: 0,
       showPlaceholder: false,
+      currency: "USD",
     }
   }
 
@@ -92,6 +93,8 @@ class Dashboard extends React.Component {
 
     let startDate = null;
     let endDate = null;
+
+    let isAdmin = window.location.pathname.includes('admin/dashboard')
 
     if(!date.startDate.isSame(date.endDate, 'day')) {
       startDate = date.startDate.format('MM/DD/YYYY');
@@ -112,8 +115,6 @@ class Dashboard extends React.Component {
         getAnalyticsData(moment().subtract(2, 'week').format('MM/DD/YYYY'), moment().format('MM/DD/YYYY')),
         getAnalyticsData()
       ]
-
-      let isAdmin = window.location.pathname.includes('admin')
 
       if(!isAdmin) {
         requests.push(geLastInvoices())
@@ -141,7 +142,8 @@ class Dashboard extends React.Component {
               viewsProgress: total.views_count_progress || 0,
               queriesProgress: total.queries_count_progress || 0,
               chartData: analytics['daily'],
-              invoices: invoices
+              invoices: invoices,
+              currency: isAdmin ? 'USD' : analytics.currency,
             })
           })
           .finally(() => {
@@ -162,7 +164,8 @@ class Dashboard extends React.Component {
               ordersProgress: total.orders_count_progress || 0,
               viewsProgress: total.views_count_progress || 0,
               queriesProgress: total.queries_count_progress || 0,
-              chartData: analytics[DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]]
+              chartData: analytics[DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]],
+              currency: isAdmin ? 'USD' : analytics.currency,
             })
           })
           .finally(() => {
@@ -227,10 +230,9 @@ class Dashboard extends React.Component {
       queriesProgress,
       invoices,
       showPlaceholder,
-      range
+      range,
+      currency,
     } = this.state;
-
-    console.log(range)
 
     return (
       <div className="dashboard-screen">
@@ -268,7 +270,7 @@ class Dashboard extends React.Component {
                               <NumberFormat value={totalRevenue} 
                                 displayType={'text'} 
                                 thousandSeparator={true} 
-                                prefix={'$'} 
+                                prefix={config.CURRENCY_LIST[currency]}
                                 renderText={value => <h3 className="text-primary mb-0">{value}</h3>} />
 
                               <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
@@ -276,9 +278,9 @@ class Dashboard extends React.Component {
 
                             <div className="progress-xs mt-3 progress">
                               <div 
-                                className={`progress-bar ${revenueProgress>0?'bg-success':(revenueProgress==0?'bg-warning':'bg-danger')}`} 
+                                className={`progress-bar ${revenueProgress > 0 ? 'bg-success' : (revenueProgress==0 ? 'bg-warning' : 'bg-danger')}`}
                                 role="progressbar" 
-                                style={{width: `${revenueProgress==0?1:Math.abs(revenueProgress)}%`}}
+                                style={{width: `${revenueProgress==0 ? 1 : Math.abs(revenueProgress)}%`}}
                                 aria-valuemin="0" 
                                 aria-valuemax="100" />
                             </div>

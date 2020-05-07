@@ -10,7 +10,7 @@ import { getProductStock } from 'screens/product_shop/productCard';
 import './style.scss'
 
 
-const ProductsList = ({ products, groups, loading, history, hide_out_of_stock }) => {
+const ProductsList = ({ products, groups, loading, history, hide_out_of_stock, center_product_titles }) => {
 
 	const [selectedGroup, setSelectedGroup] = useState(null)
 
@@ -40,7 +40,7 @@ const ProductsList = ({ products, groups, loading, history, hide_out_of_stock })
 				)}
 				{products.map(product =>
 					<div key={product.uniqid} className="mb-4 col-md-6 col-lg-3">
-						<ProductCard product={product} history={history} />
+						<ProductCard product={product} history={history} center_product_titles={center_product_titles} />
 					</div>
 				)}
 			</FlipMove>
