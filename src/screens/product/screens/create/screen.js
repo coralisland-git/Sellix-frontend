@@ -84,7 +84,8 @@ const CURRENCY_LIST = [
 	{ value: 'CHF', label: 'CHF'},
 	{ value: 'CNY', label: 'CNY'},
 	{ value: 'SEK', label: 'SEK'},
-	{ value: 'NZD', label: 'NZD'}
+	{ value: 'NZD', label: 'NZD'},
+	{ value: 'PLN', label: 'PLN'},
 ]
 
 const EDITOR_FORMATS = [

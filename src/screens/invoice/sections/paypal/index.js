@@ -18,23 +18,6 @@ import backIcon from 'assets/images/x.png'
 
 import './style.scss'
 
-const CURRENCY_LIST = { 
-  'USD': '$',
-  'EUR': '€',
-  'AUD': '$',
-  'GBP': '£',
-  'JPY': '¥',
-  'CAD': '$',
-  'CHF': '₣',
-  'CNY': '¥',
-  'SEK': 'kr',
-  'NZD': '$'
-}
-
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
 const mapDispatchToProps = (dispatch) => {
   return ({
     commonActions: bindActionCreators(CommonActions, dispatch)
@@ -192,4 +175,4 @@ class PaypalInvoice extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaypalInvoice)
+export default connect(null, mapDispatchToProps)(PaypalInvoice)

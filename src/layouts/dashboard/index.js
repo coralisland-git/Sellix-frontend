@@ -33,9 +33,7 @@ import {
 } from 'constants/navigation'
 
 import {
-  Aside,
   Header,
-  Footer,
   Loading,
   SetTitle
 } from 'components'
