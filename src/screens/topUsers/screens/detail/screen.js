@@ -112,7 +112,6 @@ class User extends React.Component {
 
   render() {
     const { loading } = this.state
-    console.log({user: this.props.user})
     return (
       <div className="detail-product-screen">
         <div className="animated fadeIn">
