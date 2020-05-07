@@ -259,7 +259,6 @@ class Purchase extends React.Component {
 			this.setState({ quantity: 0 })
 		}
 
-
 		return <div>
 			<div className="p-3 pt-2 pb-2">
 				<div className="d-flex justify-content-between align-items-center mb-3">
