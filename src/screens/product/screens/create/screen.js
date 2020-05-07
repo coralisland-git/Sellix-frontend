@@ -764,7 +764,7 @@ class CreateProduct extends React.Component {
 																{type.value === 'service' && <Row>
 																	<Col lg={12}>
 																		<FormGroup>
-																			<Label htmlFor="product_code">Service Into</Label>
+																			<Label htmlFor="product_code">Service Info</Label>
 																			<textarea className="form-control" 
 																				id='service_text'
 																				name="service_text"
