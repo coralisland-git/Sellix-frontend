@@ -14,9 +14,7 @@ import {
 import { Button } from 'components';
 import { Formik } from 'formik'
 import { createFeedback } from './actions'
-import {
-  CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 import { Loading } from 'components'
 import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
@@ -41,7 +39,10 @@ class LeaveFeedback extends React.Component {
     this.state = {
       loading: false,
       loadingInitialValues: true,
-      initialValues: {}
+      initialValues: {
+        message: "",
+        score: 0,
+      }
     }
 
     this.initializeData = this.initializeData.bind(this)
@@ -60,44 +61,44 @@ class LeaveFeedback extends React.Component {
   }
 
   initializeData () {
-    this.props.commonActions.getFeedbackByUniqid(this.props.match.params.id).then(res => {
-      if (res.status === 200) {
-        var existingFeedback = res.data.feedback
+    this.props.commonActions.getFeedbackByUniqid(this.props.uniqid)
+        .then(res => {
 
-        if(existingFeedback) {
-          if(!existingFeedback.score && existingFeedback.feedback) {
-            existingFeedback.score = {
-              'negative': 1,
-              'neutral': 3,
-              'positive': 5
-            }[existingFeedback.feedback]
+          if (res.status === 200) {
+
+            let { feedback } = res.data
+
+            if(feedback) {
+              if(!feedback.score && feedback.feedback) {
+                feedback.score = {
+                  'negative': 1,
+                  'neutral': 3,
+                  'positive': 5
+                }[feedback.feedback]
+              }
+
+              this.setState({
+                initialValues: {
+                  'message': feedback.message || "",
+                  'score': +feedback.score
+                },
+                loadingInitialValues: false
+              })
+
+            } else {
+              window.location = "/404"
+              this.setState({
+                loadingInitialValues: false
+              })
+            }
           }
-
-          this.setState({ 
-            initialValues: {
-              'message': existingFeedback.message,
-              'score': existingFeedback.score
-            },
-            loadingInitialValues: false
-          })
-
-        } else {
-          window.location = "/404"
-          this.setState({
-            loadingInitialValues: false
-          })
-        }
-      }
-    })
+        })
   }
 
-  handleSubmit(values) {
+  handleSubmit = (values) => {
     this.setState({ loading: true })
-    this.props.createFeedback({ ...values, uniqid: this.props.match.params.id }).then(res => {
+    this.props.createFeedback({ ...values, uniqid: this.props.uniqid }).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
-      // this.props.history.push({
-      //   pathname: '/admin/blacklist'
-      // })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
     }).finally(() => {
@@ -106,65 +107,58 @@ class LeaveFeedback extends React.Component {
   }
 
   render() {
+
     if(this.state.loadingInitialValues) {
       return Loading()
     }
 
+    console.log(this.state.initialValues)
+
     return (
-      <div className="animated fadeIn">
-        <Formik
-          initialValues={this.state.initialValues}
-          onSubmit={(values) => {
-            this.handleSubmit(values)
-          }}>{props => (
+        <Formik initialValues={this.state.initialValues} onSubmit={this.handleSubmit}>
+          {props => (
             <Form onSubmit={props.handleSubmit}>
-              <Row>
-                <Col lg={8} className="ml-auto mr-auto">
-                  <Card>
-                    <CardBody className="p5-4 pb-5">
-                      <div className="flex-wrapper align-items-center">
-                        <h5 className="title text-primary f-18 mt-4">Leave your feedback</h5>
-                        <p className="text-grey mt-3 mb-4">Was the product good? Write your feedback about it here.</p>
-                      </div>
-                      <div className="mb-4 feedback-radioGroup">
-                      <ReactStarsRating className="transparent-bg cursor-pointer react-stars-rating" onChange={score => {
-                        props.setFieldValue('score', score)
-                        const feedback = {
-                          1: 'negative',
-                          2: 'negative',
-                          3: 'neutral',
-                          4: 'positive',
-                          5: 'positive' 
-                        }[score]
-                        props.setFieldValue('feedback', feedback)
-                      }} 
-                                        value={props.values.score || 5} isHalf={false}/>
-                      </div>
-                      <Row>
-                        <Col>
-                          <FormGroup>
-                            <Label htmlFor="warehouseName">Review</Label>
-                            <Input
-                              type="textarea"
-                              className="pt-3 pb-3"
-                              rows={5}
-                              placeholder="Leave a text for your feedback"
-                              name="message"
-                              onChange={props.handleChange}
-                              value={props.values.message}
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Button color="primary" className="mt-4 mb-3">Submit</Button>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
+              <Card className={"mb-0"}>
+                <CardBody className="p-4">
+                  <div className="flex-wrapper align-items-center">
+                    <h3 className="text-primary">Leave your feedback</h3>
+                    <p className="text-grey mt-3 mb-4">Was the product good? Write your feedback about it here.</p>
+                  </div>
+                  <div className="mb-4 mt-4 feedback-radioGroup justify-content-flex-start d-flex">
+                    <ReactStarsRating className="transparent-bg cursor-pointer react-stars-rating" onChange={score => {
+                      props.setFieldValue('score', score)
+                      const feedback = {
+                        1: 'negative',
+                        2: 'negative',
+                        3: 'neutral',
+                        4: 'positive',
+                        5: 'positive'
+                      }[score]
+                      props.setFieldValue('feedback', feedback)
+                    }}
+                    value={+props.values.score || 5} isHalf={false}/>
+                  </div>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Input
+                            type="textarea"
+                            className="pt-3 pb-3"
+                            rows={5}
+                            placeholder="Leave a text for your feedback"
+                            name="message"
+                            onChange={props.handleChange}
+                            value={props.values.message}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Button color="primary" className="mt-3 mb-0" style={{ width: "200px"}}>Submit</Button>
+                </CardBody>
+              </Card>
             </Form>
           )}
         </Formik>
-      </div >
     )
   }
 }

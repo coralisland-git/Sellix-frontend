@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react';
 import {loadStripe} from '@stripe/stripe-js/pure';
-import {
-  CardElement,
-  Elements,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
-import SuccessIndicator from 'react-success-indicator'
+import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Loading } from 'components'
+
 import './stripeForm.scss'
- 
+
+
 const StripeForm = (props) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const { invoice, onSuccess } = props
 
-  const { stripe_publishable_key, stripe_client_secret  } = invoice;
+  const { stripe_client_secret  } = invoice;
 
   const [isSuccess, setIsSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)

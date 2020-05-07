@@ -91,7 +91,7 @@ export const createInvoice = (obj) => {
   }
 }
 
-export const getUserFeedbacks = (username) => {
+export const getUserReviews = (username) => {
   return (dispatch) => {
     let data = {
       method: 'get',
@@ -112,20 +112,22 @@ export const getUserFeedbacks = (username) => {
 }
 
 
-export const getFeedbackByUniqid = (uniqid) => {
-  return (dispatch) => {
-    let data = {
-      method: 'get',
-      url: `/feedback/unique/${uniqid}`,
-    }
-    return api(data).then(res => {
-      if(res && res.status == 200) {
-        return res
-      } else throw res
-    }).catch(err => {
-      throw err
-    })
-  }
+export const getFeedbackByUniqid = (uniqid) => (dispatch) => {
+
+  console.log(uniqid)
+  console.log(uniqid)
+  console.log(uniqid)
+    return api.get(`/feedback/unique/${uniqid}`)
+        .then(res => {
+          if(res && res.status === 200) {
+            return res
+          } else {
+            throw res
+          }
+        })
+        .catch(err => {
+          throw err
+        })
 }
 
 
@@ -151,24 +153,23 @@ export const getUserProductById = (id) => {
 }
 
 
-export const getInvoice = (id) => {
-  return (dispatch) => {
-    let data = {
-      method: 'get',
-      url: `/invoices/unique/${id}`,
-    }
-    return api(data).then(res => {
-      if(res && res.status == 200) {
-        dispatch({
-          type: COMMON.SHOP_THEME,
-          payload: res.data.invoice.theme
+export const getInvoice = (id) => (dispatch) => {
+
+    return api.get(`/invoices/unique/${id}`)
+        .then(res => {
+            if(res && res.status === 200) {
+              dispatch({
+                type: COMMON.SHOP_THEME,
+                payload: res.data.invoice.theme
+              })
+              return res
+            } else {
+              throw res
+            }
         })
-        return res
-      } else throw res
-    }).catch(err => {
-      throw err
-    })
-  }
+        .catch(err => {
+          throw err
+        })
 }
 
 export const getInvoiceViaWebsocket = (id) => {

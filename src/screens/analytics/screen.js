@@ -13,7 +13,6 @@ import { getAnalyticsData } from './actions'
 
 import './style.scss'
 
-import { PAYMENT_ICONS } from '../invoice/screen'
 
 const Progress = ({ progress, isPositive, is24 }) => {
   if(is24) {
@@ -256,7 +255,7 @@ class Analytics extends React.Component {
                             <Col md={3} key={index}>
                               <Card className="grey p-0 m-0">
                                 <CardBody className={'top3-products p-4 pt-4 pb-4 pl-2 pr-2'}>
-                                  <img src={PAYMENT_ICONS[gateway.gateway]} style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, objectFit: 'contain'}} alt="" width="100%" height="100"/>
+                                  <img src={config.PAYMENT_ICONS[gateway.gateway]} style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, objectFit: 'contain'}} alt="" width="100%" height="100"/>
                                   <div className="text-center mt-4">
                                     <h4 className="text-black" style={{ fontSize: ".9rem" }}>{gateway.gateway.toUpperCase()}</h4>
                                     <div className="d-flex align-items-center justify-content-center mt-2">

@@ -55,7 +55,7 @@ class ShopFeedback extends React.Component {
   }
 
   initializeData = () => {
-    this.props.commonActions.getUserFeedbacks(this.props.match.params.username).then(res => {
+    this.props.commonActions.getUserReviews(this.props.match.params.username).then(res => {
       if (res.status === 200) {
         this.setState({ 
           loading: false,

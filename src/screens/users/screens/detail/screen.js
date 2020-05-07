@@ -56,10 +56,11 @@ class User extends Component {
 
     const { updateUser, tostifyAlert } = this.props;
 
-    const dataForSend = pick(values, ['username', 'email', 'otp_2fa', 'email_2fa', 'id'])
-    dataForSend.otp_2fa = Boolean(+dataForSend.otp_2fa)
-    dataForSend.email_2fa = Boolean(+dataForSend.email_2fa)
+    let dataForSend = pick(values, ['username', 'email', 'otp_2fa', 'email_2fa', 'id'])
 
+    dataForSend.email_2fa = Boolean(+dataForSend.email_2fa)
+    dataForSend.otp_2fa = Boolean(+dataForSend.otp_2fa)
+    console.log(dataForSend)
     updateUser(dataForSend)
         .then(res => {
           this.getUser()
