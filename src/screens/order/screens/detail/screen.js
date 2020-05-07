@@ -297,7 +297,7 @@ class OrderDetail extends React.Component {
                           </div>
                           <div className="d-flex">
                             <p className="title">Coupon</p>
-                            <p>{order.coupon_id?order.coupon_id:'No Coupon'}</p>
+                            <p>{order.coupon_code?order.coupon_code:'No Coupon'}</p>
                           </div>
                           
                           
