@@ -215,7 +215,7 @@ class WebhookLogs extends React.Component {
           <ShowWebhookLogModal            
             openModal={openShowModal}
             webhook={webhook}
-            closeModal={ ()=> this.setState({openShowModal: false})}            
+            closeModal={ ()=> this.setState({openShowModal: false})}
           />
           <Card className="grey">
             <CardHeader>

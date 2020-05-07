@@ -60,8 +60,25 @@
     background: #f5f5f5 !important;
     padding: 10px !important;
   }  
+
 }
 
+.dark .modal {
+  .__json-pretty-error__{
+    color: #B4AEBC !important;
+    background: #251f45 !important;
+  }
+
+  .__json-pretty__ {
+    color: #66d9ef !important;
+    background: #251f45 !important;
+    padding: 10px !important;
+
+    span {
+      color: #B4AEBC !important;
+    }
+  }    
+}
 
 @media (min-width: 576px){
   .modal-detail {

@@ -130,8 +130,10 @@ class EmbededPayment extends React.Component {
     delete data['showPaymentOptions']
     delete data["product_info"]
     delete data["openCoupon"]
+    delete data["embed_fields"]
     
-    data['custom_fields'] = JSON.stringify({custom_fields: this.state.custom_fields})    
+    var custom_fields = Object.assign({}, this.state.embed_fields, this.state.custom_fields)
+    data['custom_fields'] = JSON.stringify({custom_fields: custom_fields})
     data['gateway'] = data['gateway'].toLowerCase()
     data['email'] = values.email
         
@@ -338,7 +340,7 @@ class EmbededPayment extends React.Component {
       if (pair[0] != '')
         params[key] = decodeURIComponent(pair[1])
     }
-    this.setState({custom_fields : params});
+    this.setState({embed_fields : params});
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
       if(res.status == 200){
         this.setState({
@@ -409,11 +411,11 @@ class EmbededPayment extends React.Component {
     var initial_optParam = ''
     if(paymentoptions.length > 0)
       initial_optParam = PAYMENT_LABELS[paymentoptions[0]]
-    let custom_fields = []    
+    let custom_fields = []
 
-    if(product_info && product_info.custom_fields)
+    if(product_info && product_info.custom_fields){
       var temp_custom_fields = JSON.parse(product_info.custom_fields)['custom_fields']
-      var embed_fields = Object.keys(this.state.custom_fields);
+      var embed_fields = Object.keys(this.state.embed_fields);
       if(temp_custom_fields){
         for(var i=0;i<temp_custom_fields.length;i++){
           var field = temp_custom_fields[i];
@@ -429,6 +431,7 @@ class EmbededPayment extends React.Component {
             custom_fields.push(field)
         }
       }
+    }
 
     return (
       <div className="embeded-payment-screen">
