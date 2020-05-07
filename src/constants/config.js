@@ -16,14 +16,14 @@ export default {
   CURRENCY_LIST : { 
     'USD': '$',
     'EUR': '€',
-    'AUD': '$',
+    'AUD': 'A$',
     'GBP': '£',
     'JPY': '¥',
-    'CAD': '$',
+    'CAD': 'C$',
     'CHF': '₣',
     'CNY': '¥',
     'SEK': 'kr',
-    'NZD': '$',
+    'NZD': 'ZN$',
     'PLN': 'zł',
   },
   PAYMENT_OPTS : {

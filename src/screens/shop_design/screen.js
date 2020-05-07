@@ -41,6 +41,7 @@ class Payments extends React.Component {
       hide_out_of_stock: false,
       google_analytics_tracking_id: '',
       crisp_website_id: '',
+      center_product_titles: false,
     }
   }
 
@@ -54,6 +55,7 @@ class Payments extends React.Component {
       hide_out_of_stock: this.state.hide_out_of_stock,
       google_analytics_tracking_id: this.state.google_analytics_tracking_id,
       crisp_website_id: this.state.crisp_website_id,
+      center_product_titles: this.state.center_product_titles,
     }
 
     // if(this.state.google_analytics_tracking_id) {
@@ -75,6 +77,7 @@ class Payments extends React.Component {
         discord_link: settings.shop_discord_link || '',
         crisp_website_id: settings.shop_crisp_website_id || '',
         search_enabled: settings.shop_search_enabled === '1',
+        center_product_titles: settings.shop_center_product_titles === '1',
         dark_mode: settings.shop_dark_mode === '1',
         hide_out_of_stock: settings.shop_hide_out_of_stock === '1',
 
@@ -86,7 +89,7 @@ class Payments extends React.Component {
   }
 
   render() {
-    const { loading, discord_link, crisp_website_id, search_enabled, dark_mode, hide_out_of_stock, google_analytics_tracking_id } = this.state;
+    const { loading, discord_link, crisp_website_id, search_enabled, dark_mode, hide_out_of_stock, center_product_titles } = this.state;
 
     return (
       <div className="shop-settings-screen">
@@ -137,6 +140,29 @@ class Payments extends React.Component {
                             <Col className="d-flex align-items-center">
                               <AppSwitch className="mt-1 file-switch mr-2"
                                 variant={'pill'} 
+                                color={'primary'}
+                                size="lg"
+                                checked={center_product_titles}
+                                onChange={(e) => {
+                                  this.setState({
+                                    center_product_titles: e.target.checked
+                                  })
+                                }}
+                              />
+                              <div className="ml-2">
+                                <Label className="mb-0">Centered Title for Products</Label>
+                                <p className="text-grey mb-0">Product titles will be centered in your store.</p>
+                              </div>
+                            </Col>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <FormGroup row>
+                            <Col className="d-flex align-items-center">
+                              <AppSwitch className="mt-1 file-switch mr-2"
+                                variant={'pill'}
                                 color={'primary'}
                                 size="lg"
                                 checked={search_enabled}
@@ -197,7 +223,7 @@ class Payments extends React.Component {
                               <div className="ml-2">
                                 <Label className="mb-0">Hide Out of Stock</Label>
                                 <p className="text-grey mb-0">
-                                Automatically hide my products when out of stock</p>
+                                Automatically hide your products when out of stock.</p>
                               </div>
                             </Col>
                           </FormGroup>

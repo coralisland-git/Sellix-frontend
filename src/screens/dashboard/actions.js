@@ -2,8 +2,7 @@ import { authApi } from 'utils'
 
 export const getAnalyticsData = (start, end) => () => {
 
-console.log(start, end)
-    let isAdmin = window.location.pathname.includes('admin');
+    let isAdmin = window.location.pathname.includes('admin/dashboard');
     let url = `/${isAdmin ? 'admin' : 'self'}/analytics?last_hours=true`;
     if(start) {
         url = `/${isAdmin ? 'admin' : 'self'}/analytics?from=${start}&to=${end}&year=true`;

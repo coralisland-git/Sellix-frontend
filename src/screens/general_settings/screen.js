@@ -18,6 +18,9 @@ import { Loader } from 'components'
 import { saveGeneralSettings } from './actions'
 import { CommonActions, AuthActions } from 'services/global'
 import './style.scss'
+import Select from "react-select";
+import config from "constants/config";
+import { find } from "lodash";
 
 
 const mapDispatchToProps = (dispatch) => ({
@@ -25,6 +28,21 @@ const mapDispatchToProps = (dispatch) => ({
   getUserSettings: bindActionCreators(AuthActions.getUserSettings, dispatch),
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch)
 })
+
+
+const CURRENCY_LIST = [
+  { value: 'USD', label: 'USD'},
+  { value: 'EUR', label: 'EUR'},
+  { value: 'JPY', label: 'JPY'},
+  { value: 'GBP', label: 'GBP'},
+  { value: 'AUD', label: 'AUD'},
+  { value: 'CAD', label: 'CAD'},
+  { value: 'CHF', label: 'CHF'},
+  { value: 'CNY', label: 'CNY'},
+  { value: 'SEK', label: 'SEK'},
+  { value: 'NZD', label: 'NZD'},
+  { value: 'PLN', label: 'PLN'},
+]
 
 class GeneralSettings extends React.Component {
   
@@ -35,7 +53,8 @@ class GeneralSettings extends React.Component {
       initialValues: {
         profile_attachment: '',
         email: '',
-        username: ''
+        username: '',
+        currency: ''
       }
     }
   }
@@ -43,8 +62,7 @@ class GeneralSettings extends React.Component {
   handleSubmit = (data) => {
     this.setState({ loading: true });
     let { saveGeneralSettings, tostifyAlert } = this.props;
-
-    saveGeneralSettings(data).then(res => {
+    saveGeneralSettings({ ...data, currency: data.currency.value }).then(res => {
       tostifyAlert('success', res.message)
     }).catch(err => {
       tostifyAlert('error', err.error)
@@ -53,16 +71,21 @@ class GeneralSettings extends React.Component {
     })
   }
 
-
   componentDidMount() {
     this.setState({ loading: true });
 
     this.props.getUserSettings()
       .then(({ data }) => {
-        const { profile_attachment='', email='', username='' } = data.settings;
+        const {
+          profile_attachment='',
+          email='',
+          username='',
+        } = data.settings;
+
+        let currency = CURRENCY_LIST.find(x => x.value === data.settings.currency)
 
         this.setState({
-          initialValues: { profile_attachment, email, username, }
+          initialValues: { profile_attachment, email, username, currency }
         })
       })
       .finally(() => {
@@ -79,11 +102,12 @@ class GeneralSettings extends React.Component {
     let validationSchema = Yup.object().shape({
       profile_attachment: Yup.string(),
       email: Yup.string().email('Please enter the valid email').required('Email is required'),
-      username: Yup.string().required("Username is required")
-    })
+      username: Yup.string().required("Username is required"),
+      currency: Yup.string().required("Currency is required"),
+    });
 
     return (
-      <div className="create-product-screen">
+      <div>
         <div className="animated fadeIn">
           <Formik
             initialValues={initialValues}
@@ -150,6 +174,23 @@ class GeneralSettings extends React.Component {
                                   className={errors.email && touched.email ? "is-invalid" : ""}
                                 />
                                 {errors.email && touched.email && <div className="invalid-feedback">{errors.email}</div>}
+                              </FormGroup>
+                            </Col>
+                            <Col lg={12}>
+                              <FormGroup className="mb-3">
+                                <Label htmlFor="email">Currency</Label>
+                                <Select
+                                    options={CURRENCY_LIST}
+                                    classNamePrefix={"react-select"}
+                                    id="currency"
+                                    name="currency"
+                                    placeholder="USD"
+                                    isSearchable={false}
+                                    value={values.currency}
+                                    onChange={option => handleChange("currency")(option)}
+                                    className={errors.currency && touched.currency ? "is-invalid currency-select" : "currency-select"}
+                                />
+                                {errors.currency && touched.currency && <div className="invalid-feedback">{errors.currency}</div>}
                               </FormGroup>
                             </Col>
                           </Row>
