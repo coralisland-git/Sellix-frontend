@@ -96,7 +96,8 @@ const CURRENCY_LIST = [
 	{ value: 'CHF', label: 'CHF'},
 	{ value: 'CNY', label: 'CNY'},
 	{ value: 'SEK', label: 'SEK'},
-	{ value: 'NZD', label: 'NZD'}
+	{ value: 'NZD', label: 'NZD'},
+	{ value: 'PLN', label: 'PLN'},
 ]
 
 const EDITOR_FORMATS = [
@@ -844,7 +845,7 @@ class EditProduct extends React.Component {
 																						name="stock_delimiter"
 																						value={props.values.stock_delimiter}
 																						onChange={props.handleChange}
-																					></Input>
+																					/>
 																				</FormGroup>
 																			</Col>
 																		}
@@ -857,7 +858,7 @@ class EditProduct extends React.Component {
 																					name="quantity_min"
 																					value={props.values.quantity_min}
 																					onChange={props.handleChange}
-																				></Input>
+																				/>
 																			</FormGroup>
 																		</Col>
 																		<Col lg={3}>
@@ -869,7 +870,7 @@ class EditProduct extends React.Component {
 																					name="quantity_max"
 																					value={props.values.quantity_max == 0 || props.values.quantity_max == -1 ? "" : props.values.quantity_max}
 																					onChange={props.handleChange}
-																				></Input>
+																				/>
 																				<p style={{
 																					margin: '10px 5px',
 																					color: 'gray'

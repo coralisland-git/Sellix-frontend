@@ -74,41 +74,6 @@ const CUSTOM_TYPE = [
 	{ value: 'checkbox', label: 'Checkbox' },
 ]
 
-const CURRENCY_LIST = [
-	{ value: 'USD', label: 'USD'},
-	{ value: 'EUR', label: 'EUR'},
-	{ value: 'JPY', label: 'JPY'},
-	{ value: 'GBP', label: 'GBP'},
-	{ value: 'AUD', label: 'AUD'},
-	{ value: 'CAD', label: 'CAD'},
-	{ value: 'CHF', label: 'CHF'},
-	{ value: 'CNY', label: 'CNY'},
-	{ value: 'SEK', label: 'SEK'},
-	{ value: 'NZD', label: 'NZD'}
-]
-
-const EDITOR_FORMATS = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image'
-]
-
-const EDITOR_MODULES  = {
-  toolbar: [
-    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-    [{size: []}],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, 
-	 {'indent': '-1'}, {'indent': '+1'}],
-	['link', 'image'],
-    ['clean']
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  }
-}
 
 class CreateProductGroup extends React.Component {
 	

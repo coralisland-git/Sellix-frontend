@@ -81,7 +81,8 @@ const CURRENCY_LIST = {
   'CHF': '₣',
   'CNY': '¥',
   'SEK': 'kr',
-  'NZD': '$'
+  'NZD': '$',
+  'PLN': 'zł'
 }
 
 

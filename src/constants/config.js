@@ -23,7 +23,8 @@ export default {
     'CHF': '₣',
     'CNY': '¥',
     'SEK': 'kr',
-    'NZD': '$'
+    'NZD': '$',
+    'PLN': 'zł',
   },
   PAYMENT_OPTS : {
     'paypal': 'PayPal',

@@ -256,7 +256,7 @@ class Product extends React.Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          options={ tableOptions() }
+                          options={ tableOptions({ sizePerPage: 10 }) }
                           data={all_products}
                           version="4"
                           pagination

@@ -19,18 +19,6 @@ import backIcon from 'assets/images/x.png'
 
 import './style.scss'
 
-const CURRENCY_LIST = { 
-  'USD': '$',
-  'EUR': '€',
-  'AUD': '$',
-  'GBP': '£',
-  'JPY': '¥',
-  'CAD': '$',
-  'CHF': '₣',
-  'CNY': '¥',
-  'SEK': 'kr',
-  'NZD': '$'
-}
 
 const mapStateToProps = (state) => {
   return ({
