@@ -311,7 +311,7 @@ class Order extends React.Component {
                                     <p>{order.customer_email}</p>
                                     <p className="d-flex align-items-center">
                                       <span>
-                                        {`${config.CURRENCY_LIST[order.currency]}${order.total_display} ~ Awaiting Payment`} 
+                                        {`${order.currency} ${order.total_display} ~ Awaiting Payment`}
                                       </span>
                                       <span className="sk-spinner sk-spinner-pulse"></span>
                                     </p>
@@ -342,7 +342,7 @@ class Order extends React.Component {
                                     <p>{order.customer_email}</p>
                                     <p className="d-flex align-items-center">
                                       <span>
-                                        {`${config.CURRENCY_LIST[order.currency]}${order.total_display} ~ Awaiting Payment`} 
+                                        {`${order.currency} ${order.total_display} ~ Awaiting Payment`}
                                       </span>
                                       <span className="sk-spinner sk-spinner-pulse"></span>
                                     </p>
@@ -373,7 +373,7 @@ class Order extends React.Component {
                                     <p>{order.customer_email}</p>
                                     <p className="d-flex align-items-center">
                                       <span>
-                                        {`${config.CURRENCY_LIST[order.currency]}${order.total_display} ~ Awaiting Payment`} 
+                                        {`${order.currency} ${order.total_display} ~ Awaiting Payment`}
                                       </span>
                                       <span className="sk-spinner sk-spinner-pulse"></span>
                                     </p>
@@ -404,7 +404,7 @@ class Order extends React.Component {
                                     <p>{order.customer_email}</p>
                                     <p className="d-flex align-items-center">
                                       <span>
-                                        {`${config.CURRENCY_LIST[order.currency]}${order.total_display} ~ Awaiting Payment`} 
+                                        {`${order.currency} ${order.total_display} ~ Awaiting Payment`}
                                       </span>
                                       <span className="sk-spinner sk-spinner-pulse"></span>
                                     </p>
