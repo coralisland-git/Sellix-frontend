@@ -411,24 +411,26 @@ class Invoice extends React.Component {
                 <Row className="justify-content-center">
 
                   {info &&
-                  <Col lg={7}>
-
-                      <div className="text-left my-4 mb-5">
-                        <h1 className={"m-0 px-4"}>{invoice.username}</h1>
-                      </div>
-
-                      <Card className={"p-4"} >
-                        <h4 style={{ fontWeight: 400 }} className={"pb-2 pt-2 m-0"}>Your Order for <strong>{info.product.title}</strong> is completed. Here is your product.</h4>
-                        <span className={"pb-4"}>{info.delivery_text}</span>
-
-                        <RenderProduct info={info} product_type={invoice.product_type} onSaveFile={this.onSaveFile} copyToClipboard={this.copyToClipboard} />
-                      </Card>
-
-                    </Col>
+                      <>
+                        <Col lg={12}>
+                          <div className="text-left my-4 mb-5">
+                            <h1 className={"m-0"} style={{ fontSize: "1.4rem" }}>
+                              Your Order for <strong>{info.product.title}</strong> is completed. Here is your product.
+                            </h1>
+                          </div>
+                        </Col>
+                        <Col lg={7}>
+                          <Card className={"p-4"} >
+                            <h4 style={{ fontWeight: 400 }}>{info.product.title}</h4>
+                            <span className={"pb-4"}>{info.delivery_text}</span>
+                            <RenderProduct info={info} product_type={invoice.product_type} onSaveFile={this.onSaveFile} copyToClipboard={this.copyToClipboard} />
+                          </Card>
+                        </Col>
+                      </>
                   }
 
                   <Col lg={{ size: 5 }} >
-                    <div className="text-left my-4 mb-5"><h1 className="m-0">&nbsp;</h1></div>
+                    {!info && <div className="text-left my-4 mb-5"><h1 className="m-0">&nbsp;</h1></div>}
                     <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: "calc(1.5rem + 4px)"}}>
                       <div className="float-logo">
                         <img src={sellix_logo} width="153" alt={""}/>
