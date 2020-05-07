@@ -442,15 +442,15 @@ class EmbededPayment extends React.Component {
             </Row>
           :
           <div className="ml-auto mr-auto p-0 embed-block">
-            <i className="fa fa-times cursor-pointer"></i>
+            <i className="fa fa-times"></i>
             <div className="stock-info text-center">
               <img src={sellixLogoIcon} className="logo"/>
               <p className="text-primary text-center"><b>{product_info.title}</b></p>
-              <p className="text-primary text-center" style={{fontSize: 14}}>
+              <p className="text-primary text-center user-name">
                 <span>by {product_info.username || ''}</span>
                 {user.verified == '1' &&
-                  <span style={{fontSize: 17}}>
-                    <img src={verifiedIcon} width="20" className="verified-icon ml-1" id="verifiedTooltip" />
+                  <>
+                    <img src={verifiedIcon} width="16" className="verified-icon" id="verifiedTooltip" />
                     <Tooltip
                       placement="right"
                       isOpen={verifiedTooltipOpen}
@@ -458,7 +458,7 @@ class EmbededPayment extends React.Component {
                       toggle={this.verifiedTooltipToggle.bind(this)}>
                       This shop has verified its brand identity to Sellix.
                     </Tooltip>
-                  </span>
+                  </>
                 }
               </p>
               <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>                

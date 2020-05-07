@@ -52,13 +52,6 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-const MockProducts = [
-  { label: 'All products', value: ''},
-  { label: 'id1', value: '1' },
-  { label: 'id2', value: '2' },
-  { label: 'id3', value: '3' }
-]
-
 class CreateCoupon extends React.Component {
 
   constructor(props) {
@@ -114,7 +107,7 @@ class CreateCoupon extends React.Component {
         pathname: `/dashboard/${user}/coupons/`
       })
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.message)
+      this.props.commonActions.tostifyAlert('error', err.error || err.message)
     }).finally(() => {
       this.setState({ loading: false })
     })
@@ -183,7 +176,7 @@ class CreateCoupon extends React.Component {
                                 <FormGroup className="mb-3">
                                   <Label htmlFor="product_code">Discount</Label>
                                   <DataSlider
-                                    domain={[0, 100]}
+                                    domain={[1, 100]}
                                     ticks={[1, 50, 100]}
                                     suffix="%"
                                     name="discount_value"
@@ -250,8 +243,7 @@ class CreateCoupon extends React.Component {
                         </Row>
                     }
                   </CardBody>
-                  <Button color="primary" className="" style={{ width: 200 }}
-                  >Save Coupon</Button>
+                  <Button color="primary" className="" style={{ width: 200 }}>Save Coupon</Button>
 
                 </Card>
               </Form>

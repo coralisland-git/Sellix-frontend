@@ -17,5 +17,22 @@ div.Toastify {
 
 
 
+@media (max-width: 768px) {
+  div.Toastify {
+    &__toast {
+      margin-top: .5rem;
+
+      &-container {
+        width: calc(100vw - 2rem) !important;
+        right: 0;
+        left: 1rem;
+        top: 0 !important;
+      }
+    }
+  }
+}
+
+
+
 
 

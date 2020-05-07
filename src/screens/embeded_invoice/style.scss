@@ -80,6 +80,15 @@
   }
 
   .embed-block {
-    width: 380px;
+    width: 390px;
+    position: relative;
+
+    .fa-times {
+      position: absolute;
+      right: 12px;
+      top: 13px;
+      font-size: 1.5rem;
+      -webkit-text-stroke: 3px #ffffff;
+    }
   }
 }
