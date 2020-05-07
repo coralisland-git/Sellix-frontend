@@ -85,7 +85,6 @@ class Product extends React.Component {
   handleRLDDChange(reorderedItems) {
     this.setState({ product_list: reorderedItems });
 
-    console.log(reorderedItems)
   }
 
   render() {

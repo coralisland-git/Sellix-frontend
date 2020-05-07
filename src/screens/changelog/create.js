@@ -101,8 +101,6 @@ export class Changelog extends React.Component {
 			badge: Yup.string().required('Badge is required'),
 		});
 
-		console.log(changelog)
-
 		return <div className={'changelog-screen create'}>
 			<div className="animated fadeIn">
 

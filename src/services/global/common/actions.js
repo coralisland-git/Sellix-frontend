@@ -114,9 +114,6 @@ export const getUserReviews = (username) => {
 
 export const getFeedbackByUniqid = (uniqid) => (dispatch) => {
 
-  console.log(uniqid)
-  console.log(uniqid)
-  console.log(uniqid)
     return api.get(`/feedback/unique/${uniqid}`)
         .then(res => {
           if(res && res.status === 200) {

@@ -85,14 +85,10 @@ export class DragAndDropGrid extends React.Component {
 
     let i = 0;
 
-    console.log('items', items, x, y)
- 
     for (let iY = 0; /*iY < y &&*/ i < items.length; iY += 1) {
-        console.log('hy')
       const row = [];
       itemsToRender.push(row);
       for (let iX = 0; iX < x && i < items.length; iX += 1) {
-          console.log('hx')
 
         const item = items[i];
 
@@ -131,7 +127,6 @@ export class DragAndDropGrid extends React.Component {
         newItems.push(flatItems.slice(i,i+x))
     }
 
-      console.log('newItems', newItems)
     this.setState({ items: newItems });
 
     if(this.props.handleChange) {
@@ -140,7 +135,6 @@ export class DragAndDropGrid extends React.Component {
   };
  
   render() {
-    console.log('itemsRender', this.state.items)
     return (
       <div style={{ width: '100vw', height: '100vh', margin: 20 }}>
         <VirtualDraggableGrid

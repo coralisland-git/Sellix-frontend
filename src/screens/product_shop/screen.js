@@ -147,8 +147,6 @@ class ShopProducts extends React.Component {
     let searchProducts = this.searchProducts(products);
     let searchGroups = this.searchGroups(groups)
 
-    console.log(searchProducts);
-
     return (
       <div className="shop-product-screen">
         <div className="animated customAnimation">

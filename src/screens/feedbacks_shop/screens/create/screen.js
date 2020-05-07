@@ -112,8 +112,6 @@ class LeaveFeedback extends React.Component {
       return Loading()
     }
 
-    console.log(this.state.initialValues)
-
     return (
         <Formik initialValues={this.state.initialValues} onSubmit={this.handleSubmit}>
           {props => (

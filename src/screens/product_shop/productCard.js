@@ -19,7 +19,6 @@ const ProductCard = ({ product, preventDefault, history, center_product_titles }
 
     let { image_attachment, title, price_display, currency, uniqid } = product;
 
-    console.log(center_product_titles)
     let image = Sellix;
     if(image_attachment) {
         image = config.API_ROOT_URL + '/attachments/image/' + image_attachment;

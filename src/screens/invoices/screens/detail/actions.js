@@ -20,7 +20,6 @@ export const getUser = (id) => {
     }
 
     return authApi(data).then(res => {
-      console.log({data})
       if (res.status === 200) {
         dispatch({
           type: USER.USER,

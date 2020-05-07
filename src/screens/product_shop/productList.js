@@ -24,11 +24,7 @@ const ProductsList = ({ products, groups, loading, history, hide_out_of_stock, c
 	if(hide_out_of_stock === 1) 
 		products = products.filter(product => getProductStock(product) != 0)
 
-	console.log('products', products)
-
 	products = products.filter(p => p.unlisted !== "1")
-
-	console.log('products', products)
 
 	return (
 		<Row>

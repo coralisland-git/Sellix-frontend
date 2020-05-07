@@ -224,8 +224,6 @@ class ProductGroups extends React.Component {
     const { search_key } = this.state
     const search_fields = ['title']
 
-    console.log('all prods', products)
-
     const data = products.filter(product => {
       for(let i=0; i<search_fields.length; i++)
         if(product[search_fields[i]] && product[search_fields[i]].includes(search_key))
