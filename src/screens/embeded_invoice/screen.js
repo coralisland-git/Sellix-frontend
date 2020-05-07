@@ -279,7 +279,7 @@ class EmbededInvoice extends React.Component {
                         <div className="float-logo">
                           <img src={sellix_logo} width="153" style={{marginTop:-23}}/>
                         </div>
-                        <i className="fa fa-times"></i>
+                        <i className="fa fa-times close-popup"></i>
                         <div className="top p-4">
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
