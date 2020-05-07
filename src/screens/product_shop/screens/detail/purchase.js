@@ -269,6 +269,7 @@ class Purchase extends React.Component {
 				</div>
 
 				<div className="text-center">
+					{appliedCoupon && <s>{currency}{(productInfo.price_display * quantity).toFixed(2) || 0}</s>}
 					<h3>{currency}{(productInfo.price_display * quantity * (appliedCoupon ? (100 - appliedCoupon.discount) / 100 : 1)).toFixed(2) || 0}</h3>
 					<div className="mt-3">
 						{!showPaymentOptions && <Button color="primary" className="mr-auto ml-auto d-block" onClick={this.showPaymentOptions} style={this.isOutOfStock() ? {
