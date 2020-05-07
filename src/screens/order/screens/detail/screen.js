@@ -237,7 +237,7 @@ class OrderDetail extends React.Component {
                         }</h4>
                         <div className='orderHeaderButtons'>
                           {
-                            order.status && (['0', '1'].includes(order.status)) && 
+                            order.status && (['0', '1', '4'].includes(order.status)) &&
                               <Button color="primary" className="mr-2" onClick={this.openResendModal.bind(this)}>
                                 Resend Order
                               </Button>
@@ -285,7 +285,7 @@ class OrderDetail extends React.Component {
                           </div>
                           <div className="d-flex">
                             <p className="title">Value</p>
-                            <p>{`${config.CURRENCY_LIST[order.currency]}${order.total_display} ${order.currency}`}</p>
+                            <p>{`${order.currency} ${order.total_display}`}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Created At</p>
