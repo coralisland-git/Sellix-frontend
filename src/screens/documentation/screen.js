@@ -118,8 +118,7 @@ class Documentation extends React.Component {
                       }
                       else
                         this.setState({initial: false})
-                      if(el)
-                        this.setState({activeNode: el.id.split('-')[1]})
+                      
                     }
                   }>
                   <li className="field">GET STARTED</li>
