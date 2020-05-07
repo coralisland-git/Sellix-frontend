@@ -135,8 +135,7 @@ h4 {
 @import "override/react-confirm-alert";
 @import "override/popover";
 
-
-
-
-
+:root {
+  --font-family-sans-serif: 'Heebo', sans-serif;
+}
 
