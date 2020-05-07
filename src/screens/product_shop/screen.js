@@ -16,6 +16,7 @@ import ProductList from './productList'
 const mapStateToProps = ({ common: { general_info } }) => ({
   shop_search_enabled: Number(general_info.shop_search_enabled),
   shop_hide_out_of_stock: Number(general_info.shop_hide_out_of_stock),
+  shop_center_product_titles: Number(general_info.shop_center_product_titles),
   user: general_info,
 })
 
@@ -141,7 +142,7 @@ class ShopProducts extends React.Component {
 
   render() {
     const { loading, filter, categories, products, groups } = this.state;
-    const { shop_search_enabled, shop_hide_out_of_stock } = this.props;
+    const { shop_search_enabled, shop_hide_out_of_stock, shop_center_product_titles } = this.props;
 
     let searchProducts = this.searchProducts(products);
     let searchGroups = this.searchGroups(groups)
@@ -199,6 +200,7 @@ class ShopProducts extends React.Component {
                               groups={searchGroups}
                               loading={loading}
                               hide_out_of_stock={shop_hide_out_of_stock}
+                              center_product_titles={shop_center_product_titles}
                               {...props}
                           />} />
                     </Switch>

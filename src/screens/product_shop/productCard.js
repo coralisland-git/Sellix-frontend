@@ -15,10 +15,11 @@ export const getProductStock = ({ type, file_stock, stock, service_stock }) => {
     }
 }
 
-const ProductCard = ({ product, preventDefault, history }) => {
+const ProductCard = ({ product, preventDefault, history, center_product_titles }) => {
 
     let { image_attachment, title, price_display, currency, uniqid } = product;
 
+    console.log(center_product_titles)
     let image = Sellix;
     if(image_attachment) {
         image = config.API_ROOT_URL + '/attachments/image/' + image_attachment;
@@ -29,7 +30,7 @@ const ProductCard = ({ product, preventDefault, history }) => {
             </div>
             
             <div className="p-3 d-flex flex-column h-100">
-                <h5 className="mb-1 text-black">{title}</h5>
+                <h5 className={center_product_titles ? "mb-1 text-black text-center" : "mb-1 text-black"}>{title}</h5>
                 <div className="d-flex justify-content-between mt-1">
                     <span className="price">{`${config.CURRENCY_LIST[currency]}${price_display}`}</span>
                     <span className="stock">
@@ -39,5 +40,6 @@ const ProductCard = ({ product, preventDefault, history }) => {
             </div> 
         </Card>
 }
+
 
 export default ProductCard;
