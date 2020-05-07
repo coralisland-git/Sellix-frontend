@@ -64,13 +64,17 @@
 }
 
 .dark .modal {
+
+  #json-pretty::-webkit-scrollbar-corner {
+    background-color: #1D183D !important;
+  }
+
   .__json-pretty-error__{
     color: #B4AEBC !important;
     background: #251f45 !important;
   }
 
   .__json-pretty__ {
-    color: #66d9ef !important;
     background: #251f45 !important;
     padding: 10px !important;
 
