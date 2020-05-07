@@ -49,6 +49,60 @@ const PerfectMoney = ({ perfectmoney_id, username, uniqid, total_display, curren
   </div>
 }
 
+const formatBytes = (bytes, decimals = 2) => {
+  if (bytes === 0) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
+
+  if(product_type === "file" && info.file_attachment) {
+    return <div>
+        <pre style={{ fontSize: "1rem", lineHeight: "1rem", maxHeight: "14rem", background: "#f7f7f7", padding: ".65rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
+          <span>File Name: {info.file_attachment.original_name}</span><br/>
+          <span>Size: {formatBytes(info.file_attachment.size)}</span>
+        </pre>
+        <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Download File</Button>
+    </div>
+  }
+
+  if(product_type === "serials" && info.serials.length) {
+    return <div>
+        <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "14rem", background: "#f7f7f7", padding: ".65rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
+          {info.serials.map(v => <span style={{ fontSize: "12px", lineHeight: 1}}><strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span style={{ fontSize: "12px", lineHeight: 1}}>{v.split(':')[1]}</span><br/></span>)}
+        </pre>
+
+        <div className={"d-flex"}>
+          <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>
+          <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Save as File</Button>
+        </div>
+    </div>
+  }
+
+  if(product_type === "service" && info.service_text) {
+    return <div>
+        <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "14rem", background: "#f7f7f7", padding: ".65rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
+          <span dangerouslySetInnerHTML={{ __html: info.service_text }}/>
+        </pre>
+
+        <div className={"d-flex"}>
+          <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>
+          <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Save as File</Button>
+        </div>
+    </div>
+  }
+
+  return null
+}
+
+
 class Invoice extends React.Component {
   
   constructor(props) {
@@ -364,22 +418,10 @@ class Invoice extends React.Component {
                       </div>
 
                       <Card className={"p-4"} >
-                        <h3 className={"pb-2 pt-2 m-0"}>{info.product.title}</h3>
+                        <h4 style={{ fontWeight: 400 }} className={"pb-2 pt-2 m-0"}>Your Order for <strong>{info.product.title}</strong> is completed. Here is your product.</h4>
                         <span className={"pb-4"}>{info.delivery_text}</span>
 
-
-                        {invoice.product_type !== "file" && <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "14rem", background: "#f7f7f7", padding: "1rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
-                          {invoice.product_type === "serials" &&
-                            info.serials.map(v => <span style={{ fontSize: "12px", lineHeight: 1}}>
-                                  <strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span style={{ fontSize: "12px", lineHeight: 1}}>{v.split(':')[1]}</span><br/>
-                              </span>
-                            )}
-                          {invoice.product_type === "service" && <span dangerouslySetInnerHTML={{ __html: info.service_text }}/>}
-                        </pre>}
-                        <div className={"d-flex"}>
-                          {invoice.product_type !== "file" && <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={this.copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>}
-                          <Button color={"default"} style={{ width: "150px"}} onClick={this.onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Download File</Button>
-                        </div>
+                        <RenderProduct info={info} product_type={invoice.product_type} onSaveFile={this.onSaveFile} copyToClipboard={this.copyToClipboard} />
                       </Card>
 
                     </Col>
