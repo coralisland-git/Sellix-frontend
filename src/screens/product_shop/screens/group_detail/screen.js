@@ -23,7 +23,7 @@ class ShopGroupModal extends React.Component {
   
 
   formatProductOption = product => {
-    const rating = product.average_score || 0
+    const rating = parseFloat(product.average_score || 0)
 
     const isRatingGold = rating > 4
 
