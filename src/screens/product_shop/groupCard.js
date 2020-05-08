@@ -2,9 +2,10 @@ import React from 'react'
 import config from 'constants/config'
 import { Card } from 'reactstrap';
 
-const GroupCard = ({ group, preventDefault, history, onClick }) => {
 
-    let { image_attachment, title, uniqid, products_bound } = group;
+const GroupCard = ({ group, preventDefault, onClick }) => {
+
+    let { image_attachment, title, products_bound } = group;
 
     const minPrice = Math.min(...products_bound.map(p => parseFloat(p.price_display)))
     const productWithMinPrice = products_bound.find(p => parseFloat(p.price_display) == minPrice) || {}
