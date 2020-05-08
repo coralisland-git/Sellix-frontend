@@ -23,7 +23,7 @@ class ShopGroupModal extends React.Component {
   
 
   formatProductOption = product => {
-    const rating = product.average_score || 0
+    const rating = Number(product.average_score || 0);
 
     const isRatingGold = rating > 4
 
@@ -36,9 +36,10 @@ class ShopGroupModal extends React.Component {
     return <div className={"option-select-option " + (isSelected && "is-selected") + " " + (isDisabled && "is-disabled")}>
       <div>
         <span>{product.title}</span>
-        <span className={isRatingGold && "text-gold"} style={{marginLeft: '10px'}}>
-          <span className={isRatingGold && "text-gold"} style={{fontSize: '18px', position: 'relative'}}>⭑</span>
-        {rating.toFixed(2)}</span>
+        <span className={isRatingGold ? "text-gold" : ""} style={{marginLeft: '10px'}}>
+          <span className={isRatingGold ? "text-gold" : ""} style={{fontSize: '18px', position: 'relative'}}>⭑</span>
+          {rating.toFixed(2)}
+        </span>
       </div>
       <div style={{margin: '2px 0'}}>
         <span className="price">{`${config.CURRENCY_LIST[product.currency]}${product.price_display}`}</span>
