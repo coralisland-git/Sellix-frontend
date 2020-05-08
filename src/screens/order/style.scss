@@ -1,7 +1,11 @@
 .order-screen {
   .badge {
     border-radius: 3px;
-    padding: 5 20px;
+    padding: 5px 20px;
+  }
+
+  .select-status-width {
+    width: 200px;
   }
 
   .sk-spinner-pulse {

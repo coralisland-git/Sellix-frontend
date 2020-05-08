@@ -6,12 +6,13 @@ import { Loader, Button } from 'components'
 import { withRouter } from "react-router-dom";
 
 import './style.scss'
+import config from "../../../../constants/config";
 
 
 
 class UserProductsTable extends Component {
 
-  renderProductPrice = (cell, row) => row.price ? <div>{row.price}</div> : <p className="caption">No specified</p>
+  renderProductPrice = (cell, row) => row.price ? <div>{config.CURRENCY_LIST[row.currency]}{row.price}</div> : <p className="caption">No specified</p>
 
   renderProductStock = (cell, row) => row.stock ? <div>{row.stock}</div> : <p className="caption">No specified</p>
 
@@ -39,7 +40,7 @@ class UserProductsTable extends Component {
 
                 {loading && <Row><Col lg={12}><Loader /></Col></Row>}
                 {!loading &&
-                <Row>
+                  <Row>
                   <Col lg={12}>
                     <div>
                       <BootstrapTable
