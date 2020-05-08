@@ -64,7 +64,7 @@ const ReportRevenue = ({ totalRevenue, currency, revenueProgress }) => {
       <CardBody className="p-4 bg-white">
         <p className="report-title">Revenue</p>
         <div className="d-flex justify-content-between align-items-center">
-          <NumberFormat value={totalRevenue.toFixed(2)}
+          <NumberFormat value={totalRevenue}
                         displayType={'text'}
                         thousandSeparator={true}
                         prefix={config.CURRENCY_LIST[currency]}
