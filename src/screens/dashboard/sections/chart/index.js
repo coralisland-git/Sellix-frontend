@@ -41,7 +41,7 @@ class RevenueChart extends PureComponent {
         return (
             <div className={"custom-tooltip"}>
               <p className="label"><b>{day} {month} {year}</b></p>
-              <p className="intro">Revenue: <b>{payload[1].value}</b></p>
+              <p className="intro">Revenue: <b>{payload[1].value.toFixed(2)}</b></p>
               <p className="intro">Order: <b>{payload[0].value}</b></p>
             </div>
         );
