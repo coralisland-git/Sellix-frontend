@@ -301,7 +301,7 @@ export const GlobalStyles = createGlobalStyle`
             border: 1px solid ${theme.widgetBorder} !important;
         }
 
-        *[class$=control] *:not(.text-green):not(.text-red) {
+        *[class$=control] *:not(.text-green):not(.text-red):not(.text-gold) {
             color: ${theme.text} !important;
         }
 
@@ -321,7 +321,7 @@ export const GlobalStyles = createGlobalStyle`
             color: white !important;
         }
 
-        *[class$=control] *:not(.text-green):not(.text-red) {
+        *[class$=control] *:not(.text-green):not(.text-red):not(.text-gold) {
             color: ${theme.text} !important;
         }
 
