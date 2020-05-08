@@ -34,7 +34,6 @@ const StripeForm = (props) => {
                 }
             })
             .then(function(result) {
-                console.log('result', result)
                 if (result.error) {
                     // Show error to your customer
                     setIsLoading(false);
@@ -49,8 +48,6 @@ const StripeForm = (props) => {
     }, 100)
     
   };
-
-  console.log('isLoading', isLoading, 'isSuccess', isSuccess)
 
   if(isSuccess) {
       return ""

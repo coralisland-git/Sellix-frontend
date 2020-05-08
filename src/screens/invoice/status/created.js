@@ -282,8 +282,6 @@ class Invoice extends React.Component {
 
           invoice.status = 4;
 
-          console.log(invoice.status)
-
     return (
       <div>
         {loading && <Row><Col lg={12}><Loader /></Col></Row>}

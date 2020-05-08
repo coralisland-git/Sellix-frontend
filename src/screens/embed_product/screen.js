@@ -191,7 +191,12 @@ class EmbedProduct extends React.Component {
                             </Clipboard>
                           </div>
                           <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
-                            {`<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js"></script>`}
+                            {`<script
+  src="https://cdn.sellix.io/static/js/embed.js"
+  integrity="sha384-L3twr+MVEV9azJeisEnRliaABdEDpzke4FypZ4BmGHvUKRgCGxgKkUXwawGW9Eb3"
+  crossorigin="anonymous"
+>
+</script>`}
                           </SyntaxHighlighter>
                         </div>
                         <p className="page_description text-grey mb-4">

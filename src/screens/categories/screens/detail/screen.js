@@ -108,7 +108,6 @@ class EditCategory extends React.Component {
     if (this.id) {
       this.setState({ loading: true });
       this.props.actions.getCategoryByID(this.id).then(res => {
-        console.log('initialData 1', res.data.category)
         this.setState({
           initialData: res.data.category,
           files: res.data.category.image_attachment === ''?[]:
@@ -116,7 +115,6 @@ class EditCategory extends React.Component {
         })
       }).finally(() => {
         this.props.productActions.getProductList().then(res => {
-          console.log('initialData 2', this.state.initialData)
           this.setState({
             selected_products: this.state.initialData.products_bound.map(pro => {return {value: pro.uniqid, label:pro.title}})
           })
@@ -230,8 +228,6 @@ class EditCategory extends React.Component {
                                         this.setState({
                                           selected_products: option
                                         })
-
-                                        console.log('option', option)
 
                                         props.handleChange("products_bound")(option.map(o => o.value).toString());
                                       }}

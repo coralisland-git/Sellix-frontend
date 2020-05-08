@@ -16,9 +16,7 @@ export const saveSecurity = (security) => {
 
     return authApi(data).then(res => {
       if (res.status === 200) {
-        console.log(res.data)
         if(res.data && res.data.token) {
-          console.log(res.data.token)
           window.localStorage.setItem('accessToken', res.data.token)
         }
         return res

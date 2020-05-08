@@ -17,6 +17,7 @@ import { tableOptions } from 'constants/tableoptions'
 import { NewWebhookLogModal, ShowWebhookLogModal } from './sections'
 import { CommonActions } from 'services/global';
 import * as WebhooksActions from './actions'
+import IntervalTimer from 'react-interval-timer';
 
 import './style.scss'
 
@@ -47,10 +48,7 @@ class WebhookLogs extends React.Component {
   }
 
   componentDidMount () {
-    this.initializeData();    
-    setInterval(async () => {
-      this.props.actions.getWebhookLogList()
-    }, 20000)
+    this.initializeData();
   }
 
   handleSendAgain(uniqid) {
@@ -204,6 +202,14 @@ class WebhookLogs extends React.Component {
     return (
       <div className="webhook-screen">
         <div className="animated fadeIn">
+          <IntervalTimer
+              timeout={20000}
+              callback={async () => {
+                this.props.actions.getWebhookLogList()
+              }}
+              enabled={true}
+              repeat={true}
+            />
           <NewWebhookLogModal            
             openModal={openModal}
             closeModal={this.closeNewWebhookModal.bind(this)}

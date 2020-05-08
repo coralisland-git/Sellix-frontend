@@ -14,10 +14,9 @@ function incomingListener(response) {
 };
 
 function lazyWsSend(message) {
-    if(ws === null) {
+    if(ws === null || ws.readyState !== ws.OPEN) {
         ws = new WebSocket(config.WS_URL)
         ws.addEventListener('open', function open() {
-            console.log('ws opened')
             ws.send(message)
         });
         ws.addEventListener('message', incomingListener)

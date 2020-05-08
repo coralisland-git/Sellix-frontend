@@ -14,7 +14,6 @@ export const getQueries = () => {
 
     return authApi(data).then(res => {
       if (res.status === 200) {
-        console.log({res})
         dispatch({
           type: QUERIES.QUERIES_LIST,
           payload: res.data.queries
@@ -39,7 +38,6 @@ export const getQuerie = (id) => {
 
     return authApi(data).then(res => {
       if (res.status === 200) {
-        console.log({result: res})
         dispatch({
           type: QUERIE.QUERIE,
           payload: res.data.messages

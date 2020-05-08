@@ -24,6 +24,8 @@ const ProductsList = ({ products, groups, loading, history, hide_out_of_stock, c
 	if(hide_out_of_stock === 1) 
 		products = products.filter(product => getProductStock(product) != 0)
 
+	products = products.filter(p => p.unlisted !== "1")
+
 	return (
 		<Row>
 			<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} duration={300}>

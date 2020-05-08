@@ -60,7 +60,6 @@ class User extends Component {
 
     dataForSend.email_2fa = Boolean(+dataForSend.email_2fa)
     dataForSend.otp_2fa = Boolean(+dataForSend.otp_2fa)
-    console.log(dataForSend)
     updateUser(dataForSend)
         .then(res => {
           this.getUser()
