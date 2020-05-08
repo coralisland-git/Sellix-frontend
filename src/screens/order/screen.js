@@ -8,7 +8,7 @@ import {
   CardBody,
   Row,
   Col,
-  Input
+  Input, FormGroup
 } from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import * as moment from 'moment/moment'
@@ -26,6 +26,7 @@ import completedIcon from 'assets/images/order/Check_Icon.svg'
 import paritalIcon from 'assets/images/order/Partially_Icon.svg'
 import pendingIcon from 'assets/images/order/Pending_Icon.svg'
 import IntervalTimer from 'react-interval-timer';
+import Select from "react-select";
 
 const STATUS_ICON = {
   '0': pendingIcon,
@@ -41,6 +42,20 @@ const ORDER_STATUS = {
   '3': 'Confirmation',
   '4': 'Partial'
 }
+
+const ORDER_LIST = [{
+  value: 'all', label: 'All'
+}, {
+  value: '0', label: 'Pending',
+}, {
+  value: '1', label: 'Completed'
+}, {
+  value: '2', label: 'Cancelled'
+}, {
+  value: '3', label: 'Confirmation'
+}, {
+  value: '4', label: 'Partial'
+}]
 
 const PAYMENT_OPTS = {
   'paypal': 'PayPal',
@@ -134,13 +149,14 @@ class Order extends React.Component {
   }
 
   renderOrderStatus (cell, row) {
+    const status = ORDER_STATUS[row.status] || "";
     return (
       <div className="order-status">
-        <div className={`order-badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+        <div className={`order-badge badge-${status.toLowerCase()}`} style={{  margin: '0 auto'}}>
           {+row.status === 3 && <i className={"far fa-hourglass"} style={{ fontSize: ".9rem", color: "#1d183d"}}/>}
           {+row.status !== 3 && <img src={STATUS_ICON[row.status]} alt="" />}
         </div>
-        <span className={`text-${ORDER_STATUS[row.status].toLowerCase()}`}>{ORDER_STATUS[row.status]}</span>
+        <span className={`text-${status.toLowerCase()}`}>{status}</span>
       </div>
     )  
   }
@@ -173,16 +189,35 @@ class Order extends React.Component {
         if(product[search_fields[i]] && product[search_fields[i].toLowerCase()].includes(search_key.toLowerCase())) {
           return true
         }
+        // if(search_fields[i] === 'status') {
+        //   if(product['status']) {
+        //     if(ORDER_STATUS[product['status']].toLowerCase().includes(search_key.toLowerCase())) {
+        //       return true
+        //     }
+        //   }
+        // }
       }
       return false
     })
   }
 
+  filterOrders(products) {
+    const { search_status } = this.state;
+
+    if(search_status.value === "all") {
+      return products;
+    } else {
+      return products.filter(({ status }) => status === search_status.value)
+    }
+  }
+
   render() {
 
-    const { loading, search_key } = this.state
+    const { loading, search_key, search_status } = this.state
     let { order_list, live_order_display } = this.props
 
+    if(search_status)
+      order_list = this.filterOrders(order_list)
     if(search_key)
       order_list = this.searchOrders(order_list)
 
@@ -199,8 +234,8 @@ class Order extends React.Component {
           />
           <Card>
             <CardHeader>
-              <Row style={{alignItems: 'center'}}>
-                <Col md={6}>
+              <Row className={"align-items-center justify-content-between"}>
+                <Col md={2}>
                   <div className="d-flex align-items-center mb-2">
                     <h1 className="mr-3 mb-1">{isAdmin ? "Invoices": "Orders"}</h1>
                     {!isAdmin && <>
@@ -211,15 +246,29 @@ class Order extends React.Component {
                     </>}
                   </div>
                 </Col>
-                <Col md={6}>
+                <Col md={7}>
                   <div className="d-flex justify-content-end">
+                    <div className="white mr-4">
+                      <Select
+                          className="select-status-width"
+                          options={ORDER_LIST}
+                          classNamePrefix={"react-select"}
+                          id="search_status"
+                          name="search_status"
+                          placeholder={"Filter By Status"}
+                          value={search_status}
+                          onChange={value => {
+                            this.setState({search_status: value})
+                          }}
+                      />
+                    </div>
                     <div className="searchbar white">
                       <i className="fas fa-search"/>
-                      <Input placeholder="Search..." 
-                        className="header-search-input"
-                        onChange={(e) => {
-                          this.setState({search_key: e.target.value})
-                        }}
+                      <Input placeholder="Search..."
+                             className="header-search-input"
+                             onChange={(e) => {
+                               this.setState({search_key: e.target.value})
+                             }}
                       />
                     </div>
                   </div>
