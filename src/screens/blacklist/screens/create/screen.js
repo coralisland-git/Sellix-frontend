@@ -49,11 +49,11 @@ class CreatePage extends React.Component {
   constructor(props) {
     super(props);
 
-    let initialValues = this.isEdit() ? find(props.blacklist_list, item => item.uniqid === props.match.params.id) : {
+    let initialValues = {
       type: '',
       data: '',
       note: '',
-    };
+    }
 
     this.state = {
       loading: false,
@@ -63,6 +63,16 @@ class CreatePage extends React.Component {
 
   componentDidMount() {
     this.props.actions.getBlacklist()
+        .then(({ data }) => {
+          if(this.isEdit()) {
+            let editValues = find(data.blacklists, item => item.uniqid === this.props.match.params.id);
+            editValues.type = find(TYPE_OPTIONS, ({ value }) => value === editValues.type)
+            this.setState({
+              initialValues: editValues
+            })
+          }
+
+        })
   }
 
   isEdit = () => {
@@ -71,6 +81,7 @@ class CreatePage extends React.Component {
 
   handleSubmit(values) {
     this.setState({ loading: true })
+    values.type = values.type.value
     const createOrEditPromise = this.isEdit()
       ? this.props.editBlacklist({ ...values, uniqid: this.props.match.params.id })
       : this.props.createBlacklist(values)
@@ -110,6 +121,7 @@ class CreatePage extends React.Component {
           </Breadcrumb>
           <Formik
               initialValues={initialValues}
+              enableReinitialize={true}
               onSubmit={(values) => this.handleSubmit(values)}
               validationSchema={Yup.object().shape({
                 type: Yup.string().required('Type is required'),
