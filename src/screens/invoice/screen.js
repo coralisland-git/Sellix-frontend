@@ -464,7 +464,7 @@ class Invoice extends React.Component {
                             <div className="mt-5">
                               <PayPalButton
                                   createOrder={() => invoice.paypal_tx_id}
-                                  onApprove={this.getPayPalInvoice()}
+                                  onApprove={() => this.getPayPalInvoice()}
                                   onError = {() => {}}
                                   style={{ layout: 'horizontal', color: 'blue', }}
                                   amount={invoice.total}
