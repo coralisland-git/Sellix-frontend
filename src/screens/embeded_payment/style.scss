@@ -127,7 +127,6 @@
   }
 
   .stock-info {
-    padding: 1.5rem 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -195,5 +194,9 @@
     border-radius: 3px;
     object-fit: cover;
     object-position: center;
+  }
+
+  .p-4 {
+    padding: 1.5rem 2rem !important;
   }
 }

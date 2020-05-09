@@ -41,6 +41,20 @@
       line-height: 40px;
       background-color: #FCFCFE;
       border: 1px solid #F5F5F5;
+
+      button {
+        background-color: inherit;
+        border: none;
+        padding: 0;
+        outline: none;
+        border-radius: 3px;
+        margin-left: 10px;
+        line-height: 0;
+
+        i {
+          color: #a3acb9;
+        }
+      }
     }
     
   }
@@ -90,5 +104,28 @@
       font-size: 1.5rem;
       -webkit-text-stroke: 3px #ffffff;
     }
+  }
+
+  .p-4 {
+    padding: 1.5rem 2rem !important;
+  }
+
+  .pt-5 {
+    padding-top: 3rem !important;
+  }
+
+  .logo {
+    width: 153px;
+    position: relative;
+    top: 42px;
+  }
+
+  .clip-alert {
+    position: absolute;
+    right: 0;
+    top: 90px;
+    font-size: 10px !important;
+    margin-bottom: 0px;
+    text-align: right;
   }
 }

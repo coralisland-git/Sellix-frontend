@@ -451,7 +451,7 @@ class EmbededPayment extends React.Component {
           :
           <div className="ml-auto mr-auto p-0 embed-block">
             <i className="fa fa-times close-popup"></i>
-            <div className="stock-info d-flex">
+            <div className="stock-info d-flex p-4">
               <div className="stock-detail text-center d-flex">
                 { image && <img src={image} className="product-image" alt={product_info.title}/> }
                 <div className="text-center m-auto">
