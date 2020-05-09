@@ -1,22 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Button,
-} from 'reactstrap'
-import StarRatings from 'react-star-ratings';
+import { Card, CardBody, Row, Col } from 'reactstrap'
 import { Loader } from 'components'
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
-import {
-  CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 import './style.scss'
 import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
