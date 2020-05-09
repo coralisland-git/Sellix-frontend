@@ -74,7 +74,7 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
   if(product_type === "serials" && info.serials.length) {
     return <div>
         <pre className={"mb-4 m-0"}>
-          {info.serials.map(v => <span style={{ fontSize: "12px", lineHeight: 1}}><strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span style={{ fontSize: "12px", lineHeight: 1}}>{v.split(':')[1]}</span><br/></span>)}
+          {info.serials.map(v => <span style={{ fontSize: "12px", lineHeight: 1}}>{v}<br/></span>)}
         </pre>
 
         <div className={"d-flex"}>
