@@ -83,7 +83,7 @@
       outline : none;
     }
 
-    div:contains-selector(div.sweet-alert ) { 
+    div:contains-selector(div.sweet-alert ) {
       position: relative;
     }
 
@@ -309,6 +309,20 @@
   }
 }
 
+.bitcoin-paying-screen pre {
+  font-size: 1rem;
+  line-height: 1rem;
+  max-height: 14rem;
+  background: #181432;
+  color: #b4afbc;
+  padding: .65rem;
+  border-radius: 5px;
+}
+
+.light .bitcoin-paying-screen pre {
+  background: #f7f7f7;
+  color: #23282c;
+}
 
 
 
