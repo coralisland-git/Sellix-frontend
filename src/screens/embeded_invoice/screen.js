@@ -24,6 +24,7 @@ import stripeIcon from 'assets/images/crypto/stripe.svg'
 import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import QRCode from 'react-qr-code'
+import Clipboard from 'react-clipboard.js';
 
 import './style.scss'
 
@@ -86,7 +87,8 @@ class EmbededInvoice extends React.Component {
       seconds: 2*60*60,
       showAlert: true,
       openQRModal: false,
-      openFeedbackModal: false
+      openFeedbackModal: false,
+      copied: false
     }
 
     this.timer = 0;
@@ -202,6 +204,10 @@ class EmbededInvoice extends React.Component {
         loading:false
       })
     })
+    setInterval(async () => {
+      if (this.state.copied)
+        this.setState({ copied: false})
+    }, 10000)
   }
 
   setInvoiceStatus(status) {
@@ -276,12 +282,9 @@ class EmbededInvoice extends React.Component {
                 }
                 <div className="animated fadeIn">
                   <div className="invoice-card ml-auto mr-auto p-0 embed-block">
-                      <Card className="bg-white p-0 detail mb-0">                        
-                        <div className="float-logo">
-                          <img src={sellix_logo} width="153" style={{marginTop:-23}}/>
-                        </div>
+                      <Card className="bg-white p-0 detail mb-0">
                         <i className="fa fa-times close-popup"></i>
-                        <div className="top p-4">
+                        <div className="top p-4 pt-5">
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
                             <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status)}</span>
@@ -308,15 +311,19 @@ class EmbededInvoice extends React.Component {
                             </div>
                           )}
                           {
-                            (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
+                            (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div style={{ position: "relative"}}>
                                 <p className="text-grey bold mt-4 text-center">
                                     Please send exactly <span className="badge text-primary bold">
                                       {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> {PAYMENT_OPTS[invoice.gateway]} to
                                 </p>
                                 <p className="btc-address text-grey bold text-center">
                                   {invoice.crypto_address || ''}
+                                  <Clipboard data-clipboard-text={invoice.crypto_address || ''} button-title="Copy" onSuccess={ () => { this.setState({ copied : true })}}>
+                                    <i className="fa fa-clone" aria-hidden="true"></i>
+                                  </Clipboard>
                                 </p>
-                                <div className="d-flex justify-content-between align-items-center ">
+                                { this.state.copied && <small className="clip-alert">Copied</small> }
+                                <div className="d-flex justify-content-between align-items-center mt-4">
                                   <span className="text-grey cursor-pointer" onClick={this.openQrCodeModal.bind(this)}>QR Code</span>
                                   <span className="text-grey">Pay in Wallet</span>
                                 </div>
@@ -414,6 +421,9 @@ class EmbededInvoice extends React.Component {
                             }
                           </div>
                         }
+                          <div className="float-logo text-center">
+                            <img src={sellix_logo} width="153" className="logo"/>
+                          </div>
                         </div>
                       </Card>
                    </div>

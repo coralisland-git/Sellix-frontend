@@ -9,10 +9,11 @@
   -webkit-box-pack: justify;
   
   section {
-    padding: 8rem 4rem 0;
+    padding: 6rem 4rem;
     flex-direction: row;    
     align-items: flex-start;
     display: flex;
+    border-bottom: 1px solid #ececec;
   }  
 
   .d-ins {
@@ -78,6 +79,7 @@
       //background-color: #e3e3e3 !important;
       background-color: #4f566b !important;
       margin-bottom: 0px !important;
+      color: #f8f8f8;
     }
   }
 
@@ -242,9 +244,6 @@
       border-right: 1px solid rgba(0, 0, 0, 0.07) !important;
     }
     
-    td:last-child {
-      border-right: none !important;
-    }
   }
 }
 

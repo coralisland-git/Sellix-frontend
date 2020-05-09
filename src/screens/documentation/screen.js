@@ -167,9 +167,9 @@ class Documentation extends React.Component {
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
-                      {`https://sellix.io/api/v1`}
-                    </SyntaxHighlighter>                    
+                    <pre>
+                      <code>{`https://sellix.io/api/v1`}</code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -233,9 +233,9 @@ class Documentation extends React.Component {
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst}>
-                      {`/blacklists?page=1`}
-                    </SyntaxHighlighter>
+                    <pre>
+                      <code>{`/blacklists?page=1`}</code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -566,7 +566,7 @@ DELETE /blacklists/:uniqid`}
                     <div className="code-block-header">
                       <p>RESPONSE</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
     "status": 200,
     "data": {
@@ -697,7 +697,7 @@ DELETE /blacklists/:uniqid`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       <p>CREATE BLACKLIST REQUEST</p>
                       <Clipboard data-clipboard-text={ `{
@@ -709,7 +709,7 @@ DELETE /blacklists/:uniqid`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
     "type": "ip",
     "data": "1.2.3.4",
@@ -777,7 +777,7 @@ DELETE /blacklists/:uniqid`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       <p>EDIT BLACKLIST REQUEST</p>
                       <Clipboard data-clipboard-text={ `{
@@ -788,7 +788,7 @@ DELETE /blacklists/:uniqid`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
     "type": "country",
     "data": "IT",
@@ -1130,7 +1130,7 @@ DELETE /categories/:uniqid`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       <p>CREATE CATEGORY REQUEST</p>
                       <Clipboard data-clipboard-text={ `{
@@ -1144,7 +1144,7 @@ DELETE /categories/:uniqid`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
     "title": "Demo Category",
     "unlisted": false,
@@ -1224,7 +1224,7 @@ DELETE /categories/:uniqid`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       <p>EDIT CATEGORY REQUEST</p>
                       <Clipboard data-clipboard-text={ `{
@@ -1238,7 +1238,7 @@ DELETE /categories/:uniqid`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
     "title": "Demo Category Edited",
     "unlisted": false,
@@ -1605,7 +1605,7 @@ DELETE /coupons/:uniqid`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       <p>CREATE COUPON REQUEST</p>
                       <Clipboard data-clipboard-text={ `{
@@ -1619,7 +1619,7 @@ DELETE /coupons/:uniqid`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
     "code": "demo",
     "discount_value": 65,
@@ -1699,7 +1699,7 @@ DELETE /coupons/:uniqid`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       <p>EDIT COUPON REQUEST</p>
                       <Clipboard data-clipboard-text={ `{
@@ -1713,7 +1713,7 @@ DELETE /coupons/:uniqid`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
     "code": "demo",
     "discount_value": 65,
@@ -2038,7 +2038,7 @@ POST /feedback/reply/:uniqid`}
                   </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block response">
                     <div className="code-block-header">
                       <p>REPLY FEEDBACK REQUEST</p>
                       <Clipboard data-clipboard-text={ `{
@@ -2047,7 +2047,7 @@ POST /feedback/reply/:uniqid`}
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
-                    <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
     "reply": "demo feedback reply"
 }`}
@@ -2074,6 +2074,7 @@ POST /feedback/reply/:uniqid`}
               <section id="orders-order">
                 <div className="d-ins">
                   <h3><b>Orders</b></h3>
+                  <p>I am ready to start this project now and will finish this in a couple of days.</p>
                 </div>
                 <div className="d-ex">
                   <div className="code-block response">
@@ -2493,20 +2494,37 @@ GET /oders`}
                       </tr>
                     </tbody>
                   </table>
+                  <table className="border-table">
+                    <thead>
+                      <tr>
+                        <th className="table-title" colspan="3">EVENT</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td><span className="badge-mark">PENDING</span></td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td><span className="badge-mark">COMPLETED</span></td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td><span className="badge-mark">CANCELLED</span></td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td><span className="badge-mark">WAITING FOR CONFIRMATIONS</span></td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td><span className="badge-mark">PARTIAL</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block response">
-                    <div className="code-block-header">
-                      <p>STATUSES</p>
-                    </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`0: PENDING
-1: COMPLETED
-2: CANCELLED
-3: WAITING FOR CONFIRMATIONS
-4: PARTIAL`}
-                    </SyntaxHighlighter>
-                  </div>
                   <div className="code-block response">
                     <div className="code-block-header">
                       <p>THE ORDER OBJECT</p>
