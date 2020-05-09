@@ -63,7 +63,7 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
 
   if(product_type === "file" && info.file_attachment) {
     return <div>
-        <pre style={{ fontSize: "1rem", lineHeight: "1rem", maxHeight: "14rem", background: "#f7f7f7", padding: ".65rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
+        <pre className={"mb-4 m-0"}>
           <span>File Name: {info.file_attachment.original_name}</span><br/>
           <span>Size: {formatBytes(info.file_attachment.size)}</span>
         </pre>
@@ -73,7 +73,7 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
 
   if(product_type === "serials" && info.serials.length) {
     return <div>
-        <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "14rem", background: "#f7f7f7", padding: ".65rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
+        <pre className={"mb-4 m-0"}>
           {info.serials.map(v => <span style={{ fontSize: "12px", lineHeight: 1}}><strong>{v.split(':')[0]}:</strong>&nbsp;&nbsp;<span style={{ fontSize: "12px", lineHeight: 1}}>{v.split(':')[1]}</span><br/></span>)}
         </pre>
 
@@ -86,7 +86,7 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
 
   if(product_type === "service" && info.service_text) {
     return <div>
-        <pre style={{ fontSize: ".8rem", lineHeight: ".7rem", maxHeight: "14rem", background: "#f7f7f7", padding: ".65rem", borderRadius: "5px"}} className={"mb-4 m-0"}>
+        <pre className={"mb-4 m-0"}>
           <span dangerouslySetInnerHTML={{ __html: info.service_text }}/>
         </pre>
 
