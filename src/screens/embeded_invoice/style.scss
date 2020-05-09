@@ -84,6 +84,7 @@
   }
 
   .float-logo {
+    height: 0;
     text-align: center;
     z-index: 99;
     position: relative;    
@@ -115,9 +116,9 @@
   }
 
   .logo {
-    width: 153px;
+    width: 110px;
     position: relative;
-    top: 42px;
+    top: 65px;
   }
 
   .clip-alert {
