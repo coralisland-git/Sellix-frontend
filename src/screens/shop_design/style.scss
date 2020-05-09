@@ -1,5 +1,26 @@
 .shop-settings-screen {
-    .file-switch {
-      min-width: 50px;
+  .file-switch {
+    min-width: 50px;
+  }
+
+  .invoice-placeholder {
+    border: 4px solid #000;
+    width: 100%;
+    padding: 0;
+
+    header {
+      height: 30px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+    }
+    footer {
+      height: 30px;
+    }
+
+    &.active {
+      border: 4px solid purple;
     }
   }
+}

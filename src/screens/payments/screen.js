@@ -25,6 +25,7 @@ import perfectmoneyIcon from "../../assets/images/crypto/perfectmoney.svg";
 import stripeIcon from "../../assets/images/crypto/stripe.svg";
 import stripeBtnIcon from "../../assets/images/crypto/stripe_revised.svg";
 import skrillIcon from "../../assets/images/crypto/skrill.svg";
+import Select from "react-select";
 
 const mapStateToProps = (state) => ({
   product_list: state.product.product_list
@@ -36,6 +37,11 @@ const mapDispatchToProps = (dispatch) => ({
   commonActions: bindActionCreators(CommonActions, dispatch)
 })
 
+const FEE_LEVEL = [
+  {label: "Low", value: "low"},
+  {label: "Regular", value: "regular"},
+  {label: "Priority", value: "priority"}
+]
 
 class Payments extends React.Component {
   
@@ -51,7 +57,8 @@ class Payments extends React.Component {
       perfectmoney_id: '',
       perfectmoney_passphrase: '',
       email_skrill: '',
-      secretword_skrill: ''
+      secretword_skrill: '',
+      crypto_fee_level: '',
     }
   }
 
@@ -67,7 +74,8 @@ class Payments extends React.Component {
       perfectmoney_passphrase: this.state.perfectmoney_passphrase || '',
       email_skrill: this.state.email_skrill || '',
       secretword_skrill: this.state.secretword_skrill || '',
-      stripe_user_id: this.state.stripe_user_id
+      stripe_user_id: this.state.stripe_user_id,
+      crypto_fee_level: this.state.crypto_fee_level,
     })
       .then(res => this.props.commonActions.tostifyAlert('success', res.message))
       .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
@@ -98,7 +106,8 @@ class Payments extends React.Component {
       perfectmoney_passphrase,
       stripe_user_id,
       email_skrill,
-      secretword_skrill
+      secretword_skrill,
+      crypto_fee_level,
     } = this.state;
 
     return (
@@ -118,6 +127,24 @@ class Payments extends React.Component {
                       </FormGroup>
                     </Col>
                     <Col lg={12}>
+
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="crypto_fee_level">Crypto Fees</Label>
+                            <Select
+                                classNamePrefix={"react-select"}
+                                options={FEE_LEVEL}
+                                id="crypto_fee_level"
+                                name="crypto_fee_level"
+                                value={FEE_LEVEL.find(({ value }) => value === crypto_fee_level)}
+                                onChange={(option) => {
+                                  this.setState({ crypto_fee_level: option.value });
+                                }}
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
                       <Row>
                         <Col lg={12}>
                           <FormGroup className="mb-3">

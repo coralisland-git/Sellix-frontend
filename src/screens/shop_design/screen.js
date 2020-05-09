@@ -42,6 +42,7 @@ class Payments extends React.Component {
       google_analytics_tracking_id: '',
       crisp_website_id: '',
       center_product_titles: false,
+      crypto_invoice_mode: 'default' || 'qrcode',
     }
   }
 
@@ -56,6 +57,7 @@ class Payments extends React.Component {
       google_analytics_tracking_id: this.state.google_analytics_tracking_id,
       crisp_website_id: this.state.crisp_website_id,
       center_product_titles: this.state.center_product_titles,
+      crypto_invoice_mode: this.state.crypto_invoice_mode,
     }
 
     // if(this.state.google_analytics_tracking_id) {
@@ -80,6 +82,7 @@ class Payments extends React.Component {
         center_product_titles: settings.shop_center_product_titles === '1',
         dark_mode: settings.shop_dark_mode === '1',
         hide_out_of_stock: settings.shop_hide_out_of_stock === '1',
+        crypto_invoice_mode: settings.crypto_invoice_mode,
 
         google_analytics_tracking_id: settings.shop_google_analytics_tracking_id || ''
       })
@@ -89,8 +92,9 @@ class Payments extends React.Component {
   }
 
   render() {
-    const { loading, discord_link, crisp_website_id, search_enabled, dark_mode, hide_out_of_stock, center_product_titles } = this.state;
+    const { loading, discord_link, crisp_website_id, search_enabled, dark_mode, hide_out_of_stock, center_product_titles, crypto_invoice_mode } = this.state;
 
+    console.log(crypto_invoice_mode);
     return (
       <div className="shop-settings-screen">
         <div className="animated fadeIn">
@@ -222,8 +226,38 @@ class Payments extends React.Component {
                               />
                               <div className="ml-2">
                                 <Label className="mb-0">Hide Out of Stock</Label>
-                                <p className="text-grey mb-0">
-                                Automatically hide your products when out of stock.</p>
+                                <p className="text-grey mb-0">Automatically hide your products when out of stock.</p>
+                              </div>
+                            </Col>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <FormGroup row>
+                            <Col lg={12}>
+                              <Label className="mb-0">Choose invoice from</Label>
+                              <p className="text-grey mb-0">Choose invoice from:</p>
+                            </Col>
+                            <Col lg={6} className="d-flex align-items-center">
+                              <div className={"invoice-placeholder"}>
+                                <header><div>Sellix</div></header>
+                                <div>
+                                  <div>Sellix</div>
+                                  -------- --------
+                                  -------- --------
+                                  -------- --------
+                                  _________________
+                                  -------- --------
+                                  -------- --------
+                                  -------- --------
+                                </div>
+                                <footer>----</footer>
+                              </div>
+                            </Col>
+                            <Col lg={6} className="d-flex align-items-center">
+                              <div className={"invoice-placeholder active"}>
+                                <div>13123</div>
                               </div>
                             </Col>
                           </FormGroup>
