@@ -185,11 +185,11 @@ class EmbedProduct extends React.Component {
                           <div className="code-block-header">
                             <p>EMBED JAVASCRIPT</p>
                             <Clipboard 
-                            data-clipboard-text={'<script
+                            data-clipboard-text={`<script
   src="https://cdn.sellix.io/static/js/embed.js"
   integrity="sha384-bF0mPbr3XIl6VKdt2jUYrORWDfi+A5mK3yRoEuCvm0EWowp7jpMBisstVCZO5rL6"
   crossorigin="anonymous">
-</script>'} 
+</script>`} 
                             button-title="Copy">
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
