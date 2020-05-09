@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, Row, Col, Container } from 'reactstrap'
-import SweetAlert from 'react-bootstrap-sweetalert';
+import { Card, Row, Col } from 'reactstrap'
 import * as moment from 'moment/moment'
 import { QRCodeModal } from 'components'
 import { PayPalButton } from "react-paypal-button-v2";
@@ -10,11 +9,10 @@ import { CommonActions } from 'services/global'
 import { getInvoiceInfo, downloadInvoice } from './actions'
 import { Loader, Button } from 'components'
 import StripeForm from './stripeForm'
-import LeaveFeedback from '../feedbacks_shop/screens/create/screen'
+import LeaveFeedback from '../feedbacks_shop/screens/createComponent/screen'
 import config from 'constants/config'
 
 import sellix_logo from 'assets/images/Sellix_logo.svg'
-import backIcon from 'assets/images/x.png'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import skrillLinkIcon from 'assets/images/skrill_link.svg'
 
@@ -104,7 +102,7 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
 
 
 class Invoice extends React.Component {
-  
+
   constructor(props) {
     super(props);
 
@@ -218,9 +216,9 @@ class Invoice extends React.Component {
       time: this.secondsToTime(seconds),
       seconds: seconds,
     });
-    
+
     // Check if we're at zero.
-    if (seconds < 0) { 
+    if (seconds < 0) {
       clearInterval(this.timer);
     }
   }
@@ -570,7 +568,7 @@ class Invoice extends React.Component {
                       </div>
                     </Card>
 
-                    {info && <Card>
+                    {info && <Card className={"mb-5"}>
                       <LeaveFeedback uniqid={info.feedback_uniqid} />
                     </Card>}
                   </Col>
