@@ -185,7 +185,11 @@ class EmbedProduct extends React.Component {
                           <div className="code-block-header">
                             <p>EMBED JAVASCRIPT</p>
                             <Clipboard 
-                            data-clipboard-text={'<script type="text/javascript" src="https://cdn.sellix.io/static/js/embed.js"></script>'} 
+                            data-clipboard-text={'<script
+  src="https://cdn.sellix.io/static/js/embed.js"
+  integrity="sha384-bF0mPbr3XIl6VKdt2jUYrORWDfi+A5mK3yRoEuCvm0EWowp7jpMBisstVCZO5rL6"
+  crossorigin="anonymous">
+</script>'} 
                             button-title="Copy">
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
@@ -193,9 +197,8 @@ class EmbedProduct extends React.Component {
                           <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
                             {`<script
   src="https://cdn.sellix.io/static/js/embed.js"
-  integrity="sha384-L3twr+MVEV9azJeisEnRliaABdEDpzke4FypZ4BmGHvUKRgCGxgKkUXwawGW9Eb3"
-  crossorigin="anonymous"
->
+  integrity="sha384-bF0mPbr3XIl6VKdt2jUYrORWDfi+A5mK3yRoEuCvm0EWowp7jpMBisstVCZO5rL6"
+  crossorigin="anonymous">
 </script>`}
                           </SyntaxHighlighter>
                         </div>
