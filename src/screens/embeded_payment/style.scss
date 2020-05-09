@@ -1,7 +1,7 @@
 .embeded-payment-screen {
 
   p {
-    font-size : 16px;
+    font-size : 20px;
   }
 
   .card-header {
@@ -78,7 +78,7 @@
   }
 
   .price {
-    font-size : 24px;
+    font-size : 30px;
     font-weight: bold;
   }
 
@@ -180,8 +180,8 @@
 
     .close-popup {
       position: absolute;
-      right: 10px;
-      top: 10px;
+      right: 4px;
+      top: 2px;
       font-size: 1.5rem;
       -webkit-text-stroke: 3px #E4D6FF;
     }
