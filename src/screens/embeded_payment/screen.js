@@ -18,8 +18,8 @@ import { Formik } from 'formik';
 import { Spin, Loader } from 'components'
 import * as Yup from "yup";
 import * as Showdown from "showdown";
+import config from 'constants/config'
 import shop_brand from 'assets/images/brand/shop_brand.png'
-
 
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
@@ -433,6 +433,11 @@ class EmbededPayment extends React.Component {
       }
     }
 
+    let image = null;
+    if(product_info.image_attachment) {
+        image = config.API_ROOT_URL + '/attachments/image/' + product_info.image_attachment;
+    }
+
     return (
       <div className="embeded-payment-screen">
         <div className="animated fadeIn">
@@ -446,26 +451,32 @@ class EmbededPayment extends React.Component {
           :
           <div className="ml-auto mr-auto p-0 embed-block">
             <i className="fa fa-times close-popup"></i>
-            <div className="stock-info text-center">
-              <img src={sellixLogoIcon} className="logo"/>
-              <p className="text-primary text-center"><b>{product_info.title}</b></p>
-              <p className="text-primary text-center user-name">
-                <span>by {product_info.username || ''}</span>
-                {user.verified == '1' &&
-                  <>
-                    <img src={verifiedIcon} width="16" className="verified-icon" id="verifiedTooltip" />
-                    <Tooltip
-                      placement="right"
-                      isOpen={verifiedTooltipOpen}
-                      target="verifiedTooltip"
-                      toggle={this.verifiedTooltipToggle.bind(this)}>
-                      This shop has verified its brand identity to Sellix.
-                    </Tooltip>
-                  </>
-                }
-              </p>
-              {coupon_discount !== 0 && coupon_is_valid && coupon_applied && <s className="text-primary text-center" style={{ fontSize: 18 }}>{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</s>}
-              <p className="text-primary price text-center">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>                
+            <div className="stock-info d-flex">
+              <div className="stock-detail text-center d-flex">
+                { image && <img src={image} className="product-image" alt={product_info.title}/> }
+                <div className="text-center m-auto">
+                  <p className="text-primary mb-2"><b>{product_info.title}</b></p>
+                  <p className="text-primary user-name mb-0">
+                    <span>by {product_info.username || ''}</span>
+                    {user.verified == '1' &&
+                      <>
+                        <img src={verifiedIcon} width="16" className="verified-icon" id="verifiedTooltip" />
+                        <Tooltip
+                          placement="right"
+                          isOpen={verifiedTooltipOpen}
+                          target="verifiedTooltip"
+                          toggle={this.verifiedTooltipToggle.bind(this)}>
+                          This shop has verified its brand identity to Sellix.
+                        </Tooltip>
+                      </>
+                    }
+                  </p>
+                </div>
+              </div>
+              <div className="mt-auto mb-auto text-center">
+                {coupon_discount !== 0 && coupon_is_valid && coupon_applied && <s className="text-primary" style={{ fontSize: 14 }}>{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</s>}
+                <p className="text-primary price mb-0">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>                
+              </div>
             </div>
             <Card className="bg-white stock-stop mb-0">
               {
@@ -591,13 +602,13 @@ class EmbededPayment extends React.Component {
                   </div>:
                   <>
                     { !showPaymentOptions && (
-                      <div className="pt-4 pl-4 pr-4">
+                      <div className="p-4">
                         <div className="text-center">
                           <div className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
                           </div>
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                           onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
-                          <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
+                          <div className="d-flex justify-content-center align-items-center mt-2 stock-count">
                             <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>                              
                             <span className="ml-1 mr-1">
                                 <input type="text" 
@@ -645,7 +656,7 @@ class EmbededPayment extends React.Component {
                               )}
                             </div>
                             :
-                            <p className="text-grey mt-5 mb-2 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
+                            <p className="text-grey mt-2 mb-2 cursor-pointer text-primary" style={{fontSize: 12}} onClick={this.openCoupon.bind(this)}>
                               <img src={editIcon} width="15" className="mr-1" />
                               <b>Apply a Coupon</b>
                             </p>
@@ -699,6 +710,9 @@ class EmbededPayment extends React.Component {
                     )}
                   </>
               }
+              <div className="text-center">
+                <img src={sellixLogoIcon} className="logo"/>
+              </div>
             </Card>
           </div>
         }

@@ -169,7 +169,7 @@ class Documentation extends React.Component {
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst}>
                       {`https://sellix.io/api/v1`}
-                    </SyntaxHighlighter>                    
+                    </SyntaxHighlighter>
                   </div>
                 </div>
               </section>
@@ -2074,6 +2074,7 @@ POST /feedback/reply/:uniqid`}
               <section id="orders-order">
                 <div className="d-ins">
                   <h3><b>Orders</b></h3>
+                  <p>I am ready to start this project now and will finish this in a couple of days.</p>
                 </div>
                 <div className="d-ex">
                   <div className="code-block response">
