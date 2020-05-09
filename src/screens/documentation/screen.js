@@ -2503,7 +2503,7 @@ GET /oders`}
                     <tbody>
                       <tr>
                         <td>0</td>
-                        <td><span className="badge-mark">PENDING</span></td>
+                        <td><span className="badge-mark">STATUS</span></td>
                       </tr>
                       <tr>
                         <td>1</td>

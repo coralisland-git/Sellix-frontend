@@ -432,12 +432,7 @@ class EmbededPayment extends React.Component {
             custom_fields.push(field)
         }
       }
-    }
-
-    let image = null;
-    if(product_info.image_attachment) {
-        image = config.API_ROOT_URL + '/attachments/image/' + product_info.image_attachment;
-    }
+    }    
 
     return (
       <div className="embeded-payment-screen">
@@ -453,9 +448,9 @@ class EmbededPayment extends React.Component {
           <div className="ml-auto mr-auto p-0 embed-block">
             <i className="fa fa-times close-popup"></i>
             <div className="stock-info d-flex p-4">
-              <div className="stock-detail text-center d-flex">
-                { image && <img src={image} className="product-image" alt={product_info.title}/> }
-                <div className="text-center m-auto">
+              <div className="stock-detail d-flex">
+                { user.profile_attachment && <img src={user.profile_attachment} className="product-image" alt={product_info.title}/> }
+                <div className="m-auto">
                   <p className="text-primary mb-2"><b>{product_info.title}</b></p>
                   <p className="text-primary user-name mb-0">
                     <span>by {product_info.username || ''}</span>
@@ -603,7 +598,7 @@ class EmbededPayment extends React.Component {
                   </div>:
                   <>
                     { !showPaymentOptions && (
-                      <div className="p-4">
+                      <div className="pt-4 pr-4 pl-4">
                         <div className="text-center">
                           <div className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
                           </div>
@@ -711,10 +706,10 @@ class EmbededPayment extends React.Component {
                     )}
                   </>
               }
-              <div className="text-center">
-                <img src={sellixLogoIcon} className="logo"/>
-              </div>
             </Card>
+            <div className="text-center">
+              <img src={sellixLogoIcon} className="logo"/>
+            </div>
           </div>
         }
         </div>
