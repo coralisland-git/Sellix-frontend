@@ -70,13 +70,13 @@ const API_NAVIGATIONS = [
   { key: 'edit-product', value: 'Edit Product' },
   { key: 'delete-product', value: 'Delete Product' },
 
-  { key: 'querys-query', value: 'Querys', has_children: true },
+  { key: 'queries-query', value: 'Queries', has_children: true },
   { key: 'object-query', value: 'Query Object' },
   { key: 'get-query', value: 'Get a Query' },
-  { key: 'list-query', value: 'List All Querys' },
-  { key: 'create-query', value: 'Create a Query' },
-  { key: 'edit-query', value: 'Edit Query' },
-  { key: 'delete-query', value: 'Delete Query' },
+  { key: 'list-query', value: 'List All Queries' },
+  { key: 'reply-query', value: 'Reply Query' },
+  { key: 'close-query', value: 'Close Query' },  
+  { key: 'reopen-query', value: 'Reopen Query' },
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -2513,13 +2513,13 @@ GET /oders`}
                   <table className="border-table">
                     <thead>
                       <tr>
-                        <th className="table-title" colspan="3">EVENT</th>
+                        <th className="table-title" colspan="3">STATUS</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td>0</td>
-                        <td><span className="badge-mark">STATUS</span></td>
+                        <td><span className="badge-mark">PENDING</span></td>
                       </tr>
                       <tr>
                         <td>1</td>
@@ -4073,6 +4073,376 @@ DELETE /products/:uniqid`}
                 </div>
               </section>
 
+              <section id="queries-query">
+                <div className="d-ins">
+                  <h3><b>Queries</b></h3>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`GET /queries/:uniqid
+GET /queries
+POST /queries
+PUT /queries/:uniqid
+DELETE /queries/:uniqid`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="object-query">
+                <div className="d-ins">
+                  <h3><b>Query Object</b></h3>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">uniqid</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Unique identifier for the object.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">user_id</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          ID whose query is referred to.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">day_value</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Used for analytics purpose, day of query creation.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">day</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Used for analytics purpose, string value of the day of query creation.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">month</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Used for analytics purpose, month of query creation.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">year</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Used for analytics purpose, year of query creation.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">created_at</p>
+                          <p>timestamp</p>
+                        </td>
+                        <td>
+                          The date and time that the resource was created.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">status</p>
+                          <p>string</p>
+                        </td>
+                        <td>
+                          Status of the query, see more info about statuses below.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">messages</p>
+                          <p>array of objects</p>
+                        </td>
+                        <td>
+                          Each object is a message, they are ordered by creation DESC, so the latest messages will be at the top.
+                        </td>
+                      </tr>
+                    </tbody>                          
+                  </table>
+                  <table className="border-table">
+                    <thead>
+                      <tr>
+                        <th className="table-title" colspan="3">STATUS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td><span className="badge-mark">PENDING</span></td>
+                        <td>Waiting for an answer from the seller</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td><span className="badge-mark">USERREPLY</span></td>
+                        <td>Seller has replied</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td><span className="badge-mark">CUSTOMERREPLY</span></td>
+                        <td>Customer has replied</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td><span className="badge-mark">CLOSED</span></td>
+                        <td>Query is closed</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>THE QUERY OBJECT</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "uniqid": "demo2ab29-9b1d36",
+  "user_id": 0,
+  "day_value": 11,
+  "title": "Demo Title",
+  "day": "Sat",
+  "month": "Apr",
+  "year": 2020,
+  "created_at": 1586627494,
+  "status": "pending",
+  "messages": [
+      {
+          "role": "customer",
+          "message": "demo",
+          "created_at": 1586627494
+      }
+      ...
+  ]
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="get-query">
+                <div className="d-ins">
+                  <h3><b>Get a Query</b></h3>
+                  <p>
+                    <span className="required">GET</span> /queries/:uniqid <br />
+                    Retrieves a Query by Uniqid.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "status": 200,
+  "data": {
+      "query": {
+          "uniqid": "demo2ab29-9b1d36",
+          "user_id": 0,
+          "day_value": 11,
+          "title": "Demo Title",
+          "day": "Sat",
+          "month": "Apr",
+          "year": 2020,
+          "created_at": 1586627494,
+          "status": "pending",
+          "messages": [
+              { ... }
+          ]
+      }
+  },
+  "message": null,
+  "log": null,
+  "error": null,
+  "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="list-query">
+                <div className="d-ins">
+                  <h3><b>List All Queries</b></h3>
+                  <p>
+                    <span className="required">GET</span> /queries <br />
+                    Returns a list of all the Queries. The queries are sorted by creation date, with the most recently 
+                    created queries being first. The query object does not contain all the info.
+                  </p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">page</p>
+                          <p>integer</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "status": 200,
+  "data": {
+      "queries": [
+          {
+              "id": 0,
+              "uniqid": "demo29-9b1d36",
+              "customer_email": "demo@gmail.com",
+              "user_id": 0,
+              "role": "customer",
+              "title": "Demo Title",
+              "message": "Demo Message",
+              "status": "pending",
+              "reply_to": null,
+              "section": "support",
+              "day_value": 11,
+              "day": "Sat",
+              "month": "Apr",
+              "year": 2020,
+              "created_at": 1586627494,
+              "updated_at": 0
+          }
+      ]
+  },
+  "message": null,
+  "log": null,
+  "error": null,
+  "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="reply-query">
+                <div className="d-ins">
+                  <h3><b>Reply Query</b></h3>
+                  <p>
+                    <span className="required">PUT</span> /query <br />
+                    Replies to a Query.<br /><br />
+                  </p>
+                  <p><b>Arguments</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">reply</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Reply message
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>CREATE QUERY REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+  "reply": "demo"
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "reply": "demo"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "status": 200,
+  "message": "Reply Sent Successfully.",
+  "log": null,
+  "error": null,
+  "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="close-query">
+                <div className="d-ins">
+                  <h3><b>Close Query</b></h3>
+                  <p>
+                    <span className="required">POST</span> /queries/close/:uniqid <br />
+                    Closes to a Query. <br /><br />
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "status": 200,
+  "message": "Query Closed Successfully.",
+  "log": null,
+  "error": null,
+  "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="reopen-query">
+                <div className="d-ins">
+                  <h3><b>Reopen Query</b></h3>
+                  <p>
+                    <span className="required">DELETE</span> /queries/reopen/:uniqid <br />
+                    Reopen to a Query.
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "status": 200,
+  "message": "Query Reopened Successfully.",
+  "log": null,
+  "error": null,
+  "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
               
             </Container>
           </div>          
