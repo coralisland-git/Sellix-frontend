@@ -79,6 +79,13 @@ const API_NAVIGATIONS = [
   { key: 'reopen-query', value: 'Reopen Query' },
 ]
 
+const PAY_NAVIGATIONS = [
+  { key: 'payments-payment', value: 'payments', has_children: true },
+  { key: 'checkout-flow-payment', value: 'Checkout Flow' },
+  { key: 'create-payment', value: 'Create Payment' },
+  { key: 'delete-payment', value: 'Delete Payment' },
+]
+
 const userId = window.localStorage.getItem('userId')
 
 class Documentation extends React.Component {
@@ -110,9 +117,15 @@ class Documentation extends React.Component {
         items.push(nav.key)
     }))
 
-    items.push('api_reference');    
+    items.push('api_reference');
 
     API_NAVIGATIONS.map((nav => {
+      items.push(nav.key)
+    }))
+
+    items.push('sellix_pay');    
+
+    PAY_NAVIGATIONS.map((nav => {
       items.push(nav.key)
     }))
 
@@ -153,6 +166,17 @@ class Documentation extends React.Component {
                   <li className="field">API REFERENCE</li>
                   {
                     API_NAVIGATIONS.map((nav, cindex) => {
+                      return (
+                        <li className={ nav.has_children ? 'parent' : nav.key.indexOf(activeNode) > -1 ? 'sub-nav show' : 'sub-nav' } key={cindex}>
+                          <a href={`/documentation#${nav.key}`} 
+                          >{nav.value}</a>
+                        </li>
+                       )
+                     })
+                  }
+                  <li className="field">SELLIX PAY</li>
+                  {
+                    PAY_NAVIGATIONS.map((nav, cindex) => {
                       return (
                         <li className={ nav.has_children ? 'parent' : nav.key.indexOf(activeNode) > -1 ? 'sub-nav show' : 'sub-nav' } key={cindex}>
                           <a href={`/documentation#${nav.key}`} 
