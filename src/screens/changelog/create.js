@@ -72,7 +72,7 @@ export class Changelog extends React.Component {
 
 	handleSubmit = (values) => {
 		this.setState({ loading: true })
-		this.props.createChangelog({ ...values, display_date: moment().format("DD/MM/YYYY") })
+		this.props.createChangelog({ ...values, display_date: moment().format("MMM DD, YYYY") })
 		.then(res => {
 			this.props.tostifyAlert('success', res.message)
 			return api.get('/changelog');
