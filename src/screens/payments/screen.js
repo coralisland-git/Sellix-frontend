@@ -210,9 +210,7 @@ class Payments extends React.Component {
                           </FormGroup>
                         </Col>
                       </Row>
-
-
-                      <br/>
+                      <hr/>
                       <br/>
                       <Row>
                         <Col lg={6}>
