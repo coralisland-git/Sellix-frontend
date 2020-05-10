@@ -151,7 +151,7 @@ class Blacklist extends React.Component {
               dataAlign="left"
               width='20%'
             >
-              BLOCKED DATA
+              Blocked data
             </TableHeaderColumn>
             <TableHeaderColumn
               dataField="type"
@@ -160,7 +160,7 @@ class Blacklist extends React.Component {
               dataAlign="left"
               width='60%'
             >
-              NOTE
+              Note
             </TableHeaderColumn>
             <TableHeaderColumn
               dataField="stock"
@@ -169,7 +169,7 @@ class Blacklist extends React.Component {
               dataFormat={this.renderOptions}
               width='20%'
             >
-              OPTIONS
+              Options
             </TableHeaderColumn>
           </BootstrapTable>
           {/* <Card>

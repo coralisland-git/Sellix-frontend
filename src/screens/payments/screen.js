@@ -129,24 +129,7 @@ class Payments extends React.Component {
                     <Col lg={12}>
 
                       <Row>
-                        <Col lg={12}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="crypto_fee_level">Crypto Fees</Label>
-                            <Select
-                                classNamePrefix={"react-select"}
-                                options={FEE_LEVEL}
-                                id="crypto_fee_level"
-                                name="crypto_fee_level"
-                                value={FEE_LEVEL.find(({ value }) => value === crypto_fee_level)}
-                                onChange={(option) => {
-                                  this.setState({ crypto_fee_level: option.value });
-                                }}
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
+                        <Col lg={6}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code"><i className="fa fa-paypal" style={{ color: '#0097df', marginRight: '.5rem', fontSize: '20px' }}/>PayPal Email</Label>
                             <Input 
@@ -157,13 +140,28 @@ class Payments extends React.Component {
                             />
                           </FormGroup>
                         </Col>
+                        <Col lg={6}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code"><img src={stripeIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Stripe</Label>
+                            <br/>
+                            {stripe_user_id && <p style={{marginBottom: '5px'}}>You are connected</p>}
+                            {!stripe_user_id && <Button color="default" style={{ width: "100%"}} className="connect-discord" onClick={() => {
+                              window.location = 'https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_H8Nl3tqGj85pnhyEoIOAIlUF5KoIvVaf&scope=read_write&redirect_uri=https://sellix.io/settings/stripe/connect'
+                            }}>Connect <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
+                            {stripe_user_id && <Button color="default" style={{ width: "100%"}} className="connect-discord" onClick={() => {
+                              this.props.actions.stripeDeauthorize().then(() => {
+                                document.location.reload()
+                              })
+                            }}>Deauthorize <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
+                          </FormGroup>
+                        </Col>
                       </Row>
                       <Row>
                         <Col lg={12}>
                           <FormGroup className="mb-0">
                             <Label htmlFor="product_code"><img src={perfectmoneyIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Perfect Money ID & Alternate Passphrase</Label>
                             <Row>
-                              <Col lg={5}>
+                              <Col lg={6}>
                                 <Input 
                                   type="text" 
                                   placeholder="Perfect Money ID"
@@ -172,7 +170,7 @@ class Payments extends React.Component {
                                   onChange={e => this.setState({perfectmoney_id: e.target.value})}
                                 />
                               </Col>
-                              <Col lg={7}>
+                              <Col lg={6}>
                                 <Input 
                                   type="text" 
                                   placeholder="Perfect Money Alternate Passphrase"
@@ -190,7 +188,7 @@ class Payments extends React.Component {
                           <FormGroup className="mb-0">
                             <Label htmlFor="product_code"><img src={skrillIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Skrill Email & Secret Word</Label>
                             <Row>
-                              <Col lg={5}>
+                              <Col lg={6}>
                                 <Input 
                                   type="text" 
                                   placeholder="Skrill Email"
@@ -199,7 +197,7 @@ class Payments extends React.Component {
                                   onChange={e => this.setState({email_skrill: e.target.value})}
                                 />
                               </Col>
-                              <Col lg={7}>
+                              <Col lg={6}>
                                 <Input 
                                   type="text" 
                                   placeholder="Skrill Secret Word"
@@ -212,8 +210,12 @@ class Payments extends React.Component {
                           </FormGroup>
                         </Col>
                       </Row>
+
+
+                      <br/>
+                      <br/>
                       <Row>
-                        <Col lg={12}>
+                        <Col lg={6}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code"><img src={bitcoinIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Bitcoin Address</Label>
                             <Input 
@@ -224,9 +226,7 @@ class Payments extends React.Component {
                             />
                           </FormGroup>
                         </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
+                        <Col lg={6}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code"><img src={ethereumIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Ethereum Address</Label>
                             <Input 
@@ -239,7 +239,7 @@ class Payments extends React.Component {
                         </Col>
                       </Row>
                       <Row>
-                        <Col lg={12}>
+                        <Col lg={6}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code"><img src={litecoinIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Litecoin Address</Label>
                             <Input 
@@ -250,9 +250,7 @@ class Payments extends React.Component {
                             />
                           </FormGroup>
                         </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
+                        <Col lg={6}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code"><img src={bitcoinCashIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Bitcoin Cash Address</Label>
                             <Input 
@@ -264,61 +262,29 @@ class Payments extends React.Component {
                           </FormGroup>
                         </Col>
                       </Row>
+
                       <Row>
                         <Col lg={12}>
                           <FormGroup className="mb-3">
-                            <Label htmlFor="product_code"><img src={stripeIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Stripe</Label>
-                            <br/>
-                            {stripe_user_id && <p style={{marginBottom: '5px'}}>You are connected</p>}
-                            {!stripe_user_id && <Button color="default" className="connect-discord" onClick={() => {
-                              window.location = 'https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_H8Nl3tqGj85pnhyEoIOAIlUF5KoIvVaf&scope=read_write&redirect_uri=https://sellix.io/settings/stripe/connect'
-                            }}>Connect <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
-                            {stripe_user_id && <Button color="default" className="connect-discord" onClick={() => {
-
-                              this.props.actions.stripeDeauthorize().then(() => {
-                                document.location.reload()
-                              })
-
-                            }}>Deauthorize <img src={stripeBtnIcon} width="50" style={{marginLeft: '5px'}}/></Button>}
+                            <div>
+                              <Label htmlFor="crypto_fee_level">Crypto Fees</Label>
+                              <p className={"mb-2 text-grey"} style={{ fontSize: ".7rem"}}>
+                                Select how many fees will be used to send the payout transaction. For low only a few cents will be spent on fees, regular will take an average of $0.15 while priority $2.00+. Regular and Priority depend on the current status of the Network, higher fee might be applied. Low fees are static, they will always be low.
+                              </p>
+                            </div>
+                            <Select
+                                classNamePrefix={"react-select"}
+                                options={FEE_LEVEL}
+                                id="crypto_fee_level"
+                                name="crypto_fee_level"
+                                value={FEE_LEVEL.find(({ value }) => value === crypto_fee_level)}
+                                onChange={(option) => {
+                                  this.setState({ crypto_fee_level: option.value });
+                                }}
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
-                      {/* <Row>
-                        <Col lg={6}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Perfect Money ID</Label>
-                            <Input type="text" placeholder="Perfect Money ID"></Input>
-                          </FormGroup>
-                        </Col>
-                        <Col lg={6}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Perfect Money Alternate Passphrase</Label>
-                            <Input type="text" placeholder="Perfect Money Alternate Passphrase"></Input>
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Stripe</Label><br/>
-                            <Button color="primary" className="stripe-button">Connect with Stripe</Button>
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={6}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Skrill Email</Label>
-                            <Input type="text" placeholder="Skrill Email"></Input>
-                          </FormGroup>
-                        </Col>
-                        <Col lg={6}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Skrill Secret Word</Label>
-                            <Input type="text" placeholder="Skrill Secret Word"></Input>
-                          </FormGroup>
-                        </Col>
-                      </Row> */}
                     </Col>
                   </Row>
             </CardBody>
@@ -326,34 +292,6 @@ class Payments extends React.Component {
               {loading ? <Spin/> : 'Save Settings'}
             </Button>
           </Card>
-          {/* <Card>
-            <CardBody className="p-4 mb-5">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                : 
-                  <Row className="mt-4 mb-4">
-                    <Col lg={12}>
-                      <FormGroup className="mb-5">
-                        <Label className="title">Crypto Currency</Label>
-                      </FormGroup>
-                    </Col>
-                    <Col lg={12}>
-                      <FormGroup className="mb-3">
-                        <Label htmlFor="product_code">Crypto Currency Integration</Label><br/>
-                        <Select placeholder="Select..."/>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-              }
-              
-            </CardBody>
-            <Button color="primary" className="mb-4" style={{width: 200}}>Save Settings</Button>
-          </Card> */}
         </div>
       </div>
     )
