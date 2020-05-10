@@ -42,6 +42,7 @@ class Payments extends React.Component {
       google_analytics_tracking_id: '',
       crisp_website_id: '',
       center_product_titles: false,
+      crypto_invoice_mode: 'default' || 'qrcode',
     }
   }
 
@@ -56,6 +57,7 @@ class Payments extends React.Component {
       google_analytics_tracking_id: this.state.google_analytics_tracking_id,
       crisp_website_id: this.state.crisp_website_id,
       center_product_titles: this.state.center_product_titles,
+      crypto_invoice_mode: this.state.crypto_invoice_mode,
     }
 
     // if(this.state.google_analytics_tracking_id) {
@@ -80,6 +82,7 @@ class Payments extends React.Component {
         center_product_titles: settings.shop_center_product_titles === '1',
         dark_mode: settings.shop_dark_mode === '1',
         hide_out_of_stock: settings.shop_hide_out_of_stock === '1',
+        crypto_invoice_mode: settings.crypto_invoice_mode,
 
         google_analytics_tracking_id: settings.shop_google_analytics_tracking_id || ''
       })
@@ -88,8 +91,14 @@ class Payments extends React.Component {
     })
   }
 
+  setInvoiceMode = (crypto_invoice_mode) => {
+    this.setState({
+      crypto_invoice_mode
+    })
+  }
+
   render() {
-    const { loading, discord_link, crisp_website_id, search_enabled, dark_mode, hide_out_of_stock, center_product_titles } = this.state;
+    const { loading, discord_link, crisp_website_id, search_enabled, dark_mode, hide_out_of_stock, center_product_titles, crypto_invoice_mode } = this.state;
 
     return (
       <div className="shop-settings-screen">
@@ -111,10 +120,13 @@ class Payments extends React.Component {
                       <Row>
                         <Col lg={12}>
                           <FormGroup className="mb-3">
-                            <Label htmlFor="discord_link">Discord Link</Label>
+                            <div>
+                              <Label htmlFor="discord_link">Discord Link</Label>
+                              <p className={"text-grey mb-2"}>You can add your server invite link, it will be displayed next to Create a Query in the contact form.</p>
+                            </div>
                             <Input 
                               type="text" 
-                              placeholder="Discord Link"  
+                              placeholder="https://discord.gg/example"
                               value={discord_link}
                               onChange={e => this.setState({discord_link: e.target.value})}
                             />
@@ -222,9 +234,74 @@ class Payments extends React.Component {
                               />
                               <div className="ml-2">
                                 <Label className="mb-0">Hide Out of Stock</Label>
-                                <p className="text-grey mb-0">
-                                Automatically hide your products when out of stock.</p>
+                                <p className="text-grey mb-0">Automatically hide your products when out of stock.</p>
                               </div>
+                            </Col>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className={dark_mode ? "mt-2" : "mt-2 light"}>
+                          <FormGroup row>
+                            <Col lg={4} md={12} className={"mb-4"}>
+                              <Label className="mb-0">Crypto Order Style:</Label>
+                              <p className="text-grey mb-0">Choose how you want the order payment info displayed when customers are buying with cryptos.</p>
+                            </Col>
+                            <Col lg={4} md={6} sm={6} className="d-flex align-items-center flex-column">
+                              <div className={crypto_invoice_mode === 'default' ? "invoice-mode active" : "invoice-mode"} onClick={this.setInvoiceMode.bind(this, 'default')}>
+                                <header className={"d-flex align-items-center justify-content-between"}>
+                                  <div>Sellix</div>
+                                  <div>
+                                    <span />
+                                    <span />
+                                    <span />
+                                  </div>
+                                </header>
+                                <div className={'default'}>
+                                  <div className={'logo'}>Sellix</div>
+                                  <span className={"p-title"}/>
+                                  <span ><span ></span><span ></span></span>
+                                  <span ><span ></span><span ></span></span>
+                                  <span />
+                                  <span />
+                                  <span />
+                                  <span />
+                                  <span />
+                                </div>
+                                <footer />
+                              </div>
+                              <p className="text-grey mb-0 mt-3" style={{ fontSize: ".7rem" }}>
+                                This option will display a normal order box with every info needed and the same design as PayPal, Stripe, Skrill and PerfectMoney.</p>
+                            </Col>
+                            <Col lg={4} md={6} sm={6} className="d-flex align-items-center flex-column">
+                              <div className={crypto_invoice_mode === 'qrcode' ? "invoice-mode active" : "invoice-mode"} onClick={this.setInvoiceMode.bind(this, 'qrcode')}>
+                                <header className={"d-flex align-items-center justify-content-between"}>
+                                  <div>Sellix</div>
+                                  <div>
+                                    <span />
+                                    <span />
+                                    <span />
+                                  </div>
+                                </header>
+                                <div className={'qrcode'}>
+                                  <div>
+                                    <span className={"p-title"}/>
+                                    <span><span /><span /></span>
+                                    <span />
+                                    <span />
+                                  </div>
+                                  <div>
+                                    <div className={'logo'}>Sellix</div>
+                                    <div>
+                                      <div><i className={"fas fa-qrcode"}/></div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <footer />
+                              </div>
+                              <p className="text-grey mb-0 mt-3" style={{ fontSize: ".7rem" }}>
+                                This option will instead keep the product info card and add an additional QRCode for an easier and faster checkout.
+                              </p>
                             </Col>
                           </FormGroup>
                         </Col>

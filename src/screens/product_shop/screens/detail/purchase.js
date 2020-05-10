@@ -139,7 +139,7 @@ class Purchase extends React.Component {
 	}
 
 	isOutOfStock = () => {
-		const { type, stock, file_stock, service_stock, quantity_max, quantity_min } = this.props.productInfo;
+		const { quantity_min } = this.props.productInfo;
 
 		const quantityMin = quantity_min == -1 ? 1 : quantity_min
 
@@ -153,7 +153,7 @@ class Purchase extends React.Component {
 	}
 
 	outOfStockMessage = () => {
-		const { type, stock, file_stock, service_stock, quantity_max, quantity_min } = this.props.productInfo;
+		const { quantity_min } = this.props.productInfo;
 
 		const stockUnion = this.stockUnion()
 
@@ -300,13 +300,18 @@ class Purchase extends React.Component {
 						<span className={"quantity-picker " + (!this.isValidCount(parseInt(quantity)+1) ? 'text-grey' : '')} onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
 					</div>
 
-					{this.isOutOfStock() && <div>
+					{this.isOutOfStock() ? <div>
 						<p className="text-red mt-3">{this.outOfStockMessage()}</p>
+					</div> : <div>
+						{quantity == productInfo.quantity_min && productInfo.quantity_min != productInfo.quantity_max &&
+							<span style={{ fontSize: ".6rem" }}>Minimum required quantity: {productInfo.quantity_min}</span>}
+						{quantity == productInfo.quantity_max && productInfo.quantity_min != productInfo.quantity_max &&
+							<span style={{ fontSize: ".6rem" }}>Maximum required quantity: {productInfo.quantity_max}</span>}
 					</div>}
 
 					{!this.isOutOfStock() && <>
 						{openCoupon ?
-							<div className="mt-3">
+							<div className="mt-4">
 								<div style={{display: 'flex'}} className="coupon-apply-container">
 									<Input type="text" id="coupon" name="coupon" placeholder="Coupon code" onChange={(e) => {this.setCoupon(e.target.value)}}/>
 									<Button color="primary" className="mr-auto ml-auto d-block" onClick={this.applyCoupon} style={{

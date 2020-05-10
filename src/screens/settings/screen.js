@@ -116,13 +116,11 @@ class Settings extends Component {
       change_address_bitcoin: settings.change_address_bitcoin,
       fee_fixed_bitcoin: settings.fee_fixed_bitcoin,
       site_address_bitcoin: settings.site_address_bitcoin,
-      transaction_fee_bitcoin: settings.transaction_fee_bitcoin,
     }
     let litecoin = {
       change_address_litecoin: settings.change_address_litecoin,
       fee_fixed_litecoin: settings.fee_fixed_litecoin,
       site_address_litecoin: settings.site_address_litecoin,
-      transaction_fee_litecoin: settings.transaction_fee_litecoin,
     }
     let ethereum = {
       fee_fixed_ethereum: settings.fee_fixed_ethereum,
@@ -132,7 +130,6 @@ class Settings extends Component {
     let bitcoincash = {
       fee_fixed_bitcoincash: settings.fee_fixed_bitcoincash,
       site_address_bitcoincash: settings.site_address_bitcoincash,
-      transaction_fee_bitcoincash: settings.transaction_fee_bitcoincash,
     }
     let general = {
       fee_percentage: settings.fee_percentage,
