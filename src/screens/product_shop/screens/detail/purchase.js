@@ -16,10 +16,16 @@ const ButtonOptions = ({ option, setPaymentOptions, index }) => {
 			{/*pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block*/}
 			{/*170*/}
 			<div className="d-flex justify-content-between align-items-center">
-				<div>
-					<img src={config.PAYMENT_ICONS[option]} className="mr-2" width="20" height="20" alt={''}/>
-					{config.PAYMENT_LABELS[option]}
-				</div>
+				{option === 'stripe' ?
+					<div>
+						<i className={"fas fa-credit-card mr-2"} style={{ fontSize: "1rem", color: "#6672e6" }} />
+						Credit Card
+					</div> :
+					<div>
+						<img src={config.PAYMENT_ICONS[option]} className="mr-2" width="20" height="20" alt={''}/>
+						{config.PAYMENT_LABELS[option]}
+					</div>
+				}
 			</div>
 		</Button>
 )}
@@ -303,7 +309,7 @@ class Purchase extends React.Component {
 					{this.isOutOfStock() ? <div>
 						<p className="text-red mt-3">{this.outOfStockMessage()}</p>
 					</div> : <div>
-						{quantity == productInfo.quantity_min && productInfo.quantity_min != productInfo.quantity_max &&
+						{quantity == productInfo.quantity_min && productInfo.quantity_min != productInfo.quantity_max && productInfo.quantity_min > 1 &&
 							<span style={{ fontSize: ".6rem" }}>Minimum required quantity: {productInfo.quantity_min}</span>}
 						{quantity == productInfo.quantity_max && productInfo.quantity_min != productInfo.quantity_max &&
 							<span style={{ fontSize: ".6rem" }}>Maximum required quantity: {productInfo.quantity_max}</span>}

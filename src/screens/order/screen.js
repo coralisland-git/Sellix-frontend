@@ -8,12 +8,12 @@ import {
   CardBody,
   Row,
   Col,
-  Input, FormGroup
+  Input
 } from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import * as moment from 'moment/moment'
 import config from 'constants/config'
-import { Loader, Spin } from 'components'
+import { Loader, Spin, Button } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 
 import 'react-toastify/dist/ReactToastify.css'
@@ -211,6 +211,10 @@ class Order extends React.Component {
     }
   }
 
+  updateTable = () => {
+    this.initializeData('all')
+  }
+
   render() {
 
     const { loading, search_key, search_status } = this.state
@@ -248,6 +252,7 @@ class Order extends React.Component {
                 </Col>
                 <Col md={7}>
                   <div className="d-flex justify-content-end">
+                    <Button color={"default"} className={"mr-4"} onClick={this.updateTable}>Refresh</Button>
                     <div className="white mr-4">
                       <Select
                           className="select-status-width"
