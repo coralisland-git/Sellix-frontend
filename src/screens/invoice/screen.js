@@ -111,7 +111,7 @@ class Invoice extends React.Component {
       invoice: {},
       timer: '60:00',
       time: { h:0, m:0, s:0 },
-      seconds: 2*60*60,
+      seconds: 24*60*60,
       showAlert: true,
       openQRModal: false,
       openFeedbackModal: false,
@@ -233,7 +233,7 @@ class Invoice extends React.Component {
 
     getInvoice(id)
         .then(({ data: { invoice }}) => {
-          let seconds = 2 * 60 * 60 - (new Date().getTime() - new Date(invoice.created_at * 1000).getTime()) / 1000
+          let seconds = 24 * 60 * 60 - (new Date().getTime() - new Date(invoice.created_at * 1000).getTime()) / 1000
           let time = this.secondsToTime(seconds);
           this.setState({ seconds, invoice, time })
           this.setTheme(invoice);
