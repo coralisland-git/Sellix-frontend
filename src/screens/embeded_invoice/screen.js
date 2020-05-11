@@ -201,8 +201,8 @@ class EmbededInvoice extends React.Component {
                   <div className="invoice-card ml-auto mr-auto p-0 embed-block">
                       <Card className="bg-white p-0 detail mb-0">
                         <i className="fa fa-times close-popup"></i>
-                        <div className="top p-3 pr-5">
-                          <div className="d-flex justify-content-between align-items-center ">
+                        <div className="top p-3">
+                          <div className="d-flex justify-content-between align-items-center pr-4">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
                             <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status)}</span>
                           </div>

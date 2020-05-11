@@ -37,6 +37,7 @@ class EmbededPayment extends React.Component {
       loading: false,
       openCoupon: false,
       gateway: null,
+      gatewayStep: null,
       showQuantityOption: true,
       showPaymentOptions: false,
       quantity: 1,
@@ -104,7 +105,8 @@ class EmbededPayment extends React.Component {
     if(opt == null)
       opt = 'PayPal'
     this.setState({
-      gateway: opt
+      gateway: opt,
+      gatewayStep: true
     })
   }
 
@@ -212,6 +214,7 @@ class EmbededPayment extends React.Component {
     this.setState({
       sending: false,
       gateway: null,
+      gatewayStep: false,
       showQuantityOption: true,
       showPaymentOptions: false,
       quantity: 1,
@@ -223,14 +226,14 @@ class EmbededPayment extends React.Component {
   backToProducts(){
     this.setState({
       showPaymentOptions : false,
-      gateway: null
+      gatewayStep: null
     })
   }
 
   backToOptions(){
     this.setState({
       showPaymentOptions : true,
-      gateway: null
+      gatewayStep: null
     })
   }
 
@@ -276,9 +279,14 @@ class EmbededPayment extends React.Component {
     this.setState({embed_fields : params});
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
       if(res.status == 200){
+        var paymentoptions = (res.data.product.gateways || '').split(',')
+        var gateway = null
+        if (paymentoptions.length > 0)
+          gateway = config.PAYMENT_LABELS[paymentoptions[0]]
         this.setState({
           product_info: res.data.product,
-          paymentoptions: (res.data.product.gateways || '').split(',')
+          paymentoptions: paymentoptions,
+          gateway: gateway
         })
         this.props.commonActions.getGeneralUserInfo(res.data.product.username)
           .then(({ user }) => {
@@ -322,6 +330,7 @@ class EmbededPayment extends React.Component {
     const { user } = this.props
     const {
       gateway,
+      gatewayStep,
       showPaymentOptions, 
       quantity, 
       quantityPrompt,
@@ -402,7 +411,7 @@ class EmbededPayment extends React.Component {
             </header>
             <Card className="bg-white stock-stop mb-0" style={{ borderRadius: 0 }}>
               {
-                gateway ?
+                gatewayStep ?
                   <div className="p-3">
                     <div className="d-flex justify-content-between align-items-center mb-3">
                       <p className="grey text-center desc d-flex justify-content-center w-100 " style={{ textAlign: "center" }}>
@@ -586,8 +595,8 @@ class EmbededPayment extends React.Component {
                           </div>
                           { is_many?
                             paymentoptions.map((option, key) => {
-                            if(option != '') return(
-                              <Button className="pay-button many p-2"
+                            if(option != '') return(                              
+                              <Button className={`pay-button many p-2 ${ config.PAYMENT_LABELS[option] === gateway && "selected" }`}
                                 key={key}
                                 onClick={(e) => this.setPaymentOptions(e, config.PAYMENT_LABELS[option])}
                                 >
@@ -608,7 +617,7 @@ class EmbededPayment extends React.Component {
                             :
                             paymentoptions.map(option => {
                             if(option != '') return(
-                              <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block"
+                              <Button className={`pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block ${ config.PAYMENT_LABELS[option] === gateway && "selected" }`}
                                 key={option}
                                 onClick={(e) => this.setPaymentOptions(e, config.PAYMENT_LABELS[option])}
                                 >
