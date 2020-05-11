@@ -80,8 +80,8 @@ const API_NAVIGATIONS = [
 ]
 
 const PAY_NAVIGATIONS = [
-  { key: 'payments-payment', value: 'payments', has_children: true },
-  { key: 'checkout-flow-payment', value: 'Checkout Flow' },
+  { key: 'payments-payment', value: 'Payments', has_children: true },
+  { key: 'checkoutflow-payment', value: 'Checkout Flow' },
   { key: 'create-payment', value: 'Create Payment' },
   { key: 'delete-payment', value: 'Delete Payment' },
 ]
@@ -4467,7 +4467,358 @@ DELETE /queries/:uniqid`}
                   </div>
                 </div>
               </section>
-              
+              <section id="payments-payment">
+                <div className="d-ins">
+                  <h3><b>Payments</b></h3>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`PUT /payments/:uniqid
+DELETE /payments/:uniqid`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="checkoutflow-payment">
+                <div className="d-ins">
+                  <h3><b>Checkout Flow</b></h3>
+                  <p>
+                    We currently support two types of checkout flows for Sellix Payments, Integrated and White-label. <br /><br />
+
+                    [title] Integrated <br />
+                    With the integrated checkout option, Sellix handles the checkout aspect for you by only returning a unique payment URL. This unique URL contains our realtime checkout page.<br /><br />
+
+                    [title] White-label <br />
+                    The white-label checkout flow provides the raw order created rather than a payment URL. With the raw order information, you are able to develop and integrate your own checkout experience completely separate from Sellix.<br />
+
+                    This has the added downside of not having the realtime status updates that the integrated checkout flow offers, but this can of course be implemented on your side using the webhooks. <br /><br />
+
+                    [title] Products <br />
+                    We offer the possibility to create payments for your products too. You can specify a product_id and we will take care of the rest. <br /><br />
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>ENDPOINTS</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`PUT /payments/:uniqid
+DELETE /payments/:uniqid`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="create-payment">
+                <div className="d-ins">
+                  <h3><b>Create Payment</b></h3>
+                  <p>
+                    <span className="required">PUT</span> /payments/:uniqid <br />
+                    Creates a Payment. Returns an invoice object.
+                  </p>
+                  <p><b>Arguments</b></p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="param">title</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED </p>
+                        </td>
+                        <td>
+                          Product Title, required if product_id is not specified.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">product_id</p>
+                          <p>string</p>
+                          <p className="required">OPTIONAL </p>
+                        </td>
+                        <td>
+                          Product Unique identifier.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">product_id</p>
+                          <p>quantity</p>
+                          <p className="required">OPTIONAL </p>
+                        </td>
+                        <td>
+                          Payment quantity, if a product_id is passed it will multiply the product's price.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">gateway</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Can be bitcoin, litecoin, bitcoincash, ethereum, paypal, stripe, skrill, perfectmoney.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">value</p>
+                          <p>float</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Payment amount, required if product_id is not specified.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">confirmations</p>
+                          <p>int</p>
+                        </td>
+                        <td>
+                          Crypto confirmations, defaulted to 1.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">email</p>
+                          <p>sring</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Customer email, the product will be sent here.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">custom_fields</p>
+                          <p>array of objects</p>
+                        </td>
+                        <td>
+                          Custom fields for the payment.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">white_label</p>
+                          <p>bool</p>
+                        </td>
+                        <td>
+                          Check "Checkout Flow" for more informations.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">return_url</p>
+                          <p>string</p>
+                          <p className="required">OPTIONAL</p>
+                        </td>
+                        <td>
+                          Return url, required if white_label is false.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">type</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Can be email, ip or country.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">data</p>
+                          <p>string</p>
+                          <p className="required">REQUIRED</p>
+                        </td>
+                        <td>
+                          Blocked data. Either country code, email or IP address
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className="param">note</p>
+                          <p>string</p>                          
+                        </td>
+                        <td>
+                          Internal note for the reasoning of the blacklist.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>CREATE PAYMENT REQUEST</p>
+                      <Clipboard data-clipboard-text={ `{
+  "title": "Demo Payment",
+  "product_id": "demo930bf1",
+  "gateway": "bitcoin",
+  "value": 10,
+  "currency": "EUR",
+  "quantity": 3,
+  "confirmations": 1,
+  "email": "demo@gmail.com",
+  "custom_fields":  {
+      "Demo Username": "demoUID"
+  },
+  "webhook": "https://demo.sellix.io/webhook",
+  "white_label": true,
+  "return_url": "https://demo.sellix.io/return"
+}` } button-title="Copy">
+                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      </Clipboard>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "title": "Demo Payment",
+  "product_id": "demo930bf1",
+  "gateway": "bitcoin",
+  "value": 10,
+  "currency": "EUR",
+  "quantity": 3,
+  "confirmations": 1,
+  "email": "demo@gmail.com",
+  "custom_fields":  {
+      "Demo Username": "demoUID"
+  },
+  "webhook": "https://demo.sellix.io/webhook",
+  "white_label": true,
+  "return_url": "https://demo.sellix.io/return"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "status": 200,
+  "data": {
+      "invoice": {
+          "id": 0,
+          "uniqid": "demo01a32-4df6e9",
+          "total": 1.50,
+          "total_display": 1.50,
+          "currency": "USD",
+          "exchange_rate": 1,
+          "crypto_exchange_rate": 9994.79,
+          "user_id": 0,
+          "username": "demo",
+          "customer_email": "demo@gmail.com",
+          "product_id": "demo30bf1",
+          "product_type": "serials",
+          "product_price": 0.50,
+          "file_attachment_uniqid": null,
+          "gateway": "bitcoin",
+          "paypal_email": null,
+          "paypal_tx_id": null,
+          "paypal_payer_email": null,
+          "skrill_email": null,
+          "skrill_sid": null,
+          "skrill_link": null,
+          "stripe_id": null,
+          "stripe_client_secret": null,
+          "perfectmoney_id": null,
+          "crypto_address": "demonjsckUWTShLE7C",
+          "crypto_amount": 0.00015008,
+          "crypto_received": 0,
+          "crypto_uri": "bitcoin:demoE7C?amount=0.00015008",
+          "crypto_confirmations": 1,
+          "country": "IT",
+          "location": "Italy, Europe",
+          "ip": "1.2.3.4.5.6.7",
+          "is_vpn_or_proxy": false,
+          "user_agent": "PostmanRuntime/7.6.0",
+          "quantity": 3,
+          "coupon_id": null,
+          "custom_fields": {
+              "Demo Username": "demoUID"
+          },
+          "developer_invoice": true,
+          "developer_title": "Demo Payment",
+          "developer_webhook": "https://demo.sellix.io/webhook",
+          "developer_return_url": "https://demo.sellix.io/return",
+          "status": 0,
+          "discount": 0,
+          "fee_fixed": 0,
+          "fee_percentage": 0,
+          "day_value": 8,
+          "day": "Fri",
+          "month": "May",
+          "year": 2020,
+          "created_at": 1588976278,
+          "updated_at": 0,
+          "serials": [],
+          "file": null,
+          "webhooks": [
+              ...
+          ],
+          "crypto_payout": false,
+          "crypto_payout_transaction": null,
+          "crypto_transactions": [],
+          "product": {
+              "title": "Product Demo",
+              "price_display": 0.50,
+              "currency": "USD"
+          },
+          "total_conversions": {
+              "USD": 1.5,
+              "EUR": 1.38,
+              "GBP": 1.22,
+              "JPY": 159.56,
+              "AUD": 2.3,
+              "CAD": 2.09,
+              "CHF": 1.46,
+              "CNY": 10.62,
+              "SEK": 14.64,
+              "NZD": 2.45,
+              "PLN": 6.29
+          },
+          "theme": "dark"
+      }
+  },
+  "message": null,
+  "log": null,
+  "error": null,
+  "env": "staging"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
+              <section id="delete-payment">
+                <div className="d-ins">
+                  <h3><b>Delete Payments</b></h3>
+                  <p>
+                    <span className="required">DELETE</span> /payments/:uniqid <br />
+                    Deletes a Payment
+                  </p>
+                </div>
+                <div className="d-ex">
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "status": 200,
+  "message": "Payment Deleted Successfully.",
+  "log": null,
+  "error": null,
+  "env": "production"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </section>
             </Container>
           </div>          
         </div>        
