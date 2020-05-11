@@ -338,9 +338,12 @@ class EmbededInvoice extends React.Component {
                             }
                           </div>
                         }
-                          <div className="float-logo text-center">
-                            <img src={sellix_logo} width="153" className="logo"/>
-                          </div>
+                          {/*<div className="float-logo text-center">
+                                                      <img src={sellix_logo} width="153" className="logo"/>
+                                                    </div>*/}
+                        </div>
+                        <div className={"p-3 text-center iv-footer"}>
+                          Payments processing powered by <strong><a href="https://sellix.io">Sellix</a></strong>
                         </div>
                       </Card>
                    </div>
