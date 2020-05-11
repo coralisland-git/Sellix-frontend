@@ -93,19 +93,7 @@ class EmbedLayout extends React.Component {
                 <Suspense fallback={Loading()}>
                   <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                   <Switch>
-                    {
-                      paymentRoutes.map((prop, key) => {
-                        if (prop.redirect)
-                          return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                        return (
-                          <Route
-                            path={prop.path}
-                            component={prop.component}
-                            key={key}
-                          />
-                        )
-                      })
-                    }
+                    {paymentRoutes.map((prop, key) => <Route {...prop} key={key}/>)}
                   </Switch>
                 </Suspense>
               </Container>

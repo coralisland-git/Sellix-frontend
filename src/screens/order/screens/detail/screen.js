@@ -502,19 +502,17 @@ class OrderDetail extends React.Component {
                               <Row>
                                 <Col lg={12}>
                                   {
-                                    ((order.crypto_transactions && order.crypto_transactions.length > 0) ? order.crypto_transactions : [undefined]).map(trans => 
-                                      <div className="d-info">
-                                        <p className="d-addr">
-                                          <label>Address:</label> <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
-                                          {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                          {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                          {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                        </p>
-                                        <p className="hash">
-                                          <label>Amount:</label> {trans !== undefined ? trans.crypto_amount : order.crypto_amount} 
-                                        </p>
-                                      </div>
-                                    )
+                                    <div className="d-info">
+                                      <p className="d-addr">
+                                        <label>Address:</label> <img src={PAYMENT_ICONS[order.gateway]} width="15"/> -
+                                        {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                        {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                        {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                      </p>
+                                      <p className="hash">
+                                        <label>Amount:</label> {order.crypto_received}
+                                      </p>
+                                    </div>
                                   }
                                 </Col>
                               </Row>

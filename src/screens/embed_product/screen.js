@@ -1,44 +1,21 @@
-import React from "react";
-import {connect} from 'react-redux'
+import React, { Component } from "react";
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card, 
-  CardBody, 
-  CardHeader,
-  Button,
-  Col,  
-  Row,
-  Collapse,
-  Container
-} from "reactstrap";
-import { Link } from "react-router-dom";
-import { Loader } from 'components'
-import sellix_logo from "assets/images/Sellix_logo.svg";
+import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
+import { Loader, Button } from 'components'
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneLight, atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Clipboard from 'react-clipboard.js';
+import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { NewWebhookModal } from './sections';
 import { CommonActions } from 'services/global';
 import * as ProductActions from '../product/actions';
-import { confirmAlert } from 'react-confirm-alert';
 
 import './style.scss'
 
-const mapStateToProps = (state) => {
-  return ({
-    all_products: state.product.all_products
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    commonActions: bindActionCreators(CommonActions, dispatch),
-    actions: bindActionCreators(ProductActions, dispatch)    
-  })
-}
 
 
-class EmbedProduct extends React.Component {
+class EmbedProduct extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -51,16 +28,14 @@ class EmbedProduct extends React.Component {
   }
 
   componentDidMount () {
-    this.initializeData()
-  }
 
-  initializeData = () => {
-    this.setState({ loading: true })
-    this.props.actions.getProductList().catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Sommthing went wrong!')
-    }).finally(() => {
-      this.setState({ loading: false })
-    })
+    const { getProductList, tostifyAlert } = this.props;
+
+    this.setState({ loading: true });
+
+    getProductList()
+        .catch(err => tostifyAlert('error', err.error || 'Sommthing went wrong!'))
+        .finally(() => this.setState({ loading: false }))
   }
 
   addCustomField() {
@@ -90,21 +65,21 @@ class EmbedProduct extends React.Component {
   }
 
   generateCode(product, custom_fields) {    
-    var temp = []
-    var custom_fields = custom_fields.map(field => {
+    let temp = []
+    let fields = custom_fields.map(field => {
       if(field.name !== "" && field.value !== "" && temp.indexOf(field.name) == -1 ){
         temp.push(field.name)
         return `data-sellix-custom-${field.name.toLowerCase()}="${field.value}"`
       }
     })
-    custom_fields = custom_fields.filter(field => {
+    fields = fields.filter(field => {
       if (field !== "")
         return field
     })
     var embedCode = `<button
   data-sellix-product="${product.uniqid}"`
-    if (custom_fields.length > 0)
-      embedCode += '\n  ' + custom_fields.join('\n  ')
+    if (fields.length > 0)
+      embedCode += '\n  ' + fields.join('\n  ')
     embedCode += `
   type="submit"
   alt="Buy Now with Sellix.io"
@@ -185,21 +160,13 @@ class EmbedProduct extends React.Component {
                           <div className="code-block-header">
                             <p>EMBED JAVASCRIPT</p>
                             <Clipboard 
-                            data-clipboard-text={`<script
-  src="https://cdn.sellix.io/static/js/embed.js"
-  integrity="sha384-bF0mPbr3XIl6VKdt2jUYrORWDfi+A5mK3yRoEuCvm0EWowp7jpMBisstVCZO5rL6"
-  crossorigin="anonymous">
-</script>`} 
+                            data-clipboard-text={`<script src="https://cdn.sellix.io/static/js/embed.js"></script>`}
                             button-title="Copy">
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
                           </div>
                           <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
-                            {`<script
-  src="https://cdn.sellix.io/static/js/embed.js"
-  integrity="sha384-bF0mPbr3XIl6VKdt2jUYrORWDfi+A5mK3yRoEuCvm0EWowp7jpMBisstVCZO5rL6"
-  crossorigin="anonymous">
-</script>`}
+                            {`<script src="https://cdn.sellix.io/static/js/embed.js" ></script>`}
                           </SyntaxHighlighter>
                         </div>
                         <p className="page_description text-grey mb-4">
@@ -248,7 +215,7 @@ class EmbedProduct extends React.Component {
   Purchase
 </button>`} 
                             button-title="Copy">
-                              <i className="fa fa-clone" aria-hidden="true"></i>
+                              <i className="fa fa-clone" aria-hidden="true" />
                             </Clipboard>
                           </div>
                           <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
@@ -288,6 +255,19 @@ class EmbedProduct extends React.Component {
       </div>
     )
   }
+}
+
+const mapStateToProps = (state) => {
+  return ({
+    all_products: state.product.all_products
+  })
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
+    getProductList: bindActionCreators(ProductActions.getProductList, dispatch)
+  })
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmbedProduct)
