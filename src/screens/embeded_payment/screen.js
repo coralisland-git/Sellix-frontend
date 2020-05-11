@@ -638,7 +638,6 @@ class EmbededPayment extends React.Component {
             <footer className={"p-3 text-center"} style={{ fontSize: "12px", fontWeight: 400, color: "#34485d", borderTop: "1px solid #ececec", borderRadius: "0 0 5px 5px"}}>
               Payments processing powered by <strong><a href="https://sellix.io" style={{ color: "#613cea" }}>Sellix</a></strong>
             </footer>
-            <div className="text-center"><img src={Sellix} className="logo" alt={""} /></div>
           </div>
         }
         </div>
