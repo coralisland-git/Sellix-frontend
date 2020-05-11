@@ -501,19 +501,22 @@ class OrderDetail extends React.Component {
                               <Label className="title">General Info</Label>
                               <Row>
                                 <Col lg={12}>
-                                  {
-                                    <div className="d-info">
-                                      <p className="d-addr">
-                                        <label>Address:</label> <img src={PAYMENT_ICONS[order.gateway]} width="15"/> -
-                                        {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                        {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                        {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
-                                      </p>
-                                      <p className="hash">
-                                        <label>Amount:</label> {order.crypto_received}
-                                      </p>
-                                    </div>
-                                  }
+                                  <div className="d-info">
+                                    <p className="d-addr">
+                                      <label>Address:</label> <img src={PAYMENT_ICONS[order.gateway]} width="15"/> -
+                                      {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                      {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                      {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                    </p>
+                                    {order.crypto_amount - order.crypto_received > 0 &&
+                                        <p className="d-addr">
+                                          <label>Needed:</label> {order.crypto_amount - order.crypto_received}
+                                        </p>
+                                    }
+                                    <p className="hash">
+                                      <label>Received:</label> {order.crypto_received}
+                                    </p>
+                                  </div>
                                 </Col>
                               </Row>
                             </Col>
