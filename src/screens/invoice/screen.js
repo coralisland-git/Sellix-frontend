@@ -1,5 +1,6 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { api } from 'utils'
 import { bindActionCreators } from 'redux'
 import { Card, Row, Col } from 'reactstrap'
 import * as moment from 'moment/moment'
@@ -11,6 +12,7 @@ import { Loader, Button } from 'components'
 import StripeForm from './stripeForm'
 import LeaveFeedback from '../feedbacks_shop/screens/createComponent/screen'
 import config from 'constants/config'
+import FileSaver from 'file-saver';
 
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
@@ -74,7 +76,7 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
   if(product_type === "serials" && info.serials.length) {
     return <div>
         <pre className={"mb-4 m-0"}>
-          {info.serials.map(v => <span style={{ fontSize: "12px", lineHeight: 1}}>{v}<br/></span>)}
+          {info.serials.map((v, key) => <span key={key} style={{ fontSize: "12px", lineHeight: 1}}>{v}<br/></span>)}
         </pre>
 
         <div className={"d-flex"}>
@@ -351,8 +353,11 @@ class Invoice extends React.Component {
     let secret = localStorage.getItem(params.id);
     if(secret) {
       let url = `${config.API_ROOT_URL}/invoices/download/${params.id}/${secret}`;
-      let win = window.open(url, '_blank');
-      win.focus();
+
+      api.get(url, { responseType: 'blob' })
+          .then(response => {
+            FileSaver.saveAs(response);
+          })
     }
   }
 
@@ -371,12 +376,6 @@ class Invoice extends React.Component {
   render() {
 
     const { loading, invoice, showAlert, openQRModal, fakeSuccess, info,  } = this.state;
-
-    // invoice.gateway = 'skrill'
-    // invoice.gateway = 'paypal'
-    // invoice.gateway = 'perfectmoney'
-    // invoice.gateway = 'stripe'
-    // invoice.status = 0
 
     return (
       <div>
