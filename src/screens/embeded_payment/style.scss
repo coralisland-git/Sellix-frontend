@@ -1,7 +1,7 @@
 .embeded-payment-screen {
 
   p {
-    font-size : 17px;
+    font-size : 1rem;
   }
 
   .card-header {
@@ -28,7 +28,6 @@
   .pay-button {
     
     i {
-      color: #27346A !important;
       font-size: 18px;
     }
     color: #23282c !important;
@@ -48,17 +47,19 @@
   }
 
   .pay-button.many {
-    width : 48%;
+    width: calc(50% - .5rem);
   }
 
   .pay-button.many:nth-child(even) {    
-    margin-right: 4px;
+    margin-right: .25rem;
     margin-top: .5rem;
+    color: #34485d !important;
   }
 
-  .pay-button.many:nth-child(odd) {    
-    margin-left: 4px;
+  .pay-button.many:nth-child(odd) {
+    margin-left: .25rem;
     margin-top: .5rem;
+    color: #34485d !important;
   }
 
   .stock-count {
@@ -78,20 +79,26 @@
   }
 
   .price {
-    font-size : 30px;
-    font-weight: bold;
+    font-size : 1.8rem;
+    font-weight: 900;
   }
 
   .desc {
     line-height: 1.6rem;
     margin: auto;
-    text-align: left !important;
+    text-align: left;
     max-height: 35vh;
     overflow-y: scroll;
+    font-size: .9rem;
+    color: #34485d;
+
+    & > p {
+      font-size: .9rem;
+    }
   }
 
-  .grey {
-    color: #A7A5B4;
+  .form-control {
+    color: #34485c !important;
   }
   .paypal-instant {
     background-color: #FCFCFE;
@@ -140,15 +147,13 @@
     }
 
     .user-name {
-      font-size: 14;
+      font-size: 14px;
       display: flex;      
     }
   }
 
   .stock-stop {
-    border-radius : 5px !important;
-    border-top-left-radius: 0px !important;
-    border-top-right-radius: 0px !important;
+    border-radius: 0 !important;
   }
 
   .detail {
@@ -175,7 +180,7 @@
   }
 
   .embed-block {
-    width: 390px;
+    width: 22rem;
     position: relative;
 
     .close-popup {
@@ -184,6 +189,7 @@
       top: 2px;
       font-size: 1.5rem;
       -webkit-text-stroke: 3px #E4D6FF;
+      color: #6a3de3;
     }
   }
 
@@ -194,9 +200,5 @@
     border-radius: 3px;
     object-fit: cover;
     object-position: center;
-  }
-
-  .p-4 {
-    padding: 1.5rem 2rem !important;
   }
 }

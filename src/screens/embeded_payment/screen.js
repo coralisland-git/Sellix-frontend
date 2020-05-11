@@ -1,53 +1,22 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  Tooltip
-} from 'reactstrap'
-import { Button } from 'components';
-import {
-  CommonActions
-} from 'services/global'
+import { Card, Row, Col, Form, FormGroup, Input, Tooltip } from 'reactstrap'
+import { CommonActions } from 'services/global'
+import { validateCoupon } from './actions'
 import { Formik } from 'formik';
-import { Spin, Loader } from 'components'
+import { Button, Spin, Loader } from 'components'
 import * as Yup from "yup";
 import * as Showdown from "showdown";
 import config from 'constants/config'
-import shop_brand from 'assets/images/brand/shop_brand.png'
 
-import bitcoinIcon from 'assets/images/crypto/btc.svg'
-import paypalIcon from 'assets/images/crypto/paypal.svg'
-import litecoinIcon from 'assets/images/crypto/ltc.svg'
-import ethereumIcon from 'assets/images/crypto/eth.svg'
-import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
-import backIcon from 'assets/images/back.png'
 import editIcon from 'assets/images/edit.png'
-import stripeIcon from 'assets/images/crypto/stripe.svg'
-import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
-import skrillIcon from 'assets/images/crypto/skrill.svg'
-import sellixLogoIcon from 'assets/images/Sellix_logo.svg'
 import { ReactComponent as CouponSvg } from 'assets/images/coupon.svg';
 import verifiedIcon from 'assets/images/sellix_verified.svg'
-import { validateCoupon } from './actions'
-import './style.scss'
+import Sellix from 'assets/images/Sellix_logo.svg'
 
-const mapStateToProps = (state) => {
-  return ({    
-    user: state.common.general_info || {}
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators({ validateCoupon }, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch),
-  })
-}
+
+import './style.scss'
 
 
 const converter = new Showdown.Converter({
@@ -58,44 +27,6 @@ const converter = new Showdown.Converter({
     simpleLineBreaks: true
 });
 
-
-const PAYMENT_ICONS = {
-    paypal: paypalIcon,
-    bitcoin: bitcoinIcon,
-    litecoin: litecoinIcon,
-    ethereum: ethereumIcon,
-    perfectmoney: perfectmoneyIcon,
-    stripe: stripeIcon,
-    bitcoincash: bitcoincashIcon,
-    skrill: skrillIcon
-}
-  
-
-const CURRENCY_LIST = { 
-  'USD': '$',
-  'EUR': '€',
-  'AUD': '$',
-  'GBP': '£',
-  'JPY': '¥',
-  'CAD': '$',
-  'CHF': '₣',
-  'CNY': '¥',
-  'SEK': 'kr',
-  'NZD': '$',
-  'PLN': 'zł'
-}
-
-
-const PAYMENT_LABELS = {
-  'paypal': 'PayPal',
-  'bitcoin': 'Bitcoin',
-  'litecoin': 'Litecoin',
-  'ethereum': 'Ethereum',
-  'stripe': 'Stripe',
-  'perfectmoney': 'Perfect Money',
-  'bitcoincash': 'Bitcoin Cash',
-  'skrill': 'Skrill'
-}
 
 class EmbededPayment extends React.Component {
   
@@ -124,7 +55,7 @@ class EmbededPayment extends React.Component {
     }
   }
 
-  handleSubmit(values) {
+  handleSubmit = (values) => {
     const data = Object.assign({}, this.state)
     delete data['sending']
     delete data['loading']
@@ -145,7 +76,7 @@ class EmbededPayment extends React.Component {
         pathname: `/ivembed/${res.data.invoice.uniqid}`
       })
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error)
+      this.props.commonActions.tostifyAlert('error', err ? err.error || err.message : "Server error!")
     }).finally(() => {
       this.setState({sending: false})
     })
@@ -185,8 +116,9 @@ class EmbededPayment extends React.Component {
     var params = {
       "code":coupon_value,
       "product_id":this.props.match.params.id
-    }
-    this.props.actions.validateCoupon(params).then((res) => {
+    };
+    console.log(this.props.validateCoupon);
+    this.props.validateCoupon(params).then((res) => {
       if (res.data){
           code = res.data.coupon['code']
           discount = res.data.coupon['discount']
@@ -389,8 +321,7 @@ class EmbededPayment extends React.Component {
   render() {
     const { user } = this.props
     const {
-      gateway, 
-      showQuantityOption,
+      gateway,
       showPaymentOptions, 
       quantity, 
       quantityPrompt,
@@ -399,7 +330,6 @@ class EmbededPayment extends React.Component {
       product_info,
       openCoupon, 
       paymentoptions,
-      optParam,
       coupon_value,
       coupon_code,
       coupon_discount,
@@ -411,7 +341,7 @@ class EmbededPayment extends React.Component {
     var is_many = paymentoptions.length > 4 ? true : false
     var initial_optParam = ''
     if(paymentoptions.length > 0)
-      initial_optParam = PAYMENT_LABELS[paymentoptions[0]]
+      initial_optParam = config.PAYMENT_LABELS[paymentoptions[0]]
     let custom_fields = []
 
     if(product_info && product_info.custom_fields){
@@ -432,22 +362,18 @@ class EmbededPayment extends React.Component {
             custom_fields.push(field)
         }
       }
-    }    
+    }
+
+    const validationSchema = Yup.object().shape({ email: Yup.string().required('Email is required')})
 
     return (
       <div className="embeded-payment-screen">
         <div className="animated fadeIn">
-          {
-          loading ?
-            <Row>
-              <Col lg={12}>
-                <Loader />
-              </Col>
-            </Row>
-          :
+          {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+          {!loading &&
           <div className="ml-auto mr-auto p-0 embed-block">
-            <i className="fa fa-times close-popup"></i>
-            <div className="stock-info d-flex p-4">
+            <i className="fa fa-times close-popup" />
+            <header className="stock-info d-flex p-3 pr-5">
               <div className="stock-detail d-flex">
                 { user.profile_attachment && <img src={user.profile_attachment} className="product-image" alt={product_info.title}/> }
                 <div className="m-auto">
@@ -470,29 +396,25 @@ class EmbededPayment extends React.Component {
                 </div>
               </div>
               <div className="mt-auto mb-auto text-center">
-                {coupon_discount !== 0 && coupon_is_valid && coupon_applied && <s className="text-primary" style={{ fontSize: 14 }}>{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</s>}
-                <p className="text-primary price mb-0">{CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>                
+                {coupon_discount !== 0 && coupon_is_valid && coupon_applied && <s className="text-primary" style={{ fontSize: 14 }}>{config.CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity).toFixed(2) || 0}</s>}
+                <p className="text-primary price mb-0">{config.CURRENCY_LIST[product_info.currency]}{(product_info.price_display * quantity * (100 - coupon_discount) /100).toFixed(2) || 0}</p>
               </div>
-            </div>
-            <Card className="bg-white stock-stop mb-0">
+            </header>
+            <Card className="bg-white stock-stop mb-0" style={{ borderRadius: 0 }}>
               {
-                gateway?
-                  <div className="p-4">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <img src={backIcon} width="15" onClick={this.backToOptions.bind(this)} style={{cursor: "pointer", marginTop: -25}}/>
-                      <p className="grey text-center desc">Please enter your email address <br />for product delivery</p>
-                      <span></span>
+                gateway ?
+                  <div className="p-3">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <p className="grey text-center desc d-flex justify-content-center w-100 " style={{ textAlign: "center" }}>
+                        Please enter your email address for product delivery
+                      </p>
+                      <span />
                     </div>
-                    
+
                     <Formik
-                      initialValues={{email: ''}}
-                      onSubmit={(values) => {
-                        this.handleSubmit(values)
-                      }}
-                      validationSchema={Yup.object().shape({
-                        email: Yup.string()
-                          .required('Email is required'),
-                      })}>
+                      initialValues={{ email: '' }}
+                      onSubmit={this.handleSubmit}
+                      validationSchema={validationSchema}>
                         {props => (
                           <Form onSubmit={props.handleSubmit}>
                             <FormGroup className="mb-3">
@@ -550,13 +472,13 @@ class EmbededPayment extends React.Component {
                                 if(field.type == 'largetextbox') {
                                   return (
                                     <FormGroup className="mb-3">
-                                      <textarea className="form-control" 
+                                      <textarea className="form-control"
                                         id='service_text'
                                         name="service_text"
                                         value={this.state.custom_fields[field.name]}
-                                        rows={5} 
+                                        rows={5}
                                         required={field.required}
-                                        onChange={(e) => {this.setCustomFields(field.name, e.target.value)}}></textarea>
+                                        onChange={(e) => {this.setCustomFields(field.name, e.target.value)}} />
                                     </FormGroup>
                                   )
                                 }
@@ -565,7 +487,7 @@ class EmbededPayment extends React.Component {
                                   return (
                                     <FormGroup className="mb-3">
                                       <label className="custom-checkbox custom-control payment-checkbox">
-                                        <input 
+                                        <input
                                           className="custom-control-input"
                                           type="checkbox"
                                           id="sk"
@@ -584,41 +506,35 @@ class EmbededPayment extends React.Component {
                             )
                             }
                             <div className="text-center">
-                              <p className="text-center grey" style={{fontSize: 12}}>
-                                By continuing, you agree to our Terms of Service</p>
-                              <Button color="primary" 
-                                type="submit" 
-                                className="mr-auto ml-auto mt-2" 
-                                disabled={sending}
-                                style={{width: 107}}>
-                                {sending ?<Spin/>:'Pay' }</Button>
+                              <p className="text-center" style={{ color: "#A7A5B4", fontSize: "12px" }}>By continuing, you agree to our Terms of Service</p>
+                              <Button color="primary" type="submit" className="mr-auto ml-auto mt-2" disabled={sending} style={{width: 107}}>{sending ? <Spin/> : 'Pay'}</Button>
+                              <span className="mr-auto ml-auto mt-3 d-block" style={{ color: "#613cea", cursor: "pointer" }} onClick={this.backToOptions.bind(this)}>Back</span>
                             </div>
                           </Form> )}
                       </Formik>
                   </div>:
                   <>
                     { !showPaymentOptions && (
-                      <div className="pt-4 pr-4 pl-4">
+                      <div className="p-3">
                         <div className="text-center">
-                          <div className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>                            
+                          <div className="grey desc" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}} style={{ fontSize: "1rem" }}>
                           </div>
-                          <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                          onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
+                          <Button color="primary" className="mr-auto ml-auto mt-3 d-block" onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
                           <div className="d-flex justify-content-center align-items-center mt-2 stock-count">
-                            <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>                              
+                            <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>
                             <span className="ml-1 mr-1">
-                                <input type="text" 
+                                <input type="text"
                                     className="text-primary"
                                     value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
                                     background: 'transparent',
                                     border: 'none',
                                     width: '18px',
-                                    textAlign: 'center',                               
-                                }} onChange={(e) => this.setState({quantityPrompt: e.target.value})} 
+                                    textAlign: 'center',
+                                }} onChange={(e) => this.setState({quantityPrompt: e.target.value})}
                                    onBlur={e => this.setCount(e.target.value)}
                                    />
                               </span>
-                            <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>                              
+                            <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>
                           </div>
                           {openCoupon?
                             <div className="pt-3 pb-3">
@@ -630,7 +546,7 @@ class EmbededPayment extends React.Component {
                                   placeholder="Coupon code"
                                   value={coupon_value}
                                   onChange={this.onChangeCouponCode.bind(this)} />
-                                 <Button color="primary" className="mr-auto d-block" 
+                                 <Button color="primary" className="mr-auto d-block"
                                     onClick={this.vaiidateCouponAndShowPaymentOptions.bind(this)}>
                                   <CouponSvg />
                                 </Button>
@@ -660,26 +576,32 @@ class EmbededPayment extends React.Component {
                         </div>
                       </div>
                     )}
+
                     {showPaymentOptions && (
-                      <div className="p-4">
+                      <div className="p-3">
                         <div className="text-center">
-                          <div className="d-flex justify-content-between align-items-center mb-4">
-                            <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
-                            <p className="grey text-center desc">Select payment method</p>
-                            <span></span>
+                          <div className="d-flex justify-content-between align-items-center mb-2">
+                            <p className="grey text-center desc w-100 justify-content-center d-flex" >Select payment method</p>
+                            <span />
                           </div>
                           { is_many?
                             paymentoptions.map((option, key) => {
                             if(option != '') return(
-                              <Button className="pay-button many p-2" 
-                                key={key} 
-                                onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
+                              <Button className="pay-button many p-2"
+                                key={key}
+                                onClick={(e) => this.setPaymentOptions(e, config.PAYMENT_LABELS[option])}
                                 >
                                 <div className="d-flex justify-content-between align-items-center">
-                                  <div>
-                                    <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
-                                    {PAYMENT_LABELS[option]}
-                                  </div>
+                                  {option === 'stripe' ?
+                                      <div>
+                                        <i className={"fas fa-credit-card mr-2"} style={{ fontSize: "1rem", color: "#6672e6" }} />
+                                        Credit Card
+                                      </div> :
+                                      <div>
+                                        <img src={config.PAYMENT_ICONS[option]} className="mr-2" width="20" height="20" alt={''}/>
+                                        {config.PAYMENT_LABELS[option]}
+                                      </div>
+                                  }
                                 </div>
                               </Button>
                             )})
@@ -687,29 +609,36 @@ class EmbededPayment extends React.Component {
                             paymentoptions.map(option => {
                             if(option != '') return(
                               <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block"
-                                key={option} 
-                                onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
+                                key={option}
+                                onClick={(e) => this.setPaymentOptions(e, config.PAYMENT_LABELS[option])}
                                 >
                                 <div className="d-flex justify-content-between align-items-center">
-                                  <div>
-                                    <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
-                                    {PAYMENT_LABELS[option]}
-                                  </div>
+                                  {option === 'stripe' ?
+                                      <div>
+                                        <i className={"fas fa-credit-card mr-2"} style={{ fontSize: "1rem", color: "#6672e6" }} />
+                                        Credit Card
+                                      </div> :
+                                      <div>
+                                        <img src={config.PAYMENT_ICONS[option]} className="mr-2" width="20" height="20" alt={''}/>
+                                        {config.PAYMENT_LABELS[option]}
+                                      </div>
+                                  }
                                 </div>
                               </Button>
                             )})
                           }
-                          <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
-                            onClick={(e) => this.setPaymentOptions(e, initial_optParam)}>Continue</Button>
+                          <Button color="primary" className="mr-auto ml-auto mt-3 d-block" onClick={(e) => this.setPaymentOptions(e, initial_optParam)}>Continue</Button>
+                          <span className="mr-auto ml-auto mt-3 d-block" style={{ color: "#613cea", cursor: "pointer" }} onClick={this.backToProducts.bind(this)}>Back</span>
                         </div>
                       </div>
                     )}
                   </>
               }
             </Card>
-            <div className="text-center">
-              <img src={sellixLogoIcon} className="logo"/>
-            </div>
+            <footer className={"p-3 text-center"} style={{ fontSize: "12px", fontWeight: 400, color: "#34485d", borderTop: "1px solid #ececec", borderRadius: "0 0 5px 5px"}}>
+              Payments processing powered by <strong><a href="https://sellix.io" style={{ color: "#613cea" }}>Sellix</a></strong>
+            </footer>
+            <div className="text-center"><img src={Sellix} className="logo" alt={""} /></div>
           </div>
         }
         </div>
@@ -717,5 +646,15 @@ class EmbededPayment extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = (state) => ({
+  user: state.common.general_info || {}
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  validateCoupon: bindActionCreators(validateCoupon, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmbededPayment)

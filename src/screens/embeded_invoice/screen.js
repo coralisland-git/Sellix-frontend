@@ -1,79 +1,21 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  Row,
-  Col
-} from 'reactstrap'
-import SweetAlert from 'react-bootstrap-sweetalert';
-import * as moment from 'moment/moment'
+import { Card, Row, Col } from 'reactstrap'
 import { PayPalButton } from "react-paypal-button-v2";
-import {
-  CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 import { Loader } from 'components'
-import sellix_logo from 'assets/images/Sellix_logo.svg'
-
-import bitcoinIcon from 'assets/images/crypto/btc.svg'
-import paypalIcon from 'assets/images/crypto/paypal.svg'
-import litecoinIcon from 'assets/images/crypto/ltc.svg'
-import ethereumIcon from 'assets/images/crypto/eth.svg'
-import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
-import stripeIcon from 'assets/images/crypto/stripe.svg'
-import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
-import skrillIcon from 'assets/images/crypto/skrill.svg'
 import QRCode from 'react-qr-code'
 import Clipboard from 'react-clipboard.js';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import * as moment from 'moment/moment'
+
+import sellix_logo from 'assets/images/Sellix_logo.svg'
+
 
 import './style.scss'
+import config from "../../constants/config";
 
-const CURRENCY_LIST = { 
-  'USD': '$',
-  'EUR': '€',
-  'AUD': '$',
-  'GBP': '£',
-  'JPY': '¥',
-  'CAD': '$',
-  'CHF': '₣',
-  'CNY': '¥',
-  'SEK': 'kr',
-  'NZD': '$',
-  'PLN': 'zł'
-}
-
-
-export const PAYMENT_ICONS = {
-  paypal: paypalIcon,
-  bitcoin: bitcoinIcon,
-  litecoin: litecoinIcon,
-  ethereum: ethereumIcon,
-  perfectmoney: perfectmoneyIcon,
-  stripe: stripeIcon,
-  bitcoincash: bitcoincashIcon,
-  skrill: skrillIcon
-}
-
-const PAYMENT_OPTS = {
-  'paypal': 'PayPal',
-  'bitcoin': 'BTC',
-  'litecoin': 'LTC',
-  'ethereum': 'ETH',
-  'skrill': 'Skrill',
-  'stripe': 'Stripe',
-  'bitcoincash': 'BTH',
-  'perfectmoney': 'Perfect Money'
-}
-
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
 
 class EmbededInvoice extends React.Component {
   
@@ -84,7 +26,7 @@ class EmbededInvoice extends React.Component {
       invoice: {},
       timer: '60:00',
       time: {h:0, m:0, s:0},
-      seconds: 2*60*60,
+      seconds: 24*60*60,
       showAlert: true,
       openQRModal: false,
       openFeedbackModal: false,
@@ -103,10 +45,6 @@ class EmbededInvoice extends React.Component {
     this.setState({openQRModal: !this.state.openQRModal})
   }
 
-  closeQrCodeModal() {
-    this.setState({openQRModal: false})
-  }
-
   getPayPalInvoice() {
     return this.props.commonActions.getPayPalInvoice(this.state.invoice.uniqid).then(res => {
         if(res && res.data && res.data.invoice) {
@@ -117,19 +55,6 @@ class EmbededInvoice extends React.Component {
     })
   }
 
-  openFeedBackModal() {
-    this.setState({openFeedbackModal: true})
-  }
-
-  okHandler() {
-    this.setState({openFeedbackModal: false})
-
-    this.props.history.push({
-      pathname: `/shop/${this.props.match.params.username}/feedback/id`
-    })
-  }
-
-
   secondsToTime(secs){
     let hours = Math.floor(secs / (60 * 60));
 
@@ -139,12 +64,11 @@ class EmbededInvoice extends React.Component {
     let divisor_for_seconds = divisor_for_minutes % 60;
     let seconds = Math.ceil(divisor_for_seconds);
 
-    let obj = {
+    return {
       "h": hours,
       "m": minutes,
       "s": seconds
     };
-    return obj;
   }
 
 
@@ -183,17 +107,10 @@ class EmbededInvoice extends React.Component {
     }
   }
 
-  gotoPaypal(e, id) {
-    this.props.history.push({
-      pathname: '/paypal-pay',
-      search: `?id=${id}`
-    })
-  }
-
   componentDidMount() {
     this.setState({loading:true})
     this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
-      let seconds = 2*60*60 - (new Date().getTime() - new Date(res.data.invoice.created_at*1000).getTime()) / 1000
+      let seconds = 24*60*60 - (new Date().getTime() - new Date(res.data.invoice.created_at*1000).getTime()) / 1000
 
       let timeLeftVar = this.secondsToTime(seconds);
 
@@ -295,7 +212,7 @@ class EmbededInvoice extends React.Component {
                             { 
                               invoice.gateway != 'paypal' && 
                                 <span className="text-grey d-flex align-items-center">
-                                  <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                                  <img src={config.PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
                                   {invoice.crypto_amount || 0}
                                 </span>
                             }
@@ -303,7 +220,7 @@ class EmbededInvoice extends React.Component {
                           </div>
                           <div className="d-flex justify-content-between align-items-center mb-3">
                             <span className="text-grey">{invoice.product_id || ''}</span>
-                            <span className="text-grey">{CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
+                            <span className="text-grey">{config.CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
                           </div>
                           { openQRModal && (
                             <div className="text-center pb-1">
@@ -314,7 +231,7 @@ class EmbededInvoice extends React.Component {
                             (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div style={{ position: "relative"}}>
                                 <p className="text-grey bold mt-4 text-center">
                                     Please send exactly <span className="badge text-primary bold">
-                                      {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> {PAYMENT_OPTS[invoice.gateway]} to
+                                      {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> {config.PAYMENT_OPTS[invoice.gateway]} to
                                 </p>
                                 <p className="btc-address text-grey bold text-center">
                                   {invoice.crypto_address || ''}
@@ -415,7 +332,7 @@ class EmbededInvoice extends React.Component {
                                   <div className="d-flex justify-content-between align-items-center">
                                     <span className="text-primary">Received</span>
                                     <h5 className="text-primary b-4 d-flex align-items-center">
-                                      <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                                      <img src={config.PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
                                       {invoice.crypto_received}</h5>
                                   </div>
                             }
@@ -435,4 +352,11 @@ class EmbededInvoice extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmbededInvoice)
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    commonActions: bindActionCreators(CommonActions, dispatch)
+  })
+}
+
+
+export default connect(null, mapDispatchToProps)(EmbededInvoice)
