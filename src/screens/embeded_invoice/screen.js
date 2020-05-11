@@ -201,7 +201,7 @@ class EmbededInvoice extends React.Component {
                   <div className="invoice-card ml-auto mr-auto p-0 embed-block">
                       <Card className="bg-white p-0 detail mb-0">
                         <i className="fa fa-times close-popup"></i>
-                        <div className="top p-4 pt-5">
+                        <div className="top p-3 pr-5">
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
                             <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status)}</span>
@@ -274,7 +274,7 @@ class EmbededInvoice extends React.Component {
                             </div>
                           }
                         </div>
-                        <div className="bottom p-4">
+                        <div className="bottom p-3">
                           {invoice.status == 1 && 
                             <SweetAlert
                               success
