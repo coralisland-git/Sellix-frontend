@@ -125,7 +125,10 @@ class Invoice extends React.Component {
   getInvoice = () => {
     this.props.getInvoiceViaWebsocket(this.props.match.params.id).then(invoice => {
       this.setState({
-        invoice
+        invoice: {
+          ...invoice,
+          crypto_mode: this.state.invoice.crypto_mode
+        }
       })
     })
   }

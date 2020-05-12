@@ -1,4 +1,40 @@
+
+@keyframes scalePop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes toolTipAnimation {
+  0% {
+    opacity: 0 !important;
+    top: 254px;
+  }
+  100% {
+    opacity: 1 !important;
+    top: 225px;
+  }
+}
+
+@keyframes pulse {
+	0% {
+		box-shadow: 0 0 0 0 #ef476f;
+	}
+
+	75% {
+		box-shadow: 0 0 0 5px transparent;
+	}
+}
+
 .bitcoin-paying-screen {
+
+  .copy-tooltip.show {
+    animation-name: toolTipAnimation;
+    animation-duration: 0.25s;
+    opacity: 1;
+    padding: 15px;
+    top: 225px !important;
+  }
 
   .sk-spinner-pulse {
     width: 20px;
@@ -38,6 +74,257 @@
     width: 100%;
   }
 
+  .qr-wrapper {
+    position: relative;
+    width: 290px;
+    left: -20px;
+    top: 10px;
+    transform: scale(0.9);
+
+    & > img {
+      cursor: pointer;
+    }
+
+    .qr-corner {
+      position: absolute;
+
+      padding: 3px !important;
+      // background: white;
+
+      // &.top {
+      //   top: 8px;
+      // }
+
+      // &.bottom {
+      //   bottom: 8px;
+      // }
+
+      // &.left {
+      //   left: 8px;
+      // }
+
+      // &.right {
+      //   right: 8px;
+      // }
+
+    }
+  }
+
+  .qr-container {
+    
+    overflow: hidden;
+    canvas {
+      cursor: pointer;
+    }
+    &.progress-red {
+      .payment-info-slide-up-panel h6 b {
+        color: #ef476f !important;
+      }
+    }
+    .payment-link-slide-down-panel {
+      position: absolute;
+      left: 5px;
+      top: -200px;
+      &.open {
+        top: 5px;
+      }
+      width: calc(100% - 10px);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 0;
+      transition: all 0.3s;
+      padding: 20px;
+      * {
+        color: #3e454d !important;
+      }
+      &:not(.open) + .bg-overlay {
+        z-index: -5;
+        background: transparent;
+      }
+      & + .bg-overlay {
+        transition: all 0.3s;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 998;
+        background: rgba(0,0,0,.4);
+        margin: 0;
+      }
+      & > h5 {
+        align-self: flex-start;
+      }
+      & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 15px 10px;
+        background: rgba(0,0,0,.1);
+        border-radius: 5px;
+        margin: 10px;
+        cursor: pointer;
+        & > span {
+          text-overflow: ellipsis;
+          width: 255px;
+          display: inline-block;
+          white-space: nowrap;
+          overflow: hidden;
+          color: #212529 !important;
+          font-weight: bold;
+          padding: 2px;
+          font-size: 12px;
+        }
+
+        position: relative;
+
+        overflow: hidden;
+
+        & > .copy-mode {
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+
+          justify-content: center;
+          display: flex;
+          align-items: center;
+
+          background: #333;
+
+          & > span {
+            color: white !important;
+            font-weight: bold;
+            padding-left: 5px;
+          }
+
+          opacity: 0;
+          transition: all 0.3s;
+        }
+      }
+
+      &.show-copy .copy-mode {
+        opacity: 1;
+      }
+      &.show-copy > div {
+        animation-name: scalePop;
+        animation-duration: 0.6s;
+      }
+    }
+    .payment-info-slide-up-panel {
+      position: absolute;
+      left: 5px;
+      bottom: -500px;
+      &.open {
+        bottom: 5px;
+      }
+      width: calc(100% - 10px);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 0;
+      transition: all 0.3s;
+      & > *:first-child {
+        display: block;
+        width: 100%;
+        background: #d5dcfc;
+        padding: 10px;
+      }
+      & > div {
+        width: 100%;
+        padding: 15px;
+        & > div {
+          display: flex;
+          justify-content: space-between;
+          margin-left: 20px;
+          margin-right: 20px;
+          margin-bottom: 15px;
+          justify-content: space-between;
+        }
+      }
+      * {
+        color: #3e454d !important;
+      }
+      b {
+        color: #212529 !important;
+      }
+      &:not(.open) + .bg-overlay {
+        z-index: -5;
+        background: transparent;
+      }
+      & + .bg-overlay {
+        transition: all 0.3s;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 998;
+        background: rgba(0,0,0,.4);
+        margin: 0;
+      }
+    }
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+
+      .progress-overlay {
+        cursor: pointer;
+        &:hover {
+          opacity: 0;
+          & + .CircularProgressbar {
+            transform: scale(1.8) rotate(360deg);
+            text {
+              opacity: 1;
+            }
+          }
+        }
+        &:not(:hover) {
+          & + .CircularProgressbar {
+            text {
+              opacity: 0;
+            }
+          }
+        }
+      }
+
+      .CircularProgressbar {
+        width: 35px;
+
+        transition: all 0.3s;
+
+        text {
+          transition: all 0.3s;
+        }
+
+        * {
+          cursor: default !important;
+        }
+
+        &.red {
+          animation: pulse 1s infinite;
+          border-radius: 50%;
+          padding: 1px;
+        }
+      }
+    }
+  }
+
+  .qr-container h3 {
+    color: #303133 !important;
+    margin: 0;
+    font-size: 18px;
+  }
+
   .top {
     .badge {
       background-color: #E4D6FF;
@@ -75,6 +362,9 @@
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     background-color: #E4D6FF;
+    &.no-padding {
+      padding: 0 !important;
+    }
 
     > div > div {
       position:  relative !important;
@@ -112,6 +402,7 @@
   justify-content: center;
   padding: 1rem 0 2rem;
   overflow: hidden auto;
+  padding-bottom: 60px;
 
   &.fixed {
     position: fixed;

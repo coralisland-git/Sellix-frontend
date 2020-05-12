@@ -113,7 +113,7 @@ const Forms = ({ gateway, sending, productInfo, handleSubmit, setCustomFields, r
 						})}
 
 						<div className="text-center">
-							<p className="text-center grey" style={{ fontSize: 12 }}>By continuing, you agree to our Terms of Service</p>
+							<p className="text-center grey" style={{ fontSize: 12 }}>By continuing, you agree to our Terms of Serviceeee</p>
 							<Button color="primary" type="submit" className="mr-auto ml-auto mt-2" disabled={sending}>{sending ? <Spin/> : 'Purchase'}</Button>
 						</div>
 					</Form>

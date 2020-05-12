@@ -11,6 +11,7 @@ import Form from "./form";
 
 
 import './style.scss';
+import { relativeTimeThreshold } from 'moment'
 
 
 const mapStateToProps = ({ common: { user_products, general_info: user } }) => ({
@@ -35,7 +36,8 @@ class ShopProductDetail extends React.Component {
       email: null,
       coupon_code: '',
       custom_fields: {},
-      productInfo: {}
+      productInfo: {},
+      showInvoice: false
     }
   }
 
@@ -54,7 +56,10 @@ class ShopProductDetail extends React.Component {
 
           window.localStorage.setItem(invoice.uniqid, invoice.secret)
           tostifyAlert('success', 'Invoice is created successfully.');
+
           this.props.history.push({ pathname: `/invoice/${invoice.uniqid}` })
+
+          // this.setState()
         })
         .catch(({ error }) => {
           tostifyAlert('error', error)
@@ -135,7 +140,7 @@ class ShopProductDetail extends React.Component {
   }
 
   render() {
-    const { group } = this.props;
+    const { group, affixComponent } = this.props;
 
     const {
       gateway,
@@ -169,30 +174,32 @@ class ShopProductDetail extends React.Component {
                     <div className="d-sm-down-none" >
                       <Affix offsetTop={97} container='affix-bar' >
                         <Card className="bg-white" id={'affix-container'}>
-                          {
-                            group && <div className="p-3 pt-2 pb-2">
-                              <h4>Select an option</h4>
-                              <Input type="select" name="select" id="exampleSelect" 
-                                     value={this.props.selectedProduct.uniqid}
-                                     onChange={e => {
-                                       const uniqid = e.target.value
-                                       const product = group.products_bound.find(p => p.uniqid === uniqid)
-                                       this.props.handleProductChange(product)
-                                     }}
-                                     >
-                                {group.products_bound.map(product => 
-                                  <option key={product.uniqid} value={product.uniqid}>{product.title}</option>
-                                )}
-                              </Input>
-                            </div>
-                          }
-                          {
-                            gateway ?
-                              <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                                <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
-                          }
+                          {affixComponent ? affixComponent : <>
+                            {
+                              group && <div className="p-3 pt-2 pb-2">
+                                <h4>Select an option</h4>
+                                <Input type="select" name="select" id="exampleSelect" 
+                                      value={this.props.selectedProduct.uniqid}
+                                      onChange={e => {
+                                        const uniqid = e.target.value
+                                        const product = group.products_bound.find(p => p.uniqid === uniqid)
+                                        this.props.handleProductChange(product)
+                                      }}
+                                      >
+                                  {group.products_bound.map(product => 
+                                    <option key={product.uniqid} value={product.uniqid}>{product.title}</option>
+                                  )}
+                                </Input>
+                              </div>
+                            }
+                            {
+                              gateway ?
+                                <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
+                                  <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
+                            }
 
-                          <StockInfo productInfo={productInfo} />
+                            <StockInfo productInfo={productInfo} />
+                          </>}
                         </Card>
                       </Affix>
                     </div>

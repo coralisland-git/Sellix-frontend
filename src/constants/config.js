@@ -37,6 +37,17 @@ export default {
     'perfectmoney': 'Perfect Money'
   },
 
+  PAYMENT_OPTS_FULL_NAME : {
+    'paypal': 'PayPal',
+    'bitcoin': 'Bitcoin',
+    'litecoin': 'Litecoin',
+    'ethereum': 'Ethereum',
+    'skrill': 'Skrill',
+    'stripe': 'Stripe',
+    'bitcoincash': 'Bitcoin Cash',
+    'perfectmoney': 'Perfect Money'
+  },
+
   DISCORD_CONNECT_URL: 'https://discordapp.com/oauth2/authorize?client_id=694529072046407703&permissions=2048&scope=bot',
 
   PAYMENT_ICONS: {

@@ -11,12 +11,24 @@ import { getInvoiceInfo, downloadInvoice } from './actions'
 import { Loader, Button } from 'components'
 import StripeForm from './stripeForm'
 import LeaveFeedback from '../feedbacks_shop/screens/createComponent/screen'
+import ProductScreen from '../product_shop/screens/detail/screen'
 import config from 'constants/config'
 import FileSaver from 'file-saver';
+import ReactTooltip from 'react-tooltip'
 
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import skrillLinkIcon from 'assets/images/skrill_link.svg'
+import infoIcon from 'assets/images/info.svg'
+import infoIconRed from 'assets/images/infoRed.svg'
+import copyIcon from 'assets/images/copy.svg'
+import qrCornerImg from 'assets/images/qr-corner.png'
+import dummyQrCode from 'assets/images/dummy-qr-code.png'
+import checkMarkIcon from 'assets/images/green_checkmark.svg'
+import { QRCode } from 'react-qrcode-logo';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import 'react-circular-progressbar/dist/styles.css';
 
 import './style.scss'
 
@@ -117,7 +129,12 @@ class Invoice extends React.Component {
       showAlert: true,
       openQRModal: false,
       openFeedbackModal: false,
-      fakeSuccess: false
+      fakeSuccess: false,
+      paymentInfoSlideUpPanel: false,
+
+      copyIconTooltipShown: false,
+
+      qrCellSize: null
     }
 
     this.timer = 0;
@@ -143,13 +160,16 @@ class Invoice extends React.Component {
   }
 
   getPayPalInvoice = () => {
+
+    const id = this.getInvoiceId()
+
     return this.props.getPayPalInvoice(this.state.invoice.uniqid)
         .then(res => {
           if(res && res.data && res.data.invoice) {
               this.setState({ invoice: res.data.invoice });
               this.setTheme(res.data.invoice)
               if(+res.data.invoice.status === 1) {
-                return this.props.getInvoiceInfo(this.props.match.params.id)
+                return this.props.getInvoiceInfo(id)
               }
           }
         })
@@ -180,10 +200,18 @@ class Invoice extends React.Component {
   }
 
   getInvoice = () => {
-    const { getInvoiceViaWebsocket, match: { params: { id }} } = this.props;
+    const { getInvoiceViaWebsocket } = this.props;
+
+    const id = this.getInvoiceId()
+
     getInvoiceViaWebsocket(id)
         .then(invoice => {
-          this.setState({ invoice })
+          this.setState({ 
+            invoice: {
+              ...invoice,
+              crypto_mode: this.state.invoice.crypto_mode
+            } 
+          })
           this.setTheme(invoice)
           if(+invoice.status === 1) {
             return this.props.getInvoiceInfo(id)
@@ -225,10 +253,16 @@ class Invoice extends React.Component {
     }
   }
 
+  getInvoiceId = () => {
+    const { id } = this.props.embed ? this.props : this.props.match.params;
+
+    return id
+  }
+
   componentDidMount() {
     this.setState({ loading:true });
     const { getInvoice, getInvoiceInfo, match } = this.props;
-    const { id } = match.params;
+    const id = this.getInvoiceId()
 
     document.title = `Invoice ${id} | Sellix`;
 
@@ -251,6 +285,12 @@ class Invoice extends React.Component {
           }
         })
         .finally(() => this.setState({ loading: false }))
+
+    setTimeout(() => {
+      if(!this.state.copyIconTooltipShown) {
+        ReactTooltip.show(this.copyIconRef)
+      }
+    }, 5000)
   }
 
   setInvoiceStatus = (status) => {
@@ -259,15 +299,26 @@ class Invoice extends React.Component {
 
     if(+status === 0  && !fakeSuccess) {
       this.startTimer();
-      return `${time.h} : ${(time.m > 9 ? time.m : '0' + time.m) || '00'} : ${time.s > 9 ? time.s : '0' + time.s || '00'}`;
+      if(time.h > 0) {
+        const { h, m } = time
+        return `${(h > 9 ? h : '0' + h) || '00'}:${m > 9 ? m : '0' + m || '00'}`;
+      } else {
+        const m = time.h * 60 + time.m
+        return `${(m > 9 ? m : '0' + m) || '00'}:${time.s > 9 ? time.s : '0' + time.s || '00'}`;
+      }
     } else if(+status === 1 || fakeSuccess)
       return 'Paid'
     else if(+status === 2)
-      return 'Cacelled'
+      return 'Cancelled'
     else if(+status === 3)
      return 'Pending'
     else if(+status === 4)
      return 'Partial'
+  }
+
+  getInvoiceTimePercentage = () => {
+    const { seconds } = this.state;
+    return seconds / (24 * 60 * 60) * 100
   }
 
   getInvoiceStatus2 = (status) => {
@@ -315,6 +366,11 @@ class Invoice extends React.Component {
     }
   }
 
+  getAmountToSend = ()  => {
+    const { crypto_amount, crypto_received } = this.state.invoice
+    return ((crypto_amount || 0) - (crypto_received || 0)).toFixed(8)
+  }
+
   getPaymentForm = ({ gateway, status, crypto_amount, crypto_received, crypto_address }) => {
     if(gateway === 'paypal' || gateway === 'skrill' || gateway === 'perfectmoney') {
       return ''
@@ -334,7 +390,7 @@ class Invoice extends React.Component {
         <div>
           <p className="text-grey bold mt-4 text-center">
               Please send exactly <span className="badge text-primary bold">
-                {((crypto_amount || 0) - (crypto_received || 0)).toFixed(8)}</span> {config.PAYMENT_OPTS[gateway]} to
+                {this.getAmountToSend()}</span> {config.PAYMENT_OPTS[gateway]} to
           </p>
           <p className="btc-address text-grey bold text-center">
             {crypto_address || ''}
@@ -348,11 +404,11 @@ class Invoice extends React.Component {
   }
 
   onSaveFile = () => {
-    let { match: { params } } = this.props;
+    let id = this.getInvoiceId()
 
-    let secret = localStorage.getItem(params.id);
+    let secret = localStorage.getItem(id);
     if(secret) {
-      let url = `${config.API_ROOT_URL}/invoices/download/${params.id}/${secret}`;
+      let url = `${config.API_ROOT_URL}/invoices/download/${id}/${secret}`;
 
       api.get(url, { responseType: 'blob' })
           .then(response => {
@@ -373,11 +429,305 @@ class Invoice extends React.Component {
         this.props.tostifyAlert('success', "Copied!")
   }
 
+  copyAddressToClipboardOnCopied = () => {
+    if(!this.state.paymentLinkSlideDownPanelShowCopy) {
+      this.setState({paymentLinkSlideDownPanelShowCopy: true})
+      setTimeout(() => {
+        this.setState({paymentLinkSlideDownPanelShowCopy: false})
+      }, 1500)
+    }
+  }
+
+  paymentLinkSlideDownPanel = () => {
+    const { invoice, paymentLinkSlideDownPanelOpen, paymentLinkSlideDownPanelShowCopy, forceShowTooltip } = this.state
+
+    const { theme } = this.props
+
+    if(paymentLinkSlideDownPanelOpen && (forceShowTooltip === true || forceShowTooltip === null)) {
+      this.setState({
+        forceShowTooltip: false
+      })
+    }
+
+    return <>
+      <div className={"payment-link-slide-down-panel " + (paymentLinkSlideDownPanelOpen && "open ") + (paymentLinkSlideDownPanelShowCopy && "show-copy")} style={{
+        background: theme === 'light' ? 'white' : '#edf0fe'
+      }}>
+        <h5>{config.PAYMENT_OPTS_FULL_NAME[invoice.gateway]} Address</h5>
+        <CopyToClipboard text={invoice.crypto_address}
+          onCopy={() => this.copyAddressToClipboardOnCopied()}>
+          <div>
+            <span>{invoice.crypto_address}</span>
+            <img src={copyIcon} height="20"/>
+            <div className="copy-mode">
+              <img src={checkMarkIcon} height="20"/>
+              <span>Copied</span>
+            </div>
+          </div>
+        </CopyToClipboard>
+      </div>
+      <div className="bg-overlay" onClick={() => {
+        this.setState({
+          paymentLinkSlideDownPanelOpen: false
+        })
+      }}/>
+    </>
+  }
+
+  paymentInfoSlideUpPanel = () => {
+
+    const { invoice, paymentInfoSlideUpPanelOpen } = this.state
+
+    const { theme } = this.props
+
+    return <>
+      <div className={"payment-info-slide-up-panel " + (paymentInfoSlideUpPanelOpen && "open")} style={{
+        background: theme === 'light' ? 'white' : '#edf0fe'
+      }}>
+        <h6>Please send your payment within <b>{this.setInvoiceStatus(invoice.status)}</b></h6>
+        <div>
+          <div>
+            <span>Total Price:</span>
+            <span>{invoice.total_display} {invoice.currency}</span>
+          </div>
+          <div>
+            <span>Exchange Rate:</span>
+            <span>{invoice.crypto_exchange_rate} USD</span>
+          </div>
+          <div>
+            <span>Subtotal:</span>
+            <span>{invoice.crypto_amount} {config.PAYMENT_OPTS[invoice.gateway]}</span>
+          </div>
+          {/* <div>
+            <span>Network Cost:</span>
+            <span>0.09 USD</span>
+          </div> */}
+          <div>
+            <span><b>Amound Due:</b></span>
+            <span><b>{invoice.crypto_amount - invoice.crypto_received} {config.PAYMENT_OPTS[invoice.gateway]}</b></span>
+          </div>
+        </div>
+      </div>
+      <div className="bg-overlay" onClick={() => {
+        this.setState({
+          paymentInfoSlideUpPanelOpen: false
+        })
+      }}/>
+    </>
+  }
+
+  progressShouldBeRed = () => {
+    const { seconds } = this.state;
+
+    return seconds && seconds < 60 * 60
+  }
+
   render() {
 
-    const { loading, invoice, showAlert, openQRModal, fakeSuccess, info,  } = this.state;
+    const { loading, invoice, showAlert, openQRModal, fakeSuccess, info, seconds, qrCellSize } = this.state;
 
-    return (
+    const { theme } = this.props
+
+    // invoice.gateway = 'skrill'
+    // invoice.gateway = 'paypal'
+    // invoice.gateway = 'perfectmoney'
+    // invoice.gateway = 'stripe'
+    // invoice.status = 3
+
+    const progressShouldBeRed = this.progressShouldBeRed()
+
+    const isCrypto = invoice.crypto_uri != null
+
+    const isQrMode = isCrypto && invoice.crypto_mode === 'qrcode'
+
+    const innerComponent = isQrMode ? <>
+      {(invoice.status == 0 || invoice.status == 4) && <>
+        <p style={{
+          margin: '0 40px',
+          textAlign: 'center',
+          lineHeight: '1.5'
+        }}>Scan the QR code or copy and paste the payment details into your wallet</p>
+
+        <div style={{
+          background: theme === 'light' ? 'white' : '#edf0fe',
+          borderRadius: '10px',
+          padding: '30px',
+          textAlign: 'center',
+          margin: '30px 15px 15px',
+          position: 'relative'
+        }} className={"qr-container " + (progressShouldBeRed && "progress-red")}>
+          <div>
+            <ReactTooltip place="top" backgroundColor="#4F6EF7" effect="solid" className="copy-tooltip" afterShow={() => {
+              this.setState({
+                copyIconTooltipShown: true
+              })
+            }}/>
+            <CopyToClipboard text={invoice.crypto_address}
+                              onCopy={() => {
+                              setTimeout(() => {
+                                this.copyAddressToClipboardOnCopied()
+                                }, 300)
+                              }}>
+              <img src={copyIcon} height="30" data-tip={"Copy " + config.PAYMENT_OPTS_FULL_NAME[invoice.gateway] + " Address"} data-place="top" onClick={() => {
+                this.setState({
+                  paymentLinkSlideDownPanelOpen: true
+                })
+              }} style={{
+                cursor: 'pointer'
+              }} ref={ref => this.copyIconRef = ref}/>
+            </CopyToClipboard>
+            <h3>{this.getAmountToSend()} {config.PAYMENT_OPTS[invoice.gateway]}</h3>
+            <div style={{position: 'relative'}}>
+              <img src={progressShouldBeRed ? infoIconRed : infoIcon} style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: 0,
+                  width: '100%',
+                  height: '100%',
+                  zIndex: 9,
+                  display: 'block'
+                }} className="progress-overlay" onClick={() => {
+                  this.setState({
+                    paymentInfoSlideUpPanelOpen: true
+                  })
+                }}/>
+              <CircularProgressbar value={this.getInvoiceTimePercentage()} text={
+                    this.setInvoiceStatus(invoice.status)
+                  } counterClockwise={true} 
+                  strokeWidth={10}
+                  className={progressShouldBeRed && "red"}
+                  styles={buildStyles({
+                
+                    // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                    strokeLinecap: 'butt',
+                
+                    // Text size
+                    textSize: '24px',
+                
+                    // Colors
+                    pathColor: progressShouldBeRed ? '#ef476f' : `#4F6EF7`,
+                    textColor: progressShouldBeRed ? '#ef476f' : `#4F6EF7`,
+                    trailColor: '#d6d6d6',
+                    backgroundColor: '#3e98c7',
+                  })}
+                />
+            </div>
+          </div>
+          {/* <img width="270" src={dummyQrCode}/> */}
+          <CopyToClipboard text={invoice.crypto_address}
+                              onCopy={() => {
+                                setTimeout(() => {
+                                this.copyAddressToClipboardOnCopied()
+                                }, 300)
+                              }}>
+            <div onClick={() => {
+                  this.setState({
+                    paymentLinkSlideDownPanelOpen: true
+                  })
+                }} className="qr-wrapper">
+              <QRCode bgColor={theme === 'light' ? 'white' : '#edf0fe'} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots" 
+              // logoImage={config.PAYMENT_ICONS[invoice.gateway]}
+                onQrDraw={({cellSize}) => {
+                  if(cellSize != this.state.qrCellSize)  {
+                    this.setState({
+                      qrCellSize: cellSize
+                    })
+                  }
+                }}
+              />
+              <img src={config.PAYMENT_ICONS[invoice.gateway]} width={qrCellSize * 11} style={{
+                background: theme === 'light' ? 'white' : '#edf0fe',
+                left: `calc(50% - ${qrCellSize * 5.5}px)`,
+                position: 'absolute',
+                padding: qrCellSize + 'px'
+              }}/>
+              <img className="qr-corner top left" src={qrCornerImg}  width={qrCellSize * 8} style={{
+                left: qrCellSize + 'px',
+                top: qrCellSize + 'px',
+                background: theme === 'light' ? 'white' : '#edf0fe'
+              }}/>
+              <img className="qr-corner top right" src={qrCornerImg} width={qrCellSize * 8} style={{
+                right: qrCellSize + 'px',
+                top: qrCellSize + 'px',
+                background: theme === 'light' ? 'white' : '#edf0fe'
+              }}/>
+              <img className="qr-corner bottom left" src={qrCornerImg} width={qrCellSize * 8} style={{
+                left: qrCellSize + 'px',
+                bottom: qrCellSize + 'px',
+                background: theme === 'light' ? 'white' : '#edf0fe'
+              }}/>
+            </div>
+          </CopyToClipboard>
+          {this.paymentLinkSlideDownPanel()}
+          {this.paymentInfoSlideUpPanel()}
+        </div>
+      </>
+      }
+      {invoice.status == 3 && <>
+          <Loader/>
+          <h4 style={{
+            textAlign: 'center',
+            marginBottom: '50px'
+          }}>Awaiting Confirmation <br/>({((invoice.crypto_transactions || []).slice(-1)[0] || {}).confirmations }/{invoice.crypto_confirmations || 0})</h4>
+        </>
+      }
+    </> : <>
+    <div className={info ? "top px-4 pb-4 pt-0" : "top p-4 pt-4"}>
+
+      <div className="d-flex justify-content-between align-items-center ">
+        <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
+        <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status)}</span>
+      </div>
+
+      <p className="text-grey mb-3">{invoice.uniqid}</p>
+
+      <div className="d-flex justify-content-between align-items-center ">
+        <h4 className="text-grey">{(invoice.product || {}).title}</h4>
+        {this.getCryptoAmount({...invoice})}
+      </div>
+
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <span className="text-grey">{invoice.product_id || ''}</span>
+        <span className="text-grey">{config.CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
+      </div>
+
+      {
+        this.getPaymentForm({...invoice})
+      }
+
+      {
+        (invoice.gateway === 'paypal' && +invoice.status === 0) &&
+          <div className="mt-5">
+            <PayPalButton
+                createOrder={() => invoice.paypal_tx_id}
+                onApprove={() => this.getPayPalInvoice()}
+                onError = {() => {}}
+                style={{ layout: 'horizontal', color: 'blue', }}
+                amount={invoice.total}
+                currency={invoice.currency}
+                options={{ clientId: invoice.paypal_client_id, currency: invoice.currency }}
+            />
+          </div>
+      }
+
+      {(invoice.gateway === 'perfectmoney' && +invoice.status === 0) &&
+        <PerfectMoney {...invoice}/>
+      }
+
+      {
+        (invoice.gateway === 'skrill' && +invoice.status === 0) &&
+        <div className="mt-5">
+          <div className="d-flex input-group">
+            <a target="_blacnk" href={invoice.skrill_link} className="w-100 p-0 text-center skrill-button">
+              <img src={skrillLinkIcon} height="45"/>
+            </a>
+          </div>
+        </div>
+      }
+      </div>
+    </>
+
+    const invoiceBody = (
       <div>
         {loading && <Row><Col lg={12}><Loader /></Col></Row>}
 
@@ -412,11 +762,11 @@ class Invoice extends React.Component {
                         <Col lg={12}>
                           <div className="text-left my-4 mb-5">
                             <h1 className={"m-0"} style={{ fontSize: "1.4rem" }}>
-                              Your Order for <strong>{info.product.title}</strong> is completed. Here is your product.
+                              Your Order for <strong>{info.product.title}</strong> is completed.
                             </h1>
                           </div>
                         </Col>
-                        <Col lg={7}>
+                        <Col lg={8}>
                           <Card className={"p-4"} >
                             <h4 style={{ fontWeight: 400 }}>{info.product.title}</h4>
                             <span className={"pb-4"}>{info.delivery_text}</span>
@@ -426,68 +776,16 @@ class Invoice extends React.Component {
                       </>
                   }
 
-                  <Col lg={{ size: 5 }} >
-                    {!info && <div className="text-left my-4 mb-5"><h1 className="m-0">&nbsp;</h1></div>}
+                  <Col lg={{ size: isQrMode ? 12 : 4 }} >
+                    {!info && !isQrMode && <div className="text-left my-4 mb-5"><h1 className="m-0">&nbsp;</h1></div>}
                     <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: "calc(1.5rem + 4px)"}}>
                       <div className="float-logo">
                         <img src={sellix_logo} width="153" alt={""}/>
                       </div>
 
-                      <div className={info ? "top px-4 pb-4 pt-0" : "top p-4 pt-4"}>
+                      {innerComponent}
 
-                        <div className="d-flex justify-content-between align-items-center ">
-                          <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-                          <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status)}</span>
-                        </div>
-
-                        <p className="text-grey mb-3">{invoice.uniqid}</p>
-
-                        <div className="d-flex justify-content-between align-items-center ">
-                          <h4 className="text-grey">{(invoice.product || {}).title}</h4>
-                          {this.getCryptoAmount({...invoice})}
-                        </div>
-
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                          <span className="text-grey">{invoice.product_id || ''}</span>
-                          <span className="text-grey">{config.CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
-                        </div>
-
-                        {
-                          this.getPaymentForm({...invoice})
-                        }
-
-                        {
-                          (invoice.gateway === 'paypal' && +invoice.status === 0) &&
-                            <div className="mt-5">
-                              <PayPalButton
-                                  createOrder={() => invoice.paypal_tx_id}
-                                  onApprove={() => this.getPayPalInvoice()}
-                                  onError = {() => {}}
-                                  style={{ layout: 'horizontal', color: 'blue', }}
-                                  amount={invoice.total}
-                                  currency={invoice.currency}
-                                  options={{ clientId: invoice.paypal_client_id, currency: invoice.currency }}
-                              />
-                            </div>
-                        }
-
-                        {(invoice.gateway === 'perfectmoney' && +invoice.status === 0) &&
-                          <PerfectMoney {...invoice}/>
-                        }
-
-                        {
-                          (invoice.gateway === 'skrill' && +invoice.status === 0) &&
-                          <div className="mt-5">
-                            <div className="d-flex input-group">
-                              <a target="_blacnk" href={invoice.skrill_link} className="w-100 p-0 text-center skrill-button">
-                                <img src={skrillLinkIcon} height="45"/>
-                              </a>
-                            </div>
-                          </div>
-                        }
-                      </div>
-
-                      <div className="bottom order-detail-info p-4">
+                      <div className={"bottom order-detail-info p-4 " + ((isQrMode || invoice.status == 1 || invoice.status == 2) && "no-padding")}>
                         {(+invoice.status === 1 || fakeSuccess) &&
                             <>
                               <div className={"sw-container"}>
@@ -532,7 +830,7 @@ class Invoice extends React.Component {
                             </>
                         }
 
-                        { +invoice.status !== 1 && +invoice.status !== 2 && !fakeSuccess &&
+                        { +invoice.status !== 1 && +invoice.status !== 2 && !fakeSuccess && !isQrMode &&
                           <div>
                             <h4 className="text-primary mb-3">Order Details</h4>
                             {
@@ -578,9 +876,28 @@ class Invoice extends React.Component {
           }
       </div>
     )
+
+    if(isQrMode) {
+      return <div style={{
+        marginTop: '25px'
+      }}>
+        <ProductScreen affixComponent={invoiceBody} match={{
+          params: {
+            id: invoice.product_id
+          }
+        }}/>
+      </div>
+    }
+
+    return invoiceBody
   }
 }
 
+const mapStateToProps = (state) => {
+  return ({
+    theme: state.common.theme
+  })
+}
 
 const mapDispatchToProps = (dispatch) => ({
   getPayPalInvoice: bindActionCreators(CommonActions.getPayPalInvoice, dispatch),
@@ -591,4 +908,4 @@ const mapDispatchToProps = (dispatch) => ({
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
 })
 
-export default connect(null, mapDispatchToProps)(Invoice)
+export default connect(mapStateToProps, mapDispatchToProps)(Invoice)
