@@ -13,6 +13,19 @@ export default {
   API_ROOT_URL: 'https://api.sellix.io/v1',
   WS_URL: 'wss://wss.sellix.io/websocket',
   CAPTCHA_SITE_KEY: '6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe',
+  CURRENCY_OPTIONS: [
+    { value: 'USD', label: 'USD'},
+    { value: 'EUR', label: 'EUR'},
+    { value: 'JPY', label: 'JPY'},
+    { value: 'GBP', label: 'GBP'},
+    { value: 'AUD', label: 'AUD'},
+    { value: 'CAD', label: 'CAD'},
+    { value: 'CHF', label: 'CHF'},
+    { value: 'CNY', label: 'CNY'},
+    { value: 'SEK', label: 'SEK'},
+    { value: 'NZD', label: 'NZD'},
+    { value: 'PLN', label: 'PLN'}
+  ],
   CURRENCY_LIST : { 
     'USD': '$',
     'EUR': '€',

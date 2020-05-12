@@ -30,19 +30,6 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 
-const CURRENCY_LIST = [
-  { value: 'USD', label: 'USD'},
-  { value: 'EUR', label: 'EUR'},
-  { value: 'JPY', label: 'JPY'},
-  { value: 'GBP', label: 'GBP'},
-  { value: 'AUD', label: 'AUD'},
-  { value: 'CAD', label: 'CAD'},
-  { value: 'CHF', label: 'CHF'},
-  { value: 'CNY', label: 'CNY'},
-  { value: 'SEK', label: 'SEK'},
-  { value: 'NZD', label: 'NZD'},
-  { value: 'PLN', label: 'PLN'},
-]
 
 class GeneralSettings extends React.Component {
   
@@ -59,11 +46,19 @@ class GeneralSettings extends React.Component {
     }
   }
 
-  handleSubmit = (data) => {
+  handleSubmit = (data, setStatus) => {
     this.setState({ loading: true });
     let { saveGeneralSettings, tostifyAlert } = this.props;
-    saveGeneralSettings({ ...data, currency: data.currency.value }).then(res => {
-      tostifyAlert('success', res.message)
+    let { initialValues } = this.state;
+
+    saveGeneralSettings({ ...data, currency: data.currency.value, profile_attachment: data.profile_attachment || "" }).then(res => {
+      tostifyAlert('success', res.message);
+
+      if(initialValues.email !== data.email) {
+        let message = "You will receive an email to your older address in order to confirm the change";
+        setStatus(message)
+      }
+
     }).catch(err => {
       tostifyAlert('error', err.error)
     }).finally(() => {
@@ -82,7 +77,7 @@ class GeneralSettings extends React.Component {
           username='',
         } = data.settings;
 
-        let currency = CURRENCY_LIST.find(x => x.value === data.settings.currency)
+        let currency = config.CURRENCY_OPTIONS.find(x => x.value === data.settings.currency)
 
         this.setState({
           initialValues: { profile_attachment, email, username, currency }
@@ -100,7 +95,6 @@ class GeneralSettings extends React.Component {
     } = this.state;
 
     let validationSchema = Yup.object().shape({
-      profile_attachment: Yup.string(),
       email: Yup.string().email('Please enter the valid email').required('Email is required'),
       username: Yup.string().required("Username is required"),
       currency: Yup.string().required("Currency is required"),
@@ -112,10 +106,10 @@ class GeneralSettings extends React.Component {
           <Formik
             initialValues={initialValues}
             enableReinitialize={true}
-            onSubmit={this.handleSubmit}
+            onSubmit={(values, {setStatus}) => this.handleSubmit(values, setStatus)}
             validationSchema={validationSchema}
           >
-              {({ handleSubmit, handleChange, values, errors, touched}) => (
+              {({ handleSubmit, status, handleChange, values, errors, touched}) => (
                 <Form onSubmit={handleSubmit}>
                   <Card>
                     <CardBody className="p-4 mb-4 position-relative">
@@ -173,6 +167,7 @@ class GeneralSettings extends React.Component {
                                   value={values.email}
                                   className={errors.email && touched.email ? "is-invalid" : ""}
                                 />
+                                {status && <div className="invalid-feedback d-flex" style={{ color: "#b3aebb" }}>{status}</div>}
                                 {errors.email && touched.email && <div className="invalid-feedback">{errors.email}</div>}
                               </FormGroup>
                             </Col>
@@ -180,7 +175,7 @@ class GeneralSettings extends React.Component {
                               <FormGroup className="mb-3">
                                 <Label htmlFor="email">Currency</Label>
                                 <Select
-                                    options={CURRENCY_LIST}
+                                    options={config.CURRENCY_OPTIONS}
                                     classNamePrefix={"react-select"}
                                     id="currency"
                                     name="currency"

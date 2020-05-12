@@ -11,6 +11,7 @@ import ForgotPassword from './forgot_password'
 import ResetPassword from './reset_password'
 import Dashboard from './dashboard'
 import EmailConfirm from './email_confirm'
+import ChangeEmail from './change_email'
 
 import Product from './product'
 import CreateProduct from './product/screens/create'
@@ -110,6 +111,7 @@ export {
   // Tickets,
   Ticket,
   EmailConfirm,
+  ChangeEmail,
 
 
   EditCoupon,
