@@ -551,7 +551,7 @@ class Invoice extends React.Component {
         <div style={{
           background: theme === 'light' ? '#f0f3f599' : '#edf0fe',
           borderRadius: '10px',
-          padding: '30px',
+          padding: '20px',
           textAlign: 'center',
           margin: '30px 15px 15px',
           position: 'relative'
@@ -779,7 +779,7 @@ class Invoice extends React.Component {
 
                   <Col lg={{ size: isQrMode ? 12 : 4 }} >
                     {!info && !isQrMode && <div className="text-left my-4 mb-5"><h1 className="m-0">&nbsp;</h1></div>}
-                    <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: "calc(1.5rem + 4px)"}}>
+                    <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: isQrMode ? '8px' : "calc(1.5rem + 4px)"}}>
                       <div className="float-logo">
                         <img src={sellix_logo} width="153" alt={""}/>
                       </div>
