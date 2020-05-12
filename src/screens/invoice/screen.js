@@ -573,7 +573,8 @@ class Invoice extends React.Component {
                   paymentLinkSlideDownPanelOpen: true
                 })
               }} style={{
-                cursor: 'pointer'
+                cursor: 'pointer',
+                height: '25px'
               }} ref={ref => this.copyIconRef = ref}/>
             </CopyToClipboard>
             <h3>{this.getAmountToSend()} {config.PAYMENT_OPTS[invoice.gateway]}</h3>
