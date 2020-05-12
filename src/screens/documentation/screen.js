@@ -481,13 +481,15 @@ if (hash_equals($signature, $header_signature)) {
                     <div className="code-block-header">
                       <p>ENDPOINTS</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`GET /blacklists/:uniqid
-GET /blacklists
-POST /blacklists
-PUT /blacklists/:uniqid
-DELETE /blacklists/:uniqid`}
-                    </SyntaxHighlighter>
+                    <pre className="res-status">
+                      <code>
+                        <span className="s-get">GET</span> <span>/blacklists/:uniqid</span> <br />
+                        <span className="s-get">GET</span> <span>/blacklists</span> <br />
+                        <span className="s-post">POST</span> <span>/blacklists</span> <br />
+                        <span className="s-put">PUT</span> <span>/blacklists/:uniqid</span> <br />
+                        <span className="s-delete">DELETE</span> <span>/blacklists/:uniqid</span>
+                      </code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -899,13 +901,15 @@ DELETE /blacklists/:uniqid`}
                     <div className="code-block-header">
                       <p>ENDPOINTS</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`GET /categories/:uniqid
-GET /categories
-POST /categories
-PUT /categories/:uniqid
-DELETE /categories/:uniqid`}
-                    </SyntaxHighlighter>
+                    <pre className="res-status">
+                      <code>
+                        <span className="s-get">GET</span> <span>/categories/:uniqid</span> <br />
+                        <span className="s-get">GET</span> <span>/categories</span> <br />
+                        <span className="s-post">POST</span> <span>/categories</span> <br />
+                        <span className="s-put">PUT</span> <span>/categories/:uniqid</span> <br />
+                        <span className="s-delete">DELETE</span> <span>/categories/:uniqid</span>
+                      </code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -1343,13 +1347,15 @@ DELETE /categories/:uniqid`}
                     <div className="code-block-header">
                       <p>ENDPOINTS</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`GET /coupons/:uniqid
-GET /coupons
-POST /coupons
-PUT /coupons/:uniqid
-DELETE /coupons/:uniqid`}
-                    </SyntaxHighlighter>
+                    <pre className="res-status">
+                      <code>
+                        <span className="s-get">GET</span> <span>/coupons/:uniqid</span> <br />
+                        <span className="s-get">GET</span> <span>/coupons</span> <br />
+                        <span className="s-post">POST</span> <span>/coupons</span> <br />
+                        <span className="s-put">PUT</span> <span>/coupons/:uniqid</span> <br />
+                        <span className="s-delete">DELETE</span> <span>/coupons/:uniqid</span>
+                      </code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -1819,11 +1825,13 @@ DELETE /coupons/:uniqid`}
                     <div className="code-block-header">
                       <p>ENDPOINTS</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`GET /feedback/:uniqid
-GET /feedback
-POST /feedback/reply/:uniqid`}
-                    </SyntaxHighlighter>
+                    <pre className="res-status">
+                      <code>
+                        <span className="s-get">GET</span> <span>/feedback/:uniqid</span> <br />
+                        <span className="s-get">GET</span> <span>/feedback</span> <br />
+                        <span className="s-post">POST</span> <span>/feedback/reply/:uniqid</span>
+                      </code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -2121,10 +2129,12 @@ POST /feedback/reply/:uniqid`}
                     <div className="code-block-header">
                       <p>ENDPOINTS</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`GET /orders/:uniqid
-GET /oders`}
-                    </SyntaxHighlighter>
+                    <pre className="res-status">
+                      <code>
+                        <span className="s-get">GET</span> <span>/queries/:uniqid</span> <br />
+                        <span className="s-get">GET</span> <span>/orders</span>
+                      </code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -2875,13 +2885,15 @@ GET /oders`}
                     <div className="code-block-header">
                       <p>ENDPOINTS</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`GET /products/:uniqid
-GET /products
-POST /products
-PUT /products/:uniqid
-DELETE /products/:uniqid`}
-                    </SyntaxHighlighter>
+                    <pre className="res-status">
+                      <code>
+                        <span className="s-get">GET</span> <span>/products/:uniqid</span> <br />
+                        <span className="s-get">GET</span> <span>/products</span> <br />
+                        <span className="s-post">POST</span> <span>/products</span> <br />
+                        <span className="s-put">PUT</span> <span>/products/:uniqid</span> <br />
+                        <span className="s-delete">DELETE</span> <span>/products/:uniqid</span>
+                      </code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -4106,13 +4118,15 @@ DELETE /products/:uniqid`}
                     <div className="code-block-header">
                       <p>ENDPOINTS</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`GET /queries/:uniqid
-GET /queries
-POST /queries
-PUT /queries/:uniqid
-DELETE /queries/:uniqid`}
-                    </SyntaxHighlighter>
+                    <pre className="res-status">
+                      <code>
+                        <span className="s-get">GET</span> <span>/queries/:uniqid</span> <br />
+                        <span className="s-get">GET</span> <span>/queries</span> <br />
+                        <span className="s-post">POST</span> <span>/queries</span> <br />
+                        <span className="s-put">PUT</span> <span>/queries/:uniqid</span> <br />
+                        <span className="s-delete">DELETE</span> <span>/queries/:uniqid</span>
+                      </code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -4476,10 +4490,12 @@ DELETE /queries/:uniqid`}
                     <div className="code-block-header">
                       <p>ENDPOINTS</p>
                     </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`PUT /payments/:uniqid
-DELETE /payments/:uniqid`}
-                    </SyntaxHighlighter>
+                    <pre className="res-status">
+                      <code>
+                        <span className="s-put">PUT</span> <span>/payments/:uniqid</span> <br />
+                        <span className="s-delete">DELETE</span> <span>/payments/:uniqid</span>
+                      </code>
+                    </pre>
                   </div>
                 </div>
               </section>
@@ -4500,17 +4516,6 @@ DELETE /payments/:uniqid`}
                     [title] Products <br />
                     We offer the possibility to create payments for your products too. You can specify a product_id and we will take care of the rest. <br /><br />
                   </p>
-                </div>
-                <div className="d-ex">
-                  <div className="code-block response">
-                    <div className="code-block-header">
-                      <p>ENDPOINTS</p>
-                    </div>
-                    <SyntaxHighlighter language="php" style={atomOneLight}>
-                      {`PUT /payments/:uniqid
-DELETE /payments/:uniqid`}
-                    </SyntaxHighlighter>
-                  </div>
                 </div>
               </section>
               <section id="create-payment">
