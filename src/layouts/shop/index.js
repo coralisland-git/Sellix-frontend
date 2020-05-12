@@ -195,7 +195,7 @@ class ShopLayout extends React.Component {
 						<h4 className="mb-0 mt-3 mb-2">
 							<span style={{fontSize: 20}}>{user.username}&nbsp;</span>
 							{user.verified == '1' &&
-								<span style={{fontSize: 17}}>
+								<span style={{ fontSize: 17 }}>
 									<img src={verifiedIcon} width="20" className="verified-icon mb-1" id="verifiedTooltip" />
 									<Tooltip
 										placement="right"
@@ -207,9 +207,13 @@ class ShopLayout extends React.Component {
 								</span>
 							}
 						</h4>
-						<LazyImage placeholder={Sellix} src={user.profile_attachment}>
-							{src => <img src={src} width="130" height="130" style={{ borderRadius: '50%' }} />}
-						</LazyImage>
+
+						{user.profile_attachment ?
+							<img src={user.profile_attachment} width="130" height="130" style={{ borderRadius: '50%' }} /> :
+							<i className={"fa fa-user-circle justify-content-center align-items-center d-inline-flex"}
+							   style={{width: 130, height: 130, fontSize: "8.3rem", color: "#603bea", borderRadius: "100%"}}
+							/>
+						}
 					</div>
 					<Card
 						className="report-count mb-3 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row"

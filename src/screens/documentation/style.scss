@@ -245,6 +245,31 @@
     }
     
   }
+
+  .res-status {
+    display: block; 
+    overflow-x: auto; 
+    padding: 0.5em; 
+    color: rgb(56, 58, 66) !important;
+    background: rgb(250, 250, 250);
+
+    code span {
+      font-size: inherit !important;
+    }
+  }
+
+  .s-get {
+    color: #00b680;
+  }
+  .s-post {
+    color: #3f72d0;
+  }
+  .s-put {
+    color: #f08d00;
+  }
+  .s-delete {
+    color: #f96868;
+  }
 }
 
 .dark .embed {
