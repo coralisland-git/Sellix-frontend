@@ -503,8 +503,8 @@ class Invoice extends React.Component {
             <span>0.09 USD</span>
           </div> */}
           <div>
-            <span><b>Amound Due:</b></span>
-            <span><b>{invoice.crypto_amount - invoice.crypto_received} {config.PAYMENT_OPTS[invoice.gateway]}</b></span>
+            <span>Amound:</span>
+            <span><b>{invoice.crypto_amount - invoice.crypto_received}</b> {config.PAYMENT_OPTS[invoice.gateway]}</span>
           </div>
         </div>
       </div>
@@ -549,7 +549,7 @@ class Invoice extends React.Component {
         }}>Scan the QR code or copy and paste the payment details into your wallet</p>
 
         <div style={{
-          background: theme === 'light' ? 'white' : '#edf0fe',
+          background: theme === 'light' ? '#f0f3f599' : '#edf0fe',
           borderRadius: '10px',
           padding: '30px',
           textAlign: 'center',
