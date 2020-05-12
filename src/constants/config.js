@@ -46,7 +46,7 @@ export default {
     'ethereum': 'ETH',
     'skrill': 'Skrill',
     'stripe': 'Stripe',
-    'bitcoincash': 'BTH',
+    'bitcoincash': 'BCH',
     'perfectmoney': 'Perfect Money'
   },
 

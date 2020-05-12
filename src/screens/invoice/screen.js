@@ -503,7 +503,7 @@ class Invoice extends React.Component {
             <span>0.09 USD</span>
           </div> */}
           <div>
-            <span>Amound:</span>
+            <span>Amount:</span>
             <span><b>{invoice.crypto_amount - invoice.crypto_received}</b> {config.PAYMENT_OPTS[invoice.gateway]}</span>
           </div>
         </div>
