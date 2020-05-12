@@ -588,7 +588,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Get Blacklist</b></h3>
                   <p>
-                    <span className="param">GET</span> /api/v2/blacklist/:id <br />
+                    <span className="s-get">GET</span> /blacklist/:id <br />
                     Retrieves a Blacklist by ID
                   </p>
                 </div>
@@ -636,7 +636,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>List Blacklist</b></h3>
                   <p>
-                    <span className="param">GET</span> /blacklist <br />
+                    <span className="s-get">GET</span> /blacklist <br />
                     Returns a list of the Blacklist. The blacklist are sorted by creation date, with the most 
                     recently created blacklist being first.
                   </p>
@@ -700,7 +700,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Blacklist</b></h3>
                   <p>
-                    <span className="param">PUT</span> /blacklist <br />
+                    <span className="s-put">PUT</span> /blacklist <br />
                     Creates a Blacklist and returns the Uniqid. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -782,7 +782,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Edit Blacklist</b></h3>
                   <p>
-                    <span className="param">POST</span> /blacklists/:uniqid <br />
+                    <span className="s-post">POST</span> /blacklists/:uniqid <br />
                     Edits a Blacklist. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -859,7 +859,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Delete Blacklist</b></h3>
                   <p>
-                    <span className="required">DELETE</span> /blacklists/:uniqid <br />
+                    <span className="s-delete">DELETE</span> /blacklists/:uniqid <br />
                     Deletes a Blacklist.
                   </p>
                 </div>
@@ -1037,7 +1037,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Get a Category</b></h3>
                   <p>
-                    <span className="required">GET</span> /categories/:uniqid <br />
+                    <span className="s-get">GET</span> /categories/:uniqid <br />
                     Retrieves a Category by Uniqid.
                   </p>
                 </div>
@@ -1076,7 +1076,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>List All Categories</b></h3>
                   <p>
-                    <span className="required">GET</span> /categories <br />
+                    <span className="s-get">GET</span> /categories <br />
                     Returns a list of all the Categories. The categories are sorted by creation date, with the most recently created categories being first.
                   </p>
                   <table>
@@ -1127,7 +1127,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Category</b></h3>
                   <p>
-                    <span className="required">PUT</span> /categories <br />
+                    <span className="s-put">PUT</span> /categories <br />
                     Creates a Category and returns the Uniqid. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -1222,7 +1222,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Edit Category</b></h3>
                   <p>
-                    <span className="required">POST</span> /categories/:uniqid <br />
+                    <span className="s-post">POST</span> /categories/:uniqid <br />
                     Edits a Category. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -1316,7 +1316,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Delete Category</b></h3>
                   <p>
-                    <span className="required">DELETE</span> /categories/:uniqid <br />
+                    <span className="s-delete">DELETE</span> /categories/:uniqid <br />
                     Deletes a Category.
                   </p>
                 </div>
@@ -1505,7 +1505,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Get a Coupon</b></h3>
                   <p>
-                    <span className="required">GET</span> /coupons/:uniqid <br />
+                    <span className="s-get">GET</span> /coupons/:uniqid <br />
                     Retrieves a Coupon by Uniqid.
                   </p>
                 </div>
@@ -1548,7 +1548,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>List All Coupons</b></h3>
                   <p>
-                    <span className="required">GET</span> /coupons <br />
+                    <span className="s-get">GET</span> /coupons <br />
                     Returns a list of all the Coupons. The coupons are sorted by creation date, with the most recently created coupons being first.
                   </p>
                   <table>
@@ -1603,7 +1603,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Coupon</b></h3>
                   <p>
-                    <span className="required">PUT</span> /coupon <br />
+                    <span className="s-put">PUT</span> /coupon <br />
                     Creates a Coupon and returns the Uniqid.<br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -1699,7 +1699,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Edit Coupon</b></h3>
                   <p>
-                    <span className="required">POST</span> /coupons/:uniqid <br />
+                    <span className="s-post">POST</span> /coupons/:uniqid <br />
                     Edits a Coupon. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -1793,7 +1793,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Delete Coupon</b></h3>
                   <p>
-                    <span className="required">DELETE</span> /coupons/:uniqid <br />
+                    <span className="s-delete">DELETE</span> /coupons/:uniqid <br />
                     Deletes a Coupon.
                   </p>
                 </div>
@@ -1967,7 +1967,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Get a Feedback</b></h3>
                   <p>
-                    <span className="required">GET</span> /feedback/:uniqid <br />
+                    <span className="s-get">GET</span> /feedback/:uniqid <br />
                     Retrieves a Feedback by Uniqid.
                   </p>
                 </div>
@@ -2013,7 +2013,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>List All Feedback</b></h3>
                   <p>
-                    <span className="required">GET</span> /feedback <br />
+                    <span className="s-get">GET</span> /feedback <br />
                     Returns a list of all the Feedback. The feedback are sorted by creation date, with the most recently created feedback being first. <br />
                     Invoice and Product objects are not shown in the list endpoint.
                   </p>
@@ -2066,7 +2066,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Reply Feedback</b></h3>
                   <p>
-                    <span className="required">POST</span> /feedback/:uniqid <br />
+                    <span className="s-post">POST</span> /feedback/:uniqid <br />
                     Replies to a Feedback. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -2687,7 +2687,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Get an Order</b></h3>
                   <p>
-                    <span className="required">GET</span> /order/:uniqid <br />
+                    <span className="s-get">GET</span> /order/:uniqid <br />
                     Retrieves an Order by Uniqid.
                   </p>
                 </div>
@@ -2776,7 +2776,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>List All Orders</b></h3>
                   <p>
-                    <span className="required">GET</span> /order <br />
+                    <span className="s-get">GET</span> /order <br />
                     Returns a list of all the Order. The order are sorted by creation date, with the most recently created order being first. <br />
                     Product objects and additional info are not shown in the list endpoint.
                   </p>
@@ -3281,7 +3281,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Get a Product</b></h3>
                   <p>
-                    <span className="required">GET</span> /products/:uniqid <br />
+                    <span className="s-get">GET</span> /products/:uniqid <br />
                     Retrieves a Product by Uniqid.
                   </p>
                 </div>
@@ -3364,7 +3364,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>List All Products</b></h3>
                   <p>
-                    <span className="required">GET</span> /products <br />
+                    <span className="s-get">GET</span> /products <br />
                     Returns a list of all the Products. The products are sorted by creation date, with the most recently 
                     created products being first. This endpoint will return less info than the Get Product one.
                   </p>
@@ -3446,7 +3446,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Product</b></h3>
                   <p>
-                    <span className="required">PUT</span> /product <br />
+                    <span className="s-put">PUT</span> /product <br />
                     Creates a Product and returns the Uniqid.<br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -3768,7 +3768,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Edit Product</b></h3>
                   <p>
-                    <span className="required">POST</span> /products/:uniqid <br />
+                    <span className="s-post">POST</span> /products/:uniqid <br />
                     Edits a Product. Arguments are the same as the create product endpoint, with the addition of remove_image and remove_file. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -4086,7 +4086,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Delete Product</b></h3>
                   <p>
-                    <span className="required">DELETE</span> /products/:uniqid <br />
+                    <span className="s-delete">DELETE</span> /products/:uniqid <br />
                     Deletes a Product.
                   </p>
                 </div>
@@ -4281,7 +4281,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Get a Query</b></h3>
                   <p>
-                    <span className="required">GET</span> /queries/:uniqid <br />
+                    <span className="s-get">GET</span> /queries/:uniqid <br />
                     Retrieves a Query by Uniqid.
                   </p>
                 </div>
@@ -4322,7 +4322,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>List All Queries</b></h3>
                   <p>
-                    <span className="required">GET</span> /queries <br />
+                    <span className="s-get">GET</span> /queries <br />
                     Returns a list of all the Queries. The queries are sorted by creation date, with the most recently 
                     created queries being first. The query object does not contain all the info.
                   </p>
@@ -4380,7 +4380,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Reply Query</b></h3>
                   <p>
-                    <span className="required">PUT</span> /query <br />
+                    <span className="s-put">PUT</span> /query <br />
                     Replies to a Query.<br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -4435,7 +4435,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Close Query</b></h3>
                   <p>
-                    <span className="required">POST</span> /queries/close/:uniqid <br />
+                    <span className="s-post">POST</span> /queries/close/:uniqid <br />
                     Closes to a Query. <br /><br />
                   </p>
                 </div>
@@ -4460,7 +4460,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Reopen Query</b></h3>
                   <p>
-                    <span className="required">DELETE</span> /queries/reopen/:uniqid <br />
+                    <span className="s-delete">DELETE</span> /queries/reopen/:uniqid <br />
                     Reopen to a Query.
                   </p>
                 </div>
@@ -4505,15 +4505,15 @@ if (hash_equals($signature, $header_signature)) {
                   <p>
                     We currently support two types of checkout flows for Sellix Payments, Integrated and White-label. <br /><br />
 
-                    [title] Integrated <br />
+                    <b>Integrated</b> <br />
                     With the integrated checkout option, Sellix handles the checkout aspect for you by only returning a unique payment URL. This unique URL contains our realtime checkout page.<br /><br />
 
-                    [title] White-label <br />
+                    <b>White-label</b> <br />
                     The white-label checkout flow provides the raw order created rather than a payment URL. With the raw order information, you are able to develop and integrate your own checkout experience completely separate from Sellix.<br />
 
                     This has the added downside of not having the realtime status updates that the integrated checkout flow offers, but this can of course be implemented on your side using the webhooks. <br /><br />
 
-                    [title] Products <br />
+                    <b>Products</b> <br />
                     We offer the possibility to create payments for your products too. You can specify a product_id and we will take care of the rest. <br /><br />
                   </p>
                 </div>
@@ -4522,7 +4522,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create Payment</b></h3>
                   <p>
-                    <span className="required">PUT</span> /payments/:uniqid <br />
+                    <span className="s-put">PUT</span> /payments/:uniqid <br />
                     Creates a Payment. Returns an invoice object.
                   </p>
                   <p><b>Arguments</b></p>
@@ -4803,7 +4803,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Delete Payments</b></h3>
                   <p>
-                    <span className="required">DELETE</span> /payments/:uniqid <br />
+                    <span className="s-delete">DELETE</span> /payments/:uniqid <br />
                     Deletes a Payment
                   </p>
                 </div>
