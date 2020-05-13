@@ -5,12 +5,10 @@ import { Card, Row, Col } from 'reactstrap'
 import { PayPalButton } from "react-paypal-button-v2";
 import { CommonActions } from 'services/global'
 import { Loader } from 'components'
-import QRCode from 'react-qr-code'
+// import QRCode from 'react-qr-code'
 import Clipboard from 'react-clipboard.js';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import * as moment from 'moment/moment'
-
-import sellix_logo from 'assets/images/Sellix_logo.svg'
 
 
 import './style.scss'
@@ -224,7 +222,7 @@ class EmbededInvoice extends React.Component {
                           </div>
                           { openQRModal && (
                             <div className="text-center pb-1">
-                              <QRCode value={invoice.crypto_uri || ''} size={226}/>
+                              {/*<QRCode value={invoice.crypto_uri || ''} size={226}/>*/}
                             </div>
                           )}
                           {

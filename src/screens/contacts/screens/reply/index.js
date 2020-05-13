@@ -12,7 +12,8 @@ import {
   Input
 } from 'reactstrap'
 import { Button } from 'components';
-import * as _ from 'lodash'
+import map from "lodash/map"
+import find from "lodash/find"
 import { Formik } from 'formik'
 import { replyQuerie } from '../../actions'
 import { getQuerie } from '../../actions'
@@ -92,7 +93,7 @@ class ReplyToQuerie extends React.Component {
   }
 
   renderMessages = () => {
-    return _.map(this.props.querie, querie => {
+    return map(this.props.querie, querie => {
       return <div className={querie.role === 'customer' ? 'alignForCustomerCS' : 'AlignForYouCS'}>
         <div className='querieMessageBlockCS'>
           <div className='querieMessageTitle'>{querie.role === 'customer' ? 'Customer' : 'You'}</div>
@@ -108,7 +109,7 @@ class ReplyToQuerie extends React.Component {
   }
 
   render() {
-    const currentQuerie = _.find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
+    const currentQuerie = find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
     if (!currentQuerie) { return null }
     return (
       <div className="reply-screen mt-3">

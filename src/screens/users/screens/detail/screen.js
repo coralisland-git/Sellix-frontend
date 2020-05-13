@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { Card, CardHeader, Row, Col, CardBody } from 'reactstrap'
 import { getUser, updateUser, getUserTodayAnalytics, getUserTotalAnalytics, getUser14dAnalytics, banUser, unbanUser } from './actions'
 import { CommonActions } from "../../../../services/global";
-import { pick } from "lodash";
+import pick from "lodash/pick";
 import { withRouter, Link } from "react-router-dom";
 import { Button, Spin, Loader } from "components";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";

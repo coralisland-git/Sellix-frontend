@@ -23,9 +23,8 @@ import infoIcon from 'assets/images/info.svg'
 import infoIconRed from 'assets/images/infoRed.svg'
 import copyIcon from 'assets/images/copy.svg'
 import qrCornerImg from 'assets/images/qr-corner.png'
-import dummyQrCode from 'assets/images/dummy-qr-code.png'
 import checkMarkIcon from 'assets/images/green_checkmark.svg'
-import { QRCode } from 'react-qrcode-logo';
+// import { QRCode } from 'react-qrcode-logo';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import 'react-circular-progressbar/dist/styles.css';
@@ -561,16 +560,16 @@ class Invoice extends React.Component {
       borderRadius,
       overflow: 'hidden'
     } : {}}>
-      <QRCode bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots" 
-      // logoImage={config.PAYMENT_ICONS[invoice.gateway]}
-        onQrDraw={({cellSize}) => {
-          if(cellSize != this.state.qrCellSize)  {
-            this.setState({
-              qrCellSize: cellSize
-            })
-          }
-        }}
-      />
+      {/*<QRCode bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots" */}
+      {/*// logoImage={config.PAYMENT_ICONS[invoice.gateway]}*/}
+      {/*  onQrDraw={({cellSize}) => {*/}
+      {/*    if(cellSize != this.state.qrCellSize)  {*/}
+      {/*      this.setState({*/}
+      {/*        qrCellSize: cellSize*/}
+      {/*      })*/}
+      {/*    }*/}
+      {/*  }}*/}
+      {/*/>*/}
       <img src={config.PAYMENT_ICONS[invoice.gateway]} width={qrCellSize * 11} style={{
         background: qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe'),
         left: `calc(50% - ${qrCellSize * 5.5}px)`,

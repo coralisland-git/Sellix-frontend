@@ -41,8 +41,8 @@ import ReplyToFeedback from './feedbacks/screens/reply'
 import Webhooks from './webhooks'
 import CreateWebhookSimulator from './webhooks/screens/create'
 import WebhookLogs from './webhook_logs'
-import Pages from './pages'
-import CreatePage from './pages/screens/create'
+
+
 import Contact from './contact'
 import QueryView from './contact/screens/detail'
 import ShopFeedback from './feedbacks_shop'
@@ -57,7 +57,6 @@ import EditCoupon from './coupons/screens/create'
 import ReplyToQuerie from './queries/screens/reply'
 import Contacts from './contacts/screens/reply/index.js'
 import Terms from './terms/screen.js'
-import AdminDashboard from './admin_dashboard/screen'
 import Users from './users'
 import User from './users/screens/detail'
 import TopUsers from './topUsers'
@@ -67,8 +66,6 @@ import Invoice from './invoice'
 import SecurityPage from './security'
 import Notification from './notification'
 import Payments from './payments'
-import MemberPage from './memebers'
-import Billings from './billings'
 import Settings from './settings'
 import Invoices from './invoices'
 import ShopDesign from './shop_design'
@@ -76,7 +73,6 @@ import ShopGoogleAnalytics from './shop_google_analytics'
 import StripeCallback from './payments_stripe_callback'
 
 import GeneralSettings from './general_settings'
-import Customization from './customization'
 import EmbededPayment from './embeded_payment'
 import EmbededInvoice from './embeded_invoice'
 
@@ -89,7 +85,6 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export {
-  AdminDashboard,
   Home,
   Changelog,
   Fees,
@@ -140,9 +135,7 @@ export {
   ReplyToFeedback,
   Webhooks,
   CreateWebhookSimulator,
-  Pages,
 
-  CreatePage,
   WebhookLogs,
   ShopFeedback,
   LeaveFeedback,
@@ -155,13 +148,10 @@ export {
   OrderDetail,
   SecurityPage,
   Payments,
-  MemberPage,
-  Billings,
   GeneralSettings,
   ShopDesign,
   ShopGoogleAnalytics,
   Notification,
-  Customization,
   EditBlacklist,
 
   EmbededPayment,

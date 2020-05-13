@@ -9,7 +9,7 @@ import {
   Col
 } from 'reactstrap'
 import { Button } from 'components';
-import * as _ from 'lodash'
+import filter from "lodash/filter"
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
@@ -112,7 +112,7 @@ class Queries extends React.Component {
     if (this.state.filterValue === 'noSorting') {
       return this.props.queries_list //this.props.queries_list
     } else {
-      return _.filter(this.props.queries_list, querie => querie.status === this.state.filterValue)
+      return filter(this.props.queries_list, querie => querie.status === this.state.filterValue)
     }
   }
 

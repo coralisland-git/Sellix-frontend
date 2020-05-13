@@ -16,8 +16,7 @@ import {
   Feedbacks,
   Webhooks,
   WebhookLogs,
-  CreatePage,
-  Pages,
+
   CreateProduct,
   OrderDetail,
   ReplyToQuerie,
@@ -240,22 +239,6 @@ const dashboardRoutes = [
     name: 'Feedback',
     component: Feedbacks.screen,
     title: 'Feedback',
-    exact: true,
-  },
-
-  {
-    path: `/dashboard/${user}/pages/new`,
-    name: 'New',
-    component: CreatePage.screen,
-    title: 'Create page',
-    exact: true,
-  },
-
-  {
-    path: `/dashboard/${user}/pages`,
-    name: 'Pages',
-    component: Pages.screen,
-    title: 'Pages',
     exact: true,
   },
 

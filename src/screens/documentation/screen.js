@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  Card, 
-  CardBody, 
-  CardHeader,
-  Button,
-  Col,  
-  Row,
-  Collapse,
-  Container
-} from "reactstrap";
-import { Link } from "react-router-dom";
-import sellix_logo from "assets/images/Sellix_logo.svg";
+import { Container } from "reactstrap";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburst, atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Scrollspy from 'react-scrollspy';

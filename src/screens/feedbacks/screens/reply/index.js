@@ -19,7 +19,7 @@ import config from 'constants/config'
 import * as moment from 'moment/moment'
 import { getFeedbackById } from '../../actions'
 import { Loader, Spin } from 'components'
-import * as _ from 'lodash'
+import find from "lodash/find"
 import { Formik } from 'formik'
 import {replyFeedback} from '../../actions'
 import {
@@ -107,7 +107,7 @@ class ReplyToFeedback extends React.Component {
 
   render() {
     const currentFeedback = this.props.currentFeedback || 
-      _.find(this.props.feedbacks, (feedback) => feedback.uniqid === this.props.match.params.id)
+      find(this.props.feedbacks, (feedback) => feedback.uniqid === this.props.match.params.id)
     const {loading, saving} = this.state
 
   

@@ -1,21 +1,12 @@
 import React from 'react'
 import {
-  Button,
-  Row,
-  Col,
   Form,
-  FormGroup,
-  Input,
-  Label,
   Modal,
   ModalHeader, 
-  ModalBody,
-  ModalFooter,
+  ModalBody
 } from 'reactstrap'
-import Select from 'react-select'
-import _ from 'lodash'
 
-import QRCode from 'react-qr-code';
+// import QRCode from 'react-qr-code';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 
@@ -57,7 +48,7 @@ class QRCodeModal extends React.Component {
               <Form name="simpleForm" onSubmit={props.handleSubmit}>
                 <ModalHeader toggle={closeModal}>QR Code</ModalHeader>
                   <ModalBody className="text-center pb-5">
-                    <QRCode value={value} />,
+                    {/*<QRCode value={value} />,*/}
                   </ModalBody>
               </Form>
               )}
