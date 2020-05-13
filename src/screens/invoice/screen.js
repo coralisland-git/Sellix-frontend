@@ -611,7 +611,7 @@ class Invoice extends React.Component {
 
     const isCrypto = invoice.crypto_uri != null
 
-    const isQrMode = false//isCrypto && invoice.crypto_mode === 'qrcode'
+    const isQrMode = isCrypto && invoice.crypto_mode === 'qrcode'
 
     const innerComponent = isQrMode ? <>
       {(invoice.status == 0 || invoice.status == 4) && <>
