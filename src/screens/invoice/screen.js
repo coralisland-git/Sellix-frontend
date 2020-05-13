@@ -293,12 +293,18 @@ class Invoice extends React.Component {
     }, 5000)
   }
 
-  setInvoiceStatus = (status) => {
+  setInvoiceStatus = (status, showHhMmSs) => {
 
     const { fakeSuccess, time } = this.state;
 
     if(+status === 0  && !fakeSuccess) {
       this.startTimer();
+
+      if(showHhMmSs) {
+        const { h, m, s } = time
+        return `${(h > 9 ? h : '0' + h) || '00'}:${m > 9 ? m : '0' + m || '00'}:${s > 9 ? s : '0' + s || '00'}`;
+      }
+
       if(time.h > 0) {
         const { h, m } = time
         return `${(h > 9 ? h : '0' + h) || '00'}:${m > 9 ? m : '0' + m || '00'}`;
@@ -372,6 +378,10 @@ class Invoice extends React.Component {
   }
 
   getPaymentForm = ({ gateway, status, crypto_amount, crypto_received, crypto_address }) => {
+
+    const { openQRModal } = this.state
+    const { theme } = this.props
+
     if(gateway === 'paypal' || gateway === 'skrill' || gateway === 'perfectmoney') {
       return ''
     }
@@ -392,11 +402,31 @@ class Invoice extends React.Component {
               Please send exactly <span className="badge text-primary bold">
                 {this.getAmountToSend()}</span> {config.PAYMENT_OPTS[gateway]} to
           </p>
-          <p className="btc-address text-grey bold text-center">
-            {crypto_address || ''}
+          <p className="btc-address text-grey bold text-center" style={{
+            height: openQRModal ? '310px' : '40px',
+            transition: 'height 0.3s ease-out',
+            overflow: 'hidden'
+          }}>
+            <span style={{
+              opacity: openQRModal ? 0 : 1,
+              transition: 'opacity 0.3s ease-out',
+            }}>{crypto_address || ''}</span>
+            <div className="qr-container" style={{
+              height: openQRModal ? '300px' : 0,
+              opacity: openQRModal ? 1 : 0,
+              transition: 'opacity 0.3s ease-out',
+              paddingLeft: '25px',
+              marginTop: '-40px'
+            }}>
+              {this.qrCode({
+                onClick: () => {},
+                qrBgColor: theme === 'dark' ? '#edf0fe' : null,
+                borderRadius: '5px'
+              })}
+            </div>
           </p>
           <div className="d-flex justify-content-between align-items-center ">
-            <span className="text-grey cursor-pointer" onClick={this.openQrCodeModal}>QR Code</span>
+            <span className="text-grey cursor-pointer" onClick={openQRModal ? this.closeQrCodeModal : this.openQrCodeModal}>QR Code</span>
             <span className="text-grey">Pay in Wallet</span>
           </div>
         </div>
@@ -522,6 +552,49 @@ class Invoice extends React.Component {
     return seconds && seconds < 60 * 60
   }
 
+  qrCode = ({ onClick, qrBgColor, borderRadius }) => {
+
+    const { invoice, qrCellSize } = this.state
+    const { theme } = this.props
+
+    return <div onClick={onClick} className="qr-wrapper"  style={borderRadius ? {
+      borderRadius,
+      overflow: 'hidden'
+    } : {}}>
+      <QRCode bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots" 
+      // logoImage={config.PAYMENT_ICONS[invoice.gateway]}
+        onQrDraw={({cellSize}) => {
+          if(cellSize != this.state.qrCellSize)  {
+            this.setState({
+              qrCellSize: cellSize
+            })
+          }
+        }}
+      />
+      <img src={config.PAYMENT_ICONS[invoice.gateway]} width={qrCellSize * 11} style={{
+        background: qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe'),
+        left: `calc(50% - ${qrCellSize * 5.5}px)`,
+        position: 'absolute',
+        padding: qrCellSize + 'px'
+      }}/>
+      <img className="qr-corner top left" src={qrCornerImg}  width={qrCellSize * 8} style={{
+        left: qrCellSize + 'px',
+        top: qrCellSize + 'px',
+        background: qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')
+      }}/>
+      <img className="qr-corner top right" src={qrCornerImg} width={qrCellSize * 8} style={{
+        right: qrCellSize + 'px',
+        top: qrCellSize + 'px',
+        background: qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')
+      }}/>
+      <img className="qr-corner bottom left" src={qrCornerImg} width={qrCellSize * 8} style={{
+        left: qrCellSize + 'px',
+        bottom: qrCellSize + 'px',
+        background: qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')
+      }}/>
+    </div>
+  }
+
   render() {
 
     const { loading, invoice, showAlert, openQRModal, fakeSuccess, info, seconds, qrCellSize } = this.state;
@@ -538,7 +611,7 @@ class Invoice extends React.Component {
 
     const isCrypto = invoice.crypto_uri != null
 
-    const isQrMode = isCrypto && invoice.crypto_mode === 'qrcode'
+    const isQrMode = false//isCrypto && invoice.crypto_mode === 'qrcode'
 
     const innerComponent = isQrMode ? <>
       {(invoice.status == 0 || invoice.status == 4) && <>
@@ -621,43 +694,13 @@ class Invoice extends React.Component {
                                 this.copyAddressToClipboardOnCopied()
                                 }, 300)
                               }}>
-            <div onClick={() => {
-                  this.setState({
-                    paymentLinkSlideDownPanelOpen: true
-                  })
-                }} className="qr-wrapper">
-              <QRCode bgColor={theme === 'light' ? 'white' : '#edf0fe'} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots" 
-              // logoImage={config.PAYMENT_ICONS[invoice.gateway]}
-                onQrDraw={({cellSize}) => {
-                  if(cellSize != this.state.qrCellSize)  {
-                    this.setState({
-                      qrCellSize: cellSize
-                    })
-                  }
-                }}
-              />
-              <img src={config.PAYMENT_ICONS[invoice.gateway]} width={qrCellSize * 11} style={{
-                background: theme === 'light' ? 'white' : '#edf0fe',
-                left: `calc(50% - ${qrCellSize * 5.5}px)`,
-                position: 'absolute',
-                padding: qrCellSize + 'px'
-              }}/>
-              <img className="qr-corner top left" src={qrCornerImg}  width={qrCellSize * 8} style={{
-                left: qrCellSize + 'px',
-                top: qrCellSize + 'px',
-                background: theme === 'light' ? 'white' : '#edf0fe'
-              }}/>
-              <img className="qr-corner top right" src={qrCornerImg} width={qrCellSize * 8} style={{
-                right: qrCellSize + 'px',
-                top: qrCellSize + 'px',
-                background: theme === 'light' ? 'white' : '#edf0fe'
-              }}/>
-              <img className="qr-corner bottom left" src={qrCornerImg} width={qrCellSize * 8} style={{
-                left: qrCellSize + 'px',
-                bottom: qrCellSize + 'px',
-                background: theme === 'light' ? 'white' : '#edf0fe'
-              }}/>
-            </div>
+            {this.qrCode({
+              onClick: () => {
+                this.setState({
+                  paymentLinkSlideDownPanelOpen: true
+                })
+              }
+            })}
           </CopyToClipboard>
           {this.paymentLinkSlideDownPanel()}
           {this.paymentInfoSlideUpPanel()}
@@ -677,7 +720,7 @@ class Invoice extends React.Component {
 
       <div className="d-flex justify-content-between align-items-center ">
         <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-        <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status)}</span>
+        <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status, true)}</span>
       </div>
 
       <p className="text-grey mb-3">{invoice.uniqid}</p>
@@ -734,7 +777,7 @@ class Invoice extends React.Component {
 
         {!loading &&
             <div className="bitcoin-paying-screen animated fadeIn">
-                <QRCodeModal openModal={openQRModal} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal}/>
+                <QRCodeModal openModal={false/*openQRModal*/} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal}/>
 
                 {+invoice.status === 4 && showAlert &&
                     <>
@@ -778,7 +821,7 @@ class Invoice extends React.Component {
                   }
 
                   <Col lg={{ size: isQrMode ? 12 : 4 }} >
-                    {!info && !isQrMode && <div className="text-left my-4 mb-5"><h1 className="m-0">&nbsp;</h1></div>}
+                    {!info && !isQrMode && <div className="text-left my-1 mb-1"><h1 className="m-0">&nbsp;</h1></div>}
                     <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: isQrMode ? '8px' : "calc(1.5rem + 4px)"}}>
                       <div className="float-logo">
                         <img src={sellix_logo} width="153" alt={""}/>
