@@ -6,7 +6,7 @@ export default ({ progress, isPositive, is24 }) => {
 			<div className={'progress-indicator'} >
 				{progress !== 0 ?
 					(isPositive ?
-						<span>+<b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span> :
+						<span>+<b>{(Math.round(progress*100)/100).toFixed(2) > 1000 ? 1000 : (Math.round(progress*100)/100).toFixed(2)}</b>%</span> :
 						<span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>) :
 					<span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>
 				}

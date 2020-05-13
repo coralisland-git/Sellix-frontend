@@ -108,3 +108,21 @@ export const getUserTodayAnalytics = (id) => (dispatch) => {
             throw err
         })
 }
+
+
+export const getUser14dAnalytics = (id) => (dispatch) => {
+    let url = `admin/users/analytics/${id}?from=${moment().subtract(2, 'week').format('MM/DD/YYYY')}&to=${moment().format('MM/DD/YYYY')}`;
+
+    return authApi.get(url)
+        .then(res => {
+
+            if (res.status === 200) {
+                return res.data
+            } else {
+                throw res
+            }
+        })
+        .catch(err => {
+            throw err
+        })
+}
