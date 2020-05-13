@@ -55,6 +55,8 @@ class ShopProductDetail extends React.Component {
         .then(({ data: { invoice }}) => {
 
           window.localStorage.setItem(invoice.uniqid, invoice.secret)
+          localStorage.setItem('invoice-' + invoice.uniqid, JSON.stringify(invoice))
+          localStorage.setItem('product-' + productInfo.uniqid, JSON.stringify(productInfo))
           tostifyAlert('success', 'Invoice is created successfully.');
 
           this.props.history.push({ pathname: `/invoice/${invoice.uniqid}` })
@@ -115,7 +117,20 @@ class ShopProductDetail extends React.Component {
       const { tostifyAlert, getUserProductById } = this.props.commonActions;
       this.setState({ loading: true })
 
-      getUserProductById(this.props.match.params.id).then(res => {
+      const { id } = this.props.match.params
+
+      if(localStorage.getItem('product-' + id)) {
+        this.setState({
+          productInfo: JSON.parse(localStorage.getItem('product-' + id))
+        })
+        localStorage.removeItem('product-' + id)
+
+        this.setState({
+          isTransitionFromProduct: true
+        })
+      }
+
+      getUserProductById(id).then(res => {
         if(res.status === 200) {
           this.setState({
             productInfo: {...res.data.product, paymentOptions: (res.data.product.gateways || '').split(',').filter(opt => opt !== '')},
@@ -147,15 +162,18 @@ class ShopProductDetail extends React.Component {
       sending,
       loading,
       productInfo,
+      isTransitionFromProduct
     } = this.state;
 
-    if(loading || Object.keys(productInfo).length == 0) {
+    if(Object.keys(productInfo).length == 0) {
       return <Row><Col lg={12}><Loader /></Col></Row>
     }
 
     return (
-      <div className="detail-product-screen">
-        <div className="animated fadeIn">
+      <div className="detail-product-screen" style={{
+        marginTop: '25px'
+      }}>
+        <div className={isTransitionFromProduct ? '' : "animated fadeIn"}>
 
           <div className="purchase-card ml-auto mr-auto">
             <Row className="pr-3 pl-3 pt-0">
@@ -171,34 +189,39 @@ class ShopProductDetail extends React.Component {
                   </Col>
 
                   <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
-                    <div className="d-sm-down-none" >
+                    <div className="d-sm-down-none animated fadeIn" >
                       <Affix offsetTop={97} container='affix-bar' >
-                        <Card className="bg-white" id={'affix-container'} style={affixComponent ? {maxWidth: '340px'} : {}}>
-                          {affixComponent !== undefined ? affixComponent : <>
-                            {
-                              group && <div className="p-3 pt-2 pb-2">
-                                <h4>Select an option</h4>
-                                <Input type="select" name="select" id="exampleSelect" 
-                                      value={this.props.selectedProduct.uniqid}
-                                      onChange={e => {
-                                        const uniqid = e.target.value
-                                        const product = group.products_bound.find(p => p.uniqid === uniqid)
-                                        this.props.handleProductChange(product)
-                                      }}
-                                      >
-                                  {group.products_bound.map(product => 
-                                    <option key={product.uniqid} value={product.uniqid}>{product.title}</option>
-                                  )}
-                                </Input>
-                              </div>
-                            }
-                            {
-                              gateway ?
-                                <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                                  <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
-                            }
+                        <Card className="bg-white" id={'affix-container'} style={
+                          loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : (affixComponent ? {maxWidth: '340px'} : {})
+                        }>
+                          {loading && <Loader/>}
+                          {!loading && <>
+                            {affixComponent !== undefined ? affixComponent : <>
+                              {
+                                group && <div className="p-3 pt-2 pb-2">
+                                  <h4>Select an option</h4>
+                                  <Input type="select" name="select" id="exampleSelect" 
+                                        value={this.props.selectedProduct.uniqid}
+                                        onChange={e => {
+                                          const uniqid = e.target.value
+                                          const product = group.products_bound.find(p => p.uniqid === uniqid)
+                                          this.props.handleProductChange(product)
+                                        }}
+                                        >
+                                    {group.products_bound.map(product => 
+                                      <option key={product.uniqid} value={product.uniqid}>{product.title}</option>
+                                    )}
+                                  </Input>
+                                </div>
+                              }
+                              {
+                                gateway ?
+                                  <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
+                                    <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
+                              }
 
-                            <StockInfo productInfo={productInfo} />
+                              <StockInfo productInfo={productInfo} />
+                            </>}
                           </>}
                         </Card>
                       </Affix>

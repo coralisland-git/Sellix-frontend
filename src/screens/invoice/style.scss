@@ -28,6 +28,8 @@
 
 .bitcoin-paying-screen {
 
+  min-height: 490px;
+
   .copy-tooltip.show {
     @media (min-width: 767.98px) {
       animation-name: toolTipAnimation;
