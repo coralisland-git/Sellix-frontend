@@ -93,7 +93,8 @@ class Documentation extends React.Component {
     super(props);
     this.state = {
       isOpen: false,
-      activeNode: null
+      activeNode: null,
+      initial: false
     };
   }
 
@@ -107,7 +108,20 @@ class Documentation extends React.Component {
       this.setState({initial : true})
   }
 
-   
+  componentDidUpdate() {
+    var key = this.props.history.location.hash.substr(1);    
+    if (key !== "")
+      this.setState({initial : true})
+  }
+
+  componentDidUpdate() {
+    var key = this.props.history.location.hash.substr(1);    
+    if(this.state.initial){
+      this.props.history.push(`/documentation#${key}`)
+      this.setState({initial: false})      
+    }    
+  }
+
   render() {
 
     var {activeNode} = this.state;
@@ -128,7 +142,6 @@ class Documentation extends React.Component {
     PAY_NAVIGATIONS.map((nav => {
       items.push(nav.key)
     }))
-
 
     return (
       <div className="documentation-screen">
