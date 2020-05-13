@@ -382,7 +382,7 @@ class EmbededPayment extends React.Component {
           {!loading &&
           <div className="ml-auto mr-auto p-0 embed-block">
             <i className="fa fa-times close-popup" />
-            <header className="stock-info d-flex p-3 pr-5">
+            <header className="stock-info d-flex p-3 pr-4">
               <div className="stock-detail d-flex">
                 { user.profile_attachment && <img src={user.profile_attachment} className="product-image" alt={product_info.title}/> }
                 <div className="m-auto">
