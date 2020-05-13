@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
 import { DateRangePicker2, Loader } from 'components'
-import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews } from './sections'
+import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews, ReportFee } from './sections'
 import { getAnalyticsData, geLastInvoices } from './actions'
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { tableOptions } from "../../constants/tableoptions";
@@ -45,6 +45,7 @@ class Dashboard extends React.Component {
       orders_count_progress: 0,
       views_count_progress: 0,
       queries_count_progress: 0,
+      fee_revenue_potential: 0,
       showPlaceholder: false,
       currency: "USD",
       revenue_by_gateway: []
@@ -103,6 +104,7 @@ class Dashboard extends React.Component {
               orders_count_progress: total.orders_count_progress || 0,
               views_count_progress: total.views_count_progress || 0,
               queries_count_progress: total.queries_count_progress || 0,
+              fee_revenue_potential: total.fee_revenue_potential || 0,
               chartData: analytics['daily'],
               invoices: invoices,
               currency: isAdmin ? 'USD' : analytics.currency,
@@ -127,6 +129,7 @@ class Dashboard extends React.Component {
               orders_count_progress: total.orders_count_progress || 0,
               views_count_progress: total.views_count_progress || 0,
               queries_count_progress: total.queries_count_progress || 0,
+              fee_revenue_potential: total.fee_revenue_potential || 0,
               chartData: analytics[DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]],
               currency: isAdmin ? 'USD' : analytics.currency,
               revenue_by_gateway: total.revenue_by_gateway
@@ -170,9 +173,11 @@ class Dashboard extends React.Component {
 
 
   render() {
+
     const { chartData, loading, invoices, showPlaceholder, range, revenue_by_gateway } = this.state;
 
-    console.log(revenue_by_gateway)
+    let isAdmin = window.location.pathname.includes('admin/dashboard')
+
     return (
       <div className="dashboard-screen">
         <div className="animated fadeIn">
@@ -201,13 +206,14 @@ class Dashboard extends React.Component {
                     </div>
                   </div> : <div>
                     <Row className="mt-4">
-                      <ReportRevenue {...this.state} />
+                      <ReportRevenue {...this.state} isAdmin={isAdmin}/>
                       <ReportOrders {...this.state} />
                       <ReportViews {...this.state} />
-                      <ReportQueries {...this.state} />
+                      {!isAdmin && <ReportQueries {...this.state} />}
+                      {isAdmin && <ReportFee {...this.state} potential={true} />}
                     </Row>
 
-                    <h5 className="mb-4">Revenues | Orders</h5>
+                    <h5 className="mb-4">{isAdmin ? "Cashflows" : "Revenues"} | Orders</h5>
                     <CardBody className="position-relative">
                       <div className={"position-absolute d-flex justify-content-flex-end"} style={{ fontSize: ".8rem", fontWeight: 200, top: "1rem", right: "1rem" }}>
                         This graph will always show a 14 days or higher time span
