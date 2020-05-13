@@ -618,7 +618,8 @@ class Invoice extends React.Component {
         <p style={{
           margin: '0 40px',
           textAlign: 'center',
-          lineHeight: '1.5'
+          lineHeight: '1.5',
+          marginTop: '30px'
         }}>Scan the QR code or copy and paste the payment details into your wallet</p>
 
         <div style={{

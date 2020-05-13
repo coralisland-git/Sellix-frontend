@@ -8,11 +8,11 @@
 @keyframes toolTipAnimation {
   0% {
     opacity: 0 !important;
-    top: 254px;
+    top: 229px;
   }
   100% {
     opacity: 1 !important;
-    top: 225px;
+    top: 200px;
   }
 }
 
@@ -33,7 +33,7 @@
     animation-duration: 0.25s;
     opacity: 1;
     padding: 15px;
-    top: 225px !important;
+    top: 200px !important;
   }
 
   .sk-spinner-pulse {
