@@ -331,7 +331,7 @@ class Documentation extends React.Component {
                     </tbody>
                   </table>
                 </div>
-                <div className="d-ex">
+                <div className="d-ex" style={{ position: "relative", top: 0}}>
                   <div className="code-block response">
                     <div className="code-block-header">
                       <p>VALIDATION ERROR</p>
@@ -441,7 +441,7 @@ class Documentation extends React.Component {
                   </p>
                 </div>
                 <div className="d-ex">
-                  <div className="code-block">
+                  <div className="code-block script">
                     <div className="code-block-header">
                       <p>VALIDATING SIGNED WEBHOOK SIGNATURE</p>
                       <Clipboard 
@@ -3659,7 +3659,7 @@ if (hash_equals($signature, $header_signature)) {
                     </tbody>
                   </table>
                   </div>
-                  <div className="d-ex">
+                  <div className="d-ex" style={{ position: "relative", top: 0}}>
                   <div className="code-block response">
                     <div className="code-block-header">
                        <p>CREATE PRODUCT REQUEST</p>
@@ -3975,7 +3975,7 @@ if (hash_equals($signature, $header_signature)) {
                     </tbody>
                   </table>
                 </div>
-                <div className="d-ex">
+                <div className="d-ex" style={{ position: "relative", top: 0}}>
                   <div className="code-block response">
                     <div className="code-block-header">
                       <p>EDIT PRODUCT REQUEST</p>
@@ -4657,7 +4657,7 @@ if (hash_equals($signature, $header_signature)) {
                     </tbody>
                   </table>
                 </div>
-                <div className="d-ex">
+                <div className="d-ex" style={{ position: "relative", top: 0}}>
                   <div className="code-block response">
                     <div className="code-block-header">
                       <p>CREATE PAYMENT REQUEST</p>
@@ -4707,93 +4707,12 @@ if (hash_equals($signature, $header_signature)) {
                       {`{
   "status": 200,
   "data": {
-      "invoice": {
-          "id": 0,
-          "uniqid": "demo01a32-4df6e9",
-          "total": 1.50,
-          "total_display": 1.50,
-          "currency": "USD",
-          "exchange_rate": 1,
-          "crypto_exchange_rate": 9994.79,
-          "user_id": 0,
-          "username": "demo",
-          "customer_email": "demo@gmail.com",
-          "product_id": "demo30bf1",
-          "product_type": "serials",
-          "product_price": 0.50,
-          "file_attachment_uniqid": null,
-          "gateway": "bitcoin",
-          "paypal_email": null,
-          "paypal_tx_id": null,
-          "paypal_payer_email": null,
-          "skrill_email": null,
-          "skrill_sid": null,
-          "skrill_link": null,
-          "stripe_id": null,
-          "stripe_client_secret": null,
-          "perfectmoney_id": null,
-          "crypto_address": "demonjsckUWTShLE7C",
-          "crypto_amount": 0.00015008,
-          "crypto_received": 0,
-          "crypto_uri": "bitcoin:demoE7C?amount=0.00015008",
-          "crypto_confirmations": 1,
-          "country": "IT",
-          "location": "Italy, Europe",
-          "ip": "1.2.3.4.5.6.7",
-          "is_vpn_or_proxy": false,
-          "user_agent": "PostmanRuntime/7.6.0",
-          "quantity": 3,
-          "coupon_id": null,
-          "custom_fields": {
-              "Demo Username": "demoUID"
-          },
-          "developer_invoice": true,
-          "developer_title": "Demo Payment",
-          "developer_webhook": "https://demo.sellix.io/webhook",
-          "developer_return_url": "https://demo.sellix.io/return",
-          "status": 0,
-          "discount": 0,
-          "fee_fixed": 0,
-          "fee_percentage": 0,
-          "day_value": 8,
-          "day": "Fri",
-          "month": "May",
-          "year": 2020,
-          "created_at": 1588976278,
-          "updated_at": 0,
-          "serials": [],
-          "file": null,
-          "webhooks": [
-              ...
-          ],
-          "crypto_payout": false,
-          "crypto_payout_transaction": null,
-          "crypto_transactions": [],
-          "product": {
-              "title": "Product Demo",
-              "price_display": 0.50,
-              "currency": "USD"
-          },
-          "total_conversions": {
-              "USD": 1.5,
-              "EUR": 1.38,
-              "GBP": 1.22,
-              "JPY": 159.56,
-              "AUD": 2.3,
-              "CAD": 2.09,
-              "CHF": 1.46,
-              "CNY": 10.62,
-              "SEK": 14.64,
-              "NZD": 2.45,
-              "PLN": 6.29
-          },
-          "theme": "dark"
-      }
+      "url": "https://sellix.io/payment/demo"
   },
-  "message": null,
+  "message": "Coupon Created Successfully.",
   "log": null,
   "error": null,
-  "env": "staging"
+  "env": "production"
 }`}
                     </SyntaxHighlighter>
                   </div>
