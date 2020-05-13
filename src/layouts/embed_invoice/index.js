@@ -91,12 +91,12 @@ class EmbedInvoiceLayout extends React.Component {
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
     return (
-      <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
+      <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
           <div className="admin-container app-embed">
-            <div className="">
-              <div className="">
-                  <Container className="p-0" fluid>
+            <div className="app">
+              <div className="app-body">
+                  <Container className="p-0">
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                       <Switch>

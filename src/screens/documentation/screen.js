@@ -142,9 +142,11 @@ class Documentation extends React.Component {
                   offset={ -50 }                  
                   onUpdate={
                     (el) => {
-                      if((el.id !== "introduction")){
+                      if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
                         this.props.history.push(`/documentation#${el.id}`)
                       }
+                      else
+                        this.setState({initial: false})
                     }
                   }>
                   <li className="field">GET STARTED</li>
@@ -163,7 +165,7 @@ class Documentation extends React.Component {
                   {
                     API_NAVIGATIONS.map((nav, cindex) => {
                       return (
-                        <li className={ nav.has_children ? 'parent' : nav.key.indexOf(activeNode) > -1 ? 'sub-nav show' : 'sub-nav' } key={cindex}>
+                        <li className={ nav.has_children ? 'parent' : 'sub-nav show' } key={cindex}>
                           <a href={`/documentation#${nav.key}`} 
                           >{nav.value}</a>
                         </li>
@@ -174,7 +176,7 @@ class Documentation extends React.Component {
                   {
                     PAY_NAVIGATIONS.map((nav, cindex) => {
                       return (
-                        <li className={ nav.has_children ? 'parent' : nav.key.indexOf(activeNode) > -1 ? 'sub-nav show' : 'sub-nav' } key={cindex}>
+                        <li className={ nav.has_children ? 'parent' : 'sub-nav show' } key={cindex}>
                           <a href={`/documentation#${nav.key}`} 
                           >{nav.value}</a>
                         </li>
