@@ -80,10 +80,10 @@ const API_NAVIGATIONS = [
 ]
 
 const PAY_NAVIGATIONS = [
-  { key: 'payments-payment', value: 'Payments', has_children: true },
-  { key: 'checkoutflow-payment', value: 'Checkout Flow' },
-  { key: 'create-payment', value: 'Create Payment' },
-  { key: 'delete-payment', value: 'Delete Payment' },
+  { key: 'sellix-pay', value: 'Payments', has_children: true },
+  { key: 'checkoutflow-pay', value: 'Checkout Flow' },
+  { key: 'create-pay', value: 'Create Payment' },
+  { key: 'delete-pay', value: 'Delete Payment' },
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -142,13 +142,9 @@ class Documentation extends React.Component {
                   offset={ -50 }                  
                   onUpdate={
                     (el) => {
-                      if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
+                      if((el.id !== "introduction")){
                         this.props.history.push(`/documentation#${el.id}`)
                       }
-                      else
-                        this.setState({initial: false})
-                      if(el)
-                        this.setState({activeNode: el.id.split('-')[1]})
                     }
                   }>
                   <li className="field">GET STARTED</li>
@@ -4481,7 +4477,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="payments-payment">
+              <section id="sellix-pay">
                 <div className="d-ins">
                   <h3><b>Payments</b></h3>
                 </div>
@@ -4499,7 +4495,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="checkoutflow-payment">
+              <section id="checkoutflow-pay">
                 <div className="d-ins">
                   <h3><b>Checkout Flow</b></h3>
                   <p>
@@ -4518,7 +4514,7 @@ if (hash_equals($signature, $header_signature)) {
                   </p>
                 </div>
               </section>
-              <section id="create-payment">
+              <section id="create-pay">
                 <div className="d-ins">
                   <h3><b>Create Payment</b></h3>
                   <p>
@@ -4718,7 +4714,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="delete-payment">
+              <section id="delete-pay">
                 <div className="d-ins">
                   <h3><b>Delete Payments</b></h3>
                   <p>
