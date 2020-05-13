@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Card, CardHeader, Row, Col, CardBody } from 'reactstrap'
-import { getUser, updateUser, getUserTodayAnalytics, getUserTotalAnalytics, banUser, unbanUser } from './actions'
+import { getUser, updateUser, getUserTodayAnalytics, getUserTotalAnalytics, getUser14dAnalytics, banUser, unbanUser } from './actions'
 import { CommonActions } from "../../../../services/global";
 import { pick } from "lodash";
 import { withRouter, Link } from "react-router-dom";
-import { Button, Spin } from "components";
+import { Button, Spin, Loader } from "components";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { tableOptions } from "../../../../constants/tableoptions";
 import { ReportOrders, ReportFee, ReportRevenue, ReportViews } from "../../../dashboard/sections";
@@ -30,7 +30,8 @@ class User extends Component {
     this.state = {
       loading: false,
       userLoading: false,
-      range: "total",
+      analyticsLoading: false,
+      range: "today",
       analytics: {
         daily: [],
         monthly: [],
@@ -46,14 +47,13 @@ class User extends Component {
           queries_count_progress: 0,
           currency: "USD"
         },
-      },
-      top: [],
+      }
     }
   }
 
   componentDidMount(){
     this.getUser()
-    this.getAnalytics(true)
+    this.getAnalytics()
   }
 
   getUser = () => {
@@ -64,27 +64,39 @@ class User extends Component {
   }
 
   getAnalytics = (isTotal) => {
+    this.setState({ analyticsLoading: true })
 
     if(isTotal) {
       this.props.getUserTotalAnalytics(this.props.match.params.id)
           .then((res) => {
             res.analytics.total.currency = res.analytics.currency
             this.setState({
-              analytics: res.analytics,
-              top: res.top,
+              analytics: res.analytics
             })
           })
+          .finally(() => {
+            this.setState({ analyticsLoading: false })
+          })
     } else {
-      this.props.getUserTodayAnalytics(this.props.match.params.id)
-          .then((res) => {
+
+      Promise.all([this.props.getUserTodayAnalytics(this.props.match.params.id), this.props.getUser14dAnalytics(this.props.match.params.id)])
+          .then(([res, res2]) => {
+
             res.analytics.total.currency = res.analytics.currency
+
+            console.log({
+              ...res2.analytics,
+              ...res.analytics,
+            })
             this.setState({
               analytics: {
-                ...this.state.analytics,
-                ...res.analytics
-              },
-              top: res.top,
+                ...res2.analytics,
+                ...res.analytics,
+              }
             })
+          })
+          .finally(() => {
+            this.setState({ analyticsLoading: false })
           })
     }
   }
@@ -142,7 +154,7 @@ class User extends Component {
 
   render() {
 
-    const { loading, userLoading } = this.state;
+    const { loading, userLoading, analyticsLoading } = this.state;
     const { user } = this.props;
     const { products, invoices, ips } = user;
 
@@ -205,17 +217,26 @@ class User extends Component {
           </Row>
 
           <Row className="mt-4">
-            <ReportRevenue {...this.state.analytics.total} />
-            <ReportOrders {...this.state.analytics.total} />
-            <ReportViews {...this.state.analytics.total} />
-            <ReportFee {...this.state.analytics.total} />
+            {analyticsLoading ? <div className={"w-100"} style={{ minHeight: 127 }}><Loader /></div> :
+              <>
+                <ReportRevenue {...this.state.analytics.total} />
+                <ReportOrders {...this.state.analytics.total} />
+                <ReportViews {...this.state.analytics.total} />
+                <ReportFee {...this.state.analytics.total} />
+              </>
+            }
           </Row>
 
-          <h5 className="mb-4">Revenues | Orders</h5>
+          <h5 className="mb-4">Cashflows | Orders</h5>
           <Row>
             <Col lg={12} className="mx-auto">
               <CardBody>
-                <Chart range={"monthly"} height="350px" data={this.state.analytics.monthly}/>
+                {analyticsLoading ? <div className={"w-100"} style={{ minHeight: 127 }}><Loader /></div> :
+                <Chart
+                    range={this.state.range === "today" ? "daily" : ""}
+                    height="350px"
+                    data={this.state.range === "today" ? this.state.analytics.daily : this.state.analytics.monthly}
+                />}
               </CardBody>
             </Col>
           </Row>
@@ -287,6 +308,7 @@ const mapDispatchToProps = (dispatch) => ({
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
   getUserTotalAnalytics: bindActionCreators(getUserTotalAnalytics, dispatch),
   getUserTodayAnalytics: bindActionCreators(getUserTodayAnalytics, dispatch),
+  getUser14dAnalytics: bindActionCreators(getUser14dAnalytics, dispatch),
 })
 
 
