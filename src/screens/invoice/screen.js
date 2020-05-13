@@ -940,7 +940,7 @@ class Invoice extends React.Component {
       alignItems: 'center'
     }}>
       <div/>
-      <div style={{width: '100%'}}>
+      <div style={{width: '100%', marginBottom: '35px'}}>
         {invoiceBody}
       </div>
       <div/>
