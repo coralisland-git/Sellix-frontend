@@ -145,8 +145,6 @@ class Documentation extends React.Component {
                       if((el.id !== "introduction")){
                         this.props.history.push(`/documentation#${el.id}`)
                       }
-                      if(el)
-                        this.setState({activeNode: el.id.split('-')[1]})
                     }
                   }>
                   <li className="field">GET STARTED</li>
