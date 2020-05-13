@@ -142,6 +142,11 @@ class Documentation extends React.Component {
                   offset={ -50 }
                   onUpdate={
                     (el) => {
+                      if((el.id !== "introduction" && !this.state.initial) || !this.state.initial){
+                        this.props.history.push(`/documentation#${el.id}`)
+                      }
+                      else
+                        this.setState({initial: false})
                       if(el)
                         this.setState({activeNode: el.id.split('-')[1]})
                     }
