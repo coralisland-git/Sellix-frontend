@@ -162,7 +162,7 @@ class ShopProductDetail extends React.Component {
               <Col lg={12} className="ml-auto mr-auto pb-4">
                 <Row>
 
-                  <Col md={8}>
+                  <Col md={6} lg={7} xl={8}>
                     <Card className="bg-white p-4 detail">
                       <h4 className="text-primary mb-4">{productInfo.title}</h4>
                       <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(productInfo.description)}}>
@@ -170,11 +170,11 @@ class ShopProductDetail extends React.Component {
                     </Card>
                   </Col>
 
-                  <Col md={4} className="left-bar" id="affix-bar">
+                  <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
                     <div className="d-sm-down-none" >
                       <Affix offsetTop={97} container='affix-bar' >
-                        <Card className="bg-white" id={'affix-container'}>
-                          {affixComponent ? affixComponent : <>
+                        <Card className="bg-white" id={'affix-container'} style={affixComponent ? {maxWidth: '340px'} : {}}>
+                          {affixComponent !== undefined ? affixComponent : <>
                             {
                               group && <div className="p-3 pt-2 pb-2">
                                 <h4>Select an option</h4>
@@ -205,14 +205,25 @@ class ShopProductDetail extends React.Component {
                     </div>
 
                     <div className="d-md-none">
-                      <Card className="bg-white">
-                        {
-                          gateway ?
-                              <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                              <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
-                        }
-                        <StockInfo productInfo={productInfo} />
-                      </Card>
+                      { affixComponent ? <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginTop: '40px'
+                      }}>
+                        <div style={{
+                          width: '340px'
+                        }}>
+                          {affixComponent}
+                        </div>
+                      </div> : <Card className="bg-white">
+                          {
+                            gateway ?
+                                <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
+                                <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
+                          }
+                          <StockInfo productInfo={productInfo} />
+                        </Card>
+                      }
                     </div>
 
                   </Col>

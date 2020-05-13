@@ -29,11 +29,14 @@
 .bitcoin-paying-screen {
 
   .copy-tooltip.show {
-    animation-name: toolTipAnimation;
-    animation-duration: 0.25s;
+    @media (min-width: 767.98px) {
+      animation-name: toolTipAnimation;
+      animation-duration: 0.25s;
+      top: 200px !important;
+    }
+    
     opacity: 1;
     padding: 15px;
-    top: 200px !important;
   }
 
   .sk-spinner-pulse {
