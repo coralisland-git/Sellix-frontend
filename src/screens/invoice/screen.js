@@ -288,7 +288,7 @@ class Invoice extends React.Component {
 
     setTimeout(() => {
       if(!this.state.copyIconTooltipShown) {
-        ReactTooltip.show(this.copyIconRef)
+        // ReactTooltip.show(this.copyIconRef)
       }
     }, 5000)
   }
