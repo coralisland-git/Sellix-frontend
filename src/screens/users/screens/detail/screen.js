@@ -1,33 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, CardHeader, Row, Col } from 'reactstrap'
-import { getUser, updateUser, banUser, unbanUser } from './actions'
+import { Card, CardHeader, Row, Col, CardBody } from 'reactstrap'
+import { getUser, updateUser, getUserTodayAnalytics, getUserTotalAnalytics, banUser, unbanUser } from './actions'
 import { CommonActions } from "../../../../services/global";
+import { pick } from "lodash";
+import { withRouter, Link } from "react-router-dom";
+import { Button, Spin } from "components";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+import { tableOptions } from "../../../../constants/tableoptions";
+import { ReportOrders, ReportFee, ReportRevenue, ReportViews } from "../../../dashboard/sections";
 import UserEditForm from './form'
 import UserProductsTable from './products'
 import UserOrdersTable from './orders'
 import UserIpsTable from './ips';
-import { pick } from "lodash";
-import { withRouter, Link } from "react-router-dom";
+import Chart from "../chart";
+
+import config from "constants/config";
 
 import './style.scss'
 
-import { Button, Spin } from "../../../../components";
 
 
-
-
-
-
-const mapStateToProps = ({ users: { user }}) => ({ user })
-const mapDispatchToProps = (dispatch) => ({
-  unbanUser: bindActionCreators(unbanUser, dispatch),
-  banUser: bindActionCreators(banUser, dispatch),
-  getUser: bindActionCreators(getUser, dispatch),
-  updateUser: bindActionCreators(updateUser, dispatch),
-  tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
-})
 
 class User extends Component {
 
@@ -36,11 +30,30 @@ class User extends Component {
     this.state = {
       loading: false,
       userLoading: false,
+      range: "total",
+      analytics: {
+        daily: [],
+        monthly: [],
+        total: {
+          revenue_by_gateway: [],
+          revenue: 0,
+          orders_count: 0,
+          views_count: 0,
+          queries_count: 0,
+          revenue_progress: 0,
+          orders_count_progress: 0,
+          views_count_progress: 0,
+          queries_count_progress: 0,
+          currency: "USD"
+        },
+      },
+      top: [],
     }
   }
 
   componentDidMount(){
     this.getUser()
+    this.getAnalytics(true)
   }
 
   getUser = () => {
@@ -50,6 +63,31 @@ class User extends Component {
         })
   }
 
+  getAnalytics = (isTotal) => {
+
+    if(isTotal) {
+      this.props.getUserTotalAnalytics(this.props.match.params.id)
+          .then((res) => {
+            res.analytics.total.currency = res.analytics.currency
+            this.setState({
+              analytics: res.analytics,
+              top: res.top,
+            })
+          })
+    } else {
+      this.props.getUserTodayAnalytics(this.props.match.params.id)
+          .then((res) => {
+            res.analytics.total.currency = res.analytics.currency
+            this.setState({
+              analytics: {
+                ...this.state.analytics,
+                ...res.analytics
+              },
+              top: res.top,
+            })
+          })
+    }
+  }
 
   handleSubmit = (values) => {
     this.setState({ userLoading: true })
@@ -97,6 +135,10 @@ class User extends Component {
     }
   }
 
+  setAnalyticRange = (range) => {
+    this.getAnalytics(range === "total")
+    this.setState({ range })
+  }
 
   render() {
 
@@ -155,10 +197,97 @@ class User extends Component {
             </Col>
           </Row>
 
+          <Row>
+            <Col lg={12} className="mx-auto">
+              <Button color={this.state.range === "today" ? "primary" : "default"} onClick={this.setAnalyticRange.bind(this, "today")}>Today</Button>
+              <Button color={this.state.range === "total" ? "primary" : "default"} onClick={this.setAnalyticRange.bind(this, "total")}>Total</Button>
+            </Col>
+          </Row>
+
+          <Row className="mt-4">
+            <ReportRevenue {...this.state.analytics.total} />
+            <ReportOrders {...this.state.analytics.total} />
+            <ReportViews {...this.state.analytics.total} />
+            <ReportFee {...this.state.analytics.total} />
+          </Row>
+
+          <h5 className="mb-4">Revenues | Orders</h5>
+          <Row>
+            <Col lg={12} className="mx-auto">
+              <CardBody>
+                <Chart range={"monthly"} height="350px" data={this.state.analytics.monthly}/>
+              </CardBody>
+            </Col>
+          </Row>
+
+
+          <div className="pt-4">
+            {!!this.state.analytics.total.revenue_by_gateway.length && <h5 className="mb-4 mt-4">Cashflow By Gateway</h5>}
+            {!!this.state.analytics.total.revenue_by_gateway.length && <Row className={"mb-4"}>
+              <Col lg={12}>
+                <div className={"product-table"}>
+                  <BootstrapTable
+                      options={{
+                        ...tableOptions(),
+                        sizePerPage: this.state.analytics.total.revenue_by_gateway.length
+                      }}
+                      data={this.state.analytics.total.revenue_by_gateway}
+                      version="4"
+                      striped
+                      totalSize={this.state.analytics.total.revenue_by_gateway.length}
+                      className="product-table"
+                      trClassName="cursor-pointer"
+                  >
+                    <TableHeaderColumn
+                        isKey
+                        dataField="gateway"
+                        dataFormat={(cell, row) => config.PAYMENT_OPTS[row.gateway]}
+                        dataSort
+                        width='33%'
+                    >
+                      Gateway
+                    </TableHeaderColumn>
+                    <TableHeaderColumn
+                        dataField="revenue"
+                        dataAlign="right"
+                        dataSort
+                        dataFormat={(cell, row) => `$ ${row.revenue}`}
+                        width='33%'
+                    >
+                      Cashflow
+                    </TableHeaderColumn>
+                    <TableHeaderColumn
+                        dataField="orders_count"
+                        dataAlign="right"
+                        dataFormat={(cell, row) => row.orders_count}
+                        dataSort
+                        width='33%'
+                    >
+                      Orders Count
+                    </TableHeaderColumn>
+                  </BootstrapTable>
+                </div>
+              </Col>
+            </Row>}
+          </div>
+
         </div>
       </div>
     )
   }
 }
+
+
+const mapStateToProps = ({ users: { user }}) => ({ user })
+const mapDispatchToProps = (dispatch) => ({
+  unbanUser: bindActionCreators(unbanUser, dispatch),
+  banUser: bindActionCreators(banUser, dispatch),
+  getUser: bindActionCreators(getUser, dispatch),
+  updateUser: bindActionCreators(updateUser, dispatch),
+  tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
+  getUserTotalAnalytics: bindActionCreators(getUserTotalAnalytics, dispatch),
+  getUserTodayAnalytics: bindActionCreators(getUserTodayAnalytics, dispatch),
+})
+
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(User))

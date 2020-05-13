@@ -206,11 +206,11 @@ class Invoice extends React.Component {
 
     getInvoiceViaWebsocket(id)
         .then(invoice => {
-          this.setState({ 
+          this.setState({
             invoice: {
               ...invoice,
               crypto_mode: this.state.invoice.crypto_mode
-            } 
+            }
           })
           this.setTheme(invoice)
           if(+invoice.status === 1) {
@@ -456,7 +456,7 @@ class Invoice extends React.Component {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        this.props.tostifyAlert('success', "Copied!")
+        this.props.tostifyAlert('success', "Copied to Clipboard.")
   }
 
   copyAddressToClipboardOnCopied = () => {
@@ -667,17 +667,17 @@ class Invoice extends React.Component {
                 }}/>
               <CircularProgressbar value={this.getInvoiceTimePercentage()} text={
                     this.setInvoiceStatus(invoice.status)
-                  } counterClockwise={true} 
+                  } counterClockwise={true}
                   strokeWidth={10}
                   className={progressShouldBeRed && "red"}
                   styles={buildStyles({
-                
+
                     // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                     strokeLinecap: 'butt',
-                
+
                     // Text size
                     textSize: '24px',
-                
+
                     // Colors
                     pathColor: progressShouldBeRed ? '#ef476f' : `#4F6EF7`,
                     textColor: progressShouldBeRed ? '#ef476f' : `#4F6EF7`,

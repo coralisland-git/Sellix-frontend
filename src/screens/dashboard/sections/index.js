@@ -1,7 +1,17 @@
-import Temp from './temp'
 import DashBoardChart from './chart'
+import {
+  ReportRevenue,
+  ReportViews,
+  ReportOrders,
+  ReportQueries,
+  ReportFee,
+} from './report'
 
 export {
-  Temp,
+  ReportRevenue,
+  ReportViews,
+  ReportOrders,
+  ReportQueries,
+  ReportFee,
   DashBoardChart,
 }
