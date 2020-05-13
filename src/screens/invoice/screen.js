@@ -934,7 +934,17 @@ class Invoice extends React.Component {
       </div>
     }
 
-    return invoiceBody
+    return <div style={{
+      display: 'flex',
+      height: '100%',
+      alignItems: 'center'
+    }}>
+      <div/>
+      <div style={{width: '100%'}}>
+        {invoiceBody}
+      </div>
+      <div/>
+    </div>
   }
 }
 
