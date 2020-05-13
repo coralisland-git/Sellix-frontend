@@ -250,9 +250,9 @@ class Order extends React.Component {
                     </>}
                   </div>
                 </Col>
-                <Col md={7}>
+                <Col md={8}>
                   <div className="d-flex justify-content-end">
-                    <Button color={"default"} className={"mr-4"} onClick={this.updateTable}>Refresh</Button>
+                    <Button color={"primary"} className={"mr-4"} onClick={this.updateTable}>Refresh</Button>
                     <div className="white mr-4">
                       <Select
                           className="select-status-width"

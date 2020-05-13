@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col
-} from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Col } from 'reactstrap'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
@@ -16,14 +10,6 @@ import { withRouter } from 'react-router-dom'
 
 import './style.scss'
 
-
-const mapStateToProps = (state) => ({
-  topUsers: state.topUsers.topUsers
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  getTopUsers: bindActionCreators(getTopUsers, dispatch),
-})
 
 class TopUsers extends Component {
 
@@ -57,14 +43,12 @@ class TopUsers extends Component {
         break
     }
 
-    return <div style={{ fontSize: "1rem" }}>
-      <i className={"fas fa-trophy"} style={{ marginRight: "1.3rem", fontSize: "1.2rem", color }} />#{cell}
-    </div>
+    return <div style={{ fontSize: "1rem" }}><i className={"fas fa-trophy"} style={{ marginRight: "1.3rem", fontSize: "1.2rem", color }} />#{cell}</div>
   }
 
   renderUserEmail = (cell, row) => row.email ? <div>{row.email}</div> : <p className="caption">No specified</p>
 
-  renderUserRevenue = (cell, row) => row.revenue ? <div>{row.revenue}</div> : <p className="caption">No specified</p>
+  renderUserRevenue = (cell, row) => row.revenue ? <div>$ {row.revenue}</div> : <p className="caption">No specified</p>
 
   viewUser = (id) => this.props.history.push(`/admin/users/${id}`)
 
@@ -109,7 +93,7 @@ class TopUsers extends Component {
                           <TableHeaderColumn
                             isKey
                             dataField="position"
-                            width='20%'
+                            width='10%'
                             dataSort
                             dataFormat={this.renderUserId}
                           >
@@ -126,6 +110,7 @@ class TopUsers extends Component {
                           <TableHeaderColumn
                             dataField="username"
                             dataSort
+                            width="30%"
                             dataFormat={this.renderUserUsername}
                           >
                             Username
@@ -133,6 +118,8 @@ class TopUsers extends Component {
                           <TableHeaderColumn
                             dataField="revenue"
                             dataSort
+                            dataAlign="center"
+                            width="30%"
                             dataFormat={this.renderUserRevenue}
                           >
                             Revenue
@@ -149,5 +136,15 @@ class TopUsers extends Component {
     )
   }
 }
+
+
+
+const mapStateToProps = (state) => ({
+  topUsers: state.topUsers.topUsers
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getTopUsers: bindActionCreators(getTopUsers, dispatch),
+})
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopUsers))

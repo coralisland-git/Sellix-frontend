@@ -1,156 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import NumberFormat from 'react-number-format';
-import * as moment from 'moment/moment'
 import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
-
 import { DateRangePicker2, Loader } from 'components'
-import { DashBoardChart } from './sections'
+import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews } from './sections'
 import { getAnalyticsData, geLastInvoices } from './actions'
-
-import './style.scss'
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { tableOptions } from "../../constants/tableoptions";
-import config from "constants/config";
+import * as moment from 'moment/moment'
 import { getSelfUser } from "../../services/global/auth/actions";
 import { withRouter } from "react-router-dom";
+import config from "constants/config";
 
-const PAYMENT_OPTS = {
-  'paypal': 'PayPal',
-  'bitcoin': 'BTC',
-  'litecoin': 'LTC',
-  'ethereum': 'ETH',
-  'skrill': 'Skrill',
-  'stripe': 'Stripe',
-  'bitcoincash': 'BTH',
-  'perfectmoney': 'Perfect Money'
-}
 
-const mapDispatchToProps = dispatch => ({
-  getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch),
-  geLastInvoices: bindActionCreators(geLastInvoices, dispatch),
-  getSelfUser: bindActionCreators(getSelfUser, dispatch)
-})
+import './style.scss'
+
 
 const userId = window.localStorage.getItem('userId')
-
-const Progress = ({ progress, isPositive, is24 }) => {
-  if(is24) {
-    return (
-        <div className={'progress-indicator'} >
-          {progress !== 0 ?
-              (isPositive ?
-                  <span>+<b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span> :
-                  <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>) :
-              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>
-          }
-          {
-            progress !== 0 ?
-                <i className={`fas fa-caret-${isPositive ? 'up' : 'down'}`} />:
-                <i className={`fa fa-minus`} />
-          }
-        </div>
-    )
-  } else {
-    return null
-  }
-}
-
-
-const ReportRevenue = ({ totalRevenue, currency, revenueProgress }) => {
-  return <Col lg={3}>
-    <Card>
-      <CardBody className="p-4 bg-white">
-        <p className="report-title">Revenue</p>
-        <div className="d-flex justify-content-between align-items-center">
-          <NumberFormat value={totalRevenue}
-                        displayType={'text'}
-                        thousandSeparator={true}
-                        prefix={config.CURRENCY_LIST[currency]}
-                        renderText={value => <h3 className="text-primary mb-0">{value}</h3>}
-          />
-          <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
-        </div>
-
-        <div className="progress-xs mt-3 progress">
-          <div
-              className={`progress-bar ${revenueProgress > 0 ? 'bg-success' : (revenueProgress==0 ? 'bg-warning' : 'bg-danger')}`}
-              role="progressbar"
-              style={{width: `${revenueProgress==0 ? 1 : Math.abs(revenueProgress)}%`}}
-              aria-valuemin="0"
-              aria-valuemax="100"
-          />
-        </div>
-
-      </CardBody>
-    </Card>
-  </Col>
-}
-const ReportViews = ({ totalViews, viewsProgress }) => {
-  return <Col lg={3}>
-    <Card>
-      <CardBody className="p-4 bg-white">
-        <p className="report-title">Views</p>
-        <div className="d-flex justify-content-between align-items-center">
-          <h3 className="text-primary mb-0">{totalViews}</h3>
-          <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
-        </div>
-        <div className="progress-xs mt-3 progress">
-          <div
-              className={`progress-bar ${viewsProgress>0?'bg-success':(viewsProgress==0?'bg-warning':'bg-danger')}`}
-              role="progressbar"
-              style={{width: `${viewsProgress == 0?1:Math.abs(viewsProgress)}%`}}
-              aria-valuemin="0"
-              aria-valuemax="100"/>
-        </div>
-      </CardBody>
-    </Card>
-  </Col>
-}
-const ReportOrders = ({ totalOrders, ordersProgress }) => {
-  return <Col lg={3}>
-    <Card>
-      <CardBody className="p-4 bg-white">
-        <p className="report-title">Orders</p>
-        <div className="d-flex justify-content-between align-items-center">
-          <h3 className="text-primary mb-0">{totalOrders}</h3>
-          <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
-        </div>
-        <div className="progress-xs mt-3 progress">
-          <div
-              className={`progress-bar ${ordersProgress>0?'bg-success':(ordersProgress==0?'bg-warning':'bg-danger')}`}
-              role="progressbar"
-              style={{width: `${ordersProgress==0?1:Math.abs(ordersProgress)}%`}}
-              aria-valuemin="0"
-              aria-valuemax="100"/>
-        </div>
-      </CardBody>
-    </Card>
-  </Col>
-}
-const ReportQueries = ({ totalQueries, queriesProgress }) => {
-  return <Col lg={3}>
-    <Card>
-      <CardBody className="p-4 bg-white">
-        <p className="report-title">Queries</p>
-        <div className="d-flex justify-content-between align-items-center">
-          <h3 className="text-primary mb-0">{totalQueries}</h3>
-          <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress>=0} />
-        </div>
-        <div className="progress-xs mt-3 progress">
-          <div
-              className={`progress-bar ${queriesProgress>0?'bg-success':(queriesProgress==0?'bg-warning':'bg-danger')}`}
-              role="progressbar"
-              style={{width: `${queriesProgress == 0?1:Math.abs(queriesProgress)}%`}}
-              aria-valuemin="0"
-              aria-valuemax="100" />
-        </div>
-      </CardBody>
-    </Card>
-  </Col>
-}
-
 
 const DATE_RANGES =  {
   'Last 24 hours': [moment(), moment(), 'daily'],
@@ -170,16 +36,18 @@ class Dashboard extends React.Component {
       loading: false,
       chartData: [],
       invoices: [],
-      totalRevenue: 0,
-      totalOrders: 0,
-      totalViews: 0,
-      totalQueries: 0,
-      revenueProgress: 0,
-      ordersProgress: 0,
-      viewsProgress: 0,
-      queriesProgress: 0,
+
+      revenue: 0,
+      orders_count: 0,
+      views_count: 0,
+      queries_count: 0,
+      revenue_progress: 0,
+      orders_count_progress: 0,
+      views_count_progress: 0,
+      queries_count_progress: 0,
       showPlaceholder: false,
       currency: "USD",
+      revenue_by_gateway: []
     }
   }
 
@@ -227,17 +95,18 @@ class Dashboard extends React.Component {
             let invoices = isAdmin ? [] : response[2].data.invoices;
 
             this.setState({
-              totalRevenue: total.revenue || 0,
-              totalOrders: total.orders_count || 0,
-              totalViews: total.views_count || 0,
-              totalQueries: total.queries_count || 0,
-              revenueProgress: total.revenue_progress || 0,
-              ordersProgress: total.orders_count_progress || 0,
-              viewsProgress: total.views_count_progress || 0,
-              queriesProgress: total.queries_count_progress || 0,
+              revenue: total.revenue || 0,
+              orders_count: total.orders_count || 0,
+              views_count: total.views_count || 0,
+              queries_count: total.queries_count || 0,
+              revenue_progress: total.revenue_progress || 0,
+              orders_count_progress: total.orders_count_progress || 0,
+              views_count_progress: total.views_count_progress || 0,
+              queries_count_progress: total.queries_count_progress || 0,
               chartData: analytics['daily'],
               invoices: invoices,
               currency: isAdmin ? 'USD' : analytics.currency,
+              revenue_by_gateway: total.revenue_by_gateway
             })
           })
           .finally(() => {
@@ -250,16 +119,17 @@ class Dashboard extends React.Component {
             const { total } = analytics;
 
             this.setState({
-              totalRevenue: total.revenue || 0,
-              totalOrders: total.orders_count || 0,
-              totalViews: total.views_count || 0,
-              totalQueries: total.queries_count || 0,
-              revenueProgress: total.revenue_progress || 0,
-              ordersProgress: total.orders_count_progress || 0,
-              viewsProgress: total.views_count_progress || 0,
-              queriesProgress: total.queries_count_progress || 0,
+              revenue: total.revenue || 0,
+              orders_count: total.orders_count || 0,
+              views_count: total.views_count || 0,
+              queries_count: total.queries_count || 0,
+              revenue_progress: total.revenue_progress || 0,
+              orders_count_progress: total.orders_count_progress || 0,
+              views_count_progress: total.views_count_progress || 0,
+              queries_count_progress: total.queries_count_progress || 0,
               chartData: analytics[DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]],
               currency: isAdmin ? 'USD' : analytics.currency,
+              revenue_by_gateway: total.revenue_by_gateway
             })
           })
           .finally(() => {
@@ -281,16 +151,16 @@ class Dashboard extends React.Component {
   renderOrderInfo = (cell, row) => (<div>
         <p><a onClick={(e) => this.gotoDetail(row.uniqid)}>
           <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
-          </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+          </i>&nbsp;&nbsp;&nbsp;{`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
         <p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title?row.product_title:row.product_id}</p>
       </div>)
 
-  renderOrderStatus = (cell, row) => (<div>{PAYMENT_OPTS[row.gateway]}</div>)
+  renderOrderStatus = (cell, row) => (<div>{config.PAYMENT_OPTS[row.gateway]}</div>)
 
   renderOrderValue = (cell, row) => (<div className="order">
         <p className="order-value">{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
-        <p className="caption">{row.crypto_amount ? (row.crypto_amount + ' ') : ''} {PAYMENT_OPTS[row.gateway]}</p>
+        <p className="caption">{row.crypto_amount ? (row.crypto_amount + ' ') : ''} {config.PAYMENT_OPTS[row.gateway]}</p>
       </div>)
 
   renderOrderTime = (cell, row) => (<div>
@@ -300,8 +170,9 @@ class Dashboard extends React.Component {
 
 
   render() {
-    const { chartData, loading, invoices, showPlaceholder, range } = this.state;
+    const { chartData, loading, invoices, showPlaceholder, range, revenue_by_gateway } = this.state;
 
+    console.log(revenue_by_gateway)
     return (
       <div className="dashboard-screen">
         <div className="animated fadeIn">
@@ -405,11 +276,68 @@ class Dashboard extends React.Component {
                   </div>
               }
             </div>
+
+            <div className="pt-4">
+              {!!revenue_by_gateway.length && <h5 className="mb-4 mt-4">Cashflow By Gateway</h5>}
+              {!!revenue_by_gateway.length && <Row className={"mb-4"}>
+                <Col lg={12}>
+                  <div className={"product-table"}>
+                    <BootstrapTable
+                        options={{
+                          ...tableOptions(),
+                          sizePerPage: revenue_by_gateway.length
+                        }}
+                        data={revenue_by_gateway}
+                        version="4"
+                        striped
+                        totalSize={revenue_by_gateway.length}
+                        className="product-table"
+                        trClassName="cursor-pointer"
+                    >
+                      <TableHeaderColumn
+                          isKey
+                          dataField="gateway"
+                          dataFormat={(cell, row) => config.PAYMENT_OPTS[row.gateway]}
+                          dataSort
+                          width='33%'
+                      >
+                        Gateway
+                      </TableHeaderColumn>
+                      <TableHeaderColumn
+                          dataField="revenue"
+                          dataAlign="right"
+                          dataSort
+                          dataFormat={(cell, row) => `$ ${row.revenue}`}
+                          width='33%'
+                      >
+                        Cashflow
+                      </TableHeaderColumn>
+                      <TableHeaderColumn
+                          dataField="orders_count"
+                          dataAlign="right"
+                          dataFormat={(cell, row) => row.orders_count}
+                          dataSort
+                          width='33%'
+                      >
+                        Orders Count
+                      </TableHeaderColumn>
+                    </BootstrapTable>
+                  </div>
+                </Col>
+              </Row>}
+            </div>
           </Card>
         </div>
       </div>
     )
   }
 }
+
+
+const mapDispatchToProps = dispatch => ({
+  getAnalyticsData: bindActionCreators(getAnalyticsData, dispatch),
+  geLastInvoices: bindActionCreators(geLastInvoices, dispatch),
+  getSelfUser: bindActionCreators(getSelfUser, dispatch)
+})
 
 export default withRouter(connect(null, mapDispatchToProps)(Dashboard))
