@@ -15,7 +15,7 @@ export const adminNavigation =  {
       icon: 'fas fa-users',
     },
     {
-      name: 'Top 10 users',
+      name: 'Top 50 users',
       url: `/admin/top`,
       icon: 'fas fa-star',
     },

@@ -12,7 +12,7 @@ import config from "../../../../constants/config";
 
 class UserProductsTable extends Component {
 
-  renderProductPrice = (cell, row) => row.price ? <div>{config.CURRENCY_LIST[row.currency]}{row.price}</div> : <p className="caption">No specified</p>
+  renderProductPrice = (cell, row) => row.price ? <div>{config.CURRENCY_LIST[row.currency]}{row.price_display}</div> : <p className="caption">No specified</p>
 
   renderProductStock = (cell, row) => row.stock ? <div>{row.stock}</div> : <p className="caption">No specified</p>
 
@@ -26,7 +26,7 @@ class UserProductsTable extends Component {
     const { products, loading } = this.props;
 
     return (
-        <Card className={"user-screen"}>
+        <Card>
           <CardBody className="p-4 mb-4">
             <Row>
               <Col lg={12}>
@@ -56,7 +56,7 @@ class UserProductsTable extends Component {
                         <TableHeaderColumn
                             isKey
                             dataField="title"
-                            width='20%'
+                            width='35%'
                             dataSort
                             dataFormat={this.renderUserId}
                         >
@@ -65,7 +65,7 @@ class UserProductsTable extends Component {
                         <TableHeaderColumn
                             dataField="price"
                             dataSort
-                            width="20%"
+                            width="15%"
                             dataAlign="right"
                             dataFormat={this.renderProductPrice}
                         >
@@ -75,15 +75,15 @@ class UserProductsTable extends Component {
                             dataField="type"
                             dataAlign="right"
                             dataSort
-                            width="20%"
+                            width="15%"
                             dataFormat={this.renderProductType}
                         >
                           Type
                         </TableHeaderColumn>
                         <TableHeaderColumn
                             dataField="stock"
-                            dataAlign="right"
-                            width="20%"
+                            dataAlign="center"
+                            width="15%"
                             dataSort
                             dataFormat={this.renderProductStock  }
                         >

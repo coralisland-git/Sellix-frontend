@@ -1,6 +1,6 @@
-import { USER } from 'constants/types'
+import { USER, USERS } from 'constants/types'
 import { authApi, formData } from 'utils'
-
+import * as moment from 'moment/moment'
 
 export const getUser = (id) => (dispatch) => (
     authApi.get(`/admin/users/view/${id}`)
@@ -71,3 +71,40 @@ export const unbanUser = (id) => (dispatch) => (
             throw err
           })
 )
+
+
+export const getUserTotalAnalytics = (id) => (dispatch) => {
+
+    let url = `admin/users/analytics/${id}?from=01/01/2019&to=${moment().format('MM/DD/YYYY')}&year=true`;
+
+    return authApi.get(url)
+        .then(res => {
+
+            if (res.status === 200) {
+                return res.data
+            } else {
+                throw res
+            }
+        })
+        .catch(err => {
+            throw err
+        })
+}
+
+export const getUserTodayAnalytics = (id) => (dispatch) => {
+
+    let url = `admin/users/analytics/${id}?last_hours=true`;
+
+    return authApi.get(url)
+        .then(res => {
+
+            if (res.status === 200) {
+                return res.data
+            } else {
+                throw res
+            }
+        })
+        .catch(err => {
+            throw err
+        })
+}

@@ -98,7 +98,7 @@ class UserProductsTable extends Component {
     const { invoices, loading } = this.props;
 
     return (
-        <Card className={"user-screen"}>
+        <Card>
           <CardBody className="p-4 mb-4">
             <Row>
               <Col lg={12}>
