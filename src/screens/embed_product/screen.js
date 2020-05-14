@@ -160,13 +160,13 @@ class EmbedProduct extends Component {
                           <div className="code-block-header">
                             <p>EMBED JAVASCRIPT</p>
                             <Clipboard 
-                            data-clipboard-text={`<script src="https://cdn.sellix.io/static/js/embed.js"></script>`}
+                            data-clipboard-text={`<script src="https://cdn.sellix.io/static/js/embed.js" integrity="sha384-0gODDX6JNucUjFSSiPgtMsV8vIIt9kPzXMy9o66/c7a2SQp2TJYO+R+LAxaOd617" crossorigin="anonymous"></script>`}
                             button-title="Copy">
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
                           </div>
                           <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
-                            {`<script src="https://cdn.sellix.io/static/js/embed.js" ></script>`}
+                            {`<script src="https://cdn.sellix.io/static/js/embed.js" integrity="sha384-0gODDX6JNucUjFSSiPgtMsV8vIIt9kPzXMy9o66/c7a2SQp2TJYO+R+LAxaOd617" crossorigin="anonymous"></script>`}
                           </SyntaxHighlighter>
                         </div>
                         <p className="page_description text-grey mb-4">
