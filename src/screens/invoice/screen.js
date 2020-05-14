@@ -24,7 +24,7 @@ import infoIconRed from 'assets/images/infoRed.svg'
 import copyIcon from 'assets/images/copy.svg'
 import qrCornerImg from 'assets/images/qr-corner.png'
 import checkMarkIcon from 'assets/images/green_checkmark.svg'
-// import { QRCode } from 'react-qrcode-logo';
+import { QRCode } from 'react-qrcode-logo';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import 'react-circular-progressbar/dist/styles.css';
@@ -80,7 +80,7 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
           <span>File Name: {info.file_attachment.original_name}</span><br/>
           <span>Size: {formatBytes(info.file_attachment.size)}</span>
         </pre>
-        <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Download File</Button>
+      <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Download File</Button>
     </div>
   }
 
@@ -90,10 +90,10 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
           {info.serials.map((v, key) => <span key={key} style={{ fontSize: "12px", lineHeight: 1}}>{v}<br/></span>)}
         </pre>
 
-        <div className={"d-flex"}>
-          <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>
-          <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Save as File</Button>
-        </div>
+      <div className={"d-flex"}>
+        <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>
+        <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Save as File</Button>
+      </div>
     </div>
   }
 
@@ -103,10 +103,10 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
           <span dangerouslySetInnerHTML={{ __html: info.service_text }}/>
         </pre>
 
-        <div className={"d-flex"}>
-          <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>
-          <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Save as File</Button>
-        </div>
+      <div className={"d-flex"}>
+        <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} onClick={copyToClipboard}><i className={"fas fa-copy"}/> Copy to clipboard</Button>
+        <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Save as File</Button>
+      </div>
     </div>
   }
 
@@ -165,11 +165,11 @@ class Invoice extends React.Component {
     return this.props.getPayPalInvoice(this.state.invoice.uniqid)
         .then(res => {
           if(res && res.data && res.data.invoice) {
-              this.setState({ invoice: res.data.invoice });
-              this.setTheme(res.data.invoice)
-              if(+res.data.invoice.status === 1) {
-                return this.props.getInvoiceInfo(id)
-              }
+            this.setState({ invoice: res.data.invoice });
+            this.setTheme(res.data.invoice)
+            if(+res.data.invoice.status === 1) {
+              return this.props.getInvoiceInfo(id)
+            }
           }
         })
         .then((res) => {
@@ -322,9 +322,9 @@ class Invoice extends React.Component {
     else if(+status === 2)
       return 'Cancelled'
     else if(+status === 3)
-     return 'Pending'
+      return 'Pending'
     else if(+status === 4)
-     return 'Partial'
+      return 'Partial'
   }
 
   getInvoiceTimePercentage = () => {
@@ -370,7 +370,7 @@ class Invoice extends React.Component {
       return null
     } else {
       return (
-        <span className="text-grey d-flex align-items-center">
+          <span className="text-grey d-flex align-items-center">
           <img src={config.PAYMENT_ICONS[gateway]} className="mr-1" width="15" height="15"/>{crypto_amount || 0}
         </span>
       )
@@ -402,39 +402,39 @@ class Invoice extends React.Component {
 
     if(+status < 1 || +status > 3)
       return(
-        <div>
-          <p className="text-grey bold mt-4 text-center">
+          <div>
+            <p className="text-grey bold mt-4 text-center">
               Please send exactly <span className="badge text-primary bold">
                 {this.getAmountToSend()}</span> {config.PAYMENT_OPTS[gateway]} to
-          </p>
-          <p className="btc-address text-grey bold text-center" style={{
-            height: openQRModal ? '310px' : '40px',
-            transition: 'height 0.3s ease-out',
-            overflow: 'hidden'
-          }}>
+            </p>
+            <p className="btc-address text-grey bold text-center" style={{
+              height: openQRModal ? '310px' : '40px',
+              transition: 'height 0.3s ease-out',
+              overflow: 'hidden'
+            }}>
             <span style={{
               opacity: openQRModal ? 0 : 1,
               transition: 'opacity 0.3s ease-out',
             }}>{crypto_address || ''}</span>
-            <div className="qr-container" style={{
-              height: openQRModal ? '300px' : 0,
-              opacity: openQRModal ? 1 : 0,
-              transition: 'opacity 0.3s ease-out',
-              paddingLeft: '25px',
-              marginTop: '-40px'
-            }}>
-              {this.qrCode({
-                onClick: () => {},
-                qrBgColor: theme === 'dark' ? '#edf0fe' : null,
-                borderRadius: '5px'
-              })}
+              <div className="qr-container" style={{
+                height: openQRModal ? '300px' : 0,
+                opacity: openQRModal ? 1 : 0,
+                transition: 'opacity 0.3s ease-out',
+                paddingLeft: '25px',
+                marginTop: '-40px'
+              }}>
+                {this.qrCode({
+                  onClick: () => {},
+                  qrBgColor: theme === 'dark' ? '#edf0fe' : null,
+                  borderRadius: '5px'
+                })}
+              </div>
+            </p>
+            <div className="d-flex justify-content-between align-items-center ">
+              <span className="text-grey cursor-pointer" onClick={openQRModal ? this.closeQrCodeModal : this.openQrCodeModal}>QR Code</span>
+              <span className="text-grey">Pay in Wallet</span>
             </div>
-          </p>
-          <div className="d-flex justify-content-between align-items-center ">
-            <span className="text-grey cursor-pointer" onClick={openQRModal ? this.closeQrCodeModal : this.openQrCodeModal}>QR Code</span>
-            <span className="text-grey">Pay in Wallet</span>
           </div>
-        </div>
       )
   }
 
@@ -456,12 +456,12 @@ class Invoice extends React.Component {
     let { invoice, info } = this.state;
 
     let el = document.createElement('textarea');
-        el.value = invoice.product_type === "serials" ? info.serials : invoice.product_type === "service" ? info.service_text : "";
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        this.props.tostifyAlert('success', "Copied to Clipboard.")
+    el.value = invoice.product_type === "serials" ? info.serials : invoice.product_type === "service" ? info.service_text : "";
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    this.props.tostifyAlert('success', "Copied to Clipboard.")
   }
 
   copyAddressToClipboardOnCopied = () => {
@@ -490,7 +490,7 @@ class Invoice extends React.Component {
       }}>
         <h5>{config.PAYMENT_OPTS_FULL_NAME[invoice.gateway]} Address</h5>
         <CopyToClipboard text={invoice.crypto_address}
-          onCopy={() => this.copyAddressToClipboardOnCopied()}>
+                         onCopy={() => this.copyAddressToClipboardOnCopied()}>
           <div>
             <span>{invoice.crypto_address}</span>
             <img src={copyIcon} height="20"/>
@@ -566,16 +566,16 @@ class Invoice extends React.Component {
       borderRadius,
       overflow: 'hidden'
     } : {}}>
-      {/*<QRCode bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots" */}
-      {/*// logoImage={config.PAYMENT_ICONS[invoice.gateway]}*/}
-      {/*  onQrDraw={({cellSize}) => {*/}
-      {/*    if(cellSize != this.state.qrCellSize)  {*/}
-      {/*      this.setState({*/}
-      {/*        qrCellSize: cellSize*/}
-      {/*      })*/}
-      {/*    }*/}
-      {/*  }}*/}
-      {/*/>*/}
+      <QRCode bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots"
+          // logoImage={config.PAYMENT_ICONS[invoice.gateway]}
+              onQrDraw={({cellSize}) => {
+                if(cellSize != this.state.qrCellSize)  {
+                  this.setState({
+                    qrCellSize: cellSize
+                  })
+                }
+              }}
+      />
       <img src={config.PAYMENT_ICONS[invoice.gateway]} width={qrCellSize * 11} style={{
         background: qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe'),
         left: `calc(50% - ${qrCellSize * 5.5}px)`,
@@ -644,11 +644,11 @@ class Invoice extends React.Component {
               })
             }}/>
             <CopyToClipboard text={invoice.crypto_address}
-                              onCopy={() => {
-                              setTimeout(() => {
-                                this.copyAddressToClipboardOnCopied()
-                                }, 300)
-                              }}>
+                             onCopy={() => {
+                               setTimeout(() => {
+                                 this.copyAddressToClipboardOnCopied()
+                               }, 300)
+                             }}>
               <img src={copyIcon} height="30" data-tip={"Copy " + config.PAYMENT_OPTS_FULL_NAME[invoice.gateway] + " Address"} data-place="top" onClick={() => {
                 this.setState({
                   paymentLinkSlideDownPanelOpen: true
@@ -661,47 +661,46 @@ class Invoice extends React.Component {
             <h3>{this.getAmountToSend()} {config.PAYMENT_OPTS[invoice.gateway]}</h3>
             <div style={{position: 'relative'}}>
               <img src={progressShouldBeRed ? infoIconRed : infoIcon} style={{
-                  position: 'absolute',
-                  left: 0,
-                  top: 0,
-                  width: '100%',
-                  height: '100%',
-                  zIndex: 9,
-                  display: 'block'
-                }} className="progress-overlay" onClick={() => {
-                  this.setState({
-                    paymentInfoSlideUpPanelOpen: true
-                  })
-                }}/>
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: 9,
+                display: 'block'
+              }} className="progress-overlay" onClick={() => {
+                this.setState({
+                  paymentInfoSlideUpPanelOpen: true
+                })
+              }}/>
               <CircularProgressbar value={this.getInvoiceTimePercentage()} text={
-                    this.setInvoiceStatus(invoice.status)
-                  } counterClockwise={true}
-                  strokeWidth={10}
-                  className={progressShouldBeRed && "red"}
-                  styles={buildStyles({
+                this.setInvoiceStatus(invoice.status)
+              } counterClockwise={true}
+                                   strokeWidth={10}
+                                   className={progressShouldBeRed && "red"}
+                                   styles={buildStyles({
 
-                    // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                    strokeLinecap: 'butt',
+                                     // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                     strokeLinecap: 'butt',
 
-                    // Text size
-                    textSize: '24px',
+                                     // Text size
+                                     textSize: '24px',
 
-                    // Colors
-                    pathColor: progressShouldBeRed ? '#ef476f' : `#4F6EF7`,
-                    textColor: progressShouldBeRed ? '#ef476f' : `#4F6EF7`,
-                    trailColor: '#d6d6d6',
-                    backgroundColor: '#3e98c7',
-                  })}
-                />
+                                     // Colors
+                                     pathColor: progressShouldBeRed ? '#ef476f' : `#4F6EF7`,
+                                     textColor: progressShouldBeRed ? '#ef476f' : `#4F6EF7`,
+                                     trailColor: '#d6d6d6',
+                                     backgroundColor: '#3e98c7',
+                                   })}
+              />
             </div>
           </div>
-          {/* <img width="270" src={dummyQrCode}/> */}
           <CopyToClipboard text={invoice.crypto_address}
-                              onCopy={() => {
-                                setTimeout(() => {
-                                this.copyAddressToClipboardOnCopied()
-                                }, 300)
-                              }}>
+                           onCopy={() => {
+                             setTimeout(() => {
+                               this.copyAddressToClipboardOnCopied()
+                             }, 300)
+                           }}>
             {this.qrCode({
               onClick: () => {
                 this.setState({
@@ -716,39 +715,39 @@ class Invoice extends React.Component {
       </>
       }
       {invoice.status == 3 && <>
-          <Loader/>
-          <h4 style={{
-            textAlign: 'center',
-            marginBottom: '50px'
-          }}>Awaiting Confirmation <br/>({((invoice.crypto_transactions || []).slice(-1)[0] || {}).confirmations }/{invoice.crypto_confirmations || 0})</h4>
-        </>
+        <Loader/>
+        <h4 style={{
+          textAlign: 'center',
+          marginBottom: '50px'
+        }}>Awaiting Confirmation <br/>({((invoice.crypto_transactions || []).slice(-1)[0] || {}).confirmations }/{invoice.crypto_confirmations || 0})</h4>
+      </>
       }
     </> : <>
-    <div className={info ? "top px-4 pb-4 pt-0" : "top p-4 pt-4"}>
+      <div className={info ? "top px-4 pb-4 pt-0" : "top p-4 pt-4"}>
 
-      <div className="d-flex justify-content-between align-items-center ">
-        <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-        <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status, true)}</span>
-      </div>
+        <div className="d-flex justify-content-between align-items-center ">
+          <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
+          <span className="badge text-primary bold status invoice-timer m-0" id="status">{this.setInvoiceStatus(invoice.status, true)}</span>
+        </div>
 
-      <p className="text-grey mb-3">{invoice.uniqid}</p>
+        <p className="text-grey mb-3">{invoice.uniqid}</p>
 
-      <div className="d-flex justify-content-between align-items-center ">
-        <h4 className="text-grey">{(invoice.product || {}).title}</h4>
-        {this.getCryptoAmount({...invoice})}
-      </div>
+        <div className="d-flex justify-content-between align-items-center ">
+          <h4 className="text-grey">{(invoice.product || {}).title}</h4>
+          {this.getCryptoAmount({...invoice})}
+        </div>
 
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <span className="text-grey">{invoice.product_id || ''}</span>
-        <span className="text-grey">{config.CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
-      </div>
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <span className="text-grey">{invoice.product_id || ''}</span>
+          <span className="text-grey">{config.CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
+        </div>
 
-      {
-        this.getPaymentForm({...invoice})
-      }
+        {
+          this.getPaymentForm({...invoice})
+        }
 
-      {
-        (invoice.gateway === 'paypal' && +invoice.status === 0) &&
+        {
+          (invoice.gateway === 'paypal' && +invoice.status === 0) &&
           <div className="mt-5">
             <PayPalButton
                 createOrder={() => invoice.paypal_tx_id}
@@ -760,178 +759,178 @@ class Invoice extends React.Component {
                 options={{ clientId: invoice.paypal_client_id, currency: invoice.currency }}
             />
           </div>
-      }
+        }
 
-      {(invoice.gateway === 'perfectmoney' && +invoice.status === 0) &&
+        {(invoice.gateway === 'perfectmoney' && +invoice.status === 0) &&
         <PerfectMoney {...invoice}/>
-      }
+        }
 
-      {
-        (invoice.gateway === 'skrill' && +invoice.status === 0) &&
-        <div className="mt-5">
-          <div className="d-flex input-group">
-            <a target="_blacnk" href={invoice.skrill_link} className="w-100 p-0 text-center skrill-button">
-              <img src={skrillLinkIcon} height="45"/>
-            </a>
+        {
+          (invoice.gateway === 'skrill' && +invoice.status === 0) &&
+          <div className="mt-5">
+            <div className="d-flex input-group">
+              <a target="_blacnk" href={invoice.skrill_link} className="w-100 p-0 text-center skrill-button">
+                <img src={skrillLinkIcon} height="45"/>
+              </a>
+            </div>
           </div>
-        </div>
-      }
+        }
       </div>
     </>
 
     const invoiceBody = (
-      <div>
-        {loading && <Row><Col lg={12}  style={{
-          height: '490px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}><Loader /></Col></Row>}
+        <div>
+          {loading && <Row><Col lg={12}  style={{
+            height: '490px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}><Loader /></Col></Row>}
 
-        {!loading &&
-            <div className="bitcoin-paying-screen animated fadeIn">
-                <QRCodeModal openModal={false/*openQRModal*/} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal}/>
+          {!loading &&
+          <div className="bitcoin-paying-screen animated fadeIn">
+            <QRCodeModal openModal={false/*openQRModal*/} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal}/>
 
-                {+invoice.status === 4 && showAlert &&
+            {+invoice.status === 4 && showAlert &&
+            <>
+              <div className={"sw-container fixed"} onClick={this.hideAlert}>
+                <div className="sw">
+
+                  <div className={"sw-icon-info"}>
+                    <div className={"elem-1"} />
+                    <div className={"elem-2"} />
+                  </div>
+
+                  <h2 className="sw-title">We haven't received full amount</h2>
+                  <div className="sw-text text-muted lead">
+                    Transaction has been received but it’s not enough. We only received {invoice.crypto_received} of {invoice.crypto_amount}, please send the remaining amount in order to fulfill the invoice
+                  </div>
+                </div>
+              </div>
+
+            </>
+            }
+
+            <Row className="justify-content-center">
+
+              {info &&
+              <>
+                <Col lg={12}>
+                  <div className="text-left my-4 mb-5">
+                    <h1 className={"m-0"} style={{ fontSize: "1.4rem" }}>
+                      Your Order for <strong>{info.product.title}</strong> is completed.
+                    </h1>
+                  </div>
+                </Col>
+                <Col lg={8}>
+                  <Card className={"p-4"} >
+                    <h4 style={{ fontWeight: 400 }}>{info.product.title}</h4>
+                    <span className={"pb-4"}>{info.delivery_text}</span>
+                    <RenderProduct info={info} product_type={invoice.product_type} onSaveFile={this.onSaveFile} copyToClipboard={this.copyToClipboard} />
+                  </Card>
+                </Col>
+              </>
+              }
+
+              <Col lg={{ size: isQrMode ? 12 : 4 }} >
+                {!info && !isQrMode && <div className="text-left my-1 mb-1"><h1 className="m-0">&nbsp;</h1></div>}
+                <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: isQrMode ? '8px' : "calc(1.5rem + 4px)"}}>
+                  <div className="float-logo">
+                    <img src={sellix_logo} width="153" alt={""}/>
+                  </div>
+
+                  {innerComponent}
+
+                  <div className={"bottom order-detail-info p-4 " + ((isQrMode || invoice.status == 1 || invoice.status == 2) && "no-padding")}>
+                    {(+invoice.status === 1 || fakeSuccess) &&
                     <>
-                      <div className={"sw-container fixed"} onClick={this.hideAlert}>
+                      <div className={"sw-container"}>
                         <div className="sw">
 
-                          <div className={"sw-icon-info"}>
+                          <div className={"sw-icon-success"}>
                             <div className={"elem-1"} />
-                            <div className={"elem-2"} />
+                            <span className={"elem-2"} />
+                            <span className={"elem-3"} />
+                            <div className={"elem-4"} />
+                            <div className={"elem-5"} />
+                            <div className={"elem-6"} />
                           </div>
 
-                          <h2 className="sw-title">We haven't received full amount</h2>
+                          <h2 className="sw-title">Order completed!</h2>
                           <div className="sw-text text-muted lead">
-                            Transaction has been received but it’s not enough. We only received {invoice.crypto_received} of {invoice.crypto_amount}, please send the remaining amount in order to fulfill the invoice
+                            Your invoice has been paid. <br/>You will receive the products within minutes, <br/>check your email!
                           </div>
                         </div>
                       </div>
+                    </>
+                    }
 
-                  </>
-                }
+                    {+invoice.status === 2 && !fakeSuccess &&
+                    <>
+                      <div className={"sw-container"}>
+                        <div className="sw">
 
-                <Row className="justify-content-center">
-
-                  {info &&
-                      <>
-                        <Col lg={12}>
-                          <div className="text-left my-4 mb-5">
-                            <h1 className={"m-0"} style={{ fontSize: "1.4rem" }}>
-                              Your Order for <strong>{info.product.title}</strong> is completed.
-                            </h1>
-                          </div>
-                        </Col>
-                        <Col lg={8}>
-                          <Card className={"p-4"} >
-                            <h4 style={{ fontWeight: 400 }}>{info.product.title}</h4>
-                            <span className={"pb-4"}>{info.delivery_text}</span>
-                            <RenderProduct info={info} product_type={invoice.product_type} onSaveFile={this.onSaveFile} copyToClipboard={this.copyToClipboard} />
-                          </Card>
-                        </Col>
-                      </>
-                  }
-
-                  <Col lg={{ size: isQrMode ? 12 : 4 }} >
-                    {!info && !isQrMode && <div className="text-left my-1 mb-1"><h1 className="m-0">&nbsp;</h1></div>}
-                    <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: isQrMode ? '8px' : "calc(1.5rem + 4px)"}}>
-                      <div className="float-logo">
-                        <img src={sellix_logo} width="153" alt={""}/>
-                      </div>
-
-                      {innerComponent}
-
-                      <div className={"bottom order-detail-info p-4 " + ((isQrMode || invoice.status == 1 || invoice.status == 2) && "no-padding")}>
-                        {(+invoice.status === 1 || fakeSuccess) &&
-                            <>
-                              <div className={"sw-container"}>
-                                <div className="sw">
-
-                                  <div className={"sw-icon-success"}>
-                                    <div className={"elem-1"} />
-                                    <span className={"elem-2"} />
-                                    <span className={"elem-3"} />
-                                    <div className={"elem-4"} />
-                                    <div className={"elem-5"} />
-                                    <div className={"elem-6"} />
-                                  </div>
-
-                                  <h2 className="sw-title">Order completed!</h2>
-                                  <div className="sw-text text-muted lead">
-                                    Your invoice has been paid. <br/>You will receive the products within minutes, <br/>check your email!
-                                  </div>
-                                </div>
-                              </div>
-                          </>
-                        }
-
-                        {+invoice.status === 2 && !fakeSuccess &&
-                            <>
-                              <div className={"sw-container"}>
-                                <div className="sw">
-
-                                  <div className={"sw-icon-cancel"}>
+                          <div className={"sw-icon-cancel"}>
                                         <span className="elem-1">
                                           <span className="elem-2" />
                                           <span className="elem-3" />
                                         </span>
-                                  </div>
-
-                                  <h2 className="sw-title">Invoice Cancelled</h2>
-                                  <div className="sw-text text-muted lead">
-                                    The invoice has expired or isn't available.
-                                  </div>
-                                </div>
-                              </div>
-                            </>
-                        }
-
-                        { +invoice.status !== 1 && +invoice.status !== 2 && !fakeSuccess && !isQrMode &&
-                          <div>
-                            <h4 className="text-primary mb-3">Order Details</h4>
-                            {
-                              this.getInvoiceStatus2(invoice.status) != null &&
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                                <span className="text-primary">Status</span>
-                                <h5 className="text-primary mb-0">{this.getInvoiceStatus2(invoice.status)}</h5>
-                              </div>
-                            }
-
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                              <span className="text-primary">Seller</span>
-                              <h5 className="text-primary mb-0">{invoice.username }</h5>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                              <span className="text-primary">Quantity</span>
-                              <h5 className="text-primary mb-0">{invoice.quantity}</h5>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                              <span className="text-primary">Email</span>
-                              <h5 className="text-primary mb-0">{invoice.customer_email}</h5>
-                            </div>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                              <span className="text-primary">Created</span>
-                              <h5 className="text-primary mb-0">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
-                            </div>
-                            {
-                              this.getCryptoReceived({...invoice})
-                            }
                           </div>
-                        }
+
+                          <h2 className="sw-title">Invoice Cancelled</h2>
+                          <div className="sw-text text-muted lead">
+                            The invoice has expired or isn't available.
+                          </div>
+                        </div>
                       </div>
-                    </Card>
+                    </>
+                    }
 
-                    {info && <Card className={"mb-5"}>
-                      <LeaveFeedback uniqid={info.feedback_uniqid} />
-                    </Card>}
-                  </Col>
+                    { +invoice.status !== 1 && +invoice.status !== 2 && !fakeSuccess && !isQrMode &&
+                    <div>
+                      <h4 className="text-primary mb-3">Order Details</h4>
+                      {
+                        this.getInvoiceStatus2(invoice.status) != null &&
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                          <span className="text-primary">Status</span>
+                          <h5 className="text-primary mb-0">{this.getInvoiceStatus2(invoice.status)}</h5>
+                        </div>
+                      }
 
-                </Row>
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span className="text-primary">Seller</span>
+                        <h5 className="text-primary mb-0">{invoice.username }</h5>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span className="text-primary">Quantity</span>
+                        <h5 className="text-primary mb-0">{invoice.quantity}</h5>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span className="text-primary">Email</span>
+                        <h5 className="text-primary mb-0">{invoice.customer_email}</h5>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span className="text-primary">Created</span>
+                        <h5 className="text-primary mb-0">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
+                      </div>
+                      {
+                        this.getCryptoReceived({...invoice})
+                      }
+                    </div>
+                    }
+                  </div>
+                </Card>
 
-            </div>
+                {info && <Card className={"mb-5"}>
+                  <LeaveFeedback uniqid={info.feedback_uniqid} />
+                </Card>}
+              </Col>
+
+            </Row>
+
+          </div>
           }
-      </div>
+        </div>
     )
 
     if(isQrMode) {
