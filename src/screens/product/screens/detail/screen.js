@@ -15,8 +15,6 @@ import {
 } from 'reactstrap'
 import Select from 'react-select'
 import { Button } from 'components';
-import 'react-quill/dist/quill.snow.css';
-import 'react-quill/dist/quill.snow.css';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import { AppSwitch } from '@coreui/react'
@@ -404,14 +402,11 @@ class EditProduct extends React.Component {
 			unlistedTooltipOpen, 
 			privateTooltipOpen,
 			blockTooltipOpen,
-			paypalTooltipOpen,
-			files, 
-			serials,
+			files,
 			images,
 			selectedTab,
 			showFileStock,
 			showServiceStock,
-			editorState,
 			initialValues,
       		type,
       		gateways,

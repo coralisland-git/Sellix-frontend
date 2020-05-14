@@ -14,7 +14,6 @@ import {
 	Input
 } from 'reactstrap'
 import Select from 'react-select'
-import 'react-quill/dist/quill.snow.css';
 import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 

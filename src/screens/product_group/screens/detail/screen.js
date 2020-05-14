@@ -14,8 +14,6 @@ import {
     Input
 } from 'reactstrap'
 import Select from 'react-select'
-import 'react-quill/dist/quill.snow.css';
-import 'react-quill/dist/quill.snow.css';
 import * as Showdown from "showdown";
 import { Loader, ImageUpload, Button } from 'components'
 import * as ProductGroupActions from '../../actions'

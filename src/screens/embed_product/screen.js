@@ -154,7 +154,7 @@ class EmbedProduct extends Component {
                 :
                   <Row>
                     <Col lg={12}>
-                      <div className="p-5">
+                      <div className="p-4">
                         <p className="page_description text-grey mb-4">
                           We offer the possibility to embed our products directly into your site, without having to rely on our shop page. <br />
                           In order to do this, you first have to include our embed.js through this link

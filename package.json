@@ -63,7 +63,6 @@
     "react-number-format": "^4.4.1",
     "react-paypal-button-v2": "^2.6.1",
 
-    "react-qr-code": "^0.1.3",
     "react-qrcode-logo": "https://github.com/alexeysavenkov/react-qrcode-logo#7d5b80522da840f13da3e38fdef082910ef4a907",
 
     "react-redux": "^7.1.1",

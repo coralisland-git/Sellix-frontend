@@ -11,17 +11,10 @@ import Purchase from "./purchase";
 import Form from "./form";
 
 
+
 import './style.scss';
 
 
-const mapStateToProps = ({ common: { user_products, general_info: user } }) => ({
-  user_products,
-  user,
-});
-
-const mapDispatchToProps = dispatch => ({
-  commonActions: bindActionCreators(CommonActions, dispatch)
-});
 
 
 class ShopProductDetail extends React.Component {
@@ -58,10 +51,11 @@ class ShopProductDetail extends React.Component {
           tostifyAlert('success', 'Invoice is created successfully.');
 
           this.props.history.push({
-            pathname: `/invoice/${invoice.uniqid}`
+            pathname: `/invoice/${invoice.uniqid}`,
+            state: {
+              invoice: invoice
+            }
           })
-
-          // this.setState()
         })
         .catch(({ error }) => {
           tostifyAlert('error', error)
@@ -80,7 +74,6 @@ class ShopProductDetail extends React.Component {
   setPaymentOptions = gateway => () => {
     this.setState({ gateway })
   }
-
 
   setCount = ({ quantity }) => {
     this.setState({
@@ -143,21 +136,13 @@ class ShopProductDetail extends React.Component {
     }
   }
 
+  progressShouldBeRed = () => this.state.seconds && this.state.seconds < 60 * 60
+
   render() {
-    const { group, affixComponent } = this.props;
 
-    const {
-      gateway,
-      sending,
-      loading,
-      productInfo
-    } = this.state;
+    const { group } = this.props;
+    const { gateway, sending, loading, productInfo, invoice, isQrMode } = this.state;
 
-    if(Object.keys(productInfo).length == 0) {
-      return <Row><Col lg={12}><Loader /></Col></Row>
-    }
-
-    console.log(this.props.history)
 
     return (
       <div className="detail-product-screen" style={{ marginTop: '25px' }}>
@@ -179,12 +164,10 @@ class ShopProductDetail extends React.Component {
                   <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
                     <div className="d-sm-down-none animated fadeIn" >
                       <Affix offsetTop={97} container='affix-bar' >
-                        <Card className="bg-white" id={'affix-container'} style={
-                          loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : (affixComponent ? {maxWidth: '340px'} : {})
-                        }>
+                        <Card className="bg-white" id={'affix-container'} style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
                           {loading && <Loader/>}
                           {!loading && <>
-                            {affixComponent !== undefined ? affixComponent : <>
+                            {<>
                               {
                                 group && <div className="p-3 pt-2 pb-2">
                                   <h4>Select an option</h4>
@@ -196,45 +179,20 @@ class ShopProductDetail extends React.Component {
                                           this.props.handleProductChange(product)
                                         }}
                                         >
-                                    {group.products_bound.map(product => 
-                                      <option key={product.uniqid} value={product.uniqid}>{product.title}</option>
-                                    )}
+                                    {group.products_bound.map(product => <option key={product.uniqid} value={product.uniqid}>{product.title}</option>)}
                                   </Input>
                                 </div>
                               }
                               {
                                 gateway ?
                                   <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                                    <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
+                                  <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
                               }
-
                               <StockInfo productInfo={productInfo} />
                             </>}
                           </>}
                         </Card>
                       </Affix>
-                    </div>
-
-                    <div className="d-md-none">
-                      { affixComponent ? <div style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        marginTop: '40px'
-                      }}>
-                        <div style={{
-                          width: '340px'
-                        }}>
-                          {affixComponent}
-                        </div>
-                      </div> : <Card className="bg-white">
-                          {
-                            gateway ?
-                                <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                                <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
-                          }
-                          <StockInfo productInfo={productInfo} />
-                        </Card>
-                      }
                     </div>
 
                   </Col>
@@ -248,5 +206,14 @@ class ShopProductDetail extends React.Component {
     )
   }
 }
+
+const mapStateToProps = ({ common: { user_products, general_info: user } }) => ({
+  user_products,
+  user,
+});
+
+const mapDispatchToProps = dispatch => ({
+  commonActions: bindActionCreators(CommonActions, dispatch)
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShopProductDetail))

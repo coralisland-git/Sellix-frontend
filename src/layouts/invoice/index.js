@@ -9,7 +9,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
-import { invoiceRoutes } from '../../routes';
+
+import { invoiceRoutes } from 'routes';
 import { AuthActions, CommonActions } from 'services/global'
 
 
@@ -25,24 +26,23 @@ const mapStateToProps = (state) => ({
   theme: state.common.theme
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  authActions: bindActionCreators(AuthActions, dispatch),
-  commonActions: bindActionCreators(CommonActions, dispatch)
-})
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    authActions: bindActionCreators(AuthActions, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch)
+  })
+}
 
-class DefaultLayout extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      theme: 'light'
-    }
-  }
+class InvoiceLayout extends React.Component {
 
   componentDidMount () {
-      this.props.authActions.getSelfUser().catch(err => {
-        this.props.authActions.logOut()
-      })
-      const toastifyAlert = (status, message) => {
+
+      this.props.authActions.getSelfUser()
+          .catch(err => {
+            this.props.authActions.logOut()
+          })
+
+      this.props.commonActions.setTostifyAlertFunc((status, message) => {
         if (!message) {
           message = 'Unexpected Error'
         }
@@ -63,15 +63,7 @@ class DefaultLayout extends React.Component {
             position: toast.POSITION.TOP_RIGHT
           })
         }
-      }
-      this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
-  }
-
-  changeTheme() {
-    const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
-
-    this.setState({theme: theme === 'light' ? 'dark': 'light'})
+      })
   }
 
   render() {
@@ -79,7 +71,7 @@ class DefaultLayout extends React.Component {
       zIndex: 1999
     }
 
-    const { theme } = this.props
+    const { theme } = this.props;
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -88,7 +80,7 @@ class DefaultLayout extends React.Component {
             <div className="app">
               <AppHeader fixed className="border-bottom">
                 <Suspense fallback={Loading()}>
-                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
+                  <Header {...this.props} theme={theme} isShop={true}/>
                 </Suspense>
               </AppHeader>
               
@@ -114,4 +106,4 @@ class DefaultLayout extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(InvoiceLayout)

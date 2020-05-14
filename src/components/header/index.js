@@ -6,6 +6,7 @@ import IntervalTimer from 'react-interval-timer';
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
 
 import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
+
 import './style.scss'
 
 
@@ -30,7 +31,7 @@ class Header extends Component {
   render() {
     const { profile, children, theme, is_authed, isShop, history, isDocumentation, ...attributes } = this.props
     const { notifications } = profile || {};
-    const path = this.props.history.location.pathname
+    const path = this.props.history.location.pathname;
     
     return (
       <React.Fragment>

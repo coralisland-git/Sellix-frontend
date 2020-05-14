@@ -9,8 +9,10 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
-import { productRoutes } from 'routes'
+import { productRoutes } from 'routes';
 import { AuthActions, CommonActions } from 'services/global'
+
+
 import { Header, Loading } from 'components'
 
 
@@ -70,6 +72,9 @@ class ProductLayout extends React.Component {
   }
 
   render() {
+    const containerStyle = {
+      zIndex: 1999
+    }
 
     const { theme } = this.props;
 
@@ -84,10 +89,10 @@ class ProductLayout extends React.Component {
                 </Suspense>
               </AppHeader>
               
-              <div className="app-body mt-5 pt-5">
-                  <Container className="p-0" fluid>
+              <div className="app-body mt-4 pt-5">
+                  <Container className="p-0 pt-3">
                     <Suspense fallback={Loading()}>
-                      <ToastContainer position="top-right" autoClose={5000} style={{ zIndex: 1999 }} />
+                      <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                       <Switch>
                         {productRoutes.map((prop, key) => <Route {...prop} key={key} />)}
                       </Switch>
