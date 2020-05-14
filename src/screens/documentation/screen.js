@@ -110,15 +110,10 @@ class Documentation extends React.Component {
 
   componentDidUpdate() {
     var key = this.props.history.location.hash.substr(1);    
-    if (key !== "")
-      this.setState({initial : true})
-  }
-
-  componentDidUpdate() {
-    var key = this.props.history.location.hash.substr(1);    
     if(this.state.initial){
-      this.props.history.push(`/documentation#${key}`)
-      this.setState({initial: false})      
+      var elmnt = document.getElementById(key);
+      elmnt.scrollIntoView();
+      this.setState({initial: false})
     }    
   }
 
