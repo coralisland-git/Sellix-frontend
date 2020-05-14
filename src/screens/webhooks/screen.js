@@ -11,7 +11,8 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import * as moment from 'moment/moment'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { NewWebhookModal } from './sections'

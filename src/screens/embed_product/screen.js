@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 import { Loader, Button } from 'components'
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
+import javascript from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
+
 import Clipboard from 'react-clipboard.js';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { NewWebhookModal } from './sections';
@@ -13,6 +15,7 @@ import * as ProductActions from '../product/actions';
 import './style.scss'
 
 
+SyntaxHighlighter.registerLanguage('javascript', javascript)
 
 class EmbedProduct extends Component {
 

@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { documentationRoutes } from 'routes'
-import { Container } from 'reactstrap'
+
 import {
   AuthActions,
   CommonActions

@@ -17,7 +17,7 @@ import { bindActionCreators } from 'redux'
 import * as Yup from "yup";
 import { Formik } from 'formik'
 import { createChangelog } from './actions'
-import {CommonActions} from "../../services/global";
+import {CommonActions} from "../../../services/global";
 import * as moment from "moment/moment";
 
 import "./styles.scss";

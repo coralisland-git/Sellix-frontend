@@ -1,11 +1,15 @@
 import React from "react";
 import { Container } from "reactstrap";
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { sunburst, atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
+import php from 'react-syntax-highlighter/dist/esm/languages/hljs/php'
+import sunburst from 'react-syntax-highlighter/dist/esm/styles/hljs/sunburst';
+import atomOneLight from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-light';
 import Scrollspy from 'react-scrollspy';
 import Clipboard from 'react-clipboard.js';
 
 import "./style.scss";
+
+SyntaxHighlighter.registerLanguage('php', php)
 
 const NAVITATIONS = [
   { key: 'introduction', value: 'Introduction' },

@@ -13,7 +13,8 @@ import {
 import { Button } from 'components';
 import * as moment from 'moment/moment'
 import { Loader } from 'components'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { tableOptions } from 'constants/tableoptions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import includes from "lodash/includes"

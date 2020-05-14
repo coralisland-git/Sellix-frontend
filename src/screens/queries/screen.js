@@ -10,7 +10,8 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import filter from "lodash/filter"
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 

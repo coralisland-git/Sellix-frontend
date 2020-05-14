@@ -1,18 +1,25 @@
+// Static
 import Home from './home'
-import Fees from './fees'
-import Ticket from './tickets'
-import Changelog from './changelog'
-import LogIn from './log_in'
-import TwoFactorAuthentication from './2fa'
-import OTPLogin from './otp_2fa'
-import ResetOTP from './reset_otp'
-import Register from './register'
-import ForgotPassword from './forgot_password'
-import ResetPassword from './reset_password'
-import Dashboard from './dashboard'
-import EmailConfirm from './email_confirm'
-import ChangeEmail from './change_email'
+import Fees from './static/fees'
+import Ticket from './static/tickets'
+import Changelog from './static/changelog'
+import Terms from './static/terms/screen.js'
 
+
+
+// Auth
+import LogIn from './auth/log_in'
+import TwoFactorAuthentication from './auth/2fa'
+import OTPLogin from './auth/otp_2fa'
+import ResetOTP from './auth/reset_otp'
+import Register from './auth/register'
+import ForgotPassword from './auth/forgot_password'
+import ResetPassword from './auth/reset_password'
+import EmailConfirm from './auth/email_confirm'
+import ChangeEmail from './auth/change_email'
+
+
+import Dashboard from './dashboard'
 import Product from './product'
 import CreateProduct from './product/screens/create'
 import EditProduct from './product/screens/detail'
@@ -56,7 +63,7 @@ import EditBlacklist from './blacklist/screens/create'
 import EditCoupon from './coupons/screens/create'
 import ReplyToQuerie from './queries/screens/reply'
 import Contacts from './contacts/screens/reply/index.js'
-import Terms from './terms/screen.js'
+
 import Users from './users'
 import User from './users/screens/detail'
 import TopUsers from './topUsers'

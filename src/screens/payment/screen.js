@@ -13,7 +13,8 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import { ToastContainer, toast } from 'react-toastify'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import DateRangePicker from 'react-bootstrap-daterangepicker'
 
 import { Loader } from 'components'

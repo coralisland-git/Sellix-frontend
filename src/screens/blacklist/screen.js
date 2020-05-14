@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'components';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { confirmAlert } from 'react-confirm-alert';
 import { getBlacklist, deleteFromBlacklist } from './actions'
 import { CommonActions } from 'services/global'
