@@ -94,8 +94,8 @@ class EmbedInvoiceLayout extends React.Component {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
           <div className="admin-container app-embed">
-            <div className="app">
-              <div className="app-body">
+            <div className="">
+              <div className="">
                   <Container className="p-0">
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />

@@ -93,7 +93,7 @@
   }
 
   .embed-block {
-    width: 22rem;
+    width: 22rem !important;
     position: relative;
 
     .close-popup {
@@ -140,3 +140,5 @@
     }
   }
 }
+
+
