@@ -141,17 +141,17 @@
 
     }
 
-    .field {
+    .lv-1 {
       font-size: 13px;
       color: #cfcfcf !important;
       padding: 1.5rem 0 .5rem !important;
     }
 
-    .sub-nav {
+    .lv-3 {
       padding-left: 1rem !important;
       display: none;
 
-      &.show{
+      &.vs {
         display: block;
       }
     }
