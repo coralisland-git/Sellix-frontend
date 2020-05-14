@@ -25,7 +25,6 @@
     padding-left: 4vw;
     position: sticky;
     top: 78px;
-    max-height: calc(100vh - 78px);
     display: flex;      
     flex-direction: column;    
   }
@@ -111,15 +110,16 @@
     }
 
     .side-nav {
-      min-width: 210px;
+      width: 235px;
     }
 
     .d-nav {
       border-right: 1px solid #ececec;      
-      height: 95vh;
+      height: 92vh;
       overflow: auto;
       position: fixed;
       padding: 1rem 3rem;
+      width: 235px;
     }
 
     .section-nav {
@@ -175,7 +175,7 @@
       margin-left: auto;
       margin-right: auto;
       margin-top: -4rem;
-      width: calc(100% - 200px);
+      width: calc(100% - 235px);
     }
   }
 

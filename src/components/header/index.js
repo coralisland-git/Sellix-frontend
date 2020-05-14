@@ -5,7 +5,7 @@ import IntervalTimer from 'react-interval-timer';
 
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
 
-import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
+import sellix_logo from 'assets/images/Sellix_logo.svg'
 import './style.scss'
 
 

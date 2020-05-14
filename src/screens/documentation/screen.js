@@ -27,63 +27,63 @@ const NAVITATIONS = [
 ]
 
 const API_NAVIGATIONS = [
-  { key: 'blacklist-blacklist', value: 'Blacklist', has_children: true },
-  { key: 'object-blacklist', value: 'Blacklist Object' },
-  { key: 'get-blacklist', value: 'Get Blacklist' },
-  { key: 'list-blacklist', value: 'List Blacklist' },
-  { key: 'create-blacklist', value: 'Create a Blacklist' },
-  { key: 'update-blacklist', value: 'Update a Blacklist' },
-  { key: 'destroy-blacklist', value: 'Destroy a Blacklist' },
+  { key: 'blacklists', value: 'Blacklists', has_children: true },
+  { key: 'blacklist-object', value: 'Blacklist Object' },
+  { key: 'blacklist-get', value: 'Get Blacklist' },
+  { key: 'blacklist-list', value: 'List Blacklist' },
+  { key: 'blacklist-create', value: 'Create a Blacklist' },
+  { key: 'blacklist-update', value: 'Update a Blacklist' },
+  { key: 'blacklist-destroy', value: 'Destroy a Blacklist' },
   
-  { key: 'categories-category', value: 'Categories', has_children: true },
-  { key: 'object-category', value: 'Category Object' },
-  { key: 'get-category', value: 'Get a Category' },
-  { key: 'list-category', value: 'List All Categories' },
-  { key: 'create-category', value: 'Create a Category' },
-  { key: 'edit-category', value: 'Edit Category' },
-  { key: 'delete-category', value: 'Delete Category' },
+  { key: 'categories', value: 'Categories', has_children: true },
+  { key: 'category-object', value: 'Category Object' },
+  { key: 'category-get', value: 'Get a Category' },
+  { key: 'category-list', value: 'List All Categories' },
+  { key: 'category-create', value: 'Create a Category' },
+  { key: 'category-edit', value: 'Edit Category' },
+  { key: 'category-delete', value: 'Delete Category' },
   
-  { key: 'coupons-coupon', value: 'Coupons', has_children: true },
-  { key: 'object-coupon', value: 'Coupon Object' },
-  { key: 'get-coupon', value: 'Get a Coupon' },
-  { key: 'list-coupon', value: 'List All Coupons' },
-  { key: 'create-coupon', value: 'Create a Coupon' },
-  { key: 'edit-coupon', value: 'Edit Coupon' },
-  { key: 'delete-coupon', value: 'Delete Coupon' },
+  { key: 'coupons', value: 'Coupons', has_children: true },
+  { key: 'coupon-object', value: 'Coupon Object' },
+  { key: 'coupon-get', value: 'Get a Coupon' },
+  { key: 'coupon-list', value: 'List All Coupons' },
+  { key: 'coupon-create', value: 'Create a Coupon' },
+  { key: 'coupon-edit', value: 'Edit Coupon' },
+  { key: 'coupon-delete', value: 'Delete Coupon' },
 
-  { key: 'feedback-feedback', value: 'Feedback', has_children: true },
-  { key: 'object-feedback', value: 'Feedback Object' },
-  { key: 'get-feedback', value: 'Get a Feedback' },
-  { key: 'list-feedback', value: 'List All Feedback' },
-  { key: 'reply-feedback', value: 'Reply Feedback' },
+  { key: 'feedbacks', value: 'Feedbacks', has_children: true },
+  { key: 'feedback-object', value: 'Feedback Object' },
+  { key: 'feedback-get', value: 'Get a Feedback' },
+  { key: 'feedback-list', value: 'List All Feedback' },
+  { key: 'feedback-reply', value: 'Reply Feedback' },
 
-  { key: 'orders-order', value: 'Orders', has_children: true },
-  { key: 'object-order', value: 'Order Object' },
-  { key: 'get-order', value: 'Get an Order' },
-  { key: 'list-order', value: 'List All Orders' },
+  { key: 'orders', value: 'Orders', has_children: true },
+  { key: 'order-object', value: 'Order Object' },
+  { key: 'order-get', value: 'Get an Order' },
+  { key: 'order-list', value: 'List All Orders' },
 
-  { key: 'products-product', value: 'Products', has_children: true },
-  { key: 'object-product', value: 'Product Object' },
-  { key: 'get-product', value: 'Get a Product' },
-  { key: 'list-product', value: 'List All Products' },
-  { key: 'create-product', value: 'Create a Product' },
-  { key: 'edit-product', value: 'Edit Product' },
-  { key: 'delete-product', value: 'Delete Product' },
+  { key: 'products', value: 'Products', has_children: true },
+  { key: 'product-object', value: 'Product Object' },
+  { key: 'product-get', value: 'Get a Product' },
+  { key: 'product-list', value: 'List All Products' },
+  { key: 'product-create', value: 'Create a Product' },
+  { key: 'product-edit', value: 'Edit Product' },
+  { key: 'product-delete', value: 'Delete Product' },
 
-  { key: 'queries-query', value: 'Queries', has_children: true },
-  { key: 'object-query', value: 'Query Object' },
-  { key: 'get-query', value: 'Get a Query' },
-  { key: 'list-query', value: 'List All Queries' },
-  { key: 'reply-query', value: 'Reply Query' },
-  { key: 'close-query', value: 'Close Query' },  
-  { key: 'reopen-query', value: 'Reopen Query' },
+  { key: 'queries', value: 'Queries', has_children: true },
+  { key: 'query-object', value: 'Query Object' },
+  { key: 'query-get', value: 'Get a Query' },
+  { key: 'query-list', value: 'List All Queries' },
+  { key: 'query-reply', value: 'Reply Query' },
+  { key: 'query-close', value: 'Close Query' },  
+  { key: 'query-reopen', value: 'Reopen Query' },
 ]
 
 const PAY_NAVIGATIONS = [
   { key: 'sellix-pay', value: 'Payments', has_children: true },
-  { key: 'checkoutflow-pay', value: 'Checkout Flow' },
-  { key: 'create-pay', value: 'Create Payment' },
-  { key: 'delete-pay', value: 'Delete Payment' },
+  { key: 'sellix-pay-flow', value: 'Checkout Flow' },
+  { key: 'sellix-pay-create', value: 'Create a Payment' },
+  { key: 'sellix-pay-delete', value: 'Delete Payment' },
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -161,7 +161,7 @@ class Documentation extends React.Component {
                       else
                         this.setState({initial: false})
                       if(el)
-                        this.setState({activeNode: el.id.split('-')[1]})
+                        this.setState({activeNode: el.id.split('-')[0].slice(0, 4)})
                     }
                   }>
                   <li className="field">GET STARTED</li>
@@ -485,9 +485,9 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="blacklist-blacklist">
+              <section id="blacklists">
                 <div className="d-ins">
-                  <h3><b>Blacklist</b></h3>
+                  <h3><b>Blacklists</b></h3>
                 </div>
                 <div className="d-ex">
                   <div className="code-block response">
@@ -506,7 +506,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="object-blacklist">
+              <section id="blacklist-object">
                 <div className="d-ins">
                   <h3><b>Blacklist Object</b></h3>
                   <table>
@@ -597,7 +597,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="get-blacklist">
+              <section id="blacklist-get">
                 <div className="d-ins">
                   <h3><b>Get Blacklist</b></h3>
                   <p>
@@ -645,7 +645,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="list-blacklist">
+              <section id="blacklist-list">
                 <div className="d-ins">
                   <h3><b>List Blacklist</b></h3>
                   <p>
@@ -709,7 +709,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="create-blacklist">
+              <section id="blacklist-create">
                 <div className="d-ins">
                   <h3><b>Create a Blacklist</b></h3>
                   <p>
@@ -791,7 +791,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="update-blacklist">
+              <section id="blacklist-update">
                 <div className="d-ins">
                   <h3><b>Edit Blacklist</b></h3>
                   <p>
@@ -868,7 +868,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="destroy-blacklist">
+              <section id="blacklist-destroy">
                 <div className="d-ins">
                   <h3><b>Delete Blacklist</b></h3>
                   <p>
@@ -905,7 +905,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="categories-category">
+              <section id="categories">
                 <div className="d-ins">
                   <h3><b>Categories</b></h3>
                 </div>
@@ -926,7 +926,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="object-category">
+              <section id="category-object">
                 <div className="d-ins">
                   <h3><b>Category Object</b></h3>
                   <table>
@@ -1046,7 +1046,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="get-category">
+              <section id="category-get">
                 <div className="d-ins">
                   <h3><b>Get a Category</b></h3>
                   <p>
@@ -1085,7 +1085,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="list-category">
+              <section id="category-list">
                 <div className="d-ins">
                   <h3><b>List All Categories</b></h3>
                   <p>
@@ -1136,7 +1136,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="create-category">
+              <section id="category-create">
                 <div className="d-ins">
                   <h3><b>Create a Category</b></h3>
                   <p>
@@ -1231,7 +1231,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="edit-category">
+              <section id="category-edit">
                 <div className="d-ins">
                   <h3><b>Edit Category</b></h3>
                   <p>
@@ -1325,7 +1325,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="delete-category">
+              <section id="category-delete">
                 <div className="d-ins">
                   <h3><b>Delete Category</b></h3>
                   <p>
@@ -1351,7 +1351,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="coupons-coupon">
+              <section id="coupons">
                 <div className="d-ins">
                   <h3><b>Coupons</b></h3>
                 </div>
@@ -1372,7 +1372,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="object-coupon">
+              <section id="coupon-object">
                 <div className="d-ins">
                   <h3><b>Coupon Object</b></h3>
                   <table>
@@ -1514,7 +1514,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="get-coupon">
+              <section id="coupon-get">
                 <div className="d-ins">
                   <h3><b>Get a Coupon</b></h3>
                   <p>
@@ -1557,7 +1557,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="list-coupon">
+              <section id="coupon-list">
                 <div className="d-ins">
                   <h3><b>List All Coupons</b></h3>
                   <p>
@@ -1612,7 +1612,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="create-coupon">
+              <section id="coupon-create">
                 <div className="d-ins">
                   <h3><b>Create a Coupon</b></h3>
                   <p>
@@ -1708,7 +1708,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="edit-coupon">
+              <section id="coupon-edit">
                 <div className="d-ins">
                   <h3><b>Edit Coupon</b></h3>
                   <p>
@@ -1802,7 +1802,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="delete-coupon">
+              <section id="coupon-delete">
                 <div className="d-ins">
                   <h3><b>Delete Coupon</b></h3>
                   <p>
@@ -1829,7 +1829,7 @@ if (hash_equals($signature, $header_signature)) {
                 </div>
               </section>
 
-              <section id="feedback-feedback">
+              <section id="feedbacks">
                 <div className="d-ins">
                   <h3><b>Feedback</b></h3>
                 </div>
@@ -1848,7 +1848,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="object-feedback">
+              <section id="feedback-object">
                 <div className="d-ins">
                   <h3><b>Feedback Object</b></h3>
                   <table>
@@ -1976,7 +1976,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="get-feedback">
+              <section id="feedback-get">
                 <div className="d-ins">
                   <h3><b>Get a Feedback</b></h3>
                   <p>
@@ -2022,7 +2022,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="list-feedback">
+              <section id="feedback-list">
                 <div className="d-ins">
                   <h3><b>List All Feedback</b></h3>
                   <p>
@@ -2075,7 +2075,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="reply-feedback">
+              <section id="feedback-reply">
                 <div className="d-ins">
                   <h3><b>Reply Feedback</b></h3>
                   <p>
@@ -2132,7 +2132,7 @@ if (hash_equals($signature, $header_signature)) {
                 </div>
               </section>
 
-              <section id="orders-order">
+              <section id="orders">
                 <div className="d-ins">
                   <h3><b>Orders</b></h3>
                   <p>I am ready to start this project now and will finish this in a couple of days.</p>
@@ -2151,7 +2151,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="object-order">
+              <section id="order-object">
                 <div className="d-ins">
                   <h3><b>Order Object</b></h3>
                   <table>
@@ -2696,7 +2696,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="get-order">
+              <section id="order-get">
                 <div className="d-ins">
                   <h3><b>Get an Order</b></h3>
                   <p>
@@ -2785,7 +2785,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="list-order">
+              <section id="order-list">
                 <div className="d-ins">
                   <h3><b>List All Orders</b></h3>
                   <p>
@@ -2889,7 +2889,7 @@ if (hash_equals($signature, $header_signature)) {
                 </div>
               </section>
 
-              <section id="products-product">
+              <section id="products">
                 <div className="d-ins">
                   <h3><b>Products</b></h3>
                 </div>
@@ -2910,7 +2910,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="object-product">
+              <section id="product-object">
                 <div className="d-ins">
                   <h3><b>Product Object</b></h3>
                   <table>
@@ -3290,7 +3290,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="get-product">
+              <section id="product-get">
                 <div className="d-ins">
                   <h3><b>Get a Product</b></h3>
                   <p>
@@ -3373,7 +3373,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="list-product">
+              <section id="product-list">
                 <div className="d-ins">
                   <h3><b>List All Products</b></h3>
                   <p>
@@ -3455,7 +3455,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="create-product">
+              <section id="product-create">
                 <div className="d-ins">
                   <h3><b>Create a Product</b></h3>
                   <p>
@@ -3672,7 +3672,7 @@ if (hash_equals($signature, $header_signature)) {
                     </tbody>
                   </table>
                   </div>
-                  <div className="d-ex" style={{ position: "relative", top: 0}}>
+                  <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
                        <p>CREATE PRODUCT REQUEST</p>
@@ -3777,7 +3777,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="edit-product">
+              <section id="product-edit">
                 <div className="d-ins">
                   <h3><b>Edit Product</b></h3>
                   <p>
@@ -3988,7 +3988,7 @@ if (hash_equals($signature, $header_signature)) {
                     </tbody>
                   </table>
                 </div>
-                <div className="d-ex" style={{ position: "relative", top: 0}}>
+                <div className="d-ex">
                   <div className="code-block response">
                     <div className="code-block-header">
                       <p>EDIT PRODUCT REQUEST</p>
@@ -4095,7 +4095,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="delete-product">
+              <section id="product-delete">
                 <div className="d-ins">
                   <h3><b>Delete Product</b></h3>
                   <p>
@@ -4122,7 +4122,7 @@ if (hash_equals($signature, $header_signature)) {
                 </div>
               </section>
 
-              <section id="queries-query">
+              <section id="queries">
                 <div className="d-ins">
                   <h3><b>Queries</b></h3>
                 </div>
@@ -4143,7 +4143,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="object-query">
+              <section id="query-object">
                 <div className="d-ins">
                   <h3><b>Query Object</b></h3>
                   <table>
@@ -4290,7 +4290,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="get-query">
+              <section id="query-get">
                 <div className="d-ins">
                   <h3><b>Get a Query</b></h3>
                   <p>
@@ -4331,7 +4331,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="list-query">
+              <section id="query-list">
                 <div className="d-ins">
                   <h3><b>List All Queries</b></h3>
                   <p>
@@ -4389,7 +4389,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="reply-query">
+              <section id="query-reply">
                 <div className="d-ins">
                   <h3><b>Reply Query</b></h3>
                   <p>
@@ -4444,7 +4444,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="close-query">
+              <section id="query-close">
                 <div className="d-ins">
                   <h3><b>Close Query</b></h3>
                   <p>
@@ -4469,7 +4469,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="reopen-query">
+              <section id="query-reopen">
                 <div className="d-ins">
                   <h3><b>Reopen Query</b></h3>
                   <p>
@@ -4512,7 +4512,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="checkoutflow-pay">
+              <section id="sellix-pay-flow">
                 <div className="d-ins">
                   <h3><b>Checkout Flow</b></h3>
                   <p>
@@ -4531,9 +4531,9 @@ if (hash_equals($signature, $header_signature)) {
                   </p>
                 </div>
               </section>
-              <section id="create-pay">
+              <section id="sellix-pay-create">
                 <div className="d-ins">
-                  <h3><b>Create Payment</b></h3>
+                  <h3><b>Create a Payment</b></h3>
                   <p>
                     <span className="s-put">PUT</span> /payments/:uniqid <br />
                     Creates a Payment. Returns an invoice object.
@@ -4714,7 +4714,105 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                   <div className="code-block response">
                     <div className="code-block-header">
-                      <p>RESPONSE</p>
+                      <p>WHITE LABEL RESPONSE</p>
+                    </div>
+                    <SyntaxHighlighter language="php" style={atomOneLight}>
+                      {`{
+  "status": 200,
+  "data": {
+      "invoice": {
+          "id": 0,
+          "uniqid": "demo01a32-4df6e9",
+          "total": 1.50,
+          "total_display": 1.50,
+          "currency": "USD",
+          "exchange_rate": 1,
+          "crypto_exchange_rate": 9994.79,
+          "user_id": 0,
+          "username": "demo",
+          "customer_email": "demo@gmail.com",
+          "product_id": "demo30bf1",
+          "product_type": "serials",
+          "product_price": 0.50,
+          "file_attachment_uniqid": null,
+          "gateway": "bitcoin",
+          "paypal_email": null,
+          "paypal_tx_id": null,
+          "paypal_payer_email": null,
+          "skrill_email": null,
+          "skrill_sid": null,
+          "skrill_link": null,
+          "stripe_id": null,
+          "stripe_client_secret": null,
+          "perfectmoney_id": null,
+          "crypto_address": "demonjsckUWTShLE7C",
+          "crypto_amount": 0.00015008,
+          "crypto_received": 0,
+          "crypto_uri": "bitcoin:demoE7C?amount=0.00015008",
+          "crypto_confirmations": 1,
+          "country": "IT",
+          "location": "Italy, Europe",
+          "ip": "1.2.3.4.5.6.7",
+          "is_vpn_or_proxy": false,
+          "user_agent": "PostmanRuntime/7.6.0",
+          "quantity": 3,
+          "coupon_id": null,
+          "custom_fields": {
+              "Demo Username": "demoUID"
+          },
+          "developer_invoice": true,
+          "developer_title": "Demo Payment",
+          "developer_webhook": "https://demo.sellix.io/webhook",
+          "developer_return_url": "https://demo.sellix.io/return",
+          "status": 0,
+          "discount": 0,
+          "fee_fixed": 0,
+          "fee_percentage": 0,
+          "day_value": 8,
+          "day": "Fri",
+          "month": "May",
+          "year": 2020,
+          "created_at": 1588976278,
+          "updated_at": 0,
+          "serials": [],
+          "file": null,
+          "webhooks": [
+              ...
+          ],
+          "crypto_payout": false,
+          "crypto_payout_transaction": null,
+          "crypto_transactions": [],
+          "product": {
+              "title": "Product Demo",
+              "price_display": 0.50,
+              "currency": "USD"
+          },
+          "total_conversions": {
+              "USD": 1.5,
+              "EUR": 1.38,
+              "GBP": 1.22,
+              "JPY": 159.56,
+              "AUD": 2.3,
+              "CAD": 2.09,
+              "CHF": 1.46,
+              "CNY": 10.62,
+              "SEK": 14.64,
+              "NZD": 2.45,
+              "PLN": 6.29
+          },
+          "theme": "dark"
+      }
+  },
+  "message": null,
+  "log": null,
+  "error": null,
+  "env": "staging"
+}`}
+                    </SyntaxHighlighter>
+                  </div>
+                  <div className="code-block response">
+                    <div className="code-block-header">
+                      <p>NO WHITE LABEL RESPONSE</p>
                     </div>
                     <SyntaxHighlighter language="php" style={atomOneLight}>
                       {`{
@@ -4731,9 +4829,9 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="delete-pay">
+              <section id="sellix-pay-delete">
                 <div className="d-ins">
-                  <h3><b>Delete Payments</b></h3>
+                  <h3><b>Delete a Payment</b></h3>
                   <p>
                     <span className="s-delete">DELETE</span> /payments/:uniqid <br />
                     Deletes a Payment
