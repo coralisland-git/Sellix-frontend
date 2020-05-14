@@ -38,7 +38,7 @@ class documentationLayout extends React.Component {
 
   componentDidMount () {
 
-    document.title = `Developer | Sellix`;
+    document.title = `Developers | Sellix`;
 
     const preUrl = `/${window.localStorage.getItem('userId')}`
       
