@@ -1,6 +1,7 @@
 import {
     Invoice,
-    EmbededInvoice
+    EmbededInvoice,
+    EmbededInvoiceDev
   } from 'screens'
   
   const invoiceRoutes = [
@@ -10,10 +11,16 @@ import {
       component: EmbededInvoice.screen
     },
     {
+      path: '/payment/:id',
+      name: 'EmbedInvoiceDev',
+      component: EmbededInvoiceDev.screen
+    },
+    {
       path: '/invoice/:id',
       name: 'Bitcoin',
       component: Invoice.screen
-    }
+    },
+
   ]
   
   export default invoiceRoutes
