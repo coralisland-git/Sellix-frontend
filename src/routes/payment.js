@@ -2,7 +2,7 @@ import { EmbededPayment } from 'screens'
   
 const paymentRoutes = [
     {
-        path: '/payment/embed/:id',
+        path: '/prembed/:id',
         name: 'EmbededPayment',
         component: EmbededPayment.screen
     }
