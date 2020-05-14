@@ -117,7 +117,7 @@ const QRMode = ({ invoice, seconds, theme, setInvoiceStatus, qrCode }) => {
     {+invoice.status === 3 && <>
       <Loader/>
       <h4 className={"text-center mb-5"}>
-        Awaiting Confirmation <br/>{((invoice.crypto_transactions || []).slice(-1)[0] || {}).confirmations}/{invoice.crypto_confirmations || 0})
+        Awaiting Confirmation <br/>({((invoice.crypto_transactions || []).slice(-1)[0] || {}).confirmations}/{invoice.crypto_confirmations || 0})
       </h4>
     </>}
   </>
