@@ -265,6 +265,12 @@ class Invoice extends React.Component {
 
     document.title = `Invoice ${id} | Sellix`;
 
+    if(localStorage.getItem('invoice-' + id)) {
+      this.setState({
+        invoice: JSON.parse(localStorage.getItem('invoice-' + id))
+      })
+      localStorage.removeItem('invoice-' + id)
+    }
 
     getInvoice(id)
         .then(({ data: { invoice }}) => {
@@ -287,7 +293,7 @@ class Invoice extends React.Component {
 
     setTimeout(() => {
       if(!this.state.copyIconTooltipShown) {
-        ReactTooltip.show(this.copyIconRef)
+        // ReactTooltip.show(this.copyIconRef)
       }
     }, 5000)
   }
@@ -596,7 +602,9 @@ class Invoice extends React.Component {
 
   render() {
 
-    const { loading, invoice, showAlert, openQRModal, fakeSuccess, info, seconds, qrCellSize } = this.state;
+    var { loading, invoice, showAlert, openQRModal, fakeSuccess, info, seconds, qrCellSize } = this.state;
+
+    // loading = true
 
     const { theme } = this.props
 
@@ -773,7 +781,12 @@ class Invoice extends React.Component {
 
     const invoiceBody = (
       <div>
-        {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+        {loading && <Row><Col lg={12}  style={{
+          height: '490px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}><Loader /></Col></Row>}
 
         {!loading &&
             <div className="bitcoin-paying-screen animated fadeIn">
@@ -923,7 +936,7 @@ class Invoice extends React.Component {
 
     if(isQrMode) {
       return <div style={{
-        marginTop: '25px'
+        marginTop: '32px'
       }}>
         <ProductScreen affixComponent={invoiceBody} match={{
           params: {

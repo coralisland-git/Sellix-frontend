@@ -92,8 +92,12 @@
 
     pre {
       background-color: #f7fafc !important;
-      max-height: 40vh;
+      max-height: 80vh;
     }
+  }
+
+  .code-block.script pre code:first-child{
+    color: #838896 !important;
   }
 
   .d-wrapper {
@@ -114,8 +118,8 @@
       border-right: 1px solid #ececec;      
       height: 95vh;
       overflow: auto;
-      position: fixed;      
-      padding: 2.5rem;
+      position: fixed;
+      padding: 1rem 3rem;
     }
 
     .section-nav {

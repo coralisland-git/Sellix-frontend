@@ -82,6 +82,7 @@ import StripeCallback from './payments_stripe_callback'
 import GeneralSettings from './general_settings'
 import EmbededPayment from './embeded_payment'
 import EmbededInvoice from './embeded_invoice'
+import EmbededInvoiceDev from './embeded_invoice_dev'
 
 import EmbedProduct from './embed_product'
 import Documentation from './documentation/screen.js'
@@ -163,7 +164,8 @@ export {
 
   EmbededPayment,
   EmbededInvoice,
-
+  EmbededInvoiceDev,
+  
   ProductGroups,
   CreateProductGroup,
   EditProductGroup,

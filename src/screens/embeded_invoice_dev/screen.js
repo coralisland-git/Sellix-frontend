@@ -115,7 +115,7 @@ const RenderProduct = ({ product_type, info, onSaveFile, copyToClipboard }) => {
 }
 
 
-class EmbededInvoice extends React.Component {
+class EmbededInvoiceDev extends React.Component {
   
   constructor(props) {
     super(props);
@@ -914,4 +914,4 @@ const mapDispatchToProps = (dispatch) => ({
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmbededInvoice)
+export default connect(mapStateToProps, mapDispatchToProps)(EmbededInvoiceDev)

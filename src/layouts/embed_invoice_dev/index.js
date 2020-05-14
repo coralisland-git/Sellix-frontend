@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class EmbedInvoiceLayout extends React.Component {
+class EmbedInvoiceDevLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -124,4 +124,4 @@ class EmbedInvoiceLayout extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmbedInvoiceLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(EmbedInvoiceDevLayout)
