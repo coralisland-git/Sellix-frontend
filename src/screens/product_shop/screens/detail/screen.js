@@ -1,5 +1,6 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { converter } from 'constants/config'
 import { Card, Row, Col, Input } from 'reactstrap'
@@ -11,7 +12,6 @@ import Form from "./form";
 
 
 import './style.scss';
-import { relativeTimeThreshold } from 'moment'
 
 
 const mapStateToProps = ({ common: { user_products, general_info: user } }) => ({
@@ -55,11 +55,11 @@ class ShopProductDetail extends React.Component {
         .then(({ data: { invoice }}) => {
 
           window.localStorage.setItem(invoice.uniqid, invoice.secret)
-          localStorage.setItem('invoice-' + invoice.uniqid, JSON.stringify(invoice))
-          localStorage.setItem('product-' + productInfo.uniqid, JSON.stringify(productInfo))
           tostifyAlert('success', 'Invoice is created successfully.');
 
-          this.props.history.push({ pathname: `/invoice/${invoice.uniqid}` })
+          this.props.history.push({
+            pathname: `/invoice/${invoice.uniqid}`
+          })
 
           // this.setState()
         })
@@ -119,17 +119,6 @@ class ShopProductDetail extends React.Component {
 
       const { id } = this.props.match.params
 
-      if(localStorage.getItem('product-' + id)) {
-        this.setState({
-          productInfo: JSON.parse(localStorage.getItem('product-' + id))
-        })
-        localStorage.removeItem('product-' + id)
-
-        this.setState({
-          isTransitionFromProduct: true
-        })
-      }
-
       getUserProductById(id).then(res => {
         if(res.status === 200) {
           this.setState({
@@ -161,19 +150,18 @@ class ShopProductDetail extends React.Component {
       gateway,
       sending,
       loading,
-      productInfo,
-      isTransitionFromProduct
+      productInfo
     } = this.state;
 
     if(Object.keys(productInfo).length == 0) {
       return <Row><Col lg={12}><Loader /></Col></Row>
     }
 
+    console.log(this.props.history)
+
     return (
-      <div className="detail-product-screen" style={{
-        marginTop: '25px'
-      }}>
-        <div className={isTransitionFromProduct ? '' : "animated fadeIn"}>
+      <div className="detail-product-screen" style={{ marginTop: '25px' }}>
+        <div className={""}>
 
           <div className="purchase-card ml-auto mr-auto">
             <Row className="pr-3 pl-3 pt-0">
@@ -261,4 +249,4 @@ class ShopProductDetail extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopProductDetail)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShopProductDetail))

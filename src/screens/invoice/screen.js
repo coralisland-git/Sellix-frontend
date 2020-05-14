@@ -4,14 +4,12 @@ import { api } from 'utils'
 import { bindActionCreators } from 'redux'
 import { Card, Row, Col } from 'reactstrap'
 import * as moment from 'moment/moment'
-import { QRCodeModal } from 'components'
 import { PayPalButton } from "react-paypal-button-v2";
 import { CommonActions } from 'services/global'
 import { getInvoiceInfo, downloadInvoice } from './actions'
 import { Loader, Button } from 'components'
 import StripeForm from './stripeForm'
 import LeaveFeedback from '../feedbacks_shop/screens/createComponent/screen'
-import ProductScreen from '../product_shop/screens/detail/screen'
 import config from 'constants/config'
 import FileSaver from 'file-saver';
 import ReactTooltip from 'react-tooltip'
@@ -265,13 +263,6 @@ class Invoice extends React.Component {
 
     document.title = `Invoice ${id} | Sellix`;
 
-    if(localStorage.getItem('invoice-' + id)) {
-      this.setState({
-        invoice: JSON.parse(localStorage.getItem('invoice-' + id))
-      })
-      localStorage.removeItem('invoice-' + id)
-    }
-
     getInvoice(id)
         .then(({ data: { invoice }}) => {
           let seconds = 24 * 60 * 60 - (new Date().getTime() - new Date(invoice.created_at * 1000).getTime()) / 1000
@@ -382,7 +373,7 @@ class Invoice extends React.Component {
     return ((crypto_amount || 0) - (crypto_received || 0)).toFixed(8)
   }
 
-  getPaymentForm = ({ gateway, status, crypto_amount, crypto_received, crypto_address }) => {
+  getPaymentForm = ({ gateway, status, crypto_address }) => {
 
     const { openQRModal } = this.state
     const { theme } = this.props
@@ -416,25 +407,25 @@ class Invoice extends React.Component {
               opacity: openQRModal ? 0 : 1,
               transition: 'opacity 0.3s ease-out',
             }}>{crypto_address || ''}</span>
-              <div className="qr-container" style={{
-                height: openQRModal ? '300px' : 0,
-                opacity: openQRModal ? 1 : 0,
-                transition: 'opacity 0.3s ease-out',
-                paddingLeft: '25px',
-                marginTop: '-40px'
-              }}>
-                {this.qrCode({
-                  onClick: () => {},
-                  qrBgColor: theme === 'dark' ? '#edf0fe' : null,
-                  borderRadius: '5px'
-                })}
-              </div>
-            </p>
-            <div className="d-flex justify-content-between align-items-center ">
-              <span className="text-grey cursor-pointer" onClick={openQRModal ? this.closeQrCodeModal : this.openQrCodeModal}>QR Code</span>
-              <span className="text-grey">Pay in Wallet</span>
+            <div className="qr-container" style={{
+              height: openQRModal ? '300px' : 0,
+              opacity: openQRModal ? 1 : 0,
+              transition: 'opacity 0.3s ease-out',
+              paddingLeft: '25px',
+              marginTop: '-40px'
+            }}>
+              {this.qrCode({
+                onClick: () => {},
+                qrBgColor: theme === 'dark' ? '#edf0fe' : null,
+                borderRadius: '5px'
+              })}
             </div>
+          </p>
+          <div className="d-flex justify-content-between align-items-center ">
+            <span className="text-grey cursor-pointer" onClick={openQRModal ? this.closeQrCodeModal : this.openQrCodeModal}>QR Code</span>
+            <span className="text-grey">Pay in Wallet</span>
           </div>
+        </div>
       )
   }
 
@@ -602,23 +593,17 @@ class Invoice extends React.Component {
 
   render() {
 
-    var { loading, invoice, showAlert, openQRModal, fakeSuccess, info, seconds, qrCellSize } = this.state;
-
-    // loading = true
+    let { loading, invoice, showAlert, openQRModal, fakeSuccess, info, seconds, qrCellSize } = this.state;
 
     const { theme } = this.props
-
-    // invoice.gateway = 'skrill'
-    // invoice.gateway = 'paypal'
-    // invoice.gateway = 'perfectmoney'
-    // invoice.gateway = 'stripe'
-    // invoice.status = 3
 
     const progressShouldBeRed = this.progressShouldBeRed()
 
     const isCrypto = invoice.crypto_uri != null
 
     const isQrMode = isCrypto && invoice.crypto_mode === 'qrcode'
+
+    console.log(this.props);
 
     const innerComponent = isQrMode ? <>
       {(invoice.status == 0 || invoice.status == 4) && <>
@@ -723,7 +708,7 @@ class Invoice extends React.Component {
       </>
       }
     </> : <>
-      <div className={info ? "top px-4 pb-4 pt-0" : "top p-4 pt-4"}>
+    <div className={info ? "top px-4 pb-4 mt-2" : "top p-4 pt-4 mt-2"}>
 
         <div className="d-flex justify-content-between align-items-center ">
           <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
@@ -779,17 +764,16 @@ class Invoice extends React.Component {
     </>
 
     const invoiceBody = (
-        <div>
-          {loading && <Row><Col lg={12}  style={{
-            height: '490px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}><Loader /></Col></Row>}
+      <div>
+        {loading && <Row><Col lg={4}  style={{
+          height: '490px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}><Loader /></Col></Row>}
 
-          {!loading &&
-          <div className="bitcoin-paying-screen animated fadeIn">
-            <QRCodeModal openModal={false/*openQRModal*/} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal}/>
+        {!loading &&
+            <div className="bitcoin-paying-screen animated fadeIn">
 
             {+invoice.status === 4 && showAlert &&
             <>
@@ -832,12 +816,12 @@ class Invoice extends React.Component {
               </>
               }
 
-              <Col lg={{ size: isQrMode ? 12 : 4 }} >
-                {!info && !isQrMode && <div className="text-left my-1 mb-1"><h1 className="m-0">&nbsp;</h1></div>}
-                <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: isQrMode ? '8px' : "calc(1.5rem + 4px)"}}>
-                  <div className="float-logo">
-                    <img src={sellix_logo} width="153" alt={""}/>
-                  </div>
+                  <Col lg={{ size: 4 }} >
+                    {!info && !isQrMode && <div className="text-left my-1 mb-1"><h1 className="m-0">&nbsp;</h1></div>}
+                    <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: isQrMode ? '8px' : "calc(1.5rem + 4px)"}}>
+                      <div className="float-logo">
+                        <img src={sellix_logo} width="153" alt={""}/>
+                      </div>
 
                   {innerComponent}
 
@@ -934,14 +918,8 @@ class Invoice extends React.Component {
     )
 
     if(isQrMode) {
-      return <div style={{
-        marginTop: '32px'
-      }}>
-        <ProductScreen affixComponent={invoiceBody} match={{
-          params: {
-            id: invoice.product_id
-          }
-        }}/>
+      return <div>
+        {invoiceBody}
       </div>
     }
 
@@ -959,11 +937,9 @@ class Invoice extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return ({
-    theme: state.common.theme
-  })
-}
+const mapStateToProps = (state) => ({
+  theme: state.common.theme
+})
 
 const mapDispatchToProps = (dispatch) => ({
   getPayPalInvoice: bindActionCreators(CommonActions.getPayPalInvoice, dispatch),

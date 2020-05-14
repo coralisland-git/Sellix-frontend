@@ -4,7 +4,6 @@ import LoaderFullscreen from './loader_fullscreen'
 import Spin from './spin'
 import Aside from './aside'
 import Header from './header'
-import QRCodeModal from './qrcode'
 import Footer from './footer'
 import DateRangePicker2 from './datepicker'
 
@@ -27,7 +26,6 @@ export {
   Aside,
   Header,
   Footer,
-  QRCodeModal,
   DateRangePicker2,
 
   ImageUpload,

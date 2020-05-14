@@ -7,7 +7,6 @@ import {
   SettingsLayout,
   InvoiceLayout,
   EmbedInvoiceLayout,
-  EmbedInvoiceDevLayout,
   ProductLayout,
   LandingLayout,
   DocumentationLayout
@@ -23,10 +22,7 @@ const mainRoutes = [
   // Settings
   { path: `/settings`,  name: 'SettingsLayout', component: SettingsLayout },
 
-
   { path: '/prembed', name: 'EmbedLayout', component: EmbedLayout },
-  { path: '/payment', name: 'EmbedInvoiceDevLayout', component: EmbedInvoiceDevLayout },
-  //{ path: '/payment', name: 'PaymentLayout', component: PaymentLayout },
   { path: '/ivembed', name: 'EmbedInvoiceLayout', component: EmbedInvoiceLayout },
   { path: '/invoice', name: 'InvoiceLayout', component: InvoiceLayout },
   { path: '/product', name: 'ProductLayout', component: ProductLayout },
