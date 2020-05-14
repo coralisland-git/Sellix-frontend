@@ -14,6 +14,12 @@ function incomingListener(response) {
 };
 
 function lazyWsSend(message) {
+    if(ws && ws.readyState === ws.CONNECTING) {
+        setTimeout(() => {
+            lazyWsSend(message)
+        }, 200)
+        return
+    }
     if(ws === null || ws.readyState !== ws.OPEN) {
         ws = new WebSocket(config.WS_URL)
         ws.addEventListener('open', function open() {
