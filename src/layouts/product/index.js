@@ -1,12 +1,9 @@
 import React, { Suspense } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Container } from 'reactstrap'
-import {
-  AppHeader,
-  AppFooter
-} from '@coreui/react'
+import { AppHeader, AppFooter } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
@@ -29,6 +26,7 @@ const mapStateToProps = (state) => {
     user: state.common.general_info,
   })
 }
+
 const mapDispatchToProps = (dispatch) => {
   return ({
     authActions: bindActionCreators(AuthActions, dispatch),
@@ -46,7 +44,8 @@ class ProductLayout extends React.Component {
           .catch(err => {
             this.props.authActions.logOut()
           })
-      const toastifyAlert = (status, message) => {
+
+      this.props.commonActions.setTostifyAlertFunc((status, message) => {
         if (!message) {
           message = 'Unexpected Error'
         }
@@ -67,12 +66,12 @@ class ProductLayout extends React.Component {
             position: toast.POSITION.TOP_RIGHT
           })
         }
-      }
-      this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+      })
   }
 
   render() {
-    const theme = this.props.theme
+
+    const { theme } = this.props;
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -90,19 +89,7 @@ class ProductLayout extends React.Component {
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={{ zIndex: 1999 }} />
                       <Switch>
-                        {
-                          productRoutes.map((prop, key) => {
-                            if (prop.redirect)
-                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                            return (
-                              <Route
-                                path={prop.path}
-                                component={prop.component}
-                                key={key}
-                              />
-                            )
-                          })
-                        }
+                        {productRoutes.map((prop, key) => <Route {...prop} key={key} />)}
                       </Switch>
                     </Suspense>
                   </Container>

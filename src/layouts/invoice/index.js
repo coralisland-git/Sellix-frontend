@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -10,10 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 import { invoiceRoutes } from '../../routes';
-import {
-  AuthActions,
-  CommonActions
-} from 'services/global'
+import { AuthActions, CommonActions } from 'services/global'
 
 
 import { Header, Loading } from 'components'
@@ -21,20 +18,17 @@ import { Header, Loading } from 'components'
 import './style.scss'
 
 
-const mapStateToProps = (state) => {
-  return ({
-    version: state.common.version,
-    is_authed: state.auth.is_authed,
-    profile: state.auth.profile,
-    theme: state.common.theme
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    authActions: bindActionCreators(AuthActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+const mapStateToProps = (state) => ({
+  version: state.common.version,
+  is_authed: state.auth.is_authed,
+  profile: state.auth.profile,
+  theme: state.common.theme
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  authActions: bindActionCreators(AuthActions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch)
+})
 
 class DefaultLayout extends React.Component {
   constructor(props) {

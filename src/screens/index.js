@@ -68,7 +68,7 @@ import SecurityPage from './security'
 import Notification from './notification'
 import Payments from './payments'
 import MemberPage from './memebers'
-import Billings from './billings'
+
 import Settings from './settings'
 import Invoices from './invoices'
 import ShopDesign from './shop_design'
@@ -76,10 +76,9 @@ import ShopGoogleAnalytics from './shop_google_analytics'
 import StripeCallback from './payments_stripe_callback'
 
 import GeneralSettings from './general_settings'
-import Customization from './customization'
+
 import EmbededPayment from './embeded_payment'
 import EmbededInvoice from './embeded_invoice'
-import EmbededInvoiceDev from './embeded_invoice_dev'
 
 import EmbedProduct from './embed_product'
 import Documentation from './documentation/screen.js'
@@ -109,7 +108,6 @@ export {
   TopUsers,
   Settings,
   Invoices,
-  // Tickets,
   Ticket,
   EmailConfirm,
   ChangeEmail,
@@ -157,17 +155,14 @@ export {
   SecurityPage,
   Payments,
   MemberPage,
-  Billings,
   GeneralSettings,
   ShopDesign,
   ShopGoogleAnalytics,
   Notification,
-  Customization,
   EditBlacklist,
 
   EmbededPayment,
   EmbededInvoice,
-  EmbededInvoiceDev,
   
   ProductGroups,
   CreateProductGroup,
