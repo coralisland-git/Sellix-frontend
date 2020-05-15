@@ -21,8 +21,7 @@ import Select from 'react-select'
 import { Formik } from 'formik'
 import { Loader, DataSlider } from 'components'
 import { createCoupon } from './actions'
-import { getCoupons } from '../../actions'
-import { editCoupon } from '../detail/actions'
+import { getCoupons, editCoupon } from '../../actions'
 import { getProducts, getCouponByID } from './actions'
 import {
   CommonActions

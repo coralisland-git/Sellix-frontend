@@ -87,28 +87,6 @@ const CURRENCY_LIST = [
 	{ value: 'PLN', label: 'PLN'},
 ]
 
-const EDITOR_FORMATS = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image'
-]
-
-const EDITOR_MODULES  = {
-  toolbar: [
-    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-    [{size: []}],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, 
-	 {'indent': '-1'}, {'indent': '+1'}],
-	['link', 'image'],
-    ['clean']
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  }
-}
 
 class CreateProduct extends React.Component {
 	

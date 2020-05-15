@@ -1,20 +1,10 @@
 import { combineReducers } from 'redux'
-
-import {
-  AuthReducer,
-  CommonReducer
-} from './global'
+import { AuthReducer, CommonReducer } from './global'
 
 import {
   Dashboard,
-  GeneralSettings,
-  Receipt,
-  SupplierInvoice,
   Order,
   Product,
-  Project,
-  Help,
-  Notification,
   Categories,
   BlackList,
   Webhooks,
@@ -25,14 +15,12 @@ import {
   Reports,
   Users,
   TopUsers,
-  Settings,
   Invoices,
   ProductGroups
 } from 'screens'
 
 
 const reducer = combineReducers({
-  settings: Settings.reducer,
   invoices: Invoices.reducer,
   users: Users.reducer,
   topUsers: TopUsers.reducer,

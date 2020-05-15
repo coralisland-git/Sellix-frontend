@@ -11,7 +11,7 @@ import {
   FormGroup,
   Input
 } from 'reactstrap'
-import { Button } from 'components';
+import {Button, Loader} from 'components';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import map from "lodash/map"
 import find from "lodash/filter"
@@ -28,36 +28,37 @@ import './style.scss'
 
 const user = window.localStorage.getItem('userId')
 
-const mapStateToProps = (state) => {
-  return ({
-    querie: state.queries.querie
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    commonActions: bindActionCreators(CommonActions, dispatch),
-    replyQuerie: bindActionCreators(replyQuerie, dispatch),
-    getQuerie: bindActionCreators({ getQuerie }, dispatch),
-    closeQuerie: bindActionCreators({ closeQuerie }, dispatch),
-    actions: bindActionCreators({ getQueries }, dispatch),
-  })
-}
+const mapStateToProps = (state) => ({
+  querie: state.queries.querie
+});
 
-class ReplyToQuerie extends React.Component {
+const mapDispatchToProps = (dispatch) => ({
+  commonActions: bindActionCreators(CommonActions, dispatch),
+  replyQuerie: bindActionCreators(replyQuerie, dispatch),
+  getQuerie: bindActionCreators({ getQuerie }, dispatch),
+  closeQuerie: bindActionCreators({ closeQuerie }, dispatch),
+  actions: bindActionCreators({ getQueries }, dispatch),
+})
+
+
+class ReplyToQuery extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
+      loading: true,
     }
   }
 
   componentDidMount() {
-    // this.props.actions.getFeedbacks()
-    this.props.getQuerie.getQuerie(this.props.match.params.id)
+    this.props.getQuerie.getQuerie(this.props.match.params.id).finally(() => {
+      this.setState({
+        loading: false
+      })
+    })
   }
 
-  handleSubmit(values) {
+  handleSubmit = (values) => {
     this.setState({ loading: true })
     this.props.replyQuerie({ ...values, uniqid: this.props.match.params.id }).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
@@ -89,71 +90,77 @@ class ReplyToQuerie extends React.Component {
   }
 
   render() {
-    const currentQuerie = find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
-    if (!currentQuerie) { return null }
+
+    let { loading } = this.state;
+    let { querie, history, match } = this.props;
+
+    const currentQuery = find(querie, (query) => query.uniqid === match.params.id)
+    if (!currentQuery) { return null }
+
+    console.log(loading);
     return (
       <div className="reply-screen mt-3">
         <div className="animated fadeIn">
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
-              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left" /> Queries</a>
+              <a onClick={(e) => history.goBack()}><i className="fas fa-chevron-left" /> Queries</a>
             </BreadcrumbItem>
           </Breadcrumb>
-          <Formik
-            onSubmit={(values) => {
-              this.handleSubmit(values)
-            }}>{props => (
-              <Form onSubmit={props.handleSubmit}>
-                <Card>
-                  <CardHeader>
-                    <Row style={{ alignItems: 'center' }}>
-                      <Col md={12}>
-                        <div className='querieTitle'>
-                          <h1>TICKET {this.props.querie[0].uniqid}</h1>
-                          {this.props.querie[0].status != 'closed' && <Button color="default" onClick={(e) => this.closeQuerie(this.props.match.params.id)}>Close</Button>}
-                        </div>
-                      </Col>
-                    </Row>
-                  </CardHeader>
-                  <CardBody className="p5-4 pb-5">
-                    <Row>
-                      <Col lg={8}>
-                        <FormGroup>
-                          {/* <Label htmlFor="warehouseName">Feedback <span className={`badge badge-${currentFeedback.feedback.toLowerCase()}`}>{currentFeedback.feedback.toLowerCase()}</span></Label> */}
-                          <div>
-                            {/* <p className="text-grey mt-3 mb-4">{currentFeedback.message}</p> */}
+
+          {loading && <Loader />}
+          {!loading &&
+          <Formik onSubmit={this.handleSubmit}>
+            {props =>
+                <Form onSubmit={props.handleSubmit}>
+                  <Card>
+                    <CardHeader>
+                      <Row style={{alignItems: 'center'}}>
+                        <Col md={12}>
+                          <div className='querieTitle'>
+                            <h1>TICKET {querie[0].uniqid}</h1>
+                            {querie[0].status != 'closed' && <Button color="default" onClick={(e) => this.closeQuerie(match.params.id)}>Close</Button>}
                           </div>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg={12}>
-                        <div className='QuerieChatBlock'>
-                          {this.renderMessages()}
-                        </div>
-                        <FormGroup>
-                          <Input
-                            type="textarea"
-                            className="pt-3 pb-3 "
-                            rows={7}
-                            name='message'
-                            placeholder="Reply to querie"
-                            onChange={props.handleChange}
-                            value={props.values.message}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Button color="primary" className="mt-4 mb-3">Submit</Button>
-                  </CardBody>
-                </Card>
-              </Form>
-            )}
+                        </Col>
+                      </Row>
+                    </CardHeader>
+
+                    <CardBody className="p5-4 pb-5">
+                      <Row>
+                        <Col lg={8}>
+                          <FormGroup>
+                            <div />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <div className='QuerieChatBlock'>
+                            {this.renderMessages()}
+                          </div>
+                          <FormGroup>
+                            <Input
+                                type="textarea"
+                                className="pt-3 pb-3 "
+                                rows={7}
+                                name='message'
+                                placeholder="Reply to query"
+                                onChange={props.handleChange}
+                                value={props.values.message}
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Button color="primary" className="mt-4 mb-3">Submit</Button>
+                    </CardBody>
+                  </Card>
+                </Form>
+            }
           </Formik>
+          }
         </div>
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReplyToQuerie)
+export default connect(mapStateToProps, mapDispatchToProps)(ReplyToQuery)
