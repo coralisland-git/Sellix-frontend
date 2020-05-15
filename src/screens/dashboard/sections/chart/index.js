@@ -16,16 +16,19 @@ class RevenueChart extends PureComponent {
 
   render() {
 
-    const { data, range } = this.props;
+    const { data, range, isAdmin } = this.props;
 
     if(!data.length) {
       return <Loader />
     }
+
     const days = data.map(({ day_value }) => day_value)
     const months = data.map(({ month }) => month)
     const years = data.map(({ year }) => year)
     const revenues = data.map(({ revenue }) => revenue)
     const orders = data.map(({ orders_count }) => orders_count)
+    const fee = data.map(({ fee_revenue_potential }) => fee_revenue_potential)
+    const registrations = data.map(({ registrations }) => registrations)
 
     let dataset = [];
 
@@ -36,19 +39,27 @@ class RevenueChart extends PureComponent {
         month: months[key],
         year: years[key],
         order: orders[key],
+        fee: fee[key],
+        registrations: registrations[key],
       });
     });
 
     const CustomTooltip = ({ active, payload }) => {
       if (active) {
 
-        let { day, month, year } = payload[0].payload;
+        let { day, month, year, fee, registrations } = payload[0].payload;
 
         return (
             <div className={"custom-tooltip"}>
               <p className="label"><b>{day} {month} {year}</b></p>
-              <p className="intro">Revenue: <b>{payload[1].value}</b></p>
+              <p className="intro">{isAdmin ? 'Cashflow' : 'Revenue'}: <b>{payload[1].value}</b></p>
               <p className="intro">Order: <b>{payload[0].value}</b></p>
+              {isAdmin &&
+                <>
+                  <p className="intro">Site Revenue: <b>{(fee || 0.00).toFixed(2)}</b></p>
+                  <p className="intro">Registrations: <b>{registrations}</b></p>
+                </>
+              }
             </div>
         );
       }

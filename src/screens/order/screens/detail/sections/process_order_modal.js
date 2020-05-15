@@ -1,5 +1,5 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'components';
 import {
@@ -9,30 +9,11 @@ import {
 } from 'reactstrap'
 import { Spin } from 'components'
 import { CommonActions } from 'services/global'
-
+import config from "constants/config"
 import * as Actions from '../../../actions'
 
 
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(Actions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
-
-const ORDER_STATUS = {
-  '0': 'Pending',
-  '1': 'Completed',
-  '2': 'Cancelled',
-  '3': 'Confirmation',
-  '4': 'Partial'
-}
-
-class ProcessOrderModal extends React.Component {
+class ProcessOrderModal extends Component {
   
   constructor(props) {
     super(props)
@@ -74,7 +55,7 @@ class ProcessOrderModal extends React.Component {
             <ModalBody>
                 <div>
                     <p className="text-left" style={{lineHeight: '1.4em'}}>
-                    This invoice <b>{invoiceId}</b> has been flagged as a {ORDER_STATUS[status]} payment. 
+                    This invoice <b>{invoiceId}</b> has been flagged as a {config.ORDER_STATUS[status]} payment.
                     If you wish to, you can process this order now. 
                     You won’t receive any further revenue besides what you already received now.
                     </p>
@@ -90,4 +71,10 @@ class ProcessOrderModal extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProcessOrderModal)
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(Actions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(ProcessOrderModal)

@@ -59,20 +59,6 @@ class ShopLayout extends React.Component {
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
-
-		if(prevProps.user.username !== this.props.user.username) {
-			const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
-			document.body.classList.remove('light');
-			document.body.classList.remove('dark');
-			document.body.classList.add(theme);
-
-			document.documentElement.classList.remove('light')
-			document.documentElement.classList.remove('dark')
-			document.documentElement.classList.add(theme);
-		}
-	}
-
 	componentWillUnmount() {
 		if(window.$crisp && window.$crisp.on) {
 			window.$crisp.do('chat:hide')
@@ -91,12 +77,60 @@ class ShopLayout extends React.Component {
 		document.documentElement.classList.add(theme);
 
 		document.title = `Products | Sellix`;
-		const { username } = this.props.match.params;
-		const { getGeneralUserInfo, getSelfUser, setTostifyAlertFunc } = this.props;
+
+		const { setTostifyAlertFunc } = this.props;
 
 		if(window.$crisp && window.$crisp.on) {
 			window.$crisp.do('chat:show')
 		}
+
+		this.initializeData()
+
+		setTostifyAlertFunc((status, message) => {
+			if (!message) {
+				message = 'Unexpected Error'
+			}
+			if (status === 'success') {
+				toast.success(message, {
+					position: toast.POSITION.TOP_RIGHT
+				})
+			} else if (status === 'error') {
+				toast.error(message, {
+					position: toast.POSITION.TOP_RIGHT
+				})
+			} else if (status === 'warn') {
+				toast.warn(message, {
+					position: toast.POSITION.TOP_RIGHT
+				})
+			} else if (status === 'info') {
+				toast.info(message, {
+					position: toast.POSITION.TOP_RIGHT
+				})
+			}
+		})
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if(this.props.match.params.username !== prevProps.match.params.username) {
+			this.initializeData()
+		}
+
+		if(prevProps.user.username !== this.props.user.username) {
+			const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
+			document.body.classList.remove('light');
+			document.body.classList.remove('dark');
+			document.body.classList.add(theme);
+
+			document.documentElement.classList.remove('light')
+			document.documentElement.classList.remove('dark')
+			document.documentElement.classList.add(theme);
+		}
+	}
+
+	initializeData = () => {
+
+		const { username } = this.props.match.params;
+		const { getGeneralUserInfo, getSelfUser } = this.props;
 
 		getSelfUser();
 
@@ -129,30 +163,6 @@ class ShopLayout extends React.Component {
 					}
 				}
 			})
-
-
-		setTostifyAlertFunc((status, message) => {
-			if (!message) {
-				message = 'Unexpected Error'
-			}
-			if (status === 'success') {
-				toast.success(message, {
-					position: toast.POSITION.TOP_RIGHT
-				})
-			} else if (status === 'error') {
-				toast.error(message, {
-					position: toast.POSITION.TOP_RIGHT
-				})
-			} else if (status === 'warn') {
-				toast.warn(message, {
-					position: toast.POSITION.TOP_RIGHT
-				})
-			} else if (status === 'info') {
-				toast.info(message, {
-					position: toast.POSITION.TOP_RIGHT
-				})
-			}
-		})
 	}
 
 	verifiedTooltipToggle() {

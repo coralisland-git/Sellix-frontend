@@ -6,40 +6,11 @@ import { tableOptions } from 'constants/tableoptions'
 import { Loader } from 'components'
 import { withRouter } from "react-router-dom";
 import * as moment from 'moment/moment'
-import cancelledIcon from 'assets/images/order/Cancelled_Icon.svg'
-import completedIcon from 'assets/images/order/Check_Icon.svg'
-import paritalIcon from 'assets/images/order/Partially_Icon.svg'
-import pendingIcon from 'assets/images/order/Pending_Icon.svg'
+
+import config from "constants/config";
 
 import './style.scss'
 
-import config from "../../../../constants/config";
-
-const STATUS_ICON = {
-  '0': pendingIcon,
-  '1': completedIcon,
-  '2': cancelledIcon,
-  '4': paritalIcon,
-}
-
-const ORDER_STATUS = {
-  '0': 'Pending',
-  '1': 'Completed',
-  '2': 'Cancelled',
-  '3': 'Confirmation',
-  '4': 'Partial'
-}
-
-const PAYMENT_OPTS = {
-  'paypal': 'PayPal',
-  'bitcoin': 'BTC',
-  'litecoin': 'LTC',
-  'ethereum': 'ETH',
-  'skrill': 'Skrill',
-  'stripe': 'Stripe',
-  'bitcoincash': 'BTH',
-  'perfectmoney': 'Perfect Money'
-}
 
 
 
@@ -58,7 +29,7 @@ class UserProductsTable extends Component {
         <div>
           <p><a onClick={(e) => this.gotoDetail(row.uniqid, row.username)} style={{fontSize: 15, fontWeight: 600}}>
             <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}></i>&nbsp;&nbsp;&nbsp;
-            {`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+            {`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
           </p>
           <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title?row.product_title:row.product_id}</p>
         </div>
@@ -68,11 +39,11 @@ class UserProductsTable extends Component {
   renderOrderStatus (cell, row) {
     return (
         <div className="order-status">
-          <div className={`order-badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+          <div className={`order-badge badge-${config.ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
               {+row.status === 3 && <i className={"far fa-hourglass"} style={{ fontSize: ".9rem", color: "#1d183d"}}/>}
-              {+row.status !== 3 && <img src={STATUS_ICON[row.status]} alt="" />}
+              {+row.status !== 3 && <img src={config.STATUS_ICON[row.status]} alt="" />}
           </div>
-          <span className={`text-${ORDER_STATUS[row.status].toLowerCase()}`}>{ORDER_STATUS[row.status]}</span>
+          <span className={`text-${config.ORDER_STATUS[row.status].toLowerCase()}`}>{config.ORDER_STATUS[row.status]}</span>
         </div>
     )
   }
@@ -81,7 +52,7 @@ class UserProductsTable extends Component {
     return (
         <div className="order">
           <p className="order-value" style={{fontSize: 15, fontWeight: 600}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
-          <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {PAYMENT_OPTS[row.gateway]}</p>
+          <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {config.PAYMENT_OPTS[row.gateway]}</p>
         </div>
     )
   }

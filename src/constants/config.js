@@ -6,13 +6,26 @@ import perfectmoneyIcon from "../assets/images/crypto/perfectmoney.svg";
 import stripeIcon from "../assets/images/crypto/stripe.svg";
 import bitcoincashIcon from "../assets/images/crypto/bitcoincash.svg";
 import skrillIcon from "../assets/images/crypto/skrill.svg";
+
+import cancelledIcon from 'assets/images/order/Cancelled_Icon.svg'
+import completedIcon from 'assets/images/order/Check_Icon.svg'
+import paritalIcon from 'assets/images/order/Partially_Icon.svg'
+import pendingIcon from 'assets/images/order/Pending_Icon.svg'
+
 import { Converter } from "showdown";
+
 
 export default {
   // API_ROOT_URL: 'https://staging.sellix.io/api/v1',
   API_ROOT_URL: 'https://api.sellix.io/v1',
   WS_URL: 'wss://wss.sellix.io/websocket',
   CAPTCHA_SITE_KEY: '6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe',
+  STATUS_ICON: {
+    '0': pendingIcon,
+    '1': completedIcon,
+    '2': cancelledIcon,
+    '4': paritalIcon,
+  },
   CURRENCY_OPTIONS: [
     { value: 'USD', label: 'USD'},
     { value: 'EUR', label: 'EUR'},
@@ -25,6 +38,15 @@ export default {
     { value: 'SEK', label: 'SEK'},
     { value: 'NZD', label: 'NZD'},
     { value: 'PLN', label: 'PLN'}
+  ],
+
+   ORDER_OPTIONS: [
+     {value: 'all', label: 'All'},
+     {value: '0', label: 'Pending'},
+     {value: '1', label: 'Completed'},
+     {value: '2', label: 'Cancelled'},
+     {value: '3', label: 'Confirmation'},
+     {value: '4', label: 'Partial'}
   ],
   CURRENCY_LIST : { 
     'USD': '$',
@@ -83,7 +105,15 @@ export default {
     'perfectmoney': 'Perfect Money',
     'bitcoincash': 'Bitcoin Cash',
     'skrill': 'Skrill'
+  },
+  ORDER_STATUS: {
+    '0': 'Pending',
+    '1': 'Completed',
+    '2': 'Cancelled',
+    '3': 'Confirmation',
+    '4': 'Partial'
   }
+
 }
 
 export const converter = new Converter({

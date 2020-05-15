@@ -47,6 +47,11 @@ class ShopProducts extends React.Component {
     let { user, location } = this.props;
     let { categories, filter } = this.state;
 
+
+    if(prevProps.match.params.username !== this.props.match.params.username) {
+      this.initializeData()
+    }
+
     if(prevProps.user !== user) {
       document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
     }
@@ -76,6 +81,7 @@ class ShopProducts extends React.Component {
         }
       })
     }
+
     this.initializeData()
   }
 

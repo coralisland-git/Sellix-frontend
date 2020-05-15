@@ -196,8 +196,10 @@ class Dashboard extends React.Component {
               </Row>
             </CardHeader>
 
-            <div className="pt-4">
-              {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+            <div className="pt-4 position-relative">
+              {loading && <Row className={"loader-container"}>
+                <Col lg={12}><Loader /></Col>
+              </Row>}
 
               {(!loading && showPlaceholder) ?
                   <div className={'mt-5 pt-5 unauthorized-container'}>
@@ -214,12 +216,12 @@ class Dashboard extends React.Component {
                       {isAdmin && <ReportFee {...this.state} potential={true} />}
                     </Row>
 
-                    <h5 className="mb-4">{isAdmin ? "Cashflows" : "Revenues"} | Orders</h5>
+                    <h5 className="mb-4">{isAdmin ? "Cashflow" : "Revenues"} | Orders</h5>
                     <CardBody className="position-relative">
                       <div className={"position-absolute d-flex justify-content-flex-end"} style={{ fontSize: ".8rem", fontWeight: 200, top: "1rem", right: "1rem" }}>
                         This graph will always show a 14 days or higher time span
                       </div>
-                      <DashBoardChart range={range} height="350px" data={chartData}/>
+                      <DashBoardChart isAdmin={isAdmin} range={range} height="350px" data={chartData}/>
                     </CardBody>
 
                     {!!invoices.length && <h5 className="mb-4 mt-4">Last 5 Orders</h5>}

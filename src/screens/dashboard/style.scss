@@ -98,3 +98,20 @@
     font-size: 16px;
   }
 }
+
+
+
+.dashboard-screen .loader-container {
+  transform: translate(0);
+  width: 100%;
+  position: absolute;
+  left: 15px;
+  z-index: 9;
+  top: 3rem;
+  height: 127px;
+  background: #231d3f82;
+}
+
+.light .dashboard-screen .loader-container {
+  background: #f4f1ff82;
+}

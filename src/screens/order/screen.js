@@ -16,58 +16,15 @@ import * as moment from 'moment/moment'
 import config from 'constants/config'
 import { Loader, Spin, Button } from 'components'
 import { tableOptions } from 'constants/tableoptions'
+import IntervalTimer from 'react-interval-timer';
+import Select from "react-select";
+import * as OrderActions from './actions'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
-
-import * as OrderActions from './actions'
 import './style.scss'
-import cancelledIcon from 'assets/images/order/Cancelled_Icon.svg'
-import completedIcon from 'assets/images/order/Check_Icon.svg'
-import paritalIcon from 'assets/images/order/Partially_Icon.svg'
-import pendingIcon from 'assets/images/order/Pending_Icon.svg'
-import IntervalTimer from 'react-interval-timer';
-import Select from "react-select";
 
-const STATUS_ICON = {
-  '0': pendingIcon,
-  '1': completedIcon,
-  '2': cancelledIcon,
-  '4': paritalIcon,
-}
 
-const ORDER_STATUS = {
-  '0': 'Pending',
-  '1': 'Completed',
-  '2': 'Cancelled',
-  '3': 'Confirmation',
-  '4': 'Partial'
-}
-
-const ORDER_LIST = [{
-  value: 'all', label: 'All'
-}, {
-  value: '0', label: 'Pending',
-}, {
-  value: '1', label: 'Completed'
-}, {
-  value: '2', label: 'Cancelled'
-}, {
-  value: '3', label: 'Confirmation'
-}, {
-  value: '4', label: 'Partial'
-}]
-
-const PAYMENT_OPTS = {
-  'paypal': 'PayPal',
-  'bitcoin': 'BTC',
-  'litecoin': 'LTC',
-  'ethereum': 'ETH',
-  'skrill': 'Skrill',
-  'stripe': 'Stripe',
-  'bitcoincash': 'BTH',
-  'perfectmoney': 'Perfect Money'
-}
 
 const user = window.localStorage.getItem('userId')
 
@@ -142,7 +99,7 @@ class Order extends React.Component {
       <div>
         <p><a onClick={(e) => this.gotoDetail(row.uniqid)} style={{fontSize: 15, fontWeight: 600}}>
           <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location} />&nbsp;&nbsp;&nbsp;
-          {`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+          {`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
         <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title ? row.product_title : row.product_id}</p>
       </div>
@@ -150,12 +107,12 @@ class Order extends React.Component {
   }
 
   renderOrderStatus (cell, row) {
-    const status = ORDER_STATUS[row.status] || "";
+    const status = config.ORDER_STATUS[row.status] || "";
     return (
       <div className="order-status">
         <div className={`order-badge badge-${status.toLowerCase()}`} style={{  margin: '0 auto'}}>
           {+row.status === 3 && <i className={"far fa-hourglass"} style={{ fontSize: ".9rem", color: "#1d183d"}}/>}
-          {+row.status !== 3 && <img src={STATUS_ICON[row.status]} alt="" />}
+          {+row.status !== 3 && <img src={config.STATUS_ICON[row.status]} alt="" />}
         </div>
         <span className={`text-${status.toLowerCase()}`}>{status}</span>
       </div>
@@ -166,7 +123,7 @@ class Order extends React.Component {
     return (
       <div className="order">
         <p className="order-value" style={{fontSize: 15, fontWeight: 600}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
-        <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {PAYMENT_OPTS[row.gateway]}</p>
+        <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {config.PAYMENT_OPTS[row.gateway]}</p>
       </div>
     )  
   }
@@ -257,7 +214,7 @@ class Order extends React.Component {
                     <div className="white mr-4">
                       <Select
                           className="select-status-width"
-                          options={ORDER_LIST}
+                          options={config.ORDER_OPTIONS}
                           classNamePrefix={"react-select"}
                           id="search_status"
                           name="search_status"

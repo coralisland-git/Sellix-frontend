@@ -228,7 +228,7 @@ class User extends Component {
             }
           </Row>
 
-          <h5 className="mb-4">Cashflows | Orders</h5>
+          <h5 className="mb-4">Cashflow | Orders</h5>
           <Row>
             <Col lg={12} className="mx-auto">
               <CardBody>
