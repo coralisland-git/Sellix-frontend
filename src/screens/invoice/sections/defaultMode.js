@@ -4,9 +4,10 @@ import PerfectMoney from "./perfectMoney";
 import skrillLinkIcon from "../../../assets/images/skrill_link.svg";
 import StripeForm from "./stripe/stripeForm";
 import { PayPalButton } from "react-paypal-button-v2";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 
-const DefaultMode = ({ invoice, info, theme, setInvoiceStatus, qrCode, getPayPalInvoice, setFakePayPalSuccess, fakePayPalSuccess }) => {
+const DefaultMode = ({ invoice, info, theme, setInvoiceStatus, qrCode, getPayPalInvoice, setFakePayPalSuccess, fakePayPalSuccess, tostifyAlert }) => {
 
   const [ openQRModal, setQRModal ] = useState(false)
 
@@ -34,6 +35,10 @@ const DefaultMode = ({ invoice, info, theme, setInvoiceStatus, qrCode, getPayPal
       return <StripeForm invoice={invoice} onSuccess={setFakePayPalSuccess}/>
     }
 
+    const copyToClipboard = () => {
+      tostifyAlert('success', "Copied to Clipboard.")
+    }
+
     if(+status < 1 || +status > 3)
       return(
           <div>
@@ -41,8 +46,10 @@ const DefaultMode = ({ invoice, info, theme, setInvoiceStatus, qrCode, getPayPal
               Please send exactly <span className="badge text-primary bold">{((crypto_amount || 0) - (crypto_received || 0)).toFixed(8)}</span> {config.PAYMENT_OPTS[gateway]} to
             </p>
             <p className="btc-address text-grey bold text-center" style={{height: openQRModal ? '310px' : '40px', transition: 'height 0.3s ease-out', overflow: 'hidden'}}>
-            <span style={{opacity: openQRModal ? 0 : 1, transition: 'opacity 0.3s ease-out',}}>{crypto_address || ''}</span>
-              <div className="qr-container" style={{height: openQRModal ? 'auto' : 0, opacity: openQRModal ? 1 : 0, transition: 'opacity 0.3s ease-out', paddingLeft: '25px', marginTop: openQRModal ? '-50px' : '-40px'}}>
+              <CopyToClipboard text={crypto_address || ''} onCopy={() => copyToClipboard()}>
+                <span style={{opacity: openQRModal ? 0 : 1, transition: 'opacity 0.3s ease-out', cursor: "pointer" }}>{crypto_address || ''}</span>
+              </CopyToClipboard>
+              <div className="qr-container" style={{height: openQRModal ? 'auto' : 0, opacity: openQRModal ? 1 : 0, transition: 'opacity 0.3s ease-out', padding: openQRModal ? "10px" : 0, marginTop: openQRModal ? '-50px' : '-40px'}}>
                 {qrCode({ onClick: () => {}, qrBgColor: theme === 'dark' ? '#edf0fe' : null, borderRadius: '5px', openQRModal})}
               </div>
             </p>
