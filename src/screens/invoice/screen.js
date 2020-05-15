@@ -111,7 +111,9 @@ class Invoice extends React.Component {
           this.setState({
             invoice: {
               ...invoice,
-              crypto_mode: this.state.invoice.crypto_mode
+              crypto_mode: this.state.invoice.crypto_mode,
+              developer_title: this.state.invoice.developer_title,
+              developer_return_url: this.state.invoice.developer_return_url,
             }
           })
           this.setTheme(invoice)
