@@ -154,6 +154,10 @@ export function mainBrowserNavigation(props){
         icon: 'fas fa-code',
         children: [
           {
+            name: 'Documentation',
+            url: `/documentation`,
+          },
+          {
             name: 'Embed Products',
             url: `/dashboard/${user}/developer/embed`,
           },

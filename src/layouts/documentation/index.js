@@ -40,12 +40,6 @@ class documentationLayout extends React.Component {
 
     document.title = `Developers | Sellix`;
 
-    const preUrl = `/${window.localStorage.getItem('userId')}`
-      
-    if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
-      this.props.history.push(preUrl)
-    }
-
     const toastifyAlert = (status, message) => {
       if (!message) {
         message = 'Unexpected Error'
