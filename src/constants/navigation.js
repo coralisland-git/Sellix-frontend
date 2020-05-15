@@ -156,6 +156,10 @@ export function mainBrowserNavigation(props){
           {
             name: 'Documentation',
             url: `/documentation`,
+            attributes: { 
+              target: '_blank', 
+              rel: "documentation"
+            }
           },
           {
             name: 'Embed Products',
