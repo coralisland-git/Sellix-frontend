@@ -128,7 +128,7 @@ class PaypalInvoice extends React.Component {
                         <Col lg={9} className="ml-auto mr-auto">
                             <Card className="bg-white p-5 detail">
                                 <div className="d-flex justify-content-between  mb-5">
-                                    <h2 className="text-primary">{(invoice.product || {}).title}</h2>
+                                    <h2 className="text-primary">{invoice.product_id? (invoice.product || {}).title : invoice.developer_title}</h2>
                                     <img src={backIcon} width="15" height="15"  
                                     onClick={() => {this.props.history.goBack()}}
                                     style={{cursor: "pointer"}}/>
