@@ -309,12 +309,7 @@ class Invoice extends React.Component {
 
                         <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
                           <div className="animated fadeIn">
-                            <Card className="bg-white" style={loading ? {
-                              height: '490px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center'
-                            } : {}}>
+                            <Card className="bg-white d-flex align-items-center justify-content-center mt-xs-4" style={loading ? { height: '490px' } : {}}>
                               {loading && <Loader/>}
                               <div className="float-logo">
                                 <img src={sellix_logo} width="153" alt={""}/>
@@ -371,9 +366,9 @@ class Invoice extends React.Component {
                     }
 
 
-                    <Col lg={{ size: 4 }}>
+                    <Col lg={{ size: 4 }} >
 
-                      <Card className="invoice-card p-0 bg-white pt-3 mb-2" >
+                      <Card className="invoice-card p-0 bg-white pt-3 mb-2 mt-sm-4" >
 
                         <div className="float-logo">
                           <img src={sellix_logo} width="153" alt={""}/>
