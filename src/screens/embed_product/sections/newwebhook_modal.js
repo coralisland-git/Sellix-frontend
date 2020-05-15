@@ -9,14 +9,17 @@ import {
   Modal,
   ModalHeader, 
   ModalBody,
-  ModalFooter,
 } from 'reactstrap'
 import Select from 'react-select'
 import { Button } from 'components';
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
+import javascript from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
+
 import Clipboard from 'react-clipboard.js';
+
+SyntaxHighlighter.registerLanguage('javascript', javascript)
 
 
 class NewCustomModal extends React.Component {
@@ -169,7 +172,7 @@ class NewCustomModal extends React.Component {
                               <Clipboard 
                               data-clipboard-text={embedCode} 
                               button-title="Copy">
-                                <i className="fa fa-clone" aria-hidden="true"></i>
+                                <i className="fa fa-clone" aria-hidden="true" />
                               </Clipboard>
                             </div>
                             <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>

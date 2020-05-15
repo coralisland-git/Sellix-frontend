@@ -1,5 +1,12 @@
 import React, { PureComponent } from 'react';
-import { AreaChart, ResponsiveContainer, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import Area from 'recharts/es6/cartesian/Area';
+import XAxis from 'recharts/es6/cartesian/XAxis';
+import YAxis from 'recharts/es6/cartesian/YAxis';
+import CartesianGrid from 'recharts/es6/cartesian/CartesianGrid';
+import AreaChart from 'recharts/es6/chart/AreaChart';
+import ResponsiveContainer from 'recharts/es6/component/ResponsiveContainer';
+import Tooltip from 'recharts/es6/component/Tooltip';
+
 
 import './style.scss'
 

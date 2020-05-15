@@ -5,7 +5,7 @@ import {
     GeneralSettings,
     ShopDesign,
     ShopGoogleAnalytics,
-    StripeCallback
+    StripeCallback,
   } from 'screens'
 
   const user = window.localStorage.getItem('userId')
@@ -57,21 +57,6 @@ import {
       component: StripeCallback.screen,
       title: 'Stripe Callback'
     },
-    // {
-    //     path: `/settings/${user}/memebers`,
-    //     name: 'Memebers',
-    //     component: MemberPage.screen
-    // },
-    // {
-    //   path: `/settings/${user}/billing`,
-    //   name: 'Billings',
-    //   component: Billings.screen
-    // },
-    // {
-    //   path: `/settings/${user}/customization`,
-    //   name: 'Customization',
-    //   component: Customization.screen
-    // },
     {
       redirect: true,
       pathTo: `/settings/${user}/general`,
