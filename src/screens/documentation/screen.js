@@ -12,14 +12,14 @@ SyntaxHighlighter.registerLanguage('php', php)
 
 
 const NAVITATIONS = [
-  { key: 'get_started', value: 'Get Started', level: 1 },
+  { key: 'get_started', value: 'GET STARTED', level: 1 },
   { key: 'introduction', value: 'Introduction', level: 2 },
   { key: 'authentication', value: 'Authentication', level: 2 },
   { key: 'pagination', value: 'Pagination', level: 2 },
   { key: 'errors', value: 'Errors', level: 2 },
   { key: 'webhooks', value: 'Webhooks', level: 2 },
 
-  { key: 'api_reference', value: 'API Reference', level: 1 },
+  { key: 'api_reference', value: 'API REFERENCE', level: 1 },
   { key: 'blacklists', value: 'Blacklists', level: 2 },
   { key: 'blacklist-object', value: 'Blacklist Object' },
   { key: 'blacklist-get', value: 'Get Blacklist' },
@@ -71,7 +71,7 @@ const NAVITATIONS = [
   { key: 'query-close', value: 'Close Query' },
   { key: 'query-reopen', value: 'Reopen Query' },
 
-  { key: 'sellix_checkout', value: 'Sellix Checkout', level: 1 },
+  { key: 'sellix_checkout', value: 'SELLIX CHECKOUT', level: 1 },
   { key: 'sellix-checkout', value: 'Payments', level: 2 },
   { key: 'sellix-checkout-flow', value: 'Checkout Flow' },
   { key: 'sellix-checkout-create', value: 'Create a Payment' },
