@@ -12,14 +12,14 @@ SyntaxHighlighter.registerLanguage('php', php)
 
 
 const NAVITATIONS = [
-  { key: 'get_started', value: 'Get STARTED', level: 1 },
+  { key: 'get_started', value: 'Get Started', level: 1 },
   { key: 'introduction', value: 'Introduction', level: 2 },
   { key: 'authentication', value: 'Authentication', level: 2 },
   { key: 'pagination', value: 'Pagination', level: 2 },
   { key: 'errors', value: 'Errors', level: 2 },
   { key: 'webhooks', value: 'Webhooks', level: 2 },
 
-  { key: 'api_reference', value: 'API referred', level: 1 },
+  { key: 'api_reference', value: 'API Reference', level: 1 },
   { key: 'blacklists', value: 'Blacklists', level: 2 },
   { key: 'blacklist-object', value: 'Blacklist Object' },
   { key: 'blacklist-get', value: 'Get Blacklist' },
@@ -71,11 +71,11 @@ const NAVITATIONS = [
   { key: 'query-close', value: 'Close Query' },
   { key: 'query-reopen', value: 'Reopen Query' },
 
-  { key: 'sellix_pay', value: 'SELLIX PAY', level: 1 },
-  { key: 'sellix-pay', value: 'Payments', level: 2 },
-  { key: 'sellix-pay-flow', value: 'Checkout Flow' },
-  { key: 'sellix-pay-create', value: 'Create a Payment' },
-  { key: 'sellix-pay-delete', value: 'Delete Payment' },
+  { key: 'sellix_checkout', value: 'Sellix Checkout', level: 1 },
+  { key: 'sellix-checkout', value: 'Payments', level: 2 },
+  { key: 'sellix-checkout-flow', value: 'Checkout Flow' },
+  { key: 'sellix-checkout-create', value: 'Create a Payment' },
+  { key: 'sellix-checkout-delete', value: 'Delete Payment' },
 ]
 
 const userId = window.localStorage.getItem('userId')
@@ -4449,7 +4449,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="sellix-pay">
+              <section id="sellix-checkout">
                 <div className="d-ins">
                   <h3><b>Payments</b></h3>
                 </div>
@@ -4467,7 +4467,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="sellix-pay-flow">
+              <section id="sellix-checkout-flow">
                 <div className="d-ins">
                   <h3><b>Checkout Flow</b></h3>
                   <p>
@@ -4486,7 +4486,7 @@ if (hash_equals($signature, $header_signature)) {
                   </p>
                 </div>
               </section>
-              <section id="sellix-pay-create">
+              <section id="sellix-checkout-create">
                 <div className="d-ins">
                   <h3><b>Create a Payment</b></h3>
                   <p>
@@ -4784,7 +4784,7 @@ if (hash_equals($signature, $header_signature)) {
                   </div>
                 </div>
               </section>
-              <section id="sellix-pay-delete">
+              <section id="sellix-checkout-delete">
                 <div className="d-ins">
                   <h3><b>Delete a Payment</b></h3>
                   <p>
