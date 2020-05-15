@@ -556,7 +556,7 @@ class EmbededInvoice extends React.Component {
       overflow: 'hidden',
       width: 'auto',
       marginLeft: '-7px',
-      padding: 0,
+      padding: 0
     } : {}}>
       <QRCode
           bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')}
