@@ -12,12 +12,12 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import * as moment from 'moment/moment'
-import { Loader } from 'components'
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import config from 'constants/config'
+import { Loader, Spin } from 'components'
+import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import includes from "lodash/includes"
+import { includes } from 'lodash'
 import {
 	CommonActions
 } from 'services/global'

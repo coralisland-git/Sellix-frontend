@@ -13,8 +13,7 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import map from "lodash/map"
-import find from "lodash/filter"
+import * as _ from 'lodash'
 import { Formik } from 'formik'
 import { replyQuerie } from '../../actions'
 import { getQuerie } from '../../actions'
@@ -72,7 +71,7 @@ class ReplyToQuerie extends React.Component {
   }
 
   renderMessages = () => {
-    return map(this.props.querie, querie => {
+    return _.map(this.props.querie, querie => {
       return <div className={querie.role === 'customer' ? 'alignForCustomer' : 'AlignForYou'}>
         <div className='querieMessageBlock'>
           <div className='querieMessageTitle'>{querie.role === 'customer' ? 'Customer' : 'You'}</div>
@@ -89,7 +88,7 @@ class ReplyToQuerie extends React.Component {
   }
 
   render() {
-    const currentQuerie = find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
+    const currentQuerie = _.find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
     if (!currentQuerie) { return null }
     return (
       <div className="reply-screen mt-3">

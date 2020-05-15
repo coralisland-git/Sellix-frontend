@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'components';
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { confirmAlert } from 'react-confirm-alert';
 import { getBlacklist, deleteFromBlacklist } from './actions'
 import { CommonActions } from 'services/global'
@@ -30,8 +29,11 @@ const Confirm = ({ onClose, title, message, onDelete }) => {
       <h1>{title}</h1>
       <h3>{message}</h3>
       <div className="react-confirm-alert-button-group">
-        <Button color="primary" onClick={() => { onDelete(); onClose()}}>Yes, Delete it!</Button>
-        <Button color="primary" onClick={onClose}>No</Button>
+        <button onClick={() => {
+          onDelete()
+          onClose()
+        }}>Yes, Delete it!</button>
+        <button onClick={onClose}>No</button>
       </div>
     </div>
   </div>
@@ -170,7 +172,59 @@ class Blacklist extends React.Component {
               Options
             </TableHeaderColumn>
           </BootstrapTable>
-
+          {/* <Card>
+            <CardBody>
+              <div className="flex-wrapper align-items-center">
+                <h1 className="title">Blacklist</h1>
+              </div>
+              <Row className="mt-4">
+                <Col lg={4}>
+                  <Card className="grey">
+                    <CardBody className="p-0">
+                      <div className="d-flex align-items-center justify-content-between p-3">
+                        <h5>Events per day</h5>
+                        <div className="new-select fill">
+                          <select className="form-control" ref={this.dateRangeSelect}>
+                            <option value="12">7 days</option>
+                            <option value="6">7 days</option>
+                            <option value="3">7 days</option>
+                          </select>
+                          <i className="fa fa-caret-down fa-lg mt-4" />
+                        </div>
+                      </div>
+                      <BlackListChart />
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg={4}>
+                  <Card className="grey">
+                    <CardBody>
+                      <h1 className="report">0</h1>
+                      <p className="report-title">Total events</p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg={12}>
+                  <Card className="grey">
+                    <CardBody>
+                      <p className="title mb-4">VPN/Proxies</p>
+                      <div className="custom-checkbox custom-control">
+                        <input
+                          className="custom-control-input"
+                          type="checkbox"
+                          id="paypal-email"
+                          name="SMTP-auth"
+                        />
+                        <label className="custom-control-label" htmlFor="paypal-email">
+                          Block buyers using a VPN/Proxy for risky payment methods (PayPal, Stripe)
+                        </label>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </CardBody>
+          </Card> */}
         </div>
       </div>
     )

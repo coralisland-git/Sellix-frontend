@@ -13,6 +13,8 @@ import { AuthActions, CommonActions } from 'services/global'
 import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
+import LazyImage from "react-lazy-progressive-image";
+import Sellix from '../../assets/images/user_placeholder.svg';
 
 import GoogleAnalytics from './googleAnalytics'
 
@@ -24,7 +26,7 @@ import Header from './header'
 import './style.scss'
 import verifiedIcon from 'assets/images/sellix_verified.svg'
 import LockIcon from 'assets/images/Lock.svg'
-
+import config from "../../constants/config";
 
 import LandingFooter from "../../layouts/landing/footer"
 

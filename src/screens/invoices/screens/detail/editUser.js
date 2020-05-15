@@ -13,15 +13,19 @@ import {
     Input,
     Label
 } from 'reactstrap'
-import map from "lodash/map"
-import pick from "lodash/pick"
-import mapValues from "lodash/mapValues"
+import *  as _ from 'lodash'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Formik } from 'formik'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import { tableOptions } from 'constants/tableoptions'
+import Select from 'react-select'
 import { Loader } from 'components'
-import { CommonActions } from 'services/global'
+import {
+    CommonActions
+} from 'services/global'
+import { getSettings } from '../../actions'
 import { getUser } from './actions'
-import { updateUser } from './actions'
+import {updateUser} from './actions'
 
 
 import './style.scss'
@@ -62,7 +66,7 @@ class SettingsEdit extends React.Component {
     }
 
     rednerUserRow = (props) => {
-        return map(userData, row => {
+        return _.map(userData, row => {
             if (row.key === 'username' || row.key === 'email') {
                 return <Row>
                     <Col lg={12}>
@@ -102,8 +106,8 @@ class SettingsEdit extends React.Component {
     }
 
       handleSubmit(values) {
-        const dataForSend = pick(values, map(userData, 'key'))
-        const correctFormatForSend = mapValues(dataForSend, data => {
+        const dataForSend = _.pick(values, _.map(userData, 'key'))
+        const correctFormatForSend = _.mapValues(dataForSend, data => {
             if(data === true){
                 return 1
             }

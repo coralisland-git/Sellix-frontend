@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import {
   Card,
   CardHeader,
@@ -11,9 +12,8 @@ import {
   Input
 } from 'reactstrap'
 import { Button } from 'components';
-import { ToastContainer } from 'react-toastify'
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { ToastContainer, toast } from 'react-toastify'
+import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import DateRangePicker from 'react-bootstrap-daterangepicker'
 
 import { Loader } from 'components'

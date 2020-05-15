@@ -10,8 +10,7 @@ import {
   Input
 } from 'reactstrap'
 import { Button } from 'components';
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 import { Loader } from 'components'
 import { confirmAlert } from 'react-confirm-alert';

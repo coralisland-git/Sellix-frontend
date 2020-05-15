@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -9,9 +9,11 @@ import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
-
-import { invoiceRoutes } from 'routes';
-import { AuthActions, CommonActions } from 'services/global'
+import { invoiceRoutes } from '../../routes';
+import {
+  AuthActions,
+  CommonActions
+} from 'services/global'
 
 
 import { Header, Loading } from 'components'
@@ -19,13 +21,14 @@ import { Header, Loading } from 'components'
 import './style.scss'
 
 
-const mapStateToProps = (state) => ({
-  version: state.common.version,
-  is_authed: state.auth.is_authed,
-  profile: state.auth.profile,
-  theme: state.common.theme
-})
-
+const mapStateToProps = (state) => {
+  return ({
+    version: state.common.version,
+    is_authed: state.auth.is_authed,
+    profile: state.auth.profile,
+    theme: state.common.theme
+  })
+}
 const mapDispatchToProps = (dispatch) => {
   return ({
     authActions: bindActionCreators(AuthActions, dispatch),
@@ -33,16 +36,19 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class InvoiceLayout extends React.Component {
+class DefaultLayout extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      theme: 'light'
+    }
+  }
 
   componentDidMount () {
-
-      this.props.authActions.getSelfUser()
-          .catch(err => {
-            this.props.authActions.logOut()
-          })
-
-      this.props.commonActions.setTostifyAlertFunc((status, message) => {
+      this.props.authActions.getSelfUser().catch(err => {
+        this.props.authActions.logOut()
+      })
+      const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
         }
@@ -63,7 +69,15 @@ class InvoiceLayout extends React.Component {
             position: toast.POSITION.TOP_RIGHT
           })
         }
-      })
+      }
+      this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+  }
+
+  changeTheme() {
+    const theme = window.localStorage.getItem('theme') || 'light'
+    window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
+
+    this.setState({theme: theme === 'light' ? 'dark': 'light'})
   }
 
   render() {
@@ -71,7 +85,7 @@ class InvoiceLayout extends React.Component {
       zIndex: 1999
     }
 
-    const { theme } = this.props;
+    const { theme } = this.props
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -80,7 +94,7 @@ class InvoiceLayout extends React.Component {
             <div className="app">
               <AppHeader fixed className="border-bottom">
                 <Suspense fallback={Loading()}>
-                  <Header {...this.props} theme={theme} isShop={true}/>
+                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
                 </Suspense>
               </AppHeader>
               
@@ -106,4 +120,4 @@ class InvoiceLayout extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InvoiceLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout)

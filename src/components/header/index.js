@@ -30,7 +30,7 @@ class Header extends Component {
   render() {
     const { profile, children, theme, is_authed, isShop, history, isDocumentation, ...attributes } = this.props
     const { notifications } = profile || {};
-    const path = this.props.history.location.pathname;
+    const path = this.props.history.location.pathname
     
     return (
       <React.Fragment>
