@@ -117,8 +117,8 @@ class ReplyToQuery extends React.Component {
                       <Row style={{alignItems: 'center'}}>
                         <Col md={12}>
                           <div className='querieTitle'>
-                            <h1>TICKET {querie[0].uniqid}</h1>
-                            {querie[0].status != 'closed' && <Button color="default" onClick={(e) => this.closeQuerie(match.params.id)}>Close</Button>}
+                            <h1>TICKET {currentQuery.uniqid}</h1>
+                            {currentQuery.status !== 'closed' && <Button color="default" onClick={(e) => this.closeQuerie(match.params.id)}>Close</Button>}
                           </div>
                         </Col>
                       </Row>
