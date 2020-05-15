@@ -85,7 +85,7 @@ class InvoiceLayout extends React.Component {
               </AppHeader>
               
               <div className="app-body mt-4 pt-5">
-                  <Container className="p-0 pt-3">
+                  <Container className="p-0 pt-3 pb-3">
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                       <Switch>

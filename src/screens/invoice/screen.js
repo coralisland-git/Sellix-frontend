@@ -278,7 +278,7 @@ class Invoice extends React.Component {
 
     const innerComponent = isQrMode ?
         <QRMode qrCode={this.qrCode} setInvoiceStatus={this.setInvoiceStatus} {...this.state} theme={theme} /> :
-        <DefaultMode  qrCode={this.qrCode} setInvoiceStatus={this.setInvoiceStatus} setFakePayPalSuccess={this.setFakePayPalSuccess} getPayPalInvoice={this.getPayPalInvoice} {...this.state} theme={theme} />
+        <DefaultMode tostifyAlert={this.props.tostifyAlert} qrCode={this.qrCode} setInvoiceStatus={this.setInvoiceStatus} setFakePayPalSuccess={this.setFakePayPalSuccess} getPayPalInvoice={this.getPayPalInvoice} {...this.state} theme={theme} />
 
     return <div className={!info && isQrMode ? "d-flex h-100" : "d-flex h-100 align-items-center"}>
         <div className={"w-100 mb-4"}>

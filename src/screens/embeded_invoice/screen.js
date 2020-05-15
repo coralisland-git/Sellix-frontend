@@ -406,7 +406,7 @@ class EmbededInvoice extends React.Component {
               transition: 'opacity 0.3s ease-out',
             }}>{crypto_address || ''}</span>
             <div className="qr-container" style={{
-              height: openQRModal ? '300px' : 0,
+              height: openQRModal ? 'auto' : 0,
               opacity: openQRModal ? 1 : 0,
               transition: 'opacity 0.3s ease-out',
               paddingLeft: '25px',
@@ -548,22 +548,25 @@ class EmbededInvoice extends React.Component {
 
   qrCode = ({ onClick, qrBgColor, borderRadius }) => {
 
-    const { invoice, qrCellSize } = this.state
+    const { invoice, qrCellSize, openQRModal } = this.state
     const { theme } = this.props
 
     return <div onClick={onClick} className="qr-wrapper"  style={borderRadius ? {
       borderRadius,
-      overflow: 'hidden'
+      overflow: 'hidden',
+      width: 'auto',
+      marginLeft: '-7px'
     } : {}}>
-      <QRCode bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots" 
-      // logoImage={config.PAYMENT_ICONS[invoice.gateway]}
-        onQrDraw={({cellSize}) => {
-          if(cellSize != this.state.qrCellSize)  {
-            this.setState({
-              qrCellSize: cellSize
-            })
+      <QRCode
+          bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')}
+          value={invoice.crypto_uri} size="270"
+          ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"}
+          qrStyle="dots"
+          onQrDraw={({cellSize}) => {
+            if(cellSize != this.state.qrCellSize)  {
+              this.setState({ qrCellSize: cellSize })}
+            }
           }
-        }}
       />
       <img src={config.PAYMENT_ICONS[invoice.gateway]} width={qrCellSize * 11} style={{
         background: qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe'),
@@ -625,7 +628,7 @@ class EmbededInvoice extends React.Component {
               })
             }}/>
             <CopyToClipboard text={invoice.crypto_address}
-                              onCopy={() => {
+                             onCopy={() => {
                               setTimeout(() => {
                                 this.copyAddressToClipboardOnCopied()
                                 }, 300)
