@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
@@ -11,7 +11,8 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import * as moment from 'moment/moment'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { NewWebhookLogModal, ShowWebhookLogModal } from './sections'

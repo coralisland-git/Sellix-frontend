@@ -1,20 +1,14 @@
 import React, { Suspense } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import * as router from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { Container } from 'reactstrap'
-import {
-  AppFooter,
-  AppHeader,
-} from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
-import { ThemeProvider, createGlobalStyle  } from 'styled-components';
-import { darkTheme, lightTheme } from 'layouts/theme/theme'
+import { ThemeProvider  } from 'styled-components';
+import { lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
-import { paymentRoutes } from 'routes'
 import {  
   CommonActions
 } from 'services/global'
@@ -72,13 +66,6 @@ class EmbedInvoiceLayout extends React.Component {
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
   }
 
-  changeTheme() {
-    const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
-
-    this.setState({theme: theme === 'light' ? 'dark': 'light'})
-  }
-
   render() {
     const containerStyle = {
       zIndex: 1999
@@ -87,8 +74,6 @@ class EmbedInvoiceLayout extends React.Component {
     if (this.props.location.pathname.indexOf("/ivembed") > -1){
       require('./extra.scss')
     }
-
-    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
     return (
       <ThemeProvider theme={lightTheme}>
@@ -100,19 +85,7 @@ class EmbedInvoiceLayout extends React.Component {
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                       <Switch>
-                        {
-                          invoiceRoutes.map((prop, key) => {
-                            if (prop.redirect)
-                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                            return (
-                              <Route
-                                path={prop.path}
-                                component={prop.component}
-                                key={key}
-                              />
-                            )
-                          })
-                        }
+                        {invoiceRoutes.map((prop, key) => <Route {...prop} key={key} />)}
                       </Switch>
                     </Suspense>
                   </Container>

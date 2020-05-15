@@ -21,7 +21,7 @@ import { createBlacklist } from './actions'
 import { getBlacklist } from '../../actions'
 import { editBlacklist } from '../detail/actions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import find from 'lodash/find'
+import find from "lodash/find"
 import './style.scss'
 import * as Yup from "yup";
 

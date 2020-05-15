@@ -7,7 +7,7 @@ import {
   Col
 } from 'reactstrap'
 import SweetAlert from 'react-bootstrap-sweetalert';
-import * as moment from 'moment/moment'
+
 import {
   CommonActions
 } from 'services/global'
