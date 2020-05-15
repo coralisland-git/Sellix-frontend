@@ -4,26 +4,21 @@ import { api } from 'utils'
 import { bindActionCreators } from 'redux'
 import { Card, Row, Col } from 'reactstrap'
 import * as moment from 'moment/moment'
-import { QRCodeModal } from 'components'
 import { PayPalButton } from "react-paypal-button-v2";
 import { CommonActions } from 'services/global'
 import { getInvoiceInfo, downloadInvoice } from './actions'
 import { Loader, Button } from 'components'
 import StripeForm from './stripeForm'
-import LeaveFeedback from '../feedbacks_shop/screens/createComponent/screen'
-import ProductScreen from '../product_shop/screens/detail/screen'
 import config from 'constants/config'
 import FileSaver from 'file-saver';
 import ReactTooltip from 'react-tooltip'
 
-import sellix_logo from 'assets/images/Sellix_logo.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import skrillLinkIcon from 'assets/images/skrill_link.svg'
 import infoIcon from 'assets/images/info.svg'
 import infoIconRed from 'assets/images/infoRed.svg'
 import copyIcon from 'assets/images/copy.svg'
 import qrCornerImg from 'assets/images/qr-corner.png'
-import dummyQrCode from 'assets/images/dummy-qr-code.png'
 import checkMarkIcon from 'assets/images/green_checkmark.svg'
 import { QRCode } from 'react-qrcode-logo';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -265,13 +260,6 @@ class EmbededInvoice extends React.Component {
     const id = this.getInvoiceId()
 
     document.title = `Invoice ${id} | Sellix`;
-
-    if(localStorage.getItem('invoice-' + id)) {
-      this.setState({
-        invoice: JSON.parse(localStorage.getItem('invoice-' + id))
-      })
-      localStorage.removeItem('invoice-' + id)
-    }
 
     getInvoice(id)
         .then(({ data: { invoice }}) => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, CardBody, Row, Col, FormGroup } from 'reactstrap'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { tableOptions } from 'constants/tableoptions'
 import { Loader, Button } from 'components'
 import { withRouter } from "react-router-dom";
