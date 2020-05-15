@@ -308,7 +308,7 @@ class Invoice extends React.Component {
                         }
 
                         <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
-                          <div className="d-sm-down-none animated fadeIn">
+                          <div className="animated fadeIn">
                             <Card className="bg-white" style={loading ? {
                               height: '490px',
                               display: 'flex',

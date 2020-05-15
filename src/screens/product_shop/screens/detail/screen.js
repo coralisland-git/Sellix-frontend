@@ -162,7 +162,7 @@ class ShopProductDetail extends React.Component {
                   </Col>
 
                   <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
-                    <div className="d-sm-down-none animated fadeIn" >
+                    <div className="d-sm-none d-lg-block d-md-block animated fadeIn" >
                       <Affix offsetTop={97} container='affix-bar' >
                         <Card className="bg-white" id={'affix-container'} style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
                           {loading && <Loader/>}
@@ -195,6 +195,36 @@ class ShopProductDetail extends React.Component {
                       </Affix>
                     </div>
 
+                    <div className="d-lg-none d-md-none animated fadeIn" >
+                      <Card className="bg-white" style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
+                        {loading && <Loader/>}
+                        {!loading && <>
+                          {<>
+                            {
+                              group && <div className="p-3 pt-2 pb-2">
+                                <h4>Select an option</h4>
+                                <Input type="select" name="select" id="exampleSelect"
+                                       value={this.props.selectedProduct.uniqid}
+                                       onChange={e => {
+                                         const uniqid = e.target.value
+                                         const product = group.products_bound.find(p => p.uniqid === uniqid)
+                                         this.props.handleProductChange(product)
+                                       }}
+                                >
+                                  {group.products_bound.map(product => <option key={product.uniqid} value={product.uniqid}>{product.title}</option>)}
+                                </Input>
+                              </div>
+                            }
+                            {
+                              gateway ?
+                                  <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
+                                  <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
+                            }
+                            <StockInfo productInfo={productInfo} />
+                          </>}
+                        </>}
+                      </Card>
+                    </div>
                   </Col>
                 </Row>
               </Col>
