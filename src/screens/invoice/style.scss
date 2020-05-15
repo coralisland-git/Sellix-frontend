@@ -959,3 +959,9 @@
     background-color: #F8BB86;
   }
 }
+
+@media (max-width: 768px) {
+  .mt-xs-4 {
+    margin-top: 1.5rem !important;
+  }
+}

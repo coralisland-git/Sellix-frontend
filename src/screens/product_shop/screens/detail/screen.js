@@ -162,7 +162,7 @@ class ShopProductDetail extends React.Component {
                   </Col>
 
                   <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
-                    <div className="d-sm-none d-lg-block d-md-block animated fadeIn" >
+                    <div className="d-md-none d-sm-down-none d-lg-block d-md-block animated fadeIn" >
                       <Affix offsetTop={97} container='affix-bar' >
                         <Card className="bg-white" id={'affix-container'} style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
                           {loading && <Loader/>}
