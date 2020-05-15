@@ -22,44 +22,11 @@ import { Loader, Spin } from 'components'
 import find from "lodash/find"
 import { Formik } from 'formik'
 import {replyFeedback} from '../../actions'
-import {
-  CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 
 import './style.scss'
-import bitcoinIcon from 'assets/images/crypto/btc.svg'
-import paypalIcon from 'assets/images/crypto/paypal.svg'
-import litecoinIcon from 'assets/images/crypto/ltc.svg'
-import ethereumIcon from 'assets/images/crypto/eth.svg'
-import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
-import stripeIcon from 'assets/images/crypto/stripe.svg'
-import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
-import skrillIcon from 'assets/images/crypto/skrill.svg'
-
-const PAYMENT_ICONS = {
-  paypal: paypalIcon,
-  bitcoin: bitcoinIcon,
-  litecoin: litecoinIcon,
-  ethereum: ethereumIcon,
-  perfectmoney: perfectmoneyIcon,
-  stripe: stripeIcon,
-  bitcoincash: bitcoincashIcon,
-  skrill: skrillIcon
-}
 
 const user = window.localStorage.getItem('userId')
-
-const PAYMENT_OPTS = {
-  'paypal': 'PayPal',
-  'bitcoin': 'BTC',
-  'litecoin': 'LTC',
-  'ethereum': 'ETH',
-  'skrill': 'Skrill',
-  'stripe': 'Stripe',
-  'bitcoincash': 'BTH',
-  'perfectmoney': 'Perfect Money'
-}
-
 
 const mapStateToProps = (state) => {
   return ({
@@ -189,7 +156,7 @@ class ReplyToFeedback extends React.Component {
 
                               <div className="d-flex">
                                 <p className="title">Gateway</p>
-                                <p>{PAYMENT_OPTS[currentFeedback.invoice.gateway]}</p>
+                                <p>{config.PAYMENT_OPTS[currentFeedback.invoice.gateway]}</p>
                               </div>
                               
                               <div className="d-flex">

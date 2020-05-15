@@ -18,8 +18,7 @@ import { Loader } from 'components'
 import { Formik } from 'formik'
 import { CommonActions } from 'services/global'
 import { createBlacklist } from './actions'
-import { getBlacklist } from '../../actions'
-import { editBlacklist } from '../detail/actions'
+import { getBlacklist, editBlacklist } from '../../actions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import find from "lodash/find"
 import './style.scss'

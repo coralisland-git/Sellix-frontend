@@ -6,7 +6,6 @@ import Changelog from './static/changelog'
 import Terms from './static/terms/screen.js'
 
 
-
 // Auth
 import LogIn from './auth/log_in'
 import TwoFactorAuthentication from './auth/2fa'
@@ -17,6 +16,14 @@ import ForgotPassword from './auth/forgot_password'
 import ResetPassword from './auth/reset_password'
 import EmailConfirm from './auth/email_confirm'
 import ChangeEmail from './auth/change_email'
+
+
+// Admin
+import Users from './admin/users'
+import User from './admin/users/screens/detail'
+import TopUsers from './admin/topUsers'
+import Settings from './admin/settings'
+
 
 
 import Dashboard from './dashboard'
@@ -64,16 +71,14 @@ import EditCoupon from './coupons/screens/create'
 import ReplyToQuerie from './queries/screens/reply'
 import Contacts from './contacts/screens/reply/index.js'
 
-import Users from './users'
-import User from './users/screens/detail'
-import TopUsers from './topUsers'
+
 
 import PaypalPaying from './paypal_paying'
 import Invoice from './invoice'
 import SecurityPage from './security'
 import Notification from './notification'
 import Payments from './payments'
-import Settings from './settings'
+
 import Invoices from './invoices'
 import ShopDesign from './shop_design'
 import ShopGoogleAnalytics from './shop_google_analytics'

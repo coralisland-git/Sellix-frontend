@@ -137,7 +137,7 @@ class ReplyToQuerie extends React.Component {
                             className="pt-3 pb-3 "
                             rows={7}
                             name='message'
-                            placeholder="Reply to querie"
+                            placeholder="Reply to query"
                             onChange={props.handleChange}
                             value={props.values.message}
                           />

@@ -27,7 +27,7 @@ const adminRoutes = [
   {
     path: `/admin/settings`,
     name: 'Settings',
-    component: Settings.screen,
+    component: Settings,
     title: 'Settings',
   },
   {
