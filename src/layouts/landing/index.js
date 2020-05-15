@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
-import { Link } from "react-scroll";
+import { Link, animateScroll as scroll } from "react-scroll";
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
@@ -8,10 +8,13 @@ import { landingRoutes } from 'routes'
 import { AuthActions, CommonActions } from 'services/global'
 
 import {
+    Container,
     Collapse,
     Navbar,
     NavbarBrand,
-    Nav
+    Nav,
+    NavItem,
+    NavLink
 } from 'reactstrap'
 import { Button } from 'components'
 import sellix_logo from 'assets/images/home/logo-1@2x.png'

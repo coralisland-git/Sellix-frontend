@@ -14,8 +14,7 @@ import {
   Input,
   Form
 } from 'reactstrap'
-import isEmpty from "lodash/isEmpty"
-import map from "lodash/map"
+import { isEmpty, map } from 'lodash'
 import { Loader, Button, Spin } from 'components'
 import { getSettings as fetchSettings, updateSettings } from './actions'
 import { CommonActions } from 'services/global'

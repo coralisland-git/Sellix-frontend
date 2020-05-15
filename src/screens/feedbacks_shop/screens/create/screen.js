@@ -76,7 +76,7 @@ class LeaveFeedback extends React.Component {
           this.setState({
             initialValues: {
               'message': existingFeedback.message,
-              'score': +existingFeedback.score || 5
+              'score': existingFeedback.score
             },
             loadingInitialValues: false
           })

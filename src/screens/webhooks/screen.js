@@ -11,8 +11,7 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import * as moment from 'moment/moment'
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { NewWebhookModal } from './sections'
@@ -41,8 +40,11 @@ const Confirm = ({ onClose, title, message, onDelete }) => {
       <h1>{title}</h1>
       <h3>{message}</h3>
       <div className="react-confirm-alert-button-group">
-        <Button color="primary" onClick={() => { onDelete(); onClose()}}>Yes, Delete it!</Button>
-        <Button color="primary" onClick={onClose}>No</Button>
+        <button onClick={() => {
+          onDelete()
+          onClose()
+        }}>Yes, Delete it!</button>
+        <button onClick={onClose}>No</button>
       </div>
     </div>
   </div>

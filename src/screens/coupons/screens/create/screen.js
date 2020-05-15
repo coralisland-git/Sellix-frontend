@@ -2,9 +2,7 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import map from "lodash/map"
-import some from "lodash/some"
-import remove from "lodash/remove"
+import * as _ from 'lodash'
 import {
   Card,
   CardHeader,
@@ -35,11 +33,11 @@ const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({
-    coupons: map(state.coupons.coupons, coupon => ({
+    coupons: _.map(state.coupons.coupons, coupon => ({
       ...coupon,
       discount_value: [+coupon.discount]
     })),
-    products: [{ label: 'All products', value: ''}, ...map(state.coupons.products, product => ({label: product.title, value: product.uniqid})) ]
+    products: [{ label: 'All products', value: ''}, ..._.map(state.coupons.products, product => ({label: product.title, value: product.uniqid})) ] 
   })
 }
 
@@ -97,7 +95,7 @@ class CreateCoupon extends React.Component {
     this.setState({ loading: true })
     const newValues = {
       ...values,
-      products_bound: map(values.products_bound, item => item.value).join(','),
+      products_bound: _.map(values.products_bound, item => item.value).join(','),
       max_uses: values.max_uses ? values.max_uses : -1
     }
     const createOrEditPromise = this.isEdit()
@@ -204,18 +202,18 @@ class CreateCoupon extends React.Component {
                                     placeholder="Select Products"
                                     onChange={(options) => {
                                       let newOptions = []
-                                      const oldHaveAll = some(props.values.products_bound, option => option.value === '')
-                                      const newHaveAll = some(options, option => option.value === '')
-                                      const newHaveSome = some(options, option => option.value != '')
+                                      const oldHaveAll = _.some(props.values.products_bound, option => option.value === '')
+                                      const newHaveAll = _.some(options, option => option.value === '')
+                                      const newHaveSome = _.some(options, option => option.value != '')
                                       if (oldHaveAll) {
                                         if (newHaveSome) {
-                                          newOptions = remove(options, option => option.value != '')
+                                          newOptions = _.remove(options, option => option.value != '')
                                         } else {
                                           newOptions = options
                                         }
                                       } else {
                                         if (newHaveAll) {
-                                          newOptions = remove(options, option => option.value === '')
+                                          newOptions = _.remove(options, option => option.value === '')
                                         } else {
                                           newOptions = options
                                         }

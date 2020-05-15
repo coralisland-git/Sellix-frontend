@@ -15,6 +15,8 @@ import {
 } from 'reactstrap'
 import Select from 'react-select'
 import { Button } from 'components';
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.snow.css';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import { AppSwitch } from '@coreui/react'
@@ -24,7 +26,7 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import config from 'constants/config'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import includes from "lodash/includes"
+import * as _ from 'lodash'
 
 import {
 	CommonActions
@@ -269,7 +271,7 @@ class EditProduct extends React.Component {
 	}
 
 	handleSubmit(values) {
-		const admin = includes(window.location.pathname, 'admin')
+		const admin = _.includes(window.location.pathname, 'admin')
 		this.setState({saving: true})
 		const { gateways, custom_fields, showFileStock, showServiceStock, images, files, webhook_fields } = this.state
 		delete gateways['']
@@ -380,7 +382,7 @@ class EditProduct extends React.Component {
 
   backLink = () => {
 
-	  const admin = includes(window.location.pathname, 'admin')
+	  const admin = _.includes(window.location.pathname, 'admin')
 	  const { history } = this.props;
 
 	  if(history.length > 1) {
@@ -402,11 +404,14 @@ class EditProduct extends React.Component {
 			unlistedTooltipOpen, 
 			privateTooltipOpen,
 			blockTooltipOpen,
-			files,
+			paypalTooltipOpen,
+			files, 
+			serials,
 			images,
 			selectedTab,
 			showFileStock,
 			showServiceStock,
+			editorState,
 			initialValues,
       		type,
       		gateways,

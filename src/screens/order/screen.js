@@ -10,8 +10,7 @@ import {
   Col,
   Input
 } from 'reactstrap'
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import * as moment from 'moment/moment'
 import config from 'constants/config'
 import { Loader, Spin, Button } from 'components'

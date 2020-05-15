@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 import { Loader, Button } from 'components'
-import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
-import javascript from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
-
+import SyntaxHighlighter from 'react-syntax-highlighter';
 import Clipboard from 'react-clipboard.js';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { NewWebhookModal } from './sections';
@@ -15,7 +13,6 @@ import * as ProductActions from '../product/actions';
 import './style.scss'
 
 
-SyntaxHighlighter.registerLanguage('javascript', javascript)
 
 class EmbedProduct extends Component {
 
@@ -154,7 +151,7 @@ class EmbedProduct extends Component {
                 :
                   <Row>
                     <Col lg={12}>
-                      <div className="p-4">
+                      <div className="p-5">
                         <p className="page_description text-grey mb-4">
                           We offer the possibility to embed our products directly into your site, without having to rely on our shop page. <br />
                           In order to do this, you first have to include our embed.js through this link

@@ -10,8 +10,7 @@ import {
   Input
 } from 'reactstrap'
 import { Button } from 'components';
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { confirmAlert } from 'react-confirm-alert'; 
 import { tableOptions } from 'constants/tableoptions'
@@ -43,8 +42,11 @@ const Confirm = ({ onClose, title, message, onDelete }) => {
       <h1>{title}</h1>
       <h3>{message}</h3>
       <div className="react-confirm-alert-button-group">
-        <Button color="primary" onClick={() => { onDelete(); onClose()}}>Yes, Delete it!</Button>
-        <Button color="primary" onClick={onClose}>No</Button>
+        <button onClick={() => {
+          onDelete()
+          onClose()
+        }}>Yes, Delete it!</button>
+        <button onClick={onClose}>No</button>
       </div>
     </div>
   </div>

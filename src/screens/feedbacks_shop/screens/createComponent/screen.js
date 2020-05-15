@@ -40,9 +40,11 @@ class LeaveFeedback extends React.Component {
       loadingInitialValues: true,
       initialValues: {
         message: "",
-        score: 5,
+        score: 0,
       }
     }
+
+    this.initializeData = this.initializeData.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -54,6 +56,10 @@ class LeaveFeedback extends React.Component {
   }
 
   componentDidMount () {
+    this.initializeData()
+  }
+
+  initializeData () {
     this.props.commonActions.getFeedbackByUniqid(this.props.uniqid)
         .then(res => {
 
@@ -73,7 +79,7 @@ class LeaveFeedback extends React.Component {
               this.setState({
                 initialValues: {
                   'message': feedback.message || "",
-                  'score': +feedback.score || 5
+                  'score': +feedback.score
                 },
                 loadingInitialValues: false
               })
@@ -127,7 +133,7 @@ class LeaveFeedback extends React.Component {
                       }[score]
                       props.setFieldValue('feedback', feedback)
                     }}
-                    value={+props.values.score} isHalf={false}/>
+                    value={+props.values.score || 5} isHalf={false}/>
                   </div>
                   <Row>
                     <Col>

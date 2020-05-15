@@ -7,21 +7,24 @@ import {
   CardBody,
   Row,
   Col,
+  Label,
   Form,
   FormGroup,
   Input
 } from 'reactstrap'
 import { Button } from 'components';
 import * as Yup from "yup";
-import map from "lodash/map"
-import find from "lodash/find"
+import * as cn from 'classnames'
+import * as _ from 'lodash'
 import { Formik } from 'formik'
 import { replyQuerie } from './actions'
 import { Spin } from 'components'
 import { getQuerie } from './actions'
 import { closeQuerie } from './actions'
 import { reopenQuerie } from './actions'
-import { CommonActions } from 'services/global'
+import {
+  CommonActions
+} from 'services/global'
 
 import './style.scss'
 
@@ -76,7 +79,7 @@ class ReplyToQuerie extends React.Component {
   }
 
   renderMessages = () => {
-    return map(this.props.querie, querie => {
+    return _.map(this.props.querie, querie => {
       return <div className={querie.role === 'customer' ? 'alignForCustomerCS' : 'AlignForYouCS'}>
         <div className='querieMessageBlockCS'>
           <div className='querieMessageTitle'>{querie.role === 'customer' ? 'You' : 'Seller'}</div>
@@ -98,7 +101,7 @@ class ReplyToQuerie extends React.Component {
 
   render() {
     const { loading } = this.state
-    const currentQuerie = find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
+    const currentQuerie = _.find(this.props.querie, (querie) => querie.uniqid === this.props.match.params.id)
     if (!currentQuerie) { return null }
     return (
       <div className="query-view-screen mt-3">

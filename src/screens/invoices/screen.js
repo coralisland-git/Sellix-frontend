@@ -9,8 +9,7 @@ import {
   Col,
   Button
 } from 'reactstrap'
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { getInvoices } from './actions'

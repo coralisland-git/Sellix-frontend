@@ -5,8 +5,7 @@ import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
 import { DateRangePicker2, Loader } from 'components'
 import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews, ReportFee } from './sections'
 import { getAnalyticsData, geLastInvoices } from './actions'
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { tableOptions } from "../../constants/tableoptions";
 import * as moment from 'moment/moment'
 import { getSelfUser } from "../../services/global/auth/actions";

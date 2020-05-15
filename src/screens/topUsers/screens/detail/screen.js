@@ -5,12 +5,17 @@ import {
   Card,
   CardHeader,
   CardBody,
+  Button,
   Row,
   Col,
+  Form,
+  FormGroup,
+  Input,
+  Label
 } from 'reactstrap'
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
+import Select from 'react-select'
 import { Loader } from 'components'
 import {getUser} from './actions'
 

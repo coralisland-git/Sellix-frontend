@@ -1,14 +1,21 @@
 import React from "react";
-import { Container } from "reactstrap";
-import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
-import php from 'react-syntax-highlighter/dist/esm/languages/hljs/php'
-import sunburst from 'react-syntax-highlighter/dist/esm/styles/hljs/sunburst';
-import atomOneLight from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-light';
+import {
+  Card, 
+  CardBody, 
+  CardHeader,
+  Button,
+  Col,  
+  Row,
+  Collapse,
+  Container
+} from "reactstrap";
+import { Link } from "react-router-dom";
+import sellix_logo from "assets/images/Sellix_logo.svg";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { sunburst, atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Scrollspy from 'react-scrollspy';
 import Clipboard from 'react-clipboard.js';
 import "./style.scss";
-
-SyntaxHighlighter.registerLanguage('php', php)
 
 
 const NAVITATIONS = [
@@ -68,7 +75,7 @@ const NAVITATIONS = [
   { key: 'query-get', value: 'Get a Query' },
   { key: 'query-list', value: 'List All Queries' },
   { key: 'query-reply', value: 'Reply Query' },
-  { key: 'query-close', value: 'Close Query' },
+  { key: 'query-close', value: 'Close Query' },  
   { key: 'query-reopen', value: 'Reopen Query' },
 
   { key: 'sellix_pay', value: 'SELLIX PAY', level: 1 },
@@ -112,7 +119,7 @@ class Documentation extends React.Component {
   render() {
 
     var {activeNode} = this.state;
-
+    
     var items = NAVITATIONS.map((nav => {
         return nav.key
     }))
@@ -137,7 +144,7 @@ class Documentation extends React.Component {
                       if(el)
                         this.setState({activeNode: el.id.split('-')[0].slice(0, 4)})
                     }
-                  }>
+                  }>                  
                   {
                     NAVITATIONS.map((nav, index) => {
                       if (nav.level == 1)
@@ -147,7 +154,7 @@ class Documentation extends React.Component {
                       else
                         return (
                           <li className={ nav.level == 2 ? 'lv-2' : nav.key.indexOf(activeNode) > -1 ? 'lv-3 vs' : 'lv-3' } key={index}>
-                            <a href={`/documentation#${nav.key}`}
+                            <a href={`/documentation#${nav.key}`} 
                             >{nav.value}</a>
                           </li>
                         )
