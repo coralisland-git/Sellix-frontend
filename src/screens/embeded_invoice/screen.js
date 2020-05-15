@@ -410,7 +410,8 @@ class EmbededInvoice extends React.Component {
               opacity: openQRModal ? 1 : 0,
               transition: 'opacity 0.3s ease-out',
               paddingLeft: '25px',
-              marginTop: '-40px'
+              marginTop: '-40px',
+              padding: 0
             }}>
               {this.qrCode({
                 onClick: () => {},
@@ -555,8 +556,7 @@ class EmbededInvoice extends React.Component {
       borderRadius,
       overflow: 'hidden',
       width: 'auto',
-      marginLeft: '-7px',
-      padding: 0
+      marginLeft: '-7px'
     } : {}}>
       <QRCode
           bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')}
