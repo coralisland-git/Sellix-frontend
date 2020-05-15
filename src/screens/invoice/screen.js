@@ -176,7 +176,6 @@ class Invoice extends React.Component {
 
     let invoice = location.state ? location.state.invoice : null;
 
-    console.log(invoice)
     if(invoice) {
       let seconds = 24 * 60 * 60 - (new Date().getTime() - new Date(invoice.created_at * 1000).getTime()) / 1000
       let time = this.secondsToTime(seconds);
@@ -347,7 +346,7 @@ class Invoice extends React.Component {
                   <Row className="justify-content-center">
 
                     {info &&
-                    <>
+                      <>
                       <Col lg={12}>
                         <div className="text-left my-4 mb-5">
                           <h1 className={"m-0"} style={{ fontSize: "1.4rem" }}>
@@ -366,11 +365,9 @@ class Invoice extends React.Component {
                     }
 
 
-                    <Col lg={{ size: 4 }} >
+                    <Col lg={{ size: 4 }}>
 
-                      {!info && !isQrMode && <div className="text-left my-1 mb-1"><h1 className="m-0">&nbsp;</h1></div>}
-
-                      <Card className="invoice-card p-0 bg-white pt-3" style={{ marginBottom: "calc(1.5rem + 4px)"}}>
+                      <Card className="invoice-card p-0 bg-white pt-3 mb-2" >
 
                         <div className="float-logo">
                           <img src={sellix_logo} width="153" alt={""}/>

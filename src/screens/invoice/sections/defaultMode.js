@@ -46,8 +46,8 @@ const DefaultMode = ({ invoice, info, theme, setInvoiceStatus, qrCode, getPayPal
               Please send exactly <span className="badge text-primary bold">{((crypto_amount || 0) - (crypto_received || 0)).toFixed(8)}</span> {config.PAYMENT_OPTS[gateway]} to
             </p>
             <p className="btc-address text-grey bold text-center" style={{height: openQRModal ? '310px' : '40px', transition: 'height 0.3s ease-out', overflow: 'hidden'}}>
-              <CopyToClipboard text={crypto_address || ''} onCopy={() => copyToClipboard()} style={{opacity: openQRModal ? 0 : 1, cursor: "pointer", transition: 'opacity 0.3s ease-out' }}>
-                <div>{crypto_address || ''}</div>
+              <CopyToClipboard text={crypto_address || ''} onCopy={() => copyToClipboard()}>
+                <span style={{opacity: openQRModal ? 0 : 1, transition: 'opacity 0.3s ease-out', cursor: "pointer" }}>{crypto_address || ''}</span>
               </CopyToClipboard>
               <div className="qr-container" style={{height: openQRModal ? 'auto' : 0, opacity: openQRModal ? 1 : 0, transition: 'opacity 0.3s ease-out', padding: openQRModal ? "10px" : 0, marginTop: openQRModal ? '-50px' : '-40px'}}>
                 {qrCode({ onClick: () => {}, qrBgColor: theme === 'dark' ? '#edf0fe' : null, borderRadius: '5px', openQRModal})}
