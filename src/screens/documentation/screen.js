@@ -2386,6 +2386,13 @@ if (hash_equals($signature, $header_signature)) {
                       </tr>
                       <tr>
                         <td>
+                          <p className="param">to_process</p>
+                          <p>bool</p>
+                        </td>
+                        <td>True if the invoice is marked to be processed.</td>
+                      </tr>
+                      <tr>
+                        <td>
                           <p className="param">discount</p>
                           <p>float</p>
                         </td>
