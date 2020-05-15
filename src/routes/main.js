@@ -25,6 +25,7 @@ const mainRoutes = [
   { path: '/prembed', name: 'EmbedLayout', component: EmbedLayout },
   { path: '/ivembed', name: 'EmbedInvoiceLayout', component: EmbedInvoiceLayout },
   { path: '/invoice', name: 'InvoiceLayout', component: InvoiceLayout },
+  { path: '/payment', name: 'InvoiceLayout', component: InvoiceLayout },
   { path: '/product', name: 'ProductLayout', component: ProductLayout },
   { path: '/group', name: 'ProductLayout', component: ProductLayout },
 

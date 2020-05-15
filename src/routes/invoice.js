@@ -14,6 +14,12 @@ const invoiceRoutes = [
     name: 'Bitcoin',
     component: Invoice.screen,
     exact: true
+  },
+  {
+    path: '/payment/:id',
+    name: 'Bitcoin',
+    component: Invoice.screen,
+    exact: true
   }
 ]
   

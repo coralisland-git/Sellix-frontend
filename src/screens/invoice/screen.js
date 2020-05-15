@@ -241,6 +241,10 @@ class Invoice extends React.Component {
       this.startTimer()
       return <div className="d-flex align-items-center"><div className="sk-spinner sk-spinner-pulse" />Awaiting for payment</div>
     } else if(+status === 1 || +status === 2) {
+      if (this.props.location.pathname.indexOf("/payment") > -1){
+        if (invoice.developer_return_url)
+          window.location = invoice.developer_return_url
+      }
       return null
     } else if(+status === 3) {
       return <div className="d-flex align-items-center"><div className="sk-spinner sk-spinner-pulse" />Waiting for Confirmation ({((invoice.crypto_transactions || []).slice(-1)[0] || {}).confirmations }/{invoice.crypto_confirmations || 0})</div>

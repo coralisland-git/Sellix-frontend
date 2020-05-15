@@ -72,7 +72,7 @@ const DefaultMode = ({ invoice, info, theme, setInvoiceStatus, qrCode, getPayPal
     <p className="text-grey mb-3">{invoice.uniqid}</p>
 
     <div className="d-flex justify-content-between align-items-center ">
-      <h4 className="text-grey">{(invoice.product || {}).title}</h4>
+      <h4 className="text-grey">{ invoice.product_id? (invoice.product || {}).title : invoice.developer_title }</h4>
       {getCryptoAmount({...invoice})}
     </div>
 

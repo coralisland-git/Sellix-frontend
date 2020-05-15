@@ -80,7 +80,7 @@ class EmbedLayout extends React.Component {
       zIndex: 1999
     }
 
-    if (this.props.location.pathname.indexOf("/payment/embed") > -1){
+    if (this.props.location.pathname.indexOf("/prembed") > -1){
       require('./extra.scss')
     }
 
