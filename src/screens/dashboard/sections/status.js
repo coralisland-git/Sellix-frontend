@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getStatus } from '../../admin/settings/actions'
+import { getStatus, getStatusViaWebsocket } from '../../admin/settings/actions'
 
 
 import '../style.scss'
+import IntervalTimer from "react-interval-timer";
 
 
 class Status extends React.Component {
@@ -13,7 +14,8 @@ class Status extends React.Component {
     super(props)
     this.state = {
       status: {},
-      loading: true
+      loading: true,
+      hide: false
     }
   }
 
@@ -22,11 +24,13 @@ class Status extends React.Component {
 
     this.props.getStatus()
         .then(({ data: { status } }) => {
+
           this.setState({
             status: {
               ...status.messages,
               status: status.status,
-            }
+            },
+            hide: status.messages ? localStorage.getItem(status.messages.id) : true
           })
         })
         .finally(() => {
@@ -34,20 +38,40 @@ class Status extends React.Component {
         })
   }
 
+    getStatusViaWebsocket = () => {
+
+        this.props.getStatusViaWebsocket()
+            .then((status) => {
+
+                this.setState({
+                    status: {
+                        ...status.messages,
+                        status: status.status,
+                    },
+                    hide: status.messages ? localStorage.getItem(status.messages.id) : true
+                })
+            })
+    }
+
+  hideAlert = () => {
+      localStorage.setItem(this.state.status.id, "true");
+
+      this.setState({
+          hide: true
+      })
+  }
+
   render() {
 
-    const { status, loading } = this.state;
+    const { status, loading, hide } = this.state;
 
-    console.log(status);
-
-    return null;
-
-    if(loading || +status.status === 1) {
-      return null
+    if(loading || +status.status === 1 || hide) {
+      return <IntervalTimer timeout={3000} callback={this.getStatusViaWebsocket} enabled={true} repeat={true} />
     }
 
     return (
         <div className={"d-flex status-alert"}>
+          <IntervalTimer timeout={3000} callback={this.getStatusViaWebsocket} enabled={true} repeat={true} />
           <div className={status.type + " status-alert-status"}>
             {status.type === "red" && <i className={"far fa-times-circle"} />}
             {status.type === "blue" && <i className="fas fa-exclamation-triangle" />}
@@ -57,6 +81,7 @@ class Status extends React.Component {
             <div className={status.type + " status-alert-title"}>{status.title}</div>
             <div className={"status-alert-message"}>{status.message}</div>
           </div>
+            <div className={"status-alert-hide"} onClick={this.hideAlert}><i className={"fas fa-times"}/></div>
         </div>
     )
   }
@@ -65,6 +90,7 @@ class Status extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getStatus: bindActionCreators(getStatus, dispatch),
+    getStatusViaWebsocket: bindActionCreators(getStatusViaWebsocket, dispatch),
 })
 
 export default connect(null, mapDispatchToProps)(Status)
