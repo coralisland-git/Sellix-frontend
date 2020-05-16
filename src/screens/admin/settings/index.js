@@ -1,48 +1,44 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  Navbar,
-  Collapse,
-  Container,
-  FormGroup,
-  Label,
-  Input,
-  Form
-} from 'reactstrap'
-import isEmpty from "lodash/isEmpty"
-import map from "lodash/map"
-import { Loader, Button, Spin } from 'components'
+import { Card, CardBody, Row, Col, Navbar, Collapse, Container, FormGroup, Label, Input } from 'reactstrap'
+import { Loader } from 'components'
 import { getSettings as fetchSettings, updateSettings } from './actions'
 import { CommonActions } from 'services/global'
-import { Formik } from "formik";
 import { Route, NavLink } from "react-router-dom";
+import Settings from "./settings";
+import Status from "./status";
 
 import './style.scss';
-import Select from "react-select";
 
 
+const Nav = () => {
+  return <ul className="nav">
+    <li className="nav-item"><NavLink to={('/admin/settings/general' || '/admin/settings')} style={{ height: "32px" }} className="nav-link" activeClassName={"active"}>General</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/bitcoin">Bitcoin</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/litecoin">Litecoin</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/ethereum">Ethereum</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/b-cash">Bitcoin Cash</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/status">Status</NavLink></li>
+  </ul>
+}
 
-
-class Settings extends Component {
+class SettingContainer extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
       showPlaceholder: false,
-      isOpen: false,
-      settings: {
-
-      }
+      settings: {}
     }
   }
 
   componentDidMount() {
+    this.initializeData()
+  }
+
+  initializeData = () => {
     this.setState({ loading: true })
     this.props.getSettings()
         .then((response) => {
@@ -55,97 +51,19 @@ class Settings extends Component {
         .finally(() => this.setState({ loading: false }))
   }
 
-  renderSettings = (settings, handleChange, values) => (
-      map(settings, (value, key) => {
-        if(key === "email_validation_required") {
-          return <Col lg={12} key={key}>
-            <FormGroup check className="mb-3 pl-0">
-              <div className="custom-checkbox custom-control">
-                <Input
-                    className="custom-control-input"
-                    type="checkbox"
-                    id="email_validation_required"
-                    name="email_validation_required"
-                    onChange={(e) => handleChange('email_validation_required')(e.target.checked)}
-                    checked={values.email_validation_required ? values.email_validation_required !== "0" : false}
-                />
-                <Label className="custom-control-label"  htmlFor="email_validation_required" check>
-                  Email Validation Required
-                </Label>
-              </div>
-            </FormGroup>
-          </Col>
-        } else if (key !== 'id') {
-          return <Col lg={12} key={key}>
-            <FormGroup className="mb-4">
-              <Label htmlFor={key} style={{ textTransform: "capitalize" }}>{key.replaceAll("_", " ")}</Label>
-              <Input
-                  type="text"
-                  id={key}
-                  name={key}
-                  placeholder={key.replaceAll("_", " ")}
-                  onChange={handleChange}
-                  value={values[key]}
-              />
-            </FormGroup>
-          </Col>
-        }
-      })
-  )
+  handleSubmit = (values) => {
+    this.setState({ loading: true });
 
-  formatOption = (option) => {
-
-    switch (option.value) {
-      case 'red':
-        return <div style={{ color: "#ec2330", fontSize: "1rem", fontWeight: 700 }}>{option.label}</div>
-      case 'blue':
-        return <div style={{ color: "#01b6b2", fontSize: "1rem", fontWeight: 700 }}>{option.label}</div>
-      case 'green':
-        return <div style={{ color: "#5dbc61", fontSize: "1rem", fontWeight: 700 }}>{option.label}</div>
+    let updated = {
+      ...this.state.settings,
+      ...values
     }
 
-  }
-
-  renderStatus = (handleChange, values) => {
-    return <Col lg={12} >
-      <FormGroup className="mb-4">
-        <Label htmlFor={"message"}>Message</Label>
-        <Input
-            type="textarea"
-            rows={6}
-            id={"message"}
-            name={"message"}
-            placeholder={"Message"}
-            onChange={handleChange}
-            value={values.message}
-        />
-      </FormGroup>
-      <FormGroup className="mb-4">
-        <Label htmlFor={"message"}>Type</Label>
-        <Select
-            id="event"
-            placeholder="Select product"
-            formatOptionLabel={this.formatOption}
-            options={[
-                {value: "red", label: "Red"},
-                {value: "blue", label: "Blue"},
-                {value: "green", label: "Green"},
-            ]}
-            classNamePrefix={"react-select"}
-            isSearchable={false}
-            value={values.type}
-            onChange={(option) => handleChange("type")(option)}/>
-      </FormGroup>
-      <Button color={"primary"}>Delete</Button>
-    </Col>
-  };
-
-  handleSubmit = (values) => {
-    this.setState({ loading: true })
-    values.email_validation_required = values.email_validation_required ? "1" : "0";
-    this.props.updateSettings(values)
+    updated.email_validation_required = updated.email_validation_required ? "1" : "0";
+    this.props.updateSettings(updated)
         .then(() => {
           this.props.tostifyAlert('success', "Settings Update Succeeded")
+          this.initializeData()
         })
         .catch(() => {
           this.props.tostifyAlert('error', 'Settings Update Failed')
@@ -155,70 +73,16 @@ class Settings extends Component {
         });
   }
 
-  generateSettings = () => {
-    let {
-      change_address_bitcoin,
-      fee_fixed_bitcoin,
-      site_address_bitcoin,
-      change_address_litecoin,
-      fee_fixed_litecoin,
-      site_address_litecoin,
-      fee_fixed_ethereum,
-      site_address_ethereum,
-      transaction_fee_ethereum,
-      fee_fixed_bitcoincash,
-      site_address_bitcoincash,
-      fee_percentage,
-      file_upload_maximum_size,
-      main_directory,
-      transaction_expire,
-      email_validation_required
-    } = this.state.settings;
-
-    return {
-      bitcoin: {
-        change_address_bitcoin,
-        fee_fixed_bitcoin,
-        site_address_bitcoin
-      },
-      litecoin: {
-        change_address_litecoin,
-        fee_fixed_litecoin,
-        site_address_litecoin,
-      },
-      ethereum: {
-        fee_fixed_ethereum,
-        site_address_ethereum,
-        transaction_fee_ethereum,
-      },
-      bitcoincash: {
-        fee_fixed_bitcoincash,
-        site_address_bitcoincash,
-      },
-      general: {
-        fee_percentage,
-        file_upload_maximum_size,
-        main_directory,
-        transaction_expire,
-        email_validation_required,
-      }
-    }
-  }
 
   render() {
 
-    const { settings, loading, showPlaceholder, isOpen } = this.state;
-    const { location: { pathname } } = this.props;
-
-    const { bitcoin, litecoin, ethereum, bitcoincash, general } = this.generateSettings()
-
-
+    const { loading, showPlaceholder, isOpen, settings } = this.state;
 
     return (
         <div className={"settings-main"}>
           <Container fluid>
 
-            <Row>
+            <Row className={"mt-3"}>
               <Col lg={3}>
                 <div>
                   <div className="settings-sidebar mb-4 mt-4 p-4">
@@ -226,14 +90,7 @@ class Settings extends Component {
                       <Collapse className="mr-5" isOpen={isOpen} navbar>
                         <div>
                           <h4 style={{ color: 'black', fontSize: '16px' }} className={"mb-3"}>Admin Settings</h4>
-                          <ul className="nav">
-                            <li className="nav-item"><NavLink to={'/admin/settings/general'} style={{ height: "32px" }} className="nav-link" activeClassName={"active"}>General</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/bitcoin">Bitcoin</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/litecoin">Litecoin</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/ethereum">Ethereum</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/b-cash">Bitcoin Cash</NavLink></li>
-                            <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/status">Status</NavLink></li>
-                          </ul>
+                          <Nav />
                         </div>
                       </Collapse>
                     </Navbar>
@@ -245,64 +102,32 @@ class Settings extends Component {
                 <div className="p-0 mt-4">
                   <div>
                     <div className="animated fadeIn">
-                      <Formik initialValues={settings} enableReinitialize={true} onSubmit={this.handleSubmit}>
-                        {({ handleSubmit, handleChange, values, errors, touched}) => (
-                            <Form onSubmit={handleSubmit}>
-                              <Card className="grey">
+                      <Card className="grey mb-0">
+                        <CardBody className="p-4 position-relative"  style={{ minHeight: "10rem" }}>
+                          {loading && <div className={"loader-container"}><Loader /></div>}
 
-                                <CardBody className="p-4 position-relative"  style={{ minHeight: "20rem" }}>
-                                  {loading && <div className={"loader-container"}><Loader /></div>}
-
-                                  {(!loading && isEmpty(settings) && showPlaceholder) ?
-                                      <div className={'unauthorized-container'}>
-                                        <div>
-                                          <Loader className={"override-loader"} />
-                                          <div>Unauthorized to view this content</div>
-                                        </div>
-                                      </div>
-                                      :
-                                      <Row>
-                                        <Col lg={12}>
-                                          <Route
-                                              path={"/admin/settings/bitcoin"}
-                                              render={(props) => <div {...props}>123123</div>}
-                                          />
-                                          <Row>
-                                            <Col lg={12}>
-                                              <FormGroup>
-                                                {pathname.includes('bitcoin') && <h4 className="mb-4">Bitcoin</h4>}
-                                                {pathname.includes('litecoin') && <h4 className="mb-4">Litecoin</h4>}
-                                                {pathname.includes('b-cash') && <h4 className="mb-4">Bitcoin Cash</h4>}
-                                                {pathname.includes('ethereum') && <h4 className="mb-4">Ethereum</h4>}
-                                                {pathname.includes('status') && <h4 className="mb-4">Status</h4>}
-                                                {(pathname.includes('general') || pathname === '/admin/settings') && <h4 className="mb-4">General Information</h4>}
-                                              </FormGroup>
-                                            </Col>
-                                          </Row>
-                                          <Row>
-                                            {pathname.includes('bitcoin') && this.renderSettings(bitcoin, handleChange, values)}
-                                            {pathname.includes('litecoin') && this.renderSettings(litecoin, handleChange, values)}
-                                            {pathname.includes('b-cash') && this.renderSettings(bitcoincash, handleChange, values)}
-                                            {pathname.includes('ethereum') && this.renderSettings(ethereum, handleChange, values)}
-                                            {pathname.includes('status') && this.renderStatus(handleChange, values)}
-                                            {(pathname.includes('general') || pathname === '/admin/settings') && this.renderSettings(general, handleChange, values)}
-                                          </Row>
-                                        </Col>
-                                      </Row>
-                                  }
-                                </CardBody>
-
-                                {!(!loading && isEmpty(settings) && showPlaceholder) &&
-                                <Col lg={12} className={"mt-4 p-0"}>
-                                  <Button color="primary" type="submit" className="" style={{width: 200}}>
-                                    {loading ? <Spin/> : 'Save Settings'}
-                                  </Button>
+                          {(!loading && showPlaceholder) ?
+                              <div className={'unauthorized-container'}>
+                                <div>
+                                  <Loader className={"override-loader"} />
+                                  <div>Unauthorized to view this content</div>
+                                </div>
+                              </div>
+                              :
+                              <Row>
+                                <Col lg={12}>
+                                  <Route exact={true} path={"/admin/settings"} render={props => <Settings type="general" settings={settings} handleSubmit={this.handleSubmit} {...props} title={"General Information"}/>} />
+                                  <Route path={"/admin/settings/general"} render={props => <Settings type="general" settings={settings} handleSubmit={this.handleSubmit} {...props} title={"General Information"}/>} />
+                                  <Route path={"/admin/settings/bitcoin"} render={props => <Settings type="bitcoin" settings={settings} handleSubmit={this.handleSubmit} {...props} title={"Bitcoin"}/>} />
+                                  <Route path={"/admin/settings/litecoin"} render={props => <Settings type="litecoin" settings={settings} handleSubmit={this.handleSubmit} {...props} title={"Litecoin"} />} />
+                                  <Route path={"/admin/settings/b-cash"} render={props => <Settings type="bitcoincash" settings={settings} handleSubmit={this.handleSubmit} {...props} title={"Bitcoin Cash"} />} />
+                                  <Route path={"/admin/settings/ethereum"} render={props => <Settings type="ethereum" settings={settings} handleSubmit={this.handleSubmit} {...props} title={"Ethereum"} />} />
+                                  <Route path={"/admin/settings/status"} render={props => <Status {...props} />}/>
                                 </Col>
-                                }
-                              </Card>
-                            </Form>
-                        )}
-                      </Formik>
+                              </Row>
+                          }
+                        </CardBody>
+                      </Card>
                     </div>
                   </div>
                 </div>
@@ -321,4 +146,4 @@ const mapDispatchToProps = dispatch => ({
   updateSettings: bindActionCreators(updateSettings, dispatch),
 })
 
-export default connect(null, mapDispatchToProps)(Settings)
+export default connect(null, mapDispatchToProps)(SettingContainer)

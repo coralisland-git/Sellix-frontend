@@ -10,15 +10,13 @@ import {
 
 import { Container } from 'reactstrap'
 import {
-  AppAside,
-  AppBreadcrumb,
   AppHeader,
   AppSidebar,
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
@@ -35,9 +33,7 @@ import {
 } from 'constants/navigation'
 
 import {
-  Aside,
   Header,
-  Footer,
   Loading,
   SetTitle
 } from 'components'
@@ -190,12 +186,10 @@ class AdminLayout extends React.Component {
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true} />
                     <Switch>
                       {
-                        adminRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) => {
-
-                          return redirect ?
-                              <Redirect from={path} to={pathTo} key={key} /> :
-                              <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key} />
-                        })
+                        adminRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) =>
+                            redirect ?
+                                <Redirect from={path} to={pathTo} key={key} /> :
+                                <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key} />)
                       }
                     </Switch>
                   </Suspense>
