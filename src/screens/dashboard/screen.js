@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
 import { DateRangePicker2, Loader } from 'components'
-import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews, ReportFee } from './sections'
+import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews, ReportFee, Status } from './sections'
 import { getAnalyticsData, geLastInvoices } from './actions'
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
@@ -152,13 +152,13 @@ class Dashboard extends React.Component {
     this.props.history.push(`/dashboard/${userId}/orders/view/${id}`)
   }
 
-  renderOrderInfo = (cell, row) => (<div>
+  renderOrderInfo = (cell, row) => <div>
         <p><a onClick={(e) => this.gotoDetail(row.uniqid)}>
           <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
           </i>&nbsp;&nbsp;&nbsp;{`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
         <p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title?row.product_title:row.product_id}</p>
-      </div>)
+      </div>
 
   renderOrderStatus = (cell, row) => (<div>{config.PAYMENT_OPTS[row.gateway]}</div>)
 
@@ -177,17 +177,19 @@ class Dashboard extends React.Component {
 
     const { chartData, loading, invoices, showPlaceholder, range, revenue_by_gateway } = this.state;
 
-    let isAdmin = window.location.pathname.includes('admin/dashboard')
+    let isAdmin = window.location.pathname.includes('admin/dashboard');
 
     return (
       <div className="dashboard-screen">
         <div className="animated fadeIn">
           <Card>
+
             <CardHeader>
               <Row>
                 <Col lg={12}>
                   <div className="flex-wrapper align-items-center">
                     <h1 className="title">Dashboard</h1>
+                    <Status />
                     <div className="card-header-actions">
                       <DateRangePicker2 showCustomRangeLabel={false} ranges={DATE_RANGES} getDate={this.getAnalyticsData} opens={'left'}/>
                     </div>
@@ -196,7 +198,7 @@ class Dashboard extends React.Component {
               </Row>
             </CardHeader>
 
-            <div className="pt-4 position-relative">
+            <div className="position-relative">
               {loading && <Row className={"loader-container"}>
                 <Col lg={12}><Loader /></Col>
               </Row>}
@@ -208,7 +210,7 @@ class Dashboard extends React.Component {
                       <div>Unauthorized to view this content</div>
                     </div>
                   </div> : <div>
-                    <Row className="mt-4">
+                    <Row>
                       <ReportRevenue {...this.state} isAdmin={isAdmin}/>
                       <ReportOrders {...this.state} />
                       <ReportViews {...this.state} />

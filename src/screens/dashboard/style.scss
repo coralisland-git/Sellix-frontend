@@ -26,7 +26,7 @@
     padding: 5px 20px;
     line-height: 1.7em;
     font-weight: 700;
-    height: 40px;
+    //height: 40px;
     color: #646464;
 
     button {
@@ -60,7 +60,7 @@
 
     .data-item:not(:last-child) {
       border-right: 1px solid #eee;
-      padding: 0px 3%;
+      padding: 0 3%;
       margin-bottom: 20px;
     }
   
@@ -97,8 +97,69 @@
   h5 {
     font-size: 16px;
   }
-}
 
+  .status-alert {
+    height: 5rem;
+    overflow: hidden;
+    border-radius: 3px;
+    width: 25rem;
+
+    &-status {
+      width: 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+
+      & > i {
+        font-size: 2rem;
+      }
+
+      &.red {
+        background: #ec2330;
+      }
+
+      &.blue {
+        background: #01b6b2;
+      }
+
+      &.green {
+        background: #5dbc61;
+      }
+    }
+
+    &-title {
+      font-size: 1rem;
+      font-weight: bold;
+
+      &.red {
+        color: #ec2330;
+      }
+
+      &.blue {
+        color: #01b6b2;
+      }
+
+      &.green {
+        color: #5dbc61;
+      }
+    }
+
+    &-message {
+      color: #b3aebb;
+      line-height: 1.2;
+      font-size: .8rem;
+    }
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+      padding: .5rem 1.5rem;
+      font-weight: 400;
+      background: #1d183d;
+    }
+  }
+}
 
 
 .dashboard-screen .loader-container {
@@ -107,7 +168,7 @@
   position: absolute;
   left: 15px;
   z-index: 9;
-  top: 3rem;
+  top: 0;
   height: 127px;
   background: #231d3f82;
 }

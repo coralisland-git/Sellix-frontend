@@ -178,10 +178,9 @@ export const GlobalStyles = createGlobalStyle`
 
     .order-screen .live-card .card-body,
     .dashboard-screen .card.grey .card-body,
-    .blacklist-screen .card.grey .card-body
+    .blacklist-screen .card.grey .card-body {
         background-color: ${({ theme }) => theme.widget} !important;
         background: ${({ theme }) => theme.widget} !important;
-        // border: 1px solid ${({ theme }) => theme.cardBody} !important;
     }
 
     .dashboard-screen .card .card-body h3,

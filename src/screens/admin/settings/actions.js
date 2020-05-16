@@ -29,3 +29,28 @@ export const updateSettings = (data) => () => {
       throw err
     })
 }
+
+export const updateStatus = (data) => () => {
+    return authApi.post(`/admin/status/update`, formData(data)).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+}
+
+export const getStatus = () => () => {
+
+    return authApi.get(`/status`).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+}
