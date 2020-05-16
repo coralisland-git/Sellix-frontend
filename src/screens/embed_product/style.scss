@@ -14,3 +14,20 @@
     right: 20px;
   }
 }
+
+.dark .embed {
+  .code-block {
+    background: #221d3e !important;    
+  }
+
+  .code-block.response {
+    pre {
+      background-color: #251f45 !important;
+    }
+  }
+
+  .badge-mark {
+    background-color: #221d3e !important;
+    border: 1px solid;
+  }
+}

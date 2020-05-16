@@ -135,15 +135,15 @@
         color: inherit;        
       }
 
-      .active {
-        color: #613BEA;
+      .active a {
+        color: #613BEA !important;
       }
 
     }
 
     .lv-1 {
       font-size: 13px;
-      color: #cfcfcf !important;
+      color: #cfcfcf;
       padding: 1.5rem 0 .5rem !important;
     }
 
@@ -274,22 +274,4 @@
   .s-delete {
     color: #f96868;
   }
-}
-
-.dark .embed {
-  .code-block {
-    background: #221d3e !important;    
-  }
-
-  .code-block.response {
-    pre {
-      background-color: #251f45 !important;
-    }
-  }
-
-  .badge-mark {
-    background-color: #221d3e !important;
-    border: 1px solid;
-  }
-
 }

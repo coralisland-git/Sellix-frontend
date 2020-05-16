@@ -40,7 +40,13 @@ class Header extends Component {
           href="/"
           full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
         />
-        { !isDocumentation && (
+        { isDocumentation?
+          <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
+            <UncontrolledDropdown nav direction="down" >
+              <i style={{ fontSize: 17}} className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
+            </UncontrolledDropdown>
+          </Nav>
+          :
           <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
             {
               !isShop && 
@@ -170,7 +176,7 @@ class Header extends Component {
             </UncontrolledDropdown>
             
           </Nav>
-        )}
+        }
       </React.Fragment>
     );
   }
