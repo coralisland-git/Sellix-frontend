@@ -67,13 +67,19 @@
     align-items: center;
     justify-content: space-between;
     .btn{
-        background: red!important;
+        background: #ff3f3f !important;
         color: white!important;
         width: 60px!important;
         text-align: center!important;
         padding: 0!important;
         min-height: auto!important;
         height: 35px;
+    }
+}
+
+.light, .dark {
+    .querieTitle .btn:hover {
+        background: red !important;
     }
 }
 

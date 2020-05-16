@@ -11,11 +11,12 @@ import {
   FormGroup,
   Input
 } from 'reactstrap'
+import IntervalTimer from 'react-interval-timer'
 import { Button } from 'components';
 import * as _ from 'lodash'
 import { Formik } from 'formik'
 import { replyQuerie } from '../../actions'
-import { getQuerie } from '../../actions'
+import { getQuerie, getQuerieViaWebsocket } from '../../actions'
 import { closeQuerie } from '../../actions'
 import { reopenQuerie } from '../../actions'
 import {
@@ -36,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
   return ({
     commonActions: bindActionCreators(CommonActions, dispatch),
     replyQuerie: bindActionCreators(replyQuerie, dispatch),
-    actions: bindActionCreators({ getQuerie }, dispatch),
+    actions: bindActionCreators({ getQuerie, getQuerieViaWebsocket }, dispatch),
     closeQuerie: bindActionCreators({ closeQuerie }, dispatch),
     reopenQuerie: bindActionCreators({ reopenQuerie }, dispatch),
   })
@@ -113,6 +114,12 @@ class ReplyToQuerie extends React.Component {
     return (
       <div className="reply-screen mt-3">
         <div className="animated fadeIn">
+          <IntervalTimer
+                timeout={2000}
+                callback={() => this.props.actions.getQuerieViaWebsocket(this.props.match.params.id)}
+                enabled={true}
+                repeat={true}
+              />
           <Formik
             onSubmit={(values) => {
               this.handleSubmit(values)
@@ -151,7 +158,7 @@ class ReplyToQuerie extends React.Component {
                             className="pt-3 pb-3 "
                             rows={7}
                             name='message'
-                            placeholder="Reply to querie"
+                            placeholder="Reply to query"
                             onChange={props.handleChange}
                             value={props.values.message}
                           />

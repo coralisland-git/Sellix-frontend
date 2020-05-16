@@ -2,7 +2,8 @@ import { QUERIES, QUERIE } from 'constants/types'
 import {
   api,
   authApi,
-  formData
+  formData,
+  sendAuthedWsMessage
 } from 'utils'
 
 export const getQueries = () => {
@@ -52,6 +53,19 @@ export const getQuerie = (id) => {
     })
   }
 }
+
+export const getQuerieViaWebsocket = (id) => {
+  return (dispatch) => {
+
+      sendAuthedWsMessage({ event: 'query', uniqid: id }, 'messages').then(messages => {
+        dispatch({
+          type: QUERIE.QUERIE,
+          payload: messages
+        })
+        return messages
+      })
+    }
+  }
 
 export const replyQuerie = (querie) => {
   return (dispatch) => {
