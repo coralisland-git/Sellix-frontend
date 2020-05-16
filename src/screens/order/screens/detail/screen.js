@@ -160,7 +160,7 @@ class OrderDetail extends React.Component {
             openModal={openQueueOrderModal}
             invoiceId = {order.uniqid}
             status = {order.status}
-            refreshOrder = {() => setTimeout(() => { this.initializeData(); }, 4000)}
+            refreshOrder = {() => setTimeout(() => { this.initializeData(); }, 15000)}
             closeModal={this.closeQueueOrderModal.bind(this)}/>
           <IssueReplacementModal openModal={openIssueReplacementModal} 
             // resendInvoice = {this.resendInvoice.bind(this)}
@@ -220,7 +220,7 @@ class OrderDetail extends React.Component {
                           {
                             order.status && (['2'].includes(order.status)) &&
                               <Button color="primary" className="" onClick={this.openQueueOrderModal.bind(this)}>
-                                Queue Invoice
+                                Queue Order
                               </Button>
                           }
                         </div>

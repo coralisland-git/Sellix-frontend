@@ -49,11 +49,15 @@ class Queries extends React.Component {
       case 'userreply':
         badge = 'reply'
         break;
+      case 'customerreply':
+        badge = 'pending'
+        break;
     }
 
+    console.log(row.status)
     return row.status ?
         <div className={`badge badge-${badge}`} style={{ textTransform: "capitalize" }}>
-          {row.status === 'userreply' ? "User Reply" : row.status}
+          {row.status === 'userreply' ? "Answered" : row.status === 'customerreply' ? "Customer Reply" : row.status}
         </div> :
         <p className="caption">No specified</p>
   }

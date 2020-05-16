@@ -14,11 +14,10 @@ import {
 	Input
 } from 'reactstrap'
 import Select from 'react-select'
-import { Button } from 'components';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import { AppSwitch } from '@coreui/react'
-import { Loader, ImageUpload,FileUpload, DataSlider, Spin } from 'components'
+import { Loader, ImageUpload, FileUpload, DataSlider, Spin, Button } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
@@ -26,9 +25,7 @@ import config from 'constants/config'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import includes from "lodash/includes"
 
-import {
-	CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 
 import './style.scss'
 
@@ -98,28 +95,6 @@ const CURRENCY_LIST = [
 	{ value: 'PLN', label: 'PLN'},
 ]
 
-const EDITOR_FORMATS = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image'
-]
-
-const EDITOR_MODULES  = {
-  toolbar: [
-    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-    [{size: []}],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, 
-	 {'indent': '-1'}, {'indent': '+1'}],
-	['link', 'image'],
-    ['clean']
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  }
-}
 
 class EditProduct extends React.Component {
 	
@@ -133,6 +108,7 @@ class EditProduct extends React.Component {
 			privateTooltipOpen: false,
 			blockTooltipOpen: false,
 			paypalTooltipOpen: false,
+			riskTooltipOpen: false,
 			selectedTab: 'write',
 			files: [],
 			images: [],
@@ -311,6 +287,11 @@ class EditProduct extends React.Component {
 		})
   }
 
+	riskTooltipToggle = () => {
+		this.setState({
+			riskTooltipOpen: !this.state.riskTooltipOpen
+		})
+	}
 
   duplicateProduct() {
 	this.setState({duplicating: true})
@@ -1080,7 +1061,17 @@ class EditProduct extends React.Component {
 																	</Col>
 																	<Col lg={6}>
 																		<FormGroup className="mb-3">
-																			<Label htmlFor="product_code">Max Risk Level</Label>
+																			<Label htmlFor="product_code">
+																				Max Risk Level&nbsp;&nbsp;
+																				<span id="riskTooltip"><i className="fa fa-question-circle" /></span>
+																			</Label>
+																			<Tooltip
+																				placement="right"
+																				isOpen={this.state.riskTooltipOpen}
+																				target="riskTooltip"
+																				toggle={this.riskTooltipToggle}>
+																				For now this feature is for development purposes only, it will serve in the future to determine if a customer could be a scammer or an high risk profile and therefore block non-crypto payments.
+																			</Tooltip>
 																			<DataSlider 
 																				domain={[0, 100]} 
 																				value={[props.values.max_risk_level]} 
@@ -1111,7 +1102,7 @@ class EditProduct extends React.Component {
 																					<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
 																					<Tooltip placement="right" isOpen={unlistedTooltipOpen} target="unlistedTooltip" 
 																						toggle={this.unlistedTooltipToggle.bind(this)}>
-																						Unlisted!
+																						The product wont be displayed on your Shop, but can still be accessed via direct URL.
 																					</Tooltip>
 																				</label>
 																			</div>
@@ -1133,7 +1124,7 @@ class EditProduct extends React.Component {
 																					<span href="#" id="privateTooltip"><i className="fa fa-question-circle"></i></span>
 																					<Tooltip placement="right" isOpen={privateTooltipOpen} target="privateTooltip" 
 																						toggle={this.privateTooltipToggle.bind(this)}>
-																						Private
+																						Only you can access this product
 																					</Tooltip>
 																				</label>
 																			</div>
@@ -1178,7 +1169,7 @@ class EditProduct extends React.Component {
 											</CardBody>
 											<div className="d-flex">
 												<Button color="primary" type="submit" className="" style={{width: 200}} disabled={loading || saving}>
-													{saving ?<Spin/>:'Save Product' }
+													{saving ? <Spin/> : 'Save Product' }
 												</Button>
 												
 											</div>

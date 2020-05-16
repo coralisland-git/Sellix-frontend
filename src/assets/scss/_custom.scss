@@ -661,6 +661,15 @@ box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
 }
 
 
+*[class$=control] div.react-select__value-container {
+    div.react-select__multi-value {
+        div.react-select__multi-value__label {
+            color: #6c7480 !important;
+            font-weight: 500;
+            font-size: 13px;
+        }
+    }
+}
 
 .react-select {
 

@@ -19,7 +19,7 @@ import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
 import { AppSwitch } from '@coreui/react'
-import { Loader, ImageUpload, FileUpload, DataSlider, Button } from 'components'
+import {Loader, ImageUpload, FileUpload, DataSlider, Button, Spin} from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
@@ -36,6 +36,7 @@ import bitcoinCashIcon from 'assets/images/crypto/bitcoincash.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
+import verifiedIcon from "../../../../assets/images/sellix_verified.svg";
 
 
 const mapDispatchToProps = (dispatch) => {
@@ -98,6 +99,7 @@ class CreateProduct extends React.Component {
 			privateTooltipOpen: false,
 			blockTooltipOpen: false,
 			paypalTooltipOpen: false,
+			riskTooltipOpen: false,
 			selectedTab: 'write',
 			files: [],
 			images: [],
@@ -263,6 +265,13 @@ class CreateProduct extends React.Component {
 	setGateWays(value, isChecked) {
 		this.setState({
 			gateways: {...this.state.gateways, [value]:isChecked}
+		})
+	}
+
+
+	riskTooltipToggle = () => {
+		this.setState({
+			riskTooltipOpen: !this.state.riskTooltipOpen
 		})
 	}
 
@@ -943,7 +952,17 @@ class CreateProduct extends React.Component {
 																	</Col>
 																	<Col lg={6}>
 																		<FormGroup className="mb-3">
-																			<Label htmlFor="product_code">Max Risk Level</Label>
+																			<Label htmlFor="product_code">
+																				Max Risk Level&nbsp;&nbsp;
+																				<span id="riskTooltip"><i className="fa fa-question-circle" /></span>
+																			</Label>
+																			<Tooltip
+																				placement="right"
+																				isOpen={this.state.riskTooltipOpen}
+																				target="riskTooltip"
+																				toggle={this.riskTooltipToggle}>
+																				For now this feature is for development purposes only, it will serve in the future to determine if a customer could be a scammer or an high risk profile and therefore block non-crypto payments.
+																			</Tooltip>
 																			<DataSlider 
 																				domain={[0, 100]} 
 																				suffix="%"
@@ -1043,7 +1062,7 @@ class CreateProduct extends React.Component {
 											</CardBody>
 
 											<Button color="primary" type="submit" className="" style={{width: 200}}>
-												Save Product
+												{loading ? <Spin/> : 'Save Product' }
 											</Button>
 											
 										</Card>

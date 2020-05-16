@@ -31,6 +31,7 @@ class Contact extends Component {
     }
 
     this.username = this.props.match.params.username;
+    document.title = `Contact | Sellix`;
   }
 
   componentDidMount() {
@@ -136,11 +137,7 @@ class Contact extends Component {
                             placeholder="What would you like to ask?" 
                             onChange={props.handleChange}
                             value={props.values.message}
-                            className={
-                              props.errors.message && props.touched.message
-                                  ? "is-invalid"
-                                  : ""
-                            }
+                            className={props.errors.message && props.touched.message ? "is-invalid" : ""}
                           />
                         </FormGroup>
                       </Col>
