@@ -3,7 +3,7 @@ import config from 'constants/config'
 import { Card } from 'reactstrap';
 
 
-const GroupCard = ({ group, preventDefault, onClick }) => {
+const GroupCard = ({ group, preventDefault, onClick, center_group_titles }) => {
 
     let { image_attachment, title, products_bound } = group;
 
@@ -16,7 +16,7 @@ const GroupCard = ({ group, preventDefault, onClick }) => {
             </div>
             
             <div className="p-3 d-flex flex-column h-100">
-                <h5 className="mb-1 text-black">{title}</h5>
+                <h5 className={center_group_titles ? "mb-1 text-black text-center" : "mb-1 text-black"}>{title}</h5>
                 <div className="d-flex justify-content-between mt-1">
                     <span>
                     <span className="stock">Starting at: </span>

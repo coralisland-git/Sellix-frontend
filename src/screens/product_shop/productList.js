@@ -10,7 +10,7 @@ import { getProductStock } from 'screens/product_shop/productCard';
 import './style.scss'
 
 
-const ProductsList = ({ products, groups, loading, history, hide_out_of_stock, center_product_titles }) => {
+const ProductsList = ({ products, groups, loading, history, hide_out_of_stock, center_product_titles, center_group_titles }) => {
 
 	const [selectedGroup, setSelectedGroup] = useState(null)
 
@@ -31,7 +31,7 @@ const ProductsList = ({ products, groups, loading, history, hide_out_of_stock, c
 			<FlipMove style={{ display: "flex", flexWrap: "wrap", width: "100%" }} duration={300}>
 				{groups.map(group =>
 					<div key={group.uniqid} className="mb-4 col-md-6 col-lg-3">
-						<GroupCard group={group} history={history} onClick={() => setSelectedGroup(group)}/>
+						<GroupCard group={group} history={history} onClick={() => setSelectedGroup(group)} center_group_titles={center_group_titles}/>
 					</div>
 				)}
 				{products.map(product =>

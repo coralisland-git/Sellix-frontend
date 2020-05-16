@@ -42,6 +42,7 @@ class Payments extends React.Component {
       google_analytics_tracking_id: '',
       crisp_website_id: '',
       center_product_titles: false,
+      center_group_titles: false,
       crypto_invoice_mode: 'default' || 'qrcode',
     }
   }
@@ -57,6 +58,7 @@ class Payments extends React.Component {
       google_analytics_tracking_id: this.state.google_analytics_tracking_id,
       crisp_website_id: this.state.crisp_website_id,
       center_product_titles: this.state.center_product_titles,
+      center_group_titles: this.state.center_group_titles,
       crypto_invoice_mode: this.state.crypto_invoice_mode,
     }
 
@@ -80,6 +82,7 @@ class Payments extends React.Component {
         crisp_website_id: settings.shop_crisp_website_id || '',
         search_enabled: settings.shop_search_enabled === '1',
         center_product_titles: settings.shop_center_product_titles === '1',
+        center_group_titles: settings.shop_center_group_titles === '1',
         dark_mode: settings.shop_dark_mode === '1',
         hide_out_of_stock: settings.shop_hide_out_of_stock === '1',
         crypto_invoice_mode: settings.crypto_invoice_mode,
@@ -98,7 +101,7 @@ class Payments extends React.Component {
   }
 
   render() {
-    const { loading, discord_link, crisp_website_id, search_enabled, dark_mode, hide_out_of_stock, center_product_titles, crypto_invoice_mode } = this.state;
+    const { loading, discord_link, crisp_website_id, search_enabled, dark_mode, hide_out_of_stock, center_product_titles, center_group_titles, crypto_invoice_mode } = this.state;
 
     return (
       <div className="shop-settings-screen">
@@ -164,6 +167,29 @@ class Payments extends React.Component {
                               <div className="ml-2">
                                 <Label className="mb-0">Centered Title for Products</Label>
                                 <p className="text-grey mb-0">Product titles will be centered in your store.</p>
+                              </div>
+                            </Col>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <FormGroup row>
+                            <Col className="d-flex align-items-center">
+                              <AppSwitch className="mt-1 file-switch mr-2"
+                                variant={'pill'} 
+                                color={'primary'}
+                                size="lg"
+                                checked={center_group_titles}
+                                onChange={(e) => {
+                                  this.setState({
+                                    center_group_titles: e.target.checked
+                                  })
+                                }}
+                              />
+                              <div className="ml-2">
+                                <Label className="mb-0">Centered Title for Groups</Label>
+                                <p className="text-grey mb-0">Group titles will be centered in your store.</p>
                               </div>
                             </Col>
                           </FormGroup>
