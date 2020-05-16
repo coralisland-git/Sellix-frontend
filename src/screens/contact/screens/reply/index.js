@@ -5,7 +5,7 @@ import IntervalTimer from 'react-interval-timer'
 import {Card, CardHeader, CardBody, Row, Col, Form, FormGroup, Input} from 'reactstrap'
 import {Button, Spin, Loader} from 'components';
 import {Formik} from 'formik'
-import { replyToQuery, getQuery, closeQuery, reOpenQuery, getQuerieViaWebsocket } from '../../actions'
+import { replyToQuery, getQuery, getQueryViaWebsocket } from '../../actions'
 import {CommonActions} from 'services/global'
 import * as moment from 'moment/moment'
 
@@ -32,15 +32,59 @@ class ReplyToQuery extends Component {
 
         this.state = {
             loading: true,
-            messages: null,
+            messages: [],
             reply: false,
+            isActive: true
         }
 
         this.id = this.props.match.params.id;
+        this.messageReceived = null;
+        this.title = 'Contact | Sellix';
+        document.title = this.title;
     }
 
     componentDidMount() {
-        this.getQuery()
+        this.getQuery();
+        document.title = this.title;
+        window.addEventListener('focus', () => {
+            this.setState({
+                isActive: true
+            })
+        });
+        window.addEventListener('blur', () => {
+            this.setState({
+                isActive: false
+            })
+        });
+        document.addEventListener("visibilitychange", () => {
+            clearInterval(this.messageReceived);
+            document.title = this.title;
+        })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.messageReceived);
+        document.removeEventListener("visibilitychange", () => {
+            document.title = this.title;
+        })
+        window.removeEventListener("focus", () => {
+            document.title = this.title;
+        })
+        window.removeEventListener("blur", () => {
+            document.title = this.title;
+        })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        let { messages, isActive } = this.state;
+        let isCustomer = messages.length && messages.lastItem.role === "customer"
+
+        if(prevState.messages.length && !isCustomer && !isActive && (prevState.messages.length !== messages.length)) {
+            this.messageReceived = setInterval(() => {
+                document.title = document.title === `(New) ${this.title}` ?  this.title : `(New) ${this.title}`;
+            }, 300);
+        }
     }
 
     getQuery = () => {
@@ -58,7 +102,7 @@ class ReplyToQuery extends Component {
     }
 
     getQueryViaWebsocket = () => {
-        this.props.getQuerieViaWebsocket(this.id)
+        this.props.getQueryViaWebsocket(this.id)
                 .then((res) => {
                     this.setState({
                         messages: res
@@ -94,12 +138,7 @@ class ReplyToQuery extends Component {
             <div className="reply-screen mt-3">
                 <div className="animated fadeIn">
 
-                    <IntervalTimer
-							timeout={3000}
-							callback={this.getQueryViaWebsocket}
-							enabled={true}
-							repeat={true}
-						/>
+                    <IntervalTimer timeout={3000} callback={this.getQueryViaWebsocket} enabled={true} repeat={true}/>
 
                     {loading && <Loader/>}
                     {!loading &&
@@ -155,7 +194,7 @@ const mapDispatchToProps = (dispatch) => ({
     tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
     replyToQuery: bindActionCreators(replyToQuery, dispatch),
     getQuery: bindActionCreators(getQuery, dispatch),
-    getQuerieViaWebsocket: bindActionCreators(getQuerieViaWebsocket, dispatch)
+    getQueryViaWebsocket: bindActionCreators(getQueryViaWebsocket, dispatch)
 })
 
 

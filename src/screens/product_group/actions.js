@@ -52,24 +52,18 @@ export const getProductGroupByID = (id) => {
 
 
 // Create New Product Group
-export const createProductGroup = (product) => {
-  return (dispatch) => {
-    let data = {
-      method: 'POST',
-      url: `groups/create`,
-      data: formData(product)
-    }
+export const createProductGroup = (product) => () => {
 
-    return authApi(data).then(res => {
-      if (res.status === 200) {
-        return res
-      } else {
-        throw res
-      }
-    }).catch(err => {
-      throw err
-    })
-  }
+    return authApi.post(`groups/create`, formData(product))
+        .then(res => {
+          if (res.status === 200) {
+            return res
+          } else {
+            throw res
+          }
+        }).catch(err => {
+          throw err
+        })
 }
 
 

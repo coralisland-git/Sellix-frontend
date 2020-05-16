@@ -6,7 +6,7 @@ import {Card, CardHeader, CardBody, Row, Col, Form, FormGroup, Input} from 'reac
 import {Button, Spin, Loader} from 'components';
 import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import {Formik} from 'formik'
-import {replyToQuery, getQueries, getQuery, closeQuery, reOpenQuery, getQuerieViaWebsocket } from '../../actions'
+import {replyToQuery, getQueries, getQuery, closeQuery, reOpenQuery, getQueryViaWebsocket } from '../../actions'
 import {CommonActions} from 'services/global'
 import * as moment from 'moment/moment'
 
@@ -61,7 +61,7 @@ class ReplyToQuery extends React.Component {
   }
   
   getQueryViaWebsocket = () => {
-    this.props.getQuerieViaWebsocket(this.id)
+    this.props.getQueryViaWebsocket(this.id)
 			.then((res) => {
 				this.setState({
 					messages: res
@@ -127,12 +127,7 @@ class ReplyToQuery extends React.Component {
 						</BreadcrumbItem>
 					</Breadcrumb>
 
-					<IntervalTimer
-							timeout={3000}
-							callback={this.getQueryViaWebsocket}
-							enabled={true}
-							repeat={true}
-						/>
+					<IntervalTimer timeout={3000} callback={this.getQueryViaWebsocket} enabled={true} repeat={true} />
 
 					{loading && <Loader/>}
 					{!loading &&
@@ -192,7 +187,7 @@ const mapDispatchToProps = (dispatch) => ({
 	tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
 	replyToQuery: bindActionCreators(replyToQuery, dispatch),
 	getQuery: bindActionCreators(getQuery, dispatch),
-	getQuerieViaWebsocket: bindActionCreators(getQuerieViaWebsocket, dispatch),
+	getQueryViaWebsocket: bindActionCreators(getQueryViaWebsocket, dispatch),
 	closeQuery: bindActionCreators(closeQuery, dispatch),
 	getQueries: bindActionCreators(getQueries, dispatch),
 	reOpenQuery: bindActionCreators(reOpenQuery, dispatch),

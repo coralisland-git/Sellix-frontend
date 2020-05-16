@@ -32,8 +32,7 @@ export const getQuery = (id) => (dispatch) =>
       throw err
     })
 
-export const getQuerieViaWebsocket = (id) => {
-  return (dispatch) => {
+export const getQueryViaWebsocket = (id) => (dispatch) => {
 
       return sendAuthedWsMessage({ event: 'query', uniqid: id }, 'messages').then(messages => {
         dispatch({
@@ -42,8 +41,7 @@ export const getQuerieViaWebsocket = (id) => {
         })
         return messages
       })
-    }
-  }
+}
 
 export const replyToQuery = (query) => () =>
   authApi.post(`/queries/reply`, formData(query)).then(res => {
