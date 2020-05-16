@@ -3,7 +3,7 @@ import {
     ShopProducts,
     ShopFeedback,
     LeaveFeedback,
-    QueryView
+  ContactReply
   } from 'screens'
 
   const shopRoutes = [
@@ -16,7 +16,7 @@ import {
     {
       path: `/:username/query/:id`,
       name: 'Leave Query',
-      component: QueryView.screen
+      component: ContactReply
     },
 
     {

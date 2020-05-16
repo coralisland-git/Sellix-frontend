@@ -19,7 +19,7 @@ import {
 
   CreateProduct,
   OrderDetail,
-  ReplyToQuerie,
+  ReplyToQuery,
   CreateProductGroup,
   EditProductGroup,
   ProductGroups,
@@ -100,6 +100,20 @@ const dashboardRoutes = [
     component: Product.screen,
     title: 'Products'
   },
+
+  {
+    path: `/dashboard/${user}/queries/:id`,
+    name: 'Reply to Query',
+    component: ReplyToQuery,
+    title: 'Reply to Query'
+  },
+  {
+    path: `/dashboard/${user}/queries`,
+    name: 'Queries',
+    component: Queries.screen,
+    title: 'Queries'
+  },
+
 
   {
     path: `/dashboard/${user}/groups/new`,
@@ -208,22 +222,7 @@ const dashboardRoutes = [
     title: 'Blacklists',
     exact: true,
   },
-  
 
-  {
-    path: `/dashboard/${user}/queries`,
-    name: 'Queries',
-    component: Queries.screen,
-    title: 'Queries',
-    exact: true,
-  },
-  {
-    path: `/dashboard/${user}/query/view/:id`,
-    name: 'Reply to Query',
-    component: ReplyToQuerie,
-    title: 'View Query',
-    exact: true,
-  },
   
 
   {
