@@ -49,7 +49,6 @@ import Analytics from './analytics'
 import Reports from './reports'
 import Coupons from './coupons'
 import CreateCoupon from './coupons/screens/create'
-import Queries from './queries'
 import Feedbacks from './feedbacks'
 import ReplyToFeedback from './feedbacks/screens/reply'
 import Webhooks from './webhooks'
@@ -57,8 +56,6 @@ import CreateWebhookSimulator from './webhooks/screens/create'
 import WebhookLogs from './webhook_logs'
 
 
-import Contact from './contact'
-import QueryView from './contact/screens/detail'
 import ShopFeedback from './feedbacks_shop'
 import LeaveFeedback from './feedbacks_shop/screens/create'
 import ShopProducts from './product_shop'
@@ -68,7 +65,11 @@ import BlackList from './blacklist'
 import CreateBlacklist from './blacklist/screens/create'
 import EditBlacklist from './blacklist/screens/create'
 import EditCoupon from './coupons/screens/create'
-import ReplyToQuerie from './queries/screens/reply'
+
+import Queries from './queries'
+import ReplyToQuery from './queries/screens/reply'
+import Contact from './contact'
+import ContactReply from './contact/screens/reply'
 
 
 
@@ -132,14 +133,14 @@ export {
   EditCategory,
   
   Contact,
-  QueryView,
+  ContactReply,
   Order,
   Analytics,
   Reports,
   Coupons,
   CreateCoupon,
   Queries,
-  ReplyToQuerie,
+  ReplyToQuery,
   Feedbacks,
   ReplyToFeedback,
   Webhooks,

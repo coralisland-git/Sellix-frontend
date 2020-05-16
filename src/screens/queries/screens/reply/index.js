@@ -1,166 +1,184 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Input
-} from 'reactstrap'
-import {Button, Loader} from 'components';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import map from "lodash/map"
-import find from "lodash/filter"
-import { Formik } from 'formik'
-import { replyQuerie } from '../../actions'
-import { getQuerie } from '../../actions'
-import { closeQuerie } from '../../actions'
-import { getQueries } from '../../actions'
-import {
-  CommonActions
-} from 'services/global'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {Card, CardHeader, CardBody, Row, Col, Form, FormGroup, Input} from 'reactstrap'
+import {Button, Spin, Loader} from 'components';
+import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
+import {Formik} from 'formik'
+import {replyToQuery, getQueries, getQuery, closeQuery, reOpenQuery } from '../../actions'
+import {CommonActions} from 'services/global'
+import * as moment from 'moment/moment'
 
 import './style.scss'
 
-const user = window.localStorage.getItem('userId')
 
-const mapStateToProps = (state) => ({
-  querie: state.queries.querie
-});
+const user = window.localStorage.getItem('userId');
 
-const mapDispatchToProps = (dispatch) => ({
-  commonActions: bindActionCreators(CommonActions, dispatch),
-  replyQuerie: bindActionCreators(replyQuerie, dispatch),
-  getQuerie: bindActionCreators({ getQuerie }, dispatch),
-  closeQuerie: bindActionCreators({ closeQuerie }, dispatch),
-  actions: bindActionCreators({ getQueries }, dispatch),
-})
 
+const RenderMessage = ({role, message, created_at}) => (
+	<div className={role === 'customer' ? 'alignForCustomer' : 'alignForYou'}>
+		<div className='queryMessageBlock'>
+			<div className={"d-flex align-items-center w-100 mb-3"}>
+				<div className='queryMessageTitle mr-2'>{role === 'customer' ? 'Customer' : 'You'}</div>
+				<div className='queryMessageDate'>({moment(created_at * 1000).format("DD, MMM HH:mm")})</div>
+			</div>
+			<span><i>{message}</i></span>
+		</div>
+	</div>
+)
 
 class ReplyToQuery extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      loading: true,
-    }
-  }
+	constructor(props) {
+		super(props);
 
-  componentDidMount() {
-    this.props.getQuerie.getQuerie(this.props.match.params.id).finally(() => {
-      this.setState({
-        loading: false
-      })
-    })
-  }
+		this.state = {
+			loading: true,
+			messages: null,
+			reply: false,
+		}
 
-  handleSubmit = (values) => {
-    this.setState({ loading: true })
-    this.props.replyQuerie({ ...values, uniqid: this.props.match.params.id }).then(res => {
-      this.props.commonActions.tostifyAlert('success', res.message)
-      this.props.history.push({
-        pathname: `/dashboard/${user}/queries`
-      })
-    }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error)
-    }).finally(() => {
-      this.setState({ loading: false })
-    })
-  }
+		this.id = this.props.match.params.id;
+	}
 
-  renderMessages = () => {
-    return map(this.props.querie, querie => {
-      return <div className={querie.role === 'customer' ? 'alignForCustomer' : 'AlignForYou'}>
-        <div className='querieMessageBlock'>
-          <div className='querieMessageTitle'>{querie.role === 'customer' ? 'Customer' : 'You'}</div>
-          <div>{querie.message}</div>
-          <div className='querieMessageDate'>{querie.day_value}-{querie.month}-{querie.year}</div>
-        </div>
-      </div>
-    })
-  }
+	componentDidMount() {
+		this.getQuery()
+	}
 
-  closeQuerie = (uniqid) => {
-    this.props.closeQuerie.closeQuerie({uniqid})
-    this.props.actions.getQueries()
-  }
+	getQuery = () => {
+		this.props.getQuery(this.id)
+			.then((res) => {
+				this.setState({
+					messages: res.data.messages
+				})
+			})
+			.finally(() => {
+				this.setState({
+					loading: false
+				})
+			})
+	}
 
-  render() {
+	handleSubmit = (values, { resetForm }) => {
 
-    let { loading } = this.state;
-    let { querie, history, match } = this.props;
+		this.setState({reply: true});
 
-    const currentQuery = find(querie, (query) => query.uniqid === match.params.id)
-    if (!currentQuery) { return null }
+		let { tostifyAlert, replyToQuery } = this.props;
 
-    console.log(loading);
-    return (
-      <div className="reply-screen mt-3">
-        <div className="animated fadeIn">
-          <Breadcrumb className="mb-0">
-            <BreadcrumbItem active className="mb-0">
-              <a onClick={(e) => history.goBack()}><i className="fas fa-chevron-left" /> Queries</a>
-            </BreadcrumbItem>
-          </Breadcrumb>
+		replyToQuery({...values, uniqid: this.id})
+			.then(res => {
+				tostifyAlert('success', res.message);
+				resetForm({ message: ""})
+				this.getQuery()
+			})
+			.catch(err => tostifyAlert('error', err.error))
+			.finally(() => this.setState({reply: false}))
+	}
 
-          {loading && <Loader />}
-          {!loading &&
-          <Formik onSubmit={this.handleSubmit}>
-            {props =>
-                <Form onSubmit={props.handleSubmit}>
-                  <Card>
-                    <CardHeader>
-                      <Row style={{alignItems: 'center'}}>
-                        <Col md={12}>
-                          <div className='querieTitle'>
-                            <h1>TICKET {currentQuery.uniqid}</h1>
-                            {currentQuery.status !== 'closed' && <Button color="default" onClick={(e) => this.closeQuerie(match.params.id)}>Close</Button>}
-                          </div>
-                        </Col>
-                      </Row>
-                    </CardHeader>
 
-                    <CardBody className="p5-4 pb-5">
-                      <Row>
-                        <Col lg={8}>
-                          <FormGroup>
-                            <div />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
-                          <div className='QuerieChatBlock'>
-                            {this.renderMessages()}
-                          </div>
-                          <FormGroup>
-                            <Input
-                                type="textarea"
-                                className="pt-3 pb-3 "
-                                rows={7}
-                                name='message'
-                                placeholder="Reply to query"
-                                onChange={props.handleChange}
-                                value={props.values.message}
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Button color="primary" className="mt-4 mb-3">Submit</Button>
-                    </CardBody>
-                  </Card>
-                </Form>
-            }
-          </Formik>
-          }
-        </div>
-      </div>
-    )
-  }
+	closeQuery = () => {
+		let {closeQuery, tostifyAlert, getQueries, history} = this.props;
+
+		closeQuery({uniqid: this.id})
+			.then((res) => {
+				tostifyAlert('success', res.message)
+				return getQueries()
+			})
+			.then((res) => {
+				history.push({
+					pathname: `/dashboard/${user}/queries`
+				})
+			})
+			.catch((err) => tostifyAlert('error', err.error))
+	}
+
+	reOpenQuery = () => {
+		let { reOpenQuery, tostifyAlert } = this.props;
+
+		reOpenQuery({uniqid: this.id})
+			.then((res) => {
+				tostifyAlert('success', res.message)
+				this.getQuery()
+			})
+			.catch((err) => tostifyAlert('error', err.error))
+	}
+
+	render() {
+
+		let {loading, messages, reply} = this.state;
+		let {history} = this.props;
+
+		return (
+			<div className="reply-screen mt-3">
+				<div className="animated fadeIn">
+					<Breadcrumb className="mb-0">
+						<BreadcrumbItem active className="mb-0">
+							<a onClick={(e) => history.goBack()}><i className="fas fa-chevron-left"/> Queries</a>
+						</BreadcrumbItem>
+					</Breadcrumb>
+
+					{loading && <Loader/>}
+					{!loading &&
+					<Formik onSubmit={this.handleSubmit} initialValues={{ message: "" }}>
+						{props =>
+							<Form onSubmit={props.handleSubmit}>
+								<Card>
+									<CardHeader>
+										<Row style={{alignItems: 'center'}}>
+											<Col md={12}>
+												<div className='queryTitle'>
+													<h1>Ticket: {(messages[0] || {}).title}</h1>
+													{(messages[0] || {}).status !== 'closed' ?
+														<Button color="default" onClick={this.closeQuery}>Close</Button> :
+														<Button color="default" style={{ background: "green"}} onClick={this.reOpenQuery}>Reopen</Button>
+													}
+												</div>
+											</Col>
+										</Row>
+									</CardHeader>
+
+									<CardBody className="p-4 pt-5">
+										<Row>
+											<Col lg={12}>
+												<div className='queryChatBlock'>
+													{messages.map(message => <RenderMessage {...message} key={message.id}/>)}
+												</div>
+												<FormGroup className={"mt-2"}>
+													<Input
+														type="textarea"
+														className="pt-3 pb-3 "
+														rows={7}
+														name='message'
+														placeholder="Reply to query"
+														onChange={props.handleChange}
+														value={props.values.message}
+													/>
+												</FormGroup>
+											</Col>
+										</Row>
+										<Button color="primary" className="mt-4 mb-3">
+											{reply ? <Spin/> : "Submit"}
+										</Button>
+									</CardBody>
+								</Card>
+							</Form>
+						}
+					</Formik>
+					}
+				</div>
+			</div>
+		)
+	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReplyToQuery)
+const mapDispatchToProps = (dispatch) => ({
+	tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
+	replyToQuery: bindActionCreators(replyToQuery, dispatch),
+	getQuery: bindActionCreators(getQuery, dispatch),
+	closeQuery: bindActionCreators(closeQuery, dispatch),
+	getQueries: bindActionCreators(getQueries, dispatch),
+	reOpenQuery: bindActionCreators(reOpenQuery, dispatch),
+})
+
+
+export default connect(null, mapDispatchToProps)(ReplyToQuery)
