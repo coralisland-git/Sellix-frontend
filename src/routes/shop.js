@@ -1,29 +1,22 @@
 import {
     Contact,
-    Contacts,
     ShopProducts,
     ShopFeedback,
     LeaveFeedback,
-    QueryView
+  ContactReply
   } from 'screens'
 
   const shopRoutes = [
-    {
-      path: `/:username/contact/:id`,
-      name: 'Contacts',
-      component: Contacts
-    },
     {
       path: `/:username/contact`,
       name: 'Contact',
       component: Contact.screen
     },
 
-
     {
       path: `/:username/query/:id`,
       name: 'Leave Query',
-      component: QueryView.screen
+      component: ContactReply
     },
 
     {

@@ -1,10 +1,10 @@
 .documentation {
 	.app-body{
-   		background-color: white;
    		margin-top: 70px !important;
 		background-color: #f8f8f8;
 		overflow: inherit;
 	}
+
 
 	.main {
 		padding: 0px !important;
@@ -17,5 +17,54 @@
 
 	.animated {
 		width: 100%;		
+	}
+
+	&.dark {
+		.app-body {
+			background-color: #1D183D !important;
+		}
+
+		.code-block {
+			pre {
+				color: #B4AEBC !important;
+			}
+			background: #221d3e !important;    
+		}
+
+		.code-block.response {
+			pre {
+				color: #B4AEBC !important;
+			  	background-color: #251f45 !important;
+			}
+		}
+
+		.badge-mark {
+			background-color: #221d3e !important;
+			border: 1px solid;
+		}
+
+		.d-nav {
+			border-right: 1px solid #221d3e !important;
+		}
+
+		section {
+		    border-bottom: 1px solid #221d3e;
+		}
+
+		.border-table {
+			background : #251f45 !important
+		}
+
+		th {
+			background : #221d3e !important;
+		}
+
+		.res-status {
+			color: #B4AEBC !important;
+		}
+
+		.lv-1 {
+			color: #534e61 !important;
+		}
 	}
 }

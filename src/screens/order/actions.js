@@ -103,6 +103,15 @@ export const processOrder = (invoice) => {
 }
 
 
+
+// Queue Invoice
+export const queueInvoice = (invoice) => (dispatch) =>
+    authApi.post(`/invoices/queue`, formData(invoice))
+        .then(res => res)
+        .catch(err => { throw err })
+
+
+
 export const issueReplacement = (coupon) => {
   return (dispatch) => {
     let data = {

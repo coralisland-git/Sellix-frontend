@@ -1,68 +1,43 @@
-.reply-screen {
-    label {
-        display: flex;
-        align-items: center;
-    }
-    .badge {
-        margin-left: 10px;
-        font-size: 9px;
-        padding: 4px 8px;
-        border-radius: 3px;
-        
-        color: white;
-    }
-
-    .badge-like {
-        color: #2BB224 !important;
-        background-color: #CBF4C9 !important;
-    }
-
-    .badge-dislike {
-        color: #B22424 !important;
-        background-color: #F4C9C9 !important;
-    }
-
-    .badge-neutral {
-        color: #B27424 !important;
-        background-color: #F4E6C9 !important;
-    }
-}
-.QuerieChatBlock{
+.queryChatBlock {
     width: 100%;
     min-height: 100px;
-    padding: 10px;
 }
 
-.alignForCustomer{
+.alignForCustomer {
     display: flex;
     justify-content: flex-start;
 }
 
-.AlignForYou{
+.alignForYou {
     display: flex;
     justify-content: flex-end;
 }
 
-
-.querieMessageTitle{
-    margin-bottom: 5px;
-    font-weight: 700;
+.queryMessageTitle {
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.querieMessageDate{
-    font-size: 10px;
-    margin-top: 15px;
+.queryMessageDate {
+    font-size: 12px;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-weight: 300;
 }
 
-.querieMessageBlock{
-    padding: 10px;
-    width: 160px;
-    margin-bottom: 15px;
-    border-radius: 3px;
+.queryMessageBlock {
+    padding: .8rem 1rem;
+    width: auto;
+    min-width: 13rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
     background: #221D3E;
+    max-width: 90%;
+    color: #8f8d9f;
 }
 
-.querieTitle{
+.queryTitle {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -84,7 +59,7 @@
 }
 
 .light {
-    .querieMessageBlock{
+    .queryMessageBlock{
         background: #f5f5fe;
     }
 }

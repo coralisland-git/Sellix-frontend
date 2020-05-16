@@ -8,12 +8,9 @@ import {
   Button,
   Row,
   Col,
-  Form,
-  FormGroup,
-  Input,
-  Label
 } from 'reactstrap'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { tableOptions } from 'constants/tableoptions'
 import * as moment from 'moment/moment';
 import { Loader } from 'components'

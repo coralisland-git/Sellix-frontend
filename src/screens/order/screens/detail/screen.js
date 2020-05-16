@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
@@ -12,78 +12,25 @@ import {
 } from 'reactstrap'
 import { Button } from 'components';
 import * as moment from 'moment/moment'
-import config from 'constants/config'
-import { Loader, Spin } from 'components'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
+import { Loader } from 'components'
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { tableOptions } from 'constants/tableoptions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { includes } from 'lodash'
-import {
-	CommonActions
-} from 'services/global'
-import {ResendModal} from './sections'
-import {IssueReplacementModal} from './sections'
-import {ProcessOrderModal} from './sections'
-import bitcoinIcon from 'assets/images/crypto/btc.svg'
-import paypalIcon from 'assets/images/crypto/paypal.svg'
-import litecoinIcon from 'assets/images/crypto/ltc.svg'
-import ethereumIcon from 'assets/images/crypto/eth.svg'
-import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
-import stripeIcon from 'assets/images/crypto/stripe.svg'
-import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
-import skrillIcon from 'assets/images/crypto/skrill.svg'
+import includes from "lodash/includes"
+import config from "constants/config"
+import { CommonActions } from 'services/global'
+import { ResendModal, IssueReplacementModal, ProcessOrderModal, QueueInvoice } from './sections'
 
 import * as OrderActions from '../../actions'
 
 import './style.scss'
 
-
-const PAYMENT_ICONS = {
-  paypal: paypalIcon,
-  bitcoin: bitcoinIcon,
-  litecoin: litecoinIcon,
-  ethereum: ethereumIcon,
-  perfectmoney: perfectmoneyIcon,
-  stripe: stripeIcon,
-  bitcoincash: bitcoincashIcon,
-  skrill: skrillIcon
-}
-
 const CRYPTOS = ['bitcoin', 'litecoin', 'ethereum', 'bitcoincash']
-
-const mapStateToProps = (state) => {
-  return ({
-    product_list: state.product.product_list
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(OrderActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch),
-  })
-}
 
 const user = window.localStorage.getItem('userId')
 
 
-const ORDER_STATUS = {
-  '0': 'Pending',
-  '1': 'Completed',
-  '2': 'Cancelled',
-  '3': 'Confirmation',
-  '4': 'Partial'
-}
-
-const PAYMENT_OPTS = {
-  'paypal': 'PayPal',
-  'bitcoin': 'BTC',
-  'litecoin': 'LTC',
-  'ethereum': 'ETH',
-  'skrill': 'Skrill',
-  'stripe': 'Stripe',
-  'bitcoincash': 'BTH',
-  'perfectmoney': 'Perfect Money'
-}
 
 class OrderDetail extends React.Component {
   
@@ -95,11 +42,11 @@ class OrderDetail extends React.Component {
       openModal: false,
       openIssueReplacementModal: false,
       openProcessOrderModal: false,
+      openQueueOrderModal: false,
       order: {}
     }
 
     this.id = this.props.match.params.id
-    this.initializeData = this.initializeData.bind(this)
   }
 
   closeResendModal() {
@@ -108,6 +55,10 @@ class OrderDetail extends React.Component {
 
   closeIssueReplacementModal() {
     this.setState({openIssueReplacementModal: false})
+  }
+
+  closeQueueOrderModal() {
+    this.setState({openQueueOrderModal: false})
   }
 
   closeProcessOrderModal() {
@@ -122,6 +73,10 @@ class OrderDetail extends React.Component {
     this.setState({openIssueReplacementModal: true})
   }
 
+  openQueueOrderModal() {
+    this.setState({openQueueOrderModal: true})
+  }
+
   openProcessOrderModal() {
     this.setState({openProcessOrderModal: true})
   }
@@ -130,7 +85,7 @@ class OrderDetail extends React.Component {
     this.initializeData()
   }
 
-  initializeData () {
+  initializeData = () => {
     this.setState({ loading: true })
     this.props.actions.getOrderByID(this.id).then(res => {
       if(res.status == 200)
@@ -161,6 +116,7 @@ class OrderDetail extends React.Component {
     })
   }
 
+
   routeHandle = () => {
     const { location, history } = this.props;
     const isAdmin = includes(location.pathname, '/admin')
@@ -175,8 +131,9 @@ class OrderDetail extends React.Component {
       order, 
       resending, 
       openModal, 
-      openIssueReplacementModal, 
-      openProcessOrderModal 
+      openIssueReplacementModal,
+      openQueueOrderModal,
+      openProcessOrderModal
     } = this.state
 
     let custom_fields = []
@@ -189,7 +146,8 @@ class OrderDetail extends React.Component {
 
     let link = window.location.pathname.includes("admin/invoices") ?
         `/admin/users/${order.username}/product/edit/${order.product_id}` :
-        `/dashboard/${user}/products/edit/${order.product_id}`
+        `/dashboard/${user}/products/edit/${order.product_id}`;
+
     return (
       <div className="order-detail-screen mt-3">
         <div className="animated fadeIn">
@@ -198,6 +156,12 @@ class OrderDetail extends React.Component {
             invoiceId = {order.uniqid}
             email = {order.customer_email}
             closeModal={this.closeResendModal.bind(this)}/>
+          <QueueInvoice
+            openModal={openQueueOrderModal}
+            invoiceId = {order.uniqid}
+            status = {order.status}
+            refreshOrder = {() => setTimeout(() => { this.initializeData(); }, 4000)}
+            closeModal={this.closeQueueOrderModal.bind(this)}/>
           <IssueReplacementModal openModal={openIssueReplacementModal} 
             // resendInvoice = {this.resendInvoice.bind(this)}
             invoiceId = {order.uniqid}
@@ -253,6 +217,12 @@ class OrderDetail extends React.Component {
                                 Process Order
                               </Button>
                           }
+                          {
+                            order.status && (['2'].includes(order.status)) &&
+                              <Button color="primary" className="" onClick={this.openQueueOrderModal.bind(this)}>
+                                Queue Invoice
+                              </Button>
+                          }
                         </div>
                       </div>
                       
@@ -261,12 +231,12 @@ class OrderDetail extends React.Component {
                       <Row className="flex">
                         <Col lg={12} className="mb-5">
                           <div className="d-flex align-items-center">
-                            <img src={PAYMENT_ICONS[order.gateway]} className="avatar mr-2"/>
+                            <img src={config.PAYMENT_ICONS[order.gateway]} className="avatar mr-2"/>
                             <div>
                               <p className="email text-primary mb-1 d-flex align-items-center">
                                 <a href={`mailto:${order.customer_email}`}>{order.customer_email}</a>
-                                <span className={`small-badge badge-${ORDER_STATUS[order.status] && ORDER_STATUS[order.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
-                                  {ORDER_STATUS[order.status]}
+                                <span className={`small-badge badge-${config.ORDER_STATUS[order.status] && config.ORDER_STATUS[order.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+                                  {config.ORDER_STATUS[order.status]}
                                 </span>
                               </p>
                               <p className="mb-0">{order.uniqid}</p>
@@ -304,7 +274,7 @@ class OrderDetail extends React.Component {
                         <Col lg={6}>
                           <div className="d-flex">
                             <p className="title">Gateway</p>
-                            <p>{PAYMENT_OPTS[order.gateway]}</p>
+                            <p>{config.PAYMENT_OPTS[order.gateway]}</p>
                           </div>
                           
                           <div className="d-flex">
@@ -480,7 +450,7 @@ class OrderDetail extends React.Component {
                     </Card> 
                 }
                 {
-                  order.gateway && CRYPTOS.includes(order.gateway)  && 
+                  order.gateway && CRYPTOS.includes(order.gateway)  &&
                     <Card>
                       <CardBody className="">
                         {
@@ -494,7 +464,7 @@ class OrderDetail extends React.Component {
                           <Row className="">
                             <Col lg={12}>
                               <FormGroup className="mb-4">
-                                <h4 className="title">{PAYMENT_OPTS[order.gateway]} Details</h4>
+                                <h4 className="title">{config.PAYMENT_OPTS[order.gateway]} Details</h4>
                               </FormGroup>
                             </Col>
                             <Col lg={12}>
@@ -503,7 +473,7 @@ class OrderDetail extends React.Component {
                                 <Col lg={12}>
                                   <div className="d-info">
                                     <p className="d-addr">
-                                      <label>Address:</label> <img src={PAYMENT_ICONS[order.gateway]} width="15"/> -
+                                      <label>Address:</label> <img src={config.PAYMENT_ICONS[order.gateway]} width="15"/> -
                                       {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
                                       {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
                                       {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
@@ -529,7 +499,7 @@ class OrderDetail extends React.Component {
                                       order.crypto_transactions && order.crypto_transactions.map(trans => 
                                         <div className="d-flex">
                                           <p className="hash">
-                                            {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                            {trans.crypto_amount} <img src={config.PAYMENT_ICONS[order.gateway]} width="15"/> -
                                             {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
                                             {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
                                             {order.gateway == 'ethereum' && <a href={`https://etherscan.io/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
@@ -549,7 +519,7 @@ class OrderDetail extends React.Component {
                                     <Col lg={12}>
                                       <div className="d-flex">
                                         <p className="hash">
-                                          {order.crypto_payout_transaction.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                          {order.crypto_payout_transaction.crypto_amount} <img src={config.PAYMENT_ICONS[order.gateway]} width="15"/> -
                                           {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
                                           {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
                                           {order.gateway == 'ethereum' && <a href={`https://etherscan.io/tx/${order.crypto_payout_transaction.hash}`} target="blank">{order.crypto_payout_transaction.hash}</a>}
@@ -623,5 +593,16 @@ class OrderDetail extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = (state) => ({
+  product_list: state.product.product_list
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(OrderActions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch),
+})
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderDetail)

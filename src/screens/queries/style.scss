@@ -1,17 +1,30 @@
-.product-screen {
-  .card-header {
-    color: #20a8d8;
-  }
-  .btn-group {
-    .btn {
-      color: #ffffff !important;
-    }
+.queries-screen {
+
+  label {
+    display: flex;
+    align-items: center;
   }
 
-  .product-table {
-    .my-link {
-      text-decoration: none;
-      cursor: pointer;
-    }
+  .badge {
+    font-size: 9px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    margin: 0 auto;
   }
+
+  .badge-reply {
+    color: #2BB224 !important;
+    background-color: #CBF4C9 !important;
+  }
+
+  .badge-closed {
+    color: #75025C !important;
+    background-color: #FCA2B7 !important;
+  }
+
+  .badge-pending {
+    color: #453aa2 !important;
+    background-color: #b2d8e8 !important;
+  }
+
 }

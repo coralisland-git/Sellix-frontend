@@ -5,7 +5,7 @@ import IntervalTimer from 'react-interval-timer';
 
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
 
-import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
+import sellix_logo from 'assets/images/Sellix_logo.svg'
 import './style.scss'
 
 
@@ -30,7 +30,7 @@ class Header extends Component {
   render() {
     const { profile, children, theme, is_authed, isShop, history, isDocumentation, ...attributes } = this.props
     const { notifications } = profile || {};
-    const path = this.props.history.location.pathname
+    const path = this.props.history.location.pathname;
     
     return (
       <React.Fragment>
@@ -40,7 +40,13 @@ class Header extends Component {
           href="/"
           full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
         />
-        { !isDocumentation && (
+        { isDocumentation?
+          <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
+            <UncontrolledDropdown nav direction="down" >
+              <i style={{ fontSize: 17}} className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
+            </UncontrolledDropdown>
+          </Nav>
+          :
           <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
             {
               !isShop && 
@@ -170,7 +176,7 @@ class Header extends Component {
             </UncontrolledDropdown>
             
           </Nav>
-        )}
+        }
       </React.Fragment>
     );
   }

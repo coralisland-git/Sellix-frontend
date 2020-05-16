@@ -1,12 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Card, CardHeader, Row, Col, Input } from 'reactstrap'
+import { Card, CardHeader, Row, Col, Input } from 'reactstrap'
 import { Button } from 'components';
 import { CommonActions } from 'services/global'
 import { Route, Switch, withRouter, matchPath } from 'react-router-dom'
-import { Loader, LoaderFullscreen } from 'components'
-import { debounce } from 'lodash'
+import { Loader } from 'components'
+import debounce from "lodash/debounce"
 
 import './style.scss'
 
@@ -47,6 +47,11 @@ class ShopProducts extends React.Component {
     let { user, location } = this.props;
     let { categories, filter } = this.state;
 
+
+    if(prevProps.match.params.username !== this.props.match.params.username) {
+      this.initializeData()
+    }
+
     if(prevProps.user !== user) {
       document.title = `${user ? user.username ? user.username + " |" : "" : ""} Sellix`;
     }
@@ -76,6 +81,7 @@ class ShopProducts extends React.Component {
         }
       })
     }
+
     this.initializeData()
   }
 

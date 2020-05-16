@@ -57,7 +57,7 @@ export const getQuerie = (id) => {
 export const getQuerieViaWebsocket = (id) => {
   return (dispatch) => {
 
-      sendAuthedWsMessage({ event: 'query', uniqid: id }, 'messages').then(messages => {
+      return sendAuthedWsMessage({ event: 'query', uniqid: id }, 'messages').then(messages => {
         dispatch({
           type: QUERIE.QUERIE,
           payload: messages

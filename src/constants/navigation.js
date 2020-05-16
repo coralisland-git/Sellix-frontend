@@ -154,6 +154,14 @@ export function mainBrowserNavigation(props){
         icon: 'fas fa-code',
         children: [
           {
+            name: 'Documentation',
+            url: `/documentation`,
+            attributes: { 
+              target: '_blank', 
+              rel: "documentation"
+            }
+          },
+          {
             name: 'Embed Products',
             url: `/dashboard/${user}/developer/embed`,
           },
@@ -306,10 +314,6 @@ export const adminSettingsNavigation =  {
 
 export const shopSettingsNavigation =  {
   items: [
-    // {
-    //   name: 'Members',
-    //   url: `/dashboard/${user}/settings/${user}/memebers`
-    // },
     {
       name: 'Payments',
       url: `/settings/${user}/payments`
@@ -323,14 +327,6 @@ export const shopSettingsNavigation =  {
     {
       name: 'Analytics',
       url: `/settings/${user}/analytics`
-    },
-    // {
-    //   name: 'Billing',
-    //   url: `/dashboard/${user}/settings/${user}/billing`
-    // },
-    // {
-    //   name: 'Customization',
-    //   url: `/dashboard/${user}/settings/${user}/customization`
-    // }
+    }
   ]
 }

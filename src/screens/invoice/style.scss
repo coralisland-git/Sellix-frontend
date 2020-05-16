@@ -30,11 +30,33 @@
 
   min-height: 490px;
 
+  .qrCode {
+    &-message {
+      margin: 0 2.5rem;
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 2.5rem;
+    }
+
+    &-progress-overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9;
+      display: block;
+    }
+  }
+
+  .copy-tooltip {
+    top: 0;
+  }
   .copy-tooltip.show {
     @media (min-width: 767.98px) {
       animation-name: toolTipAnimation;
       animation-duration: 0.25s;
-      top: 200px !important;
+      top: 0;
     }
     
     opacity: 1;
@@ -77,15 +99,11 @@
   .invoice-card {
     max-width: 450px;
     width: 100%;
+    margin: 0 auto;
   }
 
   .qr-wrapper {
-    position: relative;
-    width: 290px;
-    left: -20px;
-    top: 10px;
     transform: scale(0.9);
-    margin-left: 8px;
 
     & > img {
       cursor: pointer;
@@ -117,11 +135,22 @@
   }
 
   .qr-container {
-    
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 30px 15px 15px;
+    position: relative;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     overflow: hidden;
+    padding-bottom: 10px;
+
     canvas {
       cursor: pointer;
     }
+
     &.progress-red {
       .payment-info-slide-up-panel h6 b {
         color: #ef476f !important;
@@ -284,11 +313,12 @@
       margin-bottom: 0px;
 
       &:first-child {
-        margin-bottom: -6px;
+        width: 100%;
       }
 
       .progress-overlay {
         cursor: pointer;
+
         &:hover {
           opacity: 0;
           & + .CircularProgressbar {
@@ -412,9 +442,11 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 1rem 0 2rem;
   overflow: hidden auto;
-  padding-bottom: 60px;
+  padding-bottom: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
 
   &.fixed {
     position: fixed;
@@ -925,5 +957,11 @@
   }
   100% {
     background-color: #F8BB86;
+  }
+}
+
+@media (max-width: 768px) {
+  .mt-xs-4 {
+    margin-top: 1.5rem !important;
   }
 }

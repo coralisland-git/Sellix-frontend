@@ -27,7 +27,7 @@ const adminRoutes = [
   {
     path: `/admin/settings`,
     name: 'Settings',
-    component: Settings.screen,
+    component: Settings,
     title: 'Settings',
   },
   {
@@ -35,12 +35,6 @@ const adminRoutes = [
     name: 'EditAdminProduct',
     component: EditProduct.screen,
     title: 'User Product',
-  },
-  {
-    path: `/admin/users/:username/order/:id`,
-    name: 'OrderAdminDetail',
-    component: OrderDetail.screen,
-    title: 'User Order',
   },
   {
     path: `/admin/users/:id`,

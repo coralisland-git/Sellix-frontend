@@ -4,26 +4,21 @@ import { api } from 'utils'
 import { bindActionCreators } from 'redux'
 import { Card, Row, Col } from 'reactstrap'
 import * as moment from 'moment/moment'
-import { QRCodeModal } from 'components'
 import { PayPalButton } from "react-paypal-button-v2";
 import { CommonActions } from 'services/global'
 import { getInvoiceInfo, downloadInvoice } from './actions'
 import { Loader, Button } from 'components'
 import StripeForm from './stripeForm'
-import LeaveFeedback from '../feedbacks_shop/screens/createComponent/screen'
-import ProductScreen from '../product_shop/screens/detail/screen'
 import config from 'constants/config'
 import FileSaver from 'file-saver';
 import ReactTooltip from 'react-tooltip'
 
-import sellix_logo from 'assets/images/Sellix_logo.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import skrillLinkIcon from 'assets/images/skrill_link.svg'
 import infoIcon from 'assets/images/info.svg'
 import infoIconRed from 'assets/images/infoRed.svg'
 import copyIcon from 'assets/images/copy.svg'
 import qrCornerImg from 'assets/images/qr-corner.png'
-import dummyQrCode from 'assets/images/dummy-qr-code.png'
 import checkMarkIcon from 'assets/images/green_checkmark.svg'
 import { QRCode } from 'react-qrcode-logo';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -266,13 +261,6 @@ class EmbededInvoice extends React.Component {
 
     document.title = `Invoice ${id} | Sellix`;
 
-    if(localStorage.getItem('invoice-' + id)) {
-      this.setState({
-        invoice: JSON.parse(localStorage.getItem('invoice-' + id))
-      })
-      localStorage.removeItem('invoice-' + id)
-    }
-
     getInvoice(id)
         .then(({ data: { invoice }}) => {
           let seconds = 24 * 60 * 60 - (new Date().getTime() - new Date(invoice.created_at * 1000).getTime()) / 1000
@@ -418,11 +406,12 @@ class EmbededInvoice extends React.Component {
               transition: 'opacity 0.3s ease-out',
             }}>{crypto_address || ''}</span>
             <div className="qr-container" style={{
-              height: openQRModal ? '300px' : 0,
+              height: openQRModal ? 'auto' : 0,
               opacity: openQRModal ? 1 : 0,
               transition: 'opacity 0.3s ease-out',
               paddingLeft: '25px',
-              marginTop: '-40px'
+              marginTop: '-40px',
+              padding: 0
             }}>
               {this.qrCode({
                 onClick: () => {},
@@ -560,22 +549,25 @@ class EmbededInvoice extends React.Component {
 
   qrCode = ({ onClick, qrBgColor, borderRadius }) => {
 
-    const { invoice, qrCellSize } = this.state
+    const { invoice, qrCellSize, openQRModal } = this.state
     const { theme } = this.props
 
     return <div onClick={onClick} className="qr-wrapper"  style={borderRadius ? {
       borderRadius,
-      overflow: 'hidden'
+      overflow: 'hidden',
+      width: 'auto',
+      marginLeft: '-7px'
     } : {}}>
-      <QRCode bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')} value={invoice.crypto_uri} size="270" ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"} qrStyle="dots" 
-      // logoImage={config.PAYMENT_ICONS[invoice.gateway]}
-        onQrDraw={({cellSize}) => {
-          if(cellSize != this.state.qrCellSize)  {
-            this.setState({
-              qrCellSize: cellSize
-            })
+      <QRCode
+          bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')}
+          value={invoice.crypto_uri} size="270"
+          ecLevel={invoice.gateway == 'bitcoincash' ? "H" : "Q"}
+          qrStyle="dots"
+          onQrDraw={({cellSize}) => {
+            if(cellSize != this.state.qrCellSize)  {
+              this.setState({ qrCellSize: cellSize })}
+            }
           }
-        }}
       />
       <img src={config.PAYMENT_ICONS[invoice.gateway]} width={qrCellSize * 11} style={{
         background: qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe'),
@@ -637,7 +629,7 @@ class EmbededInvoice extends React.Component {
               })
             }}/>
             <CopyToClipboard text={invoice.crypto_address}
-                              onCopy={() => {
+                             onCopy={() => {
                               setTimeout(() => {
                                 this.copyAddressToClipboardOnCopied()
                                 }, 300)
