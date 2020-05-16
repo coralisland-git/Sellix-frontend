@@ -7,10 +7,17 @@ import { getStatus, updateStatus } from './actions'
 import { CommonActions } from 'services/global'
 import Select from "react-select";
 import * as moment from 'moment/moment'
+import random from 'random-letters';
+import {Formik} from "formik";
+import * as Yup from "yup";
 
 import './style.scss';
-import {Formik} from "formik";
 
+const TYPE_LIST = [
+  {value: "red", label: "Red"},
+  {value: "blue", label: "Blue"},
+  {value: "green", label: "Green"},
+];
 
 class Status extends Component {
 
@@ -18,7 +25,7 @@ class Status extends Component {
     super(props)
     this.state = {
       loading: false,
-      settings: {}
+      status: {}
     }
   }
 
@@ -29,11 +36,21 @@ class Status extends Component {
   initializeData = () => {
     this.setState({ loading: true })
     this.props.getStatus()
-        .then((response) => {
-          if(response.status === 401) {
-            this.setState({ showPlaceholder: true })
+        .then(({ data: { status }}) => {
+
+          if(status.messages) {
+            this.setState({ status: {
+                ...status.messages,
+                type: TYPE_LIST.find(({ value }) => value === status.messages.type),
+                status: status.status
+            }})
           } else {
-            this.setState({ settings: response })
+            this.setState({ status: {
+                title: "",
+                message: "",
+                type: null,
+                status: 1
+              }})
           }
         })
         .finally(() => this.setState({ loading: false }))
@@ -55,6 +72,7 @@ class Status extends Component {
 
     values.type = values.type.value
     values.created = moment().unix()
+    values.id = random(7)
     this.props.updateStatus({ messages: JSON.stringify({
         messages: values
       }) })
@@ -70,18 +88,42 @@ class Status extends Component {
         });
   }
 
+  hideMessage = () => {
+    this.setState({ loading: true });
+
+    this.props.updateStatus({ messages: "" })
+        .then(() => {
+          this.props.tostifyAlert('success', "Settings Update Succeeded")
+          this.initializeData()
+        })
+        .catch(() => {
+          this.props.tostifyAlert('error', 'Settings Update Failed')
+        })
+        .finally(() => {
+          this.setState({ loading: false })
+        });
+  }
+
 
   render() {
 
-    const { loading, showPlaceholder, isOpen, settings } = this.state;
+    const { loading, status } = this.state;
+
+    let validationSchema = Yup.object().shape({
+          title: Yup.string().required('Title is required'),
+          type: Yup.object().required('Type is required').nullable(),
+          message: Yup.string().required('Message is required'),
+    })
 
     return (
-        <Formik initialValues={{}} enableReinitialize={true} onSubmit={this.handleSubmit}>
+        <Formik initialValues={status} enableReinitialize={true} onSubmit={this.handleSubmit} validationSchema={validationSchema}>
           {(form) => (
               <Form onSubmit={form.handleSubmit}>
                 <FormGroup>
                   <h4 className="mb-4">Status</h4>
                 </FormGroup>
+
+                {loading && <div className={"loader-container"}><Loader /></div>}
 
                 <Row>
                   <Col lg={12} >
@@ -94,7 +136,9 @@ class Status extends Component {
                           placeholder={"Title"}
                           onChange={form.handleChange}
                           value={form.values.title}
+                          className={form.errors.title && form.touched.title ? "is-invalid" : ""}
                       />
+                        {form.errors.title && form.touched.title && (<div className="invalid-feedback">{form.errors.title}</div>)}
                     </FormGroup>
                     <FormGroup className="mb-4">
                       <Label htmlFor={"message"}>Message</Label>
@@ -106,7 +150,9 @@ class Status extends Component {
                           placeholder={"Message"}
                           onChange={form.handleChange}
                           value={form.values.message}
+                          className={form.errors.message && form.touched.message ? "is-invalid" : ""}
                       />
+                        {form.errors.message && form.touched.message && (<div className="invalid-feedback">{form.errors.message}</div>)}
                     </FormGroup>
                       <FormGroup className="mb-4">
                         <Label htmlFor={"message"}>Type</Label>
@@ -116,18 +162,17 @@ class Status extends Component {
                               id="event"
                               placeholder="Type of Status"
                               formatOptionLabel={this.formatOption}
-                              options={[
-                                {value: "red", label: "Red"},
-                                {value: "blue", label: "Blue"},
-                                {value: "green", label: "Green"},
-                              ]}
+                              options={TYPE_LIST}
                               classNamePrefix={"react-select"}
-                              isSearchable={false}
                               value={form.values.type}
-                              onChange={(option) => form.handleChange("type")(option)}/>
+                              onChange={(option) => form.handleChange("type")(option)}
+                              className={form.errors.type && form.touched.type ? "is-invalid" : ""}
+                              isSearchable={false}
+                          />
+                            {form.errors.type && form.touched.type && (<div className="invalid-feedback">{form.errors.type}</div>)}
                         </Col>
                         <Col lg={4}>
-                          <Button color={"primary"} style={{ width: "100%" }}>Delete</Button>
+                          {!Boolean(+status.status) ? <Button style={{ width: "100%" }} color="primary" onClick={this.hideMessage}>Delete</Button> : null}
                         </Col>
                       </Row>
                       </FormGroup>

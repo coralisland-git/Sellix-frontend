@@ -1,4 +1,4 @@
-import { authApi, formData } from 'utils'
+import {authApi, formData, sendAuthedWsMessage} from 'utils'
 
 
 export const getSettings = () => () => (
@@ -53,4 +53,9 @@ export const getStatus = () => () => {
     }).catch(err => {
       throw err
     })
+}
+
+
+export const getStatusViaWebsocket = () => () => {
+    return sendAuthedWsMessage({ event: 'status' }, 'status').then(response => response)
 }

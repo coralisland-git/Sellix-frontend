@@ -29,8 +29,7 @@ class ShopProductDetail extends React.Component {
       email: null,
       coupon_code: '',
       custom_fields: {},
-      productInfo: {},
-      showInvoice: false
+      productInfo: {}
     }
   }
 

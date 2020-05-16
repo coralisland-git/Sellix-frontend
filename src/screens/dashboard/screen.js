@@ -189,12 +189,12 @@ class Dashboard extends React.Component {
                 <Col lg={12}>
                   <div className="flex-wrapper align-items-center">
                     <h1 className="title">Dashboard</h1>
-                    <Status />
                     <div className="card-header-actions">
                       <DateRangePicker2 showCustomRangeLabel={false} ranges={DATE_RANGES} getDate={this.getAnalyticsData} opens={'left'}/>
                     </div>
                   </div>
                 </Col>
+                <Status />
               </Row>
             </CardHeader>
 

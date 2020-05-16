@@ -101,8 +101,19 @@
   .status-alert {
     height: 5rem;
     overflow: hidden;
-    border-radius: 3px;
-    width: 25rem;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    position: relative;
+    padding: 0 15px;
+
+    &-hide {
+      position: absolute;
+      top: .5rem;
+      color: #b3aebb;
+      right: 1.9rem;
+      cursor: pointer;
+    }
 
     &-status {
       width: 6rem;
@@ -110,6 +121,7 @@
       align-items: center;
       justify-content: center;
       color: #fff;
+      border-radius: 3px 0 0 3px;
 
       & > i {
         font-size: 2rem;
@@ -157,10 +169,25 @@
       padding: .5rem 1.5rem;
       font-weight: 400;
       background: #1d183d;
+      border-radius: 0 3px 3px 0;
     }
   }
 }
 
+.light .status-alert {
+
+  &-hide {
+    color: #24292d;
+  }
+
+  &-message {
+    color: #393e41;
+  }
+
+  &-container {
+    background: #fff;
+  }
+}
 
 .dashboard-screen .loader-container {
   transform: translate(0);
