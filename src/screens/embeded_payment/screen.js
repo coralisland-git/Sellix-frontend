@@ -391,7 +391,7 @@ class EmbededPayment extends React.Component {
                     <span>by {product_info.username || ''}</span>
                     {user.verified == '1' &&
                       <>
-                        <img src={verifiedIcon} width="16" className="verified-icon" id="verifiedTooltip" />
+                        <img src={verifiedIcon} style={{ width: 20, height: 15 }} className="verified-icon" id="verifiedTooltip" alt={"product_info.username"}/>
                         <Tooltip
                           placement="right"
                           isOpen={verifiedTooltipOpen}
@@ -530,20 +530,20 @@ class EmbededPayment extends React.Component {
                           </div>
                           <Button color="primary" className="mr-auto ml-auto mt-3 d-block" onClick={this.showPaymentOptions.bind(this)}>Continue</Button>
                           <div className="d-flex justify-content-center align-items-center mt-2 stock-count">
-                            <span className={quantity == 1?'text-grey':'text-primary'} onClick={this.decreaseCount.bind(this)}>-</span>
+                            <span className={quantity == 1?'text-grey':'text-primary'} style={{ fontSize: "1.5rem"}} onClick={this.decreaseCount.bind(this)}>-</span>
                             <span className="ml-1 mr-1">
                                 <input type="text"
                                     className="text-primary"
                                     value={quantityPrompt === undefined ? quantity : quantityPrompt} style={{
                                     background: 'transparent',
                                     border: 'none',
-                                    width: '18px',
+                                    width: '24px',
                                     textAlign: 'center',
                                 }} onChange={(e) => this.setState({quantityPrompt: e.target.value})}
                                    onBlur={e => this.setCount(e.target.value)}
                                    />
                               </span>
-                            <span onClick={this.increaseCount.bind(this)} className="text-primary">+</span>
+                            <span onClick={this.increaseCount.bind(this)} className="text-primary" style={{ fontSize: "1.3rem"}}>+</span>
                           </div>
                           {openCoupon?
                             <div className="pt-3 pb-3">
