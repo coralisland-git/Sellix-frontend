@@ -171,12 +171,12 @@ class Documentation extends React.Component {
                   <div className="code-block">
                     <div className="code-block-header">
                       <p>API ROOT URL</p>
-                      <Clipboard data-clipboard-text={ `https://sellix.io/api/v1` } button-title="Copy">
+                      <Clipboard data-clipboard-text={ `https://dev.sellix.io/v1` } button-title="Copy">
                         <i className="fa fa-clone" aria-hidden="true"></i>
                       </Clipboard>
                     </div>
                     <pre>
-                      <code>{`https://sellix.io/api/v1`}</code>
+                      <code>{`https://dev.sellix.io/v1`}</code>
                     </pre>
                   </div>
                 </div>
