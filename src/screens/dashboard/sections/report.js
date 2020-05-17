@@ -96,22 +96,21 @@ export const ReportQueries = ({ queries_count, queries_count_progress }) => {
 	</Col>
 }
 
-export const ReportFee = ({ fee_revenue = 0, fee_revenue_potential = 0, potential, currency }) => {
-	let fee = potential ? fee_revenue_potential : fee_revenue;
+export const ReportFee = ({ fee_revenue = 0, currency }) => {
 
 	return <Col lg={3}>
 		<Card>
 			<CardBody className="p-4 bg-white">
 				<p className="report-title">Site Revenue</p>
 				<div className="d-flex justify-content-between align-items-center">
-					<NumberFormat value={fee.toFixed(2)} displayType={'text'} thousandSeparator={true} prefix={config.CURRENCY_LIST[currency]}
+					<NumberFormat value={fee_revenue.toFixed(2)} displayType={'text'} thousandSeparator={true} prefix={config.CURRENCY_LIST[currency]}
 					              renderText={value => <h3 className="text-primary mb-0">{value}</h3>}
 					/>
 					&nbsp;
 				</div>
 				<div className="progress-xs mt-3 progress">
 					<div
-						className={`progress-bar ${fee > 0 ? 'bg-success' : 'bg-warning'}`}
+						className={`progress-bar ${fee_revenue > 0 ? 'bg-success' : 'bg-warning'}`}
 						role="progressbar"
 						style={{width: "100%"}}
 						aria-valuemin="0"

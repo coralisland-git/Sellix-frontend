@@ -160,7 +160,6 @@ class OrderDetail extends React.Component {
             openModal={openQueueOrderModal}
             invoiceId = {order.uniqid}
             status = {order.status}
-            refreshOrder = {() => setTimeout(() => { this.initializeData(); }, 15000)}
             closeModal={this.closeQueueOrderModal.bind(this)}/>
           <IssueReplacementModal openModal={openIssueReplacementModal} 
             // resendInvoice = {this.resendInvoice.bind(this)}

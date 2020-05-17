@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
       orders_count_progress: 0,
       views_count_progress: 0,
       queries_count_progress: 0,
-      fee_revenue_potential: 0,
+      fee_revenue: 0,
       showPlaceholder: false,
       currency: "USD",
       revenue_by_gateway: []
@@ -105,7 +105,7 @@ class Dashboard extends React.Component {
               orders_count_progress: total.orders_count_progress || 0,
               views_count_progress: total.views_count_progress || 0,
               queries_count_progress: total.queries_count_progress || 0,
-              fee_revenue_potential: total.fee_revenue_potential || 0,
+              fee_revenue: total.fee_revenue || 0,
               chartData: analytics['daily'],
               invoices: invoices,
               currency: isAdmin ? 'USD' : analytics.currency,
@@ -130,7 +130,7 @@ class Dashboard extends React.Component {
               orders_count_progress: total.orders_count_progress || 0,
               views_count_progress: total.views_count_progress || 0,
               queries_count_progress: total.queries_count_progress || 0,
-              fee_revenue_potential: total.fee_revenue_potential || 0,
+              fee_revenue: total.fee_revenue || 0,
               chartData: analytics[DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]],
               currency: isAdmin ? 'USD' : analytics.currency,
               revenue_by_gateway: total.revenue_by_gateway
@@ -215,7 +215,7 @@ class Dashboard extends React.Component {
                       <ReportOrders {...this.state} />
                       <ReportViews {...this.state} />
                       {!isAdmin && <ReportQueries {...this.state} />}
-                      {isAdmin && <ReportFee {...this.state} potential={true} />}
+                      {isAdmin && <ReportFee {...this.state} />}
                     </Row>
 
                     <h5 className="mb-4">{isAdmin ? "Cashflow" : "Revenues"} | Orders</h5>
