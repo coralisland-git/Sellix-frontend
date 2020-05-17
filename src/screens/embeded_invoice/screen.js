@@ -404,6 +404,7 @@ class EmbededInvoice extends React.Component {
             <span style={{
               opacity: openQRModal ? 0 : 1,
               transition: 'opacity 0.3s ease-out',
+              display: openQRModal ? 'none' : 'block'
             }}>{crypto_address || ''}</span>
             <div className="qr-container" style={{
               height: openQRModal ? 'auto' : 0,
@@ -558,6 +559,7 @@ class EmbededInvoice extends React.Component {
       width: 'auto',
       marginLeft: '-7px',
       padding: 0,
+      marginTop: "3rem"
     } : {}}>
       <QRCode
           bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')}
