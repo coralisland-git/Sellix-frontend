@@ -27,7 +27,7 @@ class RevenueChart extends PureComponent {
     const years = data.map(({ year }) => year)
     const revenues = data.map(({ revenue }) => revenue)
     const orders = data.map(({ orders_count }) => orders_count)
-    const fee = data.map(({ fee_revenue_potential }) => fee_revenue_potential)
+    const fee = data.map(({ fee_revenue }) => fee_revenue)
     const registrations = data.map(({ registrations }) => registrations)
 
     let dataset = [];

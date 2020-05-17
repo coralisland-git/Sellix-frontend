@@ -1,6 +1,6 @@
 {
-  "name": "simplevat-frontend",
-  "version": "0.1.0",
+  "name": "Sellix-Frontend",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.9.0",
@@ -29,7 +29,6 @@
     "random-letters": "^1.0.0-rc.1",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.6",
-    "react-autosuggest": "^9.4.3",
     "react-awesome-stars-rating": "^0.2.5",
     "react-bootstrap-daterangepicker": "^4.1.0",
     "react-bootstrap-sweetalert": "^5.1.9",

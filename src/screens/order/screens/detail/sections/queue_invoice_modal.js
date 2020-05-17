@@ -30,14 +30,12 @@ class QueueInvoiceModal extends React.Component {
           console.log(res)
           if(res.status == 200){
             this.props.commonActions.tostifyAlert('success', res.message)
-            this.props.refreshOrder()
             this.props.closeModal()
           } else {
               throw res
           }
         })
         .catch(err => {
-          console.log(err)
           this.props.commonActions.tostifyAlert('error', err.error)
         })
         .finally(() => {
