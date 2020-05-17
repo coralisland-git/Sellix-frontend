@@ -17,7 +17,7 @@ import Select from 'react-select'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { Button } from 'components';
-import { Spin, ImageUpload, Loader } from 'components'
+import { Spin, Loader } from 'components'
 import config from 'constants/config'
 import { Product } from 'screens'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
@@ -27,8 +27,6 @@ import {
 import * as CategoryActions from '../../actions'
 import './style.scss'
 
-
-const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({
@@ -60,12 +58,6 @@ class EditCategory extends React.Component {
     this.handleMultiChange = this.handleMultiChange.bind(this);
     this.id = this.props.match.params.id
   }
-
-  // componentWillUnmount() {
-  //   // Make sure to revoke the data uris to avoid memory leaks
-  //   this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
-  // }
-  
 
   unlistedTooltipToggle() {
     this.setState({tooltipOpen: !this.state.tooltipOpen})
@@ -128,7 +120,7 @@ class EditCategory extends React.Component {
   }
 
   render() {
-    const { loading, tooltipOpen, files, initialData, saving } = this.state
+    const { loading, tooltipOpen, initialData, saving } = this.state
 
     const { all_products } = this.props
     const product_options = all_products.map(pro => {return {value: pro.uniqid, label: pro.title}})
@@ -212,14 +204,14 @@ class EditCategory extends React.Component {
                                 </Col>
                               </Row>
                               <Row>
-                                <Col lg={12}>
+                                <Col lg={6}>
                                   <FormGroup className="mb-3">
                                     <Label htmlFor="product_bounds">Products</Label>
                                     <Select
-                                      className="select-default-width"
                                       classNamePrefix={"react-select"}
                                       id="product_bounds"
                                       name="product_bounds"
+                                      closeMenuOnSelect={false}
                                       isMulti
                                       options={product_options}
                                       placeholder="Select Products"

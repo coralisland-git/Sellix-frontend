@@ -141,7 +141,7 @@ export function mainBrowserNavigation(props){
       {
         name: 'Feedback',
         url: `/dashboard/${user}/feedback`,
-        icon: "far fa-comment-dots",
+        icon: "fas fa-comment-dots",
       },
       {
         name: 'Blacklist',
@@ -244,7 +244,7 @@ export const mainMobileNavigation = () => ({
     {
       name: 'Feedback',
       url: `/dashboard/${user}/feedback`,
-      icon: "far fa-comment-dots",
+      icon: "fas fa-comment-dots",
     },
     {
       name: 'Blacklist',

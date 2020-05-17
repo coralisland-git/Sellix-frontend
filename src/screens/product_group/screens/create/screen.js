@@ -148,25 +148,6 @@ class CreateProductGroup extends React.Component {
 														</FormGroup>
 													</Col>
 												</Row>
-												<Row>
-													<Col lg={12}>
-														<FormGroup className="mb-3">
-															<Label htmlFor="title">Sort Priority</Label>
-															<Input
-																type="number"
-																id="sort_priority"
-																name="sort_priority"
-																placeholder="Sort Priority"
-																onChange={props.handleChange}
-																value={props.values.sort_priority}
-																className={props.errors.sort_priority && props.touched.sort_priority ? "is-invalid" : ""}
-															/>
-															{props.errors.sort_priority && props.touched.sort_priority && (
-																<div className="invalid-feedback">{props.errors.sort_priority}</div>
-															)}
-														</FormGroup>
-													</Col>
-												</Row>
 
 												<Row>
 													<Col lg={12}>
@@ -202,6 +183,26 @@ class CreateProductGroup extends React.Component {
 													</Col>
 												</Row>
 
+
+												<Row>
+													<Col lg={6}>
+														<FormGroup className="mb-3">
+															<Label htmlFor="title">Priority</Label>
+															<Input
+																type="number"
+																id="sort_priority"
+																name="sort_priority"
+																placeholder="Sort Priority"
+																onChange={props.handleChange}
+																value={props.values.sort_priority}
+																className={props.errors.sort_priority && props.touched.sort_priority ? "is-invalid" : ""}
+															/>
+															{props.errors.sort_priority && props.touched.sort_priority && (
+																<div className="invalid-feedback">{props.errors.sort_priority}</div>
+															)}
+														</FormGroup>
+													</Col>
+												</Row>
 
 												<Row>
 													<Col lg={12}>
