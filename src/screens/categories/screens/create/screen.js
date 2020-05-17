@@ -17,7 +17,7 @@ import { Button } from 'components';
 import Select from 'react-select'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import { Spin, ImageUpload } from 'components'
+import { Spin } from 'components'
 import { Product } from 'screens'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
@@ -195,10 +195,10 @@ class CreateCategories extends React.Component {
                               <FormGroup className="mb-3">
                                 <Label htmlFor="product_bounds">Products</Label>
                                 <Select
-                                  className="select-default-width"
                                   id="product_bounds"
                                   name="product_bounds"
                                   classNamePrefix={"react-select"}
+                                  closeMenuOnSelect={false}
                                   isMulti
                                   options={product_options}
                                   placeholder="Select Products"
@@ -224,7 +224,7 @@ class CreateCategories extends React.Component {
                           </Row>
                           
                           <Row>
-                            <Col lg={2}>
+                            <Col lg={6}>
                               <FormGroup className="mb-3">
                                 <Label htmlFor="sort_priority">Priority</Label>
                                 <Input
@@ -253,7 +253,7 @@ class CreateCategories extends React.Component {
                                       checked={props.values.unlisted}
                                     />
                                     <label className="custom-control-label" htmlFor="inline-radio1">
-                                      Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
+                                      Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle" /></span>
                                       <Tooltip placement="right" isOpen={tooltipOpen} target="unlistedTooltip" 
                                         toggle={this.unlistedTooltipToggle.bind(this)}>
                                         This category won't be shown on your user profile page
