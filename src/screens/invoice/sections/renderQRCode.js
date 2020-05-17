@@ -6,7 +6,7 @@ import { QRCode } from 'react-qrcode-logo';
 
 const RenderQRCode = ({ onClick, borderRadius, qrBgColor, theme, invoice, onQrDrow, qrCellSize }) => {
 
-  return <div onClick={onClick} className="qr-wrapper"  style={borderRadius ? { borderRadius, overflow: 'hidden', width: "auto", marginLeft: "-2px", marginTop: "10px" } : {}}>
+  return <div onClick={onClick} className="qr-wrapper"  style={borderRadius ? { borderRadius, overflow: 'hidden', width: "auto", marginLeft: "-2px", marginTop: "10px", padding: 0 } : {}}>
     <QRCode
         bgColor={qrBgColor ? qrBgColor : (theme === 'light' ? 'white' : '#edf0fe')}
         value={invoice.crypto_uri}
