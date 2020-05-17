@@ -14,8 +14,8 @@ import {
     Nav
 } from 'reactstrap'
 import { Button } from 'components'
-import sellix_logo from 'assets/images/home/logo-1@2x.png'
-import sellix_logo_footer from 'assets/images/Sellix_logo_beta.svg'
+import sellix_logo from 'assets/images/Sellix_logo_white.svg'
+import sellix_logo_footer from 'assets/images/Sellix_logo.svg'
 import LandingFooter from './footer'
 
 import './style.scss'
