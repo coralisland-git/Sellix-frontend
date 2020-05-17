@@ -2090,7 +2090,7 @@ if (hash_equals($signature, $header_signature)) {
               <section id="orders">
                 <div className="d-ins">
                   <h3><b>Orders</b></h3>
-                  <p>I am ready to start this project now and will finish this in a couple of days.</p>
+                  
                 </div>
                 <div className="d-ex">
                   <div className="code-block response">
