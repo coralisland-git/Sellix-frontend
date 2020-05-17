@@ -54,7 +54,7 @@ class Header extends Component {
               <div>
                 {profile && profile.profile_attachment?
                   <img src={profile.profile_attachment} className="mt-2" width="45" height="45" style={{borderRadius: '50%'}}/>:
-                  <i className="fa fa-user-circle text-primary avatar-icon"/>
+                  <i className="fas fa-user-circle text-primary avatar-icon"/>
                 }
               </div>
             </DropdownToggle>
@@ -63,21 +63,21 @@ class Header extends Component {
                   <DropdownMenu right className="mt-4">
                     {
                       profile && profile.rank !== "0" && <DropdownItem onClick={() => history.push(`/admin/dashboard`)}>
-                        <i className={"fa fa-circle-o fa-md"} /> Admin Panel
+                        <i className={"far fa-circle fa-md"} /> Admin Panel
                       </DropdownItem>
                     }
                     <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
-                      <i className={"fa fa-circle-o fa-md"} /> Dashboard
+                      <i className={"far fa-circle fa-md"} /> Dashboard
                     </DropdownItem>
                     <DropdownItem className={'active'} onClick={() => this.props.history.push(`/${userId}`)}>
-                      <i className={"fa fa-dot-circle-o fa-md"} /> Your Shop
+                      <i className={"far fa-dot-circle fa-md"} /> Your Shop
                     </DropdownItem>
                     <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
-                      <i className={"fa fa-circle-o fa-md"} /> Settings
+                      <i className={"far fa-circle fa-md"} /> Settings
                     </DropdownItem>
                     
                     <DropdownItem onClick={() => this.signOut()}>
-                      <i className={"fa fa-circle-o fa-md"} /> Sign Out
+                      <i className={"far fa-circle fa-md"} /> Sign Out
                     </DropdownItem>
                   </DropdownMenu>:
                   <DropdownMenu right className="mt-2">

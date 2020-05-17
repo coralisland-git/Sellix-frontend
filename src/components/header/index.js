@@ -61,13 +61,13 @@ class Header extends Component {
             {
               !isShop && 
                 <UncontrolledDropdown nav direction="down" >
-                  <i style={{ fontSize: 17}} className={`fas fa-moon-o nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
+                  <i style={{ fontSize: 17}} className={`fas fa-moon nav-icon moon-icon ${(theme || 'light') === 'light' ? 'dark-theme' : 'light-theme'}`} onClick={this.setTheme.bind(this)}/>
                 </UncontrolledDropdown>
             } 
             
             <UncontrolledDropdown nav direction="down" className="d-sm-down-none">
               <DropdownToggle className="user-name" nav>
-                <i className="fa icon-question nav-icon" style={{fontSize: 17, fontWeight: 'bold' }} />
+                <i className="far fa-question-circle nav-icon" style={{fontSize: 17, fontWeight: 'bold' }} />
               </DropdownToggle>
               
               <DropdownMenu right className="mt-2">
@@ -138,7 +138,7 @@ class Header extends Component {
                 <div>
                   {profile && profile.profile_attachment ?
                     <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}} />:
-                    <i className="fa fa-user-circle text-primary avatar-icon" />
+                    <i className="fas fa-user-circle text-primary avatar-icon" />
                   }
                 </div>
               </DropdownToggle>
@@ -148,22 +148,22 @@ class Header extends Component {
                     {
                       profile && profile.rank !== "0" && 
                       <DropdownItem className={path.startsWith('/admin')?'active':''} onClick={() => history.push(`/admin/dashboard`)}>
-                        <i className={path.startsWith('/admin')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Admin Panel
+                        <i className={path.startsWith('/admin') ? "far fa-dot-circle fa-md" : "far fa-circle fa-md"} /> Admin Panel
                       </DropdownItem>
                     }
-                    <DropdownItem className={path.startsWith('/dashboard')?'active':''} onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
-                      <i className={path.startsWith('/dashboard')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Dashboard
+                    <DropdownItem className={path.startsWith('/dashboard') ? 'active' : ''} onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
+                      <i className={path.startsWith('/dashboard')?"far fa-dot-circle fa-md":"far fa-circle fa-md"} /> Dashboard
                     </DropdownItem>
                     <DropdownItem className={isShop?'active':''} onClick={() => this.props.history.push(`/${userId}`)}>
-                      <i className={isShop?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Your Shop
+                      <i className={isShop?"far fa-dot-circle fa-md" : "far fa-circle fa-md"} /> Your Shop
 
                     </DropdownItem>
                     <DropdownItem className={path.startsWith('/settings')?'active':''} onClick={() => this.props.history.push(`/settings/${userId}`)}>
-                      <i className={path.startsWith('/settings')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Settings
+                      <i className={path.startsWith('/settings') ? "far fa-dot-circle fa-md" : "far fa-circle fa-md"} /> Settings
                     </DropdownItem>
                     
                     <DropdownItem onClick={() => this.signOut()}>
-                      <i className={path.startsWith('/signin')?"fa fa-dot-circle-o fa-md":"fa fa-circle-o fa-md"} /> Sign Out
+                      <i className={path.startsWith('/signin') ? "far fa-dot-circle fa-md" : "far fa-circle fa-md"} /> Sign Out
                     </DropdownItem>
                   </DropdownMenu>:
                   <DropdownMenu right className="mt-2">

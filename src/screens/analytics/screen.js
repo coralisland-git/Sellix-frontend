@@ -27,7 +27,7 @@ const Progress = ({ progress, isPositive, is24 }) => {
           {
             progress != 0 ? 
               <i className={`fas fa-caret-${isPositive ? 'up' : 'down'}`} />:
-              <i className={`fa fa-minus`} />
+              <i className={`far fa-minus`} />
           }
         </div>
     )

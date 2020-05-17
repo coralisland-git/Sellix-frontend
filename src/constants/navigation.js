@@ -116,7 +116,7 @@ export function mainBrowserNavigation(props){
       {
         name: 'Analytics',
         url: `/dashboard/${user}/analytics`,
-        icon: 'fas fa-bar-chart',
+        icon: 'fas fa-chart-bar',
         children: [
           {
             name: 'All Analytics',
@@ -131,7 +131,7 @@ export function mainBrowserNavigation(props){
       {
         name: 'Coupons',
         url: `/dashboard/${user}/coupons`,
-        icon: 'fa fa-tags',
+        icon: 'fas fa-tags',
       },
       {
         name: 'Queries',
@@ -141,7 +141,7 @@ export function mainBrowserNavigation(props){
       {
         name: 'Feedback',
         url: `/dashboard/${user}/feedback`,
-        icon: "fa fa-commenting",
+        icon: "far fa-comment-dots",
       },
       {
         name: 'Blacklist',
@@ -178,7 +178,7 @@ export function mainBrowserNavigation(props){
       // {
       //   name: 'Pages',
       //   url: `/dashboard/${user}/pages`,
-      //   icon: 'fa fa-file',
+      //   icon: 'far fa-file',
       // }
     ]
   }
@@ -219,7 +219,7 @@ export const mainMobileNavigation = () => ({
     {
       name: 'Analytics',
       url: `/dashboard/${user}/analytics`,
-      icon: 'fas fa-bar-chart',
+      icon: 'fas fa-chart-bar',
       children: [
         {
           name: 'All Analytics',
@@ -234,7 +234,7 @@ export const mainMobileNavigation = () => ({
     {
       name: 'Coupons',
       url: `/dashboard/${user}/coupons`,
-      icon: 'fa fa-tags',
+      icon: 'fas fa-tags',
     },
     {
       name: 'Queries',
@@ -244,7 +244,7 @@ export const mainMobileNavigation = () => ({
     {
       name: 'Feedback',
       url: `/dashboard/${user}/feedback`,
-      icon: "fa fa-commenting",
+      icon: "far fa-comment-dots",
     },
     {
       name: 'Blacklist',

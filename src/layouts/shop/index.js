@@ -218,7 +218,7 @@ class ShopLayout extends React.Component {
 
 						{user.profile_attachment ?
 							<img src={user.profile_attachment} width="130" height="130" style={{ borderRadius: '50%' }} /> :
-							<i className={"fa fa-user-circle justify-content-center align-items-center d-inline-flex"}
+							<i className={"fas fa-user-circle justify-content-center align-items-center d-inline-flex"}
 							   style={{width: 130, height: 130, fontSize: "8.3rem", color: "#603bea", borderRadius: "100%"}}
 							/>
 						}

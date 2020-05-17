@@ -187,7 +187,7 @@ class Product extends React.Component {
           <i className="fas fa-pen"/>
         </a>
         <a>
-          <i className="fas fa-bar-chart"/>
+          <i className="fas fa-chart-bar"/>
         </a>
         <a onClick={(e) => this.deleteProduct(e, row.uniqid)}>
           <i className="fas fa-trash"/>

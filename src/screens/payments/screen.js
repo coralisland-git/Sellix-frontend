@@ -131,7 +131,7 @@ class Payments extends React.Component {
                       <Row>
                         <Col lg={6}>
                           <FormGroup className="mb-3">
-                            <Label htmlFor="product_code"><i className="fa fa-paypal" style={{ color: '#0097df', marginRight: '.5rem', fontSize: '20px' }}/>PayPal Email</Label>
+                            <Label htmlFor="product_code"><i className="fab fa-paypal" style={{ color: '#0097df', marginRight: '.5rem', fontSize: '20px' }}/>PayPal Email</Label>
                             <Input 
                               type="text" 
                               placeholder="PayPal Email"  

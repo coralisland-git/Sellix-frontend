@@ -163,7 +163,7 @@ class NewWebhookModal extends React.Component {
                             return(
                               <li key={index} className="d-flex pt-1 pb-1">
                                 <span className="mr-2">{event}</span>
-                                <i className="fa fa-times cursor-pointer" 
+                                <i className="fas fa-times cursor-pointer"
                                   onClick={ () => {
                                     var evts = chosenEvents.filter(et => {
                                       if (et == event)
