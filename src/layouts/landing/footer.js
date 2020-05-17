@@ -49,7 +49,7 @@ export function LandingFooter(props) {
                 <h5 className="mb-3">Products</h5>
                 <Nav vertical>
                 <NavItem>
-                    <NavLink href="#">API</NavLink>
+                    <NavLink href="/documentation">API</NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink href="#">Payments</NavLink>
