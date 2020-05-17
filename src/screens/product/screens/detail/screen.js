@@ -582,7 +582,7 @@ class EditProduct extends React.Component {
 																						}}
 																						/>
 																					<label className="custom-control-label" htmlFor="paypal">
-																						<i className="fa fa-paypal"></i>
+																						<i className="fab fa-paypal"></i>
 																						PayPal
 																					</label>
 																				</label>

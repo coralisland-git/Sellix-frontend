@@ -1,10 +1,3 @@
-// Styles
-// CoreUI Icons Set
-// @import '~@coreui/icons/css/coreui-icons.css';
-
-@import '~flag-icon-css/css/flag-icon.min.css';
-@import '~font-awesome/css/font-awesome.min.css';
-@import '~simple-line-icons/css/simple-line-icons.css';
 @import './assets/scss/style.scss';
 
 body {
@@ -21,4 +14,8 @@ body.light {
 
 body.sweetalert-overflow-hidden {
   overflow: visible !important;
+}
+
+.far {
+  font-weight: 400 !important;
 }

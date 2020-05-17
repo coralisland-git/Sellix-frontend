@@ -480,7 +480,7 @@ class CreateProduct extends React.Component {
 																						}}
 																					/>
 																					<label className="custom-control-label" htmlFor="paypal">
-																						<i className="fa fa-paypal" />
+																						<i className="fab fa-paypal" />
 																						PayPal
 																					</label>
 																				</label>
