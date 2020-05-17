@@ -99,7 +99,7 @@
   }
 
   .status-alert {
-    height: 5rem;
+    height: 4rem;
     overflow: hidden;
     width: 100%;
     margin-top: 1rem;
@@ -146,21 +146,24 @@
 
       &.red {
         color: #ec2330;
+        font-size: 19px;
       }
 
       &.blue {
         color: #01b6b2;
+        font-size: 19px;
       }
 
       &.green {
         color: #5dbc61;
+        font-size: 19px;
       }
     }
 
     &-message {
       color: #b3aebb;
       line-height: 1.2;
-      font-size: .8rem;
+      font-size: .91rem;
     }
 
     &-container {
