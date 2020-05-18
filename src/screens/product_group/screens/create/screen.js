@@ -29,7 +29,8 @@ class CreateProductGroup extends React.Component {
 			initialValues: {
 				title: "",
 				unlisted: 0,
-				products_bound: ''
+				products_bound: '',
+				sort_priority: null
 			}
 		}
 	}
@@ -58,7 +59,6 @@ class CreateProductGroup extends React.Component {
 	handleSubmit = (values) => {
 		this.setState({loading: true})
 
-		values.unlisted = Boolean(values.unlisted)
 		this.props.createProductGroup(values)
 			.then(res => {
 				this.props.tostifyAlert('success', res.message)
@@ -79,8 +79,7 @@ class CreateProductGroup extends React.Component {
 
 		const validationSchema = Yup.object().shape({
 			title: Yup.string().required('Title is required'),
-			unlisted: Yup.number(),
-			sort_priority: Yup.number(),
+			sort_priority: Yup.number().required('Priority is required').nullable(),
 			products_bound: Yup.string().required('Products is required'),
 		});
 
@@ -197,9 +196,10 @@ class CreateProductGroup extends React.Component {
 																value={props.values.sort_priority}
 																className={props.errors.sort_priority && props.touched.sort_priority ? "is-invalid" : ""}
 															/>
-															{props.errors.sort_priority && props.touched.sort_priority && (
-																<div className="invalid-feedback">{props.errors.sort_priority}</div>
-															)}
+															{props.errors.sort_priority &&
+																props.touched.sort_priority &&
+																	<div className="invalid-feedback">{props.errors.sort_priority}</div>
+															}
 														</FormGroup>
 													</Col>
 												</Row>
@@ -221,9 +221,9 @@ class CreateProductGroup extends React.Component {
 																	type="checkbox"
 																	id="unlisted"
 																	name="SMTP-auth"
-																	checked={+props.values.unlisted === 1}
+																	checked={+props.values.unlisted}
 																	onChange={(e) => {
-																		props.handleChange('unlisted')(e.target.checked?1:0)
+																		props.handleChange('unlisted')(e.target.checked)
 																	}}
 																/>
 																<label className="custom-control-label" htmlFor="unlisted">

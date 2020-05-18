@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { Card, Row, Col } from 'reactstrap'
 import { CommonActions } from 'services/global'
 import { getInvoiceInfo, downloadInvoice } from './actions'
-import {Affix, Loader} from 'components'
+import { Loader } from 'components'
 import LeaveFeedback from '../feedbacks_shop/screens/createComponent/screen'
 import config, { converter } from 'constants/config'
 import FileSaver from 'file-saver';
@@ -285,7 +285,7 @@ class Invoice extends React.Component {
         <QRMode qrCode={this.qrCode} setInvoiceStatus={this.setInvoiceStatus} {...this.state} theme={theme} /> :
         <DefaultMode tostifyAlert={this.props.tostifyAlert} qrCode={this.qrCode} setInvoiceStatus={this.setInvoiceStatus} setFakePayPalSuccess={this.setFakePayPalSuccess} getPayPalInvoice={this.getPayPalInvoice} {...this.state} theme={theme} />
 
-    return <div className={!info && isQrMode ? "d-flex h-100" : "d-flex h-100 align-items-center"}>
+    return <div className={!info && isQrMode ? "d-flex h-100" : info ? "d-flex h-100" : "d-flex h-100 align-items-center"}>
         <div className={"w-100 mb-4"}>
 
           {!info && isQrMode ?
@@ -337,7 +337,7 @@ class Invoice extends React.Component {
             </div>
               :
               <div>
-                {loading && <Row><Col lg={4}><Loader /></Col></Row>}
+                {loading && <Row><Col lg={12}><Loader /></Col></Row>}
 
                 {!loading &&
                 <div className="bitcoin-paying-screen animated fadeIn">
@@ -349,7 +349,7 @@ class Invoice extends React.Component {
                     {info &&
                       <>
                       <Col lg={12}>
-                        <div className="text-left my-4 mb-5">
+                        <div className="text-left mb-5">
                           <h1 className={"m-0"} style={{ fontSize: "1.4rem" }}>
                             Your Order for <strong>{info.product.title}</strong> is completed.
                           </h1>
@@ -368,7 +368,7 @@ class Invoice extends React.Component {
 
                     <Col lg={{ size: 4 }} >
 
-                      <Card className="invoice-card p-0 bg-white pt-3 mb-2 mt-sm-4" >
+                      <Card className={info ? "invoice-card p-0 bg-white pt-3 mb-2 mt-0" : "invoice-card p-0 bg-white pt-3 mb-2 mt-sm-4"}>
 
                         <div className="float-logo">
                           <img src={sellix_logo} width="153" alt={""}/>

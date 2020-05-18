@@ -31,7 +31,8 @@ class EditProductGroup extends React.Component {
             initialValues: {
                 title: "",
                 unlisted: 0,
-                products_bound: ''
+                products_bound: '',
+                sort_priority: null
             }
         }
 
@@ -83,7 +84,6 @@ class EditProductGroup extends React.Component {
     handleSubmit = (values) => {
         this.setState({loading: true})
 
-        values.unlisted = Boolean(values.unlisted)
         this.props.editProductGroup(values).then(res => {
 
             this.props.history.push(`/dashboard/${user}/groups`)
@@ -104,8 +104,7 @@ class EditProductGroup extends React.Component {
 
         const validationSchema = Yup.object().shape({
             title: Yup.string().required('Title is required'),
-            sort_priority: Yup.number(),
-            unlisted: Yup.number(),
+            sort_priority: Yup.number().required('Priority is required'),
             products_bound: Yup.string().required('Products is required'),
         })
         return (
@@ -248,9 +247,9 @@ class EditProductGroup extends React.Component {
                                                                     type="checkbox"
                                                                     id="unlisted"
                                                                     name="SMTP-auth"
-                                                                    checked={+props.values.unlisted === 1}
+                                                                    checked={+props.values.unlisted}
                                                                     onChange={(e) => {
-                                                                        props.handleChange('unlisted')(e.target.checked ? 1 : 0)
+                                                                        props.handleChange('unlisted')(e.target.checked)
                                                                     }}
                                                                 />
                                                                 <label className="custom-control-label" htmlFor="unlisted">
