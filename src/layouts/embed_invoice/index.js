@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { Container } from 'reactstrap'
+import { Container } from 'components/reactstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider  } from 'styled-components';
 import { lightTheme } from 'layouts/theme/theme'

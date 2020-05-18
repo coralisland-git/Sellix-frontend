@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, CardHeader, Row, Col, CardBody } from 'reactstrap'
+import { Card, CardHeader, Row, Col, CardBody } from 'components/reactstrap'
 import { getUser, updateUser, getUserTodayAnalytics, getUserTotalAnalytics, getUser14dAnalytics, banUser, unbanUser } from './actions'
 import { CommonActions } from "services/global";
 import pick from "lodash/pick";

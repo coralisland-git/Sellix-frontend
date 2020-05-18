@@ -9,7 +9,7 @@ import {
   Form,
   FormGroup,
   Input
-} from 'reactstrap'
+} from 'components/reactstrap'
 import { Button } from 'components';
 import { Formik } from 'formik'
 import { createFeedback } from './actions'

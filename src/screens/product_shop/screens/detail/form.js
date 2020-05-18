@@ -1,6 +1,6 @@
 import React from "react";
 import backIcon from "assets/images/x.png";
-import { FormGroup, Input, Label, Form } from "reactstrap";
+import { FormGroup, Input, Label, Form } from "components/reactstrap";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Spin } from "components";

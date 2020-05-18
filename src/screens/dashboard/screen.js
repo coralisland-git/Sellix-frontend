@@ -1,23 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, CardBody, CardHeader, Row, Col } from 'reactstrap'
+import { Card, CardBody, CardHeader, Row, Col } from 'components/reactstrap'
 import { DateRangePicker2, Loader } from 'components'
-import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews, ReportFee, Status } from './sections'
+import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews, ReportFee, Status, Revenue, Invoices } from './sections'
 import { getAnalyticsData, geLastInvoices } from './actions'
-import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
-import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
-import { tableOptions } from "../../constants/tableoptions";
 import * as moment from 'moment/moment'
 import { getSelfUser } from "../../services/global/auth/actions";
 import { withRouter } from "react-router-dom";
-import config from "constants/config";
-
 
 import './style.scss'
 
 
-const userId = window.localStorage.getItem('userId')
+
 
 const DATE_RANGES =  {
   'Last 24 hours': [moment(), moment(), 'daily'],
@@ -97,15 +92,7 @@ class Dashboard extends React.Component {
             let invoices = isAdmin ? [] : response[2].data.invoices;
 
             this.setState({
-              revenue: total.revenue || 0,
-              orders_count: total.orders_count || 0,
-              views_count: total.views_count || 0,
-              queries_count: total.queries_count || 0,
-              revenue_progress: total.revenue_progress || 0,
-              orders_count_progress: total.orders_count_progress || 0,
-              views_count_progress: total.views_count_progress || 0,
-              queries_count_progress: total.queries_count_progress || 0,
-              fee_revenue: total.fee_revenue || 0,
+              ...total,
               chartData: analytics['daily'],
               invoices: invoices,
               currency: isAdmin ? 'USD' : analytics.currency,
@@ -122,15 +109,7 @@ class Dashboard extends React.Component {
             const { total } = analytics;
 
             this.setState({
-              revenue: total.revenue || 0,
-              orders_count: total.orders_count || 0,
-              views_count: total.views_count || 0,
-              queries_count: total.queries_count || 0,
-              revenue_progress: total.revenue_progress || 0,
-              orders_count_progress: total.orders_count_progress || 0,
-              views_count_progress: total.views_count_progress || 0,
-              queries_count_progress: total.queries_count_progress || 0,
-              fee_revenue: total.fee_revenue || 0,
+              ...total,
               chartData: analytics[DATE_RANGES[date.chosenLabel || 'Last 24 hours'][2]],
               currency: isAdmin ? 'USD' : analytics.currency,
               revenue_by_gateway: total.revenue_by_gateway
@@ -147,30 +126,6 @@ class Dashboard extends React.Component {
     const [startDate, endDate] = DATE_RANGES['Last 24 hours'];
     this.getAnalyticsData({ startDate, endDate }, true)
   }
-
-  gotoDetail = (id) => {
-    this.props.history.push(`/dashboard/${userId}/orders/view/${id}`)
-  }
-
-  renderOrderInfo = (cell, row) => <div>
-        <p><a onClick={(e) => this.gotoDetail(row.uniqid)}>
-          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
-          </i>&nbsp;&nbsp;&nbsp;{`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
-        </p>
-        <p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title?row.product_title:row.product_id}</p>
-      </div>
-
-  renderOrderStatus = (cell, row) => (<div>{config.PAYMENT_OPTS[row.gateway]}</div>)
-
-  renderOrderValue = (cell, row) => (<div className="order">
-        <p className="order-value">{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
-        <p className="caption">{row.crypto_amount ? (row.crypto_amount + ' ') : ''} {config.PAYMENT_OPTS[row.gateway]}</p>
-      </div>)
-
-  renderOrderTime = (cell, row) => (<div>
-        <p>{moment(row.created_at*1000).format('DD, MMM YYYY')}</p>
-        <p>{moment(row.created_at*1000).format('HH:mm')}</p>
-      </div>)
 
 
   render() {
@@ -198,10 +153,7 @@ class Dashboard extends React.Component {
               </Row>
             </CardHeader>
 
-            <div className="position-relative">
-              {loading && <Row className={"loader-container"}>
-                <Col lg={12}><Loader /></Col>
-              </Row>}
+            <div>
 
               {(!loading && showPlaceholder) ?
                   <div className={'mt-5 pt-5 unauthorized-container'}>
@@ -210,7 +162,10 @@ class Dashboard extends React.Component {
                       <div>Unauthorized to view this content</div>
                     </div>
                   </div> : <div>
-                    <Row>
+                    <Row className={"position-relative"}>
+                      {loading && <Row className={"loader-container"}>
+                        <Col lg={12}><Loader /></Col>
+                      </Row>}
                       <ReportRevenue {...this.state} isAdmin={isAdmin}/>
                       <ReportOrders {...this.state} />
                       <ReportViews {...this.state} />
@@ -226,117 +181,12 @@ class Dashboard extends React.Component {
                       <DashBoardChart isAdmin={isAdmin} range={range} height="350px" data={chartData}/>
                     </CardBody>
 
-                    {!!invoices.length && <h5 className="mb-4 mt-4">Last 5 Orders</h5>}
-                    {!!invoices.length && <Row className={"mb-4"}>
-                      <Col lg={12}>
-                        <div className={"product-table"}>
-                          <BootstrapTable
-                              options={{
-                                ...tableOptions(),
-                                onRowClick: (row) => this.gotoDetail(row.uniqid),
-                                sizePerPage: 5
-                              }}
-                              data={invoices}
-                              version="4"
-                              striped
-                              totalSize={invoices.length}
-                              className="product-table"
-                              trClassName="cursor-pointer"
-                          >
-
-                            <TableHeaderColumn
-                                isKey
-                                dataField="customer_email"
-                                dataFormat={this.renderOrderInfo}
-                                dataSort
-                                width='45%'
-                            >
-                              Info
-                            </TableHeaderColumn>
-                            <TableHeaderColumn
-                                dataField="total_display"
-                                dataAlign="center"
-                                dataSort
-                                dataFormat={this.renderOrderValue}
-                                width='20%'
-                            >
-                              Value
-                            </TableHeaderColumn>
-                            <TableHeaderColumn
-                                dataField="status"
-                                dataAlign="center"
-                                dataFormat={this.renderOrderStatus}
-                                dataSort
-                                width='20%'
-                            >
-                              Payment Gateway
-                            </TableHeaderColumn>
-                            <TableHeaderColumn
-                                dataField="created_at"
-                                dataAlign="right"
-                                dataFormat={this.renderOrderTime}
-                                dataSort
-                                width='15%'
-                            >
-                              Time
-                            </TableHeaderColumn>
-                          </BootstrapTable>
-                        </div>
-                      </Col>
-                    </Row>}
+                    <Invoices invoices={invoices} history={this.props.history} />
                   </div>
               }
             </div>
 
-            <div className="pt-4">
-              {!!revenue_by_gateway.length && <h5 className="mb-4 mt-4">Cashflow By Gateway</h5>}
-              {!!revenue_by_gateway.length && <Row className={"mb-4"}>
-                <Col lg={12}>
-                  <div className={"product-table"}>
-                    <BootstrapTable
-                        options={{
-                          ...tableOptions(),
-                          sizePerPage: revenue_by_gateway.length
-                        }}
-                        data={revenue_by_gateway}
-                        version="4"
-                        striped
-                        totalSize={revenue_by_gateway.length}
-                        className="product-table"
-                        trClassName="cursor-pointer"
-                    >
-                      <TableHeaderColumn
-                          isKey
-                          dataField="gateway"
-                          dataFormat={(cell, row) => config.PAYMENT_OPTS[row.gateway]}
-                          dataSort
-                          width='33%'
-                      >
-                        Gateway
-                      </TableHeaderColumn>
-                      <TableHeaderColumn
-                          dataField="revenue"
-                          dataAlign="right"
-                          dataSort
-                          dataFormat={(cell, row) => `$ ${row.revenue}`}
-                          width='33%'
-                      >
-                        Cashflow
-                      </TableHeaderColumn>
-                      <TableHeaderColumn
-                          dataField="orders_count"
-                          dataAlign="right"
-                          dataFormat={(cell, row) => row.orders_count}
-                          dataSort
-                          width='33%'
-                      >
-                        Orders Count
-                      </TableHeaderColumn>
-                    </BootstrapTable>
-                  </div>
-                </Col>
-              </Row>}
-            </div>
+            <Revenue revenue_by_gateway={revenue_by_gateway} />
           </Card>
         </div>
       </div>

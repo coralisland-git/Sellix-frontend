@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, CardBody, Row, Col, Navbar, Collapse, Container, FormGroup, Label, Input } from 'reactstrap'
+import { Card, CardBody, Row, Col, Navbar, Collapse, Container } from 'components/reactstrap'
 import { Loader } from 'components'
 import { getSettings as fetchSettings, updateSettings } from './actions'
 import { CommonActions } from 'services/global'

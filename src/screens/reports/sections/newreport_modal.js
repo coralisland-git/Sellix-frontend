@@ -1,16 +1,5 @@
 import React from 'react'
-import {
-  Button,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Modal,
-  ModalHeader, 
-  ModalBody,
-  ModalFooter,
-} from 'reactstrap'
+import { Button, Row, Col, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'components/reactstrap'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as moment from 'moment/moment'

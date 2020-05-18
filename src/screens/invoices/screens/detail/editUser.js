@@ -11,12 +11,13 @@ import {
     Form,
     FormGroup,
     Input,
-    Label
-} from 'reactstrap'
+    Label,
+    Breadcrumb,
+    BreadcrumbItem
+} from 'components/reactstrap'
 import map from "lodash/map"
 import pick from "lodash/pick"
 import mapValues from "lodash/mapValues"
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Formik } from 'formik'
 import { Loader } from 'components'
 import { CommonActions } from 'services/global'

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledDropdown, Input, Badge } from 'reactstrap'
+import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledDropdown, Input, Badge } from 'components/reactstrap'
 import ReactTimeAgo from 'react-time-ago'
 import IntervalTimer from 'react-interval-timer';
 
-import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
+import AppNavbarBrand from '@coreui/react/es/NavbarBrand'
+import AppSidebarToggler from '@coreui/react/es/SidebarToggler'
 
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import './style.scss'

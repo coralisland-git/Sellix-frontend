@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'components/reactstrap'
 import { Button } from 'components';
 import Select from 'react-select'
 import { getProductStock } from 'screens/product_shop/productCard';

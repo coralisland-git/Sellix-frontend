@@ -11,15 +11,16 @@ import {
   FormGroup,
   Label,
   Tooltip,
-  Input
-} from 'reactstrap'
+  Input,
+  Breadcrumb,
+  BreadcrumbItem
+} from 'components/reactstrap'
 import { Button } from 'components';
 import Select from 'react-select'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { Spin } from 'components'
 import { Product } from 'screens'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import {
   CommonActions

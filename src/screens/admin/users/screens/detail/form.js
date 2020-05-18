@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col, Form, FormGroup, Label, Input
-} from 'reactstrap'
+import { Card, CardBody, Row, Col, Form, FormGroup, Label, Input } from 'components/reactstrap'
 import { Loader, Button, Spin } from 'components'
 import { Formik } from "formik";
 import { withRouter } from "react-router-dom";

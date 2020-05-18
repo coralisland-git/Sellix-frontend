@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import IntervalTimer from 'react-interval-timer'
-import {Card, CardHeader, CardBody, Row, Col, Form, FormGroup, Input} from 'reactstrap'
+import {Card, CardHeader, CardBody, Row, Col, Form, FormGroup, Input} from 'components/reactstrap'
 import {Button, Spin, Loader} from 'components';
 import {Formik} from 'formik'
 import { replyToQuery, getQuery, getQueryViaWebsocket } from '../../actions'

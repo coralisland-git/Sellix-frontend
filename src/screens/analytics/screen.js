@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import NumberFormat from 'react-number-format';
-import { Card, CardBody, Row, Col } from 'reactstrap'
+import { Card, CardBody, Row, Col } from 'components/reactstrap'
 import config from 'constants/config'
 
 import { Charts } from './sections'

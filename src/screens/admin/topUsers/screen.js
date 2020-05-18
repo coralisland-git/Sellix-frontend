@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, CardHeader, CardBody, Row, Col } from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Col } from 'components/reactstrap'
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Loader } from 'components'

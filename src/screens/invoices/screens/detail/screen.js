@@ -8,7 +8,7 @@ import {
   Button,
   Row,
   Col,
-} from 'reactstrap'
+} from 'components/reactstrap'
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { tableOptions } from 'constants/tableoptions'

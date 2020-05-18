@@ -8,7 +8,7 @@ import {
   Row,
   Col,
   Input
-} from 'reactstrap';
+} from 'components/reactstrap';
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Loader, Button } from 'components'
@@ -185,9 +185,6 @@ class Product extends React.Component {
       <div className="d-flex actions">
         <a onClick={(e) => this.gotoEditPage(e, row.uniqid)}>
           <i className="fas fa-pen"/>
-        </a>
-        <a>
-          <i className="fas fa-chart-bar"/>
         </a>
         <a onClick={(e) => this.deleteProduct(e, row.uniqid)}>
           <i className="fas fa-trash"/>

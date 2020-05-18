@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, FormGroup, Label, Input, Form, Row } from 'reactstrap'
+import { Col, FormGroup, Label, Input, Form, Row } from 'components/reactstrap'
 import { Button } from 'components'
 import { Formik } from "formik";
 import map from "lodash/map"

@@ -1,9 +1,3 @@
-.create-product-screen .Select.is-focused.Select--single {
-  .Select-control {
-    //box-shadow: none !important;
-  }
-}
-
 .Select {
 
   &.is-focused:not(.is-open) > .Select-control {

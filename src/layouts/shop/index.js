@@ -3,9 +3,9 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-
-import { Container, Nav, NavItem, Label, Card, 	Tooltip } from 'reactstrap'
-import { AppHeader, AppFooter } from '@coreui/react'
+import { Container, Nav, NavItem, Card, Tooltip  } from 'components/reactstrap'
+import AppFooter from '@coreui/react/es/Footer'
+import AppHeader from '@coreui/react/es/Header'
 import { ToastContainer, toast } from 'react-toastify'
 
 import { shopRoutes } from 'routes'

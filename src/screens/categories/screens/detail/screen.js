@@ -1,26 +1,13 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Form,
-  Col,
-  FormGroup,
-  Label,
-  Tooltip,
-  Input
-} from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Form, Col, FormGroup, Label, Tooltip, Input, Breadcrumb, BreadcrumbItem } from 'components/reactstrap'
 import Select from 'react-select'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { Button } from 'components';
 import { Spin, Loader } from 'components'
-import config from 'constants/config'
 import { Product } from 'screens'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import {
   CommonActions
 } from 'services/global'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, Row, Col, Form, FormGroup, Input, Tooltip } from 'reactstrap'
+import { Card, Row, Col, Form, FormGroup, Input, Tooltip } from 'components/reactstrap'
 import { CommonActions } from 'services/global'
 import { validateCoupon } from './actions'
 import { Formik } from 'formik';
@@ -13,7 +13,6 @@ import config from 'constants/config'
 import editIcon from 'assets/images/edit.png'
 import { ReactComponent as CouponSvg } from 'assets/images/coupon.svg';
 import verifiedIcon from 'assets/images/sellix_verified.svg'
-import Sellix from 'assets/images/Sellix_logo.svg'
 
 
 import './style.scss'

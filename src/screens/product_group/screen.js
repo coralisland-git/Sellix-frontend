@@ -1,14 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Input
-} from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Col, Input } from 'components/reactstrap'
 import { Button } from 'components';
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
@@ -206,9 +199,6 @@ class ProductGroups extends React.Component {
       <div className="d-flex actions">
         <a onClick={(e) => this.gotoEditPage(e, row.uniqid)}>
           <i className="fas fa-pen"/>
-        </a>
-        <a>
-          <i className="fas fa-chart-bar"/>
         </a>
         <a onClick={(e) => this.deleteProductGroup(e, row.uniqid)}>
           <i className="fas fa-trash"/>

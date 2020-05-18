@@ -1,12 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  Row,
-  Col
-} from 'reactstrap'
+import { Card, CardHeader, Row, Col } from 'components/reactstrap'
 import { Loader, Spin } from 'components'
 import {
   CommonActions,

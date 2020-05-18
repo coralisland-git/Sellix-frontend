@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { documentationRoutes } from 'routes'
-import { Container } from 'reactstrap'
 
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
@@ -14,9 +13,7 @@ import {
   AuthActions,
   CommonActions
 } from 'services/global'
-import {
-  AppHeader,
-} from '@coreui/react'
+import AppHeader from '@coreui/react/es/Header'
 import { NotFound, Loading, Header } from 'components'
 
 import './style.scss'

@@ -3,8 +3,9 @@ import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { Container } from 'reactstrap'
-import { AppFooter, AppHeader } from '@coreui/react'
+import { Container } from 'components/reactstrap'
+import AppFooter from '@coreui/react/es/Footer'
+import AppHeader from '@coreui/react/es/Header'
 import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'

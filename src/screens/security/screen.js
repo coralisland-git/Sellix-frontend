@@ -1,17 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Form,
-  Input
-} from 'reactstrap'
-import { AppSwitch } from '@coreui/react'
+import { Card, CardBody, Row, Col, FormGroup, Label, Form, Input } from 'components/reactstrap'
+import AppSwitch from '@coreui/react/es/Switch'
 import { Loader, Button, Spin } from 'components'
 import { TwoFactorModal } from './sections'
 import { Formik } from 'formik';

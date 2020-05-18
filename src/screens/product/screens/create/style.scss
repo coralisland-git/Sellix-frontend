@@ -79,17 +79,30 @@
   }
 
   .payment-checkbox {
-    width: 250px;
+    width: calc(33% - .5rem);
     height: 60px;
     display: flex;
     align-items: center;
     border-radius: 3px;
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
-    margin-right: 15px;
+    margin-right: 0;
     margin-bottom: 15px;
     cursor: pointer;
-    // padding: 0 20px;
+
+    &:last-child {
+      width: calc(33% - .5rem);
+      background: #0000 !important;
+      border: transparent !important;
+    }
+
+    @media (max-width: 768px) {
+       width: calc(50% - .5rem);
+
+      &:last-child {
+        display: none;
+      }
+    }
 
     label {
       margin-left: 25px;

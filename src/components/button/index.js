@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'reactstrap'
+import { Button } from 'components/reactstrap'
 
 import './style.scss'
 

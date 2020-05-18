@@ -3,7 +3,7 @@ import {
   Col,
   Container,
   Row
-} from 'reactstrap'
+} from 'components/reactstrap'
 
 import './style.scss'
 
