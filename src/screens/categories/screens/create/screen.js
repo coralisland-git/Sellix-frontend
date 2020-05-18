@@ -73,6 +73,8 @@ class CreateCategories extends React.Component {
   handleSubmit = (values) => {
     this.setState({ loading: true })
 
+    values.unlisted = values.unlisted ? true : false
+
     this.props.actions.createCategory(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.goBack()

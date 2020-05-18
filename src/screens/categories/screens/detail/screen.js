@@ -65,8 +65,9 @@ class EditCategory extends React.Component {
   handleSubmit = (values) => {
     this.setState({saving: true})
     const { selected_products } = this.state
-    console.log(values.unlisted)
-    console.log(values.unlisted)
+
+    values.unlisted = values.unlisted ? true : false
+
     values.products_bound = selected_products.map(o => o.value).toString()
     this.props.actions.editCategory(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
@@ -82,7 +83,12 @@ class EditCategory extends React.Component {
     if (this.id) {
       this.setState({ loading: true });
       this.props.actions.getCategoryByID(this.id).then(res => {
-        this.setState({ initialData: res.data.category })
+        this.setState({
+          initialData: {
+            ...res.data.category,
+            unlisted: +res.data.category.unlisted
+          }
+        })
       }).finally(() => {
         this.props.productActions.getProductList().then(res => {
           this.setState({

@@ -59,6 +59,7 @@ class CreateProductGroup extends React.Component {
 	handleSubmit = (values) => {
 		this.setState({loading: true})
 
+		values.unlisted = values.unlisted ? true : false
 		this.props.createProductGroup(values)
 			.then(res => {
 				this.props.tostifyAlert('success', res.message)

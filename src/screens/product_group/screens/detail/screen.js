@@ -84,6 +84,7 @@ class EditProductGroup extends React.Component {
     handleSubmit = (values) => {
         this.setState({loading: true})
 
+        values.unlisted = values.unlisted ? true : false
         this.props.editProductGroup(values).then(res => {
 
             this.props.history.push(`/dashboard/${user}/groups`)
