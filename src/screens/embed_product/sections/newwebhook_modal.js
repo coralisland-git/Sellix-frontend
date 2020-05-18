@@ -13,15 +13,20 @@ import {
 import Select from 'react-select'
 import { Button } from 'components';
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
 import javascript from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
 
 import Clipboard from 'react-clipboard.js';
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 SyntaxHighlighter.registerLanguage('javascript', javascript)
 
 
+const Yup = {
+  object,
+  string
+}
 class NewCustomModal extends React.Component {
   
   constructor(props) {

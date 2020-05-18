@@ -15,8 +15,14 @@ import Select from 'react-select'
 import { Button } from 'components';
 
 import { Formik } from 'formik';
-import * as Yup from "yup";
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
+
+const Yup = {
+    object,
+    string
+}
 const EVENT_OPTIONS = [
     { value: 'order:created', label: 'order:created' },
     { value: 'order:updated', label: 'order:updated' },

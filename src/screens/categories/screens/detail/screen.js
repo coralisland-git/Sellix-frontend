@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { Card, CardHeader, CardBody, Row, Form, Col, FormGroup, Label, Tooltip, Input, Breadcrumb, BreadcrumbItem } from 'components/reactstrap'
 import Select from 'react-select'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import { Button } from 'components';
 import { Spin, Loader } from 'components'
 import { Product } from 'screens'
@@ -13,8 +12,16 @@ import {
 } from 'services/global'
 import * as CategoryActions from '../../actions'
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
+import number from "yup/lib/number";
 
 
+const Yup = {
+  object,
+  string,
+  number,
+}
 const mapStateToProps = (state) => {
   return ({
     all_products: state.product.all_products

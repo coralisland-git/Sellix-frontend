@@ -1,12 +1,17 @@
 import React from "react";
 import backIcon from "assets/images/x.png";
 import { FormGroup, Input, Label, Form } from "components/reactstrap";
-import * as Yup from "yup";
 import { Formik } from "formik";
 import { Spin } from "components";
 import { Button } from 'components';
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 
+const Yup = {
+	object,
+	string
+}
 const Forms = ({ gateway, sending, productInfo, handleSubmit, setCustomFields, reset }) => {
 
 	let validationSchema = Yup.object().shape({ email: Yup.string().required('Email is required') })

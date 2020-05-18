@@ -18,7 +18,6 @@ import {
 import { Button } from 'components';
 import Select from 'react-select'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import { Spin } from 'components'
 import { Product } from 'screens'
 
@@ -30,7 +29,15 @@ import {
 import * as Actions from '../../actions'
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
+import number from "yup/lib/number";
 
+const Yup = {
+  object,
+  string,
+  number,
+}
 const mapStateToProps = (state) => {
   return ({
     all_products: state.product.all_products

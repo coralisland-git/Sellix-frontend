@@ -6,16 +6,23 @@ import Select from 'react-select'
 import { Loader, ImageUpload, Button, Spin } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 
 import { Product } from 'screens'
 
 import { CommonActions } from 'services/global'
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
+import number from "yup/lib/number";
 
 
 
+const Yup = {
+	object,
+	string,
+	number
+}
 class CreateProductGroup extends React.Component {
 
 	constructor(props) {

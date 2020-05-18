@@ -14,7 +14,7 @@ import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import * as moment from 'moment/moment'
 import config from 'constants/config'
-import { Loader, Spin, Button } from 'components'
+import { Loader, Button } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import IntervalTimer from 'react-interval-timer';
 import Select from "react-select";
@@ -209,7 +209,7 @@ class Order extends React.Component {
                   </div>
                 </Col>
                 <Col sm={12} md={8}>
-                  <div className="d-flex flex-sm-wrap justify-content-sm-between justify-content-end">
+                  <div className="d-flex justify-content-end">
                     <Button color={"primary"} className={"mr-4"} onClick={this.updateTable}>Refresh</Button>
                     <div className="white mr-4">
                       <Select
@@ -226,7 +226,7 @@ class Order extends React.Component {
                           }}
                       />
                     </div>
-                    <div className="searchbar white w-100 mt-sm-3">
+                    <div className="searchbar white">
                       <i className="fas fa-search"/>
                       <Input placeholder="Search..."
                              className="header-search-input"

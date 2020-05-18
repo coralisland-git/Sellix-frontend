@@ -5,14 +5,19 @@ import { Form, FormGroup, Input, Label, Modal, ModalHeader, ModalBody, ModalFoot
 import { Button } from 'components';
 import { Spin } from 'components'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import {
   CommonActions
 } from 'services/global'
 
 import * as Actions from '../actions'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 
+const Yup = {
+  object,
+  string
+}
 const mapStateToProps = (state) => {
   return ({
   })

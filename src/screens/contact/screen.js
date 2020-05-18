@@ -6,12 +6,17 @@ import { Button } from 'components';
 import { Formik } from 'formik'
 import { CommonActions } from 'services/global'
 import { createQuery} from './actions'
-import * as Yup from "yup";
 
 import discordIcon from 'assets/images/discord.png'
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
+const Yup = {
+    object,
+    string
+}
 
 class Contact extends Component {
 

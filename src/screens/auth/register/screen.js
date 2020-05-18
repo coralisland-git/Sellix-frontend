@@ -16,20 +16,26 @@ import {
   Label
 } from 'components/reactstrap'
 import { Formik } from 'formik';
-import * as Yup from "yup";
+
 import ReCAPTCHA from "react-google-recaptcha";
 import config from 'constants/config'
 
 import { AuthActions, CommonActions} from 'services/global'
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
+
+const Yup = {
+  object,
+  string,
+  ref: () => {},
+}
 const mapDispatchToProps = dispatch => ({
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
   authActions: bindActionCreators(AuthActions, dispatch)
 })
-
-const user = window.localStorage.getItem('userId')
 
 class Register extends React.Component {
   
@@ -48,10 +54,10 @@ class Register extends React.Component {
     this.captcha = {}
   }
 
-  handleSubmit = (data, { resetForm }) => {
+  handleSubmit = (data) => {
 
-    let { tostifyAlert, history } = this.props;
-    let { register, getSelfUser } = this.props.authActions;
+    let { tostifyAlert } = this.props;
+    let { register } = this.props.authActions;
     let { captchaVerify } = this.state;
 
     if(!captchaVerify) {
@@ -87,7 +93,8 @@ class Register extends React.Component {
 
   render() {
 
-    let { initialValues } = this.state;
+    let { initialValues, password } = this.state;
+
     let validationSchema = Yup.object().shape({
       email: Yup.string()
           .email('Please enter the valid email')
@@ -99,10 +106,11 @@ class Register extends React.Component {
           .min(8, 'Password must be at least 8 characters long')
           .required("Password is required"),
       confirm_password: Yup.string()
+          .required("Confirm your password")
           .when("password", {
             is: val => val && val.length > 0,
             then: Yup.string().oneOf(
-                [Yup.ref("password")],
+                [password],
                 "Both password need to be the same"
             )})
     });
@@ -171,7 +179,12 @@ class Register extends React.Component {
                                     id="password"
                                     name="password"
                                     placeholder="Password"
-                                    onChange={handleChange}
+                                    onChange={(e) => {
+                                      handleChange(e);
+                                      this.setState({
+                                        password: e.target.value
+                                      })
+                                    }}
                                     value={values.password}
                                     className={errors.password && touched.password ? "is-invalid" : ""}
                                   />

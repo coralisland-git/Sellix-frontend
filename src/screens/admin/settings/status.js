@@ -9,15 +9,22 @@ import Select from "react-select";
 import * as moment from 'moment/moment'
 import random from 'random-letters';
 import {Formik} from "formik";
-import * as Yup from "yup";
+
 
 import './style.scss';
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 const TYPE_LIST = [
   {value: "red", label: "Red"},
   {value: "blue", label: "Blue"},
   {value: "green", label: "Green"},
 ];
+
+const Yup = {
+    object,
+    string
+}
 
 class Status extends Component {
 

@@ -11,10 +11,15 @@ import { createBlacklist } from './actions'
 import { getBlacklist, editBlacklist } from '../../actions'
 import find from "lodash/find"
 import './style.scss'
-import * as Yup from "yup";
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 const user = window.localStorage.getItem('userId')
 
+const Yup = {
+  object,
+  string
+}
 const mapStateToProps = ({ blacklist: { blacklist_list } }) => ({ blacklist_list })
 const mapDispatchToProps = dispatch => {
   return ({

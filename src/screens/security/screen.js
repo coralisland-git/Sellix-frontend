@@ -6,7 +6,6 @@ import AppSwitch from '@coreui/react/es/Switch'
 import { Loader, Button, Spin } from 'components'
 import { TwoFactorModal } from './sections'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import {
   CommonActions,
   AuthActions
@@ -15,7 +14,14 @@ import {
 import * as SecureActions from './actions'
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
+const Yup = {
+  object,
+  string,
+  ref: () => {},
+}
 const mapStateToProps = (state) => {
   return ({
   })
@@ -125,16 +131,16 @@ class SecurityPage extends React.Component {
     const { 
       loading, 
       openModal, 
-      initState, 
-      loading2FA, 
+      initState,
       email_2fa, 
       changed_otp, 
       QRCode,
       recover,
       api_key,
       otp_enabled,
-      generatingAPI
-    } = this.state
+      generatingAPI,
+      password
+    } = this.state;
 
     return (
       <div className="security-screen">
@@ -163,7 +169,7 @@ class SecurityPage extends React.Component {
                 .when("new_password", {
                   is: val => (val && val.length > 0 ? true : false),
                   then: Yup.string().oneOf(
-                    [Yup.ref("new_password")],
+                    [password],
                     "Both password need to be the same"
                 )})
             })}>
@@ -214,7 +220,12 @@ class SecurityPage extends React.Component {
                                       id="new_password"
                                       name="new_password"
                                       placeholder="New Password"
-                                      onChange={props.handleChange}
+                                      onChange={(e) => {
+                                        props.handleChange(e)
+                                        this.setState({
+                                          password: e.target.value
+                                        })
+                                      }}
                                       value={props.values.new_password}
                                       className={
                                         props.errors.new_password && props.touched.new_password

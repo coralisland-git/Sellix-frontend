@@ -13,7 +13,8 @@ import {
 } from 'components/reactstrap'
 import {Button, Spin} from 'components';
 import { Formik } from 'formik';
-import * as Yup from "yup";
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 import { Loader } from 'components'
 import { saveGeneralSettings } from './actions'
 import { CommonActions, AuthActions } from 'services/global'
@@ -21,6 +22,10 @@ import './style.scss'
 import Select from "react-select";
 import config from "constants/config";
 
+const Yup = {
+  object,
+  string
+}
 
 const mapDispatchToProps = (dispatch) => ({
   saveGeneralSettings: bindActionCreators(saveGeneralSettings, dispatch),

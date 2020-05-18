@@ -22,7 +22,6 @@ import AppSwitch from '@coreui/react/es/Switch'
 import { Loader, ImageUpload, FileUpload, DataSlider, Spin, Button } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import config from 'constants/config'
 import includes from "lodash/includes"
 
@@ -37,7 +36,15 @@ import bitcoinCashIcon from 'assets/images/crypto/bitcoincash.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
+import number from "yup/lib/number";
 
+const Yup = {
+	object,
+	string,
+	number
+}
 const user = window.localStorage.getItem('userId')
 
 

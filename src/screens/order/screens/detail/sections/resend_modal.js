@@ -12,15 +12,20 @@ import {
 } from 'components/reactstrap'
 import { Spin } from 'components'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import {
   CommonActions
 } from 'services/global'
 import { Button } from 'components';
 
 import * as Actions from '../../../actions'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 
+const Yup = {
+  object,
+  string
+}
 const mapStateToProps = (state) => {
   return ({
   })
