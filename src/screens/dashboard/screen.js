@@ -42,6 +42,7 @@ class Dashboard extends React.Component {
       views_count_progress: 0,
       queries_count_progress: 0,
       fee_revenue: 0,
+
       showPlaceholder: false,
       currency: "USD",
       revenue_by_gateway: []
