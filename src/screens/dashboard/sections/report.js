@@ -8,6 +8,7 @@ export const ReportRevenue = ({ revenue = 0, currency, revenue_progress, isAdmin
 
 	let toString = revenue && +revenue > 0 && revenue || 0
 	let value = toString > 0 ? toString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
+
 	return <Col lg={3}>
 		<Card>
 			<CardBody className="p-4 bg-white">
@@ -106,7 +107,7 @@ export const ReportFee = ({ fee_revenue = 0, currency }) => {
 			<CardBody className="p-4 bg-white">
 				<p className="report-title">Site Revenue</p>
 				<div className="d-flex justify-content-between align-items-center">
-					<h3 className="text-primary mb-0">{config.CURRENCY_LIST[currency]}{+value ? +value.toFixed(2) : 0}</h3>
+					<h3 className="text-primary mb-0">{config.CURRENCY_LIST[currency]}{+value ? Number(value).toFixed(2) : 0}</h3>
 					&nbsp;
 				</div>
 				<div className="progress-xs mt-3 progress">

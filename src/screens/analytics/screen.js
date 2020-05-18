@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Card, CardBody, Row, Col } from 'components/reactstrap'
 import config from 'constants/config'
-
+import { ReportOrders, ReportQueries, ReportRevenue, ReportViews } from '../dashboard/sections'
 import { Charts } from './sections'
 import { Loader } from 'components'
 import * as moment from 'moment/moment'
@@ -11,30 +11,6 @@ import { DateRangePicker2 } from 'components'
 import { getAnalyticsData } from './actions'
 
 import './style.scss'
-
-
-const Progress = ({ progress, isPositive, is24 }) => {
-  if(is24) {
-    return (
-        <div className={'progress-indicator'} >
-          {progress != 0 ?
-             (isPositive ?
-              <span>+<b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span> :
-              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>) :
-              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b>%</span>
-          }
-          {
-            progress != 0 ? 
-              <i className={`fas fa-caret-${isPositive ? 'up' : 'down'}`} />:
-              <i className={`far fa-minus`} />
-          }
-        </div>
-    )
-  } else {
-    return null
-  }
-}
-
 
 const ranges =  {
   // 'Today': [moment(), moment()],
@@ -57,14 +33,16 @@ class Analytics extends React.Component {
       loading: false,
 
       chartData: [],
-      totalRevenue: 0,
-      totalOrders: 0,
-      totalViews: 0,
-      totalQueries: 0,
-      revenueProgress: 0,
-      ordersProgress: 0,
-      viewsProgress: 0,
-      queriesProgress: 0
+
+      revenue: 0,
+      orders_count: 0,
+      views_count: 0,
+      queries_count: 0,
+      revenue_progress: 0,
+      orders_count_progress: 0,
+      views_count_progress: 0,
+      queries_count_progress: 0,
+
     }
   }
 
@@ -77,14 +55,7 @@ class Analytics extends React.Component {
       const total = res.data.analytics.total
 
       this.setState({
-        totalRevenue: total.revenue || 0,
-        totalOrders: total.orders_count || 0,
-        totalViews: total.views_count || 0,
-        totalQueries: total.queries_count || 0,
-        revenueProgress: total.revenue_progress || 0,
-        ordersProgress: total.orders_count_progress || 0,
-        viewsProgress: total.views_count_progress || 0,
-        queriesProgress: total.queries_count_progress || 0,
+        ...total,
         chartData: res.data.analytics.daily,
         topData: res.data.top
       })
@@ -110,16 +81,8 @@ class Analytics extends React.Component {
 
   render() {
     const {
-      totalQueries, 
-      totalOrders, 
-      totalRevenue, 
-      totalViews, 
       loading, 
       chartData,
-      revenueProgress,
-      ordersProgress,
-      viewsProgress,
-      queriesProgress,
       topData
     } = this.state
 
@@ -139,82 +102,10 @@ class Analytics extends React.Component {
               {!loading &&
                 <>
                   <Row className="mt-4">
-                    <Col lg={3}>
-                      <Card className="grey">
-                        <CardBody className="p-4 bg-white">
-                          <p className="report-title mb-4">Revenue</p>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h3 className="text-primary mb-0">${totalRevenue && +totalRevenue > 0 ? totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}</h3>
-                            <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
-                          </div>
-                          <div className="progress-xs mt-3 progress">
-                            <div
-                              className={`progress-bar ${revenueProgress > 0 ? 'bg-success' : (revenueProgress==0?'bg-warning':'bg-danger')}`}
-                              role="progressbar"
-                              style={{width: `${revenueProgress == 0 ? 1 : Math.abs(revenueProgress)}%`}}
-                              aria-valuemin="0"
-                              aria-valuemax="100" />
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                    <Col lg={3}>
-                      <Card className="grey">
-                        <CardBody className="p-4">
-                          <p className="report-title mb-4">Orders</p>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h3 className="text-primary mb-0">{totalOrders}</h3>
-                            <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
-                          </div>
-                          <div className="progress-xs mt-3 progress">
-                            <div
-                              className={`progress-bar ${ordersProgress>0?'bg-success':(ordersProgress==0?'bg-warning':'bg-danger')}`}
-                              role="progressbar"
-                              style={{width: `${ordersProgress == 0 ? 1 : Math.abs(ordersProgress)}%`}}
-                              aria-valuemin="0"
-                              aria-valuemax="100" />
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                    <Col lg={3}>
-                      <Card className="grey">
-                        <CardBody className="p-4">
-                          <p className="report-title mb-4">Views</p>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h3 className="text-primary mb-0">{totalViews}</h3>
-                            <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
-                          </div>
-                          <div className="progress-xs mt-3 progress">
-                            <div
-                              className={`progress-bar ${viewsProgress>0?'bg-success':(viewsProgress==0?'bg-warning':'bg-danger')}`}
-                              role="progressbar"
-                              style={{width: `${viewsProgress == 0 ? 1 : Math.abs(viewsProgress)}%`}}
-                              aria-valuemin="0"
-                              aria-valuemax="100" />
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                    <Col lg={3}>
-                      <Card className="grey">
-                        <CardBody className="p-4">
-                          <p className="report-title mb-4">Queries</p>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h3 className="text-primary mb-0">{totalQueries}</h3>
-                            <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress >= 0} />
-                          </div>
-                          <div className="progress-xs mt-3 progress">
-                            <div
-                              className={`progress-bar ${queriesProgress > 0 ? 'bg-success' : (queriesProgress == 0?'bg-warning':'bg-danger')}`}
-                              role="progressbar"
-                              style={{width: `${queriesProgress == 0 ? 1 : Math.abs(queriesProgress)}%`}}
-                              aria-valuemin="0"
-                              aria-valuemax="100" />
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
+                    <ReportRevenue {...this.state}/>
+                    <ReportOrders {...this.state} />
+                    <ReportViews {...this.state} />
+                    <ReportQueries {...this.state} />
                   </Row>
 
                   <CardBody className={'mb-4'}>
@@ -238,11 +129,7 @@ class Analytics extends React.Component {
                   <CardBody className={'mb-4'}>
                       <h5 className={'mb-4'}>Top 3 Gateways by Orders</h5>
 
-                    {loading && <Row>
-                      <Col lg={12}>
-                        <Loader />
-                      </Col>
-                    </Row>}
+                    {loading && <Row><Col lg={12}><Loader /></Col></Row>}
                     {!loading && <Row>
                       {
                         topData && topData.gateways.map((gateway, index) =>

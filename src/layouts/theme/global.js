@@ -184,7 +184,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .dashboard-screen .card .card-body h3,
-    .analytics-screen .card.grey .card-body h3 {
+    .analytics-screen .card .card-body h3 {
         color: ${({ theme }) => theme.text} !important;
     }
 
