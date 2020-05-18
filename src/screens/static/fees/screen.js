@@ -30,6 +30,7 @@ class Fees extends React.Component {
       bitcoin: {},
       ethereum: {},
       litecoin: {},
+      bitcoincash: {},
 
       showMoreBtc: false,
       showMoreLtc: false
@@ -50,7 +51,8 @@ class Fees extends React.Component {
         paypal: data.paypal,
         bitcoin: data.bitcoin,
         ethereum: data.ethereum,
-        litecoin: data.litecoin
+        litecoin: data.litecoin,
+        bitcoincash: data.bitcoincash
       })
     }).catch((err) => {
       
@@ -58,7 +60,7 @@ class Fees extends React.Component {
   }
 
   render() {
-    const { isOpen, paypal, bitcoin, ethereum, litecoin, site_fee_percentage, showMoreBtc, showMoreLtc } = this.state
+    const { isOpen, paypal, bitcoin, ethereum, litecoin, site_fee_percentage, showMoreBtc, showMoreLtc, bitcoincash } = this.state
 
     return (
       <div className="fees-screen">
@@ -105,7 +107,7 @@ class Fees extends React.Component {
                       `}
                     </style>
                     <Col md={3}>
-                        <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                        <div className={"payment-card "}>
                             <div className="method">
                                 <h4 className="mt-4">Bitcoin</h4>
                                 <div className="service-img">
@@ -113,30 +115,20 @@ class Fees extends React.Component {
                                 </div>
                             </div>
                             <div className="content p-2">
-                                <p className="small text-primary">
-                                  {
-                                    'Sellix does not take any additional fee to process Bitcoin invoices.'
-                                  }
-                                </p>
-                                {/* <p className="small1 text-primary">
-                                  Transaction Fees: <b>${bitcoin.transaction_fee_usd || 0}</b>
-                                </p>
-                                <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
-                                    <b>{bitcoin.site_fee_low_price || 0} (${bitcoin.site_fee_low_price_usd || 0})</b>
-                                </p>
-                                <Button className="btn-read-more" onClick={() => this.setState({ showMoreBtc: !this.state.showMoreBtc })}>
-                                  read {showMoreBtc ? "less ▲" : "more ▼"}
-                                </Button>
-                                <Collapse isOpen={showMoreBtc}>
-                                  <p className="small1 text-primary">
-                                  if the order is less than ${bitcoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
-                                  </p>
-                                </Collapse> */}
+                              <p className="small1 text-primary">
+                                Transaction Fees: <b>${bitcoin.transaction_fee_usd || 0}</b>
+                              </p>
+                              <p className="small1 text-primary">Sellix Fees: <img src={service2} className="mr-1" width="17" height="17"/>
+                                  <b>{bitcoin.site_fee_low_price || 0} (${bitcoin.site_fee_low_price_usd || 0})</b>
+                              </p>
+                              <p className="small1 text-primary mt-2 lh-1">
+                              If the order is less than ${bitcoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                              </p>
                             </div>
                         </div>
                     </Col>
                     <Col md={3}>
-                        <div className={"payment-card " + (showMoreLtc && "show-more")}>
+                        <div className={"payment-card "}>
                             <div className="method">
                                 <h4 className="mt-4">Litecoin</h4>
                                 <div className="service-img">
@@ -144,25 +136,15 @@ class Fees extends React.Component {
                                 </div>
                             </div>
                             <div className="content p-2">
-                              <p className="small text-primary">
-                                {
-                                  'Sellix does not take any additional fee to process Litecoin invoices.'
-                                }
+                              <p className="small1 text-primary">
+                                  Transaction Fees: <b>${litecoin.transaction_fee_usd || 0}</b>
                               </p>
-                                {/* <p className="small1 text-primary">
-                                    Transaction Fees: <b>${litecoin.transaction_fee_usd || 0}</b>
-                                </p>
-                                <p className="small1 text-primary">Sellix Fees: <img src={service3} width="25" height="25"/>
-                                    <b>{litecoin.site_fee_low_price || 0} (${litecoin.site_fee_low_price_usd || 0})</b>
-                                </p>
-                                <Button className="btn-read-more" onClick={() => this.setState({ showMoreLtc: !this.state.showMoreLtc })}>
-                                  read {showMoreLtc ? "less ▲" : "more ▼"}
-                                </Button>
-                                <Collapse isOpen={showMoreLtc}>
-                                  <p className="small1 text-primary">
-                                  if the order is less than ${litecoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
-                                  </p>
-                                </Collapse> */}
+                              <p className="small1 text-primary">Sellix Fees: <img src={service3} className="mr-1" width="17" height="17"/>
+                                  <b>{litecoin.site_fee_low_price || 0} (${litecoin.site_fee_low_price_usd || 0})</b>
+                              </p>
+                              <p className="small1 text-primary mt-2 lh-1">
+                              If the order is less than ${litecoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                              </p>
                             </div>
                         </div>
                     </Col>
@@ -175,25 +157,19 @@ class Fees extends React.Component {
                                 </div>
                             </div>
                             <div className="content p-2">
-                              <p className="small text-primary">
-                                {
-                                  'Sellix does not take any additional fee to process Ethereum invoices.'
-                                }
+                              <p className="small1 text-primary">
+                                  Transaction Fees: <b>{(ethereum.transaction_fee || 0).toFixed(8)} (${ethereum.transaction_fee_usd || 0})</b>
                               </p>
-                                {/* <p className="small1 text-primary">
-                                    Transaction Fees: <b>{ethereum.transaction_fee || 0} (${ethereum.transaction_fee_usd || 0})</b>
-                                </p>
-                                <p className="small1 text-primary">Sellix Fees: <img src={service4} width="25" height="25"/>
-                                    <b>{site_fee_percentage}% over the total</b>
-                                </p>
-                                 */}
+                              <p className="small1 text-primary mt-2 lh-1">Sellix Fees: <img src={service4} className="mr-1" width="17" height="17"/>
+                                  <b>{site_fee_percentage}% over the total</b>
+                              </p>
                             </div>
                         </div>
                     </Col>
                 </Row>
                 <Row>
                   <Col md={3}>
-                    <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                    <div className={"payment-card "}>
                       <div className="method">
                           <h4 className="mt-4">Bitcoin Cash</h4>
                           <div className="service-img">
@@ -201,30 +177,20 @@ class Fees extends React.Component {
                           </div>
                       </div>
                       <div className="content p-2">
-                          <p className="small text-primary">
-                            {
-                              'Sellix does not take any additional fee to process Bitcoin Cash invoices.'
-                            }
-                          </p>
-                          {/* <p className="small1 text-primary">
-                            Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
-                          </p>
-                          <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
-                              <b>{bitcoincash.site_fee_low_price || 0} (${bitcoincash.site_fee_low_price_usd || 0})</b>
-                          </p>
-                          <Button className="btn-read-more" onClick={() => this.setState({ showMoreBtc: !this.state.showMoreBtc })}>
-                            read {showMoreBtc ? "less ▲" : "more ▼"}
-                          </Button>
-                          <Collapse isOpen={showMoreBtc}>
-                            <p className="small1 text-primary">
-                            if the order is less than ${bitcoincash.low_price_usd || 0}, else {site_fee_percentage}% over the total.
-                            </p>
-                          </Collapse> */}
+                        <p className="small1 text-primary">
+                          Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
+                        </p>
+                        <p className="small1 text-primary">Sellix Fees: <img src={service5} className="mr-1" width="17" height="17"/>
+                            <b>{bitcoincash.site_fee_low_price || 0} (${bitcoincash.site_fee_low_price_usd || 0})</b>
+                        </p>
+                        <p className="small1 text-primary mt-2 lh-1">
+                        If the order is less than ${bitcoincash.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                        </p>
                       </div>
                     </div>
                   </Col>
                   <Col md={3}>
-                    <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                    <div className={"payment-card "}>
                       <div className="method">
                           <h4 className="mt-4">Perfect Money</h4>
                           <div className="service-img">
@@ -255,7 +221,7 @@ class Fees extends React.Component {
                     </div>
                   </Col>
                   <Col md={3}>
-                    <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                    <div className={"payment-card "}>
                       <div className="method">
                           <h4 className="mt-4">Stripe</h4>
                           <div className="service-img">
@@ -264,9 +230,7 @@ class Fees extends React.Component {
                       </div>
                       <div className="content p-2">
                           <p className="small text-primary">
-                            {
-                              'Sellix does not take any additional fee to process Stripe invoices.'
-                            }
+                          If the order is less than $2.26, else 3.00% over the total.
                           </p>
                           {/* <p className="small1 text-primary">
                             Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
@@ -286,7 +250,7 @@ class Fees extends React.Component {
                     </div>
                   </Col>
                   <Col md={3}>
-                    <div className={"payment-card "+ (showMoreBtc && "show-more")}>
+                    <div className={"payment-card "}>
                       <div className="method">
                           <h4 className="mt-4">Skrill</h4>
                           <div className="service-img">

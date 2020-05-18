@@ -13,6 +13,10 @@
     }
   }
 
+  .lh-1 {
+    line-height: 1.6em;
+  }
+
 
   .payment-card {
     border-radius: 3px;
@@ -20,7 +24,8 @@
     box-shadow: 0 4px 30px #969ad680;
     margin-bottom: 30px;
     transition: all .3s ease;
-    height: 365px !important;
+    min-height: 300px;
+    height: 94%;
 
     @media (max-width: 768px) {
       margin-bottom: 50px;
@@ -51,8 +56,7 @@
       align-items: center;
       margin-bottom: 0;
       flex-direction: column;
-      height: 125px;
-      padding: 0;
+      padding: 15px !important;
 
       p {
         margin-bottom: 0;
@@ -142,6 +146,7 @@
   }
 
   p.small1 {
+    width: 100%;
     font-size: 13px;
     margin-bottom: 0;
     text-align: left;
