@@ -50,37 +50,27 @@ class EditCategory extends React.Component {
       saving: false,
       tooltipOpen: false,
       initialData: {
+
       },
-      files: [],
       selected_products: []
     }
 
-    this.handleMultiChange = this.handleMultiChange.bind(this);
     this.id = this.props.match.params.id
   }
 
-  unlistedTooltipToggle() {
-    this.setState({tooltipOpen: !this.state.tooltipOpen})
+  unlistedTooltipToggle = () => {
+    this.setState({ tooltipOpen: !this.state.tooltipOpen })
   }
 
-  addFile = file => {
-    this.setState({
-      files: file.map(file =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      )
-    });
-  };
-
-
-  handleSubmit(values) {
+  handleSubmit = (values) => {
     this.setState({saving: true})
     const { selected_products } = this.state
-
+    console.log(values.unlisted)
+    console.log(values.unlisted)
     values.products_bound = selected_products.map(o => o.value).toString()
     this.props.actions.editCategory(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
+      this.props.history.goBack()
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)
     }).finally(() => {
@@ -88,23 +78,11 @@ class EditCategory extends React.Component {
     })
   }
 
-  handleMultiChange(option) {
-    this.setState(state => {
-      return {
-        selected_products: option
-      };
-    });
-  }
-
   componentDidMount() {
     if (this.id) {
       this.setState({ loading: true });
       this.props.actions.getCategoryByID(this.id).then(res => {
-        this.setState({
-          initialData: res.data.category,
-          files: res.data.category.image_attachment === ''?[]:
-            [{preview: config.API_ROOT_URL+'/attachments/image/'+res.data.category.image_attachment}],
-        })
+        this.setState({ initialData: res.data.category })
       }).finally(() => {
         this.props.productActions.getProductList().then(res => {
           this.setState({
@@ -136,17 +114,11 @@ class EditCategory extends React.Component {
           <Formik
             initialValues={initialData}
             enableReinitialize={true}
-            onSubmit={(values) => {
-              this.handleSubmit(values)
-            }}
+            onSubmit={this.handleSubmit}
             validationSchema={Yup.object().shape({
-              title: Yup.string()
-                .required('Title is required'),
-              products_bound: Yup.string()
-                .required('Products is required'),
-              sort_priority: Yup.number()
-                .required("Sort Priority is required"),
-              unlisted: Yup.number()
+              title: Yup.string().required('Title is required'),
+              products_bound: Yup.string().required('Products is required'),
+              sort_priority: Yup.number().required("Sort Priority is required").nullable()
             })}>
               {props => (
                 <Form onSubmit={props.handleSubmit}>
@@ -204,7 +176,7 @@ class EditCategory extends React.Component {
                                 </Col>
                               </Row>
                               <Row>
-                                <Col lg={6}>
+                                <Col lg={12}>
                                   <FormGroup className="mb-3">
                                     <Label htmlFor="product_bounds">Products</Label>
                                     <Select
@@ -237,7 +209,7 @@ class EditCategory extends React.Component {
                               </Row>
                           
                               <Row>
-                                <Col lg={2}>
+                                <Col lg={6}>
                                   <FormGroup className="mb-3">
                                     <Label htmlFor="sort_priority">Priority</Label>
                                     <Input
@@ -247,7 +219,15 @@ class EditCategory extends React.Component {
                                       placeholder="Sort Priority"
                                       onChange={props.handleChange}
                                       value={props.values.sort_priority}
+                                      className={
+                                        props.errors.sort_priority && props.touched.sort_priority
+                                            ? "is-invalid"
+                                            : ""
+                                      }
                                     />
+                                    {props.errors.sort_priority && props.touched.sort_priority && (
+                                        <div className="invalid-feedback">{props.errors.sort_priority}</div>
+                                    )}
                                   </FormGroup>
                                 </Col>
                               </Row>
@@ -261,14 +241,14 @@ class EditCategory extends React.Component {
                                           id="inline-radio1"
                                           name="SMTP-auth"
                                           onChange={(e) => {
-                                            props.handleChange('unlisted')(e.target.checked?1:0)
+                                            props.handleChange('unlisted')(e.target.checked)
                                           }}
-                                          checked={(props.values.unlisted === '1' || props.values.unlisted === 1)?true:false}
+                                          checked={props.values.unlisted}
                                         />
                                         <label className="custom-control-label" htmlFor="inline-radio1">
-                                          Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
+                                          Unlisted &nbsp;<span id="unlistedTooltip"><i className="fa fa-question-circle" /></span>
                                           <Tooltip placement="right" isOpen={tooltipOpen} target="unlistedTooltip" 
-                                            toggle={this.unlistedTooltipToggle.bind(this)}>
+                                            toggle={this.unlistedTooltipToggle}>
                                             This product won't show on your user profile page
                                           </Tooltip>
                                         </label>

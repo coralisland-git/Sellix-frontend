@@ -54,19 +54,10 @@ class CreateCategories extends React.Component {
         title: '',
         unlisted: 0,
         products_bound: '',
-        image: '',
-        sort_priority: 0
+        sort_priority: null
       },
-      files: [],
       multiValue: []
     }
-
-    this.handleMultiChange = this.handleMultiChange.bind(this);
-  }
-
-  componentWillUnmount() {
-    // Make sure to revoke the data uris to avoid memory leaks
-    this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
   }
 
   componentDidMount() {
@@ -75,22 +66,13 @@ class CreateCategories extends React.Component {
     })
   }
 
-  unlistedTooltipToggle() {
-    this.setState({tooltipOpen: !this.state.tooltipOpen})
+  unlistedTooltipToggle = () => {
+    this.setState({ tooltipOpen: !this.state.tooltipOpen })
   }
 
-  addFile = file => {
-    this.setState({
-      files: file===null?file:file.map(file =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      )
-    });
-  };
+  handleSubmit = (values) => {
+    this.setState({ loading: true })
 
-  handleSubmit(values) {
-    this.setState({loading: true})
     this.props.actions.createCategory(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.goBack()
@@ -101,7 +83,7 @@ class CreateCategories extends React.Component {
     })
   }
 
-  handleMultiChange(option) {
+  handleMultiChange = (option) => {
     this.setState(state => {
       return {
         multiValue: option
@@ -110,7 +92,7 @@ class CreateCategories extends React.Component {
   }
 
   render() {
-    const { loading, tooltipOpen, files, initialValues } = this.state
+    const { loading, tooltipOpen, initialValues } = this.state
     const { all_products } = this.props
 
     const product_options = all_products.map(pro => {return {value: pro.uniqid, label: pro.title}})
@@ -129,13 +111,9 @@ class CreateCategories extends React.Component {
               this.handleSubmit(values)
             }}
             validationSchema={Yup.object().shape({
-              title: Yup.string()
-                .required('Title is required'),
-              products_bound: Yup.string()
-                .required('Products is required'),
-              sort_priority: Yup.number()
-                .required("Sort Priority is required"),
-              unlisted: Yup.boolean()
+              title: Yup.string().required('Title is required'),
+              products_bound: Yup.string().required('Products is required'),
+              sort_priority: Yup.number().required("Sort Priority is required").nullable()
             })}>
               {props => (
                 <Form onSubmit={props.handleSubmit}>
@@ -234,7 +212,11 @@ class CreateCategories extends React.Component {
                                   placeholder="Sort Priority"
                                   onChange={props.handleChange}
                                   value={props.values.sort_priority}
+                                  className={props.errors.sort_priority && props.touched.sort_priority ? "is-invalid" : ""}
                                 />
+                                {props.errors.sort_priority && props.touched.sort_priority &&
+                                  <div className="invalid-feedback">{props.errors.sort_priority}</div>
+                                }
                               </FormGroup>
                             </Col>
                           </Row>
@@ -253,9 +235,9 @@ class CreateCategories extends React.Component {
                                       checked={props.values.unlisted}
                                     />
                                     <label className="custom-control-label" htmlFor="inline-radio1">
-                                      Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle" /></span>
+                                      Unlisted &nbsp;<span id="unlistedTooltip"><i className="fa fa-question-circle" /></span>
                                       <Tooltip placement="right" isOpen={tooltipOpen} target="unlistedTooltip" 
-                                        toggle={this.unlistedTooltipToggle.bind(this)}>
+                                        toggle={this.unlistedTooltipToggle}>
                                         This category won't be shown on your user profile page
                                       </Tooltip>
                                     </label>
