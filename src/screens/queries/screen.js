@@ -1,13 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col
-} from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Col } from 'components/reactstrap'
 import { Button } from 'components';
 import filter from "lodash/filter"
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'

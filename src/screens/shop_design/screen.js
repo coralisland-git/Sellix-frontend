@@ -1,17 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Input
-} from 'reactstrap'
+import { Card, CardBody, Row, Col, FormGroup, Label, Input } from 'components/reactstrap'
 import {Button, Spin} from 'components';
-import { AppSwitch } from '@coreui/react'
+import AppSwitch from '@coreui/react/es/Switch'
 import { CommonActions, AuthActions } from 'services/global'
 import { Loader } from 'components'
 import * as Actions from './actions'

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { api } from 'utils'
 import { bindActionCreators } from 'redux'
-import { Card, Row, Col } from 'reactstrap'
+import { Card, Row, Col } from 'components/reactstrap'
 import * as moment from 'moment/moment'
 import { PayPalButton } from "react-paypal-button-v2";
 import { CommonActions } from 'services/global'

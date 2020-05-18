@@ -73,7 +73,6 @@ import ContactReply from './contact/screens/reply'
 
 
 
-import PaypalPaying from './paypal_paying'
 import Invoice from './invoice'
 import SecurityPage from './security'
 import Notification from './notification'
@@ -152,7 +151,6 @@ export {
   ShopProducts,
   ShopProductDetail,
   ShopGroupDetail,
-  PaypalPaying,
   BlackList,
   CreateBlacklist,
   OrderDetail,

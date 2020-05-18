@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap'
+import { Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} from 'components/reactstrap'
 import { Button } from 'components';
 import {Formik} from "formik";
 import * as Yup from "yup";

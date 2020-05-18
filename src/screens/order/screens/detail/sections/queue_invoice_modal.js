@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'components';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody } from 'components/reactstrap'
 import { Spin } from 'components'
 import { CommonActions } from 'services/global'
 import config from "constants/config"

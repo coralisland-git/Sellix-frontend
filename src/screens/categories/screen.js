@@ -7,7 +7,7 @@ import {
   CardBody,
   Row,
   Col
-} from 'reactstrap'
+} from 'components/reactstrap'
 import { Button } from 'components';
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'

@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, CardBody, Row, Col } from 'reactstrap'
+import { Card, CardBody, Row, Col } from 'components/reactstrap'
 import { Loader } from 'components'
 import ReactTimeAgo from 'react-time-ago'
 import { CommonActions } from 'services/global'

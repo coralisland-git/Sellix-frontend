@@ -9,7 +9,7 @@ import {
   FormGroup,
   Label,
   Input
-} from 'reactstrap'
+} from 'components/reactstrap'
 import {Button, Spin} from 'components';
 import { CommonActions, AuthActions } from 'services/global'
 import { Loader } from 'components'

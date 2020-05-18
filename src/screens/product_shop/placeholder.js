@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, Row, Col } from 'reactstrap'
+import { Card, CardHeader, Row, Col } from 'components/reactstrap'
 import range from "lodash/range";
 
 import './style.scss'

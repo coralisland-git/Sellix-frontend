@@ -8,7 +8,7 @@ import {
   Row,
   Col,
   Input
-} from 'reactstrap'
+} from 'components/reactstrap'
 import { Button } from 'components';
 import * as moment from 'moment/moment'
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'

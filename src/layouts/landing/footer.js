@@ -1,12 +1,6 @@
 import React from 'react'
 
-import {
-    Container,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink
-} from 'reactstrap'
+import { Container, NavbarBrand, Nav, NavItem, NavLink } from 'components/reactstrap'
 import sellix_logo_footer from 'assets/images/Sellix_logo.svg'
 
 export function LandingFooter(props) {

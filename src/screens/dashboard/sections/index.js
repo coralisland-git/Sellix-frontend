@@ -1,5 +1,7 @@
 import DashBoardChart from './chart'
 import Status from './status'
+import Revenue from './revenue'
+import Invoices from './invoices'
 import {
   ReportRevenue,
   ReportViews,
@@ -15,5 +17,7 @@ export {
   ReportQueries,
   ReportFee,
   DashBoardChart,
-  Status
+  Status,
+  Revenue,
+  Invoices,
 }

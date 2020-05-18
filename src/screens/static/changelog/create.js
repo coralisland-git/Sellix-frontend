@@ -11,7 +11,7 @@ import {
 	FormGroup,
 	Input,
 	CardHeader
-} from 'reactstrap'
+} from 'components/reactstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Yup from "yup";

@@ -11,7 +11,6 @@ import ImageUpload from './upload/imageUploader'
 import FileUpload from './upload/fileUploader'
 
 import DataSlider from './slider'
-import LeaveFeedbackModal from './feedback_leave_modal'
 import Affix from './affix'
 import NotFound from './404'
 import SetTitle from './set_title'
@@ -31,7 +30,6 @@ export {
   ImageUpload,
   FileUpload,
   DataSlider,
-  LeaveFeedbackModal,
   Affix,
   NotFound,
   SetTitle

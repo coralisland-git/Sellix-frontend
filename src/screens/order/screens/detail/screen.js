@@ -9,14 +9,15 @@ import {
   Col,
   FormGroup,
   Label,
-} from 'reactstrap'
+  BreadcrumbItem,
+  Breadcrumb,
+} from 'components/reactstrap'
 import { Button } from 'components';
 import * as moment from 'moment/moment'
 import { Loader } from 'components'
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { tableOptions } from 'constants/tableoptions'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import includes from "lodash/includes"
 import config from "constants/config"
 import { CommonActions } from 'services/global'

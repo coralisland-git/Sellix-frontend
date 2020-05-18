@@ -1,6 +1,6 @@
 import React from 'react'
 import config from 'constants/config'
-import { Card } from 'reactstrap';
+import { Card } from 'components/reactstrap';
 import Sellix from '../../assets/images/Sellix_logo.svg';
 
 

@@ -10,7 +10,7 @@ import {
   Modal,
   ModalHeader, 
   ModalBody,
-} from 'reactstrap'
+} from 'components/reactstrap'
 import { Formik } from 'formik';
 import {
   CommonActions

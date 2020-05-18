@@ -1,12 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Button } from 'components';
 import {
   Col,
   Container,
   Row,
   NavLink
-} from 'reactstrap'
+} from 'components/reactstrap'
 import './style.scss'
 
 import service1 from 'assets/images/home/service1.svg'

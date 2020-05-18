@@ -11,19 +11,20 @@ import {
 	Form,
 	Label,
 	Tooltip,
-	Input
-} from 'reactstrap'
+	Input,
+	BreadcrumbItem,
+	Breadcrumb
+} from 'components/reactstrap'
 import Select from 'react-select'
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { AppSwitch } from '@coreui/react'
+import AppSwitch from '@coreui/react/es/Switch'
 import {Loader, ImageUpload, FileUpload, DataSlider, Button, Spin} from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import { CommonActions } from 'services/global'
 
@@ -36,7 +37,6 @@ import bitcoinCashIcon from 'assets/images/crypto/bitcoincash.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
-import verifiedIcon from "../../../../assets/images/sellix_verified.svg";
 
 
 const mapDispatchToProps = (dispatch) => {
@@ -465,10 +465,10 @@ class CreateProduct extends React.Component {
 																</Row>
 																<Row>
 																	<Col lg={12}>
-																		<FormGroup className="mb-3 mr-4">
+																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Payment Methods</Label>
 
-																			<div className="d-flex flex-wrap">
+																			<div className="d-flex flex-wrap justify-content-between">
 																				<label className="custom-checkbox custom-control payment-checkbox ">
 																					<input 
 																						className="custom-control-input"
@@ -596,6 +596,8 @@ class CreateProduct extends React.Component {
 																						Skrill
 																					</label>
 																				</label>
+
+																				<label className="custom-checkbox custom-control payment-checkbox" />
 																			</div>
 																		</FormGroup>
 																	</Col>

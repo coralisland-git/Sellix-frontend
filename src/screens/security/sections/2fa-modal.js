@@ -1,18 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Modal,
-  ModalHeader, 
-  ModalBody,
-  ModalFooter,
-} from 'reactstrap'
+import { Form, FormGroup, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'components/reactstrap'
 import { Button } from 'components';
-import { Alert } from 'reactstrap'
 import { Spin } from 'components'
 import { Formik } from 'formik';
 import * as Yup from "yup";

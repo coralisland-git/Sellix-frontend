@@ -10,11 +10,12 @@ import {
   Form,
   FormGroup,
   Input,
-  Label
-} from 'reactstrap';
+  Label,
+  BreadcrumbItem,
+  Breadcrumb
+} from 'components/reactstrap';
 import Select from 'react-select';
 import { Loader } from 'components'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Button } from 'components';
 import { Formik } from 'formik';
 import * as Yup from "yup";
