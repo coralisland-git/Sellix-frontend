@@ -28,7 +28,6 @@
     "react-app-polyfill": "^1.0.6",
     "react-awesome-stars-rating": "^0.2.5",
     "react-bootstrap-daterangepicker": "^4.1.0",
-    "react-bootstrap-sweetalert": "^5.1.9",
     "react-bootstrap-table": "4.3.1",
     "react-circular-progressbar": "^2.0.3",
     "react-clipboard.js": "^2.0.16",
