@@ -6,7 +6,8 @@ import { Card, CardBody, Col } from "components/reactstrap";
 
 export const ReportRevenue = ({ revenue = 0, currency, revenue_progress, isAdmin }) => {
 
-	let value = revenue && +revenue > 0 ? revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
+	let toString = revenue && +revenue > 0 && revenue || 0
+	let value = toString > 0 ? toString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
 	return <Col lg={3}>
 		<Card>
 			<CardBody className="p-4 bg-white">
@@ -97,7 +98,8 @@ export const ReportQueries = ({ queries_count, queries_count_progress }) => {
 
 export const ReportFee = ({ fee_revenue = 0, currency }) => {
 
-	let value = fee_revenue && +fee_revenue > 0 ? fee_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
+	let toString = fee_revenue && +fee_revenue > 0 && fee_revenue || 0
+	let value = toString > 0 ? toString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
 
 	return <Col lg={3}>
 		<Card>
