@@ -144,7 +144,7 @@ class Analytics extends React.Component {
                         <CardBody className="p-4 bg-white">
                           <p className="report-title mb-4">Revenue</p>
                           <div className="d-flex justify-content-between align-items-center">
-                            <h3 className="text-primary mb-0">${totalRevenue ? totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}</h3>
+                            <h3 className="text-primary mb-0">${totalRevenue && +totalRevenue > 0 ? totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}</h3>
                             <Progress progress={revenueProgress} is24={true} isPositive={revenueProgress>=0} />
                           </div>
                           <div className="progress-xs mt-3 progress">
