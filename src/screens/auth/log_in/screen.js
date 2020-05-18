@@ -16,13 +16,19 @@ import {
   Label
 } from 'components/reactstrap'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import config from 'constants/config'
 
 import { AuthActions, CommonActions } from 'services/global'
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
+
+const Yup = {
+    object,
+    string
+}
 
 const mapDispatchToProps = dispatch => ({
     tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),

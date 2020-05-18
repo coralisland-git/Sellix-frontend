@@ -1,19 +1,18 @@
 import React from "react";
-import NumberFormat from "react-number-format";
 import Progress from "./progress";
 import config from "constants/config";
 import { Card, CardBody, Col } from "components/reactstrap";
 
 
 export const ReportRevenue = ({ revenue=0, currency, revenue_progress, isAdmin }) => {
+
+	let value = revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	return <Col lg={3}>
 		<Card>
 			<CardBody className="p-4 bg-white">
 				<p className="report-title">{isAdmin ? "Cashflow" : "Revenue"}</p>
 				<div className="d-flex justify-content-between align-items-center">
-					<NumberFormat value={revenue} displayType={'text'} thousandSeparator={true} prefix={config.CURRENCY_LIST[currency]}
-					              renderText={value => <h3 className="text-primary mb-0">{value || 0}</h3>}
-					/>
+					<h3 className="text-primary mb-0">{config.CURRENCY_LIST[currency]}{value || 0}</h3>
 					<Progress progress={revenue_progress} is24={true} isPositive={revenue_progress >= 0} />
 				</div>
 
@@ -98,14 +97,15 @@ export const ReportQueries = ({ queries_count, queries_count_progress }) => {
 
 export const ReportFee = ({ fee_revenue = 0, currency }) => {
 
+	let value = fee_revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	console.log(value)
+	console.log(value)
 	return <Col lg={3}>
 		<Card>
 			<CardBody className="p-4 bg-white">
 				<p className="report-title">Site Revenue</p>
 				<div className="d-flex justify-content-between align-items-center">
-					<NumberFormat value={fee_revenue.toFixed(2)} displayType={'text'} thousandSeparator={true} prefix={config.CURRENCY_LIST[currency]}
-					              renderText={value => <h3 className="text-primary mb-0">{value}</h3>}
-					/>
+					<h3 className="text-primary mb-0">{config.CURRENCY_LIST[currency]}{+value ? +value.toFixed(2) : 0}</h3>
 					&nbsp;
 				</div>
 				<div className="progress-xs mt-3 progress">

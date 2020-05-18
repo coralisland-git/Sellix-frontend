@@ -6,7 +6,6 @@ import { CommonActions } from 'services/global'
 import { validateCoupon } from './actions'
 import { Formik } from 'formik';
 import { Button, Spin, Loader } from 'components'
-import * as Yup from "yup";
 import * as Showdown from "showdown";
 import config from 'constants/config'
 
@@ -16,7 +15,13 @@ import verifiedIcon from 'assets/images/sellix_verified.svg'
 
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
+const Yup = {
+  object,
+  string
+}
 
 const converter = new Showdown.Converter({
     tables: true,

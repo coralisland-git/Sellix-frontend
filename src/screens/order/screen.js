@@ -14,7 +14,7 @@ import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import * as moment from 'moment/moment'
 import config from 'constants/config'
-import { Loader, Spin, Button } from 'components'
+import { Loader, Button } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import IntervalTimer from 'react-interval-timer';
 import Select from "react-select";

@@ -2,7 +2,6 @@ import React from 'react'
 import { Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} from 'components/reactstrap'
 import { Button } from 'components';
 import {Formik} from "formik";
-import * as Yup from "yup";
 import { Spin } from "components";
 import Select from "react-select";
 import {connect} from 'react-redux'
@@ -11,6 +10,8 @@ import { withRouter } from "react-router-dom";
 import './style.scss'
 import { bindActionCreators } from "redux";
 import { CommonActions } from "../../../services/global";
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 
 const OPTIONS = [
@@ -21,6 +22,10 @@ const OPTIONS = [
     {value: 'other', label: 'Other'},
 ]
 
+const Yup = {
+    object,
+    string
+}
 class Ticket extends React.Component {
 
     componentDidMount() {

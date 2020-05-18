@@ -14,15 +14,20 @@ import {
 } from 'components/reactstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as Yup from "yup";
 import { Formik } from 'formik'
 import { createChangelog } from './actions'
 import {CommonActions} from "../../../services/global";
 import * as moment from "moment/moment";
 
 import "./styles.scss";
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 
+const Yup = {
+	object,
+	string
+}
 
 function ChangelogItem({ item }) {
 

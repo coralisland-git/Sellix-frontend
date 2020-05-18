@@ -18,11 +18,16 @@ import Select from 'react-select';
 import { Loader } from 'components'
 import { Button } from 'components';
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import { CommonActions } from 'services/global';
 import { createWebhook } from '../../actions';
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 
+const Yup = {
+    object,
+    string
+}
 const EVENT_OPTIONS = [
     { value: 'order:created', label: 'order:created' },
     { value: 'order:updated', label: 'order:updated' },

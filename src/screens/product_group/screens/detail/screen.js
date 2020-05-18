@@ -6,7 +6,6 @@ import Select from 'react-select'
 import { Loader, ImageUpload, Button } from 'components'
 import * as ProductGroupActions from '../../actions'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import config from 'constants/config'
 
 import { Product } from 'screens'
@@ -14,8 +13,16 @@ import { Product } from 'screens'
 import { CommonActions } from 'services/global'
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
+import number from "yup/lib/number";
 
 
+const Yup = {
+    object,
+    string,
+    number,
+}
 const user = window.localStorage.getItem('userId')
 
 class EditProductGroup extends React.Component {

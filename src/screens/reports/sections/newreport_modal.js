@@ -9,13 +9,20 @@ import pdfIcon from 'assets/images/pdf.png'
 import { Spin } from 'components'
 
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import {
   CommonActions,
 } from 'services/global'
 
-import * as ReportActions from '../actions'
 
+
+import * as ReportActions from '../actions'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
+
+const Yup = {
+  object,
+  string
+}
 
 const mapDispatchToProps = (dispatch) => {
 	return ({

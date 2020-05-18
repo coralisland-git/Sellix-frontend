@@ -15,20 +15,24 @@ import {
   Label
 } from 'components/reactstrap'
 import { Formik } from 'formik';
-import * as Yup from "yup";
 import { Button } from 'components';
 
 import { AuthActions, CommonActions } from 'services/global'
 
 import './style.scss'
+import object from "yup/lib/object";
+import string from "yup/lib/string";
 
 const mapDispatchToProps = dispatch => ({
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
   authActions: bindActionCreators(AuthActions, dispatch)
 })
 
-const user = window.localStorage.getItem('userId')
 
+const Yup = {
+  object,
+  string
+}
 class OTPLogin extends React.Component {
   
   constructor(props) {
@@ -63,7 +67,6 @@ class OTPLogin extends React.Component {
   }
 
   render() {
-    const { qr_image, loading, recover } = this.state
 
     let validationSchema = Yup.object()
         .shape({
