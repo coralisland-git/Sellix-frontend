@@ -1,14 +1,11 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { LoaderFullscreen } from 'components';
-import { Loader } from 'components'
 import * as Actions from '../payments/actions'
 import { connect } from 'react-redux'
 import { AuthActions } from 'services/global'
 import qs from 'query-string'
 
-const mapStateToProps = (state) => ({
-});
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(Actions, dispatch),
@@ -35,4 +32,4 @@ class StripeCallback extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StripeCallback)
+export default connect(null, mapDispatchToProps)(StripeCallback)

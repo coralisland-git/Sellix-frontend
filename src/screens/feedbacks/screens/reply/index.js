@@ -11,10 +11,11 @@ import {
   Label,
   Form,
   FormGroup,
-  Input
-} from 'reactstrap'
+  Input,
+  Breadcrumb,
+  BreadcrumbItem
+} from 'components/reactstrap'
 import { Button } from 'components';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import config from 'constants/config'
 import * as moment from 'moment/moment'
 import { getFeedbackById } from '../../actions'

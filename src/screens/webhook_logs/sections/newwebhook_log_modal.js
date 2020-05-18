@@ -11,7 +11,7 @@ import {
   ModalHeader, 
   ModalBody,
   ModalFooter,
-} from 'reactstrap'
+} from 'components/reactstrap'
 import Select from 'react-select'
 
 import { Formik } from 'formik';

@@ -11,18 +11,19 @@ import {
 	Form,
 	Label,
 	Tooltip,
-	Input
-} from 'reactstrap'
+	Input,
+	BreadcrumbItem,
+	Breadcrumb
+} from 'components/reactstrap'
 import Select from 'react-select'
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
-import { AppSwitch } from '@coreui/react'
+import AppSwitch from '@coreui/react/es/Switch'
 import { Loader, ImageUpload, FileUpload, DataSlider, Spin, Button } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import config from 'constants/config'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import includes from "lodash/includes"
 
 import { CommonActions } from 'services/global'

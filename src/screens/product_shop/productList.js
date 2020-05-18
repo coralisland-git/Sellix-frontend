@@ -3,7 +3,7 @@ import FlipMove from 'react-flip-move';
 import ProductCard from './productCard';
 import GroupCard from './groupCard';
 import { Loader } from 'components';
-import { Col, Row } from 'reactstrap'
+import { Row } from 'components/reactstrap'
 import GroupModal from './screens/group_detail/screen'
 import { getProductStock } from 'screens/product_shop/productCard';
 

@@ -1,16 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  Label,
-  Form,
-  FormGroup,
-  Input
-} from 'reactstrap'
+import { Card, CardBody, Row, Col, Label, Form, FormGroup, Input } from 'components/reactstrap'
 import { Button } from 'components';
 import { Formik } from 'formik'
 import { CommonActions } from 'services/global'

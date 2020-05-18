@@ -8,28 +8,13 @@ import {
   ModalHeader, 
   ModalBody,
   ModalFooter,
-} from 'reactstrap'
+} from 'components/reactstrap'
 import * as moment from 'moment/moment'
 
 import { Button } from 'components';
 
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
-
-const EVENT_OPTIONS = [
-    { value: 'order:created', label: 'order:created' },
-    { value: 'order:updated', label: 'order:updated' },
-    { value: 'order:partial', label: 'order:partial' },
-    { value: 'order:paid', label: 'order:paid' },
-    { value: 'order:cancelled', label: 'order:cancelled' },
-    { value: 'product:created', label: 'product:created' },
-    { value: 'product:edited', label: 'product:edited' },
-    { value: 'product:stock', label: 'product:stock' },
-    { value: 'query:created', label: 'query:created' },
-    { value: 'query:replied', label: 'query:replied' },
-    { value: 'feedback:received', label: 'feedback:received' }
-]
-
 
 class ShowWebhookLogModal extends React.Component {
   

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { api } from 'utils'
 import { bindActionCreators } from 'redux'
-import { Card, Row, Col } from 'reactstrap'
+import { Card, Row, Col } from 'components/reactstrap'
 import { CommonActions } from 'services/global'
 import { getInvoiceInfo, downloadInvoice } from './actions'
 import { Loader } from 'components'
@@ -21,7 +21,6 @@ import sellix_logo from 'assets/images/Sellix_logo.svg'
 import 'react-circular-progressbar/dist/styles.css';
 
 import './style.scss'
-
 
 
 
@@ -316,7 +315,7 @@ class Invoice extends React.Component {
                               </div>
                               {!loading && innerComponent}
 
-                              <div className={"bottom order-detail-info mt-4 p-4 " + ((isQrMode || +invoice.status === 1 || +invoice.status === 2) && "no-padding")} style={{ borderRadius: "3px", overflow: "hidden" }}>
+                              <div className={"bottom order-detail-info mt-4 p-4 " + ((isQrMode || +invoice.status === 1 || +invoice.status === 2) && "no-padding")  + (invoice.status == 2 ? " w-100" : "")} style={{ borderRadius: "3px", overflow: "hidden" }}>
 
                                 {(+invoice.status === 1 || fakePayPalSuccess) && <AlertSuccess />}
 
@@ -376,7 +375,7 @@ class Invoice extends React.Component {
 
                         {innerComponent}
 
-                        <div className={"bottom order-detail-info p-4 " + ((isQrMode || +invoice.status === 1 || +invoice.status === 2) && "no-padding")} style={{ borderRadius: "3px", overflow: "hidden" }}>
+                        <div className={"bottom order-detail-info p-4 " + ((isQrMode || +invoice.status === 1 || +invoice.status === 2) && "no-padding")  + (invoice.status == 2 ? " w-100" : "") } style={{ borderRadius: "3px", overflow: "hidden" }}>
 
                           {(+invoice.status === 1 || fakePayPalSuccess) && <AlertSuccess />}
 

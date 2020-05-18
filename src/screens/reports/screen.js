@@ -1,14 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Input
-} from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Col, Input } from 'components/reactstrap'
 import config from 'constants/config'
 import { Button } from 'components';
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'

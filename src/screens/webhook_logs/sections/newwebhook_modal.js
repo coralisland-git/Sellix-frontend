@@ -10,7 +10,7 @@ import {
   ModalHeader, 
   ModalBody,
   ModalFooter,
-} from 'reactstrap'
+} from 'components/reactstrap'
 import Select from 'react-select'
 import { Button } from 'components';
 

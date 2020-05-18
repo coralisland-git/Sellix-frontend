@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { api } from 'utils'
 import { Loading } from 'components'
-import { Container } from 'reactstrap'
+import { Container } from 'components/reactstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { CommonActions } from 'services/global'

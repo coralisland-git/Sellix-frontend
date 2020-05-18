@@ -51,9 +51,6 @@ const StripeForm = (props) => {
 
   if(isSuccess) {
       return ""
-    //   return <div style={{textAlign: 'center'}}>
-    //       <SuccessIndicator size='96px' color='#613bea' />
-    //   </div>
   }
  
   return ( <>

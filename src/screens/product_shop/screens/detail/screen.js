@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { converter } from 'constants/config'
-import { Card, Row, Col, Input } from 'reactstrap'
+import { Card, Row, Col, Input } from 'components/reactstrap'
 import { CommonActions } from 'services/global'
 import { Loader, Affix } from 'components'
 import StockInfo from "./stock_info";

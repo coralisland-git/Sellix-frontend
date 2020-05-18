@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "reactstrap";
+import { Container } from "components/reactstrap";
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
 import php from 'react-syntax-highlighter/dist/esm/languages/hljs/php'
 import sunburst from 'react-syntax-highlighter/dist/esm/styles/hljs/sunburst';

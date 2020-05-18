@@ -9,7 +9,7 @@ import {
   Modal,
   ModalHeader, 
   ModalBody,
-} from 'reactstrap'
+} from 'components/reactstrap'
 import { Spin } from 'components'
 import { Formik } from 'formik';
 import * as Yup from "yup";

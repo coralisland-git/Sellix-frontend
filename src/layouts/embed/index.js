@@ -1,20 +1,12 @@
 import React, { Suspense } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import * as router from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { Container } from 'reactstrap'
-import {
-  AppAside,
-  AppBreadcrumb,
-  AppHeader,
-  AppSidebar,
-  AppSidebarNav,
-} from '@coreui/react'
+import { Container } from 'components/reactstrap'
 import { ToastContainer, toast } from 'react-toastify'
-import { ThemeProvider, createGlobalStyle  } from 'styled-components';
-import { darkTheme, lightTheme } from 'layouts/theme/theme'
+import { ThemeProvider  } from 'styled-components';
+import { lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
 import { paymentRoutes } from 'routes'

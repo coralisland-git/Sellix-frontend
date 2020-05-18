@@ -8,12 +8,10 @@ import {
   MobileView
 } from "react-device-detect";
 
-import { Container } from 'reactstrap'
-import {
-  AppHeader,
-  AppSidebar,
-  AppSidebarNav2 as AppSidebarNav,
-} from '@coreui/react'
+import { Container } from 'components/reactstrap'
+import AppSidebarNav from '@coreui/react/es/SidebarNav2'
+import AppSidebar from '@coreui/react/es/Sidebar'
+import AppHeader from '@coreui/react/es/Header'
 import { ToastContainer, toast } from 'react-toastify'
 
 import { ThemeProvider } from 'styled-components';

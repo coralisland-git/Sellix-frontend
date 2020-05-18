@@ -2,10 +2,8 @@ import React from 'react'
 import {
   Col,
   Container,
-  Row,
-  Button,
-  Collapse
-} from 'reactstrap'
+  Row
+} from 'components/reactstrap'
 
 import './style.scss'
 
@@ -117,20 +115,15 @@ class Fees extends React.Component {
                                 </div>
                             </div>
                             <div className="content p-2">
-                                {/* <p className="small text-primary">
-                                  {
-                                    'Sellix does not take any additional fee to process Bitcoin invoices.'
-                                  }
-                                </p> */}
-                                <p className="small1 text-primary">
-                                  Transaction Fees: <b>${bitcoin.transaction_fee_usd || 0}</b>
-                                </p>
-                                <p className="small1 text-primary">Sellix Fees: <img src={service2} className="mr-1" width="17" height="17"/>
-                                    <b>{bitcoin.site_fee_low_price || 0} (${bitcoin.site_fee_low_price_usd || 0})</b>
-                                </p>
-                                <p className="small1 text-primary mt-2 lh-1">
-                                If the order is less than ${bitcoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
-                                </p>
+                              <p className="small1 text-primary">
+                                Transaction Fees: <b>${bitcoin.transaction_fee_usd || 0}</b>
+                              </p>
+                              <p className="small1 text-primary">Sellix Fees: <img src={service2} className="mr-1" width="17" height="17"/>
+                                  <b>{bitcoin.site_fee_low_price || 0} (${bitcoin.site_fee_low_price_usd || 0})</b>
+                              </p>
+                              <p className="small1 text-primary mt-2 lh-1">
+                              If the order is less than ${bitcoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                              </p>
                             </div>
                         </div>
                     </Col>
@@ -143,20 +136,15 @@ class Fees extends React.Component {
                                 </div>
                             </div>
                             <div className="content p-2">
-                              {/* <p className="small text-primary">
-                                {
-                                  'Sellix does not take any additional fee to process Litecoin invoices.'
-                                }
-                              </p> */}
-                                <p className="small1 text-primary">
-                                    Transaction Fees: <b>${litecoin.transaction_fee_usd || 0}</b>
-                                </p>
-                                <p className="small1 text-primary">Sellix Fees: <img src={service3} className="mr-1" width="17" height="17"/>
-                                    <b>{litecoin.site_fee_low_price || 0} (${litecoin.site_fee_low_price_usd || 0})</b>
-                                </p>
-                                <p className="small1 text-primary mt-2 lh-1">
-                                If the order is less than ${litecoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
-                                </p>
+                              <p className="small1 text-primary">
+                                  Transaction Fees: <b>${litecoin.transaction_fee_usd || 0}</b>
+                              </p>
+                              <p className="small1 text-primary">Sellix Fees: <img src={service3} className="mr-1" width="17" height="17"/>
+                                  <b>{litecoin.site_fee_low_price || 0} (${litecoin.site_fee_low_price_usd || 0})</b>
+                              </p>
+                              <p className="small1 text-primary mt-2 lh-1">
+                              If the order is less than ${litecoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                              </p>
                             </div>
                         </div>
                     </Col>
@@ -169,17 +157,12 @@ class Fees extends React.Component {
                                 </div>
                             </div>
                             <div className="content p-2">
-                              {/* <p className="small text-primary">
-                                {
-                                  'Sellix does not take any additional fee to process Ethereum invoices.'
-                                }
-                              </p> */}
-                                <p className="small1 text-primary">
-                                    Transaction Fees: <b>{(ethereum.transaction_fee || 0).toFixed(8)} (${ethereum.transaction_fee_usd || 0})</b>
-                                </p>
-                                <p className="small1 text-primary mt-2 lh-1">Sellix Fees: <img src={service4} className="mr-1" width="17" height="17"/>
-                                    <b>{site_fee_percentage}% over the total</b>
-                                </p>
+                              <p className="small1 text-primary">
+                                  Transaction Fees: <b>{(ethereum.transaction_fee || 0).toFixed(8)} (${ethereum.transaction_fee_usd || 0})</b>
+                              </p>
+                              <p className="small1 text-primary mt-2 lh-1">Sellix Fees: <img src={service4} className="mr-1" width="17" height="17"/>
+                                  <b>{site_fee_percentage}% over the total</b>
+                              </p>
                             </div>
                         </div>
                     </Col>
@@ -194,20 +177,15 @@ class Fees extends React.Component {
                           </div>
                       </div>
                       <div className="content p-2">
-                          {/* <p className="small text-primary">
-                            {
-                              'Sellix does not take any additional fee to process Bitcoin Cash invoices.'
-                            }
-                          </p> */}
-                          <p className="small1 text-primary">
-                            Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
-                          </p>
-                          <p className="small1 text-primary">Sellix Fees: <img src={service5} className="mr-1" width="17" height="17"/>
-                              <b>{bitcoincash.site_fee_low_price || 0} (${bitcoincash.site_fee_low_price_usd || 0})</b>
-                          </p>
-                          <p className="small1 text-primary mt-2 lh-1">
-                          If the order is less than ${bitcoincash.low_price_usd || 0}, else {site_fee_percentage}% over the total.
-                          </p>
+                        <p className="small1 text-primary">
+                          Transaction Fees: <b>${bitcoincash.transaction_fee_usd || 0}</b>
+                        </p>
+                        <p className="small1 text-primary">Sellix Fees: <img src={service5} className="mr-1" width="17" height="17"/>
+                            <b>{bitcoincash.site_fee_low_price || 0} (${bitcoincash.site_fee_low_price_usd || 0})</b>
+                        </p>
+                        <p className="small1 text-primary mt-2 lh-1">
+                        If the order is less than ${bitcoincash.low_price_usd || 0}, else {site_fee_percentage}% over the total.
+                        </p>
                       </div>
                     </div>
                   </Col>

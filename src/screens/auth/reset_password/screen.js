@@ -13,7 +13,7 @@ import {
   Row,
   FormGroup,
   Label
-} from 'reactstrap'
+} from 'components/reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 

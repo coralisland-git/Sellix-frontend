@@ -2,9 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import IntervalTimer from 'react-interval-timer'
-import {Card, CardHeader, CardBody, Row, Col, Form, FormGroup, Input} from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Col, Form, FormGroup, Input, Breadcrumb, BreadcrumbItem } from 'components/reactstrap'
 import {Button, Spin, Loader} from 'components';
-import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import {Formik} from 'formik'
 import {replyToQuery, getQueries, getQuery, closeQuery, reOpenQuery, getQueryViaWebsocket } from '../../actions'
 import {CommonActions} from 'services/global'

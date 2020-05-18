@@ -10,7 +10,7 @@ import {
   Label,
   Form,
   Input
-} from 'reactstrap'
+} from 'components/reactstrap'
 import {Button, Spin} from 'components';
 import { Formik } from 'formik';
 import * as Yup from "yup";

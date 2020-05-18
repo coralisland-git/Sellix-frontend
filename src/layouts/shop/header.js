@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Nav,
-  UncontrolledDropdown
-} from 'reactstrap'
+import { DropdownItem, DropdownMenu, DropdownToggle, Nav, UncontrolledDropdown } from 'components/reactstrap'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { AuthActions } from 'services/global'

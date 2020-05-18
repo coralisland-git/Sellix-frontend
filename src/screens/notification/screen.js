@@ -11,9 +11,9 @@ import {
   Form,     
   FormGroup,
   Label
-} from 'reactstrap'
+} from 'components/reactstrap'
 import config from 'constants/config'
-import { AppSwitch } from '@coreui/react'
+import AppSwitch from '@coreui/react/es/Switch'
 import {
   CommonActions,
   AuthActions

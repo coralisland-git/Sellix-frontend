@@ -9,7 +9,7 @@ import {
   Col,
   ButtonGroup,
   Input
-} from 'reactstrap'
+} from 'components/reactstrap'
 import { Button } from 'components';
 import { ToastContainer } from 'react-toastify'
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'

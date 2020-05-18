@@ -2,7 +2,7 @@ import React from "react";
 import NumberFormat from "react-number-format";
 import Progress from "./progress";
 import config from "constants/config";
-import { Card, CardBody, Col } from "reactstrap";
+import { Card, CardBody, Col } from "components/reactstrap";
 
 
 export const ReportRevenue = ({ revenue=0, currency, revenue_progress, isAdmin }) => {

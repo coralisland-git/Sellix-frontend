@@ -2,24 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'components';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Form,
-  Input,
-} from 'reactstrap'
+import { Card, CardHeader, CardBody, Row, Col, FormGroup, Label, Form, Input, Breadcrumb, BreadcrumbItem } from 'components/reactstrap'
 import Select from 'react-select'
 import { Loader } from 'components'
 import { Formik } from 'formik'
 import { CommonActions } from 'services/global'
 import { createBlacklist } from './actions'
 import { getBlacklist, editBlacklist } from '../../actions'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import find from "lodash/find"
 import './style.scss'
 import * as Yup from "yup";

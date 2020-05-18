@@ -9,7 +9,7 @@ import {
   Row,
   Col,
   Input
-} from 'reactstrap'
+} from 'components/reactstrap'
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import * as moment from 'moment/moment'
@@ -197,19 +197,19 @@ class Order extends React.Component {
           <Card>
             <CardHeader>
               <Row className={"align-items-center justify-content-between"}>
-                <Col md={2}>
-                  <div className="d-flex align-items-center mb-2">
+                <Col sm={12} md={2}>
+                  <div className="d-flex align-items-center mb-3">
                     <h1 className="mr-3 mb-1">{isAdmin ? "Invoices": "Orders"}</h1>
                     {!isAdmin && <>
                       <div className="filter-button-group d-flex">
-                        <a className={`filter-btn ${live_order_display == 'all'?'active':''}`} onClick={(e) => this.changeFilter('all')}>All</a>
-                        <a className={`filter-btn ${live_order_display == 'live'?'active':''}`} onClick={(e) => this.changeFilter('live')}>Live</a>
+                        <a className={`filter-btn ${live_order_display === 'all' ? 'active' : ''}`} onClick={(e) => this.changeFilter('all')}>All</a>
+                        <a className={`filter-btn ${live_order_display === 'live' ? 'active' : ''}`} onClick={(e) => this.changeFilter('live')}>Live</a>
                       </div>
                     </>}
                   </div>
                 </Col>
-                <Col md={8}>
-                  <div className="d-flex justify-content-end">
+                <Col sm={12} md={8}>
+                  <div className="d-flex flex-sm-wrap justify-content-sm-between justify-content-end">
                     <Button color={"primary"} className={"mr-4"} onClick={this.updateTable}>Refresh</Button>
                     <div className="white mr-4">
                       <Select
@@ -220,12 +220,13 @@ class Order extends React.Component {
                           name="search_status"
                           placeholder={"Filter By Status"}
                           value={search_status}
+                          isSearchable={false}
                           onChange={value => {
                             this.setState({search_status: value})
                           }}
                       />
                     </div>
-                    <div className="searchbar white">
+                    <div className="searchbar white w-100 mt-sm-3">
                       <i className="fas fa-search"/>
                       <Input placeholder="Search..."
                              className="header-search-input"

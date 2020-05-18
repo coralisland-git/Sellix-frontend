@@ -9,7 +9,7 @@ import {
   Modal,
   ModalHeader, 
   ModalBody,
-} from 'reactstrap'
+} from 'components/reactstrap'
 import Select from 'react-select'
 import { Button } from 'components';
 import { Formik } from 'formik';

@@ -7,12 +7,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { landingRoutes } from 'routes'
 import { AuthActions, CommonActions } from 'services/global'
 
-import {
-    Collapse,
-    Navbar,
-    NavbarBrand,
-    Nav
-} from 'reactstrap'
+import { Collapse, Navbar, NavbarBrand, Nav } from 'components/reactstrap'
 import { Button } from 'components'
 import sellix_logo from 'assets/images/Sellix_logo_white.svg'
 import sellix_logo_footer from 'assets/images/Sellix_logo.svg'

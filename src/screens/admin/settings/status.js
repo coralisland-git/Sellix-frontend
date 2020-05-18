@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Col, FormGroup, Label, Input, Form, Row} from 'reactstrap'
+import { Col, FormGroup, Label, Input, Form, Row } from 'components/reactstrap'
 import { Loader, Button } from 'components'
 import { getStatus, updateStatus } from './actions'
 import { CommonActions } from 'services/global'

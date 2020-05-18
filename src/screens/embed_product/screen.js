@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
+import { Card, CardBody, CardHeader, Col, Row } from "components/reactstrap";
 import { Loader, Button } from 'components'
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
 import javascript from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
