@@ -6,8 +6,10 @@ import { Card, CardBody, Col } from "components/reactstrap";
 
 export const ReportRevenue = ({ revenue = 0, currency, revenue_progress, isAdmin }) => {
 
-	let toString = revenue && +revenue > 0 && revenue || 0
-	let value = toString > 0 ? toString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
+	let value = Number(revenue)
+		.toFixed(2)
+		.toString()
+		.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 	return <Col lg={3}>
 		<Card>
@@ -99,15 +101,17 @@ export const ReportQueries = ({ queries_count, queries_count_progress }) => {
 
 export const ReportFee = ({ fee_revenue = 0, currency }) => {
 
-	let toString = fee_revenue && +fee_revenue > 0 && fee_revenue || 0
-	let value = toString > 0 ? toString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
+	let value = Number(fee_revenue)
+		.toFixed(2)
+		.toString()
+		.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 	return <Col lg={3}>
 		<Card>
 			<CardBody className="p-4 bg-white">
 				<p className="report-title">Site Revenue</p>
 				<div className="d-flex justify-content-between align-items-center">
-					<h3 className="text-primary mb-0">{config.CURRENCY_LIST[currency]}{+value ? Number(value).toFixed(2) : 0}</h3>
+					<h3 className="text-primary mb-0">{config.CURRENCY_LIST[currency]}{Number(value).toFixed(2)}</h3>
 					&nbsp;
 				</div>
 				<div className="progress-xs mt-3 progress">
