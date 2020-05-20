@@ -38,8 +38,8 @@ class ShopGroupModal extends React.Component {
         <span>{product.title}</span>
 
         <span className={isRatingGold ? "text-gold ml-2" : "ml-2"} >
-          <span className={isRatingGold ? "text-gold mr-2 position-relative" : "mr-2 position-relative"}>
-            <i className="fas fa-star" style={{ fontSize: ".8rem" }}/>
+          <span className={isRatingGold ? "text-gold mr-1 position-relative" : "mr-1 position-relative"} style={{ top: "-1px" }}>
+            <i className="fas fa-star" style={{ fontSize: ".7rem" }}/>
           </span>
           <span>{rating.toFixed(2)}</span>
         </span>
