@@ -11,6 +11,7 @@ import { tableOptions } from 'constants/tableoptions'
 
 import './style.scss'
 import { getQueries } from './actions'
+import * as moment from "moment";
 
 
 const user = window.localStorage.getItem('userId')
@@ -48,7 +49,6 @@ class Queries extends React.Component {
         break;
     }
 
-    console.log(row.status)
     return row.status ?
         <div className={`badge badge-${badge}`} style={{ textTransform: "capitalize" }}>
           {row.status === 'userreply' ? "Answered" : row.status === 'customerreply' ? "Customer Reply" : row.status}
@@ -62,23 +62,7 @@ class Queries extends React.Component {
 
   renderQueryData = () => this.state.filterValue === 'noSorting' ? this.props.queries_list : filter(this.props.queries_list, query => query.status === this.state.filterValue)
 
-  renderTime(cell, row) {
-    let newDate = 0;
-
-    if (row.created_at) {
-      newDate = (Date.now() - (+row.created_at * 1000)) / (3600 * 24 * 1000)
-      if(newDate > 0){
-        if(newDate === 1){
-          newDate = `${newDate.toFixed(0)} day ago`
-        } else {
-          newDate = `${newDate.toFixed(0)} days ago`
-        }
-      }
-      return <div><p>{newDate}</p></div>
-    } else {
-      return <p className="caption">No specified</p>
-    }
-  }
+  renderTime = (cell, row) => row.created_at ? <div><p>{moment(row.created_at * 1000).format("DD, MMM HH:mm")}</p></div> : <p className="caption">No specified</p>
 
   replyToQuery = (e, id) => this.props.history.push({ pathname: `/dashboard/${user}/queries/${id}`})
 

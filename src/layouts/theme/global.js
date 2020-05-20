@@ -378,8 +378,4 @@ export const GlobalStyles = createGlobalStyle`
         top: 0;
         height: 100%;
     }
-
-    .currency-select > div:first-of-type {
-        height: 100%;
-    }
 `

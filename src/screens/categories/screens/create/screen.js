@@ -1,55 +1,24 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Form,
-  Col,
-  FormGroup,
-  Label,
-  Tooltip,
-  Input,
-  Breadcrumb,
-  BreadcrumbItem
-} from 'components/reactstrap'
-import { Button } from 'components';
+import { Card, CardHeader, CardBody, Row, Form, Col, FormGroup, Label, Tooltip, Input, Breadcrumb, BreadcrumbItem } from 'components/reactstrap'
+import { Spin, Button } from 'components';
 import Select from 'react-select'
 import { Formik } from 'formik';
-import { Spin } from 'components'
 import { Product } from 'screens'
-
-import {
-  CommonActions
-} from 'services/global'
-
-
+import { CommonActions } from 'services/global'
 import * as Actions from '../../actions'
-
-import './style.scss'
+import Reference from '../reference'
 import object from "yup/lib/object";
 import string from "yup/lib/string";
 import number from "yup/lib/number";
+
+import './style.scss'
 
 const Yup = {
   object,
   string,
   number,
-}
-const mapStateToProps = (state) => {
-  return ({
-    all_products: state.product.all_products
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    commonActions: bindActionCreators(CommonActions, dispatch),
-    productActions: bindActionCreators(Product.actions, dispatch),
-    actions: bindActionCreators(Actions, dispatch)
-  })
 }
 
 class CreateCategories extends React.Component {
@@ -62,7 +31,7 @@ class CreateCategories extends React.Component {
         title: '',
         unlisted: 0,
         products_bound: '',
-        sort_priority: null
+        sort_priority: 1
       },
       multiValue: []
     }
@@ -81,7 +50,8 @@ class CreateCategories extends React.Component {
   handleSubmit = (values) => {
     this.setState({ loading: true })
 
-    values.unlisted = values.unlisted ? true : false
+    values.unlisted = values.unlisted ? true : false;
+    values.sort_priority = values.sort_priority || 1;
 
     this.props.actions.createCategory(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
@@ -103,28 +73,28 @@ class CreateCategories extends React.Component {
 
   render() {
     const { loading, tooltipOpen, initialValues } = this.state
-    const { all_products } = this.props
+    const { products } = this.props
 
-    const product_options = all_products.map(pro => {return {value: pro.uniqid, label: pro.title}})
+    const product_options = products
+        .filter(({ unlisted }) => !Number(unlisted))
+        .map(pro => {return {value: pro.uniqid, label: pro.title}})
+
+    const validationSchema = Yup.object().shape({
+      title: Yup.string().required('Title is required'),
+      products_bound: Yup.string().required('Products is required')
+    })
 
     return (
       <div className="product-screen mt-3">
         <div className="animated fadeIn">
+
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
               <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Categories</a>
             </BreadcrumbItem>
           </Breadcrumb>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={(values) => {
-              this.handleSubmit(values)
-            }}
-            validationSchema={Yup.object().shape({
-              title: Yup.string().required('Title is required'),
-              products_bound: Yup.string().required('Products is required'),
-              sort_priority: Yup.number().required("Sort Priority is required").nullable()
-            })}>
+
+          <Formik initialValues={initialValues} onSubmit={this.handleSubmit} validationSchema={validationSchema}>
               {props => (
                 <Form onSubmit={props.handleSubmit}>
                   <Card>
@@ -137,23 +107,7 @@ class CreateCategories extends React.Component {
                     </CardHeader>
                     <CardBody className="mb-4 pt-3 pb-3">
                       <Row>
-                        <Col lg={3} className="p-0">
-                          <div className="page_description_card bg-grey p-3 mr-2">
-                            <h6 className="text-grey mb-3">REFERENCE</h6>
-                            <p className="page_description text-grey mb-0">
-                            Using Categories is a way to separate different types of products.
-                            <br/>
-                            <br/>
-                            Unlike normal products, categories are displayed as smaller tabs above the search bar, they do not have an image.
-                            <br/>
-                            <br/>
-                            Once selected, every other product that does not belong to that category will disappear with a super cool animation and the customer will be able to better see what he wants to purchase.
-                            <br/>
-                            <br/>
-                            In order to create a category, please fill its title, select which products should be contained in it and then, you can proceed!
-                            </p>
-                          </div>
-                        </Col>
+                        <Reference />
                         <Col lg={9}>
                           <Row>
                             <Col lg={12}>
@@ -166,15 +120,9 @@ class CreateCategories extends React.Component {
                                   placeholder="Enter Category Title"
                                   onChange={props.handleChange}
                                   value={props.values.title}
-                                  className={
-                                    props.errors.title && props.touched.title
-                                      ? "is-invalid"
-                                      : ""
-                                  }
+                                  className={props.errors.title && props.touched.title ? "is-invalid" : ""}
                                 />
-                                {props.errors.title && props.touched.title && (
-                                  <div className="invalid-feedback">{props.errors.title}</div>
-                                )}
+                                {props.errors.title && props.touched.title && <div className="invalid-feedback">{props.errors.title}</div>}
                               </FormGroup>
                             </Col>
                           </Row>
@@ -193,16 +141,12 @@ class CreateCategories extends React.Component {
                                   value={this.state.multiValue}
                                   onChange={(option) => {
                                     this.setState({
-                                      multiValue: option
+                                      multiValue: option || []
                                     })
 
-                                    props.handleChange("products_bound")(option.map(o => o.value).toString());
+                                    props.handleChange("products_bound")((option || []).map(o => o.value).toString());
                                   }}
-                                  className={
-                                    props.errors.products_bound && props.touched.products_bound
-                                      ? "is-invalid"
-                                      : ""
-                                  }
+                                  className={props.errors.products_bound && props.touched.products_bound ? "is-invalid" : ""}
                                 />
                                 {props.errors.products_bound && props.touched.products_bound && (
                                   <div className="invalid-feedback">{props.errors.products_bound}</div>
@@ -212,21 +156,22 @@ class CreateCategories extends React.Component {
                           </Row>
                           
                           <Row>
-                            <Col lg={6}>
+                            <Col lg={12}>
                               <FormGroup className="mb-3">
-                                <Label htmlFor="sort_priority">Priority</Label>
+                                <div>
+                                  <Label htmlFor="sort_priority">Priority</Label>
+                                  <p className={"mb-2 text-grey"} style={{ fontSize: ".7rem" }}>
+                                    This will be used to sort the group in your shop page with an ascending order.
+                                  </p>
+                                </div>
                                 <Input
                                   type="number"
                                   id="sort_priority"
                                   name="sort_priority"
-                                  placeholder="Sort Priority"
+                                  placeholder="Example: 1"
                                   onChange={props.handleChange}
                                   value={props.values.sort_priority}
-                                  className={props.errors.sort_priority && props.touched.sort_priority ? "is-invalid" : ""}
                                 />
-                                {props.errors.sort_priority && props.touched.sort_priority &&
-                                  <div className="invalid-feedback">{props.errors.sort_priority}</div>
-                                }
                               </FormGroup>
                             </Col>
                           </Row>
@@ -268,5 +213,16 @@ class CreateCategories extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = ({ product }) => ({
+  products: product.all_products
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  commonActions: bindActionCreators(CommonActions, dispatch),
+  productActions: bindActionCreators(Product.actions, dispatch),
+  actions: bindActionCreators(Actions, dispatch)
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCategories)

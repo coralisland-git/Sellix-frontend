@@ -25,8 +25,7 @@ const landingRoutes = [
   {
     path: '/contact',
     component: Ticket.screen,
-    name: 'Contact Us',
-    exact: true
+    name: 'Contact Us'
   },
   {
     path: '/',
