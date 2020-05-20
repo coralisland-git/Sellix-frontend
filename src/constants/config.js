@@ -112,7 +112,28 @@ export default {
     '2': 'Cancelled',
     '3': 'Confirmation',
     '4': 'Partial'
-  }
+  },
+
+  TYPE_OPTIONS: [
+    { value: 'file', label: 'File' },
+    { value: 'serials', label: 'Serials' },
+    { value: 'service', label: 'Service' },
+  ],
+
+  DELIMITER_OPTIONIS: [
+    { value: 'comma', label: 'Comma' },
+    { value: 'newline', label: 'New Line' },
+    { value: 'custom', label: 'Custom' }
+  ],
+
+  CUSTOM_TYPE: [
+    { value: 'number', label: 'Number' },
+    { value: 'text', label: 'Text' },
+    { value: 'hidden', label: 'Hidden' },
+    { value: 'largetextbox', label: 'Large Textbox' },
+    { value: 'checkbox', label: 'Checkbox' },
+  ]
+
 
 }
 

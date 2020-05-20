@@ -39,9 +39,11 @@ export const getSelfUser = () => {
       method: 'get',
       url: `/self`
     }
+
     if(!localStorage.accessToken) {
       return Promise.reject("Not logged in")
     }
+
     return authApi(data).then(res => {
       if (!res.error) {
         dispatch({
@@ -66,16 +68,13 @@ export const getSelfUser = () => {
 }
 
 
-export const getSelfUserViaWebsocket = () => {
+export const getUserNotificationsViaWebsocket = () => {
   return (dispatch) => {
-    sendAuthedWsMessage({ event: 'user' }, 'user').then(user => {
+    sendAuthedWsMessage({ event: 'notifications' }, 'notifications').then(notifications => {
       dispatch({
-        type: AUTH.SIGNED_IN
-      })
-      dispatch({
-        type: AUTH.USER_PROFILE,
+        type: AUTH.USER_NOTIFICATIONS,
         payload: {
-          data: user
+          data: notifications
         }
       })
     })

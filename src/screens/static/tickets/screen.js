@@ -34,7 +34,7 @@ class Ticket extends React.Component {
         let isLoggedin = window.localStorage.getItem('userId')
 
         if(!isLoggedin) {
-            this.props.history.push('/')
+            this.props.history.push('/auth/login')
         }
     }
 

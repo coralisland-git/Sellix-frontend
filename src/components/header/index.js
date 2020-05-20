@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledDropdown, Input, Badge } from 'components/reactstrap'
 import ReactTimeAgo from 'react-time-ago'
-import IntervalTimer from 'react-interval-timer';
-
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
 import AppNavbarBrand from '@coreui/react/es/NavbarBrand'
 import AppSidebarToggler from '@coreui/react/es/SidebarToggler'
-
+import IntervalTimer from "react-interval-timer";
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import './style.scss'
+import { AuthActions } from "../../services/global";
 
 
 const userId = window.localStorage.getItem('userId')
@@ -16,7 +17,7 @@ const userId = window.localStorage.getItem('userId')
 class Header extends Component {
 
   signOut = () => {
-    this.props.authActions.logOut()
+    this.props.logOut()
     this.props.history.push('/')
   }
 
@@ -25,13 +26,12 @@ class Header extends Component {
   }
 
   markAsRead = () => {
-    this.props.authActions.markAsRead()
+    this.props.markAsRead()
   }
 
   render() {
-    const { profile, children, theme, is_authed, isShop, history, isDocumentation, ...attributes } = this.props
-    const { notifications } = profile || {};
-    const path = this.props.history.location.pathname;
+    const { notifications, profile, theme, is_authed, isShop, history, isDocumentation } = this.props;
+    const path = history.location.pathname;
     
     return (
       <React.Fragment>
@@ -40,6 +40,12 @@ class Header extends Component {
           className={`p-2 ${isShop?'':'border-right'}`}
           href="/"
           full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
+        />
+        <IntervalTimer
+            timeout={3000}
+            callback={this.props.getUserNotificationsViaWebsocket}
+            enabled={true}
+            repeat={true}
         />
         { isDocumentation?
           <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
@@ -93,20 +99,13 @@ class Header extends Component {
                 }
               </DropdownToggle>
 
-              <IntervalTimer
-                timeout={3000}
-                callback={this.props.authActions.getSelfUserViaWebsocket}
-                enabled={true}
-                repeat={true}
-              />
-              
               <DropdownMenu right className="mt-2" style={{width: 300, maxHeight: 300, overflow: 'auto'}}>
                 <DropdownItem>
                   <div className="d-flex justify-content-between">
                     <span className="text-primary d-flex">Notification</span>
                     {
                       (notifications && notifications.length > 0) && 
-                        <span className="d-flex text-grey" onClick={this.markAsRead.bind(this)}>Mark as Read</span>
+                        <span className="d-flex text-grey" onClick={this.markAsRead}>Mark as Read</span>
                     }
                   </div>
                 </DropdownItem>
@@ -117,8 +116,7 @@ class Header extends Component {
                         <div className="notification-row">
                           <div className="d-flex justify-content-between align-items-end">
                             <p className="title mb-0">{notify.title}</p>
-                            <span className="timeago">
-                              <ReactTimeAgo date={notify.created_at*1000/1} locale="en"/></span>
+                            <span className="timeago"><ReactTimeAgo date={notify.created_at*1000} locale="en"/></span>
                           </div>
                           <p className="message mb-0 text-grey">{notify.message}</p>
                         </div>
@@ -138,7 +136,7 @@ class Header extends Component {
               <DropdownToggle className="user-name" nav>
                 <div>
                   {profile && profile.profile_attachment ?
-                    <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}} />:
+                    <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}} alt={"Sellix"}/>:
                     <i className="fas fa-user-circle text-primary avatar-icon" />
                   }
                 </div>
@@ -183,4 +181,15 @@ class Header extends Component {
   }
 }
 
-export default Header
+
+const mapDispatchToProps = (dispatch) => ({
+    getUserNotificationsViaWebsocket: bindActionCreators(AuthActions.getUserNotificationsViaWebsocket, dispatch),
+    logOut: bindActionCreators(AuthActions.logOut, dispatch),
+    markAsRead: bindActionCreators(AuthActions.markAsRead, dispatch)
+})
+
+const mapStateToProps = (state) => ({
+    notifications: state.auth.notifications,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

@@ -3,7 +3,7 @@ import { AUTH } from 'constants/types'
 const initState = {
   is_authed: false,
   profile: null,
-  notification: null,
+  notifications: [],
   settings: null
 }
 
@@ -37,18 +37,15 @@ const AuthReducer = (state = initState, action) => {
       }
 
     case AUTH.MARK_AS_READ:
-      const profile = Object.assign({}, state.profile)
-      profile.notifications = []
-
       return {
         ...state,
-        profile: profile
+        notifications: []
       }
 
-    case AUTH.NOTIFICATION:
+    case AUTH.USER_NOTIFICATIONS:
       return {
         ...state,
-        notification: Object.assign({}, payload.data)
+        notifications: payload.data
       }
 
     default:

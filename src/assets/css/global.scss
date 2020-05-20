@@ -61,6 +61,13 @@ h1, h2, h3, h4, h5, h6, th, button {
   display: block;
 }
 
+.is-invalid .react-mde textarea {
+  border: 1px solid #f86c6b !important;
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(248, 108, 107, 0.25) !important;
+  }
+}
+
 .light .image-uploader .drag-drop-area {
   &:hover {
     background-color: #f4f0ff !important;

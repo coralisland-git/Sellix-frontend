@@ -1,32 +1,16 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-	Card,
-	CardHeader,
-	CardBody,
-	Row,
-	Col,
-	FormGroup,
-	Form,
-	Label,
-	Tooltip,
-	Input,
-	BreadcrumbItem,
-	Breadcrumb
-} from 'components/reactstrap'
+import { Card, CardHeader, CardBody, Row, Col, FormGroup, Form, Label, Tooltip, Input, BreadcrumbItem, Breadcrumb } from 'components/reactstrap'
 import Select from 'react-select'
 import ReactMde from "react-mde";
-import * as Showdown from "showdown";
 import AppSwitch from '@coreui/react/es/Switch'
 import { Loader, ImageUpload, FileUpload, DataSlider, Spin, Button } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
-import config from 'constants/config'
+import config, { converter } from 'constants/config'
 import includes from "lodash/includes"
-
 import { CommonActions } from 'services/global'
-
 import './style.scss'
 
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
@@ -46,62 +30,6 @@ const Yup = {
 	number
 }
 const user = window.localStorage.getItem('userId')
-
-
-
-const mapStateToProps = (state) => {
-	return ({
-	})
-}
-const mapDispatchToProps = (dispatch) => {
-	return ({
-		commonActions: bindActionCreators(CommonActions, dispatch),
-		actions: bindActionCreators(ProductActions, dispatch)
-	})
-}
-
-const converter = new Showdown.Converter({
-	tables: true,
-	simplifiedAutoLink: true,
-	strikethrough: true,
-	tasklists: true,
-	simpleLineBreaks: true
-});
-
-const TYPE_OPTIONS = [
-	{ value: 'file', label: 'File' },
-	{ value: 'serials', label: 'Serials' },
-	{ value: 'service', label: 'Service' },
-]
-
-const DELIMITER_OPTIONIS = [
-	{ value: 'comma', label: 'Comma' },
-	{ value: 'newline', label: 'New Line' },
-	{ value: 'custom', label: 'Custom' }
-]
-
-const CUSTOM_TYPE = [
-	{ value: 'number', label: 'Number' },
-	{ value: 'text', label: 'Text' },
-	{ value: 'hidden', label: 'Hidden' },
-	{ value: 'largetextbox', label: 'Large Textbox' },
-	{ value: 'checkbox', label: 'Checkbox' },
-	
-]
-
-const CURRENCY_LIST = [
-	{ value: 'USD', label: 'USD'},
-	{ value: 'EUR', label: 'EUR'},
-	{ value: 'JPY', label: 'JPY'},
-	{ value: 'GBP', label: 'GBP'},
-	{ value: 'AUD', label: 'AUD'},
-	{ value: 'CAD', label: 'CAD'},
-	{ value: 'CHF', label: 'CHF'},
-	{ value: 'CNY', label: 'CNY'},
-	{ value: 'SEK', label: 'SEK'},
-	{ value: 'NZD', label: 'NZD'},
-	{ value: 'PLN', label: 'PLN'},
-]
 
 
 class EditProduct extends React.Component {
@@ -125,14 +53,14 @@ class EditProduct extends React.Component {
 				title: '',
 				price: 0,
 				description: '',
-				currency: 'USD',
+				currency: config.CURRENCY_OPTIONS[0],
 				gateways: '',
 				type: 'file',
 				serials: '',
 				service_text: '',
 				file_stock: -1,
 				service_stock: -1,
-				stock_delimiter: DELIMITER_OPTIONIS[0].value,
+				stock_delimiter: config.DELIMITER_OPTIONIS[0].value,
 				quantity_min: 0,
 				quantity_max: 0,
 				delivery_text: '',
@@ -149,8 +77,8 @@ class EditProduct extends React.Component {
 			showFileStock: false,
 			showServiceStock: false,
 			gateways: {},
-			type: TYPE_OPTIONS[0],
-			delimiter: DELIMITER_OPTIONIS[0],
+			type: config.TYPE_OPTIONS[0],
+			delimiter: config.DELIMITER_OPTIONIS[0],
 			custom_fields: [],
 			webhook_fields: []
 		}
@@ -233,7 +161,7 @@ class EditProduct extends React.Component {
 
 	addCustomField() {
 		const custom_fields = Object.assign([], this.state.custom_fields)
-		custom_fields.push({name: '', type: CUSTOM_TYPE[0], required: false})
+		custom_fields.push({name: '', type: config.CUSTOM_TYPE[0], required: false})
 
 		this.setState({custom_fields: custom_fields})
 	}
@@ -252,7 +180,7 @@ class EditProduct extends React.Component {
 		this.setState({custom_fields: custom_fields})
 	}
 
-	handleSubmit(values) {
+	handleSubmit = (values) => {
 		const admin = includes(window.location.pathname, 'admin')
 		this.setState({saving: true})
 		const { gateways, custom_fields, showFileStock, showServiceStock, images, files, webhook_fields } = this.state
@@ -321,12 +249,12 @@ class EditProduct extends React.Component {
         let product = res.data.product
         let gateways = {}
         let custom_fields = JSON.parse(product.custom_fields)['custom_fields'] || []
-        let type = TYPE_OPTIONS.filter(type => type.value==product.type)
-		let delimiter = DELIMITER_OPTIONIS[0]
+        let type = config.TYPE_OPTIONS.filter(type => type.value==product.type)
+		let delimiter = config.DELIMITER_OPTIONIS[0]
 		let serials = ''
 
         custom_fields = custom_fields.map(field => { 
-          let c_type = CUSTOM_TYPE.filter(type => type.value==field.type)
+          let c_type = config.CUSTOM_TYPE.filter(type => type.value==field.type)
           return {...field, type: c_type[0]}
         })
 
@@ -335,10 +263,10 @@ class EditProduct extends React.Component {
 		})
 		
 		if(product.stock_delimiter == ',')
-			delimiter = DELIMITER_OPTIONIS[0]
+			delimiter = config.DELIMITER_OPTIONIS[0]
 		else if(product.stock_delimiter == '\n')
-			delimiter = DELIMITER_OPTIONIS[1]
-		else delimiter = DELIMITER_OPTIONIS[2]
+			delimiter = config.DELIMITER_OPTIONIS[1]
+		else delimiter = config.DELIMITER_OPTIONIS[2]
 
 		product.serials = product.serials.join(product.stock_delimiter)
 		product.price = product.price_display
@@ -346,7 +274,7 @@ class EditProduct extends React.Component {
         this.setState({
 		  initialValues: {
 			  ...product,
-			  currency: CURRENCY_LIST.find(x => x.value === product.currency)
+			  currency: config.CURRENCY_OPTIONS.find(x => x.value === product.currency)
 		  },
 		  delimiter: delimiter,
 		  serials: serials,
@@ -402,7 +330,31 @@ class EditProduct extends React.Component {
 			delimiter,
 			custom_fields,
 			webhook_fields
-		} = this.state
+		} = this.state;
+
+		const validationSchema = Yup.object().shape({
+			title: Yup.string().required('Title is required'),
+			price: Yup.number().required('Price is required'),
+			description: Yup.string(),
+			currency: Yup.string().required('Currency is required'),
+			type: Yup.string(),
+			custom_fields: Yup.string(),
+			gateways: Yup.string(),
+			serials: Yup.string(),
+			service_text: Yup.string(),
+			file_stock: Yup.number(),
+			service_stock: Yup.number(),
+			quantity_min: Yup.number(),
+			quantity_max: Yup.number(),
+			stock_delimiter: Yup.string(),
+			delivery_text: Yup.string(),
+			crypto_confirmations: Yup.number(),
+			max_risk_level: Yup.number(),
+			unlisted: Yup.number(),
+			private: Yup.number(),
+			block_vpn_proxies: Yup.number(),
+			sort_priority: Yup.number(),
+		})
 
 		return (
 			<div className="create-product-screen mt-3">
@@ -414,36 +366,7 @@ class EditProduct extends React.Component {
 							</a>
 						</BreadcrumbItem>
 					</Breadcrumb>
-					<Formik
-						noValidate="noValidate"
-						initialValues={initialValues}
-						onSubmit={(values) => {
-							this.handleSubmit(values)
-						}}
-						enableReinitialize={true}
-						validationSchema={Yup.object().shape({
-							title: Yup.string().required('Title is required'),
-							price: Yup.number().required('Price is required'),
-							description: Yup.string(),
-							currency: Yup.string().required('Currency is required'),
-							type: Yup.string(),
-							custom_fields: Yup.string(),
-							gateways: Yup.string(),
-							serials: Yup.string(),
-							service_text: Yup.string(),
-							file_stock: Yup.number(),
-							service_stock: Yup.number(),
-							quantity_min: Yup.number(),
-							quantity_max: Yup.number(),
-							stock_delimiter: Yup.string(),
-							delivery_text: Yup.string(),
-							crypto_confirmations: Yup.number(),
-							max_risk_level: Yup.number(),
-							unlisted: Yup.number(),
-							private: Yup.number(),
-							block_vpn_proxies: Yup.number(),
-							sort_priority: Yup.number(),
-						})}>
+					<Formik noValidate="noValidate" initialValues={initialValues} onSubmit={this.handleSubmit} enableReinitialize={true} validationSchema={validationSchema}>
 							{props => (
 								<Form onSubmit={props.handleSubmit}>
 									<Card>
@@ -526,7 +449,7 @@ class EditProduct extends React.Component {
 																				</div>
 																				<div style={{marginLeft: -10}}>
 																					<Select
-																						options={CURRENCY_LIST}
+																						options={config.CURRENCY_OPTIONS}
 																						classNamePrefix={"react-select"}
 																						id="currency"
 																						name="currency"
@@ -730,7 +653,7 @@ class EditProduct extends React.Component {
 																			<Label htmlFor="product_code">Type</Label>
 																			<Select classNamePrefix={"react-select"}
 																				placeholder="Type" 
-																				options={TYPE_OPTIONS}
+																				options={config.TYPE_OPTIONS}
 																				isSearchable={false}
 																				className="mb-3"
 																				value={this.state.type}
@@ -802,7 +725,7 @@ class EditProduct extends React.Component {
 																				<Select
 																					classNamePrefix={"react-select"}
 																					placeholder="Type" 
-																					options={DELIMITER_OPTIONIS}
+																					options={config.DELIMITER_OPTIONIS}
 																					isSearchable={false}
 																					className="mb-3"
 																					id="stock_delimiter"
@@ -962,7 +885,7 @@ class EditProduct extends React.Component {
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
 																								<Select
 																									classNamePrefix={"react-select"}
-																									options={CUSTOM_TYPE}
+																									options={config.CUSTOM_TYPE}
 																							        isSearchable={false}
 																									value={field.type}
 																									onChange={(option) => {
@@ -1192,4 +1115,10 @@ class EditProduct extends React.Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProduct)
+
+const mapDispatchToProps = (dispatch) => ({
+	commonActions: bindActionCreators(CommonActions, dispatch),
+	actions: bindActionCreators(ProductActions, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(EditProduct)

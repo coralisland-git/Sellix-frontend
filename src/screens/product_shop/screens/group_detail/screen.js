@@ -36,12 +36,16 @@ class ShopGroupModal extends React.Component {
     return <div className={"option-select-option " + (isSelected && "is-selected") + " " + (isDisabled && "is-disabled")}>
       <div>
         <span>{product.title}</span>
-        <span className={isRatingGold ? "text-gold" : ""} style={{marginLeft: '10px'}}>
-          <span className={isRatingGold ? "text-gold" : ""} style={{fontSize: '18px', position: 'relative'}}>⭑</span>
-          {rating.toFixed(2)}
+
+        <span className={isRatingGold ? "text-gold ml-2" : "ml-2"} >
+          <span className={isRatingGold ? "text-gold mr-1 position-relative" : "mr-1 position-relative"} style={{ top: "-1px" }}>
+            <i className="fas fa-star" style={{ fontSize: ".7rem" }}/>
+          </span>
+          <span>{rating.toFixed(2)}</span>
         </span>
+
       </div>
-      <div style={{margin: '2px 0'}}>
+      <div style={{ marginTop: '.3rem' }}>
         <span className="price">{`${config.CURRENCY_LIST[product.currency]}${product.price_display}`}</span>
         <span style={{fontSize: '6px', position: 'relative', top: '-3px', marginLeft: '5px', marginRight: '5px'}}>
           {'  ●  '}
