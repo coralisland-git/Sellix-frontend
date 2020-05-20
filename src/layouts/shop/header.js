@@ -61,17 +61,17 @@ class Header extends Component {
                       </DropdownItem>
                     }
                     <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
-                      <i className={"far fa-circle fa-md"} /> Dashboard
+                      <i className={"nav-icon fas fa-home fa-md"} /> Dashboard
                     </DropdownItem>
                     <DropdownItem className={'active'} onClick={() => this.props.history.push(`/${userId}`)}>
-                      <i className={"far fa-dot-circle fa-md"} /> Your Shop
+                      <i className={"nav-icon fas fa-shopping-basket fa-md"} /> Your Shop
                     </DropdownItem>
                     <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
-                      <i className={"far fa-circle fa-md"} /> Settings
+                      <i className={"nav-icon fas fa-cog fa-md"} /> Settings
                     </DropdownItem>
                     
                     <DropdownItem onClick={() => this.signOut()}>
-                      <i className={"far fa-circle fa-md"} /> Sign Out
+                      <i className={"fa fa-sign-out-alt"} /> Sign Out
                     </DropdownItem>
                   </DropdownMenu>:
                   <DropdownMenu right className="mt-2">

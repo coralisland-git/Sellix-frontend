@@ -61,20 +61,6 @@ export const GlobalStyles = createGlobalStyle`
         i {color: ${({ theme }) => theme.headerDropDownColor};}
     }
 
-    .order-screen {
-        .text-completed {
-            color: ${({ theme }) => theme.textCompleted} !important;
-        }
-        .text-pending {
-            color: ${({ theme }) => theme.textPending} !important;
-        }
-        .text-cancelled {
-            color: ${({ theme }) => theme.textCancelled} !important;
-        }
-        .text-partial {
-            color: ${({ theme }) => theme.textPartial} !important;
-        }
-    }
 
     .shop-container .app-header .dropdown-item:hover,
     .shop-container .app-header .dropdown-item.active,
@@ -85,7 +71,9 @@ export const GlobalStyles = createGlobalStyle`
         i {color: ${({ theme }) => theme.headerDropDownActiveColor} !important;}
     }
 
-    
+    .order-detail-screen .webhook-badge {
+        background-color: ${({ theme }) => theme.webhookBadge} !important;
+    }
 
     .admin-container .sidebar {
         background: ${({ theme }) => theme.body};
@@ -194,6 +182,7 @@ export const GlobalStyles = createGlobalStyle`
         background: ${({ theme }) => theme.cardBody} !important;
     }
 
+    .app-header .navbar-nav .dropdown-menu-right,
     .shop-container .app-header .dropdown-item,
     .admin-container .app-header .dropdown-item {
         background: ${({ theme }) => theme.dropdownColor} !important;

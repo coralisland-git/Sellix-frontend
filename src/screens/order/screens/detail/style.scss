@@ -39,12 +39,13 @@
   }
 
   span {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .small-badge {
     font-size: 12px;
-    padding: 3px 10px;
+    padding: 5px 10px;
+    height: 25px;
     border-radius: 3px;
     margin-bottom: 9px !important;
     margin-left: 10px !important;
@@ -62,6 +63,61 @@
     border-radius: 3px;
     font-size: 12px;
     margin-left: 5px;
+  }
+
+
+  .text-completed {
+    color: #34C15B;
+  }
+  .text-pending {
+    color: #F76A1A;
+  }
+  .text-cancelled {
+    color: #938EBA;
+  }
+  .text-partial {
+    color: #8EAEFF;
+  }
+
+  .webhook-badge {
+    padding: 4px 8px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .order-badge {
+    width: fit-content;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 25px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+  }
+
+  .badge-pending {
+    background-color: rgba(247, 106, 26, 0.2);
+  }
+
+  .badge-partial {
+    background-color: rgba(142, 174, 255, 0.2);
+  }
+
+  .badge-cancelled {
+    background-color: rgba(147, 142, 186, 0.2);
+  }
+
+  .badge-completed {
+    background-color: rgba(52, 193, 91, 0.2);
+  }
+
+  .orderHeaderButtons {
+    button {
+      min-height: 40px !important;
+    }
   }
 
   .avatar {

@@ -193,13 +193,16 @@ class OrderDetail extends React.Component {
                   <Row className="">
                     <Col lg={12}>
                       <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
-                        <h4 className="title">View Order {order.developer_invoice == '1' &&
+                        <h4 className="title d-flex">View Order {order.developer_invoice == '1' &&
                           <span className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
                             Developer
                           </span>
                         }
-                        <span className={`small-badge badge-${config.ORDER_STATUS[order.status] && config.ORDER_STATUS[order.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
-                          {config.ORDER_STATUS[order.status]}
+                        <span className={`order-badge badge-${(config.ORDER_STATUS[order.status] || '').toLowerCase()} ml-2`} style={{  margin: '0 auto'}}>
+                          {+order.status === 3 && <i className={"far fa-hourglass"} style={{ fontSize: ".9rem", color: "#1d183d"}}/>}
+                          {+order.status !== 3 && <img src={config.STATUS_ICON[order.status]} alt="" />}
+                          <span className={`text-${(config.ORDER_STATUS[order.status] || '').toLowerCase()} ml-2`}>
+                            {config.ORDER_STATUS[order.status]}</span>
                         </span></h4>
                         <div className='orderHeaderButtons'>
                           {
@@ -315,82 +318,7 @@ class OrderDetail extends React.Component {
               }
             </CardBody>
           </Card>
-          <Row>
-          <Col lg={12}>
-              <Card>
-                <CardBody className="">
-                  {
-                    loading ?
-                      <Row>
-                        <Col lg={12}>
-                          <Loader />
-                        </Col>
-                      </Row>
-                    :
-                    <Row className="">
-                      <Col lg={12}>
-                        <FormGroup className="mb-4">
-                          <h4 className="title">Delivered Webhooks</h4>
-                        </FormGroup>
-                      </Col>
-                      <Col lg={12}>
-                        <Row>
-                          <Col lg={12}>
-                          <BootstrapTable
-                            options={ tableOptions() }
-                            data={order.webhooks || []}
-                            version="4"
-                            pagination
-                            striped
-                            totalSize={order.webhooks ? order.webhooks.length : 0}
-                            className="provided-custom-table"
-                            trClassName="cursor-pointer"
-                        >
-                          <TableHeaderColumn
-                            isKey
-                            dataField="url"
-                            width='30%'
-                          >
-                            URL
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="event"
-                            width='20%'
-                          >
-                            Event
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="attempts"
-                            dataAlign='center'
-                            width='10%'
-                          >
-                            Attemps
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="response_code"
-                            dataAlign='center'
-                            width='20%'
-                          >
-                            Response Code
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="created_at"
-                            dataAlign='center'
-                            dataFormat={(cell, row) => <div>{moment(new Date(row.created_at*1000)).format('DD MMM hh:mm:ss')}</div>}
-                          >
-                            Time
-                          </TableHeaderColumn>
-                        </BootstrapTable>
-                          </Col>
-                          
-                        </Row>
-                      </Col>
-                    </Row>
-                  }
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+          
           <Row>
             <Col lg={6}>
               <div>
@@ -605,7 +533,89 @@ class OrderDetail extends React.Component {
               </Card>
             </Col>
           </Row>
-          
+          <Row>
+            <Col lg={12}>
+              <Card>
+                <CardBody className="">
+                  {
+                    loading ?
+                      <Row>
+                        <Col lg={12}>
+                          <Loader />
+                        </Col>
+                      </Row>
+                    :
+                    <Row className="">
+                      <Col lg={12}>
+                        <FormGroup className="mb-4">
+                          <h4 className="title">Delivered Webhooks</h4>
+                        </FormGroup>
+                      </Col>
+                      <Col lg={12}>
+                        <Row>
+                          <Col lg={12}>
+                          <BootstrapTable
+                            options={ tableOptions() }
+                            data={order.webhooks || []}
+                            version="4"
+                            pagination
+                            striped
+                            totalSize={order.webhooks ? order.webhooks.length : 0}
+                            className="product-table"
+                            trClassName="cursor-pointer"
+                        >
+                          <TableHeaderColumn
+                            isKey
+                            dataField="url"
+                            width='30%'
+                          >
+                            URL
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="event"
+                            dataSort
+                            dataAlign="center"
+                            dataFormat={(cell, row) => <span className="webhook-badge">{row.event}</span>}
+                            width='20%'
+                          >
+                            Event
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="attempts"
+                            dataAlign='center'
+                            dataSort
+                            width='10%'
+                          >
+                            Attemps
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="response_code"
+                            dataAlign='center'
+                            dataSort
+                            dataFormat={(cell, row) => <span className="webhook-badge">{row.response_code}</span>}
+                            width='20%'
+                          >
+                            Response Code
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="created_at"
+                            dataAlign='right'
+                            dataSort
+                            dataFormat={(cell, row) => <div>{moment(new Date(row.created_at*1000)).format('DD MMM hh:mm:ss')}</div>}
+                          >
+                            Time
+                          </TableHeaderColumn>
+                        </BootstrapTable>
+                          </Col>
+                          
+                        </Row>
+                      </Col>
+                    </Row>
+                  }
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
         </div>
       </div>
     )

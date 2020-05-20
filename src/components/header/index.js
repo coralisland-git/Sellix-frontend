@@ -143,7 +143,7 @@ class Header extends Component {
               </DropdownToggle>
               {
                 is_authed? 
-                  <DropdownMenu right className="custom-dropdown-menu">
+                  <DropdownMenu right className="custom-dropdown-menu mt-3">
                     {
                       profile && profile.rank !== "0" && 
                       <DropdownItem className={path.startsWith('/admin')?'active':''} onClick={() => history.push(`/admin/dashboard`)}>
@@ -154,7 +154,7 @@ class Header extends Component {
                       <i className={path.startsWith('/dashboard')?"nav-icon fas fa-home fa-lg":"nav-icon fas fa-home fa-lg"} /> Dashboard
                     </DropdownItem>
                     <DropdownItem className={isShop?'active':''} onClick={() => this.props.history.push(`/${userId}`)}>
-                      <i className={isShop?"nav-icon fa fa-shopping-bag fa-lg" : "nav-icon fa fa-shopping-bag fa-lg"} /> Your Shop
+                      <i className={isShop?"nav-icon fas fa-shopping-basket fa-lg" : "nav-icon fas fa-shopping-basket fa-lg"} /> Your Shop
 
                     </DropdownItem>
                     <DropdownItem className={path.startsWith('/settings')?'active':''} onClick={() => this.props.history.push(`/settings/${userId}`)}>
@@ -162,7 +162,7 @@ class Header extends Component {
                     </DropdownItem>
                     
                     <DropdownItem onClick={() => this.signOut()}>
-                      <i className={path.startsWith('/signin') ? "nav-icon fa fa-sign-out fa-lg mt-4" : "fa fa-sign-out fa-lg mt-4"} /> Sign Out
+                      <i className={path.startsWith('/signin') ? "fa fa-sign-out-alt" : "fa fa-sign-out-alt"} /> Sign Out
                     </DropdownItem>
                   </DropdownMenu>:
                   <DropdownMenu right className="mt-2">

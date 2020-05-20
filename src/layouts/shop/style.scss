@@ -112,12 +112,21 @@
             width: fit-content !important;
         }
       }
+
+      .dropdown-item {
+          min-width: 90px !important;
+          font-weight: 500 !important;
+
+          i {
+              font-size: 15px;
+          }
+      }
       .nav-link {
           font-family: var(--font-family-sans-serif);
           font-size: 16px !important;
           background-color: #F5F5FE;
           border-radius: 3px !important;
-          width: 110px;
+          width: 90px;
           text-align: center;
           margin-bottom: 10px;
       }
