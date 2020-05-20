@@ -117,7 +117,7 @@ class Payments extends React.Component {
                           <FormGroup className="mb-3">
                             <div>
                               <Label htmlFor="discord_link">Discord Link</Label>
-                              <p className={"text-grey mb-2"} style={{ fontSize: ".7rem" }}>You can add your server invite link, it will be displayed next to Create a Query in the contact form.</p>
+                              <p className={"text-grey mb-2"} style={{ fontSize: ".7rem" }}>You can add your server invite link, it will be displayed next to Create a Query in the contact form</p>
                             </div>
                             <Input 
                               type="text" 
