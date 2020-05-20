@@ -41,7 +41,7 @@ class LandingLayout extends React.Component {
       this.props.getSelfUser()
     }
 
-    if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
+    if (window.localStorage.getItem('accessToken') && this.props.is_authed && this.props.match.path !== '/contact') {
       this.props.history.push(preUrl)
     }
 
