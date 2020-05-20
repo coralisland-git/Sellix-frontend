@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@coreui/coreui-pro": "^2.1.14",
     "@coreui/react": "^2.5.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
@@ -47,6 +48,7 @@
     "react-grid-dnd": "^2.1.2",
     "react-interval-timer": "^1.0.5",
     "react-json-pretty": "^2.2.0",
+    "react-loadable": "^5.5.0",
     "react-mde": "^8.2.0",
     "react-paypal-button-v2": "^2.6.1",
     "react-qrcode-logo": "https://github.com/alexeysavenkov/react-qrcode-logo#7d5b80522da840f13da3e38fdef082910ef4a907",
@@ -137,6 +139,9 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      "@babel/plugin-syntax-dynamic-import"
     ]
   }
 }

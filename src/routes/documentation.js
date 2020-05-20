@@ -6,7 +6,8 @@ import {
     {
       path: '/documentation',
       name: 'Documentation',
-      component: Documentation
+      component: Documentation,
+      exact: true
     }
   ]
   
