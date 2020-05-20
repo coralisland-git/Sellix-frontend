@@ -373,7 +373,7 @@ class Documentation extends React.Component {
                   <table className="border-table">
                     <thead>
                       <tr>
-                        <th className="table-title" colspan="3">EVENT</th>
+                        <th className="table-title" colSpan="3">EVENT</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -2522,7 +2522,7 @@ if (hash_equals($signature, $header_signature)) {
                   <table className="border-table">
                     <thead>
                       <tr>
-                        <th className="table-title" colspan="3">STATUS</th>
+                        <th className="table-title" colSpan="3">STATUS</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -4196,7 +4196,7 @@ if (hash_equals($signature, $header_signature)) {
                   <table className="border-table">
                     <thead>
                       <tr>
-                        <th className="table-title" colspan="3">STATUS</th>
+                        <th className="table-title" colSpan="3">STATUS</th>
                       </tr>
                     </thead>
                     <tbody>
