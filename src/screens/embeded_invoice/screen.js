@@ -390,18 +390,6 @@ class EmbededInvoice extends React.Component {
     }
   }
 
-  copyToClipboard = () => {
-    let { invoice, info } = this.state;
-
-    let el = document.createElement('textarea');
-        el.value = invoice.product_type === "serials" ? info.serials : invoice.product_type === "service" ? info.service_text : "";
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        this.props.tostifyAlert('success', "Copied to Clipboard.")
-  }
-
   copyAddressToClipboardOnCopied = () => {
     if(!this.state.paymentLinkSlideDownPanelShowCopy) {
       this.setState({paymentLinkSlideDownPanelShowCopy: true})

@@ -284,16 +284,7 @@ class EmbededPayment extends React.Component {
         })
         this.props.commonActions.getGeneralUserInfo(res.data.product.username)
           .then(({ user }) => {
-            if(user.shop_crisp_website_id) {
-              window.$crisp = [];
-              window.CRISP_WEBSITE_ID=user.shop_crisp_website_id;
-              const script = document.createElement("script");
-              script.src = "https://client.crisp.chat/l.js";
-              script.type = 'text/javascript';
-              script.async = true;
-              script.id = "crisp";
-              document.getElementsByTagName("head")[0].appendChild(script);
-            }
+ 
           })
           .catch((e) => {
             console.log(e)
