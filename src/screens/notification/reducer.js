@@ -1,5 +1,3 @@
-import { NOTIFICATION } from 'constants/types'
-
 const initState = {
 }
 

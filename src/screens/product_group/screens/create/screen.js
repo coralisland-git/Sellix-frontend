@@ -6,23 +6,22 @@ import Select from 'react-select'
 import { Loader, ImageUpload, Button, Spin } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
-
 import { Product } from 'screens'
-
-import { CommonActions } from 'services/global'
-
-import './style.scss'
 import object from "yup/lib/object";
 import string from "yup/lib/string";
 import number from "yup/lib/number";
+import { CommonActions } from 'services/global'
+import Reference from '../reference'
 
-
+import './style.scss'
 
 const Yup = {
 	object,
 	string,
 	number
 }
+
+
 class CreateProductGroup extends React.Component {
 
 	constructor(props) {
@@ -35,7 +34,7 @@ class CreateProductGroup extends React.Component {
 				title: "",
 				unlisted: 0,
 				products_bound: '',
-				sort_priority: null
+				sort_priority: 1
 			}
 		}
 	}
@@ -65,6 +64,7 @@ class CreateProductGroup extends React.Component {
 		this.setState({loading: true})
 
 		values.unlisted = values.unlisted ? true : false
+		values.sort_priority = values.sort_priority || 1
 		this.props.createProductGroup(values)
 			.then(res => {
 				this.props.tostifyAlert('success', res.message)
@@ -80,12 +80,14 @@ class CreateProductGroup extends React.Component {
 	render() {
 
 		const { loading, unlistedTooltipOpen, images, initialValues, multiValue } = this.state;
+		const { products, history } = this.props;
 
-		const product_options = this.props.all_products.map(({ uniqid: value, title: label }) => ({ value, label }))
+		const product_options = products
+			.filter(({ unlisted }) => !Number(unlisted))
+			.map(({ uniqid: value, title: label }) => ({ value, label }))
 
 		const validationSchema = Yup.object().shape({
 			title: Yup.string().required('Title is required'),
-			sort_priority: Yup.number().required('Priority is required').nullable(),
 			products_bound: Yup.string().required('Products is required'),
 		});
 
@@ -95,7 +97,7 @@ class CreateProductGroup extends React.Component {
 
 					<Breadcrumb className="mb-0">
 						<BreadcrumbItem active className="mb-0">
-							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Products</a>
+							<a onClick={(e) => history.goBack()}><i className="fas fa-chevron-left"/> Products</a>
 						</BreadcrumbItem>
 					</Breadcrumb>
 
@@ -105,7 +107,7 @@ class CreateProductGroup extends React.Component {
 								<Card>
 
 									<CardHeader>
-										<Row style={{alignItems: 'center'}}>
+										<Row className={"align-items-center"}>
 											<Col md={12}>
 												<h1>New Product Group</h1>
 											</Col>
@@ -115,24 +117,8 @@ class CreateProductGroup extends React.Component {
 									<CardBody className="p-4 mb-5 ">
 										{loading && <Row><Col lg={12}><Loader /></Col></Row>}
 										{!loading &&
-										<Row>
-											<Col lg={3} className="p-0">
-												<div className="page_description_card bg-grey p-3 mr-2">
-													<h6 className="text-grey mb-3">REFERENCE</h6>
-													<p className="page_description text-grey">
-														Product Groups let you organize all your items in your shop page.
-														<br/>
-														<br/>
-														They are displayed like normal products, with a card containing the image chosen, a group badge and the starting price for the cheapest product in it.
-														<br/>
-														<br/>
-														Once selected, a menu will be prompted asking to choose one of the products the group has, then the customer will be redirected to the classic purchase product page.
-														<br/>
-														<br/>
-														In order to create a group, please fill its Title, select which products should be contained in it and give it an image!
-													</p>
-												</div>
-											</Col>
+											<Row>
+											<Reference />
 											<Col lg={9} className="mt-3">
 												<Row>
 													<Col lg={12}>
@@ -171,10 +157,9 @@ class CreateProductGroup extends React.Component {
 																onBlur={() => {
 																	this.select.setState({ isOpen: true });
 																}}
-
 																onChange={(multiValue) => {
 																	this.setState({
-																		multiValue
+																		multiValue: multiValue || []
 																	})
 
 																	props.handleChange("products_bound")((multiValue || []).map(({ value }) => value).toString());
@@ -190,22 +175,22 @@ class CreateProductGroup extends React.Component {
 
 
 												<Row>
-													<Col lg={6}>
+													<Col lg={12}>
 														<FormGroup className="mb-3">
-															<Label htmlFor="title">Priority</Label>
+															<div>
+																<Label htmlFor="sort_priority">Priority</Label>
+																<p className={"mb-2 text-grey"} style={{ fontSize: ".7rem"}}>
+																	This will be used to sort the group in your shop page with an ascending order.
+																</p>
+															</div>
 															<Input
 																type="number"
 																id="sort_priority"
 																name="sort_priority"
-																placeholder="Sort Priority"
+																placeholder="Example: 1"
 																onChange={props.handleChange}
 																value={props.values.sort_priority}
-																className={props.errors.sort_priority && props.touched.sort_priority ? "is-invalid" : ""}
 															/>
-															{props.errors.sort_priority &&
-																props.touched.sort_priority &&
-																	<div className="invalid-feedback">{props.errors.sort_priority}</div>
-															}
 														</FormGroup>
 													</Col>
 												</Row>
@@ -265,9 +250,7 @@ class CreateProductGroup extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({
-	all_products: state.product.all_products
-})
+const mapStateToProps = ({ product }) => ({ products: product.all_products })
 const mapDispatchToProps = (dispatch) => ({
 	tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
 	getProductList: bindActionCreators(Product.actions.getProductList, dispatch),

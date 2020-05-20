@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getStatus, getStatusViaWebsocket } from '../../admin/settings/actions'
-
+import IntervalTimer from "react-interval-timer";
 
 import '../style.scss'
-import IntervalTimer from "react-interval-timer";
+
 
 
 class Status extends React.Component {
@@ -42,7 +42,6 @@ class Status extends React.Component {
 
         this.props.getStatusViaWebsocket()
             .then((status) => {
-
                 this.setState({
                     status: {
                         ...status.messages,

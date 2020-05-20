@@ -1,58 +1,22 @@
-import React, { Suspense } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import * as router from 'react-router-dom';
+import React, { Component, Suspense } from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  BrowserView,
-  MobileView
-} from "react-device-detect";
-
 import { Container } from 'components/reactstrap'
-import AppSidebarNav from '@coreui/react/es/SidebarNav2'
-import AppSidebar from '@coreui/react/es/Sidebar'
 import AppHeader from '@coreui/react/es/Header'
 import { ToastContainer, toast } from 'react-toastify'
-
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
-
 import { dashboardRoutes } from 'routes'
-import {
-  AuthActions,
-  CommonActions
-} from 'services/global'
-
-import {
-  mainBrowserNavigation,
-  mainMobileNavigation,
-  adminNavigation
-} from 'constants/navigation'
-
-import {
-  Header,
-  Loading,
-  SetTitle
-} from 'components'
+import { AuthActions, CommonActions } from 'services/global'
+import { Header, Loading, SetTitle } from 'components'
+import Nav from './nav'
 
 import './style.scss'
 
-const mapStateToProps = (state) => {
-  return ({
-    version: state.common.version,
-    profile: state.auth.profile,
-    is_authed: state.auth.is_authed
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    authActions: bindActionCreators(AuthActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
 
-class AdminLayout extends React.Component {
+class AdminLayout extends Component {
 
   constructor(props) {
     super(props);
@@ -66,38 +30,43 @@ class AdminLayout extends React.Component {
     document.documentElement.classList.remove('dark')
     document.documentElement.classList.add(theme);
     this.state = {
-      theme: theme
+      theme
     }
   }
 
   componentDidMount() {
+
+    const { history, location, getSelfUser, setTostifyAlertFunc, logOut } = this.props;
+
+    const userId = window.localStorage.getItem('userId')
+
     if (!window.localStorage.getItem('accessToken')) {
-      this.props.history.push('/auth/login')
+      history.push('/auth/login')
     } else {      
-      const userId = window.localStorage.getItem('userId')
-      if(this.props.location.pathname === '/webhooks'){
-        this.props.history.push(`/dashboard/${userId}/developer/webhooks/all`)
+
+      if(location.pathname === '/webhooks'){
+        history.push(`/dashboard/${userId}/developer/webhooks/all`)
       }
-      if(this.props.location.pathname === '/webhooks/simulate'){
-        this.props.history.push(`/dashboard/${userId}/developer/webhooks/logs`)        
+
+      if(location.pathname === '/webhooks/simulate'){
+        history.push(`/dashboard/${userId}/developer/webhooks/logs`)
       }
-      this.props.authActions.getSelfUser()
+
+      getSelfUser()
           .then(({ status, data }) => {
             if(status === 200) {
-               if(data.user.rank === "0") {
-                //  this.props.history.push(`/dashboard/${data.user.username}/home`)
-               }
+
             } else {
-              this.props.authActions.logOut()
-              this.props.history.push('/auth/login')
+              logOut()
+              history.push('/auth/login')
             }
           })
           .catch(err => {
-            this.props.authActions.logOut()
-            this.props.history.push('/auth/login')
+            logOut()
+            history.push('/auth/login')
           })
 
-      this.props.commonActions.setTostifyAlertFunc((status, message) => {
+      setTostifyAlertFunc((status, message) => {
         if (!message) {
           message = 'Unexpected Error'
         }
@@ -122,6 +91,7 @@ class AdminLayout extends React.Component {
     }
 
     let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+
     if (iOS) {
       for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
         let element = document.getElementsByClassName('nav-link')[i];
@@ -132,7 +102,7 @@ class AdminLayout extends React.Component {
     }
   }
 
-  changeTheme() {
+  changeTheme = () => {
     const theme = window.localStorage.getItem('theme') || 'light'
     window.localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
 
@@ -144,32 +114,15 @@ class AdminLayout extends React.Component {
     document.documentElement.classList.remove('dark')
     document.documentElement.classList.add(theme === 'light' ? 'dark' : 'light');
 
-
     this.setState({ theme: theme === 'light' ? 'dark' : 'light' })
-  }
-
-  renderNav = () => {
-    return <AppSidebar className="pt-3 mb-5" fixed display="lg">
-      <Switch>
-        <Route path="/admin">
-          <AppSidebarNav navConfig={adminNavigation} location={this.props.location} router={router} />
-        </Route>
-        <Route>
-          <BrowserView>
-            <AppSidebarNav navConfig={mainBrowserNavigation()} location={this.props.location} router={router} />
-          </BrowserView>
-          <MobileView>
-            <AppSidebarNav navConfig={mainMobileNavigation()} location={this.props.location} router={router} />
-          </MobileView>
-        </Route>
-      </Switch>
-    </AppSidebar>
   }
 
   render() {
     const containerStyle = {
       zIndex: 1999
     }
+
+    const { location } = this.props;
 
     const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
@@ -178,24 +131,25 @@ class AdminLayout extends React.Component {
         <GlobalStyles />
         <div className={"admin-container " + window.localStorage.getItem('theme') || 'light'}>
           <div className="app">
+
             <AppHeader fixed className="border-bottom">
-              <Suspense fallback={Loading()}>
-                <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} />
-              </Suspense>
+              <Header {...this.props} theme={theme} changeTheme={this.changeTheme} />
             </AppHeader>
+
             <div className="app-body">
-              {this.renderNav()}
+              <Nav location={location} />
+
               <main className="main mb-5">
                 <Container className="p-0 h-100" fluid>
                   <Suspense fallback={Loading()}>
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true} />
                     <Switch>
                       {
-                        dashboardRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) => {
-                          return redirect ?
-                              <Redirect from={path} to={pathTo} key={key} /> :
-                              <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key} />
-                        })
+                        dashboardRoutes.map(({ path, pathTo, redirect, title, component: Component }, key) => (
+                            redirect ?
+                                <Redirect from={path} to={pathTo} key={key} /> :
+                                <Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key} />
+                        ))
                       }
                     </Switch>
                   </Suspense>
@@ -209,5 +163,19 @@ class AdminLayout extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = (state) => ({
+  version: state.common.version,
+  profile: state.auth.profile,
+  is_authed: state.auth.is_authed
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getSelfUser: bindActionCreators(AuthActions.getSelfUser, dispatch),
+  logOut: bindActionCreators(AuthActions.logOut, dispatch),
+  markAsRead: bindActionCreators(AuthActions.markAsRead, dispatch),
+  setTostifyAlertFunc: bindActionCreators(CommonActions.setTostifyAlertFunc, dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminLayout)

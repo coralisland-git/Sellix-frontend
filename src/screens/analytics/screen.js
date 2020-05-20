@@ -127,7 +127,7 @@ class Analytics extends React.Component {
                   </CardBody>
 
                   <CardBody className={'mb-4'}>
-                      <h5 className={'mb-4'}>Top 3 Gateways by Orders</h5>
+                      <h5 className={'mb-4'}>Top 5 Gateways by Orders</h5>
 
                     {loading && <Row><Col lg={12}><Loader /></Col></Row>}
                     {!loading && <Row>
@@ -156,7 +156,7 @@ class Analytics extends React.Component {
 
                   <CardBody className={'mb-4'}>
 
-                      <h5 className={'mb-4'}>Top 3 Products by Revenue</h5>
+                      <h5 className={'mb-4'}>Top 5 Products by Revenue</h5>
 
                           {loading && <Row><Col lg={12}><Loader/></Col></Row>}
                           {!loading && <Row>
@@ -185,7 +185,7 @@ class Analytics extends React.Component {
                   </CardBody>
 
                   <CardBody className={'mb-4'}>
-                      <h5 className={'mb-4'}>Top 3 Products by Orders</h5>
+                      <h5 className={'mb-4'}>Top 5 Products by Orders</h5>
 
                       {loading && <Row><Col lg={12}><Loader /></Col></Row>}
                       {!loading && <Row>

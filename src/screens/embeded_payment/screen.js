@@ -6,8 +6,7 @@ import { CommonActions } from 'services/global'
 import { validateCoupon } from './actions'
 import { Formik } from 'formik';
 import { Button, Spin, Loader } from 'components'
-import * as Showdown from "showdown";
-import config from 'constants/config'
+import config, { converter } from 'constants/config'
 
 import editIcon from 'assets/images/edit.png'
 import { ReactComponent as CouponSvg } from 'assets/images/coupon.svg';
@@ -22,15 +21,6 @@ const Yup = {
   object,
   string
 }
-
-const converter = new Showdown.Converter({
-    tables: true,
-    simplifiedAutoLink: true,
-    strikethrough: true,
-    tasklists: true,
-    simpleLineBreaks: true
-});
-
 
 class EmbededPayment extends React.Component {
   

@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-const mapStateToProps = ({auth: {profile}}) => ({
-	notifications: profile ? profile.notifications.length || null : null
+const mapStateToProps = ({ auth: { notifications } }) => ({
+	notifications: notifications.length ? notifications : null
 })
 
 class SetTitle extends Component {
@@ -11,7 +11,7 @@ class SetTitle extends Component {
 		const { notifications, title } = this.props;
 
 		if (prevProps.notifications !== notifications) {
-			document.title = notifications ? `(${notifications}) ${title} | Sellix` : `${title} | Sellix`;
+			document.title = notifications ? `(${notifications.length}) ${title} | Sellix` : `${title} | Sellix`;
 		}
 	}
 
@@ -20,7 +20,7 @@ class SetTitle extends Component {
 	    if(title === 'Home') {
 		    document.title = 'Sellix: Digital Selling with Ease'
 	    }
-		document.title = notifications ? `(${notifications}) ${title} | Sellix` : `${title} | Sellix`;
+		document.title = notifications ? `(${notifications.length}) ${title} | Sellix` : `${title} | Sellix`;
 	}
 
 	render() {
