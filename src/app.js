@@ -8,9 +8,6 @@ import { Router, Route, Switch } from 'react-router-dom'
 import { configureStore } from 'services'
 import { Loading, NotFound } from 'components'
 import Shop from './layouts/shop';
-import Embed from './layouts/embed'
-import EmbedInvoice from './layouts/embed_invoice'
-
 
 import 'app.scss'
 import SingleLogo from './assets/images/single.png'
@@ -32,6 +29,15 @@ const Settings = Loadable({
   loading: () => <Loading />
 });
 
+const Embed = Loadable({
+  loader: () => import('./layouts/embed'),
+  loading: () => <Loading />
+});
+
+const EmbedInvoice = Loadable({
+  loader: () => import('./layouts/embed_invoice'),
+  loading: () => <Loading />
+});
 
 const Invoice = Loadable({
   loader: () => import('./layouts/invoice'),
@@ -108,8 +114,8 @@ export default class App extends React.Component {
             <Route path={`/payment`} name='InvoiceLayout' render={(props) => <Invoice {...props} />} />
 
             {/*Embed*/}
-            <Route path={`/prembed`} name='EmbedLayout' component={Embed} />
-            <Route path={`/ivembed`} name='EmbedInvoiceLayout' component={EmbedInvoice} />
+            <Route path={`/prembed`} name='EmbedLayout' render={(props) => <Embed {...props} />} />
+            <Route path={`/ivembed`} name='EmbedInvoiceLayout' render={(props) => <EmbedInvoice {...props} />} />
 
             <Route path={`/admin`} name='DashboardLayout' render={(props) => <Admin {...props} />} />
             <Route path={`/auth`} name='AuthLayout' render={(props) => <Auth {...props} />} />
