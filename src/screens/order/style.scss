@@ -23,16 +23,16 @@
       font-weight: 600;
     }
     .text-completed {
-      color: #087502;
+      color: #34C15B;
     }
     .text-pending {
-      color: #393939;
+      color: #F76A1A;
     }
     .text-cancelled {
-      color: #75025C;
+      color: #938EBA;
     }
     .text-partial {
-      color: #3D3AC6;
+      color: #8EAEFF;
     }
   }
   
@@ -94,7 +94,9 @@
   }
 
   .order-badge {
-    width: 70px;
+    width: fit-content;
+    padding-left: 8px;
+    padding-right: 8px;
     height: 25px;
     border-radius: 4px;
     display: flex;
@@ -103,19 +105,19 @@
   }
 
   .badge-pending {
-    background-color: #C3C0C0;
+    background-color: rgba(247, 106, 26, 0.2);
   }
 
   .badge-partial {
-    background-color: #A5E4F8;
+    background-color: rgba(142, 174, 255, 0.2);
   }
 
   .badge-cancelled {
-    background-color: #FCA2B7;
+    background-color: rgba(147, 142, 186, 0.2);
   }
 
   .badge-completed {
-    background-color: #A6FCA2;
+    background-color: rgba(52, 193, 91, 0.2);
   }
 
   .order-value {

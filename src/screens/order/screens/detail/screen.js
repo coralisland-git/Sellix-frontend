@@ -197,7 +197,10 @@ class OrderDetail extends React.Component {
                           <span className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
                             Developer
                           </span>
-                        }</h4>
+                        }
+                        <span className={`small-badge badge-${config.ORDER_STATUS[order.status] && config.ORDER_STATUS[order.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+                          {config.ORDER_STATUS[order.status]}
+                        </span></h4>
                         <div className='orderHeaderButtons'>
                           {
                             order.status && (['0', '1', '4'].includes(order.status)) &&
@@ -229,67 +232,82 @@ class OrderDetail extends React.Component {
                     </Col>
                     <Col lg={12}>
                       <Row className="flex">
-                        <Col lg={12} className="mb-5">
+                        <Col lg={12} className="mb-4">
                           <div className="d-flex align-items-center">
-                            <img src={config.PAYMENT_ICONS[order.gateway]} className="avatar mr-2"/>
-                            <div>
+                            <img src={config.PAYMENT_ICONS[order.gateway]} className="avatar mr-3"/>
+                            <div className="pb-1">
                               <p className="email text-primary mb-1 d-flex align-items-center">
                                 <a href={`mailto:${order.customer_email}`}>{order.customer_email}</a>
-                                <span className={`small-badge badge-${config.ORDER_STATUS[order.status] && config.ORDER_STATUS[order.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
-                                  {config.ORDER_STATUS[order.status]}
-                                </span>
                               </p>
                               <p className="mb-0">{order.uniqid}</p>
                             </div>
                           </div>
                         </Col>
-                        <Col lg={6}>
-                          <div className="d-flex">
+                      </Row>
+                      <p></p>
+                      <Row className="mb-4 pl-5">
+                        <Col lg={3}>
+                          <div className="d-flex flex-column">
                             <p className="title">Product</p>
-                            <p>
+                            <p className="value">
                               <Link to={link} target={"_blank"}>
                                 {order.developer_invoice == '1'?order.developer_title:(order.product && order.product.title || '')}
                               </Link>
                             </p>
                           </div>
-                          <div className="d-flex">
-                            <p className="title">Value</p>
-                            <p>{`${order.currency} ${order.total_display}`}</p>
-                          </div>
-                          <div className="d-flex">
-                            <p className="title">Created At</p>
-                            <p>{moment(new Date(order.created_at*1000)).format('DD, MMM YYYY HH:mm')}</p>
-                          </div>
-                          <div className="d-flex">
+                        </Col>
+                        <Col lg={3}>
+                          <div className="d-flex flex-column">
                             <p className="title">Quantity</p>
-                            <p>{order.quantity}</p>
+                            <p className="value">{order.quantity}</p>
                           </div>
-                          <div className="d-flex">
-                            <p className="title">Coupon</p>
-                            <p>{order.coupon_code?order.coupon_code:'No Coupon'}</p>
-                          </div>
-                          
-                          
                         </Col>
                         <Col lg={6}>
-                          <div className="d-flex">
-                            <p className="title">Gateway</p>
-                            <p>{config.PAYMENT_OPTS[order.gateway]}</p>
+                          <div className="d-flex flex-column">
+                            <p className="title">IP Address</p>
+                            <p className="value">{order.ip} {order.is_vpn_or_proxy == '1' && <span className="small-badge proxy-label">VPN/Proxy</span> }</p>
                           </div>
-                          
-                          <div className="d-flex">
-                              <p className="title">IP Address</p>
-                              <p>{order.ip} {order.is_vpn_or_proxy == '1' && <span className="small-badge proxy-label">VPN/Proxy</span> }</p>
-                            </div>
-                            <div className="d-flex">
-                              <p className="title">Device</p>
-                              <p>{order.user_agent}</p>
-                            </div>
-                            <div className="d-flex">
-                              <p className="title">Country</p>
-                              <p><i className={`flag-icon flag-icon-${order.country && order.country.toLowerCase()} mr-2`}/> 
-                                {order.location}</p>
-                            </div>
+                        </Col>
+                      </Row>
+                      <Row className="mb-4 pl-5">
+                        <Col lg={3}>
+                          <div className="d-flex flex-column">
+                            <p className="title">Value</p>
+                            <p className="value">{`${order.currency} ${order.total_display}`}</p>
+                          </div>
+                        </Col>
+                        <Col lg={3}>
+                          <div className="d-flex flex-column">
+                            <p className="title">Coupon</p>
+                            <p className="value">{order.coupon_code?order.coupon_code:'No Coupon'}</p>
+                          </div>
+                        </Col>
+                        <Col lg={6}>
+                          <div className="d-flex flex-column">
+                            <p className="title">Country</p>
+                            <p className="value"> 
+                              {order.location} <i className={`flag-icon flag-icon-${order.country && order.country.toLowerCase()} ml-2`}/></p>
+                          </div>
+                        </Col>
+                      </Row>
+                      <Row className="pl-5">
+                        <Col lg={3}>
+                          <div className="d-flex flex-column">
+                            <p className="title">Created At</p>
+                            <p className="value">{moment(new Date(order.created_at*1000)).format('DD, MMM YYYY HH:mm')}</p>
+                          </div>
+                        </Col>
+                        <Col lg={3}>
+                          <div className="d-flex flex-column">
+                            <p className="title">Gateway</p>
+                            <p className="value">{config.PAYMENT_OPTS[order.gateway]}</p>
+                          </div>
+                        </Col>
+                        <Col lg={6}>  
+                          <div className="d-flex flex-column">
+                            <p className="title">Device</p>
+                            <p className="value">{order.user_agent}</p>
+                          </div>
                         </Col>
                       </Row>
                     </Col>

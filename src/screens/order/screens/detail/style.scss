@@ -23,9 +23,15 @@
   }
 
   p.title {
-    max-width: 25%;
     width: 100%;
     margin-right: 20px;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  p.value {
+    color: #5A5574;
+    font-size: 16px;
   }
 
   label {
@@ -37,9 +43,10 @@
   }
 
   .small-badge {
-    font-size: 10px;
+    font-size: 12px;
     padding: 3px 10px;
     border-radius: 3px;
+    margin-bottom: 9px !important;
     margin-left: 10px !important;
   }
 
@@ -61,6 +68,8 @@
     font-size: 25px;
     color: white;
     padding: 0px;
+    width: 33px;
+    height: 33px;
     // background-color: #ccc;
     // border-radius: 50%;
   }

@@ -145,7 +145,7 @@ class Header extends Component {
               </DropdownToggle>
               {
                 is_authed? 
-                  <DropdownMenu right className="mt-2">
+                  <DropdownMenu right className="custom-dropdown-menu">
                     {
                       profile && profile.rank !== "0" && 
                       <DropdownItem className={path.startsWith('/admin')?'active':''} onClick={() => history.push(`/admin/dashboard`)}>
@@ -153,18 +153,18 @@ class Header extends Component {
                       </DropdownItem>
                     }
                     <DropdownItem className={path.startsWith('/dashboard') ? 'active' : ''} onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
-                      <i className={path.startsWith('/dashboard')?"far fa-dot-circle fa-md":"far fa-circle fa-md"} /> Dashboard
+                      <i className={path.startsWith('/dashboard')?"nav-icon fas fa-home fa-lg":"nav-icon fas fa-home fa-lg"} /> Dashboard
                     </DropdownItem>
                     <DropdownItem className={isShop?'active':''} onClick={() => this.props.history.push(`/${userId}`)}>
-                      <i className={isShop?"far fa-dot-circle fa-md" : "far fa-circle fa-md"} /> Your Shop
+                      <i className={isShop?"nav-icon fa fa-shopping-bag fa-lg" : "nav-icon fa fa-shopping-bag fa-lg"} /> Your Shop
 
                     </DropdownItem>
                     <DropdownItem className={path.startsWith('/settings')?'active':''} onClick={() => this.props.history.push(`/settings/${userId}`)}>
-                      <i className={path.startsWith('/settings') ? "far fa-dot-circle fa-md" : "far fa-circle fa-md"} /> Settings
+                      <i className={path.startsWith('/settings') ? "nav-icon fas fa-cog fa-lg" : "nav-icon fas fa-cog fa-lg"} /> Settings
                     </DropdownItem>
                     
                     <DropdownItem onClick={() => this.signOut()}>
-                      <i className={path.startsWith('/signin') ? "far fa-dot-circle fa-md" : "far fa-circle fa-md"} /> Sign Out
+                      <i className={path.startsWith('/signin') ? "nav-icon fa fa-sign-out fa-lg mt-4" : "fa fa-sign-out fa-lg mt-4"} /> Sign Out
                     </DropdownItem>
                   </DropdownMenu>:
                   <DropdownMenu right className="mt-2">
