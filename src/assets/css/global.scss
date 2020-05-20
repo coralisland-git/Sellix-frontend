@@ -1,28 +1,26 @@
 // global html styles
 
-// @font-face {
-//   font-family: Poppins;
-//   src: url('fonts/Poppins/Poppins-Regular.ttf');
-// }
+@font-face {
+  font-family: Proxima-Regular;
+  src: url('../font/proxima_ssv/ProximaNova-Regular.otf');
+}
 
-// @font-face {
-//   font-family: Poppins-Medium;
-//   src: url('fonts/Poppins/Poppins-Medium.ttf');
-// }
+@font-face {
+  font-family: Proxima-Bold;
+  src: url('../font/proxima_ssv/ProximaNova-Bold.otf');
+}
 
-// @font-face {
-//   font-family: Poppins-SemiBold;
-//   src: url('fonts/Poppins/Poppins-SemiBold.ttf');
-// }
-
-
+@font-face {
+  font-family: Proxima-Thin;
+  src: url('../font/proxima_ssv/ProximaNova-Thin.otf');
+}
 
 p, span, label, a, div, input, select, textarea, form {
-  font-family: var(--font-family-sans-serif);
+  font-family: 'Proxima-Regular';
 }
 
 h1, h2, h3, h4, h5, h6, th, button {
-  font-family: var(--font-family-sans-serif) !important;
+  font-family: 'Proxima-Regular' !important;
   font-weight: 600;
 }
 
