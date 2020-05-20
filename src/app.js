@@ -7,6 +7,7 @@ import { Router, Route, Switch } from 'react-router-dom'
 
 import { configureStore } from 'services'
 import { Loading, NotFound } from 'components'
+import Shop from './layouts/shop';
 
 import 'app.scss'
 import SingleLogo from './assets/images/single.png'
@@ -18,10 +19,10 @@ const Documentation = Loadable({
   loading: () => <Loading />
 });
 
-const Shop = Loadable({
-  loader: () => import('./layouts/shop'),
-  loading: () => <Loading />
-});
+// const Shop = Loadable({
+//   loader: () => import('./layouts/shop'),
+//   loading: () => <Loading />
+// });
 
 const Settings = Loadable({
   loader: () => import('./layouts/settings'),
@@ -107,9 +108,6 @@ export default class App extends React.Component {
             <Route path={`/`} exact={true} name='LandingLayout' render={(props) => <Landing {...props} />} />
 
             {/*Shop*/}
-            <Route path={`/:username`} name='ShopLayout' render={(props) => <Shop {...props} />} />
-
-            {/*Shop*/}
             <Route path={`/product`} name='ProductLayout' render={(props) => <Product {...props} />} />
             <Route path={`/group`} name='ProductLayout' render={(props) => <Product {...props} />} />
             <Route path={`/invoice`} name='InvoiceLayout' render={(props) => <Invoice {...props} />} />
@@ -138,7 +136,8 @@ export default class App extends React.Component {
             <Route path={`/404`} name='LandingLayout' render={(props) => <Landing {...props} />} />
             <Route path={`/changelog`} name='LandingLayout' render={(props) => <Landing {...props} />} />
 
-
+            {/*Shop*/}
+            <Route path={`/:username`} name='ShopLayout' component={Shop} />
           </Switch>
         </Router>
       </Provider>
