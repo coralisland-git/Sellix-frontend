@@ -107,7 +107,7 @@ export default class App extends React.Component {
             <Route path={`/`} exact={true} name='LandingLayout' render={(props) => <Landing {...props} />} />
 
             {/*Shop*/}
-            <Route path={`/:username`} exact={true} name='ShopLayout' render={(props) => <Shop {...props} />} />
+            <Route path={`/:username`} name='ShopLayout' render={(props) => <Shop {...props} />} />
 
             {/*Shop*/}
             <Route path={`/product`} name='ProductLayout' render={(props) => <Product {...props} />} />
