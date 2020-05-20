@@ -10,7 +10,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
-const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
@@ -152,7 +151,12 @@ module.exports = function(webpackEnv) {
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
             parser: safePostCssParser,
-            map: false,
+            map: shouldUseSourceMap
+              ? {
+                  inline: false,
+                  annotation: true,
+                }
+              : false,
           },
           cssProcessorPluginOptions: {
             preset: ['default', { minifyFontValues: { removeQuotes: false } }],
@@ -161,9 +165,8 @@ module.exports = function(webpackEnv) {
       ],
       splitChunks: {
         chunks: 'all',
-        maxSize: 2500000,
         name: false,
-      }
+      },
     },
     resolve: {
       modules: ['node_modules', paths.appNodeModules].concat(
@@ -320,7 +323,7 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
-      // new BundleAnalyzerPlugin(),
+      isEnvDevelopment && new BundleAnalyzerPlugin(),
       new CompressionPlugin({
         exclude: [/\.svg/]
       }),
