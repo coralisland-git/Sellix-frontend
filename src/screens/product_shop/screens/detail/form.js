@@ -100,7 +100,7 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 							if(field.type === 'checkbox') {
 								return (
 									<FormGroup className="mb-3" key={key}>
-										<label className="custom-checkbox custom-control" htmlFor={`sk${field.name}`}>
+										<label className="custom-checkbox custom-control removebackground" htmlFor={`sk${field.name}`}>
 											<input
 												className="custom-control-input"
 												type="checkbox"
