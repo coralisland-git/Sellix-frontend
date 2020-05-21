@@ -12,7 +12,7 @@ import completedIcon from 'assets/images/order/Check_Icon.svg'
 import paritalIcon from 'assets/images/order/Partially_Icon.svg'
 import pendingIcon from 'assets/images/order/Pending_Icon.svg'
 
-import { Converter } from "showdown";
+import { Converter, extension } from "showdown";
 
 
 export default {
@@ -133,14 +133,18 @@ export default {
     { value: 'largetextbox', label: 'Large Textbox' },
     { value: 'checkbox', label: 'Checkbox' },
   ]
-
-
 }
+
+extension('targetlink', () => [{
+  type: 'html',
+  filter: (text) => (''+text).replace(/<a\s+href=/gi, '<a target="_blank" href=')
+}])
 
 export const converter = new Converter({
   tables: true,
   simplifiedAutoLink: true,
   strikethrough: true,
   tasklists: true,
-  simpleLineBreaks: true
+  simpleLineBreaks: true,
+  extensions: ['targetlink']
 });

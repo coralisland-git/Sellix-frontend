@@ -267,7 +267,8 @@ export const GlobalStyles = createGlobalStyle`
         }
 
         .react-mde textarea {
-            background: ${theme.body}
+            background: ${theme.body};
+            line-height: 1.1rem;
         }
 
         .react-mde .grip {
