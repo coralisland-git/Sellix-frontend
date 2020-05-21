@@ -471,6 +471,7 @@ class EmbededPayment extends React.Component {
                                         name="service_text"
                                         value={this.state.custom_fields[field.name]}
                                         rows={5}
+                                        placeholder={field.name}
                                         required={field.required}
                                         onChange={(e) => {this.setCustomFields(field.name, e.target.value)}} />
                                     </FormGroup>

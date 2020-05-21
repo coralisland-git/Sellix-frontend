@@ -140,7 +140,7 @@ class ShopProductDetail extends React.Component {
   render() {
 
     const { group } = this.props;
-    const { gateway, sending, loading, productInfo, invoice, isQrMode } = this.state;
+    const { gateway, sending, loading, productInfo } = this.state;
 
 
     return (
@@ -184,7 +184,7 @@ class ShopProductDetail extends React.Component {
                               }
                               {
                                 gateway ?
-                                  <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
+                                  <Form productInfo={productInfo} customFieldsValues={this.state.custom_fields} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
                                   <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
                               }
                               <StockInfo productInfo={productInfo} />
@@ -216,7 +216,7 @@ class ShopProductDetail extends React.Component {
                             }
                             {
                               gateway ?
-                                  <Form productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
+                                  <Form customFieldsValues={this.state.custom_fields} productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
                                   <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
                             }
                             <StockInfo productInfo={productInfo} />
