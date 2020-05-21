@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux'
 import { Card, CardBody, CardHeader, Col, Row } from "components/reactstrap";
 import { Loader, Button } from 'components'
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
-import javascript from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
+import javascript from 'react-syntax-highlighter/dist/esm/languages/hljs/xml'
 
 import Clipboard from 'react-clipboard.js';
-import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import atomOneDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
 import { NewWebhookModal } from './sections';
 import { CommonActions } from 'services/global';
 import * as ProductActions from '../product/actions';
@@ -163,13 +163,13 @@ class EmbedProduct extends Component {
                           <div className="code-block-header">
                             <p>EMBED JAVASCRIPT</p>
                             <Clipboard 
-                            data-clipboard-text={`<script src="https://cdn.sellix.io/static/js/embed.js" integrity="sha384-0gODDX6JNucUjFSSiPgtMsV8vIIt9kPzXMy9o66/c7a2SQp2TJYO+R+LAxaOd617" crossorigin="anonymous"></script>`}
+                            data-clipboard-text={`<script src="https://cdn.sellix.io/static/js/embed.js" ></script>`}
                             button-title="Copy">
                               <i className="fa fa-clone" aria-hidden="true"></i>
                             </Clipboard>
                           </div>
                           <SyntaxHighlighter language="html" style={codeStyle} showLineNumbers={true}>
-                            {`<script src="https://cdn.sellix.io/static/js/embed.js" integrity="sha384-0gODDX6JNucUjFSSiPgtMsV8vIIt9kPzXMy9o66/c7a2SQp2TJYO+R+LAxaOd617" crossorigin="anonymous"></script>`}
+                            {`<script src="https://cdn.sellix.io/static/js/embed.js" ></script>`}
                           </SyntaxHighlighter>
                         </div>
                         <p className="page_description text-grey mb-4">
