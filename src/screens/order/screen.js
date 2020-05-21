@@ -148,7 +148,7 @@ class Order extends React.Component {
   }
 
   getLiveOrdersViaWebsocket = () => {
-    this.props.actions.getLiveOrdersViaWebsocket()
+    this.props.actions.getLiveOrders()
   }
 
   render() {
