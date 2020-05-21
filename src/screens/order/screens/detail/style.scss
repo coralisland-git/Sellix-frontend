@@ -10,7 +10,7 @@
   }
 
   p {
-    color: #A7A5B4;
+    color: #938EBA;
   }
 
   p.hash {
@@ -27,6 +27,7 @@
     margin-right: 20px;
     font-size: 12px;
     margin-bottom: 10px;
+    color: #938EBA !important;
   }
 
   p.value {
@@ -96,6 +97,11 @@
     justify-content: center;
     align-items: center;
     font-weight: 500;
+
+    span {
+      height: 25px;
+      line-height: 25px;
+    }
   }
 
   .badge-pending {

@@ -1,26 +1,27 @@
 // global html styles
 
 @font-face {
-  font-family: Proxima-Regular;
-  src: url('../font/proxima_ssv/ProximaNova-Regular.otf');
+  font-family: OpenSans-Regular;
+  src: url('../font/open_sans/OpenSans-Regular.ttf');
 }
 
 @font-face {
-  font-family: Proxima-Bold;
-  src: url('../font/proxima_ssv/ProximaNova-Bold.otf');
+  font-family: OpenSans-SemiBold;
+  src: url('../font/open_sans/OpenSans-SemiBold.ttf');
 }
 
 @font-face {
-  font-family: Proxima-Thin;
-  src: url('../font/proxima_ssv/ProximaNova-Thin.otf');
+  font-family: OpenSans-Bold;
+  src: url('../font/open_sans/OpenSans-Bold.ttf');
 }
+
 
 p, span, label, a, div, input, select, textarea, form {
-  font-family: 'Proxima-Regular';
+  font-family: 'OpenSans-Regular';
 }
 
 h1, h2, h3, h4, h5, h6, th, button {
-  font-family: 'Proxima-Regular' !important;
+  font-family: 'OpenSans-SemiBold' !important;
   font-weight: 600;
 }
 

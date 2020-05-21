@@ -3,9 +3,6 @@
     margin-bottom: 15px !important;
   }
 
-  & * {
-    font-family: 'Proxima-Regular' !important;
-  }
 
   border-radius: 0 !important;
   border-top-width: 2px !important;
@@ -20,6 +17,7 @@
   line-height: 1.5;
 
   td {
+    font-family: 'OpenSans-Regular' !important;
     vertical-align: top;
     border-left: 0px !important;
     border-right: 0px !important;

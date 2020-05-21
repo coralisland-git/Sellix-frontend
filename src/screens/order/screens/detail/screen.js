@@ -242,7 +242,7 @@ class OrderDetail extends React.Component {
                               <p className="email text-primary mb-1 d-flex align-items-center">
                                 <a href={`mailto:${order.customer_email}`}>{order.customer_email}</a>
                               </p>
-                              <p className="mb-0">{order.uniqid}</p>
+                              <p className="mb-0 title">{order.uniqid}</p>
                             </div>
                           </div>
                         </Col>

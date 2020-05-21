@@ -36,7 +36,8 @@ export const lightTheme = {
     textPending: '#393939',
     textPartial: '#3D3AC6',
 
-    webhookBadge: '#dadada'
+    webhookBadge: '#dadada',
+    orderValue: '#5A5574'
 }
   
 export const darkTheme = {
@@ -85,5 +86,6 @@ export const darkTheme = {
     textPending: '#C3C0C0',
     textPartial: '#A5E4F8',
 
-    webhookBadge: '#5A5574'
+    webhookBadge: '#5A5574',
+    orderValue: '#D8D7EB'
 }

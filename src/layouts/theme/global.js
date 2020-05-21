@@ -75,6 +75,10 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.webhookBadge} !important;
     }
 
+    .order-detail-screen p.value {
+        color: ${({ theme }) => theme.orderValue} !important;
+    }
+
     .admin-container .sidebar {
         background: ${({ theme }) => theme.body};
     }
