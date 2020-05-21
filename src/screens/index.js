@@ -1,9 +1,10 @@
+// import asyncComponent from "../layouts"
 // Static
-import Home from './home'
-import Fees from './static/fees'
-import Ticket from './static/tickets'
-import Changelog from './static/changelog'
-import Terms from './static/terms/screen.js'
+// import Home from './home'
+// import Fees from './static/fees'
+// import Ticket from './static/tickets'
+// import Changelog from './static/changelog'
+// import Terms from './static/terms/screen.js'
 
 
 // Auth
@@ -94,6 +95,45 @@ import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
 import "react-toastify/dist/ReactToastify.css"
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import React, {Component} from "react";
+
+
+
+function asyncComponent(importComponent) {
+  class AsyncComponent extends Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        component: null
+      };
+    }
+
+    async componentDidMount() {
+      const { default: component } = await importComponent();
+
+      this.setState({
+        component: component
+      });
+    }
+
+    render() {
+      const C = this.state.component;
+
+      console.log(C)
+      return C ? <C {...this.props} /> : null;
+    }
+  }
+
+  return AsyncComponent;
+}
+
+const Home = asyncComponent(() => import("./home"));
+const Fees = asyncComponent(() => import("./static/fees"));
+const Ticket = asyncComponent(() => import("./static/tickets"));
+const Changelog = asyncComponent(() => import("./static/changelog"));
+const Terms = asyncComponent(() => import("./static/terms"));
+
 
 export {
   Home,

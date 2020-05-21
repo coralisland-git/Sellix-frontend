@@ -11,6 +11,8 @@ import LandingFooter from './footer'
 import LandingHeader from './header'
 
 import './style.scss'
+import {Changelog, Fees, Home, Terms, Ticket} from "../../screens";
+import {NotFound} from "../../components";
 
 
 const userId = window.localStorage.getItem('userId')
@@ -89,7 +91,12 @@ class LandingLayout extends React.Component {
 
                   <Router>
                     <Switch>
-                      {landingRoutes.map((props, key) => <Route {...props} key={key} />)}
+                      <Route component={Fees} path={'/fees'} />
+                      <Route component={Changelog} path={'/changelog'} />
+                      <Route component={Terms} path={'/terms'} />
+                      <Route component={NotFound} path={'/404'} />
+                      <Route component={Ticket} path={'/contact'} />
+                      <Route exact={true} component={Home} path={'/'} />
                     </Switch>
                   </Router>
 
