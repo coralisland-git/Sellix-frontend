@@ -12,7 +12,7 @@ const Yup = {
 	object,
 	string
 }
-const Forms = ({ gateway, sending, productInfo, handleSubmit, setCustomFields, reset }) => {
+const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit, setCustomFields, reset }) => {
 
 	let validationSchema = Yup.object().shape({ email: Yup.string().required('Email is required') })
 
@@ -56,7 +56,7 @@ const Forms = ({ gateway, sending, productInfo, handleSubmit, setCustomFields, r
 											id="text"
 											name="text"
 											onChange={(e) => setCustomFields(field.name, e.target.value)}
-											value={customFields[field.name]}
+											value={customFieldsValues[field.name]}
 											placeholder={field.name}
 											required={field.required}
 										/>
@@ -73,7 +73,7 @@ const Forms = ({ gateway, sending, productInfo, handleSubmit, setCustomFields, r
 											id="number"
 											name="number"
 											onChange={(e) => setCustomFields(field.name, e.target.value)}
-											value={customFields[field.name]}
+											value={customFieldsValues[field.name]}
 											placeholder={field.name}
 											required={field.required}
 										/>
@@ -88,8 +88,9 @@ const Forms = ({ gateway, sending, productInfo, handleSubmit, setCustomFields, r
 										<textarea className="form-control"
 										          id='service_text'
 										          name="service_text"
-										          value={customFields[field.name]}
+										          value={customFieldsValues[field.name]}
 										          rows={5}
+										          placeholder={field.name}
 										          required={field.required}
 										          onChange={(e) => setCustomFields(field.name, e.target.value)} />
 									</FormGroup>
@@ -99,16 +100,20 @@ const Forms = ({ gateway, sending, productInfo, handleSubmit, setCustomFields, r
 							if(field.type === 'checkbox') {
 								return (
 									<FormGroup className="mb-3" key={key}>
-										<label className="custom-checkbox custom-control payment-checkbox">
+										<label className="custom-checkbox custom-control removebackground" htmlFor={`sk${field.name}`}>
 											<input
 												className="custom-control-input"
 												type="checkbox"
-												id="sk"
-												name="SMTP-auth"
-												checked={customFields[field.name] || false}
-												onChange={(e) => setCustomFields(field.name, e.target.checked)}
+												id={`sk${field.name}`}
+												name={field.name}
+												checked={customFieldsValues[field.name] || false}
+												onChange={(e) => {
+
+													console.log(customFieldsValues[field.name], e.target.checked, field.name)
+													setCustomFields(field.name, e.target.checked)
+												}}
 											/>
-											<label className="custom-control-label" htmlFor="sk">
+											<label className="custom-control-label" htmlFor={`sk${field.name}`}>
 												{field.name} <small className="font-italic">{!field.required && '(optional)'}</small>
 											</label>
 										</label>

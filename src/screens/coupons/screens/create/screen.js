@@ -198,6 +198,7 @@ class CreateCoupon extends React.Component {
                                     className="select-default-width"
                                     id="products_bound"
                                     isMulti
+                                    closeMenuOnSelect={false}
                                     classNamePrefix={"react-select"}
                                     options={this.props.products}
                                     name="products_bound"
