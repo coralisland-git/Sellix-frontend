@@ -92,7 +92,8 @@ class EditProductGroup extends Component {
 
         values.unlisted = values.unlisted ? true : false;
         values.sort_priority = values.sort_priority || 1;
-        console.log(values)
+        values.remove_image = this.state.images.length == 0?true:false
+
         this.props.editProductGroup(values).then(res => {
 
             this.props.history.push(`/dashboard/${user}/groups`)
