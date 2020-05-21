@@ -62,7 +62,7 @@ class EditProductGroup extends Component {
                             unlisted: +group.unlisted,
                             products_bound: group.products_bound.map(x => x.uniqid).join(',')
                         },
-                        images: group.image_attachment ? [{ preview: config.API_ROOT_URL+'/attachments/image/'+group.image_attachment }] : [],
+                        images: group.image_name ? [{ preview: config.CDN_GROUPS_URL + group.image_name }] : [],
                         multiValue: group.products_bound.map(({ uniqid: value, title: label }) => ({ value, label }))
                     })
                 }).finally(() => {

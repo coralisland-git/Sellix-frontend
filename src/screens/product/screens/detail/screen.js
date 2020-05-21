@@ -280,8 +280,8 @@ class EditProduct extends React.Component {
 		  serials: serials,
           files: product.file_attachment?
             [{name : product.file_attachment_info && product.file_attachment_info.original_name}]:[],
-          images: product.image_attachment?
-            [{preview: config.API_ROOT_URL+'/attachments/image/'+product.image_attachment}]:[],
+          images: product.image_name?
+            [{preview: config.CDN_PRODUCTS_URL + product.image_name}]:[],
           gateways: gateways,
           type: type[0],
           showFileStock: product.file_stock!=-1?true:false,

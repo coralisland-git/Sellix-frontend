@@ -17,15 +17,15 @@ export const getProductStock = ({ type, file_stock, stock, service_stock }) => {
 
 const ProductCard = ({ product, preventDefault, history, center_product_titles }) => {
 
-    let { image_attachment, title, price_display, currency, uniqid } = product;
+    let { image_name, title, price_display, currency, uniqid } = product;
 
     let image = Sellix;
-    if(image_attachment) {
-        image = config.API_ROOT_URL + '/attachments/image/' + image_attachment;
+    if(image_name) {
+        image = config.CDN_PRODUCTS_URL + image_name;
     }
     return <Card className="bg-white p-0 product-card" onClick={() => preventDefault ? null : history.push({ pathname: `/product/${uniqid}` })}>
             <div style={{ minHeight: 150, width: '100%' }}>
-                <img src={image} alt={title} style={image_attachment ? {} : { padding: "3rem", objectFit: "fill" }}/>
+                <img src={image} alt={title} style={image_name ? {} : { padding: "3rem", objectFit: "fill" }}/>
             </div>
             
             <div className="p-3 d-flex flex-column h-100">
