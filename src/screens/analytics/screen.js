@@ -165,7 +165,7 @@ class Analytics extends React.Component {
                                     <Col md={3} key={index}>
                                       <Card className="grey p-0 m-0" onClick={(e) => this.gotoDetail(e, pro.uniqid)} style={{cursor: 'pointer'}}>
                                         <CardBody className={'top3-products pt-4 pb-4 pl-2 pr-2'}>
-                                          <img src={config.CDN_PRODUCTS_URL + pro.file_name} style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, opacity: pro.file_name ? 1 : 0, objectFit: 'contain' }} alt="" width="100%" height="100" />
+                                          <img src={config.CDN_PRODUCTS_URL + pro.image_name} style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, opacity: pro.image_name ? 1 : 0, objectFit: 'contain' }} alt="" width="100%" height="100" />
                                           <div className="text-center mt-4">
                                             <h4 className="text-black" style={{ fontSize: ".9rem" }} >{pro.product}</h4>
                                             <div className="d-flex align-items-center justify-content-center mt-2">
@@ -194,7 +194,7 @@ class Analytics extends React.Component {
                               <Col md={3} key={index}>
                                 <Card className="grey p-0 m-0" onClick={(e) => this.gotoDetail(e, pro.uniqid)} style={{cursor: 'pointer'}}>
                                   <CardBody className={'top3-products pt-4 pb-4 pl-2 pr-2'}>
-                                    <img src={config.CDN_PRODUCTS_URL + pro.file_name} style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, opacity: pro.file_name ? 1 : 0, objectFit: 'contain'}} alt="" width="100%" height="100" />
+                                    <img src={config.CDN_PRODUCTS_URL + pro.image_name} style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, opacity: pro.image_name ? 1 : 0, objectFit: 'contain'}} alt="" width="100%" height="100" />
                                     <div className="text-center mt-4">
                                       <h4 className="text-black" style={{ fontSize: ".9rem" }} >{pro.product}</h4>
                                       <div className="d-flex align-items-center justify-content-center mt-2">
