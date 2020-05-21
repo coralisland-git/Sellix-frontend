@@ -75,6 +75,9 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.webhookBadge} !important;
     }
 
+    .order-detail-screen p.value a {
+        color: ${({ theme }) => theme.orderLink} !important;
+    }
     .order-detail-screen p.value {
         color: ${({ theme }) => theme.orderValue} !important;
     }

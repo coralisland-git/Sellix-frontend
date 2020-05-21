@@ -15,13 +15,30 @@
   src: url('../font/open_sans/OpenSans-Bold.ttf');
 }
 
+// Poppins 
+
+@font-face {
+  font-family: Poppins-Regular;
+  src: url('../font/poppins/Poppins-Regular.ttf');
+}
+
+@font-face {
+  font-family: Poppins-Medium;
+  src: url('../font/poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+  font-family: Poppins-Bold;
+  src: url('../font/poppins/Poppins-Bold.ttf');
+}
+
 
 p, span, label, a, div, input, select, textarea, form {
-  font-family: 'OpenSans-Regular';
+  font-family: 'Poppins-Regular';
 }
 
 h1, h2, h3, h4, h5, h6, th, button {
-  font-family: 'OpenSans-SemiBold' !important;
+  font-family: 'Poppins-Medium' !important;
   font-weight: 600;
 }
 
