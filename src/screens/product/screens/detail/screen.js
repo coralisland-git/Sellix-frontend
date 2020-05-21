@@ -202,7 +202,9 @@ class EditProduct extends React.Component {
 
 		values.webhooks = webhook_fields
 
-		delete values.image_attachment_info
+		delete values.image_attachment_info;
+		delete values.feedback;
+		delete values.price_conversions;
 		this.props.actions.editProduct(values).then(res => {
 			if(admin){
 				window.history.back()
@@ -271,7 +273,7 @@ class EditProduct extends React.Component {
 
 		product.serials = product.serials.join(product.stock_delimiter)
 		product.price = product.price_display
-        
+
         this.setState({
 		  initialValues: {
 			  ...product,
