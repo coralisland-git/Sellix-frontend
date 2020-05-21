@@ -126,8 +126,6 @@ class ReplyToQuery extends React.Component {
 						</BreadcrumbItem>
 					</Breadcrumb>
 
-					<IntervalTimer timeout={3000} callback={this.getQueryViaWebsocket} enabled={true} repeat={true} />
-
 					{loading && <Loader/>}
 					{!loading &&
 					<Formik onSubmit={this.handleSubmit} initialValues={{ message: "" }}>
