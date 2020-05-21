@@ -94,6 +94,7 @@ class EditProductGroup extends Component {
         values.sort_priority = values.sort_priority || 1;
         values.remove_image = this.state.images.length == 0?true:false
 
+        delete values.image_attachment_info
         this.props.editProductGroup(values).then(res => {
 
             this.props.history.push(`/dashboard/${user}/groups`)

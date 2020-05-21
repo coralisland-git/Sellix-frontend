@@ -202,6 +202,7 @@ class EditProduct extends React.Component {
 
 		values.webhooks = webhook_fields
 
+		delete values.image_attachment_info
 		this.props.actions.editProduct(values).then(res => {
 			if(admin){
 				window.history.back()
