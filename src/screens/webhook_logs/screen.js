@@ -204,10 +204,8 @@ class WebhookLogs extends React.Component {
       <div className="webhook-screen">
         <div className="animated fadeIn">
           <IntervalTimer
-              timeout={20000}
-              callback={async () => {
-                this.props.actions.getWebhookLogList()
-              }}
+              timeout={30000}
+              callback={async () => this.props.actions.getWebhookLogList()}
               enabled={true}
               repeat={true}
             />
