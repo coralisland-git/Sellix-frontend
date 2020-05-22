@@ -12,14 +12,14 @@ import { NewReportModal } from './sections'
 import {
   CommonActions,
 } from 'services/global'
-import JavascriptTimeAgo from 'javascript-time-ago'
+import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import ReactTimeAgo from 'react-time-ago'
 import * as moment from 'moment/moment'
 import * as ReportActions from './actions'
 import './style.scss'
 
-JavascriptTimeAgo.locale(en)
+TimeAgo.addLocale(en)
+const ReactTimeAgo = new TimeAgo('en-US')
 
 const mapStateToProps = (state) => {
   return ({
@@ -73,13 +73,9 @@ class Reports extends React.Component {
   }
   
 
-  renderRevenue(cell, row) {
-    return(<p>${row.revenue}</p>)
-  }
+  renderRevenue = (cell, row) => <p>${row.revenue}</p>
 
-  renderCreatedAt(cell, row){
-    return (<ReactTimeAgo date={row.created_at*1000/1} locale="en"/>)
-  }
+  renderCreatedAt = (cell, row) => ReactTimeAgo.format(row.created_at*1000)
 
   openNewReportModal() {
     this.setState({openModal: true})

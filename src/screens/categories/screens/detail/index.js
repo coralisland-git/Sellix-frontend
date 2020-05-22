@@ -157,7 +157,6 @@ class EditCategory extends React.Component {
                                       placeholder="Select Products"
                                       value={this.state.selected_products}
                                       onChange={(option) => {
-                                        console.log(option)
                                         this.setState({
                                           selected_products: option || []
                                         })

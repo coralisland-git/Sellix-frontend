@@ -1,0 +1,237 @@
+.light {
+  .shop-container {
+    background-color: #fff !important;
+  }
+
+  .shop-container .shop-section {
+    background-color: #F5F5FE !important;
+  }
+
+  .shop-product-screen .filter-button button:not(.btn-primary),
+  .productsort-screen .filter-button button:not(.btn-primary),
+  .shop-container header,
+  .admin-container .app-header {
+    background: white !important;
+  }
+
+  .moon-icon {
+    color: #D0D2D6 !important;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(196, 196, 196, 0.15) !important;
+  }
+  .admin-container {
+    background: #221D3E;
+    color: #B4AEBC;
+  }
+
+  .option-select > * > * > *:not([class$=-singleValue]):not([class$=-indicatorContainer]):not([class$=-Input]) {
+    background: white !important;
+  }
+
+  .option-select-option:not(.is-disabled) *:not(.text-gold):not(.text-green):not(.text-red) {
+    color: black !important;
+  }
+
+  .option-select-option:not(.is-disabled):not(.is-selected) * {
+    opacity: 0.85 !important;
+  }
+
+  *[class$=-control][class*=css-]{
+    background-color: #FCFCFE !important;
+    border: 1px solid #1D183D !important;
+  }
+
+  *[class$=-singleValue] > .option-select-option span:not(.text-gold):not(.text-green):not(.text-red) {
+    color: rgba(0,0,0,.9) !important;
+  }
+
+
+
+  .shop-container .app-header .dropdown-item,
+  .admin-container .app-header .dropdown-item {
+    color: #444648 !important;
+    i {
+      color: #444648;
+    }
+  }
+
+  .order-screen {
+    .text-completed {
+      color: #087502 !important;
+    }
+    .text-pending {
+      color: #393939 !important;
+    }
+    .text-cancelled {
+      color: #75025C !important;
+    }
+    .text-partial {
+      color: #3D3AC6 !important;
+    }
+  }
+
+  .shop-container .app-header .dropdown-item:hover,
+  .shop-container .app-header .dropdown-item.active,
+  .admin-container .app-header .dropdown-item:hover,
+  .admin-container .app-header .dropdown-item.active {
+    background: #ebe9ef !important;
+    color: #613BEA !important;
+    i {
+      color: #613BEA !important;
+    }
+  }
+
+
+  .border-right,
+  .border-bottom {
+    border-color: #f4f6ff !important;
+  }
+
+  .bitcoin-paying-screen .top .btc-address,
+  .searchbar .header-search-input,
+  table tbody td .badge-normal,
+  .Select-control,
+  .react-datepicker__input-container input,
+  .create-product-screen .payment-checkbox,
+  .create-product-screen .file-switch .switch-slider,
+  .image-uploader .drag-drop-area,
+  .btn-default,
+  .detail-product-screen .paypal-instant,
+  .datepicker2
+  {
+    border: 1px solid #F5F5F5 !important;
+  }
+
+  table tbody td {
+    border-top: 1px solid #F5F5F5 !important;
+  }
+
+  .form-control {
+    border: 1px solid #F5F5F5 !important;
+  }
+
+
+
+
+
+  .bitcoin-paying-screen .bottom,
+  .detail-product-screen .stock-info {
+    background-color: #E4D6FF;
+
+  }
+
+  .detail-product-screen .pay-button {
+    background-color: #FCFCFE !important;
+    border: 1px solid #F5F5F5 !important;
+  }
+
+  .page_description_card {
+    border-right: 1px solid #f4f6ff !important;
+
+    @media (max-width: 991px){
+      & {
+        border-right: none !important;
+        border-bottom: 1px solid #f4f6ff !important;
+      }
+    }
+  }
+
+  .card .card-header .header-search-input,
+  .query-sorting {
+    background-color: white !important;
+    border: 1px solid #F5F5F5 !important;
+  }
+
+  .react-bs-table-container .react-bs-table {
+    background-color: white !important;
+  }
+
+  .admin-container .sidebar,
+  .settings-sidebar,
+  .card.grey .card-body {
+    background: white !important;
+  }
+
+  .shop-container .app-header .dropdown-item,
+  .admin-container .app-header .dropdown-item {
+    background: white !important;
+  }
+
+  .shop-container .shop-navs .nav-link {
+    background-color: #F5F5FE !important;
+  }
+
+  .shop-container .report-count {
+    background-color: #F5F5FE !important;
+  }
+
+  .admin-container footer {
+    background-color: white !important;
+    background: white !important;
+  }
+
+  .app-header .navbar-nav .dropdown-menu:after {
+    border-bottom: 10px solid white !important;
+  }
+
+  .order-screen .filter-btn {
+    background-color: white;
+  }
+
+
+
+
+  .card-body {
+    background: white !important;
+  }
+
+  .admin-container .logo-background {
+    background-color: white !important;
+  }
+
+  .shop-product-screen .product-card, .productsort-screen .product-card {
+    background-color: white !important;
+  }
+
+  .detail-product-screen .card,
+  .bitcoin-paying-screen .card {
+    background-color: white !important;
+  }
+
+
+
+
+  .modal-dialog .modal-content .modal-header,
+  .modal-dialog .modal-content {
+    background-color: white !important;
+  }
+
+
+  .productsort-screen .item,
+  .categorysort-screen .item {
+    border-bottom-color: #f6f6f6 !important;
+  }
+
+  .productsort-screen .floating .item,
+  .categorysort-screen .floating .item {
+    background-color: #f6f6f6 !important;
+  }
+
+
+  .feedback-shop-screen .badge {
+    background: #F5F5F5 !important;
+  }
+
+
+  *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold):not(.text-green):not(.text-red) {
+    color: black !important;
+  }
+
+  *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold):not(.text-green):not(.text-red) {
+    color: black !important;
+  }
+
+
+}

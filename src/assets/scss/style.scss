@@ -13,7 +13,6 @@
 // Spinkit
 $spinkit-spinner-color: $body-color;
 @import 'node_modules/spinkit/scss/spinkit.scss';
-@import "../css/override/react-select";
 
 .is-invalid .react-select__control {
   border-color: #f76b6a !important;

@@ -107,8 +107,6 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 												name={field.name}
 												checked={customFieldsValues[field.name] || false}
 												onChange={(e) => {
-
-													console.log(customFieldsValues[field.name], e.target.checked, field.name)
 													setCustomFields(field.name, e.target.checked)
 												}}
 											/>

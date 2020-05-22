@@ -3,10 +3,16 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Card, CardBody, Row, Col } from 'components/reactstrap'
 import { Loader } from 'components'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
 import { CommonActions } from 'services/global'
 import './style.scss'
 import { StarRating as ReactStarsRating } from 'components/star_ratings';
+
+
+TimeAgo.addLocale(en)
+const ReactTimeAgo = new TimeAgo('en-US')
 
 const mapStateToProps = (state) => {
   return ({
@@ -99,7 +105,7 @@ class ShopFeedback extends React.Component {
                           </p>}
                           <div className="d-flex flex-row justify-content-between w-100" style={{marginLeft: '15px'}}>
                             <p><i className="fas fa-check feedback-checked" /> Verified Purchase</p>
-                            <p><ReactTimeAgo date={feedback.created_at*1000/1} locale="en"/></p>
+                            <p>{ReactTimeAgo.format(feedback.created_at*1000)}</p>
                           </div>
                         </CardBody>
                       </Card>

@@ -11,7 +11,46 @@ body.dark {
 body.light {
   background: #f6f3ff;
 }
+html.dark {
+  background: #211d3d;
+}
+
+html.light {
+  background: #f6f3ff;
+}
+
+.transparent-bg {
+  background: transparent !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.currency-select {
+  top: 0;
+  height: 100%;
+}
 
 .far {
   font-weight: 400 !important;
 }
+
+.sweet-alert h2 {
+  color: rgb(89, 89, 89) !important;
+}
+
+.text-green {
+  color: #2BB224 !important;
+}
+
+.text-red {
+  color: #f74141  !important;
+}
+
+.switch-primary .switch-input:checked + .switch-slider {
+  background-color: #613BEA !important;
+}
+
+@import "light";
+@import "dark";

@@ -113,7 +113,6 @@ class EmbededPayment extends React.Component {
       "code":coupon_value,
       "product_id":this.props.match.params.id
     };
-    console.log(this.props.validateCoupon);
     this.props.validateCoupon(params).then((res) => {
       if (res.data){
           code = res.data.coupon['code']

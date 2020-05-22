@@ -116,8 +116,6 @@ class ReplyToQuery extends Component {
 
         let { tostifyAlert, replyToQuery } = this.props;
 
-        console.log(values)
-
         replyToQuery({...values, uniqid: this.id})
             .then(res => {
                 tostifyAlert('success', res.message);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledDropdown, Input, Badge } from 'components/reactstrap'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import AppNavbarBrand from '@coreui/react/es/NavbarBrand'
@@ -10,6 +11,8 @@ import sellix_logo from 'assets/images/Sellix_logo.svg'
 import './style.scss'
 import { AuthActions } from "../../services/global";
 
+TimeAgo.addLocale(en);
+const ReactTimeAgo = new TimeAgo('en-US');
 
 const userId = window.localStorage.getItem('userId')
 
@@ -116,7 +119,7 @@ class Header extends Component {
                         <div className="notification-row">
                           <div className="d-flex justify-content-between align-items-end">
                             <p className="title mb-0">{notify.title}</p>
-                            <span className="timeago"><ReactTimeAgo date={notify.created_at*1000} locale="en"/></span>
+                            <span className="timeago">{ReactTimeAgo.format(notify.created_at*1000)}</span>
                           </div>
                           <p className="message mb-0 text-grey">{notify.message}</p>
                         </div>

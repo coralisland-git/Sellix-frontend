@@ -85,10 +85,6 @@ class User extends Component {
 
             res.analytics.total.currency = res.analytics.currency
 
-            console.log({
-              ...res2.analytics,
-              ...res.analytics,
-            })
             this.setState({
               analytics: {
                 ...res2.analytics,

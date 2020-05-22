@@ -7,11 +7,17 @@ import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Button } from 'components';
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
+
 import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
 import {getFeedbacks} from './actions'
 import './style.scss'
+
+TimeAgo.addLocale(en)
+const ReactTimeAgo = new TimeAgo('en-US')
 
 const user = window.localStorage.getItem('userId')
 
@@ -26,26 +32,14 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-const MockFeedBack = [
-  {id: "1",
-  uniqid: "testing-uniqid",
-  invoice_id: "testing-orderid",
-  product_id: "testing-productid",
-  user_id: "1",
-  message: "feedback message",
-  reply: "this is a reply",
-  feedback: "neutral",
-  date: "1583314021"}
-]
-
 class Feedbacks extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
       loading: false,
     }
 
-    // this.initializeData = this.initializeData.bind(this)
     this.replyToFeedback = this.replyToFeedback.bind(this)
     this.renderOption = this.renderOption.bind(this)
   }
@@ -72,17 +66,13 @@ class Feedbacks extends React.Component {
     )  
   }
 
-  replyToFeedback(e, id) {
+  replyToFeedback = (e, id) => {
     this.props.history.push({
       pathname: `/dashboard/${user}/feedback/reply/${id}`
     })
   }
 
-  renderOption (cell, row) {
-    return (
-      <Button color="default" onClick={(e) => this.replyToFeedback(e, row.uniqid)}>Reply</Button>
-    )
-  }
+  renderOption = (cell, row) => <Button color="default" onClick={(e) => this.replyToFeedback(e, row.uniqid)}>Reply</Button>
 
   renderMessage = (cell, row) => {
     const feedback = row;
@@ -110,9 +100,7 @@ class Feedbacks extends React.Component {
 
   renderTime(cell, row) {
 
-    const formatDate = (timestamp) => {
-      return <ReactTimeAgo date={timestamp*1000/1} locale="en"/>
-    }
+    const formatDate = (timestamp) => ReactTimeAgo.format(timestamp*1000)
     if (
       row.created_at
     ) {
