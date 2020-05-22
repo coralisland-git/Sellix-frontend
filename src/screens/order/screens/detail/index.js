@@ -287,8 +287,10 @@ class OrderDetail extends React.Component {
                             </div>
                             <div className="d-flex">
                               <p className="title">Country</p>
-                              <p><i className={`flag-icon flag-icon-${order.country && order.country.toLowerCase()} mr-2`}/> 
-                                {order.location}</p>
+                              <p>
+                                {order.country && <img src={`${config.CDN_FLAGS_URL}${order.country.toLowerCase()}.svg`} className={`flag-icon mr-2`} alt={""} />}
+                                {order.location}
+                              </p>
                             </div>
                         </Col>
                       </Row>

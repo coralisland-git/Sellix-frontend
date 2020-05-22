@@ -20,6 +20,7 @@ export default {
   API_ROOT_URL: 'https://api.sellix.io/v1',
   WS_URL: 'wss://wss.sellix.io/websocket',
   CAPTCHA_SITE_KEY: '6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe',
+  CDN_FLAGS_URL: 'https://cdn.sellix.io/static/flags/',
   STATUS_ICON: {
     '0': pendingIcon,
     '1': completedIcon,

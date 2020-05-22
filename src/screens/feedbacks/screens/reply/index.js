@@ -162,8 +162,10 @@ class ReplyToFeedback extends React.Component {
                               
                               <div className="d-flex">
                                 <p className="title">Country</p>
-                                <p><i className={`flag-icon flag-icon-${currentFeedback.invoice.country && currentFeedback.invoice.country.toLowerCase()} mr-2`}/> 
-                                  {currentFeedback.invoice.location}</p>
+                                <p>
+                                  {currentFeedback.invoice.country && <img src={`${config.CDN_FLAGS_URL}${currentFeedback.invoice.country.toLowerCase()}.svg`} className={`flag-icon mr-2`} alt={""} />}
+                                  {currentFeedback.invoice.location}
+                                </p>
                               </div>
                               <div className="d-flex">
                                 <p className="title">Created At</p>

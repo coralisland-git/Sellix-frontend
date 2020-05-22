@@ -1,22 +1,8 @@
 import React from 'react'
 import { Button } from 'components';
-import {
-  Col,
-  Container,
-  Row,
-  NavLink
-} from 'components/reactstrap'
+import { Col, Container, Row, NavLink } from 'components/reactstrap'
 import './style.scss'
 
-import service1 from 'assets/images/home/service1.svg'
-import service2 from 'assets/images/home/service2.svg'
-import service3 from 'assets/images/home/service3.svg'
-import background1 from 'assets/images/home/only_hero_bg.svg'
-import background2 from 'assets/images/home/Bg2@2x.png'
-
-import bottom_isometric from 'assets/images/home/Bottom_Isometric.svg'
-import Hero_Iphone_Mockup from 'assets/images/home/hero_iphone.svg'
-import Reliable_Payment from 'assets/images/home/Reliable_Payment.svg'
 
 class Home extends React.Component {
   
@@ -36,7 +22,7 @@ class Home extends React.Component {
     const { isOpen } = this.state
 
     return (
-      <div className="home-screen" style={{backgroundImage: "url(" + background1 + ")"}}>
+      <div className="home-screen" style={{backgroundImage: "url(https://cdn.sellix.io/static/landing/background1.svg)"}}>
 
         
         <div className="section" id="home_section" style={{paddingTop: 0, paddingBottom: 50}}>
@@ -53,12 +39,12 @@ class Home extends React.Component {
                 </NavLink>
               </Col>
               <Col md={5} className="text-center">
-                <img src={Hero_Iphone_Mockup} className="digital-img"/>
+                <img src={"https://cdn.sellix.io/static/landing/iphone.svg"} className="digital-img"/>
               </Col>
             </Row>
           </Container>
         </div>
-        <div className="background2-img" style={{backgroundImage: "url(" + background2 + ")"}}>
+        <div className="background2-img" style={{ backgroundImage: "url(https://cdn.sellix.io/static/landing/background2.png)"}}>
           <div className="section pt-0 pb-5 text-center" id="feature_section">
             <Container className="home-container" fluid>
               <h1 className="text-pink">Start selling with Sellix</h1>
@@ -68,7 +54,7 @@ class Home extends React.Component {
               <Row className="mt-5 pt-4">
                 <Col md={4} className="p-0">
                   <div className="service-card service-card-shadow zindex-2 m-2">
-                    <img className="service-img" src={service1}/>
+                    <img className="service-img" src={"https://cdn.sellix.io/static/landing/service1.svg"}/>
                     <h4 className="mt-4 text-pink f-b">Customizable Shop</h4>
                     <p className="small text-pink">
                     Our platforms offers coupons, blacklist, tickets, automated delivery, webhooks and many more features that you can fully customize for your needs.
@@ -77,7 +63,7 @@ class Home extends React.Component {
                 </Col>
                 <Col md={4} className="p-0">
                   <div className="service-card service-card-shadow zindex-3 m-2">
-                    <img className="service-img" src={service2}/>
+                    <img className="service-img" src={"https://cdn.sellix.io/static/landing/service2.svg"}/>
                     <h4 className="mt-4 text-pink f-b">Payment Flexibility</h4>
                     <p className="small text-pink">
                     Looking for a specific type of payment option? Don't look further. We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrency for your shop.
@@ -88,7 +74,7 @@ class Home extends React.Component {
                 </Col>
                 <Col md={4} className="p-0">
                   <div className="service-card service-card-shadow zindex-2 m-2">
-                    <img className="service-img" src={service3}/>
+                    <img className="service-img" src={"https://cdn.sellix.io/static/landing/service3.svg"}/>
                     <h4 className="mt-4 text-pink f-b">All-in-One Platform</h4>
                     <p className="small text-pink">
                     With Sellix you got everything in one platform. Statistics about your online store and features make sure you know everything about your orders.
@@ -112,7 +98,7 @@ class Home extends React.Component {
                   
                 </Col>
                 <Col md={7} className="text-right" style={{position: 'relative'}}>
-                  <img className="undraw-img" src={Reliable_Payment}/>
+                  <img className="undraw-img" src={"https://cdn.sellix.io/static/landing/payment.svg"}/>
                 </Col>
               </Row>
             </Container>
@@ -122,7 +108,7 @@ class Home extends React.Component {
             <Container className="p-0" fluid style={{maxWidth: 1330}}>
               <Row className="flex-row align-items-center">
                 <Col md={7}>
-                  <img className="pc-img" src={bottom_isometric}/>
+                  <img className="pc-img" src={'https://cdn.sellix.io/static/landing/bottom.svg'} alt={"bottom"}/>
                 </Col>
                 <Col md={5}>
                   <div className="float-left pb-3" style={{maxWidth: 447}}>

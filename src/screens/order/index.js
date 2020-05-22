@@ -98,7 +98,7 @@ class Order extends React.Component {
     return (
       <div>
         <p><a onClick={(e) => this.gotoDetail(row.uniqid)} style={{fontSize: 15, fontWeight: 600}}>
-          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location} />&nbsp;&nbsp;&nbsp;
+          <img src={`${config.CDN_FLAGS_URL}${row.country.toLowerCase()}.svg`} className={`flag-icon mr-2`} alt={row.location} title={row.location} />
           {`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
         </p>
         <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title ? row.product_title : row.product_id}</p>
