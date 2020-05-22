@@ -85,6 +85,10 @@ class EmbededInvoice extends React.Component {
     document.body.classList.remove('light');
     document.body.classList.remove('dark');
     document.body.classList.add('light');
+
+    document.documentElement.classList.remove('light')
+    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.add('light');
   }
 
   openQrCodeModal = () => {
