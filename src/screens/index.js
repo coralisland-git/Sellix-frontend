@@ -75,19 +75,19 @@
 // import ContactReply from './contact/screens/reply'
 
 
-import SecurityPage from './security'
-import Notification from './notification'
-import Payments from './payments'
-import ShopDesign from './shop_design'
-import ShopGoogleAnalytics from './shop_google_analytics'
-import GeneralSettings from './general_settings'
+// import SecurityPage from './security'
+// import Notification from './notification'
+// import Payments from './payments'
+// import ShopDesign from './shop_design'
+// import ShopGoogleAnalytics from './shop_google_analytics'
+// import GeneralSettings from './general_settings'
 
 
 import StripeCallback from './payments_stripe_callback'
 
-import EmbededPayment from './embeded_payment'
-import EmbededInvoice from './embeded_invoice'
-import EmbedProduct from './embed_product'
+// import EmbededPayment from './embeded_payment'
+// import EmbededInvoice from './embeded_invoice'
+// import EmbedProduct from './embed_product'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
 import "react-toastify/dist/ReactToastify.css"
@@ -202,19 +202,30 @@ const ShopProductDetail = asyncComponent(() => import("./product_shop/screens/de
 const ShopGroupDetail = asyncComponent(() => import("./product_shop/screens/group_detail"));
 
 
+const GeneralSettings = asyncComponent(() => import("./general_settings"));
+const SecurityPage = asyncComponent(() => import("./security"));
+const Payments = asyncComponent(() => import("./payments"));
+const ShopDesign = asyncComponent(() => import("./shop_design"));
+const ShopGoogleAnalytics = asyncComponent(() => import("./shop_google_analytics"));
+const Notification = asyncComponent(() => import("./notification"));
+
+const EmbedProduct = asyncComponent(() => import("./embed_product"));
+const EmbededPayment = asyncComponent(() => import("./embeded_payment"));
+const EmbededInvoice = asyncComponent(() => import("./embeded_invoice"));
+
+
 
 export {
   ShopProducts,
   ShopProductDetail,
   ShopGroupDetail,
 
+  GeneralSettings,
   SecurityPage,
   Payments,
-  GeneralSettings,
   ShopDesign,
   ShopGoogleAnalytics,
   Notification,
-
 
   StripeCallback,
 

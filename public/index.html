@@ -84,6 +84,25 @@
 
       gtag('config', 'UA-163307198-1');
     </script>
-    <script src="https://cdn.sellix.io/static/js/embed.js"></script>
+<!--    <script src="https://cdn.sellix.io/static/js/embed.js"></script>-->
+    <script>
+      var SellixContainer = document.createElement("div");
+      SellixContainer.setAttribute("id", "sellix-container"), document.getElementsByTagName("body")[0].appendChild(SellixContainer), setTimeout(function t(e) {
+        if (document.querySelector("[data-sellix-product]") && !e) {
+          SellixButtons = document.querySelectorAll("[data-sellix-product]");
+          for (var i = 0; i < SellixButtons.length; i++) {
+            SellixButtons[i].addEventListener("click", function (t) {
+              for (var e, i = t.target.getAttribute("data-sellix-product"), l = "?", n = 0, d = t.target.attributes, o = d.length; n < o; n++) (e = d[n]).nodeName.indexOf("data-sellix-custom") > -1 && (l += e.nodeName.replace("data-sellix-custom-", "") + "=" + e.nodeValue + "&");
+              var a;
+              (a = document.createElement("div")).setAttribute("id", "sellix-modal-" + i), a.setAttribute("style", "display:none; position:fixed; top: 0; left:0; width: 100%; height:100%; z-index:-1050"), a.innerHTML = '\n\t\t\t\t\t<div id="backdrop" style="background: #00000085; width:100%; height:100%; position:absolute;">\n\t\t\t\t\t</div>\n\t\t\t\t\t<div style="top:20px; margin:auto; width: 100%; height:100%; z-index:1">\n\t\t\t\t\t\t<div id="sellix-modal-close-' + i + '" style="width:30px;height:30px;position: absolute;top:100px;right:calc(50% - 180px); cursor: pointer"></div>\n\t\t\t\t\t\t<div class="sellix-modal-content" style="height: 100%">\n\t\t\t\t\t\t\t<iframe src="http://51.89.201.58/prembed/' + i + l + '" style="width:100%;height:100%; border:none;" id="sellix-iframe">\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t', document.getElementById("sellix-container").appendChild(a), (a = document.getElementById("sellix-modal-" + i)).style.display = "flex", a.style.zIndex = "1050", document.getElementById("sellix-modal-close-" + i).addEventListener("click", function () {
+                a.style.display = "none", a.style.zIndex = "-1050", a.parentNode.removeChild(a)
+              })
+            })
+          }
+          e = !0
+        }
+        document.querySelector("[data-sellix-product]") || (e = !1), setTimeout(t, 100, e)
+      }, 100, !1);
+    </script>
   </body>
 </html>

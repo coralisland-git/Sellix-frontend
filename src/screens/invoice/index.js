@@ -6,7 +6,7 @@ import { Card, Row, Col } from 'components/reactstrap'
 import { CommonActions } from 'services/global'
 import { getInvoiceInfo, downloadInvoice } from './actions'
 import { Loader } from 'components'
-import LeaveFeedback from '../feedbacks_shop/screens/createComponent/screen'
+import LeaveFeedback from '../feedbacks_shop/screens/createComponent'
 import config, { converter } from 'constants/config'
 import FileSaver from 'file-saver';
 import QRMode from './sections/qrMode'
