@@ -51,13 +51,10 @@ class Invoice extends React.Component {
   }
 
   setTheme = ({ theme }) => {
+    console.log(theme)
     document.body.classList.remove('light');
     document.body.classList.remove('dark');
     document.body.classList.add(theme);
-
-    document.documentElement.classList.remove('light')
-    document.documentElement.classList.remove('dark')
-    document.documentElement.classList.add(theme);
   }
 
   getPayPalInvoice = () => {
@@ -101,12 +98,12 @@ class Invoice extends React.Component {
   }
 
   getInvoice = () => {
-    const { getInvoiceViaWebsocket } = this.props;
+    const { getInvoice } = this.props;
 
     const id = this.getInvoiceId()
 
-    getInvoiceViaWebsocket(id)
-        .then(invoice => {
+    getInvoice(id)
+        .then(({ data: { invoice } }) => {
           this.setState({
             invoice: {
               ...invoice,
@@ -410,7 +407,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getPayPalInvoice: bindActionCreators(CommonActions.getPayPalInvoice, dispatch),
   getInvoice: bindActionCreators(CommonActions.getInvoice, dispatch),
-  getInvoiceViaWebsocket: bindActionCreators(CommonActions.getInvoiceViaWebsocket, dispatch),
   getInvoiceInfo: bindActionCreators(getInvoiceInfo, dispatch),
   downloadInvoice: bindActionCreators(downloadInvoice, dispatch),
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
