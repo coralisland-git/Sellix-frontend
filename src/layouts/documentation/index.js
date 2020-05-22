@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { documentationRoutes } from 'routes'
-import initComponent from '../index'
+import layoutHOC from '../../HOC/layoutHOC'
 
 import AppHeader from '@coreui/react/es/Header'
 import { NotFound, Header } from 'components'
@@ -36,4 +36,4 @@ class DocumentationLayout extends React.Component {
   }
 }
 
-export default initComponent(DocumentationLayout)
+export default layoutHOC(DocumentationLayout)

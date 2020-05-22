@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux'
 import {Container} from 'components/reactstrap'
 import AppFooter from '@coreui/react/es/Footer'
 import AppHeader from '@coreui/react/es/Header'
+import layoutHOC from '../../HOC/layoutHOC'
 
 import {productRoutes, invoiceRoutes} from 'routes';
 import {AuthActions} from 'services/global'
@@ -62,4 +63,4 @@ const mapDispatchToProps = (dispatch) => ({
 	logOut: bindActionCreators(AuthActions.logOut, dispatch),
 })
 
-export default connect(null, mapDispatchToProps)(InvoiceLayout)
+export default layoutHOC(connect(null, mapDispatchToProps)(InvoiceLayout))

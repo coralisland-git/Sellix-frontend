@@ -19,7 +19,7 @@ class CustomButton extends Component {
                 return false
             }
 
-            const theme = [...document.documentElement.classList].includes('dark') || 'light'
+            const theme = [...document.body.classList].includes('dark') || 'light'
 
             let button = this;
             let ripple = document.createElement('span')

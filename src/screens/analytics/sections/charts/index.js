@@ -8,9 +8,6 @@ import ResponsiveContainer from 'recharts/es6/component/ResponsiveContainer';
 import Tooltip from 'recharts/es6/component/Tooltip';
 
 
-import './style.scss'
-
-
 export default class Charts extends PureComponent {
 
   render() {

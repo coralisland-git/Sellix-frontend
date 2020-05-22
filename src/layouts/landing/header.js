@@ -7,7 +7,7 @@ import sellix_logo_footer from 'assets/images/Sellix_logo.svg'
 import sellix_logo from "assets/images/Sellix_logo_white.svg";
 
 
-export function LandingHeader({ page, isOpen, user, history, dashboardUrl }) {
+export function LandingHeader({ page, user, history, dashboardUrl }) {
     return <header className={`pt-2 pb-2 ${page === '/' ? 'home-header' : ''}`}>
         <Navbar  color="white" light expand="lg">
             <NavbarBrand href="/">
@@ -15,7 +15,7 @@ export function LandingHeader({ page, isOpen, user, history, dashboardUrl }) {
             </NavbarBrand>
 
             {page === '/' &&
-                <Collapse className="mr-5" isOpen={isOpen} navbar>
+                <Collapse className="mr-5" isOpen={true} navbar>
                     <Nav className="ml-auto" navbar>
                         <Link activeClass="active" to="home_section" spy={true} smooth={true} offset={-70} duration= {500}>Home</Link>
                         <Link activeClass="active" to="feature_section" spy={true} smooth={true} offset={-70} duration= {500}>Features</Link>

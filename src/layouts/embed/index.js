@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { embedRoutes } from 'routes';
-import initComponent from '../index';
+import layoutHOC from '../../HOC/layoutHOC'
 
 import './style.scss'
 
@@ -20,4 +20,4 @@ class EmbedLayout extends React.Component {
     }
 }
 
-export default initComponent(EmbedLayout)
+export default layoutHOC(EmbedLayout)

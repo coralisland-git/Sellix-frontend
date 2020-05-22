@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { authRoutes } from 'routes'
 import { NotFound } from 'components'
-import initComponent from '../index'
+import layoutHOC from '../../HOC/layoutHOC'
 
 import './style.scss'
 
@@ -44,4 +44,4 @@ const mapStateToProps = (state) => ({
   is_authed: state.auth.is_authed
 });
 
-export default initComponent(connect(mapStateToProps)(AuthLayout))
+export default layoutHOC(connect(mapStateToProps)(AuthLayout))

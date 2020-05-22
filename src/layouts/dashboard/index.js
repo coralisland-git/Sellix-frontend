@@ -10,7 +10,7 @@ import {AuthActions} from 'services/global'
 
 import {Header, SetTitle} from 'components'
 import Nav from './nav'
-import initComponent from '../index'
+import layoutHOC from '../../HOC/layoutHOC'
 import {adminNavigation} from 'constants/navigation'
 
 import './style.scss'
@@ -104,4 +104,4 @@ const mapDispatchToProps = (dispatch) => ({
 	logOut: bindActionCreators(AuthActions.logOut, dispatch)
 })
 
-export default initComponent(connect(null, mapDispatchToProps)(AdminLayout))
+export default layoutHOC(connect(null, mapDispatchToProps)(AdminLayout))

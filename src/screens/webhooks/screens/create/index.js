@@ -1,19 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  BreadcrumbItem,
-  Breadcrumb
-} from 'components/reactstrap';
+import { Card, CardHeader, CardBody, Row, Col, Form, FormGroup, Input, Label, BreadcrumbItem, Breadcrumb } from 'components/reactstrap';
 import Select from 'react-select';
 import { Loader } from 'components'
 import { Button } from 'components';
@@ -28,6 +16,7 @@ const Yup = {
     object,
     string
 }
+
 const EVENT_OPTIONS = [
     { value: 'order:created', label: 'order:created' },
     { value: 'order:updated', label: 'order:updated' },
@@ -43,15 +32,6 @@ const EVENT_OPTIONS = [
 ]
 
 
-const mapStateToProps = (state) => {
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    commonActions: bindActionCreators(CommonActions, dispatch),
-    actions: bindActionCreators({ createWebhook }, dispatch)
-  })
-}
-
 class CreateWebhookSimulator extends React.Component {
     
   constructor(props) {
@@ -64,8 +44,6 @@ class CreateWebhookSimulator extends React.Component {
         key: ''
       },
     }
-
-    // this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleSubmit(values) {
@@ -81,11 +59,13 @@ class CreateWebhookSimulator extends React.Component {
   }
 
   render() {
-    const { openModal, closeModal } = this.props
-    const { 
-      loading,
-      initialValues,
-    } = this.state
+
+    const { loading, initialValues } = this.state;
+    const validationSchema = Yup.object().shape({
+          url: Yup.string().required('URL is required'),
+          event: Yup.string().required('Event is required'),
+          key: Yup.string(),
+      })
 
     return (
       <div className="create-product-screen mt-3">
@@ -96,16 +76,7 @@ class CreateWebhookSimulator extends React.Component {
               <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Webhooks</a>
             </BreadcrumbItem>
           </Breadcrumb>
-          <Formik
-            initialValues={this.state.initialValues}
-            onSubmit={(values) => {
-              this.handleSubmit(values)
-            }}
-            validationSchema={Yup.object().shape({
-                url: Yup.string().required('URL is required'),
-                event: Yup.string().required('Event is required'),
-                key: Yup.string(),
-            })}>
+          <Formik initialValues={initialValues} onSubmit={this.handleSubmit} validationSchema={validationSchema}>
             {props => (
               <Form onSubmit={props.handleSubmit}>
                 <Card>
@@ -213,5 +184,10 @@ class CreateWebhookSimulator extends React.Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    actions: bindActionCreators({ createWebhook }, dispatch)
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateWebhookSimulator)

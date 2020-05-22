@@ -1,5 +1,5 @@
 .dark {
-  h1, h2, h3, h4, h5, p, label, a, th, td, input, select, textarea,
+  h1, h2, h3, h4, h5, p, label, a, td, input, select, textarea,
   .close span, span.price, .neutral-count,
   .order-detail-info span,
   .stock-info span {
@@ -166,8 +166,8 @@
     border: 1px solid #1D183D !important;
   }
 
-  table tbody td {
-    border-top: 1px solid #2c2557 !important;
+  td .btn-default {
+    border: 1px solid transparent !important;
   }
 
   .react-bootstrap-daterangepicker-container button {

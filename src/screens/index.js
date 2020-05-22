@@ -1,5 +1,5 @@
 import React from "react";
-import asyncComponent from "../async_loader";
+import asyncLoadHOC from "../HOC/asyncLoadHOC";
 import StripeCallback from './payments_stripe_callback'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
@@ -8,94 +8,93 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 
-const Home = asyncComponent(() => import("./home"));
-const Fees = asyncComponent(() => import("./static/fees"));
-const Ticket = asyncComponent(() => import("./static/tickets"));
-const Changelog = asyncComponent(() => import("./static/changelog"));
-const Terms = asyncComponent(() => import("./static/terms"));
+const Home = asyncLoadHOC(() => import("./home"));
+const Fees = asyncLoadHOC(() => import("./static/fees"));
+const Ticket = asyncLoadHOC(() => import("./static/tickets"));
+const Changelog = asyncLoadHOC(() => import("./static/changelog"));
+const Terms = asyncLoadHOC(() => import("./static/terms"));
 
-const LogIn = asyncComponent(() => import("./auth/log_in"));
-const Register = asyncComponent(() => import("./auth/register"));
-const OTPLogin = asyncComponent(() => import("./auth/otp_2fa"));
-const ResetOTP = asyncComponent(() => import("./auth/reset_otp"));
-const ForgotPassword = asyncComponent(() => import("./auth/forgot_password"));
-const ResetPassword = asyncComponent(() => import("./auth/reset_password"));
-const TwoFactorAuthentication = asyncComponent(() => import("./auth/2fa"));
-const EmailConfirm = asyncComponent(() => import("./auth/email_confirm"));
-const ChangeEmail = asyncComponent(() => import("./auth/change_email"));
+const LogIn = asyncLoadHOC(() => import("./auth/log_in"));
+const Register = asyncLoadHOC(() => import("./auth/register"));
+const OTPLogin = asyncLoadHOC(() => import("./auth/otp_2fa"));
+const ResetOTP = asyncLoadHOC(() => import("./auth/reset_otp"));
+const ForgotPassword = asyncLoadHOC(() => import("./auth/forgot_password"));
+const ResetPassword = asyncLoadHOC(() => import("./auth/reset_password"));
+const TwoFactorAuthentication = asyncLoadHOC(() => import("./auth/2fa"));
+const EmailConfirm = asyncLoadHOC(() => import("./auth/email_confirm"));
+const ChangeEmail = asyncLoadHOC(() => import("./auth/change_email"));
 
-const Dashboard = asyncComponent(() => import("./dashboard"));
+const Dashboard = asyncLoadHOC(() => import("./dashboard"));
 
-const Invoice = asyncComponent(() => import("./invoice"));
-const Invoices = asyncComponent(() => import("./invoices"));
+const Invoice = asyncLoadHOC(() => import("./invoice"));
+const Invoices = asyncLoadHOC(() => import("./invoices"));
 
-const Users = asyncComponent(() => import("./admin/users"));
-const User = asyncComponent(() => import("./admin/users/screens/detail"));
-const TopUsers = asyncComponent(() => import("./admin/topUsers"));
-const Settings = asyncComponent(() => import("./admin/settings"));
+const Users = asyncLoadHOC(() => import("./admin/users"));
+const User = asyncLoadHOC(() => import("./admin/users/screens/detail"));
+const TopUsers = asyncLoadHOC(() => import("./admin/topUsers"));
+const Settings = asyncLoadHOC(() => import("./admin/settings"));
 
-const Coupons = asyncComponent(() => import("./coupons"));
-const CreateCoupon = asyncComponent(() => import("./coupons/screens/create"));
-const EditCoupon = asyncComponent(() => import("./coupons/screens/create"));
+const Coupons = asyncLoadHOC(() => import("./coupons"));
+const CreateCoupon = asyncLoadHOC(() => import("./coupons/screens/create"));
+const EditCoupon = asyncLoadHOC(() => import("./coupons/screens/create"));
 
-const Product = asyncComponent(() => import("./product"));
-const CreateProduct = asyncComponent(() => import("./product/screens/create"));
-const EditProduct = asyncComponent(() => import("./product/screens/detail"));
-const ProductSort = asyncComponent(() => import("./product_sort"));
-
-
-const Categories = asyncComponent(() => import("./categories"));
-const CreateCategories = asyncComponent(() => import("./categories/screens/create"));
-const EditCategory = asyncComponent(() => import("./categories/screens/detail"));
-const CategorySort = asyncComponent(() => import("./category_sort"));
+const Product = asyncLoadHOC(() => import("./product"));
+const CreateProduct = asyncLoadHOC(() => import("./product/screens/create"));
+const EditProduct = asyncLoadHOC(() => import("./product/screens/detail"));
+const ProductSort = asyncLoadHOC(() => import("./product_sort"));
 
 
-const ProductGroups = asyncComponent(() => import("./product_group"));
-const CreateProductGroup = asyncComponent(() => import("./product_group/screens/create"));
-const EditProductGroup = asyncComponent(() => import("./product_group/screens/detail"));
-const ProductGroupSort = asyncComponent(() => import("./product_group_sort"));
-
-const Documentation = asyncComponent(() => import("./documentation"));
-
-const Queries = asyncComponent(() => import("./queries"));
-const ReplyToQuery = asyncComponent(() => import("./queries/screens/reply"));
-const Contact = asyncComponent(() => import("./contact"));
-const ContactReply = asyncComponent(() => import("./contact/screens/reply"));
-
-const Order = asyncComponent(() => import("./order"));
-const OrderDetail = asyncComponent(() => import("./order/screens/detail"));
-
-const BlackList = asyncComponent(() => import("./blacklist"));
-const CreateBlacklist = asyncComponent(() => import("./blacklist/screens/create"));
-const EditBlacklist = asyncComponent(() => import("./blacklist/screens/create"));
-
-const Analytics = asyncComponent(() => import("./analytics"));
-const Reports = asyncComponent(() => import("./reports"));
-
-const Feedbacks = asyncComponent(() => import("./feedbacks"));
-const ReplyToFeedback = asyncComponent(() => import("./feedbacks/screens/reply"));
-const ShopFeedback = asyncComponent(() => import("./feedbacks_shop"));
-const LeaveFeedback = asyncComponent(() => import("./feedbacks_shop/screens/create"));
-
-const Webhooks = asyncComponent(() => import("./webhooks"));
-const CreateWebhookSimulator = asyncComponent(() => import("./webhooks/screens/create"));
-const WebhookLogs = asyncComponent(() => import("./webhook_logs"));
-
-const ShopProducts = asyncComponent(() => import("./product_shop"));
-const ShopProductDetail = asyncComponent(() => import("./product_shop/screens/detail"));
-const ShopGroupDetail = asyncComponent(() => import("./product_shop/screens/group_detail"));
+const Categories = asyncLoadHOC(() => import("./categories"));
+const CreateCategories = asyncLoadHOC(() => import("./categories/screens/create"));
+const EditCategory = asyncLoadHOC(() => import("./categories/screens/detail"));
+const CategorySort = asyncLoadHOC(() => import("./category_sort"));
 
 
-const GeneralSettings = asyncComponent(() => import("./general_settings"));
-const SecurityPage = asyncComponent(() => import("./security"));
-const Payments = asyncComponent(() => import("./payments"));
-const ShopDesign = asyncComponent(() => import("./shop_design"));
-const ShopGoogleAnalytics = asyncComponent(() => import("./shop_google_analytics"));
-const Notification = asyncComponent(() => import("./notification"));
+const ProductGroups = asyncLoadHOC(() => import("./product_group"));
+const CreateProductGroup = asyncLoadHOC(() => import("./product_group/screens/create"));
+const EditProductGroup = asyncLoadHOC(() => import("./product_group/screens/detail"));
+const ProductGroupSort = asyncLoadHOC(() => import("./product_group_sort"));
 
-const EmbedProduct = asyncComponent(() => import("./embed_product"));
-const EmbededPayment = asyncComponent(() => import("./embeded_payment"));
-const EmbededInvoice = asyncComponent(() => import("./embeded_invoice"));
+const Documentation = asyncLoadHOC(() => import("./documentation"));
+
+const Queries = asyncLoadHOC(() => import("./queries"));
+const ReplyToQuery = asyncLoadHOC(() => import("./queries/screens/reply"));
+const Contact = asyncLoadHOC(() => import("./contact"));
+const ContactReply = asyncLoadHOC(() => import("./contact/screens/reply"));
+
+const Order = asyncLoadHOC(() => import("./order"));
+const OrderDetail = asyncLoadHOC(() => import("./order/screens/detail"));
+
+const BlackList = asyncLoadHOC(() => import("./blacklist"));
+const CreateBlacklist = asyncLoadHOC(() => import("./blacklist/screens/create"));
+const EditBlacklist = asyncLoadHOC(() => import("./blacklist/screens/create"));
+
+const Analytics = asyncLoadHOC(() => import("./analytics"));
+const Reports = asyncLoadHOC(() => import("./reports"));
+
+const Feedbacks = asyncLoadHOC(() => import("./feedbacks"));
+const ReplyToFeedback = asyncLoadHOC(() => import("./feedbacks/screens/reply"));
+const ShopFeedback = asyncLoadHOC(() => import("./feedbacks_shop"));
+const LeaveFeedback = asyncLoadHOC(() => import("./feedbacks_shop/screens/create"));
+
+const Webhooks = asyncLoadHOC(() => import("./webhooks"));
+const WebhookLogs = asyncLoadHOC(() => import("./webhook_logs"));
+
+const ShopProducts = asyncLoadHOC(() => import("./product_shop"));
+const ShopProductDetail = asyncLoadHOC(() => import("./product_shop/screens/detail"));
+const ShopGroupDetail = asyncLoadHOC(() => import("./product_shop/screens/group_detail"));
+
+
+const GeneralSettings = asyncLoadHOC(() => import("./general_settings"));
+const SecurityPage = asyncLoadHOC(() => import("./security"));
+const Payments = asyncLoadHOC(() => import("./payments"));
+const ShopDesign = asyncLoadHOC(() => import("./shop_design"));
+const ShopGoogleAnalytics = asyncLoadHOC(() => import("./shop_google_analytics"));
+const Notification = asyncLoadHOC(() => import("./notification"));
+
+const EmbedProduct = asyncLoadHOC(() => import("./embed_product"));
+const EmbededPayment = asyncLoadHOC(() => import("./embeded_payment"));
+const EmbededInvoice = asyncLoadHOC(() => import("./embeded_invoice"));
 
 
 
@@ -132,7 +131,6 @@ export {
   LeaveFeedback,
 
   Webhooks,
-  CreateWebhookSimulator,
   WebhookLogs,
 
   Documentation,

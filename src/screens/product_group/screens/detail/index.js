@@ -288,7 +288,7 @@ const mapStateToProps = ({ product }) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
     tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
-    getProductList: bindActionCreators(Product.actions.getProductList, dispatch),
+    getProductList: bindActionCreators(Product.getProductList, dispatch),
     editProductGroup: bindActionCreators(ProductGroupActions.editProductGroup, dispatch),
     getProductGroupByID: bindActionCreators(ProductGroupActions.getProductGroupByID, dispatch)
 })

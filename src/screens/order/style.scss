@@ -92,33 +92,4 @@
     color: white !important;
     background-color: #613BEA;
   }
-
-  .order-badge {
-    width: 70px;
-    height: 25px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .badge-pending {
-    background-color: #C3C0C0;
-  }
-
-  .badge-partial {
-    background-color: #A5E4F8;
-  }
-
-  .badge-cancelled {
-    background-color: #FCA2B7;
-  }
-
-  .badge-completed {
-    background-color: #A6FCA2;
-  }
-
-  .order-value {
-    color: #2BB224;
-  }
 }

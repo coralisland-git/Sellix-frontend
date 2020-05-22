@@ -6,7 +6,7 @@ import Select from 'react-select'
 import { Formik } from 'formik';
 import { Button } from 'components';
 import { Spin, Loader } from 'components'
-import { Product } from 'screens'
+import { getProductList } from '../../../product/actions'
 import { CommonActions } from 'services/global'
 import * as CategoryActions from '../../actions'
 import Reference from '../reference'
@@ -233,7 +233,7 @@ const mapStateToProps = ({ product }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   commonActions: bindActionCreators(CommonActions, dispatch),
-  productActions: bindActionCreators(Product.actions, dispatch),
+  productActions: bindActionCreators({ getProductList }, dispatch),
   actions: bindActionCreators(CategoryActions, dispatch)
 })
 

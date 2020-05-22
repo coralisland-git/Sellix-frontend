@@ -31,7 +31,7 @@ class UserProductsTable extends Component {
             <img src={`${config.CDN_FLAGS_URL}${row.country.toLowerCase()}.svg`} className={`flag-icon mr-2`} alt={row.location} title={row.location} />
             {`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
           </p>
-          <p className="caption" style={{marginLeft: 32}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title?row.product_title:row.product_id}</p>
+          <p className="caption" style={{marginLeft: "1.8rem"}}>{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title?row.product_title:row.product_id}</p>
         </div>
     )
   }

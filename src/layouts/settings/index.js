@@ -12,7 +12,7 @@ import AppHeader from '@coreui/react/es/Header'
 
 import { settingsRoutes } from 'routes'
 import { AuthActions } from 'services/global'
-import initComponent from '../index'
+import layoutHOC from '../../HOC/layoutHOC'
 
 import {
   mainBrowserNavigation,
@@ -33,7 +33,6 @@ class SettingsLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: window.localStorage.getItem('theme') || 'light',
       isOpen: false
     }
   }
@@ -58,13 +57,13 @@ class SettingsLayout extends React.Component {
 
   render() {
 
-    const { isOpen, theme } = this.state
+    const { isOpen } = this.state
 
     return (
         <div className="admin-container">
           <div className="app">
             <AppHeader fixed className="border-bottom">
-              <Header theme={theme} changeTheme={this.props.changeTheme} />
+              <Header theme={this.props.theme} changeTheme={this.props.changeTheme} />
             </AppHeader>
 
             <div className="app-body">
@@ -135,4 +134,4 @@ const mapDispatchToProps = (dispatch) => ({
   logOut: bindActionCreators(AuthActions.logOut, dispatch)
 })
 
-export default initComponent(connect(null, mapDispatchToProps)(SettingsLayout))
+export default layoutHOC(connect(null, mapDispatchToProps)(SettingsLayout))
