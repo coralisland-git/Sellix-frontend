@@ -732,10 +732,10 @@ class EmbededInvoice extends React.Component {
                         <i className="fa fa-times close-popup"></i>
                         {innerComponent}
 
-                        <div className={"bottom order-detail-info p-4 " + ((isQrMode || invoice.status == 1 || invoice.status == 2) && "no-padding")}>
+                        <div className={"bottom order-detail-info p-4 " + ((isQrMode || invoice.status == 1 || invoice.status == 2) && "no-padding")} style={{borderRadius: "5px"}}>
                           {(+invoice.status === 1 || fakeSuccess) &&
                               <>
-                                <div className={"sw-container"}>
+                                <div className={"sw-container"} style={{borderRadius: "5px"}}>
                                   <div className="sw">
 
                                     <div className={"sw-icon-success"}>
