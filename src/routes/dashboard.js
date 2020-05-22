@@ -37,7 +37,7 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/home`,
     name: 'Dashboard',
-    component: Dashboard.screen,
+    component: Dashboard,
     title: 'Dashboard',
     exact: true,
   },
@@ -45,14 +45,14 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/products/new`,
     name: 'New',
-    component: CreateProduct.screen,
+    component: CreateProduct,
     title: 'Create Product',
     exact: true,
   },
   {
     path: `/dashboard/${user}/products/edit/:id`,
     name: 'Edit',
-    component: EditProduct.screen,
+    component: EditProduct,
     title: 'Edit Product',
     exact: true,
   },
@@ -60,21 +60,21 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/sort/products`,
     name: 'Product Sort',
-    component: ProductSort.screen,
+    component: ProductSort,
     title: 'Sort Products',
     exact: true,
   },
   {
     path: `/dashboard/${user}/categories/new`,
     name: 'New',
-    component: CreateCategories.screen,
+    component: CreateCategories,
     title: 'Create Category',
     exact: true,
   },
   {
     path: `/dashboard/${user}/categories/edit/:id`,
     name: 'Edit',
-    component: EditCategory.screen,
+    component: EditCategory,
     title: 'Edit Category',
     exact: true,
   },
@@ -83,14 +83,14 @@ const dashboardRoutes = [
     path: `/dashboard/${user}/sort/categories`,
     name: 'Categories Sort',
     exact: true,
-    component: CategorySort.screen,
+    component: CategorySort,
     title: 'Sort Categories'
   },
 
   {
     path: `/dashboard/${user}/categories`,
     name: 'Categories',
-    component: Categories.screen,
+    component: Categories,
     title: 'Categories',
     exact: true,
   },
@@ -99,7 +99,7 @@ const dashboardRoutes = [
     path: `/dashboard/${user}/products`,
     name: 'Products',
     exact: true,
-    component: Product.screen,
+    component: Product,
     title: 'Products'
   },
 
@@ -112,7 +112,7 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/queries`,
     name: 'Queries',
-    component: Queries.screen,
+    component: Queries,
     title: 'Queries'
   },
 
@@ -121,21 +121,21 @@ const dashboardRoutes = [
     path: `/dashboard/${user}/groups/new`,
     name: 'Product Group New',
     exact: true,
-    component: CreateProductGroup.screen,
+    component: CreateProductGroup,
     title: 'Create Group'
   },
   {
     path: `/dashboard/${user}/groups/edit/:id`,
     name: 'Product Group Edit',
     exact: true,
-    component: EditProductGroup.screen,
+    component: EditProductGroup,
     title: 'Edit Group'
   },
   {
     path: `/dashboard/${user}/groups`,
     name: 'Groups',
     exact: true,
-    component: ProductGroups.screen,
+    component: ProductGroups,
     title: 'Groups'
   },
 
@@ -143,7 +143,7 @@ const dashboardRoutes = [
     path: `/dashboard/${user}/sort/groups`,
     name: 'Sort Groups',
     exact: true,
-    component: ProductGroupSort.screen,
+    component: ProductGroupSort,
     title: 'Sort Groups'
   },
  
@@ -151,7 +151,7 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/orders/view/:id`,
     name: 'Detail',
-    component: OrderDetail.screen,
+    component: OrderDetail,
     title: 'View Order',
     exact: true,
   },
@@ -159,7 +159,7 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/orders`,
     name: 'Orders',
-    component: Order.screen,
+    component: Order,
     title: 'Orders',
     exact: true,
   },
@@ -168,14 +168,14 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/analytics/reports`,
     name: 'Reports',
-    component: Reports.screen,
+    component: Reports,
     title: 'Reports',
     exact: true,
   },
   {
     path: `/dashboard/${user}/analytics/stats`,
     name: 'Analytics',
-    component: Analytics.screen,
+    component: Analytics,
     title: 'Analytics',
     exact: true,
   },
@@ -184,21 +184,21 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/coupons/new`,
     name: 'New',
-    component: CreateCoupon.screen,
+    component: CreateCoupon,
     title: 'Create Coupon',
     exact: true,
   },
   {
     path: `/dashboard/${user}/coupons/edit/:id`,
     name: 'EditCoupon',
-    component: EditCoupon.screen,
+    component: EditCoupon,
     title: 'Edit Coupon',
     exact: true,
   },
   {
     path: `/dashboard/${user}/coupons`,
     name: 'Coupons',
-    component: Coupons.screen,
+    component: Coupons,
     title: 'Coupons',
     exact: true,
   },
@@ -206,21 +206,21 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/blacklist/new`,
     name: 'New',
-    component: CreateBlacklist.screen,
+    component: CreateBlacklist,
     title: 'Create Blacklist',
     exact: true,
   },
   {
     path: `/dashboard/${user}/blacklist/edit/:id`,
     name: 'EditBlacklist',
-    component: EditBlacklist.screen,
+    component: EditBlacklist,
     title: 'Edit Blacklist',
     exact: true,
   },
   {
     path: `/dashboard/${user}/blacklist`,
     name: 'Blacklist',
-    component: BlackList.screen,
+    component: BlackList,
     title: 'Blacklists',
     exact: true,
   },
@@ -238,7 +238,7 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/feedback`,
     name: 'Feedback',
-    component: Feedbacks.screen,
+    component: Feedbacks,
     title: 'Feedback',
     exact: true,
   },
@@ -246,21 +246,21 @@ const dashboardRoutes = [
   {
     path: `/dashboard/${user}/developer/embed`,
     name: 'Embed Product',
-    component: EmbedProduct.screen,
+    component: EmbedProduct,
     title: 'Embed Product'
   },
 
   {
     path: `/dashboard/${user}/developer/webhooks/all`,
     name: 'Webhooks',
-    component: Webhooks.screen,
+    component: Webhooks,
     title: 'Webhooks',
     exact: true,
   },
   {
     path: `/dashboard/${user}/developer/webhooks/logs`,
     name: 'Weebhook Logs',
-    component: WebhookLogs.screen,
+    component: WebhookLogs,
     title: 'Webhook Logs',
     exact: true,
   },

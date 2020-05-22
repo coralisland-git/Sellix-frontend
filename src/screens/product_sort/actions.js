@@ -1,9 +1,5 @@
 import { PRODUCT } from 'constants/types'
-import {
-  api,
-  authApi,
-  formData
-} from 'utils'
+import { authApi, formData } from 'utils'
 
 // Get Product List
 export const getProductList = () => {

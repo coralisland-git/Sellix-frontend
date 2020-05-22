@@ -3,41 +3,39 @@ import {
     ShopProducts,
     ShopFeedback,
     LeaveFeedback,
-  ContactReply
-  } from 'screens'
+    ContactReply
+} from 'screens'
 
-  const shopRoutes = [
-    {
-      path: `/:username/contact`,
-      name: 'Contact',
-      component: Contact.screen
-    },
+const shopRoutes = [
+  {
+    path: `/:username/contact`,
+    name: 'Contact',
+    component: Contact
+  },
 
-    {
-      path: `/:username/query/:id`,
-      name: 'Leave Query',
-      component: ContactReply
-    },
+  {
+    path: `/:username/query/:id`,
+    name: 'Leave Query',
+    component: ContactReply
+  },
 
-    {
-      path: `/:username/feedback/:id`,
-      name: 'Leave Feedback',
-      component: LeaveFeedback.screen
-    },
+  {
+    path: `/:username/feedback/:id`,
+    name: 'Leave Feedback',
+    component: LeaveFeedback
+  },
 
-    {
-      path: `/:username/feedback`,
-      name: 'Feedback',
-      component: ShopFeedback.screen
-    },
+  {
+    path: `/:username/feedback`,
+    name: 'Feedback',
+    component: ShopFeedback
+  },
 
-    {
-      path: `/:username`,
-      name: 'Products',
-      component: ShopProducts.screen
-    },
-
-    
-  ]
+  {
+    path: `/:username`,
+    name: 'Products',
+    component: ShopProducts
+  }
+]
   
-  export default shopRoutes
+export default shopRoutes

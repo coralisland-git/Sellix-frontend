@@ -14,47 +14,47 @@ const initialRoutes = [
   {
     path: '/auth/login',
     name: 'LogIn',
-    component: LogIn.screen
+    component: LogIn
   },
   {
     path: '/auth/email',
     name: '2FA',
-    component: TwoFactorAuthentication.screen
+    component: TwoFactorAuthentication
   },
   {
     path: '/auth/otp',
     name: '2FA',
-    component: OTPLogin.screen
+    component: OTPLogin
   },
   {
     path: '/auth/otp/reset',
     name: '2FA',
-    component: ResetOTP.screen
+    component: ResetOTP
   },
   {
     path: '/auth/register',
     name: 'Register',
-    component: Register.screen
+    component: Register
   },
   {
     path: '/auth/password/reset',
     name: 'Forgot Password',
-    component: ForgotPassword.screen
+    component: ForgotPassword
   },
   {
     path: '/auth/reset/:id',
     name: 'Reset Password',
-    component: ResetPassword.screen
+    component: ResetPassword
   },
   {
     path: '/auth/validate/:code',
     name: 'Email Confirm',
-    component: EmailConfirm.screen
+    component: EmailConfirm
   },
   {
     path: '/auth/change/email/:code',
     name: 'Change Email',
-    component: ChangeEmail.screen
+    component: ChangeEmail
   }
 ]
 export default initialRoutes;

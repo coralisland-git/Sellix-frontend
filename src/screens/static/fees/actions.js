@@ -1,7 +1,4 @@
-import { PRODUCT } from 'constants/types'
-import {
-  api
-} from 'utils'
+import { api } from 'utils'
 
 
 // Get Fees

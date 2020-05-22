@@ -7,18 +7,18 @@ const invoiceRoutes = [
   {
     path: '/ivembed/:id',
     name: 'EmbedInvoice',
-    component: EmbededInvoice.screen
+    component: EmbededInvoice
   },
   {
     path: '/invoice/:id',
     name: 'Bitcoin',
-    component: Invoice.screen,
+    component: Invoice,
     exact: true
   },
   {
     path: '/payment/:id',
     name: 'Bitcoin',
-    component: Invoice.screen,
+    component: Invoice,
     exact: true
   }
 ]

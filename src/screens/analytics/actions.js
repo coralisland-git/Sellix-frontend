@@ -1,8 +1,4 @@
-import { PRODUCT } from 'constants/types'
-import {
-  api,
-  authApi
-} from 'utils'
+import { authApi } from 'utils'
 
 // Get Product By ID
 export const getAnalyticsData = (startdate, enddate) => {
