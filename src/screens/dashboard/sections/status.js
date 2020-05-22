@@ -24,7 +24,6 @@ class Status extends React.Component {
 
     this.props.getStatus()
         .then(({ data: { status } }) => {
-
           this.setState({
             status: {
               ...status.messages,
@@ -65,12 +64,12 @@ class Status extends React.Component {
     const { status, loading, hide } = this.state;
 
     if(loading || +status.status === 1 || hide) {
-      return <IntervalTimer timeout={3000} callback={this.getStatusViaWebsocket} enabled={true} repeat={true} />
+      return <IntervalTimer timeout={300000} callback={this.getStatusViaWebsocket} enabled={true} repeat={true} />
     }
 
     return (
         <div className={"d-flex status-alert"}>
-          <IntervalTimer timeout={3000} callback={this.getStatusViaWebsocket} enabled={true} repeat={true} />
+          <IntervalTimer timeout={300000} callback={this.getStatusViaWebsocket} enabled={true} repeat={true} />
           <div className={status.type + " status-alert-status"}>
             {status.type === "red" && <i className={"far fa-times-circle"} />}
             {status.type === "blue" && <i className="fas fa-exclamation-triangle" />}

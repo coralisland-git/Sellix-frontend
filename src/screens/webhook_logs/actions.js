@@ -1,9 +1,6 @@
 import { WEBHOOK } from 'constants/types'
-import {
-  api,
-  authApi,
-  formData
-} from 'utils'
+import { authApi, formData } from 'utils'
+
 
 export const getWebhookLogList = () => {
   return (dispatch) => {
@@ -24,6 +21,7 @@ export const getWebhookLogList = () => {
   }
 }
 
+
 export const createWebhookSimulator = (simulator) => {
   return (dispatch) => {
     let data = {
@@ -43,6 +41,7 @@ export const createWebhookSimulator = (simulator) => {
     })
   }
 }
+
 
 export const retryWebhook = (webhook) => {
   return (dispatch) => {

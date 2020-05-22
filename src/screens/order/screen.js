@@ -28,25 +28,6 @@ import './style.scss'
 
 const user = window.localStorage.getItem('userId')
 
-const mapStateToProps = (state) => {
-  return ({
-    order_list: state.order.order_list,
-    live_order_display: state.order.live_order_display
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(OrderActions, dispatch),
-    setFilter: (value) => { 
-      dispatch({
-        type: ORDER.LIVE_ORDER_DISPLAY,
-        payload: value
-      }) 
-    }
-  })
-}
-
 class Order extends React.Component { 
   constructor(props) {
     super(props)
@@ -73,12 +54,9 @@ class Order extends React.Component {
         this.setState({loading: false})
       })
     } else {
-      let isAdmin = window.location.pathname.includes('admin');
-      if(!isAdmin) {
-        this.props.actions.getLiveOrders().finally(() => {
-          this.setState({loading: false})
-        })
-      }
+      this.props.actions.getLiveOrders().finally(() => {
+        this.setState({loading: false})
+      })
     }
   }
 
@@ -120,23 +98,19 @@ class Order extends React.Component {
     )  
   }
 
-  renderOrderValue(cell, row) {
-    return (
+  renderOrderValue = (cell, row) => (
       <div className="order">
         <p className="order-value" style={{fontSize: 15, fontWeight: 600}}>{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
         <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {config.PAYMENT_OPTS[row.gateway]}</p>
       </div>
-    )  
-  }
+  )
 
-  renderOrderTime(cell, row) {
-    return (
+  renderOrderTime = (cell, row) => (
       <div>
         <p style={{fontSize: 15, fontWeight: 600}}>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
         <p>{new moment(new Date(row.created_at*1000)).format('MMM DD')}</p>
       </div>
-    )  
-  }
+  )
 
 
   searchOrders(products) {
@@ -174,6 +148,10 @@ class Order extends React.Component {
     this.initializeData('all')
   }
 
+  getLiveOrdersViaWebsocket = () => {
+    this.props.actions.getLiveOrders()
+  }
+
   render() {
 
     const { loading, search_key, search_status } = this.state
@@ -184,14 +162,14 @@ class Order extends React.Component {
     if(search_key)
       order_list = this.searchOrders(order_list)
 
-    let isAdmin = window.location.pathname.includes('admin');
+    let isAdmin = window.location.pathname.includes('admin/invoices');
 
     return (
       <div className="order-screen">
         <div className="animated fadeIn">
           <IntervalTimer
-              timeout={2000}
-              callback={() => this.props.actions.getLiveOrdersViaWebsocket()}
+              timeout={60000}
+              callback={this.getLiveOrdersViaWebsocket}
               enabled={live_order_display == 'live'}
               repeat={true}
           />
@@ -446,5 +424,21 @@ class Order extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = (state) => ({
+  order_list: state.order.order_list,
+  live_order_display: state.order.live_order_display
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(OrderActions, dispatch),
+  setFilter: (value) => {
+    dispatch({
+      type: ORDER.LIVE_ORDER_DISPLAY,
+      payload: value
+    })
+  }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Order)

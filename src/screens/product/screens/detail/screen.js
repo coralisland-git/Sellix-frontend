@@ -500,9 +500,9 @@ class EditProduct extends React.Component {
 																</Row>
 																<Row>
 																	<Col lg={12}>
-																		<FormGroup className="mb-3 mr-4">
+																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Payment Methods</Label>
-																			<div className="d-flex flex-wrap">
+																			<div className="d-flex flex-wrap justify-content-between">
 																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
@@ -525,8 +525,8 @@ class EditProduct extends React.Component {
 																						className="custom-control-input"
 																						type="checkbox"
 																						id="btc"
-                                            name="SMTP-auth"
-                                            checked={gateways.bitcoin}
+                                                                                        name="SMTP-auth"
+                                                                                        checked={gateways.bitcoin}
 																						onChange={(e) => {
 																							this.setGateWays('bitcoin', e.target.checked)
 																						}}
@@ -638,6 +638,8 @@ class EditProduct extends React.Component {
 																						Skrill
 																					</label>
 																				</label>
+
+																				<label className="custom-checkbox custom-control payment-checkbox" />
 																			</div>
 																		</FormGroup>
 																	</Col>

@@ -43,36 +43,35 @@ class ReplyToQuery extends Component {
         document.title = this.title;
     }
 
-    componentDidMount() {
-        this.getQuery();
-        document.title = this.title;
-        window.addEventListener('focus', () => {
-            this.setState({
-                isActive: true
-            })
-        });
-        window.addEventListener('blur', () => {
-            this.setState({
-                isActive: false
-            })
-        });
-        document.addEventListener("visibilitychange", () => {
-            clearInterval(this.messageReceived);
-            document.title = this.title;
+    setActive = () => {
+        this.setState({
+            isActive: true
         })
     }
 
-    componentWillUnmount() {
+    unsetActive = () => {
+        this.setState({
+            isActive: false
+        })
+    }
+
+    clearInterval = () => {
         clearInterval(this.messageReceived);
-        document.removeEventListener("visibilitychange", () => {
-            document.title = this.title;
-        })
-        window.removeEventListener("focus", () => {
-            document.title = this.title;
-        })
-        window.removeEventListener("blur", () => {
-            document.title = this.title;
-        })
+        document.title = this.title;
+    }
+
+    componentDidMount() {
+        this.getQuery();
+        document.title = this.title;
+        window.addEventListener('focus', this.setActive);
+        window.addEventListener('blur', this.unsetActive);
+        document.addEventListener("visibilitychange", this.clearInterval)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("focus", this.setActive)
+        window.removeEventListener("blur", this.unsetActive)
+        document.removeEventListener("visibilitychange", this.clearInterval)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -137,8 +136,6 @@ class ReplyToQuery extends Component {
         return (
             <div className="reply-screen mt-3">
                 <div className="animated fadeIn">
-
-                    <IntervalTimer timeout={3000} callback={this.getQueryViaWebsocket} enabled={true} repeat={true}/>
 
                     {loading && <Loader/>}
                     {!loading &&
