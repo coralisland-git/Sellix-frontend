@@ -1,69 +1,119 @@
 import React, { Component } from "react";
-// import AuthLayout from './auth'
-// import AdminLayout from './admin'
-// import DashboardLayout from './dashboard'
-// import ShopLayout from './shop'
-// import PaymentLayout from './default'
-// import EmbedLayout from './embed'
-// import EmbedInvoiceLayout from './embed_invoice'
-// import InvoiceLayout from './invoice'
-// import ProductLayout from './product'
-// import SettingsLayout from './settings'
-// import LandingLayout from './landing'
-// import DocumentationLayout from './documentation'
-
+import asyncComponent from "../async_loader";
+import { ToastContainer, toast } from 'react-toastify'
+import {bindActionCreators} from "redux";
+import {AuthActions, CommonActions} from "../services/global";
+import {connect} from "react-redux";
+import { withRouter } from "react-router-dom";
 const DocumentationLayout = asyncComponent(() => import("./documentation"));
 const LandingLayout = asyncComponent(() => import("./landing"));
 const SettingsLayout = asyncComponent(() => import("./settings"));
-const ProductLayout = asyncComponent(() => import("./product"));
 const InvoiceLayout = asyncComponent(() => import("./invoice"));
 const ShopLayout = asyncComponent(() => import("./shop"));
 const DashboardLayout = asyncComponent(() => import("./dashboard"));
-const AdminLayout = asyncComponent(() => import("./admin"));
 const AuthLayout = asyncComponent(() => import("./auth"));
-const PaymentLayout = asyncComponent(() => import("./default"));
 const EmbedLayout = asyncComponent(() => import("./embed"));
-const EmbedInvoiceLayout = asyncComponent(() => import("./embed_invoice"));
 
 export {
   AuthLayout,
-  AdminLayout,
   DashboardLayout,
   ShopLayout,
-  PaymentLayout,
   SettingsLayout,
   LandingLayout,
   InvoiceLayout,
-  ProductLayout,
   EmbedLayout,
-  EmbedInvoiceLayout,
   DocumentationLayout
 }
 
-export default function asyncComponent(importComponent) {
-  class AsyncComponent extends Component {
+export default function initComponent(props) {
+  class InitComponent extends Component {
+
     constructor(props) {
       super(props);
+      this.theme = window.localStorage.getItem('theme') || 'light';
+
+      document.body.classList.remove('light');
+      document.body.classList.remove('dark');
+      document.body.classList.add(this.theme);
+
+      document.documentElement.classList.remove('light')
+      document.documentElement.classList.remove('dark')
+      document.documentElement.classList.add(this.theme) ;
 
       this.state = {
-        component: null
-      };
+        theme: this.theme
+      }
     }
 
-    async componentDidMount() {
-      const { default: component } = await importComponent();
+    componentDidMount() {
+      this.props.setTostifyAlertFunc((status, message) => {
+        if (!message) {
+          message = 'Unexpected Error'
+        }
+        if (status === 'success') {
+          toast.success(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'error') {
+          toast.error(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'warn') {
+          toast.warn(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'info') {
+          toast.info(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        }
+      })
 
-      this.setState({
-        component: component
-      });
+      let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+
+      if (iOS) {
+        for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
+          let element = document.getElementsByClassName('nav-link')[i];
+          element.addEventListener("mouseenter", function (event) {
+            element.click();
+          }, false);
+        }
+      }
     }
+
+    changeTheme = () => {
+      window.localStorage.setItem('theme', this.theme === 'light' ? 'dark' : 'light')
+
+      document.body.classList.remove('light');
+      document.body.classList.remove('dark');
+      document.body.classList.add(this.theme === 'light' ? 'dark' : 'light');
+
+      document.documentElement.classList.remove('light')
+      document.documentElement.classList.remove('dark')
+      document.documentElement.classList.add(this.theme === 'light' ? 'dark' : 'light');
+
+
+      this.setState({ theme: this.theme === 'light' ? 'dark' : 'light' })
+    }
+
 
     render() {
-      const C = this.state.component;
+      let Component = props;
 
-      return C ? <C {...this.props} /> : null;
+      return <>
+        <Component {...this.props} changeTheme={this.changeTheme} />
+        <ToastContainer position="top-right" autoClose={5000} style={{ zIndex: 1999 }} hideProgressBar={true} />
+      </>;
     }
   }
 
-  return AsyncComponent;
+  const mapStateToProps = (state) => ({
+    is_authed: state.auth.is_authed
+  })
+  const mapDispatchToProps = (dispatch) => ({
+    authActions: bindActionCreators(AuthActions, dispatch),
+    setTostifyAlertFunc: bindActionCreators(CommonActions.setTostifyAlertFunc, dispatch)
+  })
+
+  return withRouter(connect(mapStateToProps, mapDispatchToProps)(InitComponent))
 }

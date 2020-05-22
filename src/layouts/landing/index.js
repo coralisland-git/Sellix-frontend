@@ -1,10 +1,8 @@
 import React from 'react'
-import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
-import { Link } from "react-scroll";
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
-import { landingRoutes } from 'routes'
 import { AuthActions, CommonActions } from 'services/global'
 
 import LandingFooter from './footer'
@@ -26,13 +24,8 @@ class LandingLayout extends React.Component {
     }
   }
 
-  toggle() {
-    this.setState({isOpen: !this.state.isOpen})
-  }
-
   componentDidMount () {
     const preUrl = `/${window.localStorage.getItem('userId')}`
-
 
     if(this.props.match.path === '/contact') {
       this.props.getSelfUser()

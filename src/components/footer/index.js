@@ -1,15 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
 
 import './style.scss'
-
-
-const propTypes = {
-  children: PropTypes.node
-}
-
-const defaultProps = {}
 
 class Footer extends Component {
   
@@ -37,7 +29,5 @@ class Footer extends Component {
   }
 }
 
-Footer.propTypes = propTypes
-Footer.defaultProps = defaultProps
 
 export default Footer

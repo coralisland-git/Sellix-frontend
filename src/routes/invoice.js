@@ -1,14 +1,6 @@
-import {
-    Invoice,
-    EmbededInvoice
-} from 'screens'
+import { Invoice } from 'screens'
   
 const invoiceRoutes = [
-  {
-    path: '/ivembed/:id',
-    name: 'EmbedInvoice',
-    component: EmbededInvoice
-  },
   {
     path: '/invoice/:id',
     name: 'Bitcoin',

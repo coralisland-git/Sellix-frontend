@@ -1,43 +1,23 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { DropdownItem, DropdownMenu, DropdownToggle, Nav, UncontrolledDropdown } from 'components/reactstrap'
-import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { AuthActions } from 'services/global'
-
 import './style.scss'
-
-
-
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 
-const propTypes = {
-  children: PropTypes.node
-}
-
-const defaultProps = {}
 
 const userId = window.localStorage.getItem('userId')
-
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    authActions: bindActionCreators(AuthActions, dispatch)
-  })
-}
 
 class Header extends Component {
 
   signOut = () => {
-    this.props.authActions.logOut()
+    this.props.logOut()
     this.props.history.push('/auth/login')
   }
 
   render() {
-    const { user, profile, children, is_authed, history, ...attributes } = this.props
+    const { profile, is_authed, history } = this.props
 
     return (
       <React.Fragment>
@@ -47,7 +27,7 @@ class Header extends Component {
             <DropdownToggle className="user-name" nav>
               <div>
                 {profile && profile.profile_attachment?
-                  <img src={profile.profile_attachment} className="mt-2" width="45" height="45" style={{borderRadius: '50%'}}/>:
+                  <img src={profile.profile_attachment} className="mt-2" width="45" height="45" style={{borderRadius: '50%'}} alt={"Logo"}/>:
                   <i className="fas fa-user-circle text-primary avatar-icon"/>
                 }
               </div>
@@ -89,7 +69,9 @@ class Header extends Component {
   }
 }
 
-Header.propTypes = propTypes
-Header.defaultProps = defaultProps
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+const mapDispatchToProps = (dispatch) => ({
+  logOut: bindActionCreators(AuthActions.logOut, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(Header)

@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { Card, CardHeader, CardBody, Row, Col, FormGroup, Form, Label, Tooltip, Input, BreadcrumbItem, Breadcrumb } from 'components/reactstrap'
 import Select from 'react-select'
 import ReactMde from "react-mde";
-import "react-mde/lib/styles/css/react-mde-all.css";
 
 import AppSwitch from '@coreui/react/es/Switch'
 import {Loader, ImageUpload, FileUpload, DataSlider, Button, Spin} from 'components'

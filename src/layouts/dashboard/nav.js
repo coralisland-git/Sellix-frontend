@@ -4,16 +4,16 @@ import * as router from 'react-router-dom';
 import { BrowserView, MobileView } from "react-device-detect";
 import AppSidebarNav from '@coreui/react/es/SidebarNav2'
 import AppSidebar from '@coreui/react/es/Sidebar'
-import { mainBrowserNavigation, mainMobileNavigation, adminNavigation } from 'constants/navigation'
+import { mainBrowserNavigation, mainMobileNavigation } from 'constants/navigation'
 
 import './style.scss'
 
 
-const Nav = ({ location }) => {
+export const Nav = ({ location, nav }) => {
   return <AppSidebar className="pt-3 mb-5" fixed display="lg">
     <Switch>
       <Route path="/admin">
-        <AppSidebarNav navConfig={adminNavigation} location={location} router={router} />
+        <AppSidebarNav navConfig={nav} location={location} router={router} />
       </Route>
       <Route>
         <BrowserView>

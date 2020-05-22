@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
@@ -10,9 +10,6 @@ import { ToastContainer, toast } from 'react-toastify'
 
 import { shopRoutes } from 'routes'
 import { AuthActions, CommonActions } from 'services/global'
-import { ThemeProvider } from 'styled-components'
-import { darkTheme, lightTheme } from 'layouts/theme/theme'
-import { GlobalStyles } from 'layouts/theme/global'
 
 import GoogleAnalytics from './googleAnalytics'
 
@@ -30,14 +27,9 @@ import LandingFooter from "../../layouts/landing/footer"
 
 import '../../layouts/landing/style.scss'
 
-const mapStateToProps = (state) => {
-	return {
-		version: state.common.version,
-		user: state.common.general_info || {},
-		profile: state.auth.profile || {},
-		is_authed: state.auth.is_authed
-	}
-}
+const mapStateToProps = (state) => ({
+	user: state.common.general_info || {}
+})
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getSelfUser: bindActionCreators(AuthActions.getSelfUser, dispatch),
@@ -177,7 +169,6 @@ class ShopLayout extends React.Component {
 		const { pathname } = this.props.history.location;
 		const { user } = this.props;
     	const userId = this.props.match.params.username;
-		const theme = user.shop_dark_mode === '1' ? 'dark' : 'light'
 		const { verifiedTooltipOpen, userIsBanned, userIsNotFound } = this.state;
 
 		const dashboardUrl = user.username ? `/dashboard/${user.username}/home` : '/'
@@ -283,23 +274,7 @@ class ShopLayout extends React.Component {
 								/>
 								<GoogleAnalytics tracking_id={user.shop_google_analytics_tracking_id}>
 									<Switch>
-										{shopRoutes.map((prop, key) => {
-											if (prop.redirect)
-												return (
-													<Redirect
-														from={prop.path}
-														to={prop.pathTo}
-														key={key}
-													/>
-												)
-											return (
-												<Route
-													path={prop.path}
-													component={prop.component}
-													key={key}
-												/>
-											)
-										})}
+										{shopRoutes.map((props, key) => <Route {...props} key={key} />)}
 									</Switch>
 								</GoogleAnalytics>
 							</Suspense>
@@ -309,7 +284,7 @@ class ShopLayout extends React.Component {
 			</div>
 		}
 
-		var appFooter
+		let appFooter
 
 		if(userIsNotFound) {
 			appFooter = <div className="landing-layout"><LandingFooter dashboardUrl={dashboardUrl} /></div>
@@ -322,11 +297,10 @@ class ShopLayout extends React.Component {
 			</AppFooter>
 		}
 
-		const userIsLoading = Object.keys(user).length == 0;
+		const userIsLoading = Object.keys(user).length === 0;
 
 		return (
-			<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-				<GlobalStyles />
+			<div>
 				<LoaderFullscreen loaderRemovedInitially={!userIsLoading}/>
 				<div className={'shop-container'}>
 					<div className="app">
@@ -341,7 +315,7 @@ class ShopLayout extends React.Component {
 						{appFooter}
 					</div>
 				</div>
-			</ThemeProvider>
+			</div>
 		)
 	}
 }
