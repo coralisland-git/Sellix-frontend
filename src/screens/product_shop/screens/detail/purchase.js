@@ -326,7 +326,7 @@ class Purchase extends React.Component {
 							<p className="text-grey mt-3 cursor-pointer" onClick={this.openCoupon}>Apply a Coupon</p>
 						}
 					</>}
-					<div className="d-flex flex-wrap ">
+					<div className="d-flex flex-wrap justify-content-center">
 						<div className="d-flex justify-content-center align-items-center stock-count" style={this.isOutOfStock() ? {
 							opacity: 0.5,
 							pointerEvents: 'none'

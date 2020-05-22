@@ -1,5 +1,3 @@
-import { matchPath } from "react-router-dom";
-
 const user = window.localStorage.getItem('userId')
 
 export const adminNavigation =  {
@@ -38,26 +36,10 @@ export const adminNavigation =  {
   ]
 }
 
-export function mainBrowserNavigation(props){
+export const mainBrowserNavigation = () => {
 
   let { pathname } = window.location;
 
-  let route = [
-    '/dashboard/:username/groups/new',
-    '/dashboard/:username/groups/edit/:id',
-    '/dashboard/:username/groups',
-    '/dashboard/:username/products/new',
-    '/dashboard/:username/products/edit/:id',
-    '/dashboard/:username/products',
-    '/dashboard/:username/categories/new',
-    '/dashboard/:username/categories/edit/:id',
-    '/dashboard/:username/categories',
-    '/dashboard/:username/sort/groups',
-    '/dashboard/:username/sort/products',
-    '/dashboard/:username/sort/categories',
-  ]
-
-  // const match = matchPath(pathname, { path: '/dashboard/:username/groups/:id' })
   return {
     items: [
       {
@@ -285,28 +267,6 @@ export const accountSettingsNavigation =  {
     {
       name: 'Notifications',
       url: `/settings/${user}/notifications`
-    }
-  ]
-}
-
-
-export const adminSettingsNavigation =  {
-  items: [
-    {
-      name: 'General',
-      url: `/admin/settings/general`
-    },
-    {
-      name: 'Bitcoin',
-      url: `/admin/settings/bitcoin`
-    },
-    {
-      name: 'Litecoin',
-      url: `/admin/settings/litecoin`
-    },
-    {
-      name: 'Ethereum',
-      url: `/admin/settings/ethereum`
     }
   ]
 }

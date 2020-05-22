@@ -23,7 +23,6 @@ class AdminLayout extends Component {
 
 		this.token = window.localStorage.getItem('accessToken');
 		this.userId = window.localStorage.getItem('userId');
-		this.isAdmin = props.location.pathname.includes('/admin/dashboard');
 	}
 
 
@@ -67,7 +66,17 @@ class AdminLayout extends Component {
 	render() {
 
 		const { location, theme, changeTheme } = this.props;
-		const router = this.isAdmin ? adminRoutes : dashboardRoutes;
+		const { pathname } = location;
+
+		const isAdmin = pathname.includes('/admin/dashboard') ||
+			pathname.includes('/admin/users') ||
+			pathname.includes('/admin/top') ||
+			pathname.includes('/admin/settings') ||
+			pathname.includes('/admin/invoices') ||
+			pathname.includes('/admin/changelog')
+
+		const router = isAdmin ? adminRoutes : dashboardRoutes;
+		console.log(router)
 
 		return (
 			<div className="admin-container">

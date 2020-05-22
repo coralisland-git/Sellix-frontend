@@ -156,7 +156,6 @@
   .Select-control,
   .react-datepicker__input-container input,
   .create-product-screen .payment-checkbox,
-  .create-product-screen .file-switch .switch-slider,
   .image-uploader .drag-drop-area,
   .btn-default,
   .detail-product-screen .paypal-instant,
@@ -263,7 +262,7 @@
   }
 
   .admin-container footer {
-    background-color: #1D183D !important;
+    border-top-color: #1D183D;
     background: #1D183D !important;
   }
 

@@ -64,7 +64,10 @@ export default function layoutHOC(props) {
 
 
 		render() {
+
 			let Component = props;
+
+
 
 			return <>
 				<Component {...this.props} changeTheme={this.changeTheme} />

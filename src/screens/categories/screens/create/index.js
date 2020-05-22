@@ -5,7 +5,7 @@ import { Card, CardHeader, CardBody, Row, Form, Col, FormGroup, Label, Tooltip, 
 import { Spin, Button } from 'components';
 import Select from 'react-select'
 import { Formik } from 'formik';
-import { Product } from 'screens'
+import { getProductList } from '../../../product/actions'
 import { CommonActions } from 'services/global'
 import * as Actions from '../../actions'
 import Reference from '../reference'
@@ -38,7 +38,7 @@ class CreateCategories extends React.Component {
   }
 
   componentDidMount() {
-    this.props.productActions.getProductList().catch(err => {
+    this.props.getProductList().catch(err => {
       console.log(err)
     })
   }
@@ -221,7 +221,7 @@ const mapStateToProps = ({ product }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   commonActions: bindActionCreators(CommonActions, dispatch),
-  productActions: bindActionCreators(Product.actions, dispatch),
+  getProductList: bindActionCreators(getProductList, dispatch),
   actions: bindActionCreators(Actions, dispatch)
 })
 

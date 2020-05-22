@@ -243,7 +243,7 @@ class EmbedProduct extends Component {
                             Demo
                           </Button>
                         </div>
-                        <p className="page_description text-grey mb-4">
+                        <p className="page_description text-grey mb-4" style={{ lineHeight: "2rem" }}>
                           This will add <span className="badge-mark">reference</span> and <span className="badge-mark">discord</span> to the custom fields array of the invoice that will be created. <br />
                           If the product already has custom fields, you can still specify additional ones that will be passed to the invoice. <br />
                           If you specify a custom field that the product already has, the user will not be asked for it when proceeding with the purchase.

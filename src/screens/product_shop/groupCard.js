@@ -18,7 +18,7 @@ const GroupCard = ({ group, preventDefault, onClick, center_group_titles }) => {
 
     return <Card className="bg-white p-0 product-card" onClick={() => preventDefault ? null : onClick && onClick()}>
             <div style={{ minHeight: 150, width: '100%' }}>
-                <img src={image} alt={title} style={image_name ? {} : { padding: "3rem", objectFit: "fill" }}/>
+                <img src={image} alt={title} style={image_name ? {} : { padding: "3rem", objectFit: "fill", width: "100%" }}/>
             </div>
             
             <div className="p-3 d-flex flex-column h-100">

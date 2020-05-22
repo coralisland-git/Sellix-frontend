@@ -6,7 +6,7 @@ import Select from 'react-select'
 import { Loader, ImageUpload, Button } from 'components'
 import * as ProductGroupActions from '../../actions'
 import { Formik } from 'formik';
-import { Product } from 'screens'
+import { getProductList } from '../../../product/actions'
 import { CommonActions } from 'services/global'
 import object from "yup/lib/object";
 import string from "yup/lib/string";
@@ -288,7 +288,7 @@ const mapStateToProps = ({ product }) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
     tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
-    getProductList: bindActionCreators(Product.getProductList, dispatch),
+    getProductList: bindActionCreators(getProductList, dispatch),
     editProductGroup: bindActionCreators(ProductGroupActions.editProductGroup, dispatch),
     getProductGroupByID: bindActionCreators(ProductGroupActions.getProductGroupByID, dispatch)
 })

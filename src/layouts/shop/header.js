@@ -42,21 +42,17 @@ class Header extends Component {
                   <DropdownMenu right className="mt-4">
                     {
                       profile && profile.rank !== "0" && <DropdownItem onClick={() => history.push(`/admin/dashboard`)}>
-                        <i className={"far fa-circle fa-md"} /> Admin Panel
+                        <i className={"fas fa-users-cog"} /> Admin Panel
                       </DropdownItem>
                     }
-                    <DropdownItem onClick={() => history.push(`/dashboard/${userId}`)}>
-                      <i className={"far fa-circle fa-md"} /> Dashboard
-                    </DropdownItem>
-                  }
                   <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
-                    <i className={"nav-icon fas fa-home fa-md"} /> Dashboard
+                    <i className={"nav-icon fas fa-home"} /> Dashboard
                   </DropdownItem>
                   <DropdownItem className={'active'} onClick={() => this.props.history.push(`/${userId}`)}>
-                    <i className={"nav-icon fas fa-shopping-basket fa-md"} /> Your Shop
+                    <i className={"nav-icon fas fa-shopping-basket"} /> Your Shop
                   </DropdownItem>
                   <DropdownItem onClick={() => this.props.history.push(`/settings/${userId}`)}>
-                    <i className={"nav-icon fas fa-cog fa-md"} /> Settings
+                    <i className={"nav-icon fas fa-cog"} /> Settings
                   </DropdownItem>
                   
                   <DropdownItem onClick={() => this.signOut()}>

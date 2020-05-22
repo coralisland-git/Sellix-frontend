@@ -8,6 +8,7 @@ import {
   TopUsers,
   Settings,
   Changelog,
+  ChangelogCreate
 } from 'screens';
 
 
@@ -62,8 +63,8 @@ const adminRoutes = [
   },
   {
     path: `/admin/changelog`,
-    name: 'AdminChangelof',
-    component: Changelog.create,
+    name: 'AdminChangelog',
+    component: ChangelogCreate,
     title: 'Changelog'
   },
   {

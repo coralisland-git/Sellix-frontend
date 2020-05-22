@@ -8,93 +8,94 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 
-const Home = asyncLoadHOC(() => import("./home"));
-const Fees = asyncLoadHOC(() => import("./static/fees"));
-const Ticket = asyncLoadHOC(() => import("./static/tickets"));
-const Changelog = asyncLoadHOC(() => import("./static/changelog"));
-const Terms = asyncLoadHOC(() => import("./static/terms"));
+const Home = asyncLoadHOC(() => import(/* webpackChunkName: "Home" */ "./home"));
+const Fees = asyncLoadHOC(() => import(/* webpackChunkName: "Fees" */ "./static/fees"));
+const Ticket = asyncLoadHOC(() => import(/* webpackChunkName: "Ticket" */ "./static/tickets"));
+const Changelog = asyncLoadHOC(() => import(/* webpackChunkName: "Changelog" */ "./static/changelog"));
+const ChangelogCreate = asyncLoadHOC(() => import(/* webpackChunkName: "ChangelogCreate" */ "./static/changelog/create"));
+const Terms = asyncLoadHOC(() => import(/* webpackChunkName: "Terms" */ "./static/terms"));
 
-const LogIn = asyncLoadHOC(() => import("./auth/log_in"));
-const Register = asyncLoadHOC(() => import("./auth/register"));
-const OTPLogin = asyncLoadHOC(() => import("./auth/otp_2fa"));
-const ResetOTP = asyncLoadHOC(() => import("./auth/reset_otp"));
-const ForgotPassword = asyncLoadHOC(() => import("./auth/forgot_password"));
-const ResetPassword = asyncLoadHOC(() => import("./auth/reset_password"));
-const TwoFactorAuthentication = asyncLoadHOC(() => import("./auth/2fa"));
-const EmailConfirm = asyncLoadHOC(() => import("./auth/email_confirm"));
-const ChangeEmail = asyncLoadHOC(() => import("./auth/change_email"));
+const LogIn = asyncLoadHOC(() => import(/* webpackChunkName: "LogIn" */ "./auth/log_in"));
+const Register = asyncLoadHOC(() => import(/* webpackChunkName: "Register" */ "./auth/register"));
+const OTPLogin = asyncLoadHOC(() => import(/* webpackChunkName: "OTPLogin" */ "./auth/otp_2fa"));
+const ResetOTP = asyncLoadHOC(() => import(/* webpackChunkName: "ResetOTP" */ "./auth/reset_otp"));
+const ForgotPassword = asyncLoadHOC(() => import(/* webpackChunkName: "ForgotPassword" */ "./auth/forgot_password"));
+const ResetPassword = asyncLoadHOC(() => import(/* webpackChunkName: "ResetPassword" */ "./auth/reset_password"));
+const TwoFactorAuthentication = asyncLoadHOC(() => import(/* webpackChunkName: "TwoFactorAuthentication" */ "./auth/2fa"));
+const EmailConfirm = asyncLoadHOC(() => import(/* webpackChunkName: "EmailConfirm" */ "./auth/email_confirm"));
+const ChangeEmail = asyncLoadHOC(() => import(/* webpackChunkName: "ChangeEmail" */ "./auth/change_email"));
 
-const Dashboard = asyncLoadHOC(() => import("./dashboard"));
+const Dashboard = asyncLoadHOC(() => import(/* webpackChunkName: "Dashboard" */ "./dashboard"));
 
-const Invoice = asyncLoadHOC(() => import("./invoice"));
-const Invoices = asyncLoadHOC(() => import("./invoices"));
+const Invoice = asyncLoadHOC(() => import(/* webpackChunkName: "Invoice" */ "./invoice"));
+const Invoices = asyncLoadHOC(() => import(/* webpackChunkName: "Invoices" */ "./invoices"));
 
-const Users = asyncLoadHOC(() => import("./admin/users"));
-const User = asyncLoadHOC(() => import("./admin/users/screens/detail"));
-const TopUsers = asyncLoadHOC(() => import("./admin/topUsers"));
-const Settings = asyncLoadHOC(() => import("./admin/settings"));
+const Users = asyncLoadHOC(() => import(/* webpackChunkName: "Users" */ "./admin/users"));
+const User = asyncLoadHOC(() => import(/* webpackChunkName: "User" */ "./admin/users/screens/detail"));
+const TopUsers = asyncLoadHOC(() => import(/* webpackChunkName: "TopUsers" */ "./admin/topUsers"));
+const Settings = asyncLoadHOC(() => import(/* webpackChunkName: "Settings" */ "./admin/settings"));
 
-const Coupons = asyncLoadHOC(() => import("./coupons"));
-const CreateCoupon = asyncLoadHOC(() => import("./coupons/screens/create"));
-const EditCoupon = asyncLoadHOC(() => import("./coupons/screens/create"));
+const Coupons = asyncLoadHOC(() => import(/* webpackChunkName: "Coupons" */ "./coupons"));
+const CreateCoupon = asyncLoadHOC(() => import(/* webpackChunkName: "CreateCoupon" */ "./coupons/screens/create"));
+const EditCoupon = asyncLoadHOC(() => import(/* webpackChunkName: "EditCoupon" */ "./coupons/screens/create"));
 
-const Product = asyncLoadHOC(() => import("./product"));
-const CreateProduct = asyncLoadHOC(() => import("./product/screens/create"));
-const EditProduct = asyncLoadHOC(() => import("./product/screens/detail"));
-const ProductSort = asyncLoadHOC(() => import("./product_sort"));
-
-
-const Categories = asyncLoadHOC(() => import("./categories"));
-const CreateCategories = asyncLoadHOC(() => import("./categories/screens/create"));
-const EditCategory = asyncLoadHOC(() => import("./categories/screens/detail"));
-const CategorySort = asyncLoadHOC(() => import("./category_sort"));
+const Product = asyncLoadHOC(() => import(/* webpackChunkName: "Product" */ "./product"));
+const CreateProduct = asyncLoadHOC(() => import(/* webpackChunkName: "CreateProduct" */ "./product/screens/create"));
+const EditProduct = asyncLoadHOC(() => import(/* webpackChunkName: "EditProduct" */ "./product/screens/detail"));
+const ProductSort = asyncLoadHOC(() => import(/* webpackChunkName: "ProductSort" */ "./product_sort"));
 
 
-const ProductGroups = asyncLoadHOC(() => import("./product_group"));
-const CreateProductGroup = asyncLoadHOC(() => import("./product_group/screens/create"));
-const EditProductGroup = asyncLoadHOC(() => import("./product_group/screens/detail"));
-const ProductGroupSort = asyncLoadHOC(() => import("./product_group_sort"));
-
-const Documentation = asyncLoadHOC(() => import("./documentation"));
-
-const Queries = asyncLoadHOC(() => import("./queries"));
-const ReplyToQuery = asyncLoadHOC(() => import("./queries/screens/reply"));
-const Contact = asyncLoadHOC(() => import("./contact"));
-const ContactReply = asyncLoadHOC(() => import("./contact/screens/reply"));
-
-const Order = asyncLoadHOC(() => import("./order"));
-const OrderDetail = asyncLoadHOC(() => import("./order/screens/detail"));
-
-const BlackList = asyncLoadHOC(() => import("./blacklist"));
-const CreateBlacklist = asyncLoadHOC(() => import("./blacklist/screens/create"));
-const EditBlacklist = asyncLoadHOC(() => import("./blacklist/screens/create"));
-
-const Analytics = asyncLoadHOC(() => import("./analytics"));
-const Reports = asyncLoadHOC(() => import("./reports"));
-
-const Feedbacks = asyncLoadHOC(() => import("./feedbacks"));
-const ReplyToFeedback = asyncLoadHOC(() => import("./feedbacks/screens/reply"));
-const ShopFeedback = asyncLoadHOC(() => import("./feedbacks_shop"));
-const LeaveFeedback = asyncLoadHOC(() => import("./feedbacks_shop/screens/create"));
-
-const Webhooks = asyncLoadHOC(() => import("./webhooks"));
-const WebhookLogs = asyncLoadHOC(() => import("./webhook_logs"));
-
-const ShopProducts = asyncLoadHOC(() => import("./product_shop"));
-const ShopProductDetail = asyncLoadHOC(() => import("./product_shop/screens/detail"));
-const ShopGroupDetail = asyncLoadHOC(() => import("./product_shop/screens/group_detail"));
+const Categories = asyncLoadHOC(() => import(/* webpackChunkName: "Categories" */ "./categories"));
+const CreateCategories = asyncLoadHOC(() => import(/* webpackChunkName: "CreateCategories" */ "./categories/screens/create"));
+const EditCategory = asyncLoadHOC(() => import(/* webpackChunkName: "EditCategory" */ "./categories/screens/detail"));
+const CategorySort = asyncLoadHOC(() => import(/* webpackChunkName: "CategorySort" */ "./category_sort"));
 
 
-const GeneralSettings = asyncLoadHOC(() => import("./settings/general_settings"));
-const SecurityPage = asyncLoadHOC(() => import("./settings/security"));
-const Payments = asyncLoadHOC(() => import("./settings/payments"));
-const ShopDesign = asyncLoadHOC(() => import("./settings/shop_design"));
-const ShopGoogleAnalytics = asyncLoadHOC(() => import("./settings/shop_google_analytics"));
-const Notification = asyncLoadHOC(() => import("./settings/notification"));
+const ProductGroups = asyncLoadHOC(() => import(/* webpackChunkName: "ProductGroups" */ "./product_group"));
+const CreateProductGroup = asyncLoadHOC(() => import(/* webpackChunkName: "CreateProductGroup" */ "./product_group/screens/create"));
+const EditProductGroup = asyncLoadHOC(() => import(/* webpackChunkName: "EditProductGroup" */ "./product_group/screens/detail"));
+const ProductGroupSort = asyncLoadHOC(() => import(/* webpackChunkName: "ProductGroupSort" */ "./product_group_sort"));
 
-const EmbedProduct = asyncLoadHOC(() => import("./embed_product"));
-const EmbededPayment = asyncLoadHOC(() => import("./embeded_payment"));
-const EmbededInvoice = asyncLoadHOC(() => import("./embeded_invoice"));
+const Documentation = asyncLoadHOC(() => import(/* webpackChunkName: "Documentation" */ "./documentation"));
+
+const Queries = asyncLoadHOC(() => import(/* webpackChunkName: "Queries" */ "./queries"));
+const ReplyToQuery = asyncLoadHOC(() => import(/* webpackChunkName: "ReplyToQuery" */ "./queries/screens/reply"));
+const Contact = asyncLoadHOC(() => import(/* webpackChunkName: "Contact" */ "./contact"));
+const ContactReply = asyncLoadHOC(() => import(/* webpackChunkName: "ContactReply" */ "./contact/screens/reply"));
+
+const Order = asyncLoadHOC(() => import(/* webpackChunkName: "Order" */ "./order"));
+const OrderDetail = asyncLoadHOC(() => import(/* webpackChunkName: "OrderDetail" */ "./order/screens/detail"));
+
+const BlackList = asyncLoadHOC(() => import(/* webpackChunkName: "BlackList" */ "./blacklist"));
+const CreateBlacklist = asyncLoadHOC(() => import(/* webpackChunkName: "CreateBlacklist" */ "./blacklist/screens/create"));
+const EditBlacklist = asyncLoadHOC(() => import(/* webpackChunkName: "EditBlacklist" */ "./blacklist/screens/create"));
+
+const Analytics = asyncLoadHOC(() => import(/* webpackChunkName: "Analytics" */ "./analytics"));
+const Reports = asyncLoadHOC(() => import(/* webpackChunkName: "Reports" */ "./reports"));
+
+const Feedbacks = asyncLoadHOC(() => import(/* webpackChunkName: "Feedbacks" */ "./feedbacks"));
+const ReplyToFeedback = asyncLoadHOC(() => import(/* webpackChunkName: "ReplyToFeedback" */ "./feedbacks/screens/reply"));
+const ShopFeedback = asyncLoadHOC(() => import(/* webpackChunkName: "ShopFeedback" */ "./feedbacks_shop"));
+const LeaveFeedback = asyncLoadHOC(() => import(/* webpackChunkName: "LeaveFeedback" */ "./feedbacks_shop/screens/create"));
+
+const Webhooks = asyncLoadHOC(() => import(/* webpackChunkName: "Webhooks" */ "./webhooks"));
+const WebhookLogs = asyncLoadHOC(() => import(/* webpackChunkName: "WebhookLogs" */ "./webhook_logs"));
+
+const ShopProducts = asyncLoadHOC(() => import(/* webpackChunkName: "ShopProducts" */ "./product_shop"));
+const ShopProductDetail = asyncLoadHOC(() => import(/* webpackChunkName: "ShopProductDetail" */ "./product_shop/screens/detail"));
+const ShopGroupDetail = asyncLoadHOC(() => import(/* webpackChunkName: "ShopGroupDetail" */ "./product_shop/screens/group_detail"));
+
+
+const GeneralSettings = asyncLoadHOC(() => import(/* webpackChunkName: "GeneralSettings" */ "./settings/general_settings"));
+const SecurityPage = asyncLoadHOC(() => import(/* webpackChunkName: "SecurityPage" */ "./settings/security"));
+const Payments = asyncLoadHOC(() => import(/* webpackChunkName: "Payments" */ "./settings/payments"));
+const ShopDesign = asyncLoadHOC(() => import(/* webpackChunkName: "ShopDesign" */ "./settings/shop_design"));
+const ShopGoogleAnalytics = asyncLoadHOC(() => import(/* webpackChunkName: "ShopGoogleAnalytics" */ "./settings/shop_google_analytics"));
+const Notification = asyncLoadHOC(() => import(/* webpackChunkName: "Notification" */ "./settings/notification"));
+
+const EmbedProduct = asyncLoadHOC(() => import(/* webpackChunkName: "EmbedProduct" */ "./embed_product"));
+const EmbededPayment = asyncLoadHOC(() => import(/* webpackChunkName: "EmbededPayment" */ "./embeded_payment"));
+const EmbededInvoice = asyncLoadHOC(() => import(/* webpackChunkName: "EmbededInvoice" */ "./embeded_invoice"));
 
 
 
@@ -102,6 +103,7 @@ export {
   ShopProducts,
   ShopProductDetail,
   ShopGroupDetail,
+  ChangelogCreate,
 
   GeneralSettings,
   SecurityPage,
