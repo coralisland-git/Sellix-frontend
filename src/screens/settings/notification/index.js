@@ -1,23 +1,11 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Button, Spin} from 'components';
-import {
-  Card,
-  CardBody,
-  Row,
-  Input,
-  Col,
-  Form,     
-  FormGroup,
-  Label
-} from 'components/reactstrap'
+import { Button, Spin } from 'components';
+import { Card, CardBody, Row, Input, Col, Form, FormGroup, Label } from 'components/reactstrap'
 import config from 'constants/config'
 import AppSwitch from '@coreui/react/es/Switch'
-import {
-  CommonActions,
-  AuthActions
-} from 'services/global'
+import { CommonActions, AuthActions } from 'services/global'
 import { Loader } from 'components'
 import * as Actions from './actions'
 import 'react-toastify/dist/ReactToastify.css'
@@ -26,19 +14,15 @@ import './style.scss'
 
 import discordIcon from 'assets/images/discord.png'
 
-const mapStateToProps = (state) => {
-  return ({
-    settings: state.auth.settings || {}
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    saveNotificationSettings: bindActionCreators(Actions.saveNotificationSettings, dispatch),
-    getUserSettings: bindActionCreators(AuthActions.getUserSettings, dispatch),
-    checkDiscordChannel: bindActionCreators(CommonActions.checkDiscordChannel, dispatch),
-    tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
-  })
-}
+const mapStateToProps = (state) => ({
+  settings: state.auth.settings || {}
+})
+const mapDispatchToProps = (dispatch) => ({
+  saveNotificationSettings: bindActionCreators(Actions.saveNotificationSettings, dispatch),
+  getUserSettings: bindActionCreators(AuthActions.getUserSettings, dispatch),
+  checkDiscordChannel: bindActionCreators(CommonActions.checkDiscordChannel, dispatch),
+  tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
+})
 
 class Notification extends React.Component {
   

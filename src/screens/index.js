@@ -1,6 +1,6 @@
 import React from "react";
 import asyncLoadHOC from "../HOC/asyncLoadHOC";
-import StripeCallback from './payments_stripe_callback'
+import StripeCallback from './settings/payments_stripe_callback'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
 import "react-toastify/dist/ReactToastify.css"
@@ -85,12 +85,12 @@ const ShopProductDetail = asyncLoadHOC(() => import("./product_shop/screens/deta
 const ShopGroupDetail = asyncLoadHOC(() => import("./product_shop/screens/group_detail"));
 
 
-const GeneralSettings = asyncLoadHOC(() => import("./general_settings"));
-const SecurityPage = asyncLoadHOC(() => import("./security"));
-const Payments = asyncLoadHOC(() => import("./payments"));
-const ShopDesign = asyncLoadHOC(() => import("./shop_design"));
-const ShopGoogleAnalytics = asyncLoadHOC(() => import("./shop_google_analytics"));
-const Notification = asyncLoadHOC(() => import("./notification"));
+const GeneralSettings = asyncLoadHOC(() => import("./settings/general_settings"));
+const SecurityPage = asyncLoadHOC(() => import("./settings/security"));
+const Payments = asyncLoadHOC(() => import("./settings/payments"));
+const ShopDesign = asyncLoadHOC(() => import("./settings/shop_design"));
+const ShopGoogleAnalytics = asyncLoadHOC(() => import("./settings/shop_google_analytics"));
+const Notification = asyncLoadHOC(() => import("./settings/notification"));
 
 const EmbedProduct = asyncLoadHOC(() => import("./embed_product"));
 const EmbededPayment = asyncLoadHOC(() => import("./embeded_payment"));

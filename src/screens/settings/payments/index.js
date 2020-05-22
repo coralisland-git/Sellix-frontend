@@ -1,15 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Input
-} from 'components/reactstrap'
+import { Card, CardBody, Row, Col, FormGroup, Label, Input } from 'components/reactstrap'
 import {Button, Spin} from 'components';
 import { CommonActions, AuthActions } from 'services/global'
 import { Loader } from 'components'
@@ -17,14 +9,14 @@ import * as Actions from './actions'
 
 import './style.scss'
 
-import bitcoinIcon from "../../assets/images/crypto/btc.svg";
-import ethereumIcon from "../../assets/images/crypto/eth.svg";
-import litecoinIcon from "../../assets/images/crypto/ltc.svg";
-import bitcoinCashIcon from "../../assets/images/crypto/bitcoincash.svg";
-import perfectmoneyIcon from "../../assets/images/crypto/perfectmoney.svg";
-import stripeIcon from "../../assets/images/crypto/stripe.svg";
-import stripeBtnIcon from "../../assets/images/crypto/stripe_revised.svg";
-import skrillIcon from "../../assets/images/crypto/skrill.svg";
+import bitcoinIcon from "../../../assets/images/crypto/btc.svg";
+import ethereumIcon from "../../../assets/images/crypto/eth.svg";
+import litecoinIcon from "../../../assets/images/crypto/ltc.svg";
+import bitcoinCashIcon from "../../../assets/images/crypto/bitcoincash.svg";
+import perfectmoneyIcon from "../../../assets/images/crypto/perfectmoney.svg";
+import stripeIcon from "../../../assets/images/crypto/stripe.svg";
+import stripeBtnIcon from "../../../assets/images/crypto/stripe_revised.svg";
+import skrillIcon from "../../../assets/images/crypto/skrill.svg";
 import Select from "react-select";
 
 const mapStateToProps = (state) => ({

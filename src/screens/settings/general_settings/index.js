@@ -1,16 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Form,
-  Input
-} from 'components/reactstrap'
+import { Card, CardBody, Row, Col, FormGroup, Label, Form, Input } from 'components/reactstrap'
 import {Button, Spin} from 'components';
 import { Formik } from 'formik';
 import object from "yup/lib/object";

@@ -5,9 +5,7 @@ import { Form, FormGroup, Input, Label, Modal, ModalHeader, ModalBody, ModalFoot
 import { Button } from 'components';
 import { Spin } from 'components'
 import { Formik } from 'formik';
-import {
-  CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 
 import * as Actions from '../actions'
 import object from "yup/lib/object";
@@ -18,16 +16,7 @@ const Yup = {
   object,
   string
 }
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(Actions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+
 
 class TwoFactorModal extends React.Component {
   
@@ -151,4 +140,9 @@ class TwoFactorModal extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TwoFactorModal)
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(Actions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(TwoFactorModal)

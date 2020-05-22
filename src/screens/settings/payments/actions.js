@@ -1,8 +1,4 @@
-import { CONTACT } from 'constants/types'
-import {
-  formData,
-  authApi
-} from 'utils'
+import { formData, authApi } from 'utils'
 
 // Save Notification
 export const savePayments = (settings) => {

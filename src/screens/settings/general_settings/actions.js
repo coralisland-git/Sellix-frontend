@@ -1,15 +1,11 @@
-import { CONTACT } from 'constants/types'
-import {
-  formData,
-  authApi
-} from 'utils'
+import { authApi, formData } from 'utils'
 
-// Save saveShopSettings
-export const saveShopSettings = (settings) => {
+// Save saveGeneralSettings
+export const saveGeneralSettings = (settings) => {
   return (dispatch) => {
     let data = {
       method: 'POST',
-      url: `/settings/shop`,
+      url: `/settings/general`,
       data: formData(settings)
     }
 

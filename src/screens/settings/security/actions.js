@@ -1,11 +1,6 @@
-import { CONTACT } from 'constants/types'
-import {
-  api,
-  authApi,
-  formData
-} from 'utils'
+import { authApi, formData } from 'utils'
 
-// Save Securitt Actions
+// Save Security Actions
 export const saveSecurity = (security) => {
   return (dispatch) => {
     let data = {

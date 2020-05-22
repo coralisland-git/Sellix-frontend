@@ -22,17 +22,12 @@ const Yup = {
   string,
   ref: () => {},
 }
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(SecureActions, dispatch),
-    authActions: bindActionCreators(AuthActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(SecureActions, dispatch),
+  authActions: bindActionCreators(AuthActions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch)
+})
 
 class SecurityPage extends React.Component {
   
@@ -351,4 +346,4 @@ class SecurityPage extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SecurityPage)
+export default connect(null, mapDispatchToProps)(SecurityPage)
