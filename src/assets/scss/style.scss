@@ -7,14 +7,12 @@
 @import "~@coreui/coreui-pro/scss/coreui.scss";
 @import "~@coreui/coreui-pro/scss/_dropdown-menu-right.scss";
 @import "custom";
-@import '~flag-icon-css/css/flag-icon.min.css';
 @import "ie-fix";
 @import "fixes";
 
 // Spinkit
 $spinkit-spinner-color: $body-color;
 @import 'node_modules/spinkit/scss/spinkit.scss';
-@import "../css/override/react-select";
 
 .is-invalid .react-select__control {
   border-color: #f76b6a !important;

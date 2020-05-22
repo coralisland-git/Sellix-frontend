@@ -166,6 +166,19 @@ module.exports = function(webpackEnv) {
       splitChunks: {
         chunks: 'all',
         name: false,
+        maxSize: 2000000,
+        minSize: 1000000,
+        cacheGroups: {
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true
+          }
+        }
       },
     },
     resolve: {

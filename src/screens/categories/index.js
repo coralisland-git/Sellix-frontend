@@ -1,9 +1,216 @@
-import screen from './screen'
-import * as actions from './actions'
-import reducer from './reducer'
+import React from 'react'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Row,
+  Col
+} from 'components/reactstrap'
+import { Button } from 'components';
+import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
+import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
+import { confirmAlert } from 'react-confirm-alert'; 
+import { Loader } from 'components'
+import { tableOptions } from 'constants/tableoptions'
+import {
+  CommonActions,
+} from 'services/global'
 
-export default {
-  screen,
-  actions,
-  reducer
+import * as Actions from './actions'
+import './style.scss'
+
+const user = window.localStorage.getItem('userId')
+
+const mapStateToProps = (state) => {
+  return ({
+    user: state.auth,
+    all_categories: state.category.all_categories
+  })
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    actions: bindActionCreators(Actions, dispatch)
+  })
+}
+
+const Confirm = ({ onClose, title, message, onDelete }) => {
+  return <div className={"react-confirm-alert" + ` ${window.localStorage.getItem('theme') || 'light'}`}>
+    <div className="react-confirm-alert-body">
+      <h1>{title}</h1>
+      <h3>{message}</h3>
+      <div className="react-confirm-alert-button-group">
+        <Button color="primary" onClick={() => { onDelete(); onClose()}}>Yes, Delete it!</Button>
+        <Button color="primary" onClick={onClose}>No</Button>
+      </div>
+    </div>
+  </div>
+}
+
+class Categories extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: false
+    }
+
+    this.initializeData = this.initializeData.bind(this)
+    this.gotoEditPage = this.gotoEditPage.bind(this)
+    this.deleteCateogry = this.deleteCateogry.bind(this)
+    this.renderOptions = this.renderOptions.bind(this)
+  }
+
+  componentDidMount () {
+    this.initializeData()
+  }
+
+  initializeData () {
+    this.setState({ loading: true })
+    this.props.actions.getCategoryList().catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  }
+
+  // Open Confirm Modal
+  showConfirmModal() {
+    this.setState({ openDeleteModal: true })
+  }
+  // Close Confirm Modal
+  closeConfirmModal() {
+    this.setState({ openDeleteModal: false })
+  }
+
+  gotoEditPage(e, id) {
+    this.props.history.push({
+      pathname: `/dashboard/${user}/categories/edit/${id}`
+    })
+  }
+
+  onDeleteCateogry = (id) => () => {
+    this.setState({ loading: true })
+    this.props.actions.deleteCategory({
+      uniqid: id
+    }).then(res => {
+      this.props.actions.getCategoryList()
+      this.props.commonActions.tostifyAlert('success', res.message)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Something went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  }
+
+  deleteCateogry(e, id) {
+    confirmAlert({
+      title: 'Are you sure?',
+      message: 'You want to delete this category?',
+      customUI:  (props) => <Confirm {...props} onDelete={this.onDeleteCateogry(id)}/>
+    });
+  }
+
+  renderOptions(cell, row) {
+    return (
+      <div className="d-flex actions">
+        <a onClick={(e) => this.gotoEditPage(e, row.uniqid)}>
+          <i className="fas fa-pen"/>
+        </a>
+        <a onClick={(e) => this.deleteCateogry(e, row.uniqid)}>
+          <i className="fas fa-trash"/>
+        </a>
+      </div>
+    )
+  }
+
+  render() {
+    const { loading } = this.state
+    const { all_categories } = this.props
+
+    return (
+      <div className="product-screen">
+        
+        <div className="animated fadeIn">
+          <Card className="grey">
+            <CardHeader>
+              <Row style={{alignItems: 'center'}}>
+                <Col md={4}>
+                  <h1>Categories</h1>
+                </Col>
+                <Col md={8}>
+                  <div className="d-flex justify-content-end">
+                    <Button className="ml-3" color="primary" 
+                      onClick={() => this.props.history.push(`/dashboard/${user}/categories/new`)}>Add Category</Button>
+                  </div>
+                </Col>
+              </Row>
+            </CardHeader>
+            <CardBody className="p-0">
+              {
+                loading ?
+                  <Row>
+                    <Col lg={12} className="mt-5">
+                      <Loader />
+                    </Col>
+                  </Row>
+                :
+                  <Row>
+                    <Col lg={12}>
+                      <div>
+                        <BootstrapTable
+                          options={ tableOptions() }
+                          data={all_categories}
+                          version="4"
+                          pagination
+                          striped
+                          totalSize={all_categories ? all_categories.length : 0}
+                          className="product-table"
+                          trClassName="cursor-pointer"
+                        >
+                          <TableHeaderColumn
+                            isKey
+                            dataField="uniqid"
+                            dataSort
+                            width="15%"
+                          >
+                            ID
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="title"
+                            dataSort
+                            width="50%"
+                          >
+                            Title
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="products_count"
+                            dataSort
+                            dataAlign="center"
+                          >
+                            Product Count
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="id"
+                            dataAlign="right"
+                            width="20%"
+                            dataFormat={this.renderOptions}
+                          >
+                            Options
+                          </TableHeaderColumn>
+                        </BootstrapTable>
+                      </div>
+                    </Col>
+                  </Row>
+              }
+            </CardBody>
+          </Card>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories)

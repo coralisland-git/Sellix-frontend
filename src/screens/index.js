@@ -1,176 +1,185 @@
-// Static
-import Home from './home'
-import Fees from './static/fees'
-import Ticket from './static/tickets'
-import Changelog from './static/changelog'
-import Terms from './static/terms/screen.js'
-
-
-// Auth
-import LogIn from './auth/log_in'
-import TwoFactorAuthentication from './auth/2fa'
-import OTPLogin from './auth/otp_2fa'
-import ResetOTP from './auth/reset_otp'
-import Register from './auth/register'
-import ForgotPassword from './auth/forgot_password'
-import ResetPassword from './auth/reset_password'
-import EmailConfirm from './auth/email_confirm'
-import ChangeEmail from './auth/change_email'
-
-
-// Admin
-import Users from './admin/users'
-import User from './admin/users/screens/detail'
-import TopUsers from './admin/topUsers'
-import Settings from './admin/settings'
-
-
-
-import Dashboard from './dashboard'
-import Product from './product'
-import CreateProduct from './product/screens/create'
-import EditProduct from './product/screens/detail'
-
-import ProductGroups from './product_group'
-import CreateProductGroup from './product_group/screens/create'
-import EditProductGroup from './product_group/screens/detail'
-import ProductGroupSort from './product_group_sort'
-
-import ProductSort from './product_sort'
-import CategorySort from './category_sort'
-
-import Categories from './categories'
-import CreateCategories from './categories/screens/create'
-import EditCategory from './categories/screens/detail'
-
-import Order from './order'
-import OrderDetail from './order/screens/detail'
-import Analytics from './analytics'
-import Reports from './reports'
-import Coupons from './coupons'
-import CreateCoupon from './coupons/screens/create'
-import Feedbacks from './feedbacks'
-import ReplyToFeedback from './feedbacks/screens/reply'
-import Webhooks from './webhooks'
-import CreateWebhookSimulator from './webhooks/screens/create'
-import WebhookLogs from './webhook_logs'
-
-
-import ShopFeedback from './feedbacks_shop'
-import LeaveFeedback from './feedbacks_shop/screens/create'
-import ShopProducts from './product_shop'
-import ShopProductDetail from './product_shop/screens/detail'
-import ShopGroupDetail from './product_shop/screens/group_detail'
-import BlackList from './blacklist'
-import CreateBlacklist from './blacklist/screens/create'
-import EditBlacklist from './blacklist/screens/create'
-import EditCoupon from './coupons/screens/create'
-
-import Queries from './queries'
-import ReplyToQuery from './queries/screens/reply'
-import Contact from './contact'
-import ContactReply from './contact/screens/reply'
-
-
-
-import Invoice from './invoice'
-import SecurityPage from './security'
-import Notification from './notification'
-import Payments from './payments'
-
-import Invoices from './invoices'
-import ShopDesign from './shop_design'
-import ShopGoogleAnalytics from './shop_google_analytics'
-import StripeCallback from './payments_stripe_callback'
-
-import GeneralSettings from './general_settings'
-import EmbededPayment from './embeded_payment'
-import EmbededInvoice from './embeded_invoice'
-
-import EmbedProduct from './embed_product'
-import Documentation from './documentation/screen.js'
+import React from "react";
+import asyncLoadHOC from "../HOC/asyncLoadHOC";
+import StripeCallback from './settings/payments_stripe_callback'
 
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
 import "react-toastify/dist/ReactToastify.css"
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
+
+const Home = asyncLoadHOC(() => import("./home"));
+const Fees = asyncLoadHOC(() => import("./static/fees"));
+const Ticket = asyncLoadHOC(() => import("./static/tickets"));
+const Changelog = asyncLoadHOC(() => import("./static/changelog"));
+const Terms = asyncLoadHOC(() => import("./static/terms"));
+
+const LogIn = asyncLoadHOC(() => import("./auth/log_in"));
+const Register = asyncLoadHOC(() => import("./auth/register"));
+const OTPLogin = asyncLoadHOC(() => import("./auth/otp_2fa"));
+const ResetOTP = asyncLoadHOC(() => import("./auth/reset_otp"));
+const ForgotPassword = asyncLoadHOC(() => import("./auth/forgot_password"));
+const ResetPassword = asyncLoadHOC(() => import("./auth/reset_password"));
+const TwoFactorAuthentication = asyncLoadHOC(() => import("./auth/2fa"));
+const EmailConfirm = asyncLoadHOC(() => import("./auth/email_confirm"));
+const ChangeEmail = asyncLoadHOC(() => import("./auth/change_email"));
+
+const Dashboard = asyncLoadHOC(() => import("./dashboard"));
+
+const Invoice = asyncLoadHOC(() => import("./invoice"));
+const Invoices = asyncLoadHOC(() => import("./invoices"));
+
+const Users = asyncLoadHOC(() => import("./admin/users"));
+const User = asyncLoadHOC(() => import("./admin/users/screens/detail"));
+const TopUsers = asyncLoadHOC(() => import("./admin/topUsers"));
+const Settings = asyncLoadHOC(() => import("./admin/settings"));
+
+const Coupons = asyncLoadHOC(() => import("./coupons"));
+const CreateCoupon = asyncLoadHOC(() => import("./coupons/screens/create"));
+const EditCoupon = asyncLoadHOC(() => import("./coupons/screens/create"));
+
+const Product = asyncLoadHOC(() => import("./product"));
+const CreateProduct = asyncLoadHOC(() => import("./product/screens/create"));
+const EditProduct = asyncLoadHOC(() => import("./product/screens/detail"));
+const ProductSort = asyncLoadHOC(() => import("./product_sort"));
+
+
+const Categories = asyncLoadHOC(() => import("./categories"));
+const CreateCategories = asyncLoadHOC(() => import("./categories/screens/create"));
+const EditCategory = asyncLoadHOC(() => import("./categories/screens/detail"));
+const CategorySort = asyncLoadHOC(() => import("./category_sort"));
+
+
+const ProductGroups = asyncLoadHOC(() => import("./product_group"));
+const CreateProductGroup = asyncLoadHOC(() => import("./product_group/screens/create"));
+const EditProductGroup = asyncLoadHOC(() => import("./product_group/screens/detail"));
+const ProductGroupSort = asyncLoadHOC(() => import("./product_group_sort"));
+
+const Documentation = asyncLoadHOC(() => import("./documentation"));
+
+const Queries = asyncLoadHOC(() => import("./queries"));
+const ReplyToQuery = asyncLoadHOC(() => import("./queries/screens/reply"));
+const Contact = asyncLoadHOC(() => import("./contact"));
+const ContactReply = asyncLoadHOC(() => import("./contact/screens/reply"));
+
+const Order = asyncLoadHOC(() => import("./order"));
+const OrderDetail = asyncLoadHOC(() => import("./order/screens/detail"));
+
+const BlackList = asyncLoadHOC(() => import("./blacklist"));
+const CreateBlacklist = asyncLoadHOC(() => import("./blacklist/screens/create"));
+const EditBlacklist = asyncLoadHOC(() => import("./blacklist/screens/create"));
+
+const Analytics = asyncLoadHOC(() => import("./analytics"));
+const Reports = asyncLoadHOC(() => import("./reports"));
+
+const Feedbacks = asyncLoadHOC(() => import("./feedbacks"));
+const ReplyToFeedback = asyncLoadHOC(() => import("./feedbacks/screens/reply"));
+const ShopFeedback = asyncLoadHOC(() => import("./feedbacks_shop"));
+const LeaveFeedback = asyncLoadHOC(() => import("./feedbacks_shop/screens/create"));
+
+const Webhooks = asyncLoadHOC(() => import("./webhooks"));
+const WebhookLogs = asyncLoadHOC(() => import("./webhook_logs"));
+
+const ShopProducts = asyncLoadHOC(() => import("./product_shop"));
+const ShopProductDetail = asyncLoadHOC(() => import("./product_shop/screens/detail"));
+const ShopGroupDetail = asyncLoadHOC(() => import("./product_shop/screens/group_detail"));
+
+
+const GeneralSettings = asyncLoadHOC(() => import("./settings/general_settings"));
+const SecurityPage = asyncLoadHOC(() => import("./settings/security"));
+const Payments = asyncLoadHOC(() => import("./settings/payments"));
+const ShopDesign = asyncLoadHOC(() => import("./settings/shop_design"));
+const ShopGoogleAnalytics = asyncLoadHOC(() => import("./settings/shop_google_analytics"));
+const Notification = asyncLoadHOC(() => import("./settings/notification"));
+
+const EmbedProduct = asyncLoadHOC(() => import("./embed_product"));
+const EmbededPayment = asyncLoadHOC(() => import("./embeded_payment"));
+const EmbededInvoice = asyncLoadHOC(() => import("./embeded_invoice"));
+
+
+
 export {
-  Home,
-  Changelog,
-  Fees,
-  LogIn,
-  Register,
-  OTPLogin,
-  ResetOTP,
-  Dashboard,
-  ForgotPassword,
-  ResetPassword,
-  TwoFactorAuthentication,
-  Invoice,
-  Terms,
-  Users,
-  User,
-  TopUsers,
-  Settings,
-  Invoices,
-  Ticket,
-  EmailConfirm,
-  ChangeEmail,
-
-
-  EditCoupon,
-  Product,
-  CreateProduct,
-  EditProduct,
-
-  CategorySort,
-  ProductSort,
-
-  Categories,
-  CreateCategories,
-  EditCategory,
-  
-  Contact,
-  ContactReply,
-  Order,
-  Analytics,
-  Reports,
-  Coupons,
-  CreateCoupon,
-  Queries,
-  ReplyToQuery,
-  Feedbacks,
-  ReplyToFeedback,
-  Webhooks,
-  CreateWebhookSimulator,
-
-  WebhookLogs,
-  ShopFeedback,
-  LeaveFeedback,
   ShopProducts,
   ShopProductDetail,
   ShopGroupDetail,
-  BlackList,
-  CreateBlacklist,
-  OrderDetail,
+
+  GeneralSettings,
   SecurityPage,
   Payments,
-  GeneralSettings,
   ShopDesign,
   ShopGoogleAnalytics,
   Notification,
-  EditBlacklist,
+
+  StripeCallback,
 
   EmbededPayment,
   EmbededInvoice,
-  
+  EmbedProduct,
+
+  Order,
+  OrderDetail,
+
+  BlackList,
+  CreateBlacklist,
+  EditBlacklist,
+
+  Analytics,
+  Reports,
+  Feedbacks,
+  ReplyToFeedback,
+  ShopFeedback,
+  LeaveFeedback,
+
+  Webhooks,
+  WebhookLogs,
+
+  Documentation,
+
+  Contact,
+  ContactReply,
+  Queries,
+  ReplyToQuery,
+
   ProductGroups,
   CreateProductGroup,
   EditProductGroup,
   ProductGroupSort,
 
-  Documentation,
-  EmbedProduct,
-  StripeCallback
+  Coupons,
+  CreateCoupon,
+  EditCoupon,
+
+  Product,
+  CreateProduct,
+  EditProduct,
+  ProductSort,
+
+  Categories,
+  CreateCategories,
+  EditCategory,
+  CategorySort,
+
+  Invoice,
+  Dashboard,
+  Users,
+  User,
+  TopUsers,
+  Settings,
+  Invoices,
+
+  Home,
+  Changelog,
+  Fees,
+  Terms,
+  Ticket,
+
+  LogIn,
+  Register,
+  OTPLogin,
+  ResetOTP,
+  ForgotPassword,
+  ResetPassword,
+  TwoFactorAuthentication,
+  EmailConfirm,
+  ChangeEmail,
 }

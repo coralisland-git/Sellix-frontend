@@ -1,5 +1,4 @@
 import React from "react";
-import backIcon from "assets/images/x.png";
 import { FormGroup, Input, Label, Form } from "components/reactstrap";
 import { Formik } from "formik";
 import { Spin } from "components";
@@ -26,7 +25,7 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 		<div className="p-3 pt-2 pb-2 mb-2">
 			<div className="d-flex justify-content-between align-items-center mb-3">
 				<h4 className="mt-2  grey">Checkout with {gateway}</h4>
-				<img src={backIcon} width="15" className="mb-2" onClick={reset} style={{cursor: "pointer"}} alt={''}/>
+				<i className={"fas fa-times mb-2"} onClick={reset} style={{cursor: "pointer", fontSize: "1rem"}} />
 			</div>
 
 			<Formik initialValues={{ email: '' }} onSubmit={handleSubmit} validationSchema={validationSchema}>
@@ -108,8 +107,6 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 												name={field.name}
 												checked={customFieldsValues[field.name] || false}
 												onChange={(e) => {
-
-													console.log(customFieldsValues[field.name], e.target.checked, field.name)
 													setCustomFields(field.name, e.target.checked)
 												}}
 											/>

@@ -1,36 +1,25 @@
 import React from 'react'
-import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
-import { Link } from "react-scroll";
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { ToastContainer, toast } from 'react-toastify'
-import { landingRoutes } from 'routes'
+import layoutHOC from '../../HOC/layoutHOC'
 import { AuthActions, CommonActions } from 'services/global'
-
 import LandingFooter from './footer'
 import LandingHeader from './header'
-
+import { Changelog, Fees, Home, Terms, Ticket } from "../../screens";
+import { NotFound } from "../../components";
 import './style.scss'
-
 
 const userId = window.localStorage.getItem('userId')
 
 class LandingLayout extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-        isOpen: false
-    }
-  }
-
-  toggle() {
-    this.setState({isOpen: !this.state.isOpen})
-  }
-
   componentDidMount () {
-    const preUrl = `/${window.localStorage.getItem('userId')}`
+    const preUrl = `/${userId}`
 
+
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
 
     if(this.props.match.path === '/contact') {
       this.props.getSelfUser()
@@ -44,37 +33,10 @@ class LandingLayout extends React.Component {
     if (window.localStorage.getItem('accessToken') && this.props.is_authed && this.props.match.path !== '/contact') {
       this.props.history.push(preUrl)
     }
-
-    this.props.setTostifyAlertFunc((status, message) => {
-      if (!message) {
-        message = 'Unexpected Error'
-      }
-      if (status === 'success') {
-        toast.success(message, {
-          position: toast.POSITION.TOP_RIGHT
-        })
-      } else if (status === 'error') {
-        toast.error(message, {
-          position: toast.POSITION.TOP_RIGHT
-        })
-      } else if (status === 'warn') {
-        toast.warn(message, {
-          position: toast.POSITION.TOP_RIGHT
-        })
-      } else if (status === 'info') {
-        toast.info(message, {
-          position: toast.POSITION.TOP_RIGHT
-        })
-      }
-    })
   }
 
   render() {
-    const containerStyle = {
-      zIndex: 1999
-    }
 
-    const { isOpen } = this.state;
     const { history, match } = this.props;
 
     const dashboardUrl = userId ? `/dashboard/${userId}/home` : '/'
@@ -83,13 +45,17 @@ class LandingLayout extends React.Component {
       <div className="landing-layout">
           <div className="animated fadeIn">
               <div className="initial-container">
-                <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
 
-                  <LandingHeader page={match.url} isOpen={isOpen} user={userId} history={history} dashboardUrl={dashboardUrl} />
+                  <LandingHeader page={match.url} user={userId} history={history} dashboardUrl={dashboardUrl} />
 
                   <Router>
                     <Switch>
-                      {landingRoutes.map((props, key) => <Route {...props} key={key} />)}
+                      <Route component={Fees} path={'/fees'} />
+                      <Route component={Changelog} path={'/changelog'} />
+                      <Route component={Terms} path={'/terms'} />
+                      <Route component={NotFound} path={'/404'} />
+                      <Route component={Ticket} path={'/contact'} />
+                      <Route exact={true} component={Home} path={'/'} />
                     </Switch>
                   </Router>
 
@@ -111,4 +77,4 @@ const mapDispatchToProps = (dispatch) => ({
   setTostifyAlertFunc: bindActionCreators(CommonActions.setTostifyAlertFunc, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(LandingLayout)
+export default layoutHOC(connect(mapStateToProps, mapDispatchToProps)(LandingLayout))

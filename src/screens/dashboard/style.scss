@@ -4,13 +4,6 @@
     padding: 0.4rem 0.6rem;
   }
 
-  h1.title {
-    font-size: 18px;
-    color: black;
-    font-weight: 600;
-    font-family: var(--font-family-sans-serif);
-  }
-
   .date-select {
     button {
       margin: 0 !important;
@@ -18,19 +11,6 @@
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-    }
-  }
-
-  .card-footer,
-  .card-header {
-    padding: 5px 20px;
-    line-height: 1.7em;
-    font-weight: 700;
-    //height: 40px;
-    color: #646464;
-
-    button {
-      margin: 0 !important;
     }
   }
 

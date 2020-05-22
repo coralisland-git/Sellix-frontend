@@ -1,0 +1,336 @@
+.dark {
+  h1, h2, h3, h4, h5, p, label, a, td, input, select, textarea,
+  .close span, span.price, .neutral-count,
+  .order-detail-info span,
+  .stock-info span {
+    color: #B4AEBC !important;
+  }
+
+  .mde-header * {
+    color: #B4AEBC !important;
+  }
+
+  .react-mde, .react-mde *:not(.selected) {
+    border-color: #221D3E !important;
+  }
+
+  .mde-header {
+    background: #1D183D;
+  }
+
+  .react-mde textarea {
+    background: #221D3E;
+    line-height: 1.1rem;
+  }
+
+  .react-mde .grip {
+    background: #1D183D;
+  }
+
+  .admin-container {
+    background: #221D3E;
+    color: #B4AEBC;
+  }
+
+  *[class$=control] {
+    background-color: #221D3E !important;
+    border: 1px solid #1D183D !important;
+  }
+
+  *[class$=control] *:not(.text-green):not(.text-red):not(.text-gold) {
+    color: #B4AEBC !important;
+  }
+
+  *[class$=-menu] {
+    background-color: #241e4c !important;
+    border-radius: 5px !important;
+    color: #B4AEBC !important;
+  }
+
+  *[class$=-menu] *[class$=-option] {
+    background-color: #241e4c !important;
+    cursor:pointer;
+  }
+
+  *[class$=-menu] *[class$=-option]:hover {
+    background-color: #221D3E !important;
+    color: white !important;
+  }
+
+  *[class$=control] *:not(.text-green):not(.text-red):not(.text-gold) {
+    color: #B4AEBC !important;
+  }
+
+  *[class$=multiValue] * {
+    color: black !important;
+  }
+
+  .go-back-btn {
+    background: #270e84 !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .go-back-btn:hover {
+    background: #230c76 !important;
+  }
+
+  .quantity-picker.text-grey {
+    opacity: 0.5 !important;
+  }
+
+
+
+  .shop-container {
+    background-color: #1D183D !important;
+  }
+
+  .shop-container .shop-section {
+    background-color: #221D3E !important;
+  }
+
+  .shop-product-screen .filter-button button:not(.btn-primary),
+  .productsort-screen .filter-button button:not(.btn-primary),
+  .shop-container header,
+  .admin-container .app-header {
+    background: #1D183D !important;
+  }
+
+  .moon-icon {
+    color: #F4A944 !important;
+  }
+
+
+  .admin-container .app-header *:not(.badge) {
+    color: #B4AEBC;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #272244 !important;
+  }
+
+
+
+  .shop-container .app-header .dropdown-item,
+  .admin-container .app-header .dropdown-item {
+    color: #B4AEBC !important;
+    i {color: #B4AEBC;}
+  }
+
+  .order-screen {
+    .text-completed {
+      color: #A6FCA2 !important;
+    }
+    .text-pending {
+      color: #C3C0C0 !important;
+    }
+    .text-cancelled {
+      color: #FCA2B7 !important;
+    }
+    .text-partial {
+      color: #A5E4F8 !important;
+    }
+  }
+
+  .shop-container .app-header .dropdown-item:hover,
+  .shop-container .app-header .dropdown-item.active,
+  .admin-container .app-header .dropdown-item:hover,
+  .admin-container .app-header .dropdown-item.active {
+    background: #2b2645 !important;
+    color: white !important;
+    i {
+      color: white !important;
+    }
+  }
+
+
+
+  .border-right,
+  .border-bottom {
+    border-color: rgb(34, 29, 62) !important;
+  }
+
+  .bitcoin-paying-screen .top .btc-address,
+  .searchbar .header-search-input,
+  table tbody td .badge-normal,
+  .Select-control,
+  .react-datepicker__input-container input,
+  .create-product-screen .payment-checkbox,
+  .create-product-screen .file-switch .switch-slider,
+  .image-uploader .drag-drop-area,
+  .btn-default,
+  .detail-product-screen .paypal-instant,
+  .datepicker2
+  {
+    background-color: #221D3E !important;
+    border: 1px solid #1D183D !important;
+  }
+
+  td .btn-default {
+    border: 1px solid transparent !important;
+  }
+
+  .react-bootstrap-daterangepicker-container button {
+    background-color: #221D3E !important;
+  }
+
+  .form-control {
+    background-color: #221D3E !important;
+    border: 1px solid #1D183D !important;
+  }
+
+
+
+  .admin-container .sidebar {
+    background: #221D3E;
+  }
+
+  .bitcoin-paying-screen .bottom,
+  .detail-product-screen .stock-info {
+    background-color: #181432;
+
+  }
+
+  .bitcoin-paying-screen .bottom h4,
+  .bitcoin-paying-screen .bottom h5 {
+    color: #B4AEBC !important;
+  }
+
+  .new-select i {
+    color: #B4AEBC !important;
+  }
+
+  .detail-product-screen .pay-button {
+    background-color: #221d3e !important;
+    border: 1px solid #221D3E !important;
+  }
+
+  .page_description_card {
+    border-right: 1px solid #221D3E !important;
+
+    @media (max-width: 991px){
+      & {
+        border-right: none !important;
+        border-bottom: 1px solid #221D3E !important;
+      }
+    }
+  }
+
+  .card .card-header .header-search-input,
+  .query-sorting {
+    background-color: #1D183D !important;
+    border: 1px solid #1D183D !important;
+  }
+
+  .react-bs-table-container .react-bs-table {
+    background-color: #1D183D !important;
+  }
+
+  .order-screen .live-card .card-body,
+  .dashboard-screen .card.grey .card-body,
+  .blacklist-screen .card.grey .card-body {
+    background-color: #221D3E !important;
+    background: #221D3E !important;
+  }
+
+
+
+
+
+  .dashboard-screen .card .card-body h3,
+  .analytics-screen .card .card-body h3 {
+    color: #B4AEBC !important;
+  }
+
+  .admin-container .sidebar,
+  .settings-sidebar,
+  .card.grey .card-body {
+    background: #1D183D !important;
+  }
+
+  .shop-container .app-header .dropdown-item,
+  .admin-container .app-header .dropdown-item {
+    background: #1D183D !important;
+    color: #B4AEBC;
+  }
+
+  .shop-container .shop-navs .nav-link {
+    background-color: #221D3E !important;
+  }
+
+  .shop-container .report-count {
+    background-color: #221D3E!important;
+  }
+
+  .admin-container footer {
+    background-color: #1D183D !important;
+    background: #1D183D !important;
+  }
+
+  .app-header .navbar-nav .dropdown-menu:after {
+    border-bottom: 10px solid #1D183D !important;
+  }
+
+  .order-screen .filter-btn {
+    background-color: #1D183D;
+  }
+
+
+
+  .card-body {
+    background: #1D183D !important;
+  }
+
+  .admin-container .logo-background {
+    background-color: #1D183D !important;
+  }
+
+  .shop-product-screen .product-card, .productsort-screen .product-card {
+    background-color: #1D183D !important;
+  }
+
+  .shop-product-screen .card.grey .card-body,
+  .productsort-screen .card.grey  .card-body {
+    background: #221D3E !important;
+    background-color: #221D3E !important;
+  }
+
+  .detail-product-screen .card,
+  .bitcoin-paying-screen .card {
+    background-color: #1D183D !important;
+  }
+
+
+
+  .modal-dialog .modal-content .modal-header,
+  .modal-dialog .modal-content {
+    background-color: #1D183D !important;
+  }
+
+
+  .productsort-screen .item,
+  .categorysort-screen .item {
+    border-bottom-color: #2e2759 !important;
+  }
+
+  .productsort-screen .floating .item,
+  .categorysort-screen .floating .item {
+    background-color: #2e2759 !important;
+  }
+
+
+  .feedback-shop-screen .badge {
+    background: #1D183D !important;
+  }
+
+
+  *:not([class$=-singleValue]) > .option-select-option.is-selected span:not(.text-gold):not(.text-green):not(.text-red) {
+    color: white !important;
+  }
+
+  *:not([class$=-singleValue]) > .option-select-option:hover span:not(.text-gold):not(.text-green):not(.text-red) {
+    color: white !important;
+  }
+
+
+}

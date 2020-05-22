@@ -3,7 +3,7 @@ import authRoutes from './auth'
 import adminRoutes from './admin'
 import dashboardRoutes from './dashboard'
 import shopRoutes from './shop'
-import paymentRoutes from './payment'
+import embedRoutes from './embed'
 import settingsRoutes from './settings'
 import landingRoutes from './landing'
 import productRoutes from './product'
@@ -15,7 +15,7 @@ export {
   authRoutes,
   adminRoutes,
   shopRoutes,
-  paymentRoutes,
+  embedRoutes,
   settingsRoutes,
   landingRoutes,
   invoiceRoutes,

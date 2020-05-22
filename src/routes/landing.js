@@ -4,12 +4,12 @@ import { NotFound } from 'components'
 const landingRoutes = [
   {
     path: '/fees',
-    component: Fees.screen,
+    component: Fees,
     name: 'Fees'
   },
   {
     path: '/changelog',
-    component: Changelog.screen,
+    component: Changelog,
     name: 'Changelog'
   },
   {
@@ -24,12 +24,12 @@ const landingRoutes = [
   },
   {
     path: '/contact',
-    component: Ticket.screen,
+    component: Ticket,
     name: 'Contact Us'
   },
   {
     path: '/',
-    component: Home.screen,
+    component: Home,
     name: 'Home',
     exact: true
   },

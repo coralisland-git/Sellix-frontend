@@ -1,4 +1,3 @@
-import backIcon from "assets/images/x.png";
 import config from "constants/config";
 import { Collapse, Input } from "components/reactstrap";
 import { withRouter } from "react-router-dom";
@@ -13,8 +12,7 @@ const ButtonOptions = ({ option, setPaymentOptions, index }) => {
 
 	return (
 		<Button className="pay-button mb-2 pl-2 mr-auto ml-auto pr-2 d-block" onClick={setPaymentOptions(config.PAYMENT_LABELS[option])} style={{width: 145}}>
-			{/*pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block*/}
-			{/*170*/}
+
 			<div className="d-flex justify-content-between align-items-center">
 				{option === 'stripe' ?
 					<div>
@@ -269,7 +267,7 @@ class Purchase extends React.Component {
 			<div className="p-3 pt-2 pb-2">
 				{/* <div className="d-flex justify-content-between align-items-center mb-3">
 					<div onClick={this.backToProducts} style={{ cursor: "pointer" }} >
-						<img src={backIcon} className="mb-2" width="15" alt={''}/>
+						<i className={"fas fa-times mb-2"} style={{ fontSize: "1rem"}} />
 					</div>
 				</div> */}
 

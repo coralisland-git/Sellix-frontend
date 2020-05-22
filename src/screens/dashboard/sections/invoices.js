@@ -17,8 +17,8 @@ export default ({ invoices, history }) => {
 
 	const renderOrderInfo = (cell, row) => <div>
 		<p><a onClick={(e) => gotoDetail(row.uniqid)}>
-			<i className={`flag-icon flag-icon-${row.country.toLowerCase()}`} title={row.location}>
-			</i>&nbsp;&nbsp;&nbsp;{`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+			<img src={`${config.CDN_FLAGS_URL}${row.country.toLowerCase()}.svg`} className={`flag-icon mr-2`} alt={row.location} title={row.location} />
+			{`${config.PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
 		</p>
 		<p className="caption">{row.uniqid} - {row.developer_invoice === '1' ? row.developer_title : row.product_title?row.product_title:row.product_id}</p>
 	</div>

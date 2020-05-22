@@ -23,6 +23,7 @@ export default {
   CDN_GROUPS_URL: 'https://cdn.sellix.io/static/images/groups/',
   WS_URL: 'wss://wss.sellix.io/websocket',
   CAPTCHA_SITE_KEY: '6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe',
+  CDN_FLAGS_URL: 'https://cdn.sellix.io/static/flags/',
   STATUS_ICON: {
     '0': pendingIcon,
     '1': completedIcon,

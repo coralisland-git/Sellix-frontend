@@ -1,27 +1,20 @@
-import AuthLayout from './auth'
-import AdminLayout from './admin'
-import DashboardLayout from './dashboard'
-import ShopLayout from './shop'
-import PaymentLayout from './default'
-import EmbedLayout from './embed'
-import InvoiceLayout from './invoice'
-import EmbedInvoiceLayout from './embed_invoice'
-import ProductLayout from './product'
-import SettingsLayout from './settings'
-import LandingLayout from './landing'
-import DocumentationLayout from './documentation'
+import asyncLoadHOC from "../HOC/asyncLoadHOC";
+const DocumentationLayout = asyncLoadHOC(() => import("./documentation"));
+const LandingLayout = asyncLoadHOC(() => import("./landing"));
+const SettingsLayout = asyncLoadHOC(() => import("./settings"));
+const InvoiceLayout = asyncLoadHOC(() => import("./invoice"));
+const ShopLayout = asyncLoadHOC(() => import("./shop"));
+const DashboardLayout = asyncLoadHOC(() => import("./dashboard"));
+const AuthLayout = asyncLoadHOC(() => import("./auth"));
+const EmbedLayout = asyncLoadHOC(() => import("./embed"));
 
 export {
   AuthLayout,
-  AdminLayout,
   DashboardLayout,
   ShopLayout,
-  PaymentLayout,
   SettingsLayout,
   LandingLayout,
   InvoiceLayout,
-  ProductLayout,
   EmbedLayout,
-  EmbedInvoiceLayout,
   DocumentationLayout
 }

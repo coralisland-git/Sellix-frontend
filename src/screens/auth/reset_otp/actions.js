@@ -1,12 +1,7 @@
-import { USER } from 'constants/types'
-import {
-  api,
-  authApi,
-  formData
-} from 'utils'
+import { authApi, formData } from 'utils'
 
 export const resetOTP = (obj) => {
-  return (dispatch) => {
+  return () => {
     let data = {
       method: 'post',
       url: '/reset/otp',

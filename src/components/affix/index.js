@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom';
 import {isIE, isSafari} from 'react-device-detect';
 
@@ -155,16 +154,6 @@ class Affix extends Component {
             </div>
         )
     }
-}
-
-Affix.propTypes = {
-    container: PropTypes.string,
-    offsetTop: PropTypes.number,
-    horizontal: PropTypes.bool,
-    target: PropTypes.func,
-    onChange: PropTypes.func,
-    onTargetChange: PropTypes.func,
-    zIndex: PropTypes.number,
 }
 
 Affix.defaultProps = {

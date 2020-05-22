@@ -14,12 +14,6 @@ const ProductGroupReducer = (state = initState, action) => {
         all_product_groups: Object.assign([], payload)
       }
 
-    // case PRODUCT.PRODUCT_LIST:
-    //   return {
-    //     ...state,
-    //     product_list: Object.assign([], payload.data)
-    //   }
-
     default:
       return state
   }

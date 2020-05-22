@@ -15,13 +15,13 @@ const adminRoutes = [
   {
     path: `/admin/invoices/:id`,
     name: 'InvoicesView',
-    component: OrderDetail.screen,
+    component: OrderDetail,
     title: 'Invoice ',
   },
   {
     path: `/admin/invoices`,
     name: 'Orders',
-    component: Order.screen,
+    component: Order,
     title: 'Invoices',
   },
   {
@@ -33,31 +33,31 @@ const adminRoutes = [
   {
     path: `/admin/users/:username/product/edit/:id`,
     name: 'EditAdminProduct',
-    component: EditProduct.screen,
+    component: EditProduct,
     title: 'User Product',
   },
   {
     path: `/admin/users/:id`,
     name: 'User',
-    component: User.screen,
+    component: User,
     title: 'User',
   },
   {
     path: `/admin/users`,
     name: 'Users',
-    component: Users.screen,
+    component: Users,
     title: 'Users',
   },
   {
     path: `/admin/top`,
     name: 'TopUsers',
-    component: TopUsers.screen,
+    component: TopUsers,
     title: 'Top Users',
   },
   {
     path: `/admin/dashboard`,
     name: 'AdminDashboard',
-    component: Dashboard.screen,
+    component: Dashboard,
     title: 'Dashboard'
   },
   {

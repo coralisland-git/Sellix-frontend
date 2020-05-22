@@ -337,19 +337,9 @@ text-decoration: none;
 
 
 .card {
-background-color: transparent;
-border-radius: 3px !important;
-box-shadow: none !important;
-
-.card-header-actions {
-    margin-right: 0 !important;
-}
-
-.card-header {
-    background-color: transparent !important;
+    background-color: transparent;
     border-radius: 3px !important;
-    border: none !important;
-    padding: 20px 0;
+    box-shadow: none !important;
 
     h1 {
         font-size: 16px;
@@ -358,21 +348,34 @@ box-shadow: none !important;
         font-family: 'OpenSans-SemiBold' !important;
     }
 
-    .header-search-input {
-        background-color: white !important;
-    }
-}
+    .card-header {
+        background-color: transparent !important;
+        border-radius: 3px !important;
+        border: none !important;
+        padding: 20px 0;
 
-.card-body {
-    background-color: white;
-    border-radius: 3px !important;
-    padding: 30px 25px;
-}
+        h1 {
+            font-size: 16px;
+            color: #2b2b2b;
+            font-weight: 600;
+            font-family: var(--font-family-sans-serif) !important;
+        }
+
+        .header-search-input {
+            background-color: white !important;
+        }
+    }
+
+    .card-body {
+        background-color: white;
+        border-radius: 3px !important;
+        padding: 30px 25px;
+    }
 }
 
 
 .paypal-button-text {
-color: #A7A5B4 !important;
+    color: #A7A5B4 !important;
 }
 
 .card.grey {
@@ -699,4 +702,36 @@ box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
 }
 .progress {
     background: #cec2ff;
+}
+
+
+.order-screen {
+.order-badge {
+    width: 70px;
+    height: 25px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.badge-pending {
+    background-color: #C3C0C0;
+}
+
+.badge-partial {
+    background-color: #A5E4F8;
+}
+
+.badge-cancelled {
+    background-color: #FCA2B7;
+}
+
+.badge-completed {
+    background-color: #A6FCA2;
+}
+
+.order-value {
+    color: #2BB224;
+}
 }

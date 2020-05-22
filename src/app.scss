@@ -1,4 +1,5 @@
 @import './assets/scss/style.scss';
+@import "~react-mde/lib/styles/css/react-mde-all.css";
 
 body {
   transition: background 1s;
@@ -12,6 +13,98 @@ body.light {
   background: #f6f3ff;
 }
 
+.transparent-bg {
+  background: transparent !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.currency-select {
+  top: 0;
+  height: 100%;
+}
+
 .far {
   font-weight: 400 !important;
+}
+
+.sweet-alert h2 {
+  color: rgb(89, 89, 89) !important;
+}
+
+.text-green {
+  color: #2BB224 !important;
+}
+
+.text-red {
+  color: #f74141  !important;
+}
+
+.switch-primary .switch-input:checked + .switch-slider {
+  background-color: #613BEA !important;
+}
+
+@import "light";
+@import "dark";
+
+.recharts-cartesian-axis-tick-line {
+  display: none;
+}
+
+.recharts-xAxis line {
+  display: none;
+}
+.recharts-yAxis line {
+  display: none;
+}
+
+.recharts-cartesian-grid-horizontal line {
+  stroke: #e8e8e8;
+}
+.dark .recharts-cartesian-grid-horizontal line {
+  stroke: #262626;
+}
+
+
+.custom-tooltip {
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  padding: 0;
+  overflow: hidden;
+  padding-bottom: .5rem;
+  background: white;
+
+  .label {
+    padding: .75rem .5rem;
+    background: #613BEA;
+    color: white;
+  }
+  .intro {
+    padding: .5rem .5rem;
+    margin: 0;
+    color: black;
+    background: white;
+    font-size: .9rem;
+
+    &:last-child {
+      padding-bottom: 1rem;
+    }
+  }
+}
+
+
+.dark .custom-tooltip {
+  background: #221D3E;
+  border-color: #1c173d;
+
+  .label {
+    color: white !important;
+  }
+
+  .intro {
+    background: #221D3E;
+    color: #B4AEBC;
+  }
 }
