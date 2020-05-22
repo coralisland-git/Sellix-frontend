@@ -7,6 +7,11 @@
     }
   }
 
+  .payment-card {
+    max-width: 424px;
+    width: 100%;
+  }
+
   .card-header {
     color: #20a8d8;
   }
@@ -40,6 +45,9 @@
   }
 
   .stock-count {
+    width: 170px;
+    border: 1.5px solid #634DDD;
+    border-radius: 4px;
     span {
       font-size: 15px;
       line-height: 1em;
