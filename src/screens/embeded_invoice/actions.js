@@ -1,11 +1,7 @@
-import { USER } from 'constants/types'
-import {
-  api,
-  authApi
-} from 'utils'
+import { api } from 'utils'
 
 
-export const getInvoiceInfo = (id) => (dispatch) => {
+export const getInvoiceInfo = (id) => () => {
 
     let secret = localStorage.getItem(id);
 
@@ -21,7 +17,7 @@ export const getInvoiceInfo = (id) => (dispatch) => {
           })
 }
 
-export const downloadInvoice = (id) => (dispatch) => {
+export const downloadInvoice = (id) => () => {
 
     let secret = localStorage.getItem(id);
 
