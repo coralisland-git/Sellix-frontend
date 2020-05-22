@@ -19,7 +19,11 @@ const userId = window.localStorage.getItem('userId')
 
 class Header extends Component {
 
-  signOut = () => {
+    componentDidMount() {
+        this.props.getUserNotificationsViaWebsocket()
+    }
+
+    signOut = () => {
     this.props.logOut()
     this.props.history.push('/')
   }
@@ -44,12 +48,7 @@ class Header extends Component {
           href="/"
           full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
         />
-        <IntervalTimer
-            timeout={3000}
-            callback={this.props.getUserNotificationsViaWebsocket}
-            enabled={true}
-            repeat={true}
-        />
+        <IntervalTimer timeout={120000} callback={this.props.getUserNotificationsViaWebsocket} enabled={true} repeat={true}/>
         { isDocumentation?
           <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
             <UncontrolledDropdown nav direction="down" >

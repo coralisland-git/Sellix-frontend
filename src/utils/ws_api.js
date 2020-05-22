@@ -17,7 +17,7 @@ function lazyWsSend(message) {
     if(ws && ws.readyState === ws.CONNECTING) {
         setTimeout(() => {
             lazyWsSend(message)
-        }, 200)
+        }, 6000)
         return
     }
     if(ws === null || ws.readyState !== ws.OPEN) {

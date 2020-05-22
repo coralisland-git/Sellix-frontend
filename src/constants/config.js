@@ -15,9 +15,12 @@ import pendingIcon from 'assets/images/order/Pending_Icon.svg'
 import { Converter, extension } from "showdown";
 
 
+
 export default {
   // API_ROOT_URL: 'https://staging.sellix.io/api/v1',
   API_ROOT_URL: 'https://api.sellix.io/v1',
+  CDN_PRODUCTS_URL: 'https://cdn.sellix.io/static/images/products/',
+  CDN_GROUPS_URL: 'https://cdn.sellix.io/static/images/groups/',
   WS_URL: 'wss://wss.sellix.io/websocket',
   CAPTCHA_SITE_KEY: '6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe',
   CDN_FLAGS_URL: 'https://cdn.sellix.io/static/flags/',
