@@ -91,16 +91,6 @@ class EmbededInvoice extends React.Component {
     this.setState({openQRModal: false})
   }
 
-  setTheme = ({ theme }) => {
-    document.body.classList.remove('light');
-    document.body.classList.remove('dark');
-    document.body.classList.add(theme);
-
-    document.documentElement.classList.remove('light')
-    document.documentElement.classList.remove('dark')
-    document.documentElement.classList.add(theme);
-  }
-
   getPayPalInvoice = () => {
 
     const id = this.getInvoiceId()
@@ -109,7 +99,7 @@ class EmbededInvoice extends React.Component {
         .then(res => {
           if(res && res.data && res.data.invoice) {
               this.setState({ invoice: res.data.invoice });
-              this.setTheme(res.data.invoice)
+
               if(+res.data.invoice.status === 1) {
                 return this.props.getInvoiceInfo(id)
               }
@@ -154,7 +144,6 @@ class EmbededInvoice extends React.Component {
               crypto_mode: this.state.invoice.crypto_mode
             }
           })
-          this.setTheme(invoice)
           if(+invoice.status === 1) {
             return this.props.getInvoiceInfo(id)
           }
@@ -213,7 +202,6 @@ class EmbededInvoice extends React.Component {
           let seconds = 24 * 60 * 60 - (new Date().getTime() - new Date(invoice.created_at * 1000).getTime()) / 1000
           let time = this.secondsToTime(seconds);
           this.setState({ seconds, invoice, time })
-          this.setTheme(invoice);
           if(+invoice.status === 1) {
             return getInvoiceInfo(id)
           }
