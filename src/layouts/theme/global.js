@@ -90,15 +90,9 @@ export const GlobalStyles = createGlobalStyle`
         background-color: #613BEA !important;
     }
 
-    .bitcoin-paying-screen .bottom,
     .detail-product-screen .stock-info {
         background-color: ${({ theme }) => theme.stockInfoBg};
         
-    }
-
-    .bitcoin-paying-screen .bottom h4,
-    .bitcoin-paying-screen .bottom h5 {
-        color: ${({ theme }) => theme.text} !important;
     }
 
     .new-select i {
@@ -132,7 +126,12 @@ export const GlobalStyles = createGlobalStyle`
         border-color: ${({ theme }) => theme.borderRight} !important;
     }
 
-    .bitcoin-paying-screen .top .btc-address,
+    .bitcoin-paying-screen .top .btc-address {
+        border: 1px solid ${({ theme }) => theme.btcAddressBorderColor} !important;
+    }
+    .bitcoin-paying-screen .invoice-divider {
+        border-top: 1px solid ${({ theme }) => theme.hrDivider} !important;
+    }
     .searchbar .header-search-input,
     table tbody td .badge-normal,
     .Select-control,
@@ -238,6 +237,10 @@ export const GlobalStyles = createGlobalStyle`
     .detail-product-screen .card,
     .bitcoin-paying-screen .card {
         background-color: ${({ theme }) => theme.cardBody} !important;
+    }
+
+    .bitcoin-paying-screen .value-color {
+        color: ${({ theme }) => theme.invoiceValueColor} !important;
     }
     
     .modal-dialog .modal-content .modal-header,

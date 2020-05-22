@@ -28,6 +28,23 @@
 
 .bitcoin-paying-screen {
 
+  .f-18 {
+    font-size: 18px !important;
+  }
+
+  .f-16 {
+    font-size: 16px !important;
+  }
+
+
+  .caption-color {
+    color: #938EBA !important;
+  }
+
+  .value-color {
+    color: #332F56;
+  }
+
   min-height: 490px;
 
   .qrCode {
@@ -47,6 +64,10 @@
       z-index: 9;
       display: block;
     }
+  }
+
+  .invoice-divider {
+    margin: 40px 0;
   }
 
   .copy-tooltip {
@@ -97,7 +118,7 @@
   }
 
   .invoice-card {
-    max-width: 450px;
+    max-width: 425px;
     width: 100%;
     margin: 0 auto;
   }
@@ -365,43 +386,70 @@
     font-size: 18px;
   }
 
+  .text-bold {
+    font-family: 'OpenSans-Bold' !important;
+  }
+
+  .badge-grey {
+    background-color: #F5F3FB;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    height: 30px;
+    color: #8069FF !important;
+    border-radius: 3px;
+    min-width: 80px;
+  }
+
+
   .top {
     .badge {
-      background-color: #E4D6FF;
+      background-color: rgba(99, 77, 221, 0.2);
       display: inline-block;
-      padding: 9px;
+      line-height: 30px;
       height: 30px;
+      color: #8069FF !important;
       border-radius: 3px;
       min-width: 80px;
     }
 
     span, p {
-      font-size: 13px !important;
+      font-size: 13px;
     }
 
     h4 {
       font-size: 16px;
+      font-family: 'OpenSans-Regular' !important;
     }
     
     .bold {
-      font-family: var(--font-family-sans-serif);
+      font-family: "OpenSans-SemiBold";
       font-weight: 600;
     }
 
     .btc-address {
       height: 40px;
       border-radius: 3px;
-      line-height: 40px;
-      background-color: #FCFCFE;
-      border: 1px solid #F5F5F5;
+      line-height: 47px;
+      background-color: transparent !important;
     }
-    
+    .clipboard-text {
+      display: flex;
+      justify-content: space-between;
+      padding-left: 10px;
+      padding-right: 10px;
+      white-space: pre;
+
+      span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
   }
 
   .bottom {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    background-color: #E4D6FF;
     &.no-padding {
       padding: 0 !important;
     }
@@ -421,7 +469,7 @@
       font-size: 16px;
     }
     span, h5 {
-      font-size: 13px !important;
+      font-size: 16px !important;
     }
   }
 

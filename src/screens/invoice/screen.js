@@ -278,6 +278,10 @@ class Invoice extends React.Component {
     let { loading, invoice, showAlert, fakePayPalSuccess, info } = this.state;
     let { theme } = this.props;
 
+    console.log(invoice)
+
+    // invoice.status = 4
+
     const isQrMode = invoice.crypto_uri != null && invoice.crypto_mode === 'qrcode';
 
     const innerComponent = isQrMode ?
@@ -310,9 +314,7 @@ class Invoice extends React.Component {
                           <div className="animated fadeIn">
                             <Card className="bg-white d-flex align-items-center justify-content-center mt-xs-4" style={loading ? { height: '490px' } : {}}>
                               {loading && <Loader/>}
-                              <div className="float-logo">
-                                <img src={sellix_logo} width="153" alt={""}/>
-                              </div>
+  
                               {!loading && innerComponent}
 
                               <div className={"bottom order-detail-info mt-4 p-4 " + ((isQrMode || +invoice.status === 1 || +invoice.status === 2) && "no-padding")  + (invoice.status == 2 ? " w-100" : "")} style={{ borderRadius: "3px", overflow: "hidden" }}>
@@ -365,25 +367,24 @@ class Invoice extends React.Component {
                     }
 
 
-                    <Col lg={{ size: 4 }} >
+                    <Col className="ml-3 mr-3">
 
-                      <Card className={info ? "invoice-card p-0 bg-white pt-3 mb-2 mt-0" : "invoice-card p-0 bg-white pt-3 mb-2 mt-sm-4"}>
-
-                        <div className="float-logo">
-                          <img src={sellix_logo} width="153" alt={""}/>
-                        </div>
+                      <Card className={info ? "invoice-card p-0 bg-white mb-2 mt-0 pb-2" : "invoice-card p-0 bg-white mb-2 mt-sm-4 pb-2"}>
+                        
+                        <h3 className="text-center mb-3 product-title value-color mt-4">{invoice.product && invoice.product.title}</h3>
+                        <p className="text-center mb-3 product-user caption-color">{invoice.username}</p>
 
                         {innerComponent}
 
+                      </Card>
+                      <Card className={"invoice-card p-0 bg-white mb-2"}>
                         <div className={"bottom order-detail-info p-4 " + ((isQrMode || +invoice.status === 1 || +invoice.status === 2) && "no-padding")  + (invoice.status == 2 ? " w-100" : "") } style={{ borderRadius: "3px", overflow: "hidden" }}>
-
                           {(+invoice.status === 1 || fakePayPalSuccess) && <AlertSuccess />}
 
                           {(+invoice.status === 2 && !fakePayPalSuccess) && <AlertCanceled />}
 
                           {(+invoice.status !== 1 && +invoice.status !== 2 && !fakePayPalSuccess && !isQrMode) && <OrderDetail invoice={invoice} status={this.getInvoiceStatus(invoice.status)}/>}
-                        </div>
-
+                          </div>
                       </Card>
 
                       {info && <Card className={"mb-5"}>

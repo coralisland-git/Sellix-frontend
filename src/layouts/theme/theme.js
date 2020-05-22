@@ -38,7 +38,12 @@ export const lightTheme = {
 
     webhookBadge: '#dadada',
     orderValue: '#5A5574',
-    orderLink: '#613BEA'
+    orderLink: '#613BEA',
+    
+    invoiceValueColor: '#332F56',
+    btcAddressBorderColor: '#E6E5F5',
+    hrDivider: '#E6E5F5',
+    timebarBgColor: '#F5F3FB'
 }
   
 export const darkTheme = {
@@ -89,5 +94,10 @@ export const darkTheme = {
 
     webhookBadge: '#5A5574',
     orderValue: '#D8D7EB',
-    orderLink: '#D8D7EB'
+    orderLink: '#D8D7EB',
+
+    invoiceValueColor: '#F5F3FB',
+    btcAddressBorderColor: '#5A5574',
+    hrDivider: '#5A5574',
+    timebarBgColor: '#5A5574'
 }
