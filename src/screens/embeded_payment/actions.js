@@ -1,15 +1,6 @@
-import { PRODUCT, COUPONS } from 'constants/types'
-import {
-  api,
-  authApi,
-  formData
-} from 'utils'
+import { COUPONS } from 'constants/types'
+import { authApi, formData } from 'utils'
 
-export const initialData = (obj) => {
-  return (dispatch) => {
-    
-  }
-}
 
 export const getCoupons = () => {
   return (dispatch) => {
@@ -27,7 +18,7 @@ export const getCoupons = () => {
         return res
       } else {
         throw res
-      }     
+      }
     }).catch(err => {
       throw err
     })

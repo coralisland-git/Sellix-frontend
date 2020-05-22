@@ -142,12 +142,12 @@ class EmbededInvoice extends React.Component {
   }
 
   getInvoice = () => {
-    const { getInvoiceViaWebsocket } = this.props;
+    const { getInvoice } = this.props;
 
     const id = this.getInvoiceId()
 
-    getInvoiceViaWebsocket(id)
-        .then(invoice => {
+    getInvoice(id)
+        .then(({ data: { invoice }}) => {
           this.setState({
             invoice: {
               ...invoice,
@@ -415,13 +415,12 @@ class EmbededInvoice extends React.Component {
         background: theme === 'light' ? 'white' : '#edf0fe'
       }}>
         <h5>{config.PAYMENT_OPTS_FULL_NAME[invoice.gateway]} Address</h5>
-        <CopyToClipboard text={invoice.crypto_address}
-          onCopy={() => this.copyAddressToClipboardOnCopied()}>
+        <CopyToClipboard text={invoice.crypto_address} onCopy={() => this.copyAddressToClipboardOnCopied()}>
           <div>
             <span>{invoice.crypto_address}</span>
-            <img src={copyIcon} height="20"/>
+            <img src={copyIcon} height="20" alt={""} />
             <div className="copy-mode">
-              <img src={checkMarkIcon} height="20"/>
+              <img src={checkMarkIcon} height="20" alt={""}/>
               <span>Copied</span>
             </div>
           </div>
@@ -838,7 +837,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   getPayPalInvoice: bindActionCreators(CommonActions.getPayPalInvoice, dispatch),
   getInvoice: bindActionCreators(CommonActions.getInvoice, dispatch),
-  getInvoiceViaWebsocket: bindActionCreators(CommonActions.getInvoiceViaWebsocket, dispatch),
   getInvoiceInfo: bindActionCreators(getInvoiceInfo, dispatch),
   downloadInvoice: bindActionCreators(downloadInvoice, dispatch),
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
