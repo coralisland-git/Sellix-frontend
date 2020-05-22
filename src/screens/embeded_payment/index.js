@@ -480,16 +480,16 @@ class EmbededPayment extends React.Component {
                                 if(field.type == 'checkbox') {
                                   return (
                                     <FormGroup className="mb-3">
-                                      <label className="custom-checkbox custom-control payment-checkbox">
+                                      <label className="custom-checkbox custom-control payment-checkbox" htmlFor={`sk${field.name}`}>
                                         <input
                                           className="custom-control-input"
                                           type="checkbox"
-                                          id="sk"
+                                          id={`sk${field.name}`}
                                           name="SMTP-auth"
                                           checked={this.state.custom_fields[field.name] || false}
                                           onChange={(e) => {this.setCustomFields(field.name, e.target.checked)}}
                                           />
-                                        <label className="custom-control-label" htmlFor="sk">
+                                        <label className="custom-control-label" htmlFor={`sk${field.name}`}>
                                           {field.name} <small className="font-italic">{!field.required && '(optional)'}</small>
                                         </label>
                                       </label>

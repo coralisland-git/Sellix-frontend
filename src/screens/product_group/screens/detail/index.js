@@ -62,7 +62,7 @@ class EditProductGroup extends Component {
                             unlisted: +group.unlisted,
                             products_bound: group.products_bound.map(x => x.uniqid).join(',')
                         },
-                        images: group.image_attachment ? [{ preview: config.API_ROOT_URL+'/attachments/image/'+group.image_attachment }] : [],
+                        images: group.image_attachment ? [{ preview: config.CDN_GROUPS_URL + group.image_attachment_info.name }] : [],
                         multiValue: group.products_bound.map(({ uniqid: value, title: label }) => ({ value, label }))
                     })
                 }).finally(() => {
@@ -92,6 +92,11 @@ class EditProductGroup extends Component {
 
         values.unlisted = values.unlisted ? true : false;
         values.sort_priority = values.sort_priority || 1;
+        values.remove_image = this.state.images.length == 0?true:false
+
+        delete values.image_attachment_info;
+        delete values.feedback;
+        delete values.price_conversions;
         this.props.editProductGroup(values).then(res => {
 
             this.props.history.push(`/dashboard/${user}/groups`)

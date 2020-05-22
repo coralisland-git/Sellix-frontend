@@ -202,6 +202,9 @@ class EditProduct extends React.Component {
 
 		values.webhooks = webhook_fields
 
+		delete values.image_attachment_info;
+		delete values.feedback;
+		delete values.price_conversions;
 		this.props.actions.editProduct(values).then(res => {
 			if(admin){
 				window.history.back()
@@ -270,7 +273,7 @@ class EditProduct extends React.Component {
 
 		product.serials = product.serials.join(product.stock_delimiter)
 		product.price = product.price_display
-        
+
         this.setState({
 		  initialValues: {
 			  ...product,
@@ -280,8 +283,7 @@ class EditProduct extends React.Component {
 		  serials: serials,
           files: product.file_attachment?
             [{name : product.file_attachment_info && product.file_attachment_info.original_name}]:[],
-          images: product.image_attachment?
-            [{preview: config.API_ROOT_URL+'/attachments/image/'+product.image_attachment}]:[],
+          images: product.image_attachment ? [{preview: config.CDN_PRODUCTS_URL + product.image_attachment_info.name}] : [],
           gateways: gateways,
           type: type[0],
           showFileStock: product.file_stock!=-1?true:false,
@@ -498,9 +500,9 @@ class EditProduct extends React.Component {
 																</Row>
 																<Row>
 																	<Col lg={12}>
-																		<FormGroup className="mb-3 mr-4">
+																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Payment Methods</Label>
-																			<div className="d-flex flex-wrap">
+																			<div className="d-flex flex-wrap justify-content-between">
 																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
@@ -523,8 +525,8 @@ class EditProduct extends React.Component {
 																						className="custom-control-input"
 																						type="checkbox"
 																						id="btc"
-                                            name="SMTP-auth"
-                                            checked={gateways.bitcoin}
+                                                                                        name="SMTP-auth"
+                                                                                        checked={gateways.bitcoin}
 																						onChange={(e) => {
 																							this.setGateWays('bitcoin', e.target.checked)
 																						}}
@@ -636,6 +638,8 @@ class EditProduct extends React.Component {
 																						Skrill
 																					</label>
 																				</label>
+
+																				<label className="custom-checkbox custom-control payment-checkbox" />
 																			</div>
 																		</FormGroup>
 																	</Col>
