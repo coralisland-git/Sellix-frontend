@@ -5,8 +5,6 @@ import { authRoutes } from 'routes'
 import { NotFound } from 'components'
 import layoutHOC from '../../HOC/layoutHOC'
 
-import './style.scss'
-
 
 class AuthLayout extends Component {
 

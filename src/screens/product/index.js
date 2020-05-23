@@ -1,14 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Input
-} from 'components/reactstrap';
+import { Card, CardHeader, CardBody, Row, Col, Input } from 'components/reactstrap';
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Loader, Button } from 'components'
@@ -19,23 +12,8 @@ import { CommonActions } from 'services/global'
 import { Link } from 'react-router-dom'
 
 import * as ProductActions from './actions'
-import './style.scss'
 
 const user = window.localStorage.getItem('userId')
-
-const mapStateToProps = (state) => {
-  return ({
-    all_products: state.product.all_products
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(ProductActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
-
 
 const Confirm = ({ onClose, title, message, onDelete }) => {
   return <div className={"react-confirm-alert" + ` ${window.localStorage.getItem('theme') || 'light'}`}>
@@ -87,11 +65,7 @@ class Product extends React.Component {
     });
   }
 
-  renderProductInfo = (cell, row) => {
-    if (
-      row.title && row.uniqid
-    ) {
-      return (
+  renderProductInfo = (cell, row) => row.title && row.uniqid ?
         <div>
           <p>
             <Link to={`/dashboard/${user}/products/edit/${row.uniqid}`} >
@@ -99,14 +73,8 @@ class Product extends React.Component {
             </Link>
           </p>
           <p className="caption">{row.uniqid}</p>
-        </div>
-      )  
-    } else {
-      return (
+        </div>:
         <p className="caption">No specified</p>
-      )
-    }
-  }
 
   onDeleteProduct = (uniqid) => () => {
     this.setState({ loading: true })
@@ -123,29 +91,15 @@ class Product extends React.Component {
         })
   }
 
-  renderProductType = (cell, row) => {
-    if (
-      row.type
-    ) {
-      return (
+  renderProductType = (cell, row) => row.type ?
         <div className="badge badge-normal" style={{ margin: '0 auto'}}>
           {row.type}
-        </div>
-      )  
-    } else {
-      return (
+        </div> :
         <p className="caption">No specified</p>
-      )
-    }
-  }
 
-  renderProductPrice = (cell, row) => {
-    return (
-      <p>
-        {config.CURRENCY_LIST[row.currency]}{row.price_display}
-      </p>
-    )  
-  }
+  renderProductPrice = (cell, row) => <p>
+    {config.CURRENCY_LIST[row.currency]}{row.price_display}
+  </p>
 
   renderFileStock = (cell, row) => {
 
@@ -316,5 +270,15 @@ class Product extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  all_products: state.product.all_products
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ProductActions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch)
+})
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product)

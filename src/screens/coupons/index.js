@@ -15,8 +15,6 @@ import {
 } from 'services/global'
 import { getCoupons, deleteCoupon } from './actions'
 
-import './style.scss'
-
 const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {

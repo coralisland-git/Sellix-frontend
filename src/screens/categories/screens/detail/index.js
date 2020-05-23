@@ -14,8 +14,6 @@ import object from "yup/lib/object";
 import string from "yup/lib/string";
 import number from "yup/lib/number";
 
-import './style.scss'
-
 const Yup = {
   object,
   string,

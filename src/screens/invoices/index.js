@@ -15,8 +15,6 @@ import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { getInvoices } from './actions'
 
-import './style.scss'
-
 
 const mapStateToProps = (state) => ({
   invoices: state.invoices.invoices
