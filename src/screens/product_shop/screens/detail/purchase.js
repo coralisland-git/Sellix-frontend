@@ -264,7 +264,7 @@ class Purchase extends React.Component {
 		}
 
 		return <div>
-			<div className="p-3 pt-2 pb-2">
+			<div className="p-4 pt-2 pb-2">
 				{/* <div className="d-flex justify-content-between align-items-center mb-3">
 					<div onClick={this.backToProducts} style={{ cursor: "pointer" }} >
 						<i className={"fas fa-times mb-2"} style={{ fontSize: "1rem"}} />
@@ -327,7 +327,7 @@ class Purchase extends React.Component {
 						}
 					</>}
 					<div className="d-flex flex-wrap justify-content-center">
-						<div className="d-flex justify-content-center align-items-center stock-count" style={this.isOutOfStock() ? {
+						<div className="d-flex justify-content-center align-items-center ml-2 mr-2 stock-count" style={this.isOutOfStock() ? {
 							opacity: 0.5,
 							pointerEvents: 'none'
 						} : {}}>
@@ -342,11 +342,11 @@ class Purchase extends React.Component {
 							</span>
 							<span className={"quantity-picker " + (!this.isValidCount(parseInt(quantity)+1) ? 'text-grey' : '')} onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
 						</div>
-						{<Button color="primary" className="mr-auto ml-auto d-block" onClick={this.showPaymentOptions} style={this.isOutOfStock() ? {
-							width: 170,
+						{<Button color="primary" className="ml-2 mr-2 d-block" onClick={this.showPaymentOptions} style={this.isOutOfStock() ? {
+							width: 172,
 							opacity: 0.7,
 							pointerEvents: 'none'
-						} : {width: 170}}>Continue</Button>}
+						} : {width: 172}}>Continue</Button>}
 					</div>
 					
 				</div>

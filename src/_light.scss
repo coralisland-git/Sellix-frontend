@@ -47,27 +47,11 @@
   }
 
 
-
   .shop-container .app-header .dropdown-item,
   .admin-container .app-header .dropdown-item {
     color: #444648 !important;
     i {
       color: #444648;
-    }
-  }
-
-  .order-screen {
-    .text-completed {
-      color: #087502 !important;
-    }
-    .text-pending {
-      color: #393939 !important;
-    }
-    .text-cancelled {
-      color: #75025C !important;
-    }
-    .text-partial {
-      color: #3D3AC6 !important;
     }
   }
 
@@ -109,16 +93,6 @@
 
   .form-control {
     border: 1px solid #F5F5F5 !important;
-  }
-
-
-
-
-
-  .bitcoin-paying-screen .bottom,
-  .detail-product-screen .stock-info {
-    background-color: #E4D6FF;
-
   }
 
   .detail-product-screen .pay-button {
@@ -179,8 +153,17 @@
     background-color: white;
   }
 
+  .order-detail-screen .webhook-badge {
+    background-color: #dfdfdf;
+  }
 
+  .bitcoin-paying-screen .value-color {
+    color: #332F56 !important;
+  }
 
+  .bitcoin-paying-screen .badge-grey {
+    color: #5A5574 !important;
+  }
 
   .card-body {
     background: white !important;

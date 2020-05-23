@@ -2,7 +2,6 @@ import React from "react";
 import * as moment from "moment";
 import config from "constants/config";
 
-import copyIcon from 'assets/images/invoice/clipboard.svg'
 
 const getCryptoReceived = ({ gateway, crypto_received }) => {
 	if(gateway === 'paypal' || gateway === 'perfectmoney' || gateway === 'skrill' || gateway === 'stripe') {

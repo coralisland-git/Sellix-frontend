@@ -144,89 +144,50 @@ class ShopProductDetail extends React.Component {
 
 
     return (
-      <div className="detail-product-screen" style={{ marginTop: '25px' }}>
+      <div className="detail-product-screen">
         <div className={""}>
 
           <div className="purchase-card ml-auto mr-auto">
             <Row className="pr-3 pl-3 pt-0">
-              <Col lg={12} className="ml-auto mr-auto pb-4">
-                <Row>
-
-                  <Col md={6} lg={7} xl={8}>
-                    <Card className="bg-white p-4 detail">
-                      <h4 className="text-primary mb-4">{productInfo.title}</h4>
-                      <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(productInfo.description)}}>
-                      </div>
-                    </Card>
-                  </Col>
-
-                  <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
-                    <div className="d-md-none d-sm-down-none d-lg-block d-md-block animated fadeIn" >
-                      <Affix offsetTop={97} container='affix-bar' >
-                        <Card className="bg-white" id={'affix-container'} style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
-                          {loading && <Loader/>}
-                          {!loading && <>
-                            {<>
-                              {
-                                group && <div className="p-3 pt-2 pb-2">
-                                  <h4>Select an option</h4>
-                                  <Input type="select" name="select" id="exampleSelect" 
-                                        value={this.props.selectedProduct.uniqid}
-                                        onChange={e => {
-                                          const uniqid = e.target.value
-                                          const product = group.products_bound.find(p => p.uniqid === uniqid)
-                                          this.props.handleProductChange(product)
-                                        }}
-                                        >
-                                    {group.products_bound.map(product => <option key={product.uniqid} value={product.uniqid}>{product.title}</option>)}
-                                  </Input>
-                                </div>
-                              }
-                              {
-                                gateway ?
-                                  <Form productInfo={productInfo} customFieldsValues={this.state.custom_fields} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                                  <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
-                              }
-                              <StockInfo productInfo={productInfo} />
-                            </>}
-                          </>}
-                        </Card>
-                      </Affix>
-                    </div>
-
-                    <div className="d-lg-none d-md-none animated fadeIn" >
-                      <Card className="bg-white" style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
-                        {loading && <Loader/>}
-                        {!loading && <>
-                          {<>
-                            {
-                              group && <div className="p-3 pt-2 pb-2">
-                                <h4>Select an option</h4>
-                                <Input type="select" name="select" id="exampleSelect"
-                                       value={this.props.selectedProduct.uniqid}
-                                       onChange={e => {
-                                         const uniqid = e.target.value
-                                         const product = group.products_bound.find(p => p.uniqid === uniqid)
-                                         this.props.handleProductChange(product)
-                                       }}
-                                >
-                                  {group.products_bound.map(product => <option key={product.uniqid} value={product.uniqid}>{product.title}</option>)}
-                                </Input>
-                              </div>
-                            }
-                            {
-                              gateway ?
-                                  <Form customFieldsValues={this.state.custom_fields} productInfo={productInfo} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
-                                  <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
-                            }
-                            <StockInfo productInfo={productInfo} />
-                          </>}
+              <div className="payment-card left-bar ml-auto mr-auto" id="affix-bar">
+                <div className="animated fadeIn" >
+                    <Card className="bg-white" style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
+                      {loading && <Loader/>}
+                      {!loading && <>
+                        {<>
+                          <div className="product-info p-4">
+                            <h4 className="text-center mt-1">{productInfo.title}</h4>
+                            <p className="text-center mb-4">{productInfo.username}</p>
+                            <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(productInfo.description)}}>
+                          </div>
+                          {
+                            group && <div className="p-3 pt-2 pb-2">
+                              <h4>Select an option</h4>
+                              <Input type="select" name="select" id="exampleSelect" 
+                                    value={this.props.selectedProduct.uniqid}
+                                    onChange={e => {
+                                      const uniqid = e.target.value
+                                      const product = group.products_bound.find(p => p.uniqid === uniqid)
+                                      this.props.handleProductChange(product)
+                                    }}
+                                    >
+                                {group.products_bound.map(product => <option key={product.uniqid} value={product.uniqid}>{product.title}</option>)}
+                              </Input>
+                            </div>
+                          }
+                          
+                          </div>
+                          {
+                            gateway ?
+                              <Form productInfo={productInfo} customFieldsValues={this.state.custom_fields} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
+                              <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
+                          }
+                          <StockInfo productInfo={productInfo} />
                         </>}
-                      </Card>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
+                      </>}
+                    </Card>
+                </div>
+              </div>
             </Row>
           </div>
 

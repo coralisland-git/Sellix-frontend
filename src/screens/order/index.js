@@ -91,8 +91,8 @@ class Order extends React.Component {
         <div className={`order-badge badge-${status.toLowerCase()}`} style={{  margin: '0 auto'}}>
           {+row.status === 3 && <i className={"far fa-hourglass"} style={{ fontSize: ".9rem", color: "#1d183d"}}/>}
           {+row.status !== 3 && <img src={config.STATUS_ICON[row.status]} alt="" />}
+          <span className={`text-${status.toLowerCase()} ml-1`}>{status}</span>
         </div>
-        <span className={`text-${status.toLowerCase()}`}>{status}</span>
       </div>
     )  
   }
