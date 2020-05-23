@@ -8,34 +8,6 @@
 
   background-color: #e8e1ff;
 
-  .app-header {
-    // border-radius: 10px;
-    height: 70px;
-    // box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.2);
-    
-    padding: 0 10px;
-    // height: 100px;
-    // margin: 0 20px;
-    // margin-top: 30px;
-    
-    button:focus {
-      outline: none;
-    }
-    .dropdown-item {
-      border-radius: 0;
-    }
-    .header-sidebar-icon {
-      color: #73818f;
-    }
-    .header-icon {
-      font-size: 18px;
-      color: #73818f;
-    }
-    .my-link {
-      cursor: pointer;
-      color: #73818f;
-    }
-  }
 
 
   .app-body {

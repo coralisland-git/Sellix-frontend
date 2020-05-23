@@ -691,7 +691,7 @@ class EditProduct extends React.Component {
 																							showFileStock: e.target.checked
 																						})
 																					}}
-																					size="sm"
+																					       size="lg"
 																					/><span>Set how many this file can be sold </span>
 																			</Col>
 																		</FormGroup>
@@ -815,7 +815,7 @@ class EditProduct extends React.Component {
 																							showServiceStock: e.target.checked
 																						})
 																					}}
-																					size="sm"
+																					       size="lg"
 																					/><span>Set how many this service can be sold </span>
 																			</Col>
 																		</FormGroup>
@@ -910,7 +910,7 @@ class EditProduct extends React.Component {
 																										onChange={(e) => {
 																											this.saveCustomField(e.target.checked, index, 'required')
 																										}}
-																										size="sm"/>
+																										       size="lg"/>
 																									<a onClick={(e) => this.deleteCustomField(e, index)} style={{fontSize: 20, cursor: "pointer", color: "#B4AEBC"}}>
 																										<i className="fas fa-trash"/>
 																									</a>

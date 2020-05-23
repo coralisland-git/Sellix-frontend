@@ -67,10 +67,8 @@ export default function layoutHOC(props) {
 
 			let Component = props;
 
-
-
 			return <>
-				<Component {...this.props} changeTheme={this.changeTheme} />
+				<Component {...this.props} changeTheme={this.changeTheme} theme={this.theme} />
 				<ToastContainer position="top-right" autoClose={5000} style={{ zIndex: 1999 }} hideProgressBar={true} />
 			</>;
 		}

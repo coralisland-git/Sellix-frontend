@@ -17,7 +17,7 @@ class DocumentationLayout extends React.Component {
 
   render() {
     return (
-        <div className={"admin-container documentation"}>
+        <div className={"admin-container documentation " + this.props.theme}>
           <div className="app">
             <AppHeader fixed className="border-bottom">
               <Header isShop={true} isDocumentation={true} theme={this.props.theme} changeTheme={this.props.changeTheme} />

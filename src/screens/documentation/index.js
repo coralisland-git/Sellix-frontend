@@ -78,7 +78,6 @@ const NAVITATIONS = [
   { key: 'sellix-checkout-delete', value: 'Delete Payment' },
 ]
 
-const userId = window.localStorage.getItem('userId')
 
 class Documentation extends React.Component {
   constructor(props) {
@@ -90,32 +89,24 @@ class Documentation extends React.Component {
     };
   }
 
-  toggle() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
-
   componentDidMount() {
-    var key = this.props.history.location.hash.substr(1);    
+    let key = this.props.history.location.hash.substr(1);
     if (key !== "")
       this.setState({initial : true})
   }
 
   componentDidUpdate() {
-    var key = this.props.history.location.hash.substr(1);    
-    if(this.state.initial){
-      var elmnt = document.getElementById(key);
+    let key = this.props.history.location.hash.substr(1);
+    if(this.state.initial) {
+      let elmnt = document.getElementById(key);
       elmnt.scrollIntoView();
       this.setState({initial: false})
-    }    
+    }
   }
 
   render() {
 
-    var {activeNode} = this.state;
-
-    var items = NAVITATIONS.map((nav => {
-        return nav.key
-    }))
+    let { activeNode } = this.state;
 
     return (
       <div className="documentation-screen">
@@ -123,7 +114,7 @@ class Documentation extends React.Component {
           <div className="d-wrapper">          
             <div className="side-nav">
               <div className="d-nav">
-                <Scrollspy items={ items }
+                <Scrollspy items={ NAVITATIONS.map((({ key }) => key)) }
                   className="section-nav"
                   currentClassName="active"
                   offset={ -50 }
@@ -138,21 +129,12 @@ class Documentation extends React.Component {
                         this.setState({activeNode: el.id.split('-')[0].slice(0, 4)})
                     }
                   }>
-                  {
-                    NAVITATIONS.map((nav, index) => {
-                      if (nav.level == 1)
-                        return (
-                          <li className="lv-1" key={index}>{nav.value}</li>
-                        )
-                      else
-                        return (
-                          <li className={ nav.level == 2 ? 'lv-2' : nav.key.indexOf(activeNode) > -1 ? 'lv-3 vs' : 'lv-3' } key={index}>
-                            <a href={`/documentation#${nav.key}`}
-                            >{nav.value}</a>
-                          </li>
-                        )
-                    })
-                  }
+                  {NAVITATIONS.map(({ value, level, key }) => level === 1 ?
+                      <li className="lv-1" key={key}>{value}</li> :
+                      <li className={ level === 2 ? 'lv-2' : key.indexOf(activeNode) > -1 ? 'lv-3 vs' : 'lv-3' } key={key}>
+                        <a href={`/documentation#${key}`}>{value}</a>
+                      </li>
+                  )}
                 </Scrollspy>
               </div>
             </div>
@@ -172,7 +154,7 @@ class Documentation extends React.Component {
                     <div className="code-block-header">
                       <p>API ROOT URL</p>
                       <Clipboard data-clipboard-text={ `https://dev.sellix.io/v1` } button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
+                        <i className="fa fa-clone" />
                       </Clipboard>
                     </div>
                     <pre>
@@ -200,7 +182,7 @@ class Documentation extends React.Component {
                       <Clipboard 
                       data-clipboard-text={ `Authorization: Bearer testingjHdAZK6jG2pN6cabSQdZhlS2XqE8UvOSdqSDtlZAeOuF2jfr3a87KKs3Z` } 
                       button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
+                        <i className="fa fa-clone" />
                       </Clipboard>
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst}>
@@ -235,10 +217,8 @@ class Documentation extends React.Component {
                   <div className="code-block">
                     <div className="code-block-header">
                       <p>PAGINATING ORDERS EXAMPLE</p>
-                      <Clipboard 
-                      data-clipboard-text={ `/blacklists?page=1` } 
-                      button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
+                      <Clipboard data-clipboard-text={ `/blacklists?page=1` } button-title="Copy">
+                        <i className="fa fa-clone" />
                       </Clipboard>
                     </div>
                     <pre>
@@ -423,7 +403,7 @@ if (hash_equals($signature, $header_signature)) {
   // handle valid webhook
 }` } 
                       button-title="Copy">
-                        <i className="fa fa-clone" aria-hidden="true"></i>
+                        <i className="fa fa-clone" />
                       </Clipboard>
                     </div>
                     <SyntaxHighlighter language="php" style={sunburst} showLineNumbers={true}>
