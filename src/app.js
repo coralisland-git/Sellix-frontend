@@ -34,17 +34,13 @@ export default class App extends React.Component {
   }
 
   render () {
-    
     return (
-
       <Provider store={store}>
         <Router history={history}>
-          <React.Suspense fallback={Loading()}>
-            <Switch>
-              {mainRoutes.map((props, key) => <Route key={key} {...props} />)}
-              <Route component={NotFound} />
-            </Switch>
-          </React.Suspense>
+          <Switch>
+            {mainRoutes.map((props, key) => <Route key={key} {...props} />)}
+            <Route component={NotFound} />
+          </Switch>
         </Router>
       </Provider>
     )

@@ -235,7 +235,7 @@ class EmbedProduct extends Component {
                           <Button
                             className="demo-btn"
                             color="primary"
-                            data-sellix-product="5ec6422a08939"
+                            data-sellix-product="5ea869ce3e971"
                             data-sellix-custom-demo="dummy"
                             type="submit"
                             alt="Embed Demo Button"
