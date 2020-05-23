@@ -46,7 +46,7 @@ class InvoiceLayout extends React.Component {
 						</Container>
 					</div>
 
-					<AppFooter>
+					<AppFooter className={"align-items-center justify-content-center"}>
 						<p className="text-center text-grey footer-report py-4 m-0">
 							Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
 						</p>

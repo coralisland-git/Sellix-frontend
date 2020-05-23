@@ -16,27 +16,16 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import * as moment from 'moment/moment'
 import * as ReportActions from './actions'
-import './style.scss'
 
 TimeAgo.addLocale(en)
 const ReactTimeAgo = new TimeAgo('en-US')
 
-const mapStateToProps = (state) => {
-  return ({
-    report_list: state.report.report_list
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(ReportActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
 
 class Reports extends React.Component {
+
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
       loading: false,
       openModal: false,
@@ -122,10 +111,7 @@ class Reports extends React.Component {
                   <div className="d-flex justify-content-end">
                     <div className="searchbar white">
                       <i className="fas fa-search"/>
-                      <Input placeholder="Search..." className="header-search-input" 
-                        onChange={(e) => {
-                          this.setState({search_key: e.target.value})
-                      }}></Input>
+                      <Input placeholder="Search..." className="header-search-input" onChange={(e) => this.setState({search_key: e.target.value})} />
                     </div>
                     <Button className="ml-3" color="primary" onClick={this.openNewReportModal.bind(this)}>
                       New Report</Button>
@@ -213,5 +199,14 @@ class Reports extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  report_list: state.report.report_list
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ReportActions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch)
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reports)

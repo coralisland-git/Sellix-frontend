@@ -13,13 +13,16 @@ import './style.scss';
 
 
 const Nav = () => {
-  return <ul className="nav">
-    <li className="nav-item"><NavLink to={('/admin/settings/general' || '/admin/settings')} style={{ height: "32px" }} className="nav-link" activeClassName={"active"}>General</NavLink></li>
-    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/bitcoin">Bitcoin</NavLink></li>
-    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/litecoin">Litecoin</NavLink></li>
-    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/ethereum">Ethereum</NavLink></li>
-    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/b-cash">Bitcoin Cash</NavLink></li>
-    <li className="nav-item"><NavLink activeClassName={"active"} style={{ height: "32px" }} className="nav-link" to="/admin/settings/status">Status</NavLink></li>
+  let style = {
+    height: "32px", padding: "7px 0"
+  }
+  return <ul className="nav d-flex flex-column">
+    <li className="nav-item"><NavLink to={('/admin/settings/general' || '/admin/settings')} style={style} className="nav-link" activeClassName={"active"}>General</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={style} className="nav-link" to="/admin/settings/bitcoin">Bitcoin</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={style} className="nav-link" to="/admin/settings/litecoin">Litecoin</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={style} className="nav-link" to="/admin/settings/ethereum">Ethereum</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={style} className="nav-link" to="/admin/settings/b-cash">Bitcoin Cash</NavLink></li>
+    <li className="nav-item"><NavLink activeClassName={"active"} style={style} className="nav-link" to="/admin/settings/status">Status</NavLink></li>
   </ul>
 }
 

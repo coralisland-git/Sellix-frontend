@@ -6,7 +6,7 @@ import Select from 'react-select'
 import { Loader, ImageUpload, Button, Spin } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
-import { Product } from 'screens'
+import { getProductList } from '../../../product/actions'
 import object from "yup/lib/object";
 import string from "yup/lib/string";
 import number from "yup/lib/number";
@@ -253,7 +253,7 @@ class CreateProductGroup extends React.Component {
 const mapStateToProps = ({ product }) => ({ products: product.all_products })
 const mapDispatchToProps = (dispatch) => ({
 	tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
-	getProductList: bindActionCreators(Product.actions.getProductList, dispatch),
+	getProductList: bindActionCreators(getProductList, dispatch),
 	createProductGroup: bindActionCreators(ProductActions.createProductGroup, dispatch)
 })
 

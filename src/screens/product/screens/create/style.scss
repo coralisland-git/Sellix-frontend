@@ -1,7 +1,4 @@
 .create-product-screen {
-  .card-header {
-    color: #20a8d8;
-  }
 
   span {
     color: #A7A5B4;
@@ -23,13 +20,7 @@
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     padding: 0 20px;
-
-    .DraftEditor-editorContainer .public-DraftEditor-content {
-      min-height: 200px;
-    }
   }
-
-
 
   .editor-toolbar {
     margin-bottom: -1px !important;
@@ -78,7 +69,7 @@
     border: none;
   }
 
-  .payment-checkbox {
+  & .payment-checkbox {
     width: calc(33% - .5rem);
     height: 60px;
     display: flex;

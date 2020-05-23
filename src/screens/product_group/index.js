@@ -12,22 +12,18 @@ import config from 'constants/config'
 import { CommonActions } from 'services/global'
 
 import * as ProductGroupActions from './actions'
-import './style.scss'
 
 const user = window.localStorage.getItem('userId')
 
-const mapStateToProps = (state) => {
-  return ({
-    all_product_groups: state.product_group.all_product_groups
-  })
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(ProductGroupActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+const mapStateToProps = (state) => ({
+  all_product_groups: state.product_group.all_product_groups
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ProductGroupActions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch)
+})
 
 
 const Confirm = ({ onClose, title, message, onDelete }) => {
@@ -46,7 +42,8 @@ const Confirm = ({ onClose, title, message, onDelete }) => {
 class ProductGroups extends React.Component {
   
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
       loading: false,
       search_key: null
@@ -80,11 +77,7 @@ class ProductGroups extends React.Component {
     });
   }
 
-  renderProductInfo = (cell, row) => {
-    if (
-      row.title && row.uniqid
-    ) {
-      return (
+  renderProductInfo = (cell, row) => row.title && row.uniqid ?
         <div>
           <p>
             <a href={`/dashboard/${user}/groups/edit/${row.uniqid}`} >
@@ -92,20 +85,10 @@ class ProductGroups extends React.Component {
             </a>
           </p>
           <p className="caption">{row.uniqid}</p>
-        </div>
-      )  
-    } else {
-      return (
+        </div> :
         <p className="caption">No specified</p>
-      )
-    }
-  }
 
-  renderGroupTitle = (cell, row) => {
-    if (
-      row.title && row.uniqid
-    ) {
-      return (
+  renderGroupTitle = (cell, row) => row.title && row.uniqid ?
         <div>
           <p>
             <a href={`/dashboard/${user}/groups/edit/${row.uniqid}`} >
@@ -113,14 +96,8 @@ class ProductGroups extends React.Component {
             </a>
           </p>
           <p className="caption">{row.uniqid}</p>
-        </div>
-      )  
-    } else {
-      return (
+        </div> :
         <p className="caption">No specified</p>
-      )
-    }
-  }
 
   onDeleteProductGroup = (uniqid) => () => {
     this.setState({ loading: true })
@@ -137,29 +114,15 @@ class ProductGroups extends React.Component {
         })
   }
 
-  renderProductType = (cell, row) => {
-    if (
-      row.type
-    ) {
-      return (
+  renderProductType = (cell, row) => row.type ?
         <div className="badge badge-normal" style={{ margin: '0 auto'}}>
           {row.type}
-        </div>
-      )  
-    } else {
-      return (
+        </div> :
         <p className="caption">No specified</p>
-      )
-    }
-  }
 
-  renderProductPrice = (cell, row) => {
-    return (
-      <p>
-        {config.CURRENCY_LIST[row.currency]}{row.price_display}
-      </p>
-    )  
-  }
+  renderProductPrice = (cell, row) => <p>
+    {config.CURRENCY_LIST[row.currency]}{row.price_display}
+  </p>
 
   renderFileStock = (cell, row) => {
 
@@ -286,39 +249,11 @@ class ProductGroups extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="products_count"
-                            // dataFormat={this.renderGroupTitle}
                             dataSort
                             width='44%'
                           >
                             Products Count
                           </TableHeaderColumn>
-                          {/* <TableHeaderColumn
-                            dataField="type"
-                            dataFormat={this.renderGroupProducts}
-                            dataAlign="center"
-                            dataSort
-                            width='13%'
-                          >
-                            Type
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="file_stock"
-                            dataSort
-                            dataAlign="center"
-                            dataFormat={this.renderFileStock}
-                            width='13%'
-                          >
-                            Stock
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="price_display"
-                            dataFormat={this.renderProductPrice}
-                            dataSort
-                            dataAlign="center"
-                            width='13%'
-                          >
-                            Price
-                          </TableHeaderColumn> */}
                           <TableHeaderColumn
                             dataField="id"
                             dataAlign="right"

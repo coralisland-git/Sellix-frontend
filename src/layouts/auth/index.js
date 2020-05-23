@@ -5,10 +5,15 @@ import { authRoutes } from 'routes'
 import { NotFound } from 'components'
 import layoutHOC from '../../HOC/layoutHOC'
 
-import './style.scss'
-
 
 class AuthLayout extends Component {
+
+  constructor(props) {
+    super(props);
+
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+  }
 
   componentDidMount () {
     const preUrl = `/${window.localStorage.getItem('userId')}`;

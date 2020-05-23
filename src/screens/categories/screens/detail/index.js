@@ -14,8 +14,6 @@ import object from "yup/lib/object";
 import string from "yup/lib/string";
 import number from "yup/lib/number";
 
-import './style.scss'
-
 const Yup = {
   object,
   string,
@@ -74,7 +72,7 @@ class EditCategory extends React.Component {
           }
         })
       }).finally(() => {
-        this.props.productActions.getProductList().then(res => {
+        this.props.getProductList().then(res => {
           this.setState({
             selected_products: this.state.initialData.products_bound.map(pro => {return {value: pro.uniqid, label:pro.title}})
           })
@@ -233,7 +231,7 @@ const mapStateToProps = ({ product }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   commonActions: bindActionCreators(CommonActions, dispatch),
-  productActions: bindActionCreators({ getProductList }, dispatch),
+  getProductList: bindActionCreators(getProductList , dispatch),
   actions: bindActionCreators(CategoryActions, dispatch)
 })
 

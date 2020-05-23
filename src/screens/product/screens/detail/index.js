@@ -11,7 +11,7 @@ import { Formik } from 'formik';
 import config, { converter } from 'constants/config'
 import includes from "lodash/includes"
 import { CommonActions } from 'services/global'
-import './style.scss'
+import '../create/style.scss'
 
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import ethereumIcon from 'assets/images/crypto/eth.svg'
@@ -515,7 +515,7 @@ class EditProduct extends React.Component {
 																						}}
 																						/>
 																					<label className="custom-control-label" htmlFor="paypal">
-																						<i className="fab fa-paypal"></i>
+																						<i className="fab fa-paypal" />
 																						PayPal
 																					</label>
 																				</label>
@@ -691,7 +691,7 @@ class EditProduct extends React.Component {
 																							showFileStock: e.target.checked
 																						})
 																					}}
-																					size="sm"
+																					       size="lg"
 																					/><span>Set how many this file can be sold </span>
 																			</Col>
 																		</FormGroup>
@@ -815,7 +815,7 @@ class EditProduct extends React.Component {
 																							showServiceStock: e.target.checked
 																						})
 																					}}
-																					size="sm"
+																					       size="lg"
 																					/><span>Set how many this service can be sold </span>
 																			</Col>
 																		</FormGroup>
@@ -876,7 +876,7 @@ class EditProduct extends React.Component {
 																			return(
 																				<Col lg={12} key={index}>
 																					<Row>
-																						<Col lg={4}>
+																						<Col lg={5}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Name</Label>
 																								<Input type="text" value={field.name} onChange={(e) => {
@@ -884,7 +884,7 @@ class EditProduct extends React.Component {
 																								}}/>
 																							</FormGroup>
 																						</Col>
-																						<Col lg={4}>
+																						<Col lg={3}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
 																								<Select
@@ -898,7 +898,7 @@ class EditProduct extends React.Component {
 																								/>
 																							</FormGroup>
 																						</Col>
-																						<Col lg={3}>
+																						<Col lg={2}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Required</Label>
 																								<div className="d-flex align-items-center mt-2">
@@ -910,9 +910,10 @@ class EditProduct extends React.Component {
 																										onChange={(e) => {
 																											this.saveCustomField(e.target.checked, index, 'required')
 																										}}
-																										size="sm"/>
-																									<a onClick={(e) => this.deleteCustomField(e, index)} style={{fontSize: 20}}>
-																										<i className="fas fa-trash"/></a>
+																										       size="lg"/>
+																									<a onClick={(e) => this.deleteCustomField(e, index)} style={{fontSize: 20, cursor: "pointer", color: "#B4AEBC"}}>
+																										<i className="fas fa-trash"/>
+																									</a>
 																								</div>
 																							</FormGroup>
 																						</Col>

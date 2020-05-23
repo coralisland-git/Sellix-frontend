@@ -1,7 +1,6 @@
 .dark {
   h1, h2, h3, h4, h5, p, label, a, td, input, select, textarea,
   .close span, span.price, .neutral-count,
-  .order-detail-info span,
   .stock-info span {
     color: #B4AEBC !important;
   }
@@ -35,6 +34,11 @@
   *[class$=control] {
     background-color: #221D3E !important;
     border: 1px solid #1D183D !important;
+  }
+
+  .custom-control.custom-checkbox {
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
   }
 
   *[class$=control] *:not(.text-green):not(.text-red):not(.text-gold) {
@@ -117,21 +121,6 @@
     i {color: #B4AEBC;}
   }
 
-  .order-screen {
-    .text-completed {
-      color: #A6FCA2 !important;
-    }
-    .text-pending {
-      color: #C3C0C0 !important;
-    }
-    .text-cancelled {
-      color: #FCA2B7 !important;
-    }
-    .text-partial {
-      color: #A5E4F8 !important;
-    }
-  }
-
   .shop-container .app-header .dropdown-item:hover,
   .shop-container .app-header .dropdown-item.active,
   .admin-container .app-header .dropdown-item:hover,
@@ -142,7 +131,6 @@
       color: white !important;
     }
   }
-
 
 
   .border-right,
@@ -156,7 +144,6 @@
   .Select-control,
   .react-datepicker__input-container input,
   .create-product-screen .payment-checkbox,
-  .create-product-screen .file-switch .switch-slider,
   .image-uploader .drag-drop-area,
   .btn-default,
   .detail-product-screen .paypal-instant,
@@ -183,12 +170,6 @@
 
   .admin-container .sidebar {
     background: #221D3E;
-  }
-
-  .bitcoin-paying-screen .bottom,
-  .detail-product-screen .stock-info {
-    background-color: #181432;
-
   }
 
   .bitcoin-paying-screen .bottom h4,
@@ -233,9 +214,18 @@
     background: #221D3E !important;
   }
 
+  .bitcoin-paying-screen .value-color {
+    color: #F5F3FB !important;
+  }
 
+  .bitcoin-paying-screen .invoice-divider {
+    border-top: 1px solid #5A5574;
+  }
 
-
+  .bitcoin-paying-screen .badge-grey {
+    background-color: #5A5574;
+    color: #D8D7EB !important;
+  }
 
   .dashboard-screen .card .card-body h3,
   .analytics-screen .card .card-body h3 {
@@ -263,7 +253,7 @@
   }
 
   .admin-container footer {
-    background-color: #1D183D !important;
+    border-top-color: #1D183D;
     background: #1D183D !important;
   }
 
@@ -275,7 +265,9 @@
     background-color: #1D183D;
   }
 
-
+  .order-detail-screen .webhook-badge {
+    background-color: #5A5574;
+  }
 
   .card-body {
     background: #1D183D !important;

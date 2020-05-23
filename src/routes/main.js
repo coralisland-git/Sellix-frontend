@@ -38,7 +38,7 @@ const mainRoutes = [
   { path: '/404', name: 'LandingLayout', component: LandingLayout },
   { path: '/changelog', name: 'LandingLayout', component: LandingLayout },
 
-  { path: `/webhooks`, name: 'DashboardLayout', component: DashboardLayout},
+  { path: `/webhooks`, name: 'DashboardLayout', component: DashboardLayout },
 
   { path: `/documentation`,  name: 'DocumentationLayout', component: DocumentationLayout },
   { path: `/:username`, name: 'ShopLayout', component: ShopLayout },

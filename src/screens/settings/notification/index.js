@@ -128,9 +128,9 @@ class Notification extends React.Component {
                             <Col className="d-flex align-items-center">
                               <AppSwitch className="mx-1 file-switch mr-2"
                                 style={{width: 50}}
-                                variant={'pill'} 
+                                variant={'pill'}
+                                size="lg"
                                 color={'primary'}
-                                size="sm"
                                 checked={invoice_notification}
                                 onChange={(e) => this.setState({ invoice_notification: e.target.checked })}
                               />
@@ -155,7 +155,7 @@ class Notification extends React.Component {
                                 style={{width: 50}}
                                 variant={'pill'} 
                                 color={'primary'}
-                                size="sm"
+                                         size="lg"
                                 checked={ticket_notification}
                                 onChange={(e) => this.setState({ ticket_notification: e.target.checked })}
                               />
@@ -179,7 +179,7 @@ class Notification extends React.Component {
                                 style={{width: 50}}
                                 variant={'pill'} 
                                 color={'primary'}
-                                size="sm"
+                                         size="lg"
                                 checked={feedback_notification}
                                 onChange={(e) => {
                                   this.setState({
@@ -207,7 +207,7 @@ class Notification extends React.Component {
                                 style={{width: 50}}
                                 variant={'pill'} 
                                 color={'primary'}
-                                size="sm"
+                                         size="lg"
                                 checked={reply_notification}
                                 onChange={(e) => {
                                   this.setState({

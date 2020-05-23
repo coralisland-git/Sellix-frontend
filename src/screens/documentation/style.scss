@@ -29,76 +29,6 @@
     flex-direction: column;    
   }
 
-  .code-block {
-    //background-color: #cfcfcf;
-    background-color: #3c4257;
-
-    border-radius: 3px;
-    margin-bottom: 30px;
-    box-shadow: 0 0 0 1px rgba(0,0,0,.07);
-    position: relative;
-
-    .code-block-header {
-      padding: 12px 20px;
-      color: #a3acb9;
-      display: flex;
-      justify-content: space-between;
-
-      p {
-        margin-bottom: 0px !important;
-        font-weight: 600;
-      }        
-      
-      button {
-        background-color: inherit;
-        border: none;
-        padding: 0.3rem;
-        outline: none;
-        border-radius: 3px;
-
-        &:hover {
-          background-color: #4f566b;
-        }
-
-        &:active {
-          background-color: #494f60;
-        }
-
-        i {
-          color: #a3acb9;
-        }
-      }
-    }
-
-    pre {
-      padding: 25px 20px !important;
-      line-height: 1.4rem;
-      border-bottom-left-radius: 3px;
-      border-bottom-right-radius: 3px;
-      //background-color: #e3e3e3 !important;
-      background-color: #4f566b !important;
-      margin-bottom: 0px !important;
-      color: #f8f8f8;
-    }
-  }
-
-  .code-block.response {
-    background-color: #e3e8ee;    
-
-    .code-block-header {
-      color: #697386;
-    } 
-
-    pre {
-      background-color: #f7fafc !important;
-      max-height: 80vh;
-    }
-  }
-
-  .code-block.script pre code:first-child{
-    color: #838896 !important;
-  }
-
   .d-wrapper {
     width: inherit;
     padding: 0px;
@@ -221,19 +151,6 @@
 
   .required {
     color: #e74c3c;
-  }
-
-  .badge-mark {
-    line-height: 1.2rem;
-    text-align: center;
-    border-radius: 3px;
-    font-size: 13px !important;
-    font-weight: normal;    
-    padding: 3px 10px;
-    margin: 2px;
-    vertical-align: middle;
-    background-color: #E4D6FF;
-    color: #613BEA;
   }
 
   .border-table {

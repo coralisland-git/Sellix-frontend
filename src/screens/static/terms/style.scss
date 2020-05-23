@@ -1,6 +1,6 @@
 .terms-screen {
   * {
-    font-family: var(--font-family-sans-serif);
+    font-family: "OpenSans-Regular" !important;
   }
 
   .section {
@@ -19,7 +19,7 @@
 
       p.large {
         font-size: 1.2rem !important;
-        font-weight: 200;
+        font-family: "OpenSans-Light" !important;
         color: #fff;
       }
     }

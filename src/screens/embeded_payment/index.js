@@ -25,7 +25,8 @@ const Yup = {
 class EmbededPayment extends React.Component {
   
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
       sending: false,
       loading: false,
@@ -48,6 +49,14 @@ class EmbededPayment extends React.Component {
       coupon_applied: false,
       verifiedTooltipOpen: false
     }
+
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
+
+    document.documentElement.classList.remove('light')
+    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.add('light');
   }
 
   handleSubmit = (values) => {

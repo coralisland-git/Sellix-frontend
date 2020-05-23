@@ -1,21 +1,3 @@
-.product-screen {
-  .card-header {
-    color: #20a8d8;
-  }
-  .btn-group {
-    .btn {
-      color: #ffffff !important;
-    }
-  }
-
-  .product-table {
-    .my-link {
-      text-decoration: none;
-      cursor: pointer;
-    }
-  }
-}
-
 .unauthorized-container {
   position: absolute;
   width: 100%;
@@ -73,6 +55,34 @@
 
     img {
       width: 30px;
+    }
+  }
+}
+
+.settings-main {
+  .nav {
+    .nav-link {
+      &.active {
+        color: #613BEA !important;
+      }
+      &:hover {
+        color: #613BEA !important;
+      }
+    }
+  }
+}
+
+.light .settings-main {
+  .nav {
+    .nav-link {
+      color: #B4AEBC !important;
+
+      &.active {
+        color: #613BEA !important;
+      }
+      &:hover {
+        color: #613BEA !important;
+      }
     }
   }
 }

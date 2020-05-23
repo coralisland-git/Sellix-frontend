@@ -1,13 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col
-} from 'components/reactstrap'
+import { Card, CardHeader, CardBody, Row, Col } from 'components/reactstrap';
 import { Button } from 'components';
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
@@ -19,7 +13,6 @@ import {
 } from 'services/global'
 
 import * as Actions from './actions'
-import './style.scss'
 
 const user = window.localStorage.getItem('userId')
 

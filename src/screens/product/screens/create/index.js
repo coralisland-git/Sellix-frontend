@@ -564,13 +564,13 @@ class CreateProduct extends React.Component {
 																			style={{width: 50}}
 																			variant={'pill'}
 																			color={'primary'}
+																			       size="lg"
 																			checked={showFileStock}
 																			onChange={(e) => {
 																				this.setState({
 																					showFileStock: e.target.checked
 																				})
 																			}}
-																			size="sm"
 																			/><span>Set how many times this file can be sold </span>
 																	</Col>
 																</FormGroup>
@@ -694,7 +694,7 @@ class CreateProduct extends React.Component {
 																					showServiceStock: e.target.checked
 																				})
 																			}}
-																			size="sm"
+																			       size="lg"
 																			/><span>Set how many times this service can be sold </span>
 																	</Col>
 																</FormGroup>
@@ -753,7 +753,7 @@ class CreateProduct extends React.Component {
 																	return(
 																		<Col lg={12} key={index}>
 																			<Row>
-																				<Col lg={4}>
+																				<Col lg={5}>
 																					<FormGroup className="mb-3">
 																						<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Name</Label>
 																						<Input type="text" value={field.name} onChange={(e) => {
@@ -761,7 +761,7 @@ class CreateProduct extends React.Component {
 																						}}/>
 																					</FormGroup>
 																				</Col>
-																				<Col lg={4}>
+																				<Col lg={3}>
 																					<FormGroup className="mb-3">
 																						<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
 																						<Select options={config.CUSTOM_TYPE}
@@ -774,7 +774,7 @@ class CreateProduct extends React.Component {
 																						/>
 																					</FormGroup>
 																				</Col>
-																				<Col lg={3}>
+																				<Col lg={2}>
 																					<FormGroup className="mb-3">
 																						<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Required</Label>
 																						<div className="d-flex align-items-center mt-2">
@@ -786,9 +786,10 @@ class CreateProduct extends React.Component {
 																								onChange={(e) => {
 																									this.saveCustomField(e.target.checked, index, 'required')
 																								}}
-																								size="sm"/>
-																							<a onClick={(e) => this.deleteCustomField(e, index)} style={{fontSize: 20}}>
-																								<i className="fas fa-trash"/></a>
+																								       size="lg"/>
+																							<a onClick={(e) => this.deleteCustomField(e, index)} style={{fontSize: 20, cursor: "pointer", color: "#B4AEBC"}}>
+																								<i className="fas fa-trash"/>
+																							</a>
 																						</div>
 																					</FormGroup>
 																				</Col>

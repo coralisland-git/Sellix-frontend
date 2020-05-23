@@ -1,14 +1,5 @@
 import React, {Component} from 'react'
-import {
-	DropdownItem,
-	DropdownMenu,
-	DropdownToggle,
-	Nav,
-	NavItem,
-	UncontrolledDropdown,
-	Input,
-	Badge
-} from 'components/reactstrap'
+import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledDropdown, Input, Badge } from 'components/reactstrap'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import {connect} from 'react-redux'
@@ -115,11 +106,10 @@ class Header extends Component {
 							<DropdownMenu right className="mt-2" style={{width: 300, maxHeight: 300, overflow: 'auto'}}>
 								<DropdownItem>
 									<div className="d-flex justify-content-between">
-										<span className="text-primary d-flex">Notification</span>
+										<span className="text-primary d-flex mr-2">Notification</span>
 										{
 											(notifications && notifications.length > 0) &&
-											<span className="d-flex text-grey"
-											      onClick={this.markAsRead}>Mark as Read</span>
+											<span className="d-flex text-grey" onClick={this.markAsRead}>Mark as Read</span>
 										}
 									</div>
 								</DropdownItem>
@@ -159,33 +149,25 @@ class Header extends Component {
 							</DropdownToggle>
 							{
 								is_authed ?
-									<DropdownMenu right className="mt-3">
+									<DropdownMenu right className="mt-3 main-menu">
 										{
 											profile && profile.rank !== "0" &&
-											<DropdownItem className={path.startsWith('/admin') ? 'active' : ''}
-											              onClick={() => history.push(`/admin/dashboard`)}>
-												<i className={path.startsWith('/admin') ? "far fa-dot-circle fa-md" : "far fa-circle fa-md"}/> Admin
-												Panel
+											<DropdownItem className={path.startsWith('/admin') ? 'active' : ''} onClick={() => history.push(`/admin/dashboard`)}>
+												<i className={"fas fa-users-cog"}/> Admin Panel
 											</DropdownItem>
 										}
-										<DropdownItem className={path.startsWith('/dashboard') ? 'active' : ''}
-										              onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
-											<i className={path.startsWith('/dashboard')?"nav-icon fas fa-home fa-lg":"nav-icon fas fa-home fa-lg"}/> Dashboard
+										<DropdownItem className={path.startsWith('/dashboard') ? 'active' : ''} onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
+											<i className={"nav-icon fas fa-home fa-lg"}/> Dashboard
 										</DropdownItem>
-										<DropdownItem className={isShop ? 'active' : ''}
-										              onClick={() => this.props.history.push(`/${userId}`)}>
-											<i className={isShop?"nav-icon fas fa-shopping-basket fa-lg" : "nav-icon fas fa-shopping-basket fa-lg"}/> Your
-											Shop
-
+										<DropdownItem className={isShop ? 'active' : ''} onClick={() => this.props.history.push(`/${userId}`)}>
+											<i className={"nav-icon fas fa-shopping-basket fa-lg"}/> Your Shop
 										</DropdownItem>
-										<DropdownItem className={path.startsWith('/settings') ? 'active' : ''}
-										              onClick={() => this.props.history.push(`/settings/${userId}`)}>
-											<i className={path.startsWith('/settings') ? "nav-icon fas fa-cog fa-lg" : "nav-icon fas fa-cog fa-lg"}/> Settings
+										<DropdownItem className={path.startsWith('/settings') ? 'active' : ''} onClick={() => this.props.history.push(`/settings/${userId}`)}>
+											<i className={"nav-icon fas fa-cog fa-lg"}/> Settings
 										</DropdownItem>
 
 										<DropdownItem onClick={() => this.signOut()}>
-											<i className={path.startsWith('/signin') ? "fa fa-sign-out-alt" : "fa fa-sign-out-alt"}/> Sign
-											Out
+											<i className={"fa fa-sign-out-alt"}/> Sign Out
 										</DropdownItem>
 									</DropdownMenu> :
 									<DropdownMenu right className="mt-2">

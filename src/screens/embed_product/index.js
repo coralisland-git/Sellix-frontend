@@ -235,7 +235,7 @@ class EmbedProduct extends Component {
                           <Button
                             className="demo-btn"
                             color="primary"
-                            data-sellix-product="5ea869ce3e971" 
+                            data-sellix-product="5ea869ce3e971"
                             data-sellix-custom-demo="dummy"
                             type="submit"
                             alt="Embed Demo Button"
@@ -260,17 +260,13 @@ class EmbedProduct extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return ({
-    all_products: state.product.all_products
-  })
-}
+const mapStateToProps = (state) => ({
+  all_products: state.product.all_products
+})
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
-    getProductList: bindActionCreators(ProductActions.getProductList, dispatch)
-  })
-}
+const mapDispatchToProps = (dispatch) => ({
+  tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
+  getProductList: bindActionCreators(ProductActions.getProductList, dispatch)
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmbedProduct)

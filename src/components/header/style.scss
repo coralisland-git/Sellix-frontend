@@ -16,14 +16,18 @@
 .app-header .navbar-nav .dropdown-menu:after {
   display: none;
 }
+.app-header .main-menu button {
+  font-family: "OpenSans-Regular" !important;
+}
+
+
 
 .app-header .navbar-nav .dropdown-menu-right {
   top: 42px !important;
   right: 10px !important;
   left: auto !important;
   transform: none !important;
-  padding: 8px 0 !important;
-  border-radius: 5px !important;
+  //padding: 8px 0 !important;
   width: 160px;
 }
 

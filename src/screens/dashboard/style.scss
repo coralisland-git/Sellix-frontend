@@ -1,5 +1,13 @@
 .dashboard-screen {
-  // Common CSS
+
+  .graph-note {
+    font-size: .8rem;
+    font-weight: 200;
+    top: 1rem;
+    right: 2rem;
+    font-family: "OpenSans-Light" !important;
+  }
+
   .nav-link {
     padding: 0.4rem 0.6rem;
   }

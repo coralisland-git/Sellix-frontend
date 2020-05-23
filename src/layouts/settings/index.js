@@ -1,6 +1,6 @@
 import React from 'react'
 import * as router from 'react-router-dom';
-import { Route, Switch, Redirect } from 'react-router-dom'
+import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { BrowserView, MobileView } from "react-device-detect";
@@ -16,9 +16,7 @@ import layoutHOC from '../../HOC/layoutHOC'
 
 import {
   mainBrowserNavigation,
-  mainMobileNavigation,
-  accountSettingsNavigation,
-  shopSettingsNavigation
+  mainMobileNavigation
 } from 'constants/navigation'
 
 import { Header, SetTitle } from 'components'
@@ -57,7 +55,8 @@ class SettingsLayout extends React.Component {
 
   render() {
 
-    const { isOpen } = this.state
+    const { isOpen } = this.state;
+    const user = window.localStorage.getItem("userId")
 
     return (
         <div className="admin-container">
@@ -88,7 +87,19 @@ class SettingsLayout extends React.Component {
                             <Collapse className="mr-5" isOpen={isOpen} navbar>
                               <div>
                                 <h4 style={{ color: 'black', fontSize: '16px' }}>Account</h4>
-                                <AppSidebarNav navConfig={accountSettingsNavigation} location={this.props.location} router={router} />
+                                <div className="scrollbar-container sidebar-nav ps">
+                                  <ul className="nav">
+                                    <li className="nav-item">
+                                      <NavLink className="nav-link" activeClassName={"active"} to={`/settings/${user}/general`}>General</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                      <NavLink className="nav-link" activeClassName={"active"} to={`/settings/${user}/security`}>Security</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                      <NavLink className="nav-link" activeClassName={"active"} to={`/settings/${user}/notifications`}>Notifications</NavLink>
+                                    </li>
+                                  </ul>
+                                </div>
                               </div>
                             </Collapse>
                           </Navbar>
@@ -99,7 +110,19 @@ class SettingsLayout extends React.Component {
                             <Collapse className="mr-5" isOpen={isOpen} navbar>
                               <div>
                                 <h4 style={{ color: 'black', fontSize: '16px' }}>Shop</h4>
-                                <AppSidebarNav navConfig={shopSettingsNavigation} location={this.props.location} router={router} />
+                                <div className="scrollbar-container sidebar-nav ps">
+                                  <ul className="nav">
+                                    <li className="nav-item">
+                                      <NavLink className="nav-link" activeClassName={"active"} to={`/settings/${user}/payments`}>Payments</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                      <NavLink className="nav-link" activeClassName={"active"} to={`/settings/${user}/design`}>Design</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                      <NavLink className="nav-link" activeClassName={"active"} to={`/settings/${user}/analytics`}>Analytics</NavLink>
+                                    </li>
+                                  </ul>
+                                </div>
                               </div>
                             </Collapse>
                           </Navbar>
