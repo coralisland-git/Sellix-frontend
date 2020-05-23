@@ -58,3 +58,31 @@
     }
   }
 }
+
+.settings-main {
+  .nav {
+    .nav-link {
+      &.active {
+        color: #613BEA !important;
+      }
+      &:hover {
+        color: #613BEA !important;
+      }
+    }
+  }
+}
+
+.light .settings-main {
+  .nav {
+    .nav-link {
+      color: #B4AEBC !important;
+
+      &.active {
+        color: #613BEA !important;
+      }
+      &:hover {
+        color: #613BEA !important;
+      }
+    }
+  }
+}

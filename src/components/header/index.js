@@ -106,11 +106,10 @@ class Header extends Component {
 							<DropdownMenu right className="mt-2" style={{width: 300, maxHeight: 300, overflow: 'auto'}}>
 								<DropdownItem>
 									<div className="d-flex justify-content-between">
-										<span className="text-primary d-flex">Notification</span>
+										<span className="text-primary d-flex mr-2">Notification</span>
 										{
 											(notifications && notifications.length > 0) &&
-											<span className="d-flex text-grey"
-											      onClick={this.markAsRead}>Mark as Read</span>
+											<span className="d-flex text-grey" onClick={this.markAsRead}>Mark as Read</span>
 										}
 									</div>
 								</DropdownItem>
@@ -150,7 +149,7 @@ class Header extends Component {
 							</DropdownToggle>
 							{
 								is_authed ?
-									<DropdownMenu right className="mt-3">
+									<DropdownMenu right className="mt-3 main-menu">
 										{
 											profile && profile.rank !== "0" &&
 											<DropdownItem className={path.startsWith('/admin') ? 'active' : ''} onClick={() => history.push(`/admin/dashboard`)}>

@@ -136,9 +136,12 @@ html > body div.custom-control {
   .nav-item {
     padding: 1.1rem 0 !important;
   }
+  .sidebar-nav .nav .nav-item .nav-link {
+    font-family: "OpenSans-SemiBold" !important;
+  }
   .nav-link {
     padding: 0 1rem !important;
-    font-family: var(--font-family-sans-serif);
+    font-family: "OpenSans-SemiBold" !important;
     font-weight: 500 !important;
     color: #A7A5B4;
     display: flex;
@@ -158,9 +161,6 @@ html > body div.custom-control {
     }
   }
 
-
-
-
   .nav-dropdown {
     .nav-link {
       color: #A7A5B4;
@@ -168,7 +168,6 @@ html > body div.custom-control {
         color: #A7A5B4;
       }
     }
-
 
     .nav-dropdown-items {
       .nav-item {
@@ -186,23 +185,8 @@ html > body div.custom-control {
           }
         }
       }
-
     }
 
-    // .nav-dropdown-toggle:hover:before {
-    //   content: '';
-    // }
-
-    .nav-dropdown-toggle:before {
-      // content: '>';
-      // // background-image: none;
-      // width: initial;
-      // height: initial;
-      // margin-top: 0px;
-      // font-weight: 600;
-      // font-family: monospace;
-      // top: 1px;
-    }
     .nav-link:hover,
     .nav-link.active {
       background-color: transparent;

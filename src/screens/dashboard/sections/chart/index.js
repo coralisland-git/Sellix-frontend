@@ -79,7 +79,7 @@ class RevenueChart extends PureComponent {
 
     return (
         <ResponsiveContainer width={"100%"} height={350}>
-          <AreaChart height={350} data={dataset} margin={{ top: 10, right: 10, left: -30, bottom: 0 }} >
+          <AreaChart height={350} width={"100%"} data={dataset} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} >
             <defs>
               <linearGradient id="fillPurple" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0" stopColor="#613BEA" stopOpacity={1} />

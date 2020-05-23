@@ -176,7 +176,7 @@ class Dashboard extends React.Component {
 
                     <h5 className="mb-4">{isAdmin ? "Cashflow" : "Revenues"} | Orders</h5>
                     <CardBody className="position-relative">
-                      <div className={"position-absolute d-flex justify-content-flex-end"} style={{ fontSize: ".8rem", fontWeight: 200, top: "1rem", right: "1rem" }}>
+                      <div className={"position-absolute d-flex justify-content-flex-end graph-note"}>
                         This graph will always show a 14 days or higher time span
                       </div>
                       <DashBoardChart isAdmin={isAdmin} range={range} height="350px" data={chartData}/>
