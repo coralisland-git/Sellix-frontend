@@ -8,6 +8,13 @@ import layoutHOC from '../../HOC/layoutHOC'
 
 class AuthLayout extends Component {
 
+  constructor(props) {
+    super(props);
+
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+  }
+
   componentDidMount () {
     const preUrl = `/${window.localStorage.getItem('userId')}`;
     const token = window.localStorage.getItem('accessToken');
