@@ -132,6 +132,10 @@ export const GlobalStyles = createGlobalStyle`
     .bitcoin-paying-screen .invoice-divider {
         border-top: 1px solid ${({ theme }) => theme.hrDivider} !important;
     }
+    .bitcoin-paying-screen .badge-grey {
+        background-color: ${({ theme }) => theme.timebarBgColor} !important;
+        color: ${({ theme }) => theme.timebarColor} !important;
+    }
     .searchbar .header-search-input,
     table tbody td .badge-normal,
     .Select-control,
