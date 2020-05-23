@@ -195,10 +195,9 @@ class EditProduct extends React.Component {
 		if(values.quantity_max == "") {
 			values.quantity_max = "0"
 		}
-
 		values.remove_image = images.length == 0?true:false
 		values.remove_file= files.length == 0?true:false
-		values.currency = values.currency.value
+		values.currency = typeof values.currency === "string" ? values.currency : values.currency.value
 
 		values.webhooks = webhook_fields
 
