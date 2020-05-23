@@ -33,6 +33,10 @@ import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback 
 
 const user = window.localStorage.getItem('userId')
 
+const RedirectToDashboard = () => {
+  window.location = `/dashboard/${user}/home`
+}
+
 const dashboardRoutes = [
   {
     path: `/dashboard/${user}/home`,
@@ -224,9 +228,6 @@ const dashboardRoutes = [
     title: 'Blacklists',
     exact: true,
   },
-
-  
-
   {
     path: `/dashboard/${user}/feedback/reply/:id`,
     name: 'Reply to Feedback',
@@ -234,7 +235,6 @@ const dashboardRoutes = [
     title: 'Reply to Feedback',
     exact: true,
   },
-
   {
     path: `/dashboard/${user}/feedback`,
     name: 'Feedback',
@@ -265,13 +265,14 @@ const dashboardRoutes = [
     exact: true,
   },
 
+
   {
-    redirect: true,
-    path: `/dashboard/${user}`,
-    pathTo: `/dashboard/${user}/home`,
+    path: `/dashboard/:user`,
+    component: RedirectToDashboard,
+    exact: true,
   },
 
-  
+
 ]
 
 export default dashboardRoutes

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Route, Switch, Redirect} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -29,6 +29,14 @@ class AdminLayout extends Component {
 	componentDidMount() {
 
 		const {history, location, getSelfUser, logOut} = this.props;
+		const { pathname } = location;
+
+		let isAdmin = pathname.includes('/admin/dashboard') ||
+		pathname.includes('/admin/users') ||
+		pathname.includes('/admin/top') ||
+		pathname.includes('/admin/settings') ||
+		pathname.includes('/admin/invoices') ||
+		pathname.includes('/admin/changelog')
 
 		if (!this.token) {
 			history.push('/auth/login')
@@ -47,7 +55,7 @@ class AdminLayout extends Component {
 			getSelfUser()
 				.then(({ status, data }) => {
 					if (status === 200) {
-						if (data.user.rank === "0") {
+						if (isAdmin && +data.user.rank < 0) {
 							history.push(`/dashboard/${data.user.username}/home`)
 						}
 					} else {
@@ -76,7 +84,6 @@ class AdminLayout extends Component {
 			pathname.includes('/admin/changelog')
 
 		const router = isAdmin ? adminRoutes : dashboardRoutes;
-		console.log(router)
 
 		return (
 			<div className="admin-container">
@@ -92,10 +99,7 @@ class AdminLayout extends Component {
 							<Container className="p-0 h-100" fluid>
 								<Switch>
 									{router.map(({path, pathTo, redirect, title, component: Component}, key) =>
-										redirect ?
-											<Redirect from={path} to={pathTo} key={key}/> :
-											<Route path={path} render={(props) => <SetTitle
-												title={title}><Component {...props} /></SetTitle>} key={key}/>
+										<Route path={path} render={(props) => <SetTitle title={title}><Component {...props} /></SetTitle>} key={key}/>
 									)}
 								</Switch>
 							</Container>

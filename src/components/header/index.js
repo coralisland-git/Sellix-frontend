@@ -156,13 +156,13 @@ class Header extends Component {
 												<i className={"fas fa-users-cog"}/> Admin Panel
 											</DropdownItem>
 										}
-										<DropdownItem className={path.startsWith('/dashboard') ? 'active' : ''} onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
+										<DropdownItem className={path.startsWith('/dashboard') ? 'active' : ''} onClick={() => history.push(`/dashboard/${userId}`)}>
 											<i className={"nav-icon fas fa-home fa-lg"}/> Dashboard
 										</DropdownItem>
-										<DropdownItem className={isShop ? 'active' : ''} onClick={() => this.props.history.push(`/${userId}`)}>
+										<DropdownItem className={isShop ? 'active' : ''} onClick={() => history.push(`/${userId}`)}>
 											<i className={"nav-icon fas fa-shopping-basket fa-lg"}/> Your Shop
 										</DropdownItem>
-										<DropdownItem className={path.startsWith('/settings') ? 'active' : ''} onClick={() => this.props.history.push(`/settings/${userId}`)}>
+										<DropdownItem className={path.startsWith('/settings') ? 'active' : ''} onClick={() => history.push(`/settings/${userId}`)}>
 											<i className={"nav-icon fas fa-cog fa-lg"}/> Settings
 										</DropdownItem>
 
