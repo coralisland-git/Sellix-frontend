@@ -740,6 +740,13 @@ box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
         background-color: rgba(52, 193, 91, 0.2);
     }
 
+    .badge-confirmation {
+        background-color: #0fa1dd33;
+        i {
+            color: #0fa2de !important;
+        }
+    }
+
     .order-value {
         color: #2BB224;
     }

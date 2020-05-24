@@ -131,7 +131,13 @@ class OrderDetail extends React.Component {
         `/admin/users/${order.username}/product/edit/${order.product_id}` :
         `/dashboard/${user}/products/edit/${order.product_id}`;
 
-    let ca = order.crypto_amount
+    let cav = Number(order.crypto_amount * order.crypto_exchange_rate).toFixed(2)
+    let crv = Number(order.crypto_received * order.crypto_exchange_rate).toFixed(2)
+
+    if(cav === crv) {
+      crv -= 0.01
+    }
+
     return (
       <div className="order-detail-screen mt-3">
         <div className="animated fadeIn">
@@ -155,9 +161,13 @@ class OrderDetail extends React.Component {
                             {+order.status !== 3 && <img src={config.STATUS_ICON[order.status]} alt="" />}
                             <span className={`text-${(config.ORDER_STATUS[order.status] || '').toLowerCase()} ml-2`}>{config.ORDER_STATUS[order.status]}</span>
                           </span>
-                          <span className={`order-badge ml-2`} style={{ margin: '0 auto' }}>
-                            <b>1300$</b>
-                          </span>
+                          {+order.status === 4 &&
+                            <span className={`order-badge badge-${(config.ORDER_STATUS[order.status] || '').toLowerCase()} ml-2`} style={{margin: '0 auto'}}>
+                              <span className={`text-${(config.ORDER_STATUS[order.status] || '').toLowerCase()}`}>
+                                {config.CURRENCY_LIST[order.currency]}{crv} of {config.CURRENCY_LIST[order.currency]}{cav}
+                              </span>
+                            </span>
+                          }
                         </h4>
                         <div className='orderHeaderButtons'>
                           {

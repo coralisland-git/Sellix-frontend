@@ -1,5 +1,6 @@
 import {Button} from "../../../components";
 import React from "react";
+import Link from "react-router-dom/es/Link";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 
 
@@ -48,19 +49,28 @@ const RenderProduct = ({ product_type, tostifyAlert, info, onSaveFile }) => {
     </div>
   }
 
-  if(product_type === "service" && info.service_text) {
-    return <div>
-        <pre className={"mb-4 m-0"}>
-          <span dangerouslySetInnerHTML={{ __html: info.service_text }}/>
-        </pre>
+  if(product_type === "service") {
+    if(info.service_text) {
+      return <div>
+          <pre className={"mb-4 m-0"}>
+            <span dangerouslySetInnerHTML={{ __html: info.service_text }} />
+          </pre>
 
-      <div className={"d-flex"}>
-        <CopyToClipboard text={info.service_text} onCopy={() => copyToClipboard()}>
-          <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} ><i className={"fas fa-copy"}/> Copy to clipboard</Button>
-        </CopyToClipboard>
-        <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Save as File</Button>
+        <div className={"d-flex"}>
+          <CopyToClipboard text={info.service_text} onCopy={() => copyToClipboard()}>
+            <Button color={"primary"} style={{ width: "200px"}} className={"mr-4"} ><i className={"fas fa-copy"}/> Copy to clipboard</Button>
+          </CopyToClipboard>
+          <Button color={"default"} style={{ width: "150px"}} onClick={onSaveFile}><i className={"fas fa-save"}/>&nbsp;&nbsp;Save as File</Button>
+        </div>
       </div>
-    </div>
+    } else {
+      return <div>
+        <span><p>This product has no service text, please wait further actions by the seller or open a query on his page.</p></span><br/>
+        <Link to={`${info.product.username}/contact`} target={"_blank"}><Button color={"default"}>
+          <i className={"fas fa-comments"}/>&nbsp;&nbsp;Contact {info.product.username}
+        </Button></Link>
+      </div>
+    }
   }
 
   return null

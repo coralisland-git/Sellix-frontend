@@ -17,7 +17,6 @@ import OrderDetail from './sections/renderOrderDetail'
 import { AlertSuccess, AlertCanceled, AlertPartial } from './sections/alerts'
 
 
-import sellix_logo from 'assets/images/Sellix_logo.svg'
 import 'react-circular-progressbar/dist/styles.css';
 
 import './style.scss'

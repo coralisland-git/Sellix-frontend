@@ -1,7 +1,4 @@
 .order-detail-screen {
-  .card-header {
-    color: #20a8d8;
-  }
 
   .provided-custom-table {
     .react-bs-table {
@@ -79,6 +76,9 @@
   .text-partial {
     color: #8EAEFF;
   }
+  .text-confirmation {
+    color: #0fa2de;
+  }
 
   .webhook-badge {
     padding: 4px 8px 6px;
@@ -118,6 +118,13 @@
 
   .badge-completed {
     background-color: rgba(52, 193, 91, 0.2);
+  }
+
+  .badge-confirmation {
+    background-color: #0fa1dd33;
+    i {
+      color: #0fa2de !important;
+    }
   }
 
   .orderHeaderButtons {

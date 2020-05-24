@@ -89,8 +89,8 @@ class Invoice extends React.Component {
 								<Row>
 									<Col lg={12}>
 										{
-											order.crypto_transactions && order.crypto_transactions.map(trans =>
-												<div className="d-flex">
+											order.crypto_transactions && order.crypto_transactions.map((trans, key) =>
+												<div className="d-flex" key={key}>
 													<p className="hash">
 														{trans.crypto_amount} <img src={config.PAYMENT_ICONS[order.gateway]} width="15" alt={"Currency"}/> -{order.gateway === 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
 														{order.gateway === 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
