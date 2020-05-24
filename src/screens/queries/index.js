@@ -51,7 +51,7 @@ class Queries extends React.Component {
 
     return row.status ?
         <div className={`badge badge-${badge}`} style={{ textTransform: "capitalize" }}>
-          {row.status === 'userreply' ? "Answered" : row.status === 'customerreply' ? "Customer Reply" : row.status}
+          {row.status === 'userreply' ? "Answered" : (row.status === 'customerreply' ? "Customer Reply" : row.status)}
         </div> :
         <p className="caption">No specified</p>
   }

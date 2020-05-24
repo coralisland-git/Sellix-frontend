@@ -8,6 +8,15 @@
     }
   }
 
+  .infinite-scroll-component__outerdiv {
+    width: 100%;
+
+    & > div {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
   .filter-button {
     button {
       min-height: 38px !important;

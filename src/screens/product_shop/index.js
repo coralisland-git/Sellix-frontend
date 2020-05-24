@@ -13,18 +13,6 @@ import './style.scss'
 import ProductList from './productList'
 
 
-const mapStateToProps = ({ common: { general_info } }) => ({
-  shop_search_enabled: Number(general_info.shop_search_enabled),
-  shop_hide_out_of_stock: Number(general_info.shop_hide_out_of_stock),
-  shop_center_product_titles: Number(general_info.shop_center_product_titles),
-  shop_center_group_titles: Number(general_info.shop_center_group_titles),
-  user: general_info,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(CommonActions, dispatch)
-})
-
 
 class ShopProducts extends React.Component {
   
@@ -218,5 +206,17 @@ class ShopProducts extends React.Component {
     )
   }
 }
+
+const mapStateToProps = ({ common: { general_info } }) => ({
+  shop_search_enabled: Number(general_info.shop_search_enabled),
+  shop_hide_out_of_stock: Number(general_info.shop_hide_out_of_stock),
+  shop_center_product_titles: Number(general_info.shop_center_product_titles),
+  shop_center_group_titles: Number(general_info.shop_center_group_titles),
+  user: general_info,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(CommonActions, dispatch)
+})
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShopProducts))
