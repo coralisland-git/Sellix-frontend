@@ -1,6 +1,6 @@
 import config from "constants/config";
 import { Collapse, Input } from "components/reactstrap";
-import { withRouter } from "react-router-dom";
+import withRouter from "react-router-dom/withRouter"
 import React from "react";
 import { api, formData } from 'utils';
 import { Button } from 'components';

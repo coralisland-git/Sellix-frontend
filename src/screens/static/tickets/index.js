@@ -6,7 +6,7 @@ import { Spin } from "components";
 import Select from "react-select";
 import {connect} from 'react-redux'
 import {authApi} from "utils";
-import { withRouter } from "react-router-dom";
+import withRouter from "react-router-dom/withRouter"
 import './style.scss'
 import { bindActionCreators } from "redux";
 import { CommonActions } from "../../../services/global";

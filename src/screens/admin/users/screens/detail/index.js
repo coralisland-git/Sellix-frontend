@@ -5,7 +5,8 @@ import { Card, CardHeader, Row, Col, CardBody } from 'components/reactstrap'
 import { getUser, updateUser, getUserTodayAnalytics, getUserTotalAnalytics, getUser14dAnalytics, banUser, unbanUser } from './actions'
 import { CommonActions } from "services/global";
 import pick from "lodash/pick";
-import { withRouter, Link } from "react-router-dom";
+import withRouter from "react-router-dom/withRouter"
+import Link from 'react-router-dom/es/Link'
 import { Button, Spin, Loader } from "components";
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'

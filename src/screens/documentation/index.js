@@ -527,7 +527,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Blacklist</b></h3>
                   <p>
-                    <span className="s-put">PUT</span> /blacklist <br />
+                    <span className="s-post">POST</span> /blacklist <br />
                     Creates a Blacklist and returns the Uniqid. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -609,7 +609,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Edit Blacklist</b></h3>
                   <p>
-                    <span className="s-post">POST</span> /blacklists/:uniqid <br />
+                    <span className="s-put">PUT</span> /blacklists/:uniqid <br />
                     Edits a Blacklist. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -954,7 +954,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Category</b></h3>
                   <p>
-                    <span className="s-put">PUT</span> /categories <br />
+                    <span className="s-post">POST</span> /categories <br />
                     Creates a Category and returns the Uniqid. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -1049,7 +1049,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Edit Category</b></h3>
                   <p>
-                    <span className="s-post">POST</span> /categories/:uniqid <br />
+                    <span className="s-put">PUT</span> /categories/:uniqid <br />
                     Edits a Category. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -1430,7 +1430,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Coupon</b></h3>
                   <p>
-                    <span className="s-put">PUT</span> /coupon <br />
+                    <span className="s-post">POST</span> /coupon <br />
                     Creates a Coupon and returns the Uniqid.<br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -1526,7 +1526,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Edit Coupon</b></h3>
                   <p>
-                    <span className="s-post">POST</span> /coupons/:uniqid <br />
+                    <span className="s-put">PUT</span> /coupons/:uniqid <br />
                     Edits a Coupon. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -3280,7 +3280,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Product</b></h3>
                   <p>
-                    <span className="s-put">PUT</span> /product <br />
+                    <span className="s-post">POST</span> /product <br />
                     Creates a Product and returns the Uniqid.<br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -3602,7 +3602,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Edit Product</b></h3>
                   <p>
-                    <span className="s-post">POST</span> /products/:uniqid <br />
+                    <span className="s-put">PUT</span> /products/:uniqid <br />
                     Edits a Product. Arguments are the same as the create product endpoint, with the addition of remove_image and remove_file. <br /><br />
                   </p>
                   <p><b>Arguments</b></p>
@@ -4356,7 +4356,7 @@ if (hash_equals($signature, $header_signature)) {
                 <div className="d-ins">
                   <h3><b>Create a Payment</b></h3>
                   <p>
-                    <span className="s-put">PUT</span> /payments/:uniqid <br />
+                    <span className="s-post">POST</span> /payments/:uniqid <br />
                     Creates a Payment. Returns an invoice object.
                   </p>
                   <p><b>Arguments</b></p>

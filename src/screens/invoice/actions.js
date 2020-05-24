@@ -1,7 +1,7 @@
 import { api } from 'utils'
 
 
-export const getInvoiceInfo = (id) => (dispatch) => {
+export const getInvoiceInfo = (id) => () => {
 
     let secret = localStorage.getItem(id);
 

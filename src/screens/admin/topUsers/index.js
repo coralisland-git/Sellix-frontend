@@ -7,7 +7,7 @@ import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { getTopUsers } from './actions'
-import { withRouter } from 'react-router-dom'
+import withRouter from "react-router-dom/withRouter"
 
 import './style.scss'
 

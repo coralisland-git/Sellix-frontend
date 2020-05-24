@@ -7,7 +7,7 @@ import { DashBoardChart, ReportOrders, ReportQueries, ReportRevenue, ReportViews
 import { getAnalyticsData, geLastInvoices } from './actions'
 import * as moment from 'moment/moment'
 import { getSelfUser } from "../../services/global/auth/actions";
-import { withRouter } from "react-router-dom";
+import withRouter from "react-router-dom/withRouter"
 
 import './style.scss'
 

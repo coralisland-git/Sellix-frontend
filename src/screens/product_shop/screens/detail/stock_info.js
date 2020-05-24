@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from 'react-router-dom/es/Link'
 import React from "react";
 
 const StockInfo = ({ productInfo }) => {

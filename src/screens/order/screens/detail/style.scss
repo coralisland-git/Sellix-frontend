@@ -148,3 +148,20 @@
     }
   }
 }
+
+
+
+.goods pre {
+  font-size: 1rem;
+  line-height: 1rem;
+  max-height: 14rem;
+  background: #181432;
+  color: #b4afbc;
+  padding: .65rem;
+  border-radius: 5px;
+}
+
+.light .goods pre {
+  background: #f7f7f7;
+  color: #23282c;
+}

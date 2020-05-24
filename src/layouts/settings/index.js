@@ -1,6 +1,9 @@
 import React from 'react'
 import * as router from 'react-router-dom';
-import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
+import NavLink from "react-router-dom/NavLink"
+import Redirect from 'react-router-dom/es/Redirect'
+import Route from 'react-router-dom/es/Route'
+import Switch from 'react-router-dom/es/Switch'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { BrowserView, MobileView } from "react-device-detect";

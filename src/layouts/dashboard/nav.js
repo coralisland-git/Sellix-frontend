@@ -1,5 +1,6 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import Route from 'react-router-dom/es/Route'
+import Switch from 'react-router-dom/es/Switch'
 import * as router from 'react-router-dom';
 import { BrowserView, MobileView } from "react-device-detect";
 import AppSidebarNav from '@coreui/react/es/SidebarNav2'

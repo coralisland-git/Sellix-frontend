@@ -4,7 +4,7 @@ import { DropdownItem, DropdownMenu, DropdownToggle, Nav, UncontrolledDropdown }
 import { bindActionCreators } from 'redux'
 import { AuthActions } from 'services/global'
 import AppHeader from "@coreui/react/lib/Header"
-import { withRouter } from "react-router-dom"
+import withRouter from "react-router-dom/withRouter"
 
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 

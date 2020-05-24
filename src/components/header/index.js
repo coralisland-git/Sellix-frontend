@@ -3,7 +3,7 @@ import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, UncontrolledD
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
+import withRouter from 'react-router-dom/es/withRouter'
 import {bindActionCreators} from 'redux'
 import AppNavbarBrand from '@coreui/react/es/NavbarBrand'
 import AppSidebarToggler from '@coreui/react/es/SidebarToggler'

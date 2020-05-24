@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux'
 import { Card, CardHeader, Row, Col, Input } from 'components/reactstrap'
 import { Button } from 'components';
 import { CommonActions } from 'services/global'
-import { Route, Switch, withRouter, matchPath } from 'react-router-dom'
+import withRouter from "react-router-dom/withRouter"
+import matchPath from 'react-router-dom/es/matchPath'
+import Route from 'react-router-dom/es/Route'
+import Switch from 'react-router-dom/es/Switch'
 import { Loader } from 'components'
 import debounce from "lodash/debounce"
 

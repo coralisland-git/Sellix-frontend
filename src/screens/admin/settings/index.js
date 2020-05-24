@@ -5,7 +5,8 @@ import { Card, CardBody, Row, Col, Navbar, Collapse, Container } from 'component
 import { Loader } from 'components'
 import { getSettings as fetchSettings, updateSettings } from './actions'
 import { CommonActions } from 'services/global'
-import { Route, NavLink } from "react-router-dom";
+import NavLink from "react-router-dom/NavLink"
+import Route from 'react-router-dom/es/Route'
 import Settings from "./settings";
 import Status from "./status";
 

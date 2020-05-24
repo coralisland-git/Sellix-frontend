@@ -4,7 +4,9 @@ import LockIcon from "../../assets/images/Lock.svg";
 import {NotFound} from "../../components";
 import verifiedIcon from "../../assets/images/sellix_verified.svg";
 import {Card, Container, Nav, NavItem, Tooltip} from "../../components/reactstrap";
-import {NavLink, Route, Switch} from "react-router-dom";
+import NavLink from 'react-router-dom/es/NavLink'
+import Route from 'react-router-dom/es/Route'
+import Switch from 'react-router-dom/es/Switch'
 import GoogleAnalytics from "./googleAnalytics";
 import {shopRoutes} from "../../routes";
 

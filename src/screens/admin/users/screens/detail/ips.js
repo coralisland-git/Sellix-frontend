@@ -4,7 +4,7 @@ import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { tableOptions } from 'constants/tableoptions'
 import { Loader } from 'components'
-import { withRouter } from "react-router-dom";
+import withRouter from "react-router-dom/withRouter"
 import * as moment from 'moment/moment'
 
 import './style.scss'

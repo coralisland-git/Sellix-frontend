@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import {bindActionCreators} from "redux";
 import {AuthActions, CommonActions} from "../services/global";
-import {withRouter} from "react-router-dom";
+import withRouter from 'react-router-dom/es/withRouter'
 import {connect} from "react-redux";
 
 export default function layoutHOC(props) {

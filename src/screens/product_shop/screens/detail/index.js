@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import withRouter from "react-router-dom/withRouter"
 import { bindActionCreators } from 'redux'
 import { converter } from 'constants/config'
 import { Card, Row, Col, Input } from 'components/reactstrap'

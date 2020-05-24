@@ -2,14 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ORDER } from 'constants/types'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Input
-} from 'components/reactstrap'
+import { Card, CardHeader, CardBody, Row, Col, Input } from 'components/reactstrap'
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import * as moment from 'moment/moment'

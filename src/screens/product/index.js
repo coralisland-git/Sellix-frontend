@@ -9,7 +9,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import { tableOptions } from 'constants/tableoptions'
 import config from 'constants/config'
 import { CommonActions } from 'services/global'
-import { Link } from 'react-router-dom'
+import Link from 'react-router-dom/es/Link'
 
 import * as ProductActions from './actions'
 

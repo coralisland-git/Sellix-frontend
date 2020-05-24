@@ -1,5 +1,7 @@
 import React from 'react'
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
+import Router from 'react-router-dom/es/BrowserRouter'
+import Route from 'react-router-dom/es/Route'
+import Switch from 'react-router-dom/es/Switch'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import layoutHOC from '../../HOC/layoutHOC'

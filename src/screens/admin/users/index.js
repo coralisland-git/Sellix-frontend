@@ -5,7 +5,7 @@ import { Card, CardHeader, CardBody, Row, Col, Input } from 'components/reactstr
 import BootstrapTable from 'react-bootstrap-table/lib/BootstrapTable'
 import TableHeaderColumn from 'react-bootstrap-table/lib/TableHeaderColumn'
 import { Loader, Button } from 'components'
-import { withRouter } from 'react-router-dom'
+import withRouter from "react-router-dom/withRouter"
 import { tableOptions } from 'constants/tableoptions'
 import { getUsers } from './actions'
 
