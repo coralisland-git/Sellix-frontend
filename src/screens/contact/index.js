@@ -64,13 +64,14 @@ class Contact extends Component {
 
 
       return (
-      <div className="contact-screen container">
+      <div className="contact-screen">
         <div className="animated customAnimation">
-          <Formik onSubmit={this.handleSubmit} initialValues={initialValues} validationSchema={validationSchema}>
+
+          <Formik onSubmit={this.handleSubmit} initialValues={initialValues} validationSchema={validationSchema} >
             {props => (
-              <Form onSubmit={props.handleSubmit}>
+              <Form onSubmit={props.handleSubmit} className="py-2">
                 <Card>
-                  <CardBody className="mt-4 pb-3 pt-3">
+                  <CardBody className="pb-3 pt-3">
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <h4 className="title text-primary f-18">Create a Query</h4>
                       <div style={{ height: 65 }}>
@@ -144,6 +145,7 @@ class Contact extends Component {
               </Form>
             )}
           </Formik>
+
         </div>
       </div>
     )

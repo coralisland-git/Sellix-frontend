@@ -5,27 +5,15 @@ import { Card, CardBody, Row, Col } from 'components/reactstrap'
 import { Loader } from 'components'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-
+import { StarRating as ReactStarsRating } from 'components/star_ratings';
 import { CommonActions } from 'services/global'
 import './style.scss'
-import { StarRating as ReactStarsRating } from 'components/star_ratings';
+
 
 
 TimeAgo.addLocale(en)
 const ReactTimeAgo = new TimeAgo('en-US')
 
-const mapStateToProps = (state) => {
-  return ({
-    user_feedback: state.common.user_feedback,
-    user: state.common.general_info,
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
 
 class ShopFeedback extends React.Component {
 
@@ -34,6 +22,8 @@ class ShopFeedback extends React.Component {
     this.state = {
       loading: true,
     }
+
+    this.user = props.match.params.username;
   }
 
   componentDidUpdate(prevProps) {
@@ -48,64 +38,47 @@ class ShopFeedback extends React.Component {
     this.initializeData()
   }
 
-  initializeData = () => {
-    this.props.commonActions.getUserReviews(this.props.match.params.username).then(res => {
-      if (res.status === 200) {
-        this.setState({ 
-          loading: false,
-          user_feedback: res.data.feedback
+  initializeData = async () => {
+    try {
+      let { status, data } = await this.props.getUserReviews(this.user)
+      if (status === 200) {
+        this.setState({
+          user_feedback: data.feedback
         })
       }
-    })
+    } catch (e) {
+
+    } finally {
+      this.setState({ loading: false })
+    }
   }
 
   render() {
-    const { loading } = this.state
-    const { user_feedback } = this.state
+
+    const { loading, user_feedback } = this.state;
 
     return (
       <div className="feedback-shop-screen">
         <div className="animated customAnimation">
-        {
-            loading ?
-              <Row>
-                <Col lg={12}>
-                  <Loader />
-                </Col>
-              </Row>
-            :
-              <Row className="py-3">
+        {loading && <Row><Col lg={12}><Loader /></Col></Row>}
+        {!loading &&
+          <Row className="py-2">
                 {
-                  user_feedback.map((feedback, key) =>
-                    <Col lg={3} key={key}>
+                  user_feedback.map(({ score, message, reply, created_at }) =>
+                    <Col md={6} lg={4} key={created_at}>
                       <Card className="">
-                        <CardBody className="p-3 bg-white d-flex flex-column align-items-center justify-content-between">
-                          <div className="text-left w-100">
-                            <ReactStarsRating isEdit={false} value={Number(feedback.score)} isHalf={false} className="react-stars-rating"/>
+                        <CardBody className="px-3 py-3 bg-white d-flex flex-column align-items-center justify-content-between">
+                          <div className={"d-flex w-100 align-items-center"}>
+                            <div className="text-left w-100">
+                              <ReactStarsRating isEdit={false} value={Number(score)} isHalf={false} className="react-stars-rating"/>
+                            </div>
+                            <span className={"w-100 text-right"}>{ReactTimeAgo.format(created_at*1000)}</span>
                           </div>
-                          <p style={{lineHeight: '15px', padding: '10px'}}>{feedback.message}</p>
-                          {feedback.reply && <p style={{
-                            borderLeft: '3px solid #613bea',
-                            marginLeft: '10px',
-                            padding: '10px',
-                            position: 'relative',
-                            top: '-6px'
-                          }}>
-                            {feedback.reply}  
-                            <p className="reply-from-seller">— reply from the Seller</p>
-                            <style>
-                              {`
-                              .reply-from-seller {
-                                font-size: 11px;
-                                color: gray !important;
-                                margin: 8px 0;
-                              }
-                              `}
-                            </style>
-                          </p>}
-                          <div className="d-flex flex-row justify-content-between w-100" style={{marginLeft: '15px'}}>
-                            <p><i className="fas fa-check feedback-checked" /> Verified Purchase</p>
-                            <p>{ReactTimeAgo.format(feedback.created_at*1000)}</p>
+                          <span className={"message"}>{message}</span>
+                          {reply && <span className={"reply"}><span>{reply}</span> <span className="reply-from-seller">— reply from the Seller</span></span>}
+
+                          <div className="d-flex flex-row justify-content-between w-100">
+                            <span><i className="fas fa-check feedback-checked" /> Verified Purchase</span>
                           </div>
                         </CardBody>
                       </Card>
@@ -119,5 +92,15 @@ class ShopFeedback extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = (state) => ({
+  user_feedback: state.common.user_feedback,
+  user: state.common.general_info,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getUserReviews: bindActionCreators(CommonActions.getUserReviews, dispatch)
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopFeedback)

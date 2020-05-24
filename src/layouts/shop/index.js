@@ -77,6 +77,10 @@ class ShopLayout extends React.Component {
 					script.async = true;
 					script.id = "crisp";
 					document.getElementsByTagName("head")[0].appendChild(script);
+				} else {
+					if(window.$crisp && window.$crisp.on) {
+						window.$crisp.do('chat:hide')
+					}
 				}
 			})
 			.catch((e) => {

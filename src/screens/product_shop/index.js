@@ -151,11 +151,11 @@ class ShopProducts extends React.Component {
 
             {!loading &&
               <Card className="grey">
-                <CardHeader className="pb-1 pt-3">
+                <CardHeader className="pb-2 pt-2">
                   <Row>
                     {
                       categories.length !== 0 &&
-                      <Col md={12} className="filter-button d-flex flex-wrap mb-4">
+                      <Col md={12} className="filter-button d-flex flex-wrap mb-3">
                         <Button skip color={filter === 'all' ? 'primary' : 'white'} className="mr-2" disabled={loading} onClick={this.setFilter('all')}>
                           All
                         </Button>
@@ -169,7 +169,7 @@ class ShopProducts extends React.Component {
 
                     {
                       shop_search_enabled === 1 &&
-                      <Col md={12} className="mb-4">
+                      <Col md={12} className="mb-3">
                         <div className="d-flex justify-content-start">
                           <div className="searchbar white w-100">
                             <i className="fas fa-search"/>
