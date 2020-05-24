@@ -36,6 +36,7 @@ export class LoaderFullscreen extends React.Component {
             position: 'fixed',
             zIndex: 99999,
             left: 0,
+            top: 0,
             right: 0,
             height: '100%',
             display: loaderRemoved ? 'none' : 'flex',
