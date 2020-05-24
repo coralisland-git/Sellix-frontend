@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import {loadStripe} from '@stripe/stripe-js/pure';
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { Loading } from 'components'
+import { Loader } from 'components'
 
 import './stripeForm.scss'
 
@@ -55,7 +55,7 @@ const StripeForm = (props) => {
  
   return ( <>
         {isLoading && <div className="stripe-loader-container">
-            {Loading()}
+            <Loader />
         </div>}
         <form onSubmit={handleSubmit} style={isLoading ? { display: 'none'} : {}}>
             <CardElement />

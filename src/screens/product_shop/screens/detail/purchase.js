@@ -320,7 +320,6 @@ class Purchase extends React.Component {
 								}}>
 									{couponSuccess && <span className="text-green">{parseInt(appliedCoupon.discount)}% Coupon is applied!</span>}
 									{couponError && <span className="text-red">Coupon does not exist or is expired</span>}
-									{/* {couponLoading && Loading()} */}
 								</p>
 							</div> :
 							<p className="text-grey mt-3 cursor-pointer" onClick={this.openCoupon}>Apply a Coupon</p>

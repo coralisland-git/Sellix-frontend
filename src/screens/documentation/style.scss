@@ -9,11 +9,27 @@
   -webkit-box-pack: justify;
   
   section {
-    padding: 6rem 4rem;
+    padding: 2rem 1rem;
+    padding-top: 70px;
     flex-direction: row;    
     align-items: flex-start;
     display: flex;
     border-bottom: 1px solid #ececec;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+
+      .d-ins {
+        width: 100%;
+      }
+      .d-ex {
+        width: 100%;
+        position: static;
+        padding: 0;
+        margin-top: 1rem;
+      }
+
+    }
   }  
 
   .d-ins {
@@ -31,45 +47,15 @@
 
   .d-wrapper {
     width: inherit;
-    padding: 0px;
+    padding: 0;
     display: flex;
     background-color: inherit;
 
-    > div {
+    & > div {
       padding: 0 !important;
     }
 
-    .side-nav {
-      width: 235px;
-    }
 
-    .d-nav {
-      border-right: 1px solid #ececec;      
-      height: 92vh;
-      overflow: auto;
-      position: fixed;
-      padding: 1rem 3rem;
-      width: 235px;
-    }
-
-    .section-nav {
-      list-style: none;
-      padding-left: 0 !important;
-
-      li {
-        padding: .7rem 0;
-        cursor: pointer;
-      }
-
-      a {
-        color: inherit;        
-      }
-
-      .active a {
-        color: #613BEA !important;
-      }
-
-    }
 
     .lv-1 {
       font-size: 13px;
@@ -146,16 +132,16 @@
   }
 
   .param {
-    color: #613BEA;
+    color: #613BEA !important;
   }
 
   .required {
-    color: #e74c3c;
+    color: #e74c3c !important;
   }
 
   .border-table {
-    margin-left: 0px !important;
-    background: #f7fafc;
+    margin-left: 0 !important;
+    background: #f7fafc !important;
 
     tr {
       border: 1px solid rgba(0, 0, 0, 0.07) !important;
@@ -180,15 +166,15 @@
   }
 
   .s-get {
-    color: #00b680;
+    color: #00b680 !important;
   }
   .s-post {
-    color: #3f72d0;
+    color: #3f72d0 !important;
   }
   .s-put {
-    color: #f08d00;
+    color: #f08d00 !important;
   }
   .s-delete {
-    color: #f96868;
+    color: #f96868 !important;
   }
 }

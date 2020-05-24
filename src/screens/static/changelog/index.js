@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { api } from 'utils'
-import { Loading } from 'components'
+import { Loader } from 'components'
 import { Container } from 'components/reactstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -75,7 +75,7 @@ export class Changelog extends React.Component {
 
       <div className="section text-center bg-white" style={{ paddingBottom: "5rem", display: 'flex'}}>
         <Container className="home-container d-flex flex-column justify-content-center align-items-center">
-          {changelog === null ? <Loading /> : changelog.map((item, key) => <ChangelogItem key={key} item={item} />)}
+          {changelog === null ? <Loader /> : changelog.map((item, key) => <ChangelogItem key={key} item={item} />)}
         </Container>
       </div>
     </div>

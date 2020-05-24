@@ -6,7 +6,7 @@ import { Router, Route, Switch } from 'react-router-dom'
 
 import { mainRoutes } from 'routes'
 import { configureStore } from 'services'
-import { Loading, NotFound } from 'components'
+import { NotFound } from 'components'
 
 import 'app.scss'
 import SingleLogo from './assets/images/single.png'

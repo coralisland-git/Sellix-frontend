@@ -5,8 +5,9 @@ import layoutHOC from '../../HOC/layoutHOC'
 
 import AppHeader from '@coreui/react/es/Header'
 import { NotFound, Header } from 'components'
-
 import './style.scss'
+import Nav from "./nav";
+import {Container} from "../../components/reactstrap";
 
 
 class DocumentationLayout extends React.Component {
@@ -22,12 +23,16 @@ class DocumentationLayout extends React.Component {
             <AppHeader fixed className="border-bottom">
               <Header isShop={true} isDocumentation={true} theme={this.props.theme} changeTheme={this.props.changeTheme} />
             </AppHeader>
+
             <div className="app-body">
+              <Nav/>
               <main className="main">
-                <Switch>
-                  {documentationRoutes.map((props, key) => <Route{...props} key={key}/>)}
-                  <Route path="*" component={NotFound} />
-                </Switch>
+                <Container className="p-0 h-100" fluid>
+                  <Switch>
+                    {documentationRoutes.map((props, key) => <Route{...props} key={key}/>)}
+                    <Route path="*" component={NotFound} />
+                  </Switch>
+                </Container>
               </main>
             </div>
           </div>

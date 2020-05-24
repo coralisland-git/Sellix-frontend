@@ -1,20 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Input
-} from 'components/reactstrap'
-import { Button } from 'components';
+import { Card, CardBody, Row, Col, Form, FormGroup, Input } from 'components/reactstrap'
+import { Button, Loader } from 'components';
 import { Formik } from 'formik'
 import { createFeedback } from './actions'
 import { CommonActions } from 'services/global'
-import { Loading } from 'components'
 import { StarRating as ReactStarsRating } from 'components/star_ratings';
 
 import './style.scss'
@@ -102,7 +93,7 @@ class LeaveFeedback extends React.Component {
   render() {
 
     if(this.state.loadingInitialValues) {
-      return Loading()
+      return <Loader />
     }
 
     return (

@@ -1,4 +1,3 @@
-import Loading from './loading'
 import Loader from './loader'
 import LoaderFullscreen from './loader_fullscreen'
 import Spin from './spin'
@@ -16,7 +15,6 @@ import SetTitle from './set_title'
 import Button from './button'
 
 export {
-  Loading,
   Loader,
   LoaderFullscreen,
   Spin,

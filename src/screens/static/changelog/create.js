@@ -1,17 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { api } from 'utils'
-import {Loader, Button, Spin, Loading} from 'components'
-import {
-	Card,
-	CardBody,
-	Row,
-	Col,
-	Label,
-	Form,
-	FormGroup,
-	Input,
-	CardHeader
-} from 'components/reactstrap'
+import { Loader, Button, Spin } from 'components'
+import { Card, CardBody, Row, Col, Label, Form, FormGroup, Input, CardHeader } from 'components/reactstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Formik } from 'formik'
@@ -195,7 +185,7 @@ export class Changelog extends React.Component {
 								</Formik>
 							</Col>
 							<Col lg={8} md={12}>
-								{changelog === null ? <Loading /> : changelog.map((item, key) => <ChangelogItem key={key} item={item} />)}
+								{changelog === null ? <Loader /> : changelog.map((item, key) => <ChangelogItem key={key} item={item} />)}
 							</Col>
 						</Row>
 					}

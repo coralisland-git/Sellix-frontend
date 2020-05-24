@@ -5,12 +5,6 @@
 		overflow: inherit;
 	}
 
-
-	.main {
-		padding: 0px !important;
-		margin: auto !important;
-	}
-
 	.main .container-fluid {
 		height: 100%;
 	}
@@ -66,5 +60,43 @@
 		.lv-1 {
 			color: #534e61 !important;
 		}
+	}
+
+
+	.d-nav {
+		border-right: none !important;
+		height: 100vh;
+		overflow: auto;
+		padding: 1rem 3rem;
+		width: 100%;
+	}
+
+	& .section-nav {
+		list-style: none;
+		padding-left: 0 !important;
+
+		li {
+			padding: .7rem 0;
+			cursor: pointer;
+		}
+
+		a {
+			color: inherit;
+		}
+
+		.active a {
+			color: #613BEA !important;
+		}
+	}
+
+
+	main.container-fluid {
+		max-width: 1280px!important;
+	}
+}
+
+@media (min-width: 576px){
+	html:not([dir=rtl]) .sidebar-show.sidebar-fixed .app-footer, html:not([dir=rtl]) .sidebar-show.sidebar-fixed .main, html:not([dir=rtl]) .sidebar-sm-show.sidebar-fixed .app-footer, html:not([dir=rtl]) .sidebar-sm-show.sidebar-fixed .main {
+		margin-left: inherit !important;
 	}
 }
