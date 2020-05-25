@@ -1,4 +1,9 @@
 .documentation {
+
+	.sidebar {
+		height: calc(100% - 70px);
+	}
+
 	.app-body{
    		margin-top: 70px !important;
 		background-color: #f8f8f8;
@@ -81,7 +86,11 @@
 		}
 
 		a {
-			color: inherit;
+			color: #7f8082;
+		}
+
+		.lv-1 {
+			color: black !important;
 		}
 
 		.active a {

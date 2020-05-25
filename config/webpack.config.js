@@ -335,7 +335,6 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
-      isEnvDevelopment && new BundleAnalyzerPlugin(),
       new CompressionPlugin({
         exclude: [/\.svg/]
       }),

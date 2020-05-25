@@ -109,7 +109,18 @@
     p {
       line-height: 1.4rem;
     }
+  }
 
+  #webhooks {
+    td {
+      @media (max-width: 768px) {
+        padding: 5px 3px !important;
+
+        span {
+          font-size: .7rem !important;
+        }
+      }
+    }
   }
 
   th {

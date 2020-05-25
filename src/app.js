@@ -1,5 +1,5 @@
+import { hot } from 'react-hot-loader/root';
 import React from 'react'
-
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
 import Router from 'react-router-dom/es/Router'
@@ -16,8 +16,7 @@ import SingleLogo from './assets/images/single.png'
 const history = createBrowserHistory()
 const store = configureStore()
 
-
-export default class App extends React.Component {
+class App extends React.Component {
 
   componentDidMount() {
     for(const elem of document.querySelectorAll('[putSinglePngHrefHere]')) {
@@ -50,3 +49,4 @@ export default class App extends React.Component {
 
 }
 
+export default hot(App);

@@ -45,6 +45,7 @@
     "react-gesture-responder": "^2.1.0",
     "react-google-recaptcha": "^2.0.1",
     "react-grid-dnd": "^2.1.2",
+    "react-hot-loader": "^4.12.21",
     "react-infinite-scroll-component": "^5.0.4",
     "react-interval-timer": "^1.0.5",
     "react-json-pretty": "^2.2.0",
@@ -136,6 +137,7 @@
   "babel": {
     "presets": [
       "react-app"
-    ]
+    ],
+    "plugins": ["react-hot-loader/babel"]
   }
 }
