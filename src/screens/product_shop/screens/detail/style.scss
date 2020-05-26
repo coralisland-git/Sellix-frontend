@@ -15,6 +15,36 @@
   .purchase-card {
     max-width: 1100px;
     width: 100%;
+
+    .select-payment {
+      color: #938EBA !important;
+      font-family: 'OpenSans-SemiBold' !important;
+      font-size: 18px;
+    }
+
+    h3.price {
+      font-size: 45px;
+      color: #8069FF;
+      font-family: 'OpenSans-Bold' !important;
+
+      small {
+        font-size: 20px;
+      }
+    }
+
+    .bottom-caption {
+      color: #C1BFDD !important;
+    }
+
+    .back-btn {
+      color: #634DDD;
+      border: 1.5px solid rgba(99, 77, 221, 0.3) !important;
+      background-color: transparent;
+    }
+
+    .back-btn:hover {
+      background-color: transparent !important;
+    }
   }
 
   .description {
@@ -22,6 +52,7 @@
       max-width: 100%;
     }
   }
+
 
   .coupon-help {
     font-size: 12px;
@@ -31,9 +62,11 @@
     font-size: 15px !important;
     font-weight: 400 !important;
     color: #A7A5B4 !important;
-    background-color: #FCFCFE !important;
-    border: 1px solid #F5F5F5 !important; 
+    height: 50px !important;
+    background-color: #F5F3FB;
+    border: none !important; 
 
+    &.active,
     &:hover {
       background-color: #613BEA !important;
       color: white !important;
@@ -42,7 +75,7 @@
 
   .stock-count {
     width: 172px;
-    border: 1.5px solid #634DDD;
+    border: 1.5px solid rgba(99, 77, 221, 0.3);
     border-radius: 4px;
     span {
       font-size: 15px;
@@ -54,14 +87,14 @@
     input {
       background: transparent;
       border: none;
-      width: 50px;
+      width: 75px;
       text-align: center;
       font-weight: bold;
       outline: none;
 
       &:focus {
         outline: none;
-        box-shadow: 0 0 0 0.2rem rgba(121, 88, 237, 0.5);
+        box-shadow:none;
         border-radius: 5px;
       }
     }
@@ -98,7 +131,6 @@
       background: #D6E6FF;
       color: #27346A !important;
       font-size: 10px !important;
-      font-family: var(--font-family-sans-serif);
       font-weight: 600;
     }
   }
@@ -109,7 +141,6 @@
     border-bottom-right-radius: 3px;
 
     .bold {
-      font-family: var(--font-family-sans-serif);
       font-weight: 600;
     }
   }
@@ -145,6 +176,34 @@
 .light .detail-product-screen .description pre {
   background: #f3edff;
   color: #000;
+}
+
+.dark .detail-product-screen {
+  .product-title {
+    color: white !important;
+  }
+  .purchase-card {
+    h3.price {
+      color: white !important;
+    }
+  }
+
+  .bottom-caption {
+    color: #5A5574 !important;
+  }
+
+  .stock-count {
+    border: 1.5px solid #5A5574;
+  }
+
+  .back-btn {
+    color: white !important;
+    border: 1.5px solid #5A5574 !important;
+  }
+
+  .pay-button {
+    background-color: rgba(99, 77, 221, 0.12);
+  }
 }
 
 .removebackground {

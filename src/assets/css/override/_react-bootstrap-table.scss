@@ -26,14 +26,16 @@
     font-size: 13px;
     border-color: #f1f1f1;
     line-height: 1.2;
+
     .btn-group {
       position: inherit !important;
     }
     .btn-brand {
       border-radius: 0.25rem !important;
     }
-    span,a,p {
+    span,a,p,div {
       white-space: pre-line;
+      font-family: 'OpenSans-Regular' !important;
     }
     a {
       color: #23282d;

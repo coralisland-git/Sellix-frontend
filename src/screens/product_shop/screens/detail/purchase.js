@@ -1,17 +1,21 @@
 import config from "constants/config";
 import { Collapse, Input } from "components/reactstrap";
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import withRouter from "react-router-dom/withRouter"
 import React from "react";
+import { CommonActions } from 'services/global'
+import { converter } from 'constants/config'
 import { api, formData } from 'utils';
 import { Button } from 'components';
 
-const ButtonOptions = ({ option, setPaymentOptions, index }) => {
+const ButtonOptions = ({ option, setGateWay, grid, active }) => {
 	if(option === '') {
 		return null
 	}
 
 	return (
-		<Button className="pay-button mb-2 pl-2 mr-auto ml-auto pr-2 d-block" onClick={setPaymentOptions(config.PAYMENT_LABELS[option])} style={{width: 145}}>
+		<Button className={`pay-button mb-2 pl-3 mr-1 ml-1 pr-3 d-block ${active?'active':''}`} onClick={() => setGateWay(config.PAYMENT_LABELS[option])} style={{ width: grid?175:'calc(100% - 8px)'}}>
 
 			<div className="d-flex justify-content-between align-items-center">
 				{option === 'stripe' ?
@@ -40,8 +44,13 @@ class Purchase extends React.Component {
 			appliedCoupon: null,
 			couponSuccess: false,
 			couponError: false,
-			couponLoader: false
+			couponLoader: false,
+			step: 0,
+			selectedOption: null
 		}
+
+		this.setGateWay = this.setGateWay.bind(this)
+		this.goPurchaseForm = this.goPurchaseForm.bind(this)
 	}
 
 	openCoupon = () => {
@@ -52,8 +61,33 @@ class Purchase extends React.Component {
 
 	showPaymentOptions = () => {
 		this.setState({
-			showPaymentOptions: true
+			showPaymentOptions: true,
+			step: 1
 		})
+	}
+
+	goPurchaseForm() {
+		const { tostifyAlert } = this.props.commonActions;
+		const { selectedOption, appliedCoupon, quantity} = this.state
+		const {productInfo} = this.props
+		const price = (productInfo.price_display * quantity * (appliedCoupon ? (100 - appliedCoupon.discount) / 100 : 1)).toFixed(2)
+		const couponPrice = (productInfo.price_display * quantity).toFixed(2)
+
+		if(selectedOption)
+			this.props.setPaymentOptions(selectedOption, price, appliedCoupon?couponPrice:null)
+		else tostifyAlert('error', 'Please select payment method!')
+	}
+
+	setGateWay = (gatway) => {
+		this.setState({selectedOption: gatway})
+	}
+
+	onBack = () => {
+		if(this.state.step === 1)
+			this.setState({
+				showPaymentOptions: false,
+				step: 0
+			})
 	}
 
 	backToProducts = () => {
@@ -256,7 +290,7 @@ class Purchase extends React.Component {
 
 		let { productInfo, setPaymentOptions } = this.props;
 		let { paymentOptions = [] } = productInfo;
-		let { openCoupon, showPaymentOptions, couponSuccess, couponError, couponLoading, appliedCoupon, quantity } = this.state;
+		let { openCoupon, showPaymentOptions, couponSuccess, couponError, selectedOption, step, couponLoading, appliedCoupon, quantity } = this.state;
 		let currency = config.CURRENCY_LIST[productInfo.currency];
 
 		if(this.isOutOfStock() && quantity > 0) {
@@ -264,40 +298,39 @@ class Purchase extends React.Component {
 		}
 
 		return <div>
-			<div className="p-4 pt-2 pb-2">
+			<div className="pl-4 pr-4 pt-2 pb-4">
 				{/* <div className="d-flex justify-content-between align-items-center mb-3">
 					<div onClick={this.backToProducts} style={{ cursor: "pointer" }} >
 						<i className={"fas fa-times mb-2"} style={{ fontSize: "1rem"}} />
 					</div>
 				</div> */}
-
+				{step ===0 && <div className="description ml-2 mr-2 mb-3" dangerouslySetInnerHTML={{__html: converter.makeHtml(productInfo.description)}}/>}
 				<div className="text-center">
-					{appliedCoupon && <s>{currency}{(productInfo.price_display * quantity).toFixed(2) || 0}</s>}
-					<h3>{currency}{(productInfo.price_display * quantity * (appliedCoupon ? (100 - appliedCoupon.discount) / 100 : 1)).toFixed(2) || 0}</h3>
-					<div className="mt-3">
+					<div className="mt-3 mb-4">
+						{showPaymentOptions && <p className="text-center select-payment mb-4">Select Payment Method</p>}
 						{showPaymentOptions && paymentOptions.length === 0 && <p className="mt-3 mb-3 text-grey">This product has no payment options.</p>}
 						<Collapse isOpen={showPaymentOptions}>
-							<div className={paymentOptions.length > 4 ? "d-flex flex-wrap justify-content-between" : ""}>
-								{paymentOptions.map((option, key) => <ButtonOptions option={option} key={key} setPaymentOptions={setPaymentOptions} />)}
+							<div className={paymentOptions.length > 4 ? "d-flex flex-wrap ml-1 mr-1" : "ml-1 mr-1"}>
+								{paymentOptions.map((option, key) => <ButtonOptions option={option} key={key} setGateWay={this.setGateWay} active={config.PAYMENT_LABELS[option]==selectedOption}  grid={paymentOptions.length > 4 ? true:false}/>)}
 							</div>
 						</Collapse>
 					</div>
-					
-					
-
-					{this.isOutOfStock() ? <div>
-						<p className="text-red mt-3">{this.outOfStockMessage()}</p>
-					</div> : <div>
-						{quantity == productInfo.quantity_min && productInfo.quantity_min != productInfo.quantity_max && productInfo.quantity_min > 1 &&
-							<span style={{ fontSize: ".6rem" }}>Minimum required quantity: {productInfo.quantity_min}</span>}
-						{quantity == productInfo.quantity_max && productInfo.quantity_min != productInfo.quantity_max &&
-							<span style={{ fontSize: ".6rem" }}>Maximum required quantity: {productInfo.quantity_max}</span>}
-					</div>}
-
-					{!this.isOutOfStock() && <>
-						{openCoupon ?
+					<div className="mb-4 pb-1">
+						<h3 className="price"><small className="currency">{currency}</small>{(productInfo.price_display * quantity * (appliedCoupon ? (100 - appliedCoupon.discount) / 100 : 1)).toFixed(2) || 0}</h3>
+						{appliedCoupon && <s>{currency}{(productInfo.price_display * quantity).toFixed(2) || 0}</s>}
+						{this.isOutOfStock() ? <div>
+							<p className="text-red mt-3">{this.outOfStockMessage()}</p>
+						</div> : <div>
+							{quantity == productInfo.quantity_min && productInfo.quantity_min != productInfo.quantity_max && productInfo.quantity_min > 1 &&
+								<span style={{ fontSize: ".6rem" }}>Minimum required quantity: {productInfo.quantity_min}</span>}
+							{quantity == productInfo.quantity_max && productInfo.quantity_min != productInfo.quantity_max &&
+								<span style={{ fontSize: ".6rem" }}>Maximum required quantity: {productInfo.quantity_max}</span>}
+						</div>}
+					</div>
+					{!this.isOutOfStock() && step===0 && <>
+						{(openCoupon) ?
 							<div className="mt-4">
-								<div style={{display: 'flex'}} className="coupon-apply-container">
+								<div style={{display: 'flex'}} className="coupon-apply-container ml-2 mr-2">
 									<Input type="text" id="coupon" name="coupon" placeholder="Coupon code" onChange={(e) => {this.setCoupon(e.target.value)}}/>
 									<Button color="primary" className="mr-auto ml-auto d-block" onClick={this.applyCoupon} style={{
 										width: 100
@@ -316,7 +349,6 @@ class Purchase extends React.Component {
 								<p className="text-grey text-left mt-2 coupon-help" style={{
 									display: 'flex',
 									justifyContent: 'center',
-									paddingTop: '10px'
 								}}>
 									{couponSuccess && <span className="text-green">{parseInt(appliedCoupon.discount)}% Coupon is applied!</span>}
 									{couponError && <span className="text-red">Coupon does not exist or is expired</span>}
@@ -325,27 +357,31 @@ class Purchase extends React.Component {
 							<p className="text-grey mt-3 cursor-pointer" onClick={this.openCoupon}>Apply a Coupon</p>
 						}
 					</>}
-					<div className="d-flex flex-wrap justify-content-center">
-						<div className="d-flex justify-content-center align-items-center ml-2 mr-2 stock-count" style={this.isOutOfStock() ? {
-							opacity: 0.5,
-							pointerEvents: 'none'
-						} : {}}>
-							<span className={"quantity-picker " + (!this.isValidCount(quantity-1) ? 'text-grey' : '')} style={{ padding: "1rem" }} onClick={this.decreaseCount}><i className="fas fa-minus"/></span>
-							<span style={{ fontSize: 20, minWidth: 25, marginBottom: 2.5 }}>
-								<input
-									type="text"
-									value={quantity}
-									onChange={(e) => this.setCount(e.target.value)}
-									onBlur={(e) => this.onBlur(e.target.value)}
-								/>
-							</span>
-							<span className={"quantity-picker " + (!this.isValidCount(parseInt(quantity)+1) ? 'text-grey' : '')} onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
-						</div>
-						{<Button color="primary" className="ml-2 mr-2 d-block" onClick={this.showPaymentOptions} style={this.isOutOfStock() ? {
-							width: 172,
+					<div className="d-flex justify-content-center">
+						{!showPaymentOptions?
+							<div className="d-flex justify-content-center align-items-center ml-2 mr-2 mb-2 stock-count" style={this.isOutOfStock() ? {
+								opacity: 0.5,
+								pointerEvents: 'none'
+							} : {}}>
+								<span className={"quantity-picker " + (!this.isValidCount(quantity-1) ? 'text-grey' : '')} style={{ padding: "1rem" }} onClick={this.decreaseCount}><i className="fas fa-minus"/></span>
+								<span style={{ fontSize: 20, minWidth: 75, marginBottom: 2.5 }}>
+									<input
+										type="text"
+										value={quantity}
+										onChange={(e) => this.setCount(e.target.value)}
+										onBlur={(e) => this.onBlur(e.target.value)}
+									/>
+								</span>
+								<span className={"quantity-picker " + (!this.isValidCount(parseInt(quantity)+1) ? 'text-grey' : '')} onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
+							</div>
+							:<Button color="secondary back-btn" className="ml-2 mr-2 d-block mb-2" style={{maxWidth: 172, width: '100%'}} onClick={this.onBack}>Back</Button>
+						}
+						{<Button color="primary" className="ml-2 mr-2 d-block mb-2" onClick={step===0?this.showPaymentOptions:this.goPurchaseForm} style={this.isOutOfStock() ? {
+							maxWidth: 172,
+							width: '100%',
 							opacity: 0.7,
 							pointerEvents: 'none'
-						} : {width: 172}}>Continue</Button>}
+						} : {maxWidth: 172, width: '100%'}}>Continue</Button>}
 					</div>
 					
 				</div>
@@ -354,4 +390,9 @@ class Purchase extends React.Component {
 	}
 }
 
-export default withRouter(Purchase);
+const mapDispatchToProps = dispatch => ({
+	commonActions: bindActionCreators(CommonActions, dispatch)
+  });
+  
+
+  export default withRouter(connect(null, mapDispatchToProps)(Purchase));

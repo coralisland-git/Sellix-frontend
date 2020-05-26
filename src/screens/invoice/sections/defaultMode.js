@@ -46,7 +46,7 @@ const DefaultMode = ({ invoice, info, theme, setInvoiceStatus, qrCode, getPayPal
             <p className="text-grey bold mt-4 text-center f-18 text-bold caption-color">
               Send exactly <span className="badge text-bold text-primary f-18">{((crypto_amount || 0) - (crypto_received || 0)).toFixed(8)} {config.PAYMENT_OPTS[gateway]}</span> to
             </p>
-            <p className="btc-address text-grey bold text-center f-18" style={{height: openQRModal ? '335px' : '50px', transition: 'height 0.3s ease-out', overflow: 'hidden'}}>
+            <div className="btc-address text-grey bold text-center f-18 mb-3" style={{height: openQRModal ? '335px' : '50px', transition: 'height 0.3s ease-out', overflow: 'hidden'}}>
               <CopyToClipboard text={crypto_address || ''} onCopy={() => copyToClipboard()}>
                 <span className="f-16 mb-1 value-color clipboard-text" style={{fontWeight: 400, opacity: openQRModal ? 0 : 1, transition: 'opacity 0.3s ease-out', cursor: "pointer" }}><span className="value-color f-16">{crypto_address || ''}</span> <img src={copyIcon}/></span>
                 
@@ -54,7 +54,7 @@ const DefaultMode = ({ invoice, info, theme, setInvoiceStatus, qrCode, getPayPal
               <div className="qr-container" style={{height: openQRModal ? 'auto' : 0, opacity: openQRModal ? 1 : 0, transition: 'opacity 0.3s ease-out', padding: openQRModal ? "10px" : 0, marginTop: openQRModal ? '-50px' : '-40px'}}>
                 {qrCode({ onClick: () => {}, qrBgColor: theme === 'dark' ? '#edf0fe' : null, borderRadius: '5px', openQRModal})}
               </div>
-            </p>
+            </div>
             <div className="d-flex justify-content-between align-items-center ">
               <span className="text-grey cursor-pointer caption-color" onClick={() => setQRModal(!openQRModal)}><i className="fas fa-qrcode"/> QR Code</span>
               <span className="text-grey caption-color">Pay in Wallet</span>

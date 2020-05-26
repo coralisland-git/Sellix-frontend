@@ -69,6 +69,18 @@
     }
   }
 
+  table {
+    td {
+      span,a,p,div {
+        white-space: pre-line;
+        font-family: 'OpenSans-SemiBold' !important;
+      }
+      p.caption {
+        font-family: 'OpenSans-Regular' !important;
+      }
+    }
+  }
+
   .filter-btn {
     padding: 7px;
     font-size: 13px;

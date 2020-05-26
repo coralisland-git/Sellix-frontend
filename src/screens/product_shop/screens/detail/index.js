@@ -70,8 +70,8 @@ class ShopProductDetail extends React.Component {
     })
   }
 
-  setPaymentOptions = gateway => () => {
-    this.setState({ gateway })
+  setPaymentOptions = (gateway, price, coupon) => {
+    this.setState({ gateway: gateway, price: price, coupon: coupon })
   }
 
   setCount = ({ quantity }) => {
@@ -140,7 +140,7 @@ class ShopProductDetail extends React.Component {
   render() {
 
     const { group } = this.props;
-    const { gateway, sending, loading, productInfo } = this.state;
+    const { gateway, sending, loading, productInfo, price, coupon } = this.state;
 
 
     return (
@@ -151,15 +151,13 @@ class ShopProductDetail extends React.Component {
             <Row className="pr-3 pl-3 pt-0">
               <div className="payment-card left-bar ml-auto mr-auto" id="affix-bar">
                 <div className="animated fadeIn" >
-                    <Card className="bg-white" style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
+                    <Card className="bg-white pb-1" style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
                       {loading && <Loader/>}
                       {!loading && <>
                         {<>
-                          <div className="product-info p-4">
-                            <h4 className="text-center mt-1">{productInfo.title}</h4>
+                          <div className="product-info pt-4 pl-4 pr-4 pb-0">
+                            <h4 className="text-center mt-1 product-title">{productInfo.title}</h4>
                             <p className="text-center mb-4">{productInfo.username}</p>
-                            <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(productInfo.description)}}>
-                          </div>
                           {
                             group && <div className="p-3 pt-2 pb-2">
                               <h4>Select an option</h4>
@@ -179,15 +177,17 @@ class ShopProductDetail extends React.Component {
                           </div>
                           {
                             gateway ?
-                              <Form productInfo={productInfo} customFieldsValues={this.state.custom_fields} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
+                              <Form productInfo={productInfo} price={price} coupon={coupon} customFieldsValues={this.state.custom_fields} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
                               <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
                           }
-                          <StockInfo productInfo={productInfo} />
+                          
                         </>}
                       </>}
                     </Card>
+                    <p className="text-center bottom-caption mb-5">Payments processing powered by Sellix</p>
                 </div>
               </div>
+              
             </Row>
           </div>
 

@@ -3,6 +3,7 @@ import { FormGroup, Input, Label, Form } from "components/reactstrap";
 import { Formik } from "formik";
 import { Spin } from "components";
 import { Button } from 'components';
+import config from "constants/config";
 import object from "yup/lib/object";
 import string from "yup/lib/string";
 
@@ -11,7 +12,7 @@ const Yup = {
 	object,
 	string
 }
-const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit, setCustomFields, reset }) => {
+const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit, setCustomFields, reset, price, coupon }) => {
 
 	let validationSchema = Yup.object().shape({ email: Yup.string().required('Email is required') })
 
@@ -23,16 +24,11 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 
 	return (
 		<div className="p-3 pt-2 pb-2 mb-2">
-			<div className="d-flex justify-content-between align-items-center mb-3">
-				<h4 className="mt-2  grey">Checkout with {gateway}</h4>
-				<i className={"fas fa-times mb-2"} onClick={reset} style={{cursor: "pointer", fontSize: "1rem"}} />
-			</div>
-
+			<p className="text-center select-payment mb-4">Email address for product delivery</p>
 			<Formik initialValues={{ email: '' }} onSubmit={handleSubmit} validationSchema={validationSchema}>
 				{({ handleSubmit, errors, touched, values, handleChange}) => (
 					<Form onSubmit={handleSubmit}>
-						<FormGroup className="mb-3">
-							<Label htmlFor="email">Email</Label>
+						<FormGroup className="mb-3 ml-3 mr-3">
 							<Input
 								type="text"
 								id="email"
@@ -48,7 +44,7 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 						{customFields.map((field, key) => {
 							if(field.type === 'text') {
 								return (
-									<FormGroup className="mb-3" key={key}>
+									<FormGroup className="mb-3 ml-3 mr-3" key={key}>
 										<Label htmlFor="email">{field.name} <small className="font-italic">{!field.required && '(optional)'}</small></Label>
 										<Input
 											type="text"
@@ -65,7 +61,7 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 
 							if(field.type === 'number') {
 								return (
-									<FormGroup className="mb-3" key={key}>
+									<FormGroup className="mb-3 ml-3 mr-3" key={key}>
 										<Label htmlFor="number">{field.name} <small className="font-italic">{!field.required && '(optional)'}</small></Label>
 										<Input
 											type="number"
@@ -82,7 +78,7 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 
 							if(field.type === 'largetextbox') {
 								return (
-									<FormGroup className="mb-3" key={key}>
+									<FormGroup className="mb-3 ml-3 mr-3" key={key}>
 										<Label htmlFor="number">{field.name} <small className="font-italic">{!field.required && '(optional)'}</small></Label>
 										<textarea className="form-control"
 										          id='service_text'
@@ -98,7 +94,7 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 
 							if(field.type === 'checkbox') {
 								return (
-									<FormGroup className="mb-3" key={key}>
+									<FormGroup className="mb-3 ml-3 mr-3" key={key}>
 										<label className="custom-checkbox custom-control removebackground" htmlFor={`sk${field.name}`}>
 											<input
 												className="custom-control-input"
@@ -118,10 +114,13 @@ const Forms = ({ gateway, customFieldsValues, sending, productInfo, handleSubmit
 								)
 							}
 						})}
-
-						<div className="text-center">
-							<p className="text-center grey" style={{ fontSize: 12 }}>By continuing, you agree to our Terms of Service.</p>
-							<Button color="primary" type="submit" className="mr-auto ml-auto mt-2" disabled={sending}>{sending ? <Spin/> : 'Purchase'}</Button>
+						<div className="text-center mt-5 mb-5">
+							<h3 className="price"><small className="currency">{config.CURRENCY_LIST[productInfo.currency]}</small>{price}</h3>
+							{coupon && <s>{config.CURRENCY_LIST[productInfo.currency]}{coupon}</s>}
+						</div>
+						<div className="d-flex justify-content-center">
+							<Button color="secondary back-btn" className="ml-2 mr-2 d-block mb-2" style={{maxWidth: 172, width: '100%'}} onClick={reset}>Back</Button>
+							<Button color="primary" type="submit" className="mr-2 ml-2 mb-2" style={{maxWidth: 172, width: '100%'}} disabled={sending}>{sending ? <Spin/> : 'Pay'}</Button>
 						</div>
 					</Form>
 				)}

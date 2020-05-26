@@ -31,7 +31,7 @@ class App extends React.Component {
 
     document.body.classList.remove('light');
     document.body.classList.remove('dark');
-    document.body.classList.add(theme);
+    document.body.classList.add('theme');
   }
 
   render () {
