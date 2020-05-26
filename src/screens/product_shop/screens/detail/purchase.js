@@ -354,7 +354,7 @@ class Purchase extends React.Component {
 									{couponError && <span className="text-red">Coupon does not exist or is expired</span>}
 								</p>
 							</div> :
-							<p className="text-grey mt-3 cursor-pointer" onClick={this.openCoupon}>Apply a Coupon</p>
+							<p className="text-grey mt-3 mb-4 cursor-pointer" onClick={this.openCoupon}>Apply a Coupon</p>
 						}
 					</>}
 					<div className="d-flex justify-content-center">

@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import withRouter from "react-router-dom/withRouter"
+import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux'
 import { converter } from 'constants/config'
-import { Card, Row, Col, Input } from 'components/reactstrap'
+import { Card, Row, Col, Input, BreadcrumbItem, Breadcrumb } from 'components/reactstrap'
 import { CommonActions } from 'services/global'
 import { Loader, Affix } from 'components'
 import StockInfo from "./stock_info";
@@ -154,12 +154,18 @@ class ShopProductDetail extends React.Component {
             <Row className="pr-3 pl-3 pt-0">
               <div className="payment-card left-bar ml-auto mr-auto" id="affix-bar">
                 <div className="animated fadeIn" >
+                  
                     <Card className="bg-white pb-1" style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
                       {loading && <Loader/>}
                       {!loading && <>
                         {<>
-                          <div className="product-info pt-4 pl-4 pr-4 pb-0">
-                            <h4 className="text-center mt-1 product-title">{productInfo.title}</h4>
+                          <Breadcrumb className="mb-0 ml-3">
+                            <BreadcrumbItem active className="mb-0">
+                              <a onClick={(e) => this.props.history.push(`/${productInfo.username}`)}><i className="fas fa-chevron-left"/> Shop</a>
+                            </BreadcrumbItem>
+                          </Breadcrumb>
+                          <div className="product-info pl-4 pr-4 pb-0">
+                            <h4 className="text-center product-title">{productInfo.title}</h4>
                             <p className="text-center mb-4">{productInfo.username}</p>
                           {
                             group && <div className="p-3 pt-2 pb-2">
