@@ -10,11 +10,7 @@ import StockInfo from "./stock_info";
 import Purchase from "./purchase";
 import Form from "./form";
 
-
-
 import './style.scss';
-
-
 
 
 class ShopProductDetail extends React.Component {
@@ -102,6 +98,12 @@ class ShopProductDetail extends React.Component {
     }
   }
 
+  setTheme = (theme) => {
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+    document.body.classList.add(theme);
+  }
+
   componentDidMount() {
     if(this.props.group) {
       this.updateGroupProduct()
@@ -113,6 +115,7 @@ class ShopProductDetail extends React.Component {
 
       getUserProductById(id).then(res => {
         if(res.status === 200) {
+          this.setTheme(res.data.product.theme)
           this.setState({
             productInfo: {...res.data.product, paymentOptions: (res.data.product.gateways || '').split(',').filter(opt => opt !== '')},
             quantity: res.data.product.quantity_min > 1 ? res.data.product.quantity_min : 1

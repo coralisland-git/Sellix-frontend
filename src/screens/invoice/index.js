@@ -50,7 +50,6 @@ class Invoice extends React.Component {
   }
 
   setTheme = ({ theme }) => {
-    console.log(theme)
     document.body.classList.remove('light');
     document.body.classList.remove('dark');
     document.body.classList.add(theme);
@@ -273,10 +272,6 @@ class Invoice extends React.Component {
 
     let { loading, invoice, showAlert, fakePayPalSuccess, info } = this.state;
     let { theme } = this.props;
-
-    console.log(invoice)
-
-    // invoice.status = 4
 
     const isQrMode = invoice.crypto_uri != null && invoice.crypto_mode === 'qrcode';
 

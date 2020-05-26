@@ -23,28 +23,14 @@ class InvoiceLayout extends React.Component {
 		document.title = `Products | Sellix`;
 
 		this.props.getSelfUser()
-			.then((res) => {
-				const theme = res.data.user.shop_dark_mode === '1' ? 'dark' : 'light';
-				document.body.classList.remove('light');
-				document.body.classList.remove('dark');
-				document.body.classList.add(theme);
-			})
 			.catch(() => {
 				this.props.logOut()
 			})
 	}
 
-	componentWillUpdate(prevProps, prevState) {
-		console.log(this.props.user)
-		const theme = this.props.user.shop_dark_mode === '1' ? 'dark' : 'light';
-		document.body.classList.remove('light');
-		document.body.classList.remove('dark');
-		document.body.classList.add(theme);
-	}
-
 	render() {
 		const {theme} = this.props;
-		
+
 		return (
 			<div className="admin-container">
 				<div className="app">
@@ -71,13 +57,10 @@ class InvoiceLayout extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-	user: state.common.general_info || {}
-})
 
 const mapDispatchToProps = (dispatch) => ({
 	getSelfUser: bindActionCreators(AuthActions.getSelfUser, dispatch),
 	logOut: bindActionCreators(AuthActions.logOut, dispatch),
 })
 
-export default layoutHOC(connect(mapStateToProps, mapDispatchToProps)(InvoiceLayout))
+export default layoutHOC(connect(null, mapDispatchToProps)(InvoiceLayout))
