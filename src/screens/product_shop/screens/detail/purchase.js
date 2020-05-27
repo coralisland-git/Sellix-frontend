@@ -299,18 +299,17 @@ class Purchase extends React.Component {
 
 		return <div>
 			<div className="pl-4 pr-4 pt-2 pb-4">
-				{/* <div className="d-flex justify-content-between align-items-center mb-3">
-					<div onClick={this.backToProducts} style={{ cursor: "pointer" }} >
-						<i className={"fas fa-times mb-2"} style={{ fontSize: "1rem"}} />
-					</div>
-				</div> */}
-				{step ===0 && <div className="description ml-2 mr-2 mb-3" dangerouslySetInnerHTML={{__html: converter.makeHtml(productInfo.description)}}/>}
+				{step === 0 && <div onClick={this.backToProducts} className="backshop-btn" >
+					<i className={"fas fa-times mb-2"} style={{ fontSize: "1rem"}} />
+				</div>
+				}
+				
 				<div className="text-center">
 					<div className="mt-3 mb-4">
 						{showPaymentOptions && <p className="text-center select-payment mb-4">Select Payment Method</p>}
 						{showPaymentOptions && paymentOptions.length === 0 && <p className="mt-3 mb-3 text-grey">This product has no payment options.</p>}
 						<Collapse isOpen={showPaymentOptions}>
-							<div className={paymentOptions.length > 4 ? "d-flex flex-wrap ml-1 mr-1" : "ml-1 mr-1"}>
+							<div className={paymentOptions.length > 4 ? "d-flex flex-wrap ml-1 mr-1 justify-content-center" : "ml-1 mr-1"}>
 								{paymentOptions.map((option, key) => <ButtonOptions option={option} key={key} setGateWay={this.setGateWay} active={config.PAYMENT_LABELS[option]==selectedOption}  grid={paymentOptions.length > 4 ? true:false}/>)}
 							</div>
 						</Collapse>
@@ -374,9 +373,9 @@ class Purchase extends React.Component {
 								</span>
 								<span className={"quantity-picker " + (!this.isValidCount(parseInt(quantity)+1) ? 'text-grey' : '')} onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
 							</div>
-							:<Button color="secondary back-btn" className="ml-2 mr-2 d-block mb-2" style={{maxWidth: 172, width: '100%'}} onClick={this.onBack}>Back</Button>
+							:<Button color="secondary back-btn" className="ml-2 mr-2 d-block mb-2 p-0" style={{maxWidth: 172, width: '100%'}} onClick={this.onBack}>Back</Button>
 						}
-						{<Button color="primary" className="ml-2 mr-2 d-block mb-2" onClick={step===0?this.showPaymentOptions:this.goPurchaseForm} style={this.isOutOfStock() ? {
+						{<Button color="primary" className="ml-2 mr-2 d-block mb-2 pl-0 pr-0" onClick={step===0?this.showPaymentOptions:this.goPurchaseForm} style={this.isOutOfStock() ? {
 							maxWidth: 172,
 							width: '100%',
 							opacity: 0.7,
