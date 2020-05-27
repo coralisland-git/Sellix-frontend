@@ -15,7 +15,7 @@ const ButtonOptions = ({ option, setGateWay, grid, active }) => {
 	}
 
 	return (
-		<Button className={`pay-button mb-2 pl-3 mr-1 ml-1 pr-3 d-block ${active?'active':''}`} onClick={() => setGateWay(config.PAYMENT_LABELS[option])} style={{ width: grid?175:'calc(100% - 8px)'}}>
+		<Button className={`pay-button mb-2 pl-2 mr-1 ml-1 pr-2 d-block ${active?'active':''}`} onClick={() => setGateWay(config.PAYMENT_LABELS[option])} style={{ width: grid?145:'calc(100% - 8px)'}}>
 
 			<div className="d-flex justify-content-between align-items-center">
 				{option === 'stripe' ?
@@ -356,14 +356,19 @@ class Purchase extends React.Component {
 							<p className="text-grey mt-3 mb-4 cursor-pointer" onClick={this.openCoupon}>Apply a Coupon</p>
 						}
 					</>}
-					<div className="d-flex justify-content-center">
-						{!showPaymentOptions?
+					{ step === 0 && <div className="d-flex justify-content-center align-items-center flex-column mb-2">
+						{<Button color="primary" className="ml-2 mr-2 d-block mb-3 pl-0 pr-0" onClick={step===0?this.showPaymentOptions:this.goPurchaseForm} style={this.isOutOfStock() ? {
+								maxWidth: 180,
+								width: '100%',
+								opacity: 0.7,
+								pointerEvents: 'none'
+							} : {maxWidth: 180, width: '100%'}}>Purchase</Button>}
 							<div className="d-flex justify-content-center align-items-center ml-2 mr-2 mb-2 stock-count" style={this.isOutOfStock() ? {
 								opacity: 0.5,
 								pointerEvents: 'none'
 							} : {}}>
 								<span className={"quantity-picker " + (!this.isValidCount(quantity-1) ? 'text-grey' : '')} style={{ padding: "1rem" }} onClick={this.decreaseCount}><i className="fas fa-minus"/></span>
-								<span style={{ fontSize: 20, minWidth: 75, marginBottom: 2.5 }}>
+								<span style={{ fontSize: 20, minWidth: 65, marginBottom: 2.5 }}>
 									<input
 										type="text"
 										value={quantity}
@@ -373,16 +378,18 @@ class Purchase extends React.Component {
 								</span>
 								<span className={"quantity-picker " + (!this.isValidCount(parseInt(quantity)+1) ? 'text-grey' : '')} onClick={this.increaseCount} style={{ padding: "1rem" }}><i className="fas fa-plus"/></span>
 							</div>
-							:<Button color="secondary back-btn" className="ml-2 mr-2 d-block mb-2 p-0" style={{maxWidth: 172, width: '100%'}} onClick={this.onBack}>Back</Button>
-						}
-						{<Button color="primary" className="ml-2 mr-2 d-block mb-2 pl-0 pr-0" onClick={step===0?this.showPaymentOptions:this.goPurchaseForm} style={this.isOutOfStock() ? {
-							maxWidth: 172,
-							width: '100%',
-							opacity: 0.7,
-							pointerEvents: 'none'
-						} : {maxWidth: 172, width: '100%'}}>Continue</Button>}
-					</div>
-					
+						</div>
+					}
+					{ step === 1 && <div className="d-flex justify-content-center">
+							<Button color="secondary back-btn" className="ml-2 mr-2 d-block mb-2 p-0" style={{maxWidth: 172, width: '100%'}} onClick={this.onBack}>Back</Button>
+							{<Button color="primary" className="ml-2 mr-2 d-block mb-2 pl-0 pr-0" onClick={step===0?this.showPaymentOptions:this.goPurchaseForm} style={this.isOutOfStock() ? {
+								maxWidth: 172,
+								width: '100%',
+								opacity: 0.7,
+								pointerEvents: 'none'
+							} : {maxWidth: 172, width: '100%'}}>Continue</Button>}
+						</div>
+					}
 				</div>
 			</div>
 		</div>

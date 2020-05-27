@@ -38,11 +38,11 @@ class InvoiceLayout extends React.Component {
 					</AppHeader>
 
 					<div className="app-body mt-5 pt-5">
-						<Container className="p-0 pt-3 pb-3">
+						<div className="p-0 pt-3 pb-3 w-100">
 							<Switch>
 								{[...productRoutes, ...invoiceRoutes].map((prop, key) => <Route {...prop} key={key}/>)}
 							</Switch>
-						</Container>
+						</div>
 					</div>
 
 					<AppFooter className={"align-items-center justify-content-center"}>

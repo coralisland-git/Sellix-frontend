@@ -155,15 +155,15 @@ class ShopProductDetail extends React.Component {
             <Col lg={12} className="ml-auto mr-auto pb-4">
               <Row>
 
-                <Col md={6} lg={7} xl={7}>
-                  <Card className="bg-white p-4 detail">
-                    <h4 className="text-primary mb-4">{productInfo.title}</h4>
+                <Col md={6} lg={7} xl={8}>
+                  <Card className="bg-white p-4 pl-5 pr-5 detail">
+                    <h4 className="text-primary mb-4 mt-3 product-title">{productInfo.title}</h4>
                     <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(productInfo.description)}}>
                     </div>
                   </Card>
                 </Col>
 
-                <Col md={6} lg={5} xl={5} className="left-bar" id="affix-bar">
+                <Col md={6} lg={5} xl={4} className="left-bar" id="affix-bar">
                   <div className="d-md-none d-sm-down-none d-lg-block d-md-block animated fadeIn" >
                     <Affix offsetTop={97} container='affix-bar' >
                       <Card className="bg-white payment-card pt-3" id={'affix-container'} style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
@@ -201,10 +201,14 @@ class ShopProductDetail extends React.Component {
                   </div>
 
                   <div className="d-lg-none d-md-none animated fadeIn" >
-                    <Card className="bg-white" style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
+                    <Card className="bg-white payment-card pt-3 ml-auto mr-auto" style={loading ? { height: '490px', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
                       {loading && <Loader/>}
                       {!loading && <>
                         {<>
+                          <div className="product-info pl-4 pr-4 pb-0 mt-4">
+                            <h4 className="text-center product-title">{productInfo.title}</h4>
+                            <p className="text-center mb-0">{productInfo.username}</p>
+                          </div>
                           {
                             group && <div className="p-3 pt-2 pb-2">
                               <h4>Select an option</h4>

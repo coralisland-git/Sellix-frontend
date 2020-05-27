@@ -24,13 +24,13 @@
   }
 
   .purchase-card {
-    max-width: 1100px;
+    max-width: 1200px;
     width: 100%;
 
     .select-payment {
       color: #938EBA !important;
       font-family: 'OpenSans-SemiBold' !important;
-      font-size: 18px;
+      font-size: 17px;
     }
 
     h3.price {
@@ -70,7 +70,7 @@
     line-height: 1.3em;
   }
   .pay-button {
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-weight: 400 !important;
     color: #A7A5B4 !important;
     height: 50px !important;
@@ -85,7 +85,8 @@
   }
 
   .stock-count {
-    width: 172px;
+    width: 145px;
+    height: 45px;
     border: 1.5px solid rgba(99, 77, 221, 0.3);
     border-radius: 4px;
     span {
@@ -98,7 +99,7 @@
     input {
       background: transparent;
       border: none;
-      width: 75px;
+      width: 65px;
       text-align: center;
       font-weight: bold;
       outline: none;
