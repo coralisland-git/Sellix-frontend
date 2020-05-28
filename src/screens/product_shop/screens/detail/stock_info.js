@@ -16,12 +16,6 @@ const StockInfo = ({ productInfo }) => {
 
 	return  <div className="stock-info p-2">
 		<div className="d-flex justify-content-between p-2">
-			<span className="text-primary">Seller</span>
-			<span className="text-primary bold">
-        <Link className="bold" to={`/${productInfo.username}`}>{productInfo.username || ''}</Link>
-      </span>
-		</div>
-		<div className="d-flex justify-content-between p-2">
 			<span className="text-primary">Stock</span>
 			<span className="text-primary bold">{getProductStock}</span>
 		</div>
