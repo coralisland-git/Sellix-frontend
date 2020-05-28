@@ -157,7 +157,7 @@ class ShopProductDetail extends React.Component {
 
                 <Col md={6} lg={7} xl={8}>
                   <Card className="bg-white p-4 pl-5 pr-5 detail">
-                    <h4 className="text-primary mb-4 mt-3 product-title">{productInfo.title}</h4>
+                    <h4 className="mb-4 mt-3 product-title">{productInfo.title}</h4>
                     <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(productInfo.description)}}>
                     </div>
                   </Card>
@@ -194,6 +194,7 @@ class ShopProductDetail extends React.Component {
                                 <Form productInfo={productInfo} price={price} coupon={coupon} customFieldsValues={this.state.custom_fields} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
                                 <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
                             }
+                            <StockInfo productInfo={productInfo} />
                           </>}
                         </>}
                       </Card>
@@ -229,6 +230,7 @@ class ShopProductDetail extends React.Component {
                               <Form productInfo={productInfo} price={price} coupon={coupon} customFieldsValues={this.state.custom_fields} handleSubmit={this.handleSubmit} reset={this.reset} gateway={gateway} setCustomFields={this.setCustomFields} sending={sending}/>:
                               <Purchase setPaymentOptions={this.setPaymentOptions} {...this.state} setCount={this.setCount} setCoupon={this.setCoupon}/>
                           }
+                          <StockInfo productInfo={productInfo} />
                         </>}
                       </>}
                     </Card>
