@@ -1,0 +1,41 @@
+.admin-edit-user-screen {
+  .react-bs-table {
+    padding: 0 !important;
+  }
+
+  button {
+    border: none !important;
+  }
+
+  .ban-button {
+    background-color: #ff0052cf !important;
+
+    &:hover {
+      background-color: darken(#ff0052cf, 10%) !important;
+    }
+  }
+
+  .unban-button {
+    background-color: #20c120 !important;
+
+    &:hover {
+      background-color: darken(#20c120, 10%) !important;
+    }
+  }
+
+  .shop-button {
+    background-color: #00adff !important;
+
+    &:hover {
+      background-color: darken(#00adff, 10%) !important;
+    }
+  }
+}
+
+.userBlockRow{
+  margin-bottom: 10px;
+}
+
+.light .adminUserBlock{
+  background: white;
+}
